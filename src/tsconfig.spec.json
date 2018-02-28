@@ -4,6 +4,7 @@
     "outDir": "../out-tsc/spec",
     "baseUrl": "./",
     "module": "commonjs",
+    "target": "es5",
     "types": [
       "jasmine",
       "node"
@@ -14,6 +15,7 @@
   ],
   "include": [
     "**/*.spec.ts",
+    "**/*.mock.ts",
     "**/*.d.ts"
   ]
 }
