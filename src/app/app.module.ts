@@ -13,6 +13,7 @@ import { SharedModule } from '@app/shared';
 import { HomeModule } from './home/home.module';
 import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
+import { ReportModule } from './report/report.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -30,6 +31,7 @@ import { AppRoutingModule } from './app-routing.module';
     HomeModule,
     AboutModule,
     LoginModule,
+    ReportModule,
     AppRoutingModule
   ],
   declarations: [AppComponent],

@@ -8,3 +8,4 @@ export * from './http/http-cache.service';
 export * from './route.service';
 export * from './route-reusable-strategy';
 export * from './logger.service';
+export * from './report/report.service';

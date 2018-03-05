@@ -14,6 +14,7 @@ import { AuthenticationGuard } from './authentication/authentication.guard';
 import { I18nService } from './i18n.service';
 import { HttpService } from './http/http.service';
 import { HttpCacheService } from './http/http-cache.service';
+import { ReportService } from './report/report.service';
 
 export function createHttpService(backend: ConnectionBackend,
                                   defaultOptions: RequestOptions,
@@ -36,6 +37,7 @@ export function createHttpService(backend: ConnectionBackend,
   ],
   providers: [
     AuthenticationService,
+    ReportService,
     AuthenticationGuard,
     I18nService,
     HttpCacheService,
