@@ -1,6 +1,6 @@
 {
   "generator-ngx-rocket": {
-    "version": "3.2.1",
+    "version": "4.0.0",
     "props": {
       "appName": "sinamecc wui",
       "target": [
@@ -10,6 +10,7 @@
       "ui": "material",
       "layout": "simple",
       "auth": true,
+      "lazy": true,
       "projectName": "sinamecc-wui",
       "packageManager": "npm",
       "mobile": []

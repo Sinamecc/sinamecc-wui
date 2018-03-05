@@ -1,7 +1,7 @@
 # sinamecc wui
 
 This project was generated with [ngX-Rocket](https://github.com/ngx-rocket/generator-ngx-rocket/)
-version 3.2.1
+version 4.0.0
 
 # Getting started
 
@@ -9,12 +9,12 @@ version 3.2.1
  ```sh
  npm install
  ```
- 
+
 2. Launch development server, and open `localhost:4200` in your browser:
  ```sh
  npm start
  ```
- 
+
 # Project structure
 
 ```
@@ -49,6 +49,7 @@ Task automation is based on [NPM scripts](https://docs.npmjs.com/misc/scripts).
 Task                            | Description
 --------------------------------|--------------------------------------------------------------------------------------
 `npm start`                     | Run development server on `http://localhost:4200/`
+`npm run serve:sw`              | Run test server on `http://localhost:4200/` with service worker enabled
 `npm run build [-- --env=prod]` | Lint code and build web app for production (with [AOT](https://angular.io/guide/aot-compiler)) in `dist/` folder
 `npm test`                      | Run unit tests via [Karma](https://karma-runner.github.io) in watch mode
 `npm run test:ci`               | Lint code and run unit tests once for continuous integration

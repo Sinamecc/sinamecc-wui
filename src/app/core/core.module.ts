@@ -1,7 +1,7 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
-import { HttpModule, Http, XHRBackend, ConnectionBackend, RequestOptions } from '@angular/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -14,18 +14,14 @@ import { AuthenticationGuard } from './authentication/authentication.guard';
 import { I18nService } from './i18n.service';
 import { HttpService } from './http/http.service';
 import { HttpCacheService } from './http/http-cache.service';
-import { ReportService } from './report/report.service';
-
-export function createHttpService(backend: ConnectionBackend,
-                                  defaultOptions: RequestOptions,
-                                  httpCacheService: HttpCacheService) {
-  return new HttpService(backend, defaultOptions, httpCacheService);
-}
+import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
+import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
+import { CacheInterceptor } from './http/cache.interceptor';
 
 @NgModule({
   imports: [
     CommonModule,
-    HttpModule,
+    HttpClientModule,
     TranslateModule,
     FlexLayoutModule,
     MaterialModule,
@@ -37,14 +33,20 @@ export function createHttpService(backend: ConnectionBackend,
   ],
   providers: [
     AuthenticationService,
-    ReportService,
     AuthenticationGuard,
     I18nService,
     HttpCacheService,
+    ApiPrefixInterceptor,
+    ErrorHandlerInterceptor,
+    CacheInterceptor,
     {
-      provide: Http,
-      deps: [XHRBackend, RequestOptions, HttpCacheService],
-      useFactory: createHttpService
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiPrefixInterceptor,
+      multi: true
+    },
+    {
+      provide: HttpClient,
+      useClass: HttpService
     },
     {
       provide: RouteReuseStrategy,
