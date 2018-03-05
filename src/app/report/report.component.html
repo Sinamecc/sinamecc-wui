@@ -1,0 +1,35 @@
+<div class="container">
+  <mat-card>
+    <h1>
+      <mat-card-title translate>APP_NAME</mat-card-title>
+    </h1>
+    <mat-card-content>
+      <form (ngSubmit)="submitForm()" [formGroup]="reportForm" novalidate>
+        <div class="report-error" [hidden]="!error || isLoading" translate>
+          Name or report file name incorrect.
+        </div>
+        <br/>
+        <div fxLayout="column">
+          <mat-form-field>
+            <input type="text" matInput formControlName="name" [placeholder]="'Name' | translate"/>
+            <mat-error *ngIf="reportForm.controls.name.valid || reportForm.controls.name.untouched">
+              <span translate>Name is required</span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input type="text" matInput formControlName="filename" [placeholder]="'Filename' | translate" required/>
+            <mat-error *ngIf="reportForm.controls.filename.valid || reportForm.controls.filename.untouched">
+              <span translate>Filename is required</span>
+            </mat-error>
+          </mat-form-field>
+          <br/>
+          <input type="hidden" formControlName="token" required/>
+          <button mat-raised-button color="primary" type="submit" [disabled]="reportForm.invalid || isLoading">
+            <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
+            <span translate>Submit Report</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

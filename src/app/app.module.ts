@@ -11,6 +11,7 @@ import { environment } from '@env/environment';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
 import { HomeModule } from './home/home.module';
+import { ReportModule } from './report/report.module';
 import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +28,7 @@ import { AppRoutingModule } from './app-routing.module';
     CoreModule,
     SharedModule,
     HomeModule,
+    ReportModule,
     LoginModule,
     AppRoutingModule
   ],
