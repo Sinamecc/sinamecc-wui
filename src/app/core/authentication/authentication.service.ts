@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
 
 export interface Credentials {
   // Customize received credentials here
@@ -14,6 +17,10 @@ export interface LoginContext {
   remember?: boolean;
 }
 
+const routes = {
+  login: () => `/v1/token/`
+};
+
 const credentialsKey = 'credentials';
 
 /**
@@ -25,7 +32,7 @@ export class AuthenticationService {
 
   private _credentials: Credentials | null;
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
     const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
@@ -39,12 +46,33 @@ export class AuthenticationService {
    */
   login(context: LoginContext): Observable<Credentials> {
     // Replace by proper authentication call
-    const data = {
+    /* const data = {
       username: context.username,
       token: '123456'
     };
-    this.setCredentials(data, context.remember);
-    return of(data);
+    
+    return of(data); */
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+       // 'Authorization': 'my-auth-token'
+      })
+    };
+     return this.httpClient
+      .post(routes.login(), context, httpOptions) 
+      .pipe(
+        map((body: any) => {
+          const data = {
+            username: context.username,
+            token: body.token
+          };
+          this.setCredentials(data, context.remember);
+          return data;
+        })
+      );
+
+      
+      
   }
 
   /**
