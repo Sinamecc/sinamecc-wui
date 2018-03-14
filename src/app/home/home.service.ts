@@ -14,7 +14,9 @@ export class HomeService {
   constructor(private httpClient: HttpClient) { }
 
   getHealthStatus(): Observable<string> {
-    return this.httpClient
+
+    return of('Dummy backend');
+    /* return this.httpClient
       .cache()
       .get(routes.healthstatus())
       .pipe(
@@ -22,7 +24,7 @@ export class HomeService {
           return body.message;
         }),
         catchError(() => of('Error, could not ping backend :-('))
-      );
+      ); */
   }
 
 }

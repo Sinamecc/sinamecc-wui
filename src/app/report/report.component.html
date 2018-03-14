@@ -2,11 +2,12 @@
   <mat-card>
     <h1>
       <mat-card-title translate>APP_NAME</mat-card-title>
+      <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
     </h1>
     <mat-card-content>
       <form (ngSubmit)="submitForm()" [formGroup]="reportForm" novalidate>
         <div class="report-error" [hidden]="!error || isLoading" translate>
-          Name or report file name incorrect.
+          <span translate>Error submitting the form.</span>
         </div>
         <br/>
         <div fxLayout="column">
@@ -16,14 +17,23 @@
               <span translate>Name is required</span>
             </mat-error>
           </mat-form-field>
+          <br/>
           <mat-form-field>
-            <input type="text" matInput formControlName="filename" [placeholder]="'Filename' | translate" required/>
-            <mat-error *ngIf="reportForm.controls.filename.valid || reportForm.controls.filename.untouched">
-              <span translate>Filename is required</span>
+              
+            <app-input-file formControlName="reportfile" placeholder="Required input" valuePlaceholder="No file selected" required></app-input-file>
+            <mat-icon matSuffix>folder</mat-icon>
+            <mat-error *ngIf="reportForm.get('reportfile').hasError('required')">
+              Please select a file
             </mat-error>
+            <mat-error *ngIf="reportForm.get('reportfile').hasError('maxContentSize')">
+                <span translate>The total size must not exceed {{formDoc.get('reportfile')?.getError('maxContentSize').maxSize | byteFormat}}
+              ({{reportForm.get('reportfile')?.getError('maxContentSize').actualSize | byteFormat}}).</span>
+            </mat-error>
+                
+   
+                
           </mat-form-field>
           <br/>
-          <input type="hidden" formControlName="token" required/>
           <button mat-raised-button color="primary" type="submit" [disabled]="reportForm.invalid || isLoading">
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
             <span translate>Submit Report</span>

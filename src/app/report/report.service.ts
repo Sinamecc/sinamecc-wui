@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { Logger, I18nService, AuthenticationService } from '@app/core';
 
 export interface Response {
   // Customize received credentials here
@@ -10,9 +14,12 @@ export interface Response {
 
 export interface ReportContext {
   name: string;
-  filename: string;
-  userId: number;
+  reportFile: string|any;
 }
+
+const routes = {
+  reportFile: () => `/v1/report_file/`
+};
 
 
 /**
@@ -22,7 +29,8 @@ export interface ReportContext {
 export class ReportService {
 
 
-  constructor() {
+  constructor(private authenticationService: AuthenticationService,
+              private httpClient: HttpClient) {
 
   }
 
@@ -33,9 +41,23 @@ export class ReportService {
    */
   submitReport(context: ReportContext): Observable<Response> {
     // Replace by proper api call, verify params in component
-
-    const response = {statusCode: 200, message: 'Form submitted correctly'};
-    return of(response);
+    console.log(context);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.authenticationService.credentials.token
+      })
+    };
+    return this.httpClient
+    .post(routes.reportFile(), context, httpOptions) 
+    .pipe(
+      map((body: any) => {
+        console.log(body);
+        const response = {statusCode: 200, message: 'Form submitted correctly'};
+        return response;
+      })
+    );
+    // const response = {statusCode: 200, message: 'Form submitted correctly'};
+    // return of(response);
   }
 
 

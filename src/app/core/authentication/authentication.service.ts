@@ -64,7 +64,7 @@ export class AuthenticationService {
         map((body: any) => {
           const data = {
             username: context.username,
-            token: body.token
+            token: 'JWT ' + body.token
           };
           this.setCredentials(data, context.remember);
           return data;

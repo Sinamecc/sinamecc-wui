@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
@@ -27,7 +27,6 @@ export class ReportComponent implements OnInit {
   constructor(private router: Router,
     private formBuilder: FormBuilder,
     private i18nService: I18nService,
-    private authenticationService: AuthenticationService,
     private reportService: ReportService) {
     this.createForm();
   }
@@ -50,12 +49,10 @@ export class ReportComponent implements OnInit {
       });
   }
 
-
   private createForm() {
     this.reportForm = this.formBuilder.group({
       name: ['', Validators.required],
-      filename: ['', Validators.required],
-      token: this.authenticationService.credentials.token
+      reportfile: [{ value: undefined, disabled: false }, []],
     });
   }
 
