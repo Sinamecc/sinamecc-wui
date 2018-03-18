@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
@@ -9,29 +9,31 @@ import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material'
 const log = new Logger('Report');
 
 
-import { ReportService, Reports, Report } from './report.service';
+import { ReportService, Reports, Report, Version } from './../report.service';
 
 
 @Component({
-  selector: 'app-report',
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.scss']
+  selector: 'app-report-versions',
+  templateUrl: './report-versions.component.html',
+  styleUrls: ['./report-versions.component.scss']
 })
-export class ReportComponent implements OnInit {
+export class ReportVersionsComponent implements OnInit {
 
   version: string = environment.version;
+  report: number;
   error: string;
   isLoading = false;
-  listOfReports: Reports;
-  dataSource: MatTableDataSource<Report>;
-  displayedColumns = ['report_file_id', 'name', 'last_active_version', 'versions'];
+  listOfVersions: Version[];
+  dataSource: MatTableDataSource<Version>;
+  displayedColumns = ['version_name', 'file'];
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private router: Router,
     private i18nService: I18nService,
-    private reportService: ReportService) { }
+    private reportService: ReportService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.reports();
@@ -48,8 +50,9 @@ export class ReportComponent implements OnInit {
       this.isLoading = false;
     }))
     .subscribe(response => {
-      this.listOfReports =  response; 
-      this.dataSource = new MatTableDataSource<Report>(this.listOfReports.reports);
+      this.listOfVersions =  response.reports.filter(
+        report => report.report_file_id === +this.route.snapshot.paramMap.get('id'))[0].versions; 
+      this.dataSource = new MatTableDataSource<Version>(this.listOfVersions);
     }, error => {
       log.debug(`Report File error: ${error}`);
       this.error = error;

@@ -1,0 +1,33 @@
+<mat-toolbar>
+    <span>Report Versions</span>
+  </mat-toolbar>
+  <a mat-button color="primary" routerLink="/report/new">Add new version</a>
+<div class="container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+    <!-- Report File Id Column -->
+    <ng-container matColumnDef="version_name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Name of Version </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.version_name}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="file">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> File </mat-header-cell>
+      <mat-cell *matCellDef="let element"><a mat-button href="/assets/sample.png" download>{{element.file.split('/').pop()}}</a></mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 20]"
+                 [showFirstLastButtons]="true">
+  </mat-paginator>
+</div>
+<a mat-fab routerLink="/report">
+  <mat-icon aria-label="Go to Data for Report">undo</mat-icon>
+</a>

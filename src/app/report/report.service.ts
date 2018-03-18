@@ -10,15 +10,35 @@ export interface Response {
   // Customize received credentials here
   statusCode: number;
   message: string;
+  
+}
+
+export interface Reports {
+  reports: Report[];
+}
+
+export interface Report {
+  name: string;
+  created_at: string;
+  last_active_version: string;
+  versions: Version[];
+  report_file_id: number;
+}
+
+export interface Version {
+  version_name: string;
+  file: string;
 }
 
 export interface ReportContext {
   name: string;
-  reportFile: string|any;
+  file: string|any;
 }
 
 const routes = {
-  reportFile: () => `/v1/report_file/`
+  submitReport: () => `/v1/report_file/`,
+  reports: () => `/v1/reports/`,
+  versions: () => `/v1/report/versions/`
 };
 
 
@@ -47,17 +67,51 @@ export class ReportService {
         'Authorization': this.authenticationService.credentials.token
       })
     };
-    return this.httpClient
-    .post(routes.reportFile(), context, httpOptions) 
-    .pipe(
-      map((body: any) => {
-        console.log(body);
-        const response = {statusCode: 200, message: 'Form submitted correctly'};
-        return response;
-      })
-    );
-    // const response = {statusCode: 200, message: 'Form submitted correctly'};
-    // return of(response);
+
+    let fileList = context.file.files;
+    if (fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData:FormData = new FormData();
+      formData.append('name', context.name);
+      formData.append('file', file, file.name);
+      return this.httpClient
+      .post(routes.submitReport(), formData, httpOptions) 
+      .pipe(
+        map((body: any) => {
+          console.log(body);
+          const response = {statusCode: 200, message: 'Form submitted correctly'};
+          return response;
+        })
+      );
+    } else {
+      // raise exception
+    }
+  }
+
+  reports(): Observable<Reports> {
+    const r1: Report = {name: 'Titan', 
+                        created_at: '2018-03-14 05:19:11.982642+00', 
+                        report_file_id: 1,
+                        last_active_version: 'v3',
+                        versions: [{version_name: 'v1', file: 'report_data/2018/03/13/23/04/49/get_token'},
+                                   {version_name: 'v2', file: 'report_data/2018/03/13/23/04/49/get_token'},
+                                   {version_name: 'v3', file: 'report_data/2018/03/13/23/04/49/get_token'}]};
+    const r2: Report = {name: 'Dodge Ram', 
+                        created_at: '2018-03-12 07:19:11.982642+00', 
+                        last_active_version: 'v001',
+                        report_file_id: 2,
+                        versions: [{version_name: 'v001', file: 'report_data/2018/03/13/23/04/49/get_token'}]};
+    const r3: Report = {name: 'Tundra', 
+                        report_file_id: 3,
+                        created_at: '2016-03-12 07:19:11.982642+00', 
+                        last_active_version: 'v5',
+                        versions: [{version_name: 'v1', file: 'report_data/2018/03/13/23/04/49/get_token'},
+                                   {version_name: 'v2', file: 'report_data/2018/03/13/23/04/49/get_token'},
+                                   {version_name: 'v3', file: 'report_data/2018/03/13/23/04/49/get_token'},
+                                   {version_name: 'v4', file: 'report_data/2018/03/13/23/04/49/get_token'},
+                                   {version_name: 'v5', file: 'report_data/2018/03/13/23/04/49/get_token'}]};
+    const response: Reports = {reports: [r1, r2, r3]};
+    return of(response);
   }
 
 

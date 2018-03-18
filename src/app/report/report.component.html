@@ -1,45 +1,46 @@
-<div class="container">
-  <mat-card>
-    <h1>
-      <mat-card-title translate>APP_NAME</mat-card-title>
-      <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
-    </h1>
-    <mat-card-content>
-      <form (ngSubmit)="submitForm()" [formGroup]="reportForm" novalidate>
-        <div class="report-error" [hidden]="!error || isLoading" translate>
-          <span translate>Error submitting the form.</span>
-        </div>
-        <br/>
-        <div fxLayout="column">
-          <mat-form-field>
-            <input type="text" matInput formControlName="name" [placeholder]="'Name' | translate"/>
-            <mat-error *ngIf="reportForm.controls.name.valid || reportForm.controls.name.untouched">
-              <span translate>Name is required</span>
-            </mat-error>
-          </mat-form-field>
-          <br/>
-          <mat-form-field>
-              
-            <app-input-file formControlName="reportfile" placeholder="Required input" valuePlaceholder="No file selected" required></app-input-file>
-            <mat-icon matSuffix>folder</mat-icon>
-            <mat-error *ngIf="reportForm.get('reportfile').hasError('required')">
-              Please select a file
-            </mat-error>
-            <mat-error *ngIf="reportForm.get('reportfile').hasError('maxContentSize')">
-                <span translate>The total size must not exceed {{formDoc.get('reportfile')?.getError('maxContentSize').maxSize | byteFormat}}
-              ({{reportForm.get('reportfile')?.getError('maxContentSize').actualSize | byteFormat}}).</span>
-            </mat-error>
-                
-   
-                
-          </mat-form-field>
-          <br/>
-          <button mat-raised-button color="primary" type="submit" [disabled]="reportForm.invalid || isLoading">
-            <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-            <span translate>Submit Report</span>
-          </button>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+<mat-toolbar>
+    <span>Data for Report</span>
+  </mat-toolbar>
+<div class="container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+    <!-- Report File Id Column -->
+    <ng-container matColumnDef="report_file_id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.report_file_id}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+
+    <!-- Last Active Version Column -->
+    <ng-container matColumnDef="last_active_version">
+      <mat-header-cell *matHeaderCellDef> Last Active Version </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.last_active_version}} </mat-cell>
+    </ng-container>
+
+    <!-- Created At Column -->
+    <ng-container matColumnDef="created_at">
+      <mat-header-cell *matHeaderCellDef> Created At </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.created_at}} </mat-cell>
+    </ng-container>
+
+    <!-- Versions Column -->
+    <ng-container matColumnDef="versions">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Versions </mat-header-cell>
+      <mat-cell *matCellDef="let element"><a mat-button routerLink="/report/{{element.report_file_id}}/versions">{{element.versions.length}}</a></mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 20]"
+                 [showFirstLastButtons]="true">
+  </mat-paginator>
 </div>
