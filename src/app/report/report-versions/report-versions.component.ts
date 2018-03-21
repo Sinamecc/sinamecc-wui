@@ -9,7 +9,7 @@ import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material'
 const log = new Logger('Report');
 
 
-import { ReportService, Reports, Report, Version } from './../report.service';
+import { ReportService, Report, Version } from './../report.service';
 
 
 @Component({
@@ -50,9 +50,9 @@ export class ReportVersionsComponent implements OnInit {
       this.isLoading = false;
     }))
     .subscribe(response => {
-      this.listOfVersions =  response.reports.filter(
-        report => report.report_file_id === +this.route.snapshot.paramMap.get('id'))[0].versions; 
-      this.dataSource = new MatTableDataSource<Version>(this.listOfVersions);
+     // this.listOfVersions =  response.reports.filter(
+     //   report => report.report_file_id === +this.route.snapshot.paramMap.get('id'))[0].versions; 
+      //this.dataSource = new MatTableDataSource<Version>(this.listOfVersions);
     }, error => {
       log.debug(`Report File error: ${error}`);
       this.error = error;

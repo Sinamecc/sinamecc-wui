@@ -1,46 +1,42 @@
 <mat-toolbar>
     <span>Data for Report</span>
-  </mat-toolbar>
+</mat-toolbar>
+<a mat-button color="primary" routerLink="/report/new">Add new report file</a>
 <div class="container mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource" matSort>
+  <mat-table #table [dataSource]="dataSource">
 
-    <!-- Report File Id Column -->
-    <ng-container matColumnDef="report_file_id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.report_file_id}} </mat-cell>
-    </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
     </ng-container>
 
-    <!-- Last Active Version Column -->
-    <ng-container matColumnDef="last_active_version">
-      <mat-header-cell *matHeaderCellDef> Last Active Version </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.last_active_version}} </mat-cell>
+    <!-- Created Column -->
+    <ng-container matColumnDef="updated">
+      <mat-header-cell *matHeaderCellDef> Last update: </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.updated}} </mat-cell>
     </ng-container>
 
-    <!-- Created At Column -->
-    <ng-container matColumnDef="created_at">
+    <!-- Updates Column -->
+    <ng-container matColumnDef="created">
       <mat-header-cell *matHeaderCellDef> Created At </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.created_at}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.created}} </mat-cell>
     </ng-container>
 
-    <!-- Versions Column -->
-    <ng-container matColumnDef="versions">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Versions </mat-header-cell>
-      <mat-cell *matCellDef="let element"><a mat-button routerLink="/report/{{element.report_file_id}}/versions">{{element.versions.length}}</a></mat-cell>
-    </ng-container>
+        <!-- Versions Column -->
+        <ng-container matColumnDef="versions">
+          <mat-header-cell *matHeaderCellDef> Versions </mat-header-cell>
+          <mat-cell *matCellDef="let element"><a mat-button routerLink="/report/{{element.id}}/versions">See versions</a></mat-cell>
+        </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 
   <mat-paginator #paginator
-                 [pageSize]="10"
-                 [pageSizeOptions]="[5, 10, 20]"
-                 [showFirstLastButtons]="true">
-  </mat-paginator>
+  [pageSize]="10"
+  [pageSizeOptions]="[5, 10, 20]"
+  [showFirstLastButtons]="true">
+</mat-paginator>
 </div>

@@ -5,11 +5,13 @@ import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material'
+import {DataSource} from '@angular/cdk/collections';
+import { Observable} from 'rxjs/Observable';
 
 const log = new Logger('Report');
 
 
-import { ReportService, Reports, Report } from './report.service';
+import { ReportService, Report } from './report.service';
 
 
 @Component({
@@ -22,39 +24,31 @@ export class ReportComponent implements OnInit {
   version: string = environment.version;
   error: string;
   isLoading = false;
-  listOfReports: Reports;
-  dataSource: MatTableDataSource<Report>;
-  displayedColumns = ['report_file_id', 'name', 'last_active_version', 'versions'];
+  listOfReports: Report[];
+  //dataSource: MatTableDataSource<Report> ;
+  dataSource = new ReportDataSource(this.reportService);
+  //dataSource = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns = ['name', 'created', 'updated', 'versions'];
   
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatSort) sort: MatSort;
 
   constructor(private router: Router,
     private i18nService: I18nService,
-    private reportService: ReportService) { }
+    private reportService: ReportService
+    ) { }
 
-  ngOnInit() {
-    this.reports();
-   }
+    ngOnInit() {
+    }
 
-   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+}
+
+export class ReportDataSource extends DataSource<any> {
+  constructor(private reportService: ReportService) {
+    super();
   }
-
-  reports() {
-    this.isLoading = true;
-    this.reportService.reports()
-    .pipe(finalize(() => {
-      this.isLoading = false;
-    }))
-    .subscribe(response => {
-      this.listOfReports =  response; 
-      this.dataSource = new MatTableDataSource<Report>(this.listOfReports.reports);
-    }, error => {
-      log.debug(`Report File error: ${error}`);
-      this.error = error;
-    });
-
+  connect(): Observable < Report[] > {
+    return this.reportService.reports();
   }
-
+  disconnect() {}
 }

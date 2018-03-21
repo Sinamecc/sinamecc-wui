@@ -9,7 +9,7 @@ import { Logger, I18nService, AuthenticationService } from '@app/core';
 const log = new Logger('Report');
 
 
-import { ReportService, Reports } from './../report.service';
+import { ReportService } from './../report.service';
 
 @Component({
   selector: 'app-report-new',
@@ -40,6 +40,7 @@ export class ReportNewComponent implements OnInit {
         this.isLoading = false;
       }))
       .subscribe(response => {
+        this.router.navigate(['/report'], { replaceUrl: true });
         log.debug(`${response.statusCode} status code received from form`);
 
       }, error => {
