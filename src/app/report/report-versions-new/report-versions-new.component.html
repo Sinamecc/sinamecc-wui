@@ -5,10 +5,10 @@
       <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
     </h1>
     <h3>
-      <mat-card-title translate>Create a new report file:</mat-card-title>
+      <mat-card-title translate>Submit a new report file version:</mat-card-title>
     </h3>
     <mat-card-content>
-      <form (ngSubmit)="submitForm()" [formGroup]="reportForm" novalidate>
+      <form (ngSubmit)="submitForm()" *ngIf="!isLoading" [formGroup]="reportForm" novalidate>
         <div class="report-error" [hidden]="!error || isLoading" translate>
           <span translate>Error submitting the form.</span>
         </div>

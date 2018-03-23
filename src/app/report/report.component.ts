@@ -5,8 +5,8 @@ import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material'
-import {DataSource} from '@angular/cdk/collections';
-import { Observable} from 'rxjs/Observable';
+import { DataSource } from '@angular/cdk/collections';
+import { Observable } from 'rxjs/Observable';
 
 const log = new Logger('Report');
 
@@ -24,11 +24,8 @@ export class ReportComponent implements OnInit {
   version: string = environment.version;
   error: string;
   isLoading = false;
-  listOfReports: Report[];
-  //dataSource: MatTableDataSource<Report> ;
   dataSource = new ReportDataSource(this.reportService);
-  //dataSource = new MatTableDataSource(ELEMENT_DATA);
-  displayedColumns = ['name', 'created', 'updated', 'versions'];
+  displayedColumns = ['name', 'last_active_version', 'created', 'updated', 'versions'];
   
   // @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ViewChild(MatSort) sort: MatSort;

@@ -12,6 +12,12 @@
       <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
     </ng-container>
 
+    <!-- Last Active Version -->
+    <ng-container matColumnDef="last_active_version">
+      <mat-header-cell *matHeaderCellDef> Last Active Version </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.last_active_version}} </mat-cell>
+    </ng-container>
+
     <!-- Created Column -->
     <ng-container matColumnDef="updated">
       <mat-header-cell *matHeaderCellDef> Last update: </mat-header-cell>
@@ -27,7 +33,7 @@
         <!-- Versions Column -->
         <ng-container matColumnDef="versions">
           <mat-header-cell *matHeaderCellDef> Versions </mat-header-cell>
-          <mat-cell *matCellDef="let element"><a mat-button routerLink="/report/{{element.id}}/versions">See versions</a></mat-cell>
+          <mat-cell *matCellDef="let element"><a mat-button routerLink="/report/{{element.id}}/versions">{{element.versions}}</a></mat-cell>
         </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

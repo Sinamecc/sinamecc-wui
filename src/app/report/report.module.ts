@@ -12,6 +12,7 @@ import { ReportComponent } from './report.component';
 import { ReportService } from './report.service';
 import { ReportNewComponent } from './report-new/report-new.component';
 import { ReportVersionsComponent } from './report-versions/report-versions.component';
+import { ReportVersionsNewComponent } from './report-versions-new/report-versions-new.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { ReportVersionsComponent } from './report-versions/report-versions.compo
   declarations: [
     ReportComponent,
     ReportNewComponent,
-    ReportVersionsComponent
+    ReportVersionsComponent,
+    ReportVersionsNewComponent
   ],
   providers: [ReportService]
 })

@@ -18,9 +18,13 @@ export interface Report {
   updated: string;
 }
 
-export interface Version {
-  version_name: string;
+export interface Version{
+  version: string;
   file: string;
+}
+export interface ReportFileDetailed {
+  name: string;
+  versions: Version[];
 }
 
 export interface ReportContext {
@@ -30,8 +34,9 @@ export interface ReportContext {
 
 const routes = {
   submitReport: () => `/v1/report_file/`,
+  submitVersion: (id: number) => `/v1/report_file/${id}`,
   reports: () => `/v1/report_file/`,
-  versions: () => `/v1/report_file/:id/versions`
+  versions: (id: number) => `/v1/report_file/${id}/versions`
 };
 
 
@@ -84,6 +89,43 @@ export class ReportService {
     }
   }
 
+    /**
+   * Submit Report Version Forms.
+   * @param {ReportContext} context The report version form parameters.
+   * @return {Observable<Response>} The report response.
+   */
+  submitReportVersion(context: ReportContext, id:number): Observable < Response > {
+    // Replace by proper api call, verify params in component
+    console.log(context);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.authenticationService.credentials.token
+      })
+    };
+
+    let fileList = context.file.files;
+    if (fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData: FormData = new FormData();
+      formData.append('name', context.name);
+      formData.append('file', file, file.name);
+      return this.httpClient
+        .put(routes.submitVersion(id), formData, {headers: httpOptions.headers, observe: 'response'})
+        .pipe(
+          map((body: any) => {
+            console.log(body);
+            const response = {
+              statusCode: 200,
+              message: 'Form submitted correctly'
+            };
+            return response;
+          })
+        );
+    } else {
+      // raise exception
+    }
+  }
+
   reports(): Observable < Report[] > {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -98,70 +140,36 @@ export class ReportService {
           return body;
         })
       );
+  }
 
+  versions(id:number): Observable<Version[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.authenticationService.credentials.token
+      })
+    };
+    return this.httpClient
+      .get(routes.versions(id), httpOptions) 
+      .pipe(
+        map((body: any) => {
+          return body.versions;
+        })
+      );
+  }
 
-/*
-    const r1: Report = {
-      name: 'Titan',
-      created_at: '2018-03-14 05:19:11.982642+00',
-      report_file_id: 1,
-      last_active_version: 'v3',
-      versions: [{
-          version_name: 'v1',
-          file: 'report_data/2018/03/13/23/04/49/get_token'
-        },
-        {
-          version_name: 'v2',
-          file: 'report_data/2018/03/13/23/04/49/get_token'
-        },
-        {
-          version_name: 'v3',
-          file: 'report_data/2018/03/13/23/04/49/get_token'
-        }
-      ]
+  reportVersionsName(id:number): Observable<string> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.authenticationService.credentials.token
+      })
     };
-    const r2: Report = {
-      name: 'Dodge Ram',
-      created_at: '2018-03-12 07:19:11.982642+00',
-      last_active_version: 'v001',
-      report_file_id: 2,
-      versions: [{
-        version_name: 'v001',
-        file: 'report_data/2018/03/13/23/04/49/get_token'
-      }]
-    };
-    const r3: Report = {
-      name: 'Tundra',
-      report_file_id: 3,
-      created_at: '2016-03-12 07:19:11.982642+00',
-      last_active_version: 'v5',
-      versions: [{
-          version_name: 'v1',
-          file: 'report_data/2018/03/13/23/04/49/get_token'
-        },
-        {
-          version_name: 'v2',
-          file: 'report_data/2018/03/13/23/04/49/get_token'
-        },
-        {
-          version_name: 'v3',
-          file: 'report_data/2018/03/13/23/04/49/get_token'
-        },
-        {
-          version_name: 'v4',
-          file: 'report_data/2018/03/13/23/04/49/get_token'
-        },
-        {
-          version_name: 'v5',
-          file: 'report_data/2018/03/13/23/04/49/get_token'
-        }
-      ]
-    };
-    const response: Reports = {
-      reports: [r1, r2, r3]
-    };
-    return of(response);
-    */
+    return this.httpClient
+      .get(routes.versions(id), httpOptions) 
+      .pipe(
+        map((body: any) => {
+          return body.name;
+        })
+      );
   }
 
 
