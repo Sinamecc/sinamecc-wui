@@ -5,6 +5,7 @@ export const environment = {
   production: true,
   version: env.npm_package_version,
   serverUrl: 'http://stage.sinamecc-minae.com:8000/api',
+  mediaUrl: 'http://stage.sinamecc-minae.com',
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',
