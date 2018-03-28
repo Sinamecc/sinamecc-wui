@@ -25,7 +25,7 @@
     <!-- Name Column -->
     <ng-container matColumnDef="file">
       <mat-header-cell *matHeaderCellDef> File </mat-header-cell>
-      <mat-cell *matCellDef="let element"><a mat-button href="media/{{element.file}}" download>{{element.file.split('/').pop()}}</a></mat-cell>
+      <mat-cell *matCellDef="let element"><a mat-button href="{{serverUrl}}/media/{{element.file}}" download>{{element.file.split('/').pop()}}</a></mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 

@@ -8,6 +8,7 @@ import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material'
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 
+
 const log = new Logger('Report');
 
 
@@ -22,6 +23,7 @@ import { ReportService, Report, Version } from './../report.service';
 export class ReportVersionsComponent implements OnInit {
 
   version: string = environment.version;
+  serverUrl: string = environment.serverUrl;
   report: number;
   error: string;
   id: number;
