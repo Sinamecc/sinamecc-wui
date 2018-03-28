@@ -59,7 +59,7 @@ export class AuthenticationService {
       })
     };
      return this.httpClient
-      .post(routes.login(), context) 
+      .post(routes.login(), context, httpOptions) 
       .pipe(
         map((body: any) => {
           const data = {
