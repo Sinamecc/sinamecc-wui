@@ -59,7 +59,6 @@ export class ReportService {
    */
   submitReport(context: ReportContext): Observable < Response > {
     // Replace by proper api call, verify params in component
-    console.log(context);
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token

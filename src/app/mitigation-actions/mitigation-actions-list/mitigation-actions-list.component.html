@@ -1,11 +1,37 @@
-<div class="container">
-  <mat-card>
-    <h1>
-      <mat-card-title translate>APP_NAME</mat-card-title>
-    </h1>
-    <mat-card-content>
-      <mat-icon>code</mat-icon>
-      <span translate>Here will list all inserted mitigation actions</span> 
-    </mat-card-content>
-  </mat-card>
+<mat-toolbar>
+  <span>Data for Report</span>
+</mat-toolbar>
+<a mat-button color="primary" routerLink="/mitigation/actions/new">Add new mitigation action</a>
+<div class="container mat-elevation-z8">
+<mat-table #table [dataSource]="dataSource">
+
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+  </ng-container>
+
+  <!-- Updated Column -->
+  <ng-container matColumnDef="updated">
+    <mat-header-cell *matHeaderCellDef> Last update: </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.updated}} </mat-cell>
+  </ng-container>
+
+  <!-- Created Column -->
+  <ng-container matColumnDef="created">
+    <mat-header-cell *matHeaderCellDef> Created At </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.created}} </mat-cell>
+  </ng-container>
+
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<mat-paginator #paginator
+[pageSize]="10"
+[pageSizeOptions]="[5, 10, 20]"
+[showFirstLastButtons]="true">
+</mat-paginator>
 </div>

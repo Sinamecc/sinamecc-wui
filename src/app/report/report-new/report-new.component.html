@@ -31,7 +31,7 @@
                   <span translate>The total size must not exceed {{formDoc.get('file')?.getError('maxContentSize').maxSize | byteFormat}}
                 ({{reportForm.get('file')?.getError('maxContentSize').actualSize | byteFormat}}).</span>
               </mat-error>
-            </mat-form-field>
+          </mat-form-field>
           <br/>
           <button mat-raised-button color="primary" type="submit" [disabled]="reportForm.invalid || isLoading">
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>

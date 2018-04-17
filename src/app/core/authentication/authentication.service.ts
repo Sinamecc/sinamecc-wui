@@ -62,9 +62,11 @@ export class AuthenticationService {
       .post(routes.login(), context, httpOptions) 
       .pipe(
         map((body: any) => {
+          console.log('BODY:', body);
           const data = {
             username: context.username,
-            token: 'JWT ' + body.token
+            token: 'JWT ' + body.token,
+            //userId: body.user_id
           };
           this.setCredentials(data, context.remember);
           return data;
