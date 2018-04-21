@@ -1,0 +1,39 @@
+<div class="container">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title translate>Mitigation Action</mat-card-title>
+        <mat-card-subtitle>
+          <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
+        </mat-card-subtitle>
+        <div class="container mat-elevation-z8" [hidden]="isLoading">
+            <h3>General Data</h3>
+            <strong>Code</strong>: {{mitigationAction?.id}} <br>
+            <strong>Name:</strong> {{mitigationAction?.name}} <br>
+            <strong>Program:</strong> {{mitigationAction?.strategy_name}} <br>
+            <strong>Objective:</strong> {{mitigationAction?.purpose}} <br>
+            <strong>Quantitative Objective:</strong> {{mitigationAction?.quantitative_purpose}} <br>
+            <strong>Entity:</strong> {{mitigationAction?.institution.name}} <br>
+            <mat-divider></mat-divider>
+            <h3>Contact</h3>
+            Contact Name: {{mitigationAction?.contact.full_name}} <br>
+            Contact Position: {{mitigationAction?.contact.position}} <br>
+            Contact Phone: {{mitigationAction?.contact.phone}} <br>
+            Contact Email: {{mitigationAction?.contact.email}} <br>
+            <mat-divider></mat-divider>
+            <h3>Progress Indicator</h3>
+            Name: Some test shit <br>
+            Type: {{mitigationAction?.progress_indicator.type}} <br>
+            Unit: {{mitigationAction?.progress_indicator.unit}} <br>
+            Start Date: {{mitigationAction?.progress_indicator.start_date}} <br>
+            <mat-divider></mat-divider>
+            <h3>Localization</h3>
+            Geographic Site: {{mitigationAction?.location.geographical_site}} <br>
+            Is Gis Annexed?: {{mitigationAction?.location.is_gis_annexed}}
+
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+  

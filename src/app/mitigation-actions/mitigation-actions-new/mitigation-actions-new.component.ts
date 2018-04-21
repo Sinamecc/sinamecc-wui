@@ -1,12 +1,18 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
+import { finalize, map, tap } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { Institution } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { Status } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { IngeiCompliance } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { GeographicScale } from '@app/mitigation-actions/mitigation-action-new-form-data';
+
+import { Observable } from 'rxjs/Observable';
 
 const log = new Logger('Report');
 
@@ -23,18 +29,14 @@ export class MitigationActionsNewComponent implements OnInit {
   formGroup: FormGroup;
   isLoading = false;
   isNonLinear = false;
-  initalRequiredData: MitigationActionNewFormData;
+  initalRequiredData: Observable<MitigationActionNewFormData>;
+  
   startDate = new Date(1990, 0, 1);
-  institutions = [
-    {name: 'MINAE', value: '1'},
-    {name: 'SINAMECC', value: '2'}
-  ];
+  institutions: Institution[];
+  ingeis: IngeiCompliance[];
+  statusses: Status[];
+  geographicScales: GeographicScale[];
 
-  statusses = [
-    {name: 'Planeación', value: '1'},
-    {name: 'Implementación', value: '2'},
-    {name: 'Finalizada', value: '3'}
-  ];
 
   get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
 
@@ -43,7 +45,6 @@ export class MitigationActionsNewComponent implements OnInit {
     private i18nService: I18nService,
     private service: MitigationActionsService) {
     this.createForm();
-    console.log(this.formArray.get([0]));
   }
 
   ngOnInit() { }
@@ -70,7 +71,6 @@ export class MitigationActionsNewComponent implements OnInit {
   private createForm() {
     this.formGroup = this.formBuilder.group({
       formArray: this.formBuilder.array([
-
         this.formBuilder.group({
           programCtrl: ['', Validators.required],
           nameCtrl: ['', Validators.required],
@@ -101,9 +101,7 @@ export class MitigationActionsNewComponent implements OnInit {
           gasInventoryCtrl: null,
         }),
         this.formBuilder.group({
-          afoluIngeiCtrl: null,
-          processIngeiCtrl: null,
-          wasteIngeiCtrl: null,
+          ingeiComplianceCtrl: null,
         }),
         this.formBuilder.group({
           geographicScaleCtrl: ['', Validators.required],
@@ -124,6 +122,21 @@ export class MitigationActionsNewComponent implements OnInit {
         }),
       ])
     });
+
+    this.initalRequiredData = this.initialFormData().pipe(
+      tap(mitigationActionNewFormData => {
+        this.isLoading = false;
+        this.institutions = mitigationActionNewFormData.institutions;
+        this.statusses = mitigationActionNewFormData.statuses;
+        this.ingeis = mitigationActionNewFormData.ingei_compliances;
+        this.geographicScales = mitigationActionNewFormData.geographic_scales;
+      }));
+  }
+
+  private initialFormData():Observable<MitigationActionNewFormData> {
+    return this.service.newMitigationActionFormData()
+    .pipe(finalize(() => { this.isLoading = false; }));
+
   }
 
 }

@@ -3,10 +3,12 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, flatMap } from 'rxjs/operators';
 
 export interface Credentials {
   // Customize received credentials here
+  id: number;
+  email: string;
   username: string;
   token: string;
 }
@@ -18,7 +20,8 @@ export interface LoginContext {
 }
 
 const routes = {
-  login: () => `/v1/token/`
+  login: () => `/v1/token/`,
+  userData: (username: string) => `/v1/user/${username}`
 };
 
 const credentialsKey = 'credentials';
@@ -58,18 +61,21 @@ export class AuthenticationService {
        // 'Authorization': 'my-auth-token'
       })
     };
+    
      return this.httpClient
       .post(routes.login(), context, httpOptions) 
       .pipe(
-        map((body: any) => {
-          console.log('BODY:', body);
-          const data = {
-            username: context.username,
-            token: 'JWT ' + body.token,
-            //userId: body.user_id
-          };
-          this.setCredentials(data, context.remember);
-          return data;
+        flatMap((body: any) => {
+          return this.httpClient.get(routes.userData(context.username)).pipe(map((req:any) => {
+            const data = {
+              username: req.username,
+              token: 'JWT ' + body.token,
+              id: req.id,
+              email: req.email
+            };
+            this.setCredentials(data, context.remember);
+            return data;
+          }));
         })
       );
 

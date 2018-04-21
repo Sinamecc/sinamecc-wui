@@ -13,6 +13,8 @@ import { MitigationActionsListComponent } from './mitigation-actions-list/mitiga
 import { MitigationActionsService } from './mitigation-actions.service';
 import { MitigationActionsNewComponent } from './mitigation-actions-new/mitigation-actions-new.component';
 import { DatePipe } from '@angular/common';
+import { MitigationActionComponent } from './mitigation-action/mitigation-action.component';
+import { MitigationActionsUpdateComponent } from './mitigation-actions-update/mitigation-actions-update.component';
 
 @NgModule({
   imports: [
@@ -28,7 +30,9 @@ import { DatePipe } from '@angular/common';
   ],
   declarations: [
     MitigationActionsListComponent,
-    MitigationActionsNewComponent
+    MitigationActionsNewComponent,
+    MitigationActionComponent,
+    MitigationActionsUpdateComponent
   ],
   providers: [
     MitigationActionsService,

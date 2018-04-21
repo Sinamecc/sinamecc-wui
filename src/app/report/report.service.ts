@@ -75,7 +75,6 @@ export class ReportService {
         .post(routes.submitReport(), formData, httpOptions)
         .pipe(
           map((body: any) => {
-            console.log(body);
             const response = {
               statusCode: 200,
               message: 'Form submitted correctly'
@@ -95,7 +94,6 @@ export class ReportService {
    */
   submitReportVersion(context: ReportContext, id:number): Observable < Response > {
     // Replace by proper api call, verify params in component
-    console.log(context);
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
@@ -112,7 +110,6 @@ export class ReportService {
         .put(routes.submitVersion(id), formData, {headers: httpOptions.headers, observe: 'response'})
         .pipe(
           map((body: any) => {
-            console.log(body);
             const response = {
               statusCode: 200,
               message: 'Form submitted correctly'
@@ -135,7 +132,6 @@ export class ReportService {
       .get(routes.reports(), httpOptions) 
       .pipe(
         map((body: any) => {
-          console.log(body);
           return body;
         })
       );

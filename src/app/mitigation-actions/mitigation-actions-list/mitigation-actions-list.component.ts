@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
@@ -7,6 +7,7 @@ import { Logger, I18nService, AuthenticationService } from '@app/core';
 import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material'
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
+import { map, catchError } from 'rxjs/operators';
 
 const log = new Logger('Report');
 
@@ -27,7 +28,7 @@ export class MitigationActionsListComponent implements OnInit {
   error: string;
   isLoading = false;
   dataSource = new MitigationActionSource(this.service);
-  displayedColumns = ['name', 'created', 'updated'];
+  displayedColumns = ['name', 'strategy_name', 'purpose', 'updated', 'created', 'actions'];
   
 
   constructor(private router: Router,
@@ -36,6 +37,23 @@ export class MitigationActionsListComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+  }
+
+  view(uuid: string) {
+    this.router.navigate([`/mitigation/actions/${uuid}`], { replaceUrl: true });
+  }
+
+  update(uuid: string) {
+    this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
+  }
+
+  delete(uuid: string) {
+   this.isLoading = true;
+    this.service.deleteMitigationAction(uuid).subscribe(() =>{
+      // here i need to refresh table
+      this.isLoading = false;
+      this.dataSource = new MitigationActionSource(this.service);
+    } ) 
   }
 
 }

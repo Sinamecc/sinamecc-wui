@@ -8,7 +8,7 @@
       <mat-card-title translate>Create a new mitigation action:</mat-card-title>
     </h3>
     <mat-card-content>
-      <form (ngSubmit)="submitForm()" [formGroup]="formGroup">
+      <form (ngSubmit)="submitForm()" *ngIf="initalRequiredData | async" [formGroup]="formGroup">
         <mat-vertical-stepper formArrayName="formArray" linear>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>Basic Info</ng-template>
@@ -27,7 +27,7 @@
 
             <mat-form-field>
               <mat-select  formControlName="entityCtrl" placeholder="Entity or Institution">
-                <mat-option *ngFor="let institution of institutions" [value]="institution.value">
+                <mat-option *ngFor="let institution of institutions" [value]="institution.id">
                   {{ institution.name }}
                 </mat-option>
               </mat-select>
@@ -47,27 +47,27 @@
             <mat-form-field>
               <mat-label>Name</mat-label>
               <input matInput formControlName="contactNameCtrl">
-              <mat-error>The input is invalid.</mat-error>
+              <mat-error>The input is required.</mat-error>
             </mat-form-field>
             <br/>
             <mat-form-field>
               <mat-label>Position</mat-label>
               <input matInput formControlName="positionCtrl">
-              <mat-error>The input is invalid.</mat-error>
+              <mat-error>The input is required.</mat-error>
             </mat-form-field>
             <br/>
 
             <mat-form-field>
               <mat-label>Email address</mat-label>
               <input matInput formControlName="emailFormCtrl">
-              <mat-error>The input is invalid.</mat-error>
+              <mat-error>The input is required.</mat-error>
             </mat-form-field>
             <br/>
 
             <mat-form-field>
               <mat-label>Phone</mat-label>
               <input matInput formControlName="phoneCtrl">
-              <mat-error>The input is invalid.</mat-error>
+              <mat-error>The input is required.</mat-error>
             </mat-form-field>
             <br/>
 
@@ -89,15 +89,15 @@
             <mat-form-field>
               <mat-label>Quantitative Objective </mat-label>
               <input matInput formControlName="quantitativeObjectiveCtrl">
-              <mat-error>The input is invalid.</mat-error>
+              <mat-error>The input is required.</mat-error>
             </mat-form-field>
             <br/>
             <br/>
 
             <mat-form-field>
               <mat-select  formControlName="actionStatusCtrl" placeholder="Mitigation Action Status">
-                <mat-option *ngFor="let status of statusses" [value]="status.value">
-                  {{ status.name }}
+                <mat-option *ngFor="let status of statusses" [value]="status.id">
+                  {{ status.status }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -178,7 +178,7 @@
             <mat-form-field>
               <mat-label>In case of insured, list sources</mat-label>
               <input matInput formControlName="financingSourceCtrl">
-              <mat-error>The input is invalid.</mat-error>
+              <mat-error>The input is required.</mat-error>
             </mat-form-field>
             <br/>
 
@@ -199,11 +199,14 @@
             <ng-template matStepLabel>
               <div>INGEI</div>
             </ng-template>
-            <mat-label>Compliance with Costa Rica's INGEI</mat-label>
 
-            <mat-checkbox formControlName="afoluIngeiCtrl">Agricultura, silvicultura y otros usos de la tierra (AFOLU)</mat-checkbox>
-            <mat-checkbox formControlName="processIngeiCtrl">Procesos industriales y uso de productos</mat-checkbox>
-            <mat-checkbox formControlName="wasteIngeiCtrl">Residuos</mat-checkbox>
+            <mat-form-field>
+                <mat-select placeholder="Ingei Compliance" formControlName="ingeiComplianceCtrl" multiple>
+                  <mat-option *ngFor="let ingei of ingeis" [value]="ingei.id">{{ingei.name}}</mat-option>
+                </mat-select>
+                <mat-error>The input is required.</mat-error>
+              </mat-form-field>
+              
 
             <br/>
             <div>
@@ -219,13 +222,11 @@
 
             <br/>
 
-            <mat-radio-group matInput formControlName="geographicScaleCtrl">
-              <mat-radio-button value="1">National</mat-radio-button>
-              <mat-radio-button value="2">Regional</mat-radio-button>
-              <mat-radio-button value="3">Local</mat-radio-button>
-            </mat-radio-group>
-
-
+            <mat-form-field>
+                <mat-select placeholder="Geographic Scale" formControlName="geographicScaleCtrl">
+                  <mat-option *ngFor="let geographicScale of geographicScales" [value]="geographicScale.id">{{geographicScale.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
 
             <div>
               <button mat-button matStepperPrevious type="button">Back</button>
@@ -240,7 +241,7 @@
             <mat-form-field>
               <mat-label>Geographic Site</mat-label>
               <input matInput formControlName="locationNameCtrl">
-              <mat-error>The input is invalid.</mat-error>
+              <mat-error>The input is required.</mat-error>
             </mat-form-field>
             <br/>
 
@@ -263,34 +264,34 @@
             <mat-form-field>
               <mat-label>Emissions Sources</mat-label>
               <input matInput formControlName="emissionSourceCtrl">
-              <mat-error>The input is invalid.</mat-error>
+              <mat-error>The input is required.</mat-error>
             </mat-form-field>
             <br/>
             <mat-form-field>
               <mat-label>Carbon Sinks</mat-label>
               <input matInput formControlName="carbonSinksCtrl">
-              <mat-error>The input is invalid.</mat-error>
+              <mat-error>The input is required.</mat-error>
             </mat-form-field>
             <br/>
 
             <mat-form-field>
               <mat-label>How the impact in emissions will be achieved?</mat-label>
               <input matInput formControlName="emissionImpactCtrl">
-              <mat-error>The input is invalid.</mat-error>
+              <mat-error>The input is required.</mat-error>
             </mat-form-field>
             <br/>
 
             <mat-form-field>
               <mat-label>Impact of mitigation action</mat-label>
               <input matInput formControlName="mitigationActionImpactCtrl">
-              <mat-error>The input is invalid.</mat-error>
+              <mat-error>The input is required.</mat-error>
             </mat-form-field>
             <br/>
 
             <mat-form-field>
               <mat-label>Bibliographical Sources</mat-label>
               <input matInput formControlName="bibliographicalSourcesCtrl">
-              <mat-error>The input is invalid.</mat-error>
+              <mat-error>The input is required.</mat-error>
             </mat-form-field>
             <br/>
 
@@ -306,7 +307,7 @@
             <mat-form-field>
               <mat-label>International Market Participation</mat-label>
               <input matInput formControlName="internationalParticipationDetailCtrl">
-              <mat-error>The input is invalid.</mat-error>
+              <mat-error>The input is required.</mat-error>
             </mat-form-field>
             <br/>
 
@@ -326,9 +327,12 @@
 
           <mat-step>
             <ng-template matStepLabel>Confirm your information</ng-template>
-            Everything seems correct.
+            
+            <div *ngIf="formGroup.valid; else elseBlock">Everything seems correct. </div>
+            
+            <ng-template #elseBlock>Check the form for any errors marked in red</ng-template>
             <div>
-              <button mat-button>Done</button>
+              <button mat-raised-button color="primary">Done</button>
               
 
             </div>
