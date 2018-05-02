@@ -68,7 +68,7 @@ export class AuthenticationService {
         flatMap((body: any) => {
           const innerHttpOptions = {
             headers: new HttpHeaders({
-              'Authorization': body.token
+              'Authorization': 'JWT ' + body.token
             })
           };
           return this.httpClient.get(routes.userData(context.username), innerHttpOptions).pipe(map((req:any) => {
