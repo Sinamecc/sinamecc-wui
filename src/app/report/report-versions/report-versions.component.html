@@ -4,27 +4,27 @@
       <mat-card-title translate>Detailed Report File</mat-card-title>
       <mat-card-subtitle>
         <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
-        <p [hidden]="isLoading">Name of report file: {{reportFileName | async}}</p>
+        <p [hidden]="isLoading" translate>Name of report file: {{reportFileName | async}}</p>
       </mat-card-subtitle>
     </mat-card-content>
   </mat-card>
 </div>
 <mat-toolbar>
-    <span>Report Versions</span>
+    <span translate>Report Versions</span>
   </mat-toolbar>
-  <a mat-button color="primary" routerLink="/report/{{id}}/versions/new">Add new version</a>
+  <a mat-button color="primary" routerLink="/report/{{id}}/versions/new" translate>Add new version</a>
 <div class="container mat-elevation-z8">
   <mat-table #table [dataSource]="dataSource">
 
     <!-- Report File Id Column -->
     <ng-container matColumnDef="version">
-      <mat-header-cell *matHeaderCellDef> Name of Version </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate> Name of Version </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.version}} </mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="file">
-      <mat-header-cell *matHeaderCellDef> File </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate> File </mat-header-cell>
       <mat-cell *matCellDef="let element"><a mat-button href="{{mediaUrl}}/media/{{element.file}}" download>{{element.file.split('/').pop()}}</a></mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

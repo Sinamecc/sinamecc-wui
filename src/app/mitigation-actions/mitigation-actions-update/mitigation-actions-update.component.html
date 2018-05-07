@@ -1,348 +1,347 @@
 <div class="container">
-    <mat-card>
-      <h1>
-        <mat-card-title translate>APP_NAME</mat-card-title>
-        <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
-      </h1>
-      <h3>
-        <mat-card-title translate>Edit a mitigation action:</mat-card-title>
-      </h3>
-      <mat-card-content>
-        <form (ngSubmit)="submitForm()" *ngIf="formValues | async" [formGroup]="formGroup">
-          <mat-vertical-stepper formArrayName="formArray" >
-            <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
-              <ng-template matStepLabel>Basic Info</ng-template>
-              <mat-form-field>
-                <mat-label>Program</mat-label>
-                <input matInput formControlName="programCtrl" required>
-                <mat-error>This field is required</mat-error>
-              </mat-form-field>
+  <mat-card>
+    <h1>
+      <mat-card-title translate>APP_NAME</mat-card-title>
+      <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
+    </h1>
+    <h3>
+      <mat-card-title><span translate>Edit a mitigation action: </span></mat-card-title>
+    </h3>
+    <mat-card-content>
+      <form (ngSubmit)="submitForm()" *ngIf="formValues | async" [formGroup]="formGroup">
+        <mat-vertical-stepper formArrayName="formArray" >
+          <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+            <ng-template matStepLabel><span translate>Basic Info</span></ng-template>
+            <mat-form-field>
+              <mat-label><div [innerHTML]="'Program' | translate"></div> </mat-label>
+              <!-- <mat-label translate>Program</mat-label> -->
+              <input matInput formControlName="programCtrl" required>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br/>
+            <mat-form-field>
+              <mat-label translate>Name</mat-label>
+              <input matInput formControlName="nameCtrl" required>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-form-field>
+              <mat-select  formControlName="entityCtrl" [placeholder]="'Entity or Institution' | translate" [compareWith]="compareIds">
+                <mat-option *ngFor="let institution of institutions" [value]="institution.id">
+                  {{ institution.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <br/>
+            <div>
               <br/>
-              <mat-form-field>
-                <mat-label>Name</mat-label>
-                <input matInput formControlName="nameCtrl" required>
-                <mat-error>This field is required</mat-error>
-              </mat-form-field>
-              <br/>
-  
-              <mat-form-field>
-                <mat-select  formControlName="entityCtrl" placeholder="Entity or Institution" [compareWith]="compareIds">
-                  <mat-option *ngFor="let institution of institutions" [value]="institution.id">
-                    {{ institution.name }}
-                  </mat-option>
+              <button mat-button matStepperNext type="button"><span translate>Next</span></button>
+            </div>
+          </mat-step>
+
+          <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+            <ng-template matStepLabel>
+              <div translate>Contact Info</div>
+            </ng-template>
+
+            <mat-form-field>
+              <mat-label translate>Name</mat-label>
+              <input matInput formControlName="contactNameCtrl">
+              <mat-error translate>The input is invalid.</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-form-field>
+              <mat-label translate>Position</mat-label>
+              <input matInput formControlName="positionCtrl">
+              <mat-error translate>The input is invalid.</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-form-field>
+              <mat-label translate>Email address</mat-label>
+              <input matInput formControlName="emailFormCtrl">
+              <mat-error translate>The input is invalid.</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-form-field>
+              <mat-label translate>Phone</mat-label>
+              <input matInput formControlName="phoneCtrl">
+              <mat-error translate>The input is invalid.</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <div>
+              <button mat-button matStepperPrevious type="button"> <span translate>Back</span></button>
+              <button mat-button matStepperNext type="button"> <span translate>Next</span></button>
+            </div>
+          </mat-step>
+          <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
+            <ng-template matStepLabel>
+              <div translate>Objectives</div>
+            </ng-template>
+            <mat-form-field>
+              <textarea matInput formControlName="actionObjectiveCtrl" [placeholder]="'Objective of the mitigation action' | translate" matTextareaAutosize
+                matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br/>
+            <mat-form-field>
+              <mat-label translate>Quantitative Objective </mat-label>
+              <input matInput formControlName="quantitativeObjectiveCtrl">
+              <mat-error translate>The input is invalid.</mat-error>
+            </mat-form-field>
+            <br/>
+            <br/>
+
+            <mat-form-field>
+              <mat-select  formControlName="actionStatusCtrl" [placeholder]="'Mitigation Action Status' | translate">
+                <mat-option *ngFor="let status of statusses" [value]="status.id">
+                  {{ status.status }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <br/>
+
+            <mat-form-field>
+              <mat-label translate>Starting year of Mitigation Action:</mat-label>
+              <input matInput [matDatepicker]="implementationInitialDatePicker" [placeholder]="'Choose a date' | translate" formControlName="implementationInitialDateCtrl">
+              <mat-datepicker-toggle matSuffix [for]="implementationInitialDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #implementationInitialDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+            <br/>
+
+            <mat-form-field>
+              <mat-label translate>Last year of Mitigation Action:</mat-label>
+              <input matInput [matDatepicker]="implementationEndDatePicker" [placeholder]="'Choose a date' | translate" formControlName="implementationEndDateCtrl">
+              <mat-datepicker-toggle matSuffix [for]="implementationEndDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #implementationEndDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+            <br/>
+            <button mat-button matStepperPrevious type="button" translate>Back</button>
+            <button mat-button matStepperNext type="button" translate>Next</button>
+          </mat-step>
+
+          <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
+            <ng-template matStepLabel>
+              <div translate>Progress Indicators</div>
+            </ng-template>
+            <mat-form-field>
+              <mat-label translate>Name</mat-label>
+              <input matInput formControlName="progressIndicatorNameCtrl" required>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-form-field>
+              <mat-label translate>Type</mat-label>
+              <input matInput formControlName="progressIndicatorTypeCtrl" required>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-form-field>
+              <mat-label translate>Unit</mat-label>
+              <input matInput formControlName="progressIndicatorUnitCtrl" required>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-form-field>
+              <mat-label translate>Year when it started:</mat-label>
+              <input matInput [matDatepicker]="progressIndicatorInitialYearPicker" [placeholder]="'Choose a date' | translate" formControlName="progressIndicatorInitialYearCtrl">
+              <mat-datepicker-toggle matSuffix [for]="progressIndicatorInitialYearPicker"></mat-datepicker-toggle>
+              <mat-datepicker #progressIndicatorInitialYearPicker startView="year" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+
+            <br/>
+
+            <button mat-button matStepperPrevious type="button" > <span translate>Back </span></button>
+            <button mat-button matStepperNext type="button" > <span translate>Next </span></button>
+          </mat-step>
+
+          <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
+            <ng-template matStepLabel>
+              <div translate>Financing and Gas Inventory</div>
+            </ng-template>
+
+            <mat-label translate>Finance Status</mat-label>
+            <mat-radio-group matInput formControlName="financingStatusCtrl">
+              <mat-radio-button value="1" translate>To achieve</mat-radio-button>
+              <mat-radio-button value="2" translate>Insured</mat-radio-button>
+            </mat-radio-group>
+
+            <br/>
+
+
+            <mat-form-field>
+              <mat-label translate>In case of insured, list sources</mat-label>
+              <input matInput formControlName="financingSourceCtrl">
+              <mat-error translate>The input is invalid.</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-label translate>Gas Inventory</mat-label>
+            <mat-radio-group matInput formControlName="gasInventoryCtrl">
+              <mat-radio-button value="1" translate>Energy</mat-radio-button>
+            </mat-radio-group>
+
+            <br/>
+
+            <div>
+              <button mat-button matStepperPrevious type="button" > <span translate>Back </span></button>
+              <button mat-button matStepperNext type="button" > <span translate>Next </span></button>
+            </div>
+          </mat-step>
+
+          <mat-step formGroupName="5" [stepControl]="formArray?.get([5])">
+            <ng-template matStepLabel>
+              <div translate>INGEI</div>
+            </ng-template>
+
+            <mat-form-field>
+                <mat-select [placeholder]="'Ingei Compliance' | translate" formControlName="ingeiComplianceCtrl" multiple [compareWith]="compareIds">
+                  <mat-option *ngFor="let ingei of ingeis" [value]="ingei.id">{{ingei.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
-  
-              <br/>
-              <div>
-                <br/>
-                <button mat-button matStepperNext type="button">Next</button>
-              </div>
-            </mat-step>
-  
-            <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
-              <ng-template matStepLabel>
-                <div>Contact Info</div>
-              </ng-template>
+              
 
-              <mat-form-field>
-                <mat-label>Name</mat-label>
-                <input matInput formControlName="contactNameCtrl">
-                <mat-error>The input is invalid.</mat-error>
-              </mat-form-field>
-              <br/>
+            <br/>
+            <div>
+              <button mat-button matStepperPrevious type="button" > <span translate>Back </span></button>
+              <button mat-button matStepperNext type="button" > <span translate>Next </span></button>
+            </div>
+          </mat-step>
 
-              <mat-form-field>
-                <mat-label>Position</mat-label>
-                <input matInput formControlName="positionCtrl">
-                <mat-error>The input is invalid.</mat-error>
-              </mat-form-field>
-              <br/>
-  
-              <mat-form-field>
-                <mat-label>Email address</mat-label>
-                <input matInput formControlName="emailFormCtrl">
-                <mat-error>The input is invalid.</mat-error>
-              </mat-form-field>
-              <br/>
-  
-              <mat-form-field>
-                <mat-label>Phone</mat-label>
-                <input matInput formControlName="phoneCtrl">
-                <mat-error>The input is invalid.</mat-error>
-              </mat-form-field>
-              <br/>
-  
-              <div>
-                <button mat-button matStepperPrevious type="button">Back</button>
-                <button mat-button matStepperNext type="button">Next</button>
-              </div>
-            </mat-step>
-            <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
-              <ng-template matStepLabel>
-                <div>Objectives</div>
-              </ng-template>
-              <mat-form-field>
-                <textarea matInput formControlName="actionObjectiveCtrl" placeholder="Objective of the mitigation action" matTextareaAutosize
-                  matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
-                <mat-error>This field is required</mat-error>
-              </mat-form-field>
-              <br/>
-              <mat-form-field>
-                <mat-label>Quantitative Objective </mat-label>
-                <input matInput formControlName="quantitativeObjectiveCtrl">
-                <mat-error>The input is invalid.</mat-error>
-              </mat-form-field>
-              <br/>
-              <br/>
-  
-              <mat-form-field>
-                <mat-select  formControlName="actionStatusCtrl" placeholder="Mitigation Action Status">
-                  <mat-option *ngFor="let status of statusses" [value]="status.id">
-                    {{ status.status }}
-                  </mat-option>
+          <mat-step formGroupName="6" [stepControl]="formArray?.get([6])">
+            <ng-template matStepLabel>
+              <div translate>Geographic Scale</div>
+            </ng-template>
+
+            <br/>
+
+            <mat-form-field>
+                <mat-select [placeholder]="'Geographic Scale' | translate" formControlName="geographicScaleCtrl" [compareWith]="compareIds">
+                  <mat-option *ngFor="let geographicScale of geographicScales" [value]="geographicScale.id">{{geographicScale.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
-  
-              <br/>
-  
-              <mat-form-field>
-                <mat-label>Starting year of Mitigation Action:</mat-label>
-                <input matInput [matDatepicker]="implementationInitialDatePicker" placeholder="Choose a date" formControlName="implementationInitialDateCtrl">
-                <mat-datepicker-toggle matSuffix [for]="implementationInitialDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #implementationInitialDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
-              </mat-form-field>
-              <br/>
-  
-              <mat-form-field>
-                <mat-label>Last year of Mitigation Action:</mat-label>
-                <input matInput [matDatepicker]="implementationEndDatePicker" placeholder="Choose a date" formControlName="implementationEndDateCtrl">
-                <mat-datepicker-toggle matSuffix [for]="implementationEndDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #implementationEndDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
-              </mat-form-field>
-              <br/>
-              <button mat-button matStepperPrevious type="button">Back</button>
-              <button mat-button matStepperNext type="button">Next</button>
-            </mat-step>
-  
-            <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
-              <ng-template matStepLabel>
-                <div>Progress Indicators</div>
-              </ng-template>
-              <mat-form-field>
-                <mat-label>Name</mat-label>
-                <input matInput formControlName="progressIndicatorNameCtrl" required>
-                <mat-error>This field is required</mat-error>
-              </mat-form-field>
-              <br/>
-  
-              <mat-form-field>
-                <mat-label>Type</mat-label>
-                <input matInput formControlName="progressIndicatorTypeCtrl" required>
-                <mat-error>This field is required</mat-error>
-              </mat-form-field>
-              <br/>
-  
-              <mat-form-field>
-                <mat-label>Unit</mat-label>
-                <input matInput formControlName="progressIndicatorUnitCtrl" required>
-                <mat-error>This field is required</mat-error>
-              </mat-form-field>
-              <br/>
-  
-              <mat-form-field>
-                <mat-label>Year when it started:</mat-label>
-                <input matInput [matDatepicker]="progressIndicatorInitialYearPicker" placeholder="Choose a date" formControlName="progressIndicatorInitialYearCtrl">
-                <mat-datepicker-toggle matSuffix [for]="progressIndicatorInitialYearPicker"></mat-datepicker-toggle>
-                <mat-datepicker #progressIndicatorInitialYearPicker startView="year" [startAt]="startDate"></mat-datepicker>
-              </mat-form-field>
-  
-              <br/>
-  
-              <button mat-button matStepperPrevious type="button">Back</button>
-              <button mat-button matStepperNext type="button">Next</button>
-            </mat-step>
-  
-            <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
-              <ng-template matStepLabel>
-                <div>Financing and Gas Inventory</div>
-              </ng-template>
-  
-              <mat-label>Finance Status</mat-label>
-              <mat-radio-group matInput formControlName="financingStatusCtrl">
-                <mat-radio-button value="1">To achieve</mat-radio-button>
-                <mat-radio-button value="2">Insured</mat-radio-button>
-              </mat-radio-group>
-  
-              <br/>
-  
-  
-              <mat-form-field>
-                <mat-label>In case of insured, list sources</mat-label>
-                <input matInput formControlName="financingSourceCtrl">
-                <mat-error>The input is invalid.</mat-error>
-              </mat-form-field>
-              <br/>
-  
-              <mat-label>Gas Inventory</mat-label>
-              <mat-radio-group matInput formControlName="gasInventoryCtrl">
-                <mat-radio-button value="1">Energy</mat-radio-button>
-              </mat-radio-group>
-  
-              <br/>
-  
-              <div>
-                <button mat-button matStepperPrevious type="button">Back</button>
-                <button mat-button matStepperNext type="button">Next</button>
-              </div>
-            </mat-step>
-  
-            <mat-step formGroupName="5" [stepControl]="formArray?.get([5])">
-              <ng-template matStepLabel>
-                <div>INGEI</div>
-              </ng-template>
-  
-              <mat-form-field>
-                  <mat-select placeholder="Ingei Compliance" formControlName="ingeiComplianceCtrl" multiple [compareWith]="compareIds">
-                    <mat-option *ngFor="let ingei of ingeis" [value]="ingei.id">{{ingei.name}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-                
-  
-              <br/>
-              <div>
-                <button mat-button matStepperPrevious type="button">Back</button>
-                <button mat-button matStepperNext type="button">Next</button>
-              </div>
-            </mat-step>
-  
-            <mat-step formGroupName="6" [stepControl]="formArray?.get([6])">
-              <ng-template matStepLabel>
-                <div>Geographic Scale</div>
-              </ng-template>
-  
-              <br/>
-  
-              <mat-form-field>
-                  <mat-select placeholder="Geographic Scale" formControlName="geographicScaleCtrl" [compareWith]="compareIds">
-                    <mat-option *ngFor="let geographicScale of geographicScales" [value]="geographicScale.id">{{geographicScale.name}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-  
-              <div>
-                <button mat-button matStepperPrevious type="button">Back</button>
-                <button mat-button matStepperNext type="button">Next</button>
-              </div>
-            </mat-step>
-  
-            <mat-step formGroupName="7" [stepControl]="formArray?.get([7])">
-              <ng-template matStepLabel>
-                <div>Location</div>
-              </ng-template>
-              <mat-form-field>
-                <mat-label>Geographic Site</mat-label>
-                <input matInput formControlName="locationNameCtrl">
-                <mat-error>The input is invalid.</mat-error>
-              </mat-form-field>
-              <br/>
-  
-              <mat-label>GIS information Annexed?</mat-label>
-              <mat-radio-group matInput formControlName="gisAnnexedCtrl">
-                <mat-radio-button value="1">Yes</mat-radio-button>
-                <mat-radio-button value="0">No</mat-radio-button>
-              </mat-radio-group>
-  
-              <div>
-                <button mat-button matStepperPrevious type="button">Back</button>
-                <button mat-button matStepperNext type="button">Next</button>
-              </div>
-            </mat-step>
-  
-            <mat-step formGroupName="8" [stepControl]="formArray?.get([8])">
-              <ng-template matStepLabel>
-                <div>Other</div>
-              </ng-template>
-              <mat-form-field>
-                <mat-label>Emissions Sources</mat-label>
-                <input matInput formControlName="emissionSourceCtrl">
-                <mat-error>The input is invalid.</mat-error>
-              </mat-form-field>
-              <br/>
-              <mat-form-field>
-                <mat-label>Carbon Sinks</mat-label>
-                <input matInput formControlName="carbonSinksCtrl">
-                <mat-error>The input is invalid.</mat-error>
-              </mat-form-field>
-              <br/>
-  
-              <mat-form-field>
-                <mat-label>How the impact in emissions will be achieved?</mat-label>
-                <input matInput formControlName="emissionImpactCtrl">
-                <mat-error>The input is invalid.</mat-error>
-              </mat-form-field>
-              <br/>
-  
-              <mat-form-field>
-                <mat-label>Impact of mitigation action</mat-label>
-                <input matInput formControlName="mitigationActionImpactCtrl">
-                <mat-error>The input is invalid.</mat-error>
-              </mat-form-field>
-              <br/>
-  
-              <mat-form-field>
-                <mat-label>Bibliographical Sources</mat-label>
-                <input matInput formControlName="bibliographicalSourcesCtrl">
-                <mat-error>The input is invalid.</mat-error>
-              </mat-form-field>
-              <br/>
-  
-              <mat-label>International Market Participation?</mat-label>
-              <mat-radio-group matInput formControlName="internationalParticipationCtrl">
-                <mat-radio-button value="1">Yes</mat-radio-button>
-                <mat-radio-button value="2">No</mat-radio-button>
-  
-              </mat-radio-group>
-  
-              <br/>
-  
-              <mat-form-field>
-                <mat-label>International Market Participation</mat-label>
-                <input matInput formControlName="internationalParticipationDetailCtrl">
-                <mat-error>The input is invalid.</mat-error>
-              </mat-form-field>
-              <br/>
-  
-              <mat-form-field>
-                <textarea matInput formControlName="sustainabilityObjectivesCtrl" placeholder="Sustainable Development Objectives" matTextareaAutosize
-                  matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
-                <mat-error>This field is required</mat-error>
-              </mat-form-field>
-              <br/>
-  
-  
-              <div>
-                <button mat-button matStepperPrevious type="button">Back</button>
-                <button mat-button matStepperNext type="button">Next</button>
-              </div>
-            </mat-step>
-  
-            <mat-step>
-              <ng-template matStepLabel>Confirm your information</ng-template>
-              <div *ngIf="formGroup.valid; else elseBlock">Everything seems correct. </div>  
-                 <ng-template #elseBlock>  
-                   <p class="footnote">Form invalid! Check the form for any errors marked in red.</p>
-                  </ng-template>
-              <br>
-              <div>
-                  <button mat-raised-button color="primary">Done</button>  
-              </div>
-            </mat-step>
-          </mat-vertical-stepper>
-  
-  
-  
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  
+
+            <div>
+              <button mat-button matStepperPrevious type="button" > <span translate>Back </span></button>
+              <button mat-button matStepperNext type="button" > <span translate>Next </span></button>
+            </div>
+          </mat-step>
+
+          <mat-step formGroupName="7" [stepControl]="formArray?.get([7])">
+            <ng-template matStepLabel>
+              <div translate>Location</div>
+            </ng-template>
+            <mat-form-field>
+              <mat-label translate>Geographic Site</mat-label>
+              <input matInput formControlName="locationNameCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-label translate>GIS information Annexed?</mat-label>
+            <mat-radio-group matInput formControlName="gisAnnexedCtrl">
+              <mat-radio-button value="1" ><span translate> Yes </span></mat-radio-button>
+              <mat-radio-button value="0" ><span translate>No </span></mat-radio-button>
+            </mat-radio-group>
+
+            <div>
+              <button mat-button matStepperPrevious type="button" > <span translate> Back </span></button>
+              <button mat-button matStepperNext type="button" > <span translate>Next </span></button>
+            </div>
+          </mat-step>
+
+          <mat-step formGroupName="8" [stepControl]="formArray?.get([8])">
+            <ng-template matStepLabel>
+              <div translate>Other</div>
+            </ng-template>
+            <mat-form-field>
+              <mat-label translate>Emissions Sources</mat-label>
+              <input matInput formControlName="emissionSourceCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br/>
+            <mat-form-field>
+              <mat-label translate>Carbon Sinks</mat-label>
+              <input matInput formControlName="carbonSinksCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-form-field>
+              <mat-label translate>How the impact in emissions will be achieved?</mat-label>
+              <input matInput formControlName="emissionImpactCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-form-field>
+              <mat-label translate>Impact of mitigation action</mat-label>
+              <input matInput formControlName="mitigationActionImpactCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-form-field>
+              <mat-label translate>Bibliographical Sources</mat-label>
+              <input matInput formControlName="bibliographicalSourcesCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-label translate>International Market Participation?</mat-label>
+            <mat-radio-group matInput formControlName="internationalParticipationCtrl">
+              <mat-radio-button value="1" > <span translate> Yes </span></mat-radio-button>
+              <mat-radio-button value="2" > <span translate> No </span></mat-radio-button>
+
+            </mat-radio-group>
+
+            <br/>
+
+            <mat-form-field>
+              <mat-label translate>International Market Participation</mat-label>
+              <input matInput formControlName="internationalParticipationDetailCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-form-field>
+              <textarea matInput formControlName="sustainabilityObjectivesCtrl" [placeholder]="'Sustainable Development Objectives' | translate" matTextareaAutosize
+                matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br/>
+
+
+            <div>
+              <button mat-button matStepperPrevious type="button" > <span translate>Back</span></button>
+              <button mat-button matStepperNext type="button" > <span translate> Next </span></button>
+            </div>
+          </mat-step>
+
+          <mat-step>
+            <ng-template matStepLabel> <span translate> Confirm your information </span></ng-template>
+            
+            <div *ngIf="formGroup.valid; else elseBlock" translate>Everything seems correct. </div>
+            
+            <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
+            <div>
+              <button mat-raised-button color="primary"><span translate>Done</span></button>
+            </div>
+          </mat-step>
+        </mat-vertical-stepper>
+
+
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

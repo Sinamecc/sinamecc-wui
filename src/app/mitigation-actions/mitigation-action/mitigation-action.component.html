@@ -6,29 +6,29 @@
           <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
         </mat-card-subtitle>
         <div class="container mat-elevation-z8" [hidden]="isLoading">
-            <h3>General Data</h3>
-            <strong>Code</strong>: {{mitigationAction?.id}} <br>
-            <strong>Name:</strong> {{mitigationAction?.name}} <br>
-            <strong>Program:</strong> {{mitigationAction?.strategy_name}} <br>
-            <strong>Objective:</strong> {{mitigationAction?.purpose}} <br>
-            <strong>Quantitative Objective:</strong> {{mitigationAction?.quantitative_purpose}} <br>
-            <strong>Entity:</strong> {{mitigationAction?.institution.name}} <br>
+            <h3 translate>General Data</h3>
+            <strong translate>Code</strong>: {{mitigationAction?.id}} <br>
+            <strong translate>Name:</strong> {{mitigationAction?.name}} <br>
+            <strong translate>Program:</strong> {{mitigationAction?.strategy_name}} <br>
+            <strong translate>Objective:</strong> {{mitigationAction?.purpose}} <br>
+            <strong translate>Quantitative Objective:</strong> {{mitigationAction?.quantitative_purpose}} <br>
+            <strong translate>Entity:</strong> {{mitigationAction?.institution.name}} <br>
             <mat-divider></mat-divider>
-            <h3>Contact</h3>
-            Contact Name: {{mitigationAction?.contact.full_name}} <br>
-            Contact Position: {{mitigationAction?.contact.position}} <br>
-            Contact Phone: {{mitigationAction?.contact.phone}} <br>
-            Contact Email: {{mitigationAction?.contact.email}} <br>
+            <h3 translate>Contact</h3>
+            <span translate>Contact Name: </span> {{mitigationAction?.contact.full_name}} <br>
+            <span translate>Contact Position: </span> {{mitigationAction?.contact.position}} <br>
+            <span translate>Contact Phone: </span> {{mitigationAction?.contact.phone}} <br>
+            <span translate>Contact Email: </span> {{mitigationAction?.contact.email}} <br>
             <mat-divider></mat-divider>
-            <h3>Progress Indicator</h3>
-            Name: {{mitigationAction?.progress_indicator.name}} <br>
-            Type: {{mitigationAction?.progress_indicator.type}} <br>
-            Unit: {{mitigationAction?.progress_indicator.unit}} <br>
-            Start Date: {{mitigationAction?.progress_indicator.start_date}} <br>
+            <h3 translate>Progress Indicator</h3>
+            <span translate>Name: </span> {{mitigationAction?.progress_indicator.name}} <br>
+            <span translate>Type: </span> {{mitigationAction?.progress_indicator.type}} <br>
+            <span translate>Unit: </span> {{mitigationAction?.progress_indicator.unit}} <br>
+            <span translate>Start Date: </span> {{mitigationAction?.progress_indicator.start_date}} <br>
             <mat-divider></mat-divider>
-            <h3>Localization</h3>
-            Geographic Site: {{mitigationAction?.location.geographical_site}} <br>
-            Is Gis Annexed?: {{mitigationAction?.location.is_gis_annexed}}
+            <h3 translate>Localization</h3>
+            <span translate>Geographic Site: </span> {{mitigationAction?.location.geographical_site}} <br>
+            <span translate>Is Gis Annexed?: </span> {{mitigationAction?.location.is_gis_annexed}}
 
         </div>
 
