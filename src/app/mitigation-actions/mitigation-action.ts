@@ -5,6 +5,7 @@ export interface MitigationAction {
   purpose: string;
   quantitative_purpose: string;
   institution: Institution;
+  question_ucc: string;
   contact: Contact;
   location: Location;
   progress_indicator: ProgressIndicator;

@@ -29,7 +29,7 @@ export class MitigationActionsListComponent implements OnInit {
   isLoading = false;
   dataSource = new MitigationActionSource(this.service);
   displayedColumns = ['name', 'strategy_name', 'purpose', 'updated', 'created', 'actions'];
-  
+
 
   constructor(private router: Router,
     private i18nService: I18nService,
@@ -53,7 +53,7 @@ export class MitigationActionsListComponent implements OnInit {
       // here i need to refresh table
       this.isLoading = false;
       this.dataSource = new MitigationActionSource(this.service);
-    } ) 
+    } )
   }
 
 }

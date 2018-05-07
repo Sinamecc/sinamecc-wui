@@ -53,16 +53,14 @@ export class MitigationActionsUpdateComponent implements OnInit {
     
   }
 
-  private createForm() {
-
-
-    
+  private createForm() {    
     this.formGroup = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
           programCtrl: ['', Validators.required],
           nameCtrl: ['', Validators.required],
           entityCtrl: ['', Validators.required],
+          uccCtrl: null,
         }),
         this.formBuilder.group({
           contactNameCtrl: ['', Validators.required],
@@ -194,6 +192,7 @@ export class MitigationActionsUpdateComponent implements OnInit {
             programCtrl: [mitigationAction['strategy_name'], Validators.required],
             nameCtrl: [mitigationAction['name'], Validators.required],
             entityCtrl: [mitigationAction['institution']['id'], Validators.required],
+            uccCtrl:[mitigationAction['question_ucc'],null],
           }),
           this.formBuilder.group({
             contactNameCtrl: [mitigationAction['contact']['full_name'], Validators.required],
