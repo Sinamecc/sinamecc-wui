@@ -39,9 +39,9 @@
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef translate> Actions </mat-header-cell>
     <mat-cell *matCellDef="let element"> 
-      <button mat-raised-button color="primary" (click)="view(element.id)" translate>View</button>
-      <button mat-raised-button color="warn" (click)="delete(element.id)" translate>Delete</button>
-      <button mat-raised-button color="accent" (click)="update(element.id)" translate>Edit</button>
+      <button mat-icon-button color="primary" (click)="view(element.id)" ><mat-icon color="white">visibility</mat-icon></button>
+      <button mat-icon-button color="warn" (click)="delete(element.id)" > <mat-icon color="white">delete</mat-icon></button>
+      <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button>
     </mat-cell>
 </ng-container>
 
