@@ -5,6 +5,7 @@ export interface MitigationActionNewFormData {
   finances: Finance[];
   ingei_compliances: IngeiCompliance[];
   geographic_scales: GeographicScale[];
+  finance_source_types: FinanceSourceType[];
   
   }
 
@@ -38,3 +39,8 @@ export interface MitigationActionNewFormData {
     id: Number;
     name: String;
   }
+
+export interface FinanceSourceType {
+  id: Number;
+  name: String;
+}

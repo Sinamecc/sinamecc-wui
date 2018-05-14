@@ -176,20 +176,24 @@
               <div translate>Financing and Gas Inventory</div>
             </ng-template>
 
-            <mat-label translate>Finance Status</mat-label>
-            <mat-radio-group matInput formControlName="financingStatusCtrl">
-              <mat-radio-button value="1" translate>To achieve</mat-radio-button>
-              <mat-radio-button value="2" translate>Insured</mat-radio-button>
-            </mat-radio-group>
+            <mat-form-field>
+                <mat-label translate>Finance Status</mat-label>
+                <mat-select  formControlName="financingStatusCtrl" [placeholder]="'Finance Source Status' | translate" (selectionChange)="financialSourceInputShown($event)"  [compareWith]="compareIds">
+                    <mat-option *ngFor="let financeStatus of financeSourceTypes" [value]="financeStatus.id">
+                      {{ financeStatus.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
 
             <br/>
 
-
+            <div *ngIf="displayFinancialSource">
             <mat-form-field>
               <mat-label translate>In case of insured, list sources</mat-label>
               <input matInput formControlName="financingSourceCtrl">
               <mat-error translate>The input is invalid.</mat-error>
             </mat-form-field>
+          </div>
             <br/>
 
             <mat-label translate>Gas Inventory</mat-label>
@@ -307,7 +311,7 @@
             <mat-label translate>International Market Participation?</mat-label>
             <mat-radio-group matInput formControlName="internationalParticipationCtrl">
               <mat-radio-button value="1" > <span translate> Yes </span></mat-radio-button>
-              <mat-radio-button value="2" > <span translate> No </span></mat-radio-button>
+              <mat-radio-button value="0" > <span translate> No </span></mat-radio-button>
 
             </mat-radio-group>
 

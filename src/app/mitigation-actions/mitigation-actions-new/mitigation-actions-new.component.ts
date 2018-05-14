@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { finalize, map, tap } from 'rxjs/operators';
@@ -6,13 +6,14 @@ import { finalize, map, tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { MitigationActionNewFormData, FinanceSourceType } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { Institution } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { Status } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { IngeiCompliance } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { GeographicScale } from '@app/mitigation-actions/mitigation-action-new-form-data';
 
 import { Observable } from 'rxjs/Observable';
+import { MatSelectChange } from '@angular/material/select';
 
 const log = new Logger('Report');
 
@@ -36,7 +37,8 @@ export class MitigationActionsNewComponent implements OnInit {
   ingeis: IngeiCompliance[];
   statusses: Status[];
   geographicScales: GeographicScale[];
-
+  financeSourceTypes: FinanceSourceType[];
+  displayFinancialSource: Boolean;
 
   get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
 
@@ -66,6 +68,10 @@ export class MitigationActionsNewComponent implements OnInit {
         this.error = error;
       });
 
+  }
+
+  activateInsured(id: number): void {
+    this.displayFinancialSource = id != 1 
   }
 
   private createForm() {
@@ -98,7 +104,7 @@ export class MitigationActionsNewComponent implements OnInit {
         }),
         this.formBuilder.group({
           financingStatusCtrl: ['', Validators.required],
-          financingSourceCtrl: ['', Validators.required],
+          financingSourceCtrl: null,
           gasInventoryCtrl: null,
         }),
         this.formBuilder.group({
@@ -131,6 +137,7 @@ export class MitigationActionsNewComponent implements OnInit {
         this.statusses = mitigationActionNewFormData.statuses;
         this.ingeis = mitigationActionNewFormData.ingei_compliances;
         this.geographicScales = mitigationActionNewFormData.geographic_scales;
+        this.financeSourceTypes = mitigationActionNewFormData.finance_source_types;
       }));
   }
 
@@ -138,6 +145,12 @@ export class MitigationActionsNewComponent implements OnInit {
     return this.service.newMitigationActionFormData()
     .pipe(finalize(() => { this.isLoading = false; }));
 
+  }
+
+  financialSourceInputShown($event:any) {
+    // todo: when we traslate in the backend we need to traslate this hardcoded value here
+    const insuredSourceTypeId = this.financeSourceTypes.filter(financeSource => financeSource.name == 'Asegurado').map(({ id }) => id);
+    this.displayFinancialSource = $event.value == insuredSourceTypeId;
   }
 
 }

@@ -199,7 +199,7 @@ export class MitigationActionsService {
     if(financeFormId) {
       formData.append('finance[id]', String(financeFormId));
     }
-    formData.append('finance[name]', context.formArray[4].financingStatusCtrl);
+    formData.append('finance[finance_source_type]', context.formArray[4].financingStatusCtrl);
     formData.append('finance[source]', context.formArray[4].financingSourceCtrl);
 
     formData.append('strategy_name', context.formArray[0].programCtrl);

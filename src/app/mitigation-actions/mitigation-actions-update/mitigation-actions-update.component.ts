@@ -6,7 +6,7 @@ import { finalize, tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { MitigationActionNewFormData, GeographicScale, Status, IngeiCompliance, Institution } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { MitigationActionNewFormData, GeographicScale, Status, IngeiCompliance, Institution, FinanceSourceType } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { Observable } from 'rxjs/Observable';
 import { forkJoin } from 'rxjs/observable/forkJoin';
@@ -38,7 +38,10 @@ export class MitigationActionsUpdateComponent implements OnInit {
   ingeis: IngeiCompliance[];
   statusses: Status[];
   geographicScales: GeographicScale[];
+  financeSourceTypes: FinanceSourceType[];
   formValues: any;
+
+  displayFinancialSource: Boolean;
   
   constructor(private router: Router,
     private formBuilder: FormBuilder,
@@ -84,7 +87,7 @@ export class MitigationActionsUpdateComponent implements OnInit {
         this.formBuilder.group({
 
           financingStatusCtrl: ['', Validators.required],
-          financingSourceCtrl: ['', Validators.required],
+          financingSourceCtrl: null,
           gasInventoryCtrl: null,
         }),
         this.formBuilder.group({
@@ -174,6 +177,7 @@ export class MitigationActionsUpdateComponent implements OnInit {
         this.statusses = mitigationActionNewFormData.statuses;
         this.ingeis = mitigationActionNewFormData.ingei_compliances;
         this.geographicScales = mitigationActionNewFormData.geographic_scales;
+        this.financeSourceTypes = mitigationActionNewFormData.finance_source_types;
       }));
       return initialRequiredData;
   }
@@ -214,7 +218,7 @@ export class MitigationActionsUpdateComponent implements OnInit {
             progressIndicatorInitialYearCtrl: [mitigationAction['progress_indicator']['start_date'], Validators.required],
           }),
           this.formBuilder.group({
-            financingStatusCtrl: [1, Validators.required],
+            financingStatusCtrl: [mitigationAction['finance']['finance_source_type']['id'], Validators.required],
             financingSourceCtrl: [mitigationAction['finance']['source'], Validators.required],
             gasInventoryCtrl: mitigationAction['gas_inventory'],
           }),
@@ -242,6 +246,13 @@ export class MitigationActionsUpdateComponent implements OnInit {
         this.formGroup.setControl('formArray', mitigationActionArray);
       }));
       return mitigationAction;
+  }
+
+
+  financialSourceInputShown($event:any) {
+    // todo: when we traslate in the backend we need to traslate this hardcoded value here
+    const insuredSourceTypeId = this.financeSourceTypes.filter(financeSource => financeSource.name == 'Asegurado').map(({ id }) => id);
+    this.displayFinancialSource = $event.value == insuredSourceTypeId;
   }
 
   compareIds(id1: any, id2: any): boolean {
