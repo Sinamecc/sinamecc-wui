@@ -69,6 +69,8 @@
   "Year when it started:":"Año cuando se inició:",
   "Financing and Gas Inventory":"Financiamiento e Inventario GEI",
   "Finance Status":"Estado financiero",
+  "To achieve":"Por obtener",
+  "Insured":"Asegurado",
   "The input is required.": "El campo es requerido.",
   "Location":"Localización",
   "Geographic Site":"Sitio Geográfico",
@@ -79,7 +81,7 @@
   "Yes":"Si",
   "No":"No",
   "Sustainable Development Objectives":"Objetivos de desarrollo sustentable",
-  "In case of insured, list sources":"Si seleccionó insured, escriba las fuentes",
+  "In case of insured, list sources":"Si seleccionó asegurado, escriba las fuentes",
   "Gas Inventory":"Inventario de GEI",
   "Energy":"Energía",
   "Emissions Sources":"Fuentes de emisiones",
@@ -96,6 +98,10 @@
   "International Market Participation":"Participación en el mercado internacional",
   "Everything seems correct.":"Todo luce correcto.",
   "Done":"Listo",
-  "Costa Rican Compensation Units:":"Unidades de compensación costarricenses:"
-
-}
+  "Costa Rica Compensation Units":"Unidades de compensación costarricenses",
+  "Planeación":"Planeación",
+  "Implementación":"Implementación",
+  "Ingei Compliance":"Conformidad Ingei",
+  "The input is required or length is incorrect.":"Este campo es requerido o tamaño incorrecto"
+  
+  }

@@ -87,7 +87,7 @@ export class MitigationActionsNewComponent implements OnInit {
           contactNameCtrl: ['', Validators.required],
           positionCtrl: ['', Validators.required],
           emailFormCtrl: ['', Validators.email],
-          phoneCtrl: ['', Validators.required],
+          phoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
         }),
         this.formBuilder.group({
           actionObjectiveCtrl: ['', Validators.required],
