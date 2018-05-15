@@ -1,0 +1,64 @@
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title translate>Detailed Report File</mat-card-title>
+      <mat-card-subtitle>
+        <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
+        <p [hidden]="isLoading"></p>
+      </mat-card-subtitle>
+    </mat-card-content>
+  </mat-card>
+</div>
+<mat-toolbar>
+    <span>Mccr Registries</span>
+  </mat-toolbar>
+  <a mat-button color="primary" routerLink="/mccr/registries/new">Add new mccr registry</a>
+<div class="container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+    <!-- Mccr Registry Name Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> Mccr Registry Id </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container>
+
+    <!--Status Column -->
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+    </ng-container>
+
+    <!--Status Column -->
+    <ng-container matColumnDef="mitigation">
+      <mat-header-cell *matHeaderCellDef> Mitigation Action Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.mitigation}} </mat-cell>
+    </ng-container>
+
+    <!--Number of Files Column -->
+    <ng-container matColumnDef="files">
+      <mat-header-cell *matHeaderCellDef> Number Of Files </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.files}} </mat-cell>
+    </ng-container>
+
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+    <mat-cell *matCellDef="let element"> 
+      <button mat-icon-button color="primary" (click)="view(element.id)"><mat-icon color="white">visibility</mat-icon></button>
+      <button mat-icon-button color="warn" (click)="delete(element.id)"><mat-icon color="white">delete</mat-icon></button>
+      <button mat-icon-button color="accent" (click)="update(element.id)"><mat-icon color="white">edit</mat-icon></button>
+    </mat-cell>
+</ng-container>
+
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+</div>
+<a mat-fab routerLink="/report">
+  <mat-icon aria-label="Go to Data for Report">undo</mat-icon>
+</a>

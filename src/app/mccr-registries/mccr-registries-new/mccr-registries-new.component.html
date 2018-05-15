@@ -1,0 +1,81 @@
+<div class="container">
+  <mat-card>
+    <h1>
+      <mat-card-title translate>APP_NAME</mat-card-title>
+      <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
+    </h1>
+    <h3>
+      <mat-card-title translate>Create a new mccr registry:</mat-card-title>
+    </h3>
+    <mat-card-content>
+      <form (ngSubmit)="submitForm()" *ngIf="mitigationActions | async"  [formGroup]="form" novalidate>
+        <div class="form-error" [hidden]="!error || isLoading" translate>
+          <span translate>Error submitting the form.</span>
+        </div>
+        <br/>
+        <div fxLayout="column">
+
+          <mat-form-field>
+              <mat-select  formControlName="mitigationActionCtrl" placeholder="Mitigation Action">
+                  <mat-option *ngFor="let mitigationAction of processedMitigationActions" [value]="mitigationAction.id">
+                    {{ mitigationAction.name }}
+                  </mat-option>
+                </mat-select>
+          </mat-form-field>
+          <br/>
+          <mat-card formArrayName="files">
+              <mat-card-title>Files</mat-card-title>
+              <mat-divider></mat-divider>
+              
+              <!-- loop throught units -->
+              <div *ngFor="let file of form.controls.files.controls; let i=index">
+                
+                <!-- row divider show for every nex row exclude if first row -->
+                <mat-divider *ngIf="form.controls.files.controls.length > 1 && i > 0" ></mat-divider><br>
+                
+                <!-- group name in this case row index -->
+                <div [formGroupName]="i">
+                  <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="3.5%" fxLayoutAlign="center">
+                    
+  
+                    <mat-form-field>
+                        <app-input-file formControlName="file" placeholder="Required input" valuePlaceholder="No file selected" required></app-input-file>
+                        <mat-icon matSuffix>folder</mat-icon>
+                        <mat-error *ngIf="file.controls.file.hasError('required')">
+                          Please select a file
+                        </mat-error>
+           
+                    </mat-form-field>
+      
+                
+      
+                    <!-- row delete button, hidden if there is just one row -->
+                    <button mat-mini-fab color="warn" 
+                            *ngIf="form.controls.files.controls.length > 1" (click)="removeFile(i)" type="button">
+                        <mat-icon>delete forever</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+      
+              <!-- New unit button -->
+              <mat-divider></mat-divider>
+              <mat-card-actions>
+                <button mat-raised-button (click)="addFile()" type="button"  *ngIf="form.controls.files.controls.length <= 10">
+                  <mat-icon>add box</mat-icon>
+                  Add new file
+                </button>
+              </mat-card-actions>
+            </mat-card> <!-- End form units array -->    
+
+          <br/>
+
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">
+            <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
+            <span translate>Submit Mccr Registry</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

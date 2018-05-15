@@ -16,6 +16,7 @@ import { MitigationActionsModule } from './mitigation-actions/mitigation-actions
 import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { MccrRegistriesModule } from '@app/mccr-registries/mccr-registries.module';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { AppRoutingModule } from './app-routing.module';
     HomeModule,
     ReportModule,
     MitigationActionsModule,
+    MccrRegistriesModule,
     LoginModule,
     AppRoutingModule
   ],
