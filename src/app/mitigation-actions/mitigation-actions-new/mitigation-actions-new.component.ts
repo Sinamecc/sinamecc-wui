@@ -82,6 +82,7 @@ export class MitigationActionsNewComponent implements OnInit {
           nameCtrl: ['', Validators.required],
           entityCtrl: ['', Validators.required],
           uccCtrl: null,
+          ovvCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
           contactNameCtrl: ['', Validators.required],

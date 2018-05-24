@@ -37,11 +37,19 @@
             <br/>
 
             <mat-form-field>
-              <mat-label>Costa Rica Compensation Unit</mat-label>
+              <mat-label translate>Costa Rica Compensation Unit</mat-label>
               <input matInput formControlName="uccCtrl">
               <mat-error>Some error happened with this field</mat-error>
             </mat-form-field>
             <br/>
+
+            <mat-form-field>
+              <mat-label translate>Validation Verification body</mat-label>
+              <input matInput formControlName="ovvCtrl">
+              <mat-error>This field is required</mat-error>
+            </mat-form-field>
+            <br/>
+
             <div>
               <br/>
               <button mat-button matStepperNext type="button"><span translate>Next</span></button>

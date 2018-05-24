@@ -221,6 +221,7 @@ export class MitigationActionsService {
     formData.append('status', context.formArray[2].actionStatusCtrl);
     formData.append('institution', context.formArray[0].entityCtrl);
     formData.append('question_ucc', context.formArray[0].uccCtrl);
+    formData.append('question_ovv', context.formArray[0].ovvCtrl);
     formData.append('ingei_compliances', context.formArray[5].ingeiComplianceCtrl ? context.formArray[5].ingeiComplianceCtrl.join() : '');
     formData.append('geographic_scale', context.formArray[6].geographicScaleCtrl);
     formData.append('user', String(this.authenticationService.credentials.id)); // change to user id from current user

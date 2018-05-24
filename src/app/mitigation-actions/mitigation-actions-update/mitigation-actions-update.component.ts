@@ -64,6 +64,7 @@ export class MitigationActionsUpdateComponent implements OnInit {
           nameCtrl: ['', Validators.required],
           entityCtrl: ['', Validators.required],
           uccCtrl: null,
+          ovvCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
           contactNameCtrl: ['', Validators.required],
@@ -196,7 +197,8 @@ export class MitigationActionsUpdateComponent implements OnInit {
             programCtrl: [mitigationAction['strategy_name'], Validators.required],
             nameCtrl: [mitigationAction['name'], Validators.required],
             entityCtrl: [mitigationAction['institution']['id'], Validators.required],
-            uccCtrl:[mitigationAction['question_ucc'],null],
+            uccCtrl: [mitigationAction['question_ucc'], null],
+            ovvCtrl: [mitigationAction['question_ovv'], Validators.required],
           }),
           this.formBuilder.group({
             contactNameCtrl: [mitigationAction['contact']['full_name'], Validators.required],
