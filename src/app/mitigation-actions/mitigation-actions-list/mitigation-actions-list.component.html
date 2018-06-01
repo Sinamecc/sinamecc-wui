@@ -23,6 +23,12 @@
       <mat-header-cell *matHeaderCellDef translate> Objective </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.purpose}} </mat-cell>
     </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef translate> Status </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.review_status.status}} </mat-cell>
+    </ng-container>
   <!-- Updated Column -->
   <ng-container matColumnDef="updated">
     <mat-header-cell *matHeaderCellDef translate> Last update: </mat-header-cell>
@@ -42,12 +48,14 @@
       <button mat-icon-button color="primary" (click)="view(element.id)" ><mat-icon color="white">visibility</mat-icon></button>
       <button mat-icon-button color="warn" (click)="delete(element.id)" > <mat-icon color="white">delete</mat-icon></button>
       <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button>
+      <button mat-icon-button color="primary" (click)="addReview(element.id)" > <mat-icon color="white">rate_review</mat-icon></button>
+      <button mat-icon-button color="primary" (click)="changelog(element.id)" > <mat-icon color="white">history</mat-icon></button>
     </mat-cell>
 </ng-container>
 
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-row [ngClass]="row.review_status.status" *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 
 <mat-paginator #paginator

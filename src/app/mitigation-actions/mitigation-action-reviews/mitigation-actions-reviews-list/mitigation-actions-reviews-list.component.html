@@ -1,0 +1,38 @@
+<mat-toolbar>
+  <span translate>Changelog for mitigation action</span>{{id}}
+</mat-toolbar>
+<div class="container mat-elevation-z8">
+<mat-table #table [dataSource]="dataSource">
+
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="date">
+    <mat-header-cell *matHeaderCellDef translate> Date </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.date | date:'medium'}} </mat-cell>
+  </ng-container>
+
+  <!-- Strategy Name Column -->
+  <ng-container matColumnDef="current_status">
+    <mat-header-cell *matHeaderCellDef translate> Current Status </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.current_status?.status }} </mat-cell>
+  </ng-container>
+
+    <!-- Objective Column -->
+    <ng-container matColumnDef="previous_status">
+      <mat-header-cell *matHeaderCellDef translate> Previous Status </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.previous_status?.status}} </mat-cell>
+    </ng-container>
+
+
+
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<mat-paginator #paginator
+[pageSize]="10"
+[pageSizeOptions]="[5, 10, 20]"
+[showFirstLastButtons]="true">
+</mat-paginator>
+</div>

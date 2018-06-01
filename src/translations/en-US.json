@@ -101,6 +101,11 @@
   "Planeación":"Planning",
   "Implementación":"Implementation",
   "Ingei Compliance":"Ingei Compliance",
-  "The input is required or length is incorrect.":"The input is required or length is incorrect."
-  
+  "The input is required or length is incorrect.":"The input is required or length is incorrect.",
+  "Previous Status":"Previous Status",
+  "Current Status":"Current Status",
+  "Date":"Date",
+  "Changelog for mitigation action":"Changelog for mitigation action",
+  "Validation Verification Body":"Validation Verification Body",
+  "Add a new review for this mitigation action":"Add a new review for this mitigation action"
   }

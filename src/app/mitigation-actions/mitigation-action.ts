@@ -10,6 +10,7 @@ export interface MitigationAction {
   contact: Contact;
   location: Location;
   progress_indicator: ProgressIndicator;
+  review_status: ReviewStatus;
   created: string;
   updated: string;
 }
@@ -35,4 +36,9 @@ export interface Location {
 export interface Institution {
   id: string;
   name: string;
+}
+
+export interface ReviewStatus { 
+  id: number;
+  status: string;
 }

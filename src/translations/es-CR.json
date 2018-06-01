@@ -85,7 +85,7 @@
   "Gas Inventory":"Inventario de GEI",
   "Energy":"Energía",
   "Emissions Sources":"Fuentes de emisiones",
-  "Carbon Sinks":"Carbon Sinks",
+  "Carbon Sinks":"Sumideros de Carbono",
   "Contact":"Contacto",
   "Contact Name":"Nombre del Contacto",
   "Contact Position":"Posicion",
@@ -102,6 +102,15 @@
   "Planeación":"Planeación",
   "Implementación":"Implementación",
   "Ingei Compliance":"Conformidad Ingei",
-  "The input is required or length is incorrect.":"Este campo es requerido o tamaño incorrecto"
+  "The input is required or length is incorrect.":"Este campo es requerido o tamaño incorrecto",
+  "General Data": "Datos Generales",
+  "Status":"Estatus",
+  "Previous Status":"Estado Previo",
+  "Current Status":"Estado Actual",
+  "Date":"Fecha",
+  "Changelog for mitigation action":"Historial de cambios de la revision para la acción de mitigación",
+  "Validation Verification Body":"Organismo Verificador Validador",
+  "Add a new review for this mitigation action":"Agregar una nueva revisión para esta acción de mitigación",
+  "Description of the review of the Mitigation Action":"Descripción de la revisión de la Acción de Mitigación"
   
   }

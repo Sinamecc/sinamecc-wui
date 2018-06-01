@@ -6,20 +6,24 @@ import { HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { MitigationAction } from './mitigation-action';
+import { MitigationActionReview } from './mitigation-action-review';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { MitigationActionReviewNewFormData } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
 
 const routes = {
   seededFormData: () => `/v1/mitigations/form`,
   submitNewMitigationAction: () => `/v1/mitigations/`,
   submitUpdateMitigationAction: (uuid:string) => `/v1/mitigations/${uuid}`,
   mitigationActions: () => `/v1/mitigations/`,
+  mitigationActionReviews: (uuid: string) =>  `/v1/mitigations/changelog/${uuid}`,
   deleteMitigationAction: (uuid: string) => `/v1/mitigations/${uuid}`,
-  getMitigationAction: (uuid: string) => `/v1/mitigations/${uuid}`
+  getMitigationAction: (uuid: string) => `/v1/mitigations/${uuid}`,
+  mitigationActionAvailableStatuses: () => `/v1/workflow/status`,
+  submitMitigationActionReview: (uuid: string) => `/v1/mitigations/${uuid}`
 
 };
-
 
 export interface Response {
   // Customize received credentials here
@@ -94,6 +98,7 @@ export class MitigationActionsService {
     .get(routes.seededFormData(), httpOptions) 
     .pipe(
       map((body: any) => {
+        console.log(body);
         return body;
       })
     );
@@ -117,18 +122,37 @@ export class MitigationActionsService {
 
   }
 
-  getMitigationAction(uuid: string): Observable <MitigationAction> {
+
+  mitigationActionReviews(uuid: string) : Observable < MitigationActionReview[] > {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
       })
     };
 
+    return this.httpClient
+    .get(routes.mitigationActionReviews(uuid), httpOptions) 
+    .pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
 
+
+  }
+
+
+  getMitigationAction(uuid: string): Observable <MitigationAction> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.authenticationService.credentials.token
+      })
+    };
     return this.httpClient
       .get(routes.getMitigationAction(uuid), httpOptions) 
       .pipe(
         map((body: any) => {
+          console.log('Getting an specific mitigation action', body);
           return body;
         })
       );
@@ -154,6 +178,44 @@ export class MitigationActionsService {
         })
       );
 
+  }
+
+  getMitigationActionReviewStatuses(): Observable < MitigationActionReviewNewFormData > {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.authenticationService.credentials.token
+      })
+    };
+    return this.httpClient
+    .get(routes.mitigationActionAvailableStatuses(), httpOptions) 
+    .pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
+  }
+
+  submitNewMitigationActionReviewForm(context: any, uuid: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.authenticationService.credentials.token
+      })
+    };
+    console.log('context before submitting a review', context);
+
+    context['user'] = this.authenticationService.credentials.id;
+    const url = routes.submitMitigationActionReview(uuid);
+    return this.httpClient
+    .patch(url, context, httpOptions)
+    .pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly'
+        };
+        return response;
+      })
+    );
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -228,4 +290,6 @@ export class MitigationActionsService {
     return formData;
 
   }
+
+
 }

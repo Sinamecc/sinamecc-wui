@@ -42,4 +42,9 @@ export class MitigationActionComponent implements OnInit {
      .subscribe((response: MitigationAction) => { this.mitigationAction = response; }); 
   }
 
+
+  review(uuid: string) {
+    this.router.navigate([`mitigation/actions/${uuid}/reviews`], { replaceUrl: true });
+  }
+
 }

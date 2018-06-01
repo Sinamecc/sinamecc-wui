@@ -28,7 +28,7 @@ export class MitigationActionsListComponent implements OnInit {
   error: string;
   isLoading = false;
   dataSource = new MitigationActionSource(this.service);
-  displayedColumns = ['name', 'strategy_name', 'purpose', 'updated', 'created', 'actions'];
+  displayedColumns = ['name', 'strategy_name', 'purpose', 'status', 'updated', 'created', 'actions'];
 
 
   constructor(private router: Router,
@@ -45,6 +45,14 @@ export class MitigationActionsListComponent implements OnInit {
 
   update(uuid: string) {
     this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
+  }
+
+  addReview(uuid: string) {
+    this.router.navigate([`mitigation/actions/${uuid}/reviews/new`], { replaceUrl: true });
+  }
+
+  changelog(uuid: string) {
+    this.router.navigate([`mitigation/actions/${uuid}/reviews`], { replaceUrl: true });
   }
 
   delete(uuid: string) {

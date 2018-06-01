@@ -7,6 +7,8 @@
         </mat-card-subtitle>
         <div class="container mat-elevation-z8" [hidden]="isLoading">
             <h3 translate>General Data</h3>
+            <strong translate>Status</strong>: {{mitigationAction?.review_status?.status}} <br>
+
             <strong translate>Code</strong>: {{mitigationAction?.id}} <br>
             <strong translate>Name:</strong> {{mitigationAction?.name}} <br>
             <strong translate>Program:</strong> {{mitigationAction?.strategy_name}} <br>
@@ -31,8 +33,12 @@
             <h3 translate>Localization</h3>
             <span translate>Geographic Site: </span> {{mitigationAction?.location.geographical_site}} <br>
             <span translate>Is Gis Annexed?: </span> {{mitigationAction?.location.is_gis_annexed}}
-
+            <mat-divider></mat-divider>
+            <h3 translate>Actions</h3>
+            <button mat-icon-button color="primary" (click)="review(mitigationAction?.id)" > <mat-icon color="white">rate_review</mat-icon></button>
         </div>
+
+
 
       </mat-card-content>
     </mat-card>
