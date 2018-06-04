@@ -137,8 +137,8 @@
               <mat-datepicker #implementationEndDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
             <br/>
-            <button mat-button matStepperPrevious type="button" translate>Back</button>
-            <button mat-button matStepperNext type="button" translate>Next</button>
+            <button mat-button matStepperPrevious type="button" > <span translate>Back </span></button>
+            <button mat-button matStepperNext type="button" > <span translate>Next </span></button>
           </mat-step>
 
           <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
@@ -206,7 +206,7 @@
 
             <mat-label translate>Gas Inventory</mat-label>
             <mat-radio-group matInput formControlName="gasInventoryCtrl">
-              <mat-radio-button value="1" translate>Energy</mat-radio-button>
+              <mat-radio-button value="1" translate><span translate>Energy</span></mat-radio-button>
             </mat-radio-group>
 
             <br/>

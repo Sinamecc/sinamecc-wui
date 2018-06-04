@@ -16,7 +16,7 @@
         <div fxLayout="column">
 
           <mat-form-field>
-              <mat-select  formControlName="mitigationActionCtrl" placeholder="Mitigation Action">
+              <mat-select  formControlName="mitigationActionCtrl" [placeholder]="'Mitigation Action' | translate">
                   <mat-option *ngFor="let mitigationAction of processedMitigationActions" [value]="mitigationAction.id">
                     {{ mitigationAction.name }}
                   </mat-option>
@@ -24,7 +24,7 @@
           </mat-form-field>
           <br/>
           <mat-card formArrayName="files">
-              <mat-card-title>Files</mat-card-title>
+              <mat-card-title translate>Files</mat-card-title>
               <mat-divider></mat-divider>
               
               <!-- loop throught units -->
@@ -39,7 +39,7 @@
                     
   
                     <mat-form-field>
-                        <app-input-file formControlName="file" placeholder="Required input" valuePlaceholder="No file selected" required></app-input-file>
+                        <app-input-file formControlName="file" [placeholder]="'Required input' | translate" valuePlaceholder="No file selected" required></app-input-file>
                         <mat-icon matSuffix>folder</mat-icon>
                         <mat-error *ngIf="file.controls.file.hasError('required')">
                           Please select a file
@@ -63,7 +63,7 @@
               <mat-card-actions>
                 <button mat-raised-button (click)="addFile()" type="button"  *ngIf="form.controls.files.controls.length <= 10">
                   <mat-icon>add box</mat-icon>
-                  Add new file
+                  <span translate> Add new file</span>
                 </button>
               </mat-card-actions>
             </mat-card> <!-- End form units array -->    
