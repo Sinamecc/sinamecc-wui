@@ -16,6 +16,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { MccrRegistry } from '@app/mccr-registries/mccr-registry';
 import { of } from 'rxjs/observable/of';
+import { TranslateService } from '@ngx-translate/core';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-mccr-registries-update',
@@ -40,7 +42,9 @@ export class MccrRegistriesUpdateComponent implements OnInit {
     private i18nService: I18nService,
     private service: MccrRegistriesService,
     private mitigationService: MitigationActionsService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private translateService: TranslateService,
+    public snackBar: MatSnackBar) {
       this.id = this.route.snapshot.paramMap.get('id');
       this.createForm();
     
@@ -58,6 +62,7 @@ export class MccrRegistriesUpdateComponent implements OnInit {
       }))
       .subscribe(response => {
         this.router.navigate(['/mccr/registries'], { replaceUrl: true });
+        this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res); });
         log.debug(`${response.statusCode} status code received from form`);
 
       }, error => {

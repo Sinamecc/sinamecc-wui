@@ -14,6 +14,8 @@ import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { Observable } from 'rxjs/Observable';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { Subscription } from 'rxjs/Subscription';
+import { TranslateService } from '@ngx-translate/core';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-mccr-registries-new',
@@ -34,7 +36,9 @@ export class MccrRegistriesNewComponent implements OnInit {
     private formBuilder: FormBuilder,
     private i18nService: I18nService,
     private service: MccrRegistriesService,
-    private mitigationService: MitigationActionsService) {
+    private mitigationService: MitigationActionsService,
+    private translateService: TranslateService,
+    public snackBar: MatSnackBar) {
     this.createForm();
   }
 
@@ -50,6 +54,7 @@ export class MccrRegistriesNewComponent implements OnInit {
       }))
       .subscribe(response => {
         this.router.navigate(['/mccr/registries'], { replaceUrl: true });
+        this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res); });
         log.debug(`${response.statusCode} status code received from form`);
 
       }, error => {

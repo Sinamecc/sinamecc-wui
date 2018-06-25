@@ -10,6 +10,8 @@ const log = new Logger('Report');
 
 
 import { ReportService } from './../report.service';
+import { MatSnackBar } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-report-new',
@@ -26,7 +28,9 @@ export class ReportNewComponent implements OnInit {
   constructor(private router: Router,
     private formBuilder: FormBuilder,
     private i18nService: I18nService,
-    private reportService: ReportService) {
+    private reportService: ReportService,
+    private translateService: TranslateService,
+    public snackBar: MatSnackBar) {
     this.createForm();
   }
 
@@ -41,6 +45,7 @@ export class ReportNewComponent implements OnInit {
       }))
       .subscribe(response => {
         this.router.navigate(['/report'], { replaceUrl: true });
+        this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res); });
         log.debug(`${response.statusCode} status code received from form`);
 
       }, error => {

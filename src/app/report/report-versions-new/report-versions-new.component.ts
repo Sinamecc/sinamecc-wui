@@ -13,6 +13,8 @@ const log = new Logger('Report');
 
 import { ReportService } from './../report.service';
 import { Observable } from 'rxjs/Observable';
+import { TranslateService } from '@ngx-translate/core';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-report-versions-new',
@@ -32,7 +34,9 @@ export class ReportVersionsNewComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private i18nService: I18nService,
-    private reportService: ReportService) {
+    private reportService: ReportService,
+    private translateService: TranslateService,
+    public snackBar: MatSnackBar) {
     this.id = +this.route.snapshot.paramMap.get('id');
     this.createForm();
   }
@@ -49,6 +53,7 @@ export class ReportVersionsNewComponent implements OnInit {
       .subscribe(response => {
         // :id/versions
         this.router.navigate([`/report/${this.route.snapshot.paramMap.get('id')}/versions`], { replaceUrl: true });
+        this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res); });
         log.debug(`${response.statusCode} status code received from form`);
 
       }, error => {

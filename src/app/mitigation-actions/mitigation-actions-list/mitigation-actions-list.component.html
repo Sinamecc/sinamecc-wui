@@ -46,7 +46,7 @@
     <mat-header-cell *matHeaderCellDef translate> Actions </mat-header-cell>
     <mat-cell *matCellDef="let element"> 
       <button mat-icon-button color="primary" (click)="view(element.id)" ><mat-icon color="white">visibility</mat-icon></button>
-      <button mat-icon-button color="warn" (click)="delete(element.id)" > <mat-icon color="white">delete</mat-icon></button>
+      <button mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)" > <mat-icon color="white">delete</mat-icon></button>
       <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button>
       <button mat-icon-button color="primary" (click)="addReview(element.id)" > <mat-icon color="white">rate_review</mat-icon></button>
       <button mat-icon-button color="primary" (click)="changelog(element.id)" > <mat-icon color="white">history</mat-icon></button>

@@ -17,6 +17,7 @@ import { HttpCacheService } from './http/http-cache.service';
 import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { CacheInterceptor } from './http/cache.interceptor';
+import { ComponentDialogComponent } from './component-dialog/component-dialog.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,11 @@ import { CacheInterceptor } from './http/cache.interceptor';
   ],
   declarations: [
     HeaderComponent,
-    ShellComponent
+    ShellComponent,
+    ComponentDialogComponent
+  ],
+  entryComponents: [
+    ComponentDialogComponent
   ],
   providers: [
     AuthenticationService,
