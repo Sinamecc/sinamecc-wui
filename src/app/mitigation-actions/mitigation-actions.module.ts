@@ -16,7 +16,8 @@ import { DatePipe } from '@angular/common';
 import { MitigationActionComponent } from './mitigation-action/mitigation-action.component';
 import { MitigationActionsUpdateComponent } from './mitigation-actions-update/mitigation-actions-update.component';
 import { MitigationActionReviewsNewComponent } from './mitigation-action-reviews/mitigation-action-reviews-new/mitigation-action-reviews-new.component';
-import { MitigationActionsReviewsListComponent } from './mitigation-action-reviews/mitigation-actions-reviews-list/mitigation-actions-reviews-list.component'
+import { MitigationActionsReviewsListComponent } from './mitigation-action-reviews/mitigation-actions-reviews-list/mitigation-actions-reviews-list.component';
+import { ConceptualIntegrationComponent } from './conceptual-integration/conceptual-integration.component'
 @NgModule({
   imports: [
     CommonModule,
@@ -35,7 +36,8 @@ import { MitigationActionsReviewsListComponent } from './mitigation-action-revie
     MitigationActionComponent,
     MitigationActionsUpdateComponent,
     MitigationActionReviewsNewComponent,
-    MitigationActionsReviewsListComponent
+    MitigationActionsReviewsListComponent,
+    ConceptualIntegrationComponent
   ],
   providers: [
     MitigationActionsService,

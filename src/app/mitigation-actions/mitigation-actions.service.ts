@@ -29,6 +29,7 @@ export interface Response {
   // Customize received credentials here
   statusCode: number;
   message: string;
+  id?: string;
 
 }
 @Injectable()
@@ -54,6 +55,7 @@ export class MitigationActionsService {
       map((body: any) => {
         const response = {
           statusCode: 200,
+          id: body.id,
           message: 'Form submitted correctly'
         };
         return response;

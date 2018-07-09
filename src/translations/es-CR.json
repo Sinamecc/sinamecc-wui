@@ -127,6 +127,10 @@
   "Changelog for mitigation action":"Historial de cambios de la revision para la acción de mitigación",
   "Validation Verification Body":"Organismo Verificador Validador",
   "Add a new review for this mitigation action":"Agregar una nueva revisión para esta acción de mitigación",
-  "Description of the review of the Mitigation Action":"Descripción de la revisión de la Acción de Mitigación"
+  "Description of the review of the Mitigation Action":"Descripción de la revisión de la Acción de Mitigación",
+  "Conceptual Proposal Integration":"Propuesta Conceptual de Integración",
+  "Code":"Código",
+  "Download formulary":"Descargar Formulario",
+  "You must download the file, fill it and load your proposal for review":"Debe descargar el formulario, posteriormente debe llenarlo y cargar su propuesta para ser revisada"
   
   }

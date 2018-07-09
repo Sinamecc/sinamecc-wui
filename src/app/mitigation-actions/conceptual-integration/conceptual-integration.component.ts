@@ -12,13 +12,12 @@ import { MitigationActionsService } from './../mitigation-actions.service';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 
 
-
 @Component({
-  selector: 'app-mitigation-action',
-  templateUrl: './mitigation-action.component.html',
-  styleUrls: ['./mitigation-action.component.scss']
+  selector: 'app-conceptual-integration',
+  templateUrl: './conceptual-integration.component.html',
+  styleUrls: ['./conceptual-integration.component.scss']
 })
-export class MitigationActionComponent implements OnInit {
+export class ConceptualIntegrationComponent implements OnInit {
 
   mitigationAction: MitigationAction;
   isLoading: boolean;
@@ -31,16 +30,16 @@ export class MitigationActionComponent implements OnInit {
       this.id = this.route.snapshot.paramMap.get('id');
     }
 
-  ngOnInit() {
-    this.isLoading = true;
-    this.service.getMitigationAction(this.id)
-     .pipe(finalize(() => { this.isLoading = false; }))
-     .subscribe((response: MitigationAction) => { this.mitigationAction = response; }); 
-  }
+    ngOnInit() {
+      this.isLoading = true;
+      this.service.getMitigationAction(this.id)
+       .pipe(finalize(() => { this.isLoading = false; }))
+       .subscribe((response: MitigationAction) => { this.mitigationAction = response; }); 
+      
+    }
 
-
-  review(uuid: string) {
-    this.router.navigate([`mitigation/actions/${uuid}/reviews`], { replaceUrl: true });
-  }
+    dashboard() {
+      this.router.navigate([`mitigation/actions`], { replaceUrl: true });
+    }
 
 }

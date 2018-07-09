@@ -54,14 +54,13 @@ export class MitigationActionsNewComponent implements OnInit {
   submitForm() {
     this.isLoading = true;
 
-
     this.service.submitMitigationActionNewForm(this.formGroup.value)
       .pipe(finalize(() => {
         this.formGroup.markAsPristine();
         this.isLoading = false;
       }))
       .subscribe(response => {
-        this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
+        this.router.navigate([`/mitigation/actions/${response.id}/conceptual/integration`], { replaceUrl: true });
         
       }, error => {
         log.debug(`New Mitigation Action Form error: ${error}`);

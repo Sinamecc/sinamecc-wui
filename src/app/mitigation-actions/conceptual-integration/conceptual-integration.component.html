@@ -1,0 +1,22 @@
+<div class="container">
+  <mat-card>
+    <h1>
+      <mat-card-title translate>APP_NAME</mat-card-title>
+      <!-- <app-loader [isLoading]="isLoading" size="1.5"></app-loader> -->
+    </h1>
+    <h3>
+      <mat-card-title translate>Conceptual Proposal Integration:</mat-card-title>
+    </h3>
+    <mat-card-content>
+      <strong translate>Code</strong>: {{mitigationAction?.id}} <br>
+
+      <span translate>Download formulary:<a href='assets/sample.png' download>File Explorer</a></span>
+      <br/>
+      <br/>
+      <strong translate>Note:</strong><span translate>You must download the file, fill it and load your proposal for review</span>
+      <div class="button-row">
+        <button mat-raised-button color="primary" (click)="dashboard()"><span translate>Next</span></button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
