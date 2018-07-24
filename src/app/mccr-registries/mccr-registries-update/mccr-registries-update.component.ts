@@ -89,7 +89,7 @@ export class MccrRegistriesUpdateComponent implements OnInit {
   }
   
   private initialMitigationActions(): Observable<MitigationAction[]> {
-    let mitigationActions = this.mitigationService.mitigationActions().pipe(
+    let mitigationActions = this.mitigationService.mitigationActions(this.i18nService.language.split('-')[0]).pipe(
       tap(actions => {
       this.processedMitigationActions = actions;
     }));

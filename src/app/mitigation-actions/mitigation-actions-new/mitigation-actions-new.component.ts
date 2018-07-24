@@ -39,6 +39,8 @@ export class MitigationActionsNewComponent implements OnInit {
   geographicScales: GeographicScale[];
   financeSourceTypes: FinanceSourceType[];
   displayFinancialSource: Boolean;
+  registrationTypeId:string;
+
 
   get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
 
@@ -54,7 +56,8 @@ export class MitigationActionsNewComponent implements OnInit {
   submitForm() {
     this.isLoading = true;
 
-    this.service.submitMitigationActionNewForm(this.formGroup.value)
+
+    this.service.submitMitigationActionNewForm(this.formGroup.value, this.registrationTypeId)
       .pipe(finalize(() => {
         this.formGroup.markAsPristine();
         this.isLoading = false;
@@ -133,6 +136,7 @@ export class MitigationActionsNewComponent implements OnInit {
     this.initalRequiredData = this.initialFormData().pipe(
       tap(mitigationActionNewFormData => {
         this.isLoading = false;
+        this.registrationTypeId = mitigationActionNewFormData.registration_types[0].id
         this.institutions = mitigationActionNewFormData.institutions;
         this.statusses = mitigationActionNewFormData.statuses;
         this.ingeis = mitigationActionNewFormData.ingei_compliances;
@@ -142,7 +146,7 @@ export class MitigationActionsNewComponent implements OnInit {
   }
 
   private initialFormData():Observable<MitigationActionNewFormData> {
-    return this.service.newMitigationActionFormData()
+    return this.service.newMitigationActionFormData(this.i18nService.language.split('-')[0], 'new')
     .pipe(finalize(() => { this.isLoading = false; }));
 
   }

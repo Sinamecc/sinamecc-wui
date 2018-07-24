@@ -95,7 +95,7 @@ export class MccrRegistriesNewComponent implements OnInit {
   }
   
   private initialFormData(): Observable<MitigationAction[]> {
-    return this.mitigationService.mitigationActions()
+    return this.mitigationService.mitigationActions(this.i18nService.language.split('-')[0])
     .pipe(finalize(() => { this.isLoading = false; }));
   }
 

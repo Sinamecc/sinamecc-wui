@@ -13,13 +13,13 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { MitigationActionReviewNewFormData } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
 
 const routes = {
-  seededFormData: () => `/v1/mitigations/form`,
+  seededFormData: (lang: string, registration_type: string) => `/v1/mitigations/form/${lang}/${registration_type}`,
   submitNewMitigationAction: () => `/v1/mitigations/`,
   submitUpdateMitigationAction: (uuid:string) => `/v1/mitigations/${uuid}`,
-  mitigationActions: () => `/v1/mitigations/`,
+  mitigationActions: (lang: string) => `/v1/mitigations/${lang}`,
   mitigationActionReviews: (uuid: string) =>  `/v1/mitigations/changelog/${uuid}`,
   deleteMitigationAction: (uuid: string) => `/v1/mitigations/${uuid}`,
-  getMitigationAction: (uuid: string) => `/v1/mitigations/${uuid}`,
+  getMitigationAction: (uuid: string, lang: string) => `/v1/mitigations/${lang}/${uuid}`,
   mitigationActionAvailableStatuses: () => `/v1/workflow/status`,
   submitMitigationActionReview: (uuid: string) => `/v1/mitigations/${uuid}`
 
@@ -41,14 +41,14 @@ export class MitigationActionsService {
 
   }
 
-  submitMitigationActionNewForm(context: any): Observable <Response> {
+  submitMitigationActionNewForm(context: any, registrationTypeId:string): Observable <Response> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
       })
     };
 
-    let formData: FormData = this.buildFormData(context);
+    let formData: FormData = this.buildFormData(context, registrationTypeId);
     return this.httpClient
     .post(routes.submitNewMitigationAction(), formData, httpOptions)
     .pipe(
@@ -64,7 +64,9 @@ export class MitigationActionsService {
     
   }
 
-  submitMitigationActionUpdateForm(context: any, uuid: string, 
+  submitMitigationActionUpdateForm(context: any, 
+                                   uuid: string, 
+                                   registrationTypeId:string,
                                    contactFormId: number, 
                                    progressIndicatorFormId: number, 
                                    financeFormId: number,
@@ -74,7 +76,7 @@ export class MitigationActionsService {
         'Authorization': this.authenticationService.credentials.token
       })
     };
-    let formData: FormData = this.buildFormData(context, contactFormId, progressIndicatorFormId, financeFormId, locationFormId);
+    let formData: FormData = this.buildFormData(context, registrationTypeId, contactFormId, progressIndicatorFormId, financeFormId, locationFormId);
     return this.httpClient
     .put(routes.submitUpdateMitigationAction(uuid), formData, httpOptions)
     .pipe(
@@ -90,34 +92,33 @@ export class MitigationActionsService {
 
   
 
-  newMitigationActionFormData(): Observable < MitigationActionNewFormData > {
+  newMitigationActionFormData(language:string, registration_type:string): Observable < MitigationActionNewFormData > {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
       })
     };
     return this.httpClient
-    .get(routes.seededFormData(), httpOptions) 
+    .get(routes.seededFormData(language, registration_type), httpOptions) 
     .pipe(
       map((body: any) => {
-        console.log(body);
         return body;
       })
     );
 
   }
 
-  mitigationActions(): Observable < MitigationAction[] > {
+  mitigationActions(language:string): Observable < MitigationAction[] > {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
       })
     };
-
     return this.httpClient
-      .get(routes.mitigationActions(), httpOptions) 
+      .get(routes.mitigationActions(language), httpOptions) 
       .pipe(
         map((body: any) => {
+          debugger;
           return body;
         })
       );
@@ -144,17 +145,16 @@ export class MitigationActionsService {
   }
 
 
-  getMitigationAction(uuid: string): Observable <MitigationAction> {
+  getMitigationAction(uuid: string, lang: string): Observable <MitigationAction> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
       })
     };
     return this.httpClient
-      .get(routes.getMitigationAction(uuid), httpOptions) 
+      .get(routes.getMitigationAction(uuid, lang), httpOptions) 
       .pipe(
         map((body: any) => {
-          console.log('Getting an specific mitigation action', body);
           return body;
         })
       );
@@ -236,10 +236,12 @@ export class MitigationActionsService {
       'Something bad happened; please try again later.');
   };
 
-  private buildFormData(context: any, contactFormId:number = null,
-                                      progressIndicatorFormId:number = null,
-                                      financeFormId:number = null,
-                                      locationFormId:number = null,) {
+  private buildFormData(context: any, 
+                        registrationFormId:string,
+                        contactFormId:number = null,
+                        progressIndicatorFormId:number = null,
+                        financeFormId:number = null,
+                        locationFormId:number = null,) {
     let formData:FormData = new FormData();
     if(contactFormId) {
       formData.append('contact[id]', String(contactFormId));
@@ -279,7 +281,7 @@ export class MitigationActionsService {
     formData.append('is_international', context.formArray[8].internationalParticipationCtrl);
     formData.append('international_participation', context.formArray[8].internationalParticipationDetailCtrl);
     formData.append('sustainability', context.formArray[8].sustainabilityObjectivesCtrl);
-    formData.append('registration_type', '1');
+    formData.append('registration_type', registrationFormId);
     formData.append('start_date', this.datePipe.transform(context.formArray[2].implementationInitialDateCtrl, 'yyyy-MM-dd'));
     formData.append('end_date', this.datePipe.transform(context.formArray[2].implementationEndDateCtrl, 'yyyy-MM-dd'));
     formData.append('status', context.formArray[2].actionStatusCtrl);

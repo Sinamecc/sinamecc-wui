@@ -88,7 +88,7 @@ export class MitigationActionReviewsNewComponent implements OnInit {
   }
 
   private getMitigation():Observable<MitigationAction> {
-    return this.service.getMitigationAction(this.id)
+    return this.service.getMitigationAction(this.id, this.i18nService.language.split('-')[0])
     .pipe(finalize(() => { this.isLoading = false; }));
 
   }

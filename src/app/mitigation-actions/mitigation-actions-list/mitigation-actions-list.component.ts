@@ -30,7 +30,7 @@ export class MitigationActionsListComponent implements OnInit {
   version: string = environment.version;
   error: string;
   isLoading = false;
-  dataSource = new MitigationActionSource(this.service);
+  dataSource = new MitigationActionSource(this.service, this.i18nService);
   displayedColumns = ['name', 'strategy_name', 'purpose', 'status', 'updated', 'created', 'actions'];
 
 
@@ -64,7 +64,7 @@ export class MitigationActionsListComponent implements OnInit {
     this.service.deleteMitigationAction(uuid).subscribe(() =>{
       // here i need to refresh table
       this.isLoading = false;
-      this.dataSource = new MitigationActionSource(this.service);
+      this.dataSource = new MitigationActionSource(this.service, this.i18nService);
     } );
 
   }
@@ -92,11 +92,12 @@ export class MitigationActionsListComponent implements OnInit {
 }
 
 export class MitigationActionSource extends DataSource<any> {
-  constructor(private service: MitigationActionsService) {
+  constructor(private service: MitigationActionsService,
+              private i18nService: I18nService,) {
     super();
   }
   connect(): Observable < MitigationAction[] > {
-    return this.service.mitigationActions();
+    return this.service.mitigationActions(this.i18nService.language.split('-')[0]);
   }
   disconnect() {}
 }

@@ -109,7 +109,9 @@
             <br/>
 
             <mat-form-field>
+                
               <mat-select  formControlName="actionStatusCtrl" [placeholder]="'Mitigation Action Status' | translate">
+                
                 <mat-option *ngFor="let status of statusses" [value]="status.id">
                   {{ status.status }}
                 </mat-option>
@@ -333,6 +335,7 @@
               <mat-error translate>This field is required</mat-error>
             </mat-form-field>
             <br/>
+
 
 
             <div>

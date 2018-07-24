@@ -40,6 +40,7 @@ export class MitigationActionsUpdateComponent implements OnInit {
   geographicScales: GeographicScale[];
   financeSourceTypes: FinanceSourceType[];
   formValues: any;
+  registrationTypeId: string;
 
   displayFinancialSource: Boolean;
   
@@ -129,6 +130,7 @@ export class MitigationActionsUpdateComponent implements OnInit {
     this.isLoading = true;
     this.service.submitMitigationActionUpdateForm(this.formGroup.value, 
                                                   this.id, 
+                                                  this.registrationTypeId,
                                                   this.contactFormId, 
                                                   this.progressIndicatorFormId, 
                                                   this.financeFormId, 
@@ -148,12 +150,12 @@ export class MitigationActionsUpdateComponent implements OnInit {
   }
   private loadFormData():Observable<MitigationAction> {
 
-    return this.service.getMitigationAction(this.id)
+    return this.service.getMitigationAction(this.id, this.i18nService.language.split('-')[0])
     .pipe(finalize(() => { this.isLoading = false; }));
   }
 
   private initialFormData():Observable<MitigationActionNewFormData> {
-    return this.service.newMitigationActionFormData()
+    return this.service.newMitigationActionFormData(this.i18nService.language.split('-')[0], 'update')
     .pipe(finalize(() => { this.isLoading = false; }));
 
   }
@@ -174,11 +176,13 @@ export class MitigationActionsUpdateComponent implements OnInit {
     let initialRequiredData = this.initialFormData().pipe(
       tap(mitigationActionNewFormData => {
         this.isLoading = false;
+        this.registrationTypeId = mitigationActionNewFormData.registration_types[0].id;
         this.institutions = mitigationActionNewFormData.institutions;
         this.statusses = mitigationActionNewFormData.statuses;
         this.ingeis = mitigationActionNewFormData.ingei_compliances;
         this.geographicScales = mitigationActionNewFormData.geographic_scales;
         this.financeSourceTypes = mitigationActionNewFormData.finance_source_types;
+
       }));
       return initialRequiredData;
   }

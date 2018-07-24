@@ -33,7 +33,7 @@ export class MitigationActionComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.service.getMitigationAction(this.id)
+    this.service.getMitigationAction(this.id, this.i18nService.language.split('-')[0])
      .pipe(finalize(() => { this.isLoading = false; }))
      .subscribe((response: MitigationAction) => { this.mitigationAction = response; }); 
   }
