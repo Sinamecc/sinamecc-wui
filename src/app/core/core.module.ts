@@ -18,6 +18,7 @@ import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { CacheInterceptor } from './http/cache.interceptor';
 import { ComponentDialogComponent } from './component-dialog/component-dialog.component';
+import { S3Service } from '@app/core/s3.service';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { ComponentDialogComponent } from './component-dialog/component-dialog.co
     AuthenticationService,
     AuthenticationGuard,
     I18nService,
+    S3Service,
     HttpCacheService,
     ApiPrefixInterceptor,
     ErrorHandlerInterceptor,

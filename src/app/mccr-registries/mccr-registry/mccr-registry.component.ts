@@ -41,7 +41,22 @@ export class MccrRegistryComponent implements OnInit {
     this.isLoading = true;
     this.service.getMccrRegistry(this.id)
      .pipe(finalize(() => { this.isLoading = false; }))
-     .subscribe((response: MccrRegistry) => { this.mccrRegistry = response; }); 
+     .subscribe((response: MccrRegistry) => { debugger; this.mccrRegistry = response; }); 
+  }
+
+  async download(file:string) {
+    this.isLoading = true;
+    const blob = await this.service.downloadResource(file);
+    var url = window.URL.createObjectURL(blob.data);
+    var a = document.createElement('a');
+    document.body.appendChild(a);
+    a.setAttribute('style', 'display: none');
+    a.href = url;
+    a.download = blob.filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove(); // remove the element
+    this.isLoading = false;
   }
 
 }

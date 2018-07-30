@@ -14,6 +14,7 @@
   </mat-toolbar>
   <a mat-button color="primary" routerLink="/report/{{id}}/versions/new" translate>Add new version</a>
 <div class="container mat-elevation-z8">
+  
   <mat-table #table [dataSource]="dataSource">
 
     <!-- Report File Id Column -->
@@ -25,7 +26,8 @@
     <!-- Name Column -->
     <ng-container matColumnDef="file">
       <mat-header-cell *matHeaderCellDef translate> File </mat-header-cell>
-      <mat-cell *matCellDef="let element"><a mat-button href="{{mediaUrl}}/media/{{element.file}}" download>{{element.file.split('/').pop()}}</a></mat-cell>
+      
+      <mat-cell *matCellDef="let element"><button mat-icon-button color="primary" (click)="download(element.file)" ><mat-icon color="white">vertical_align_bottom</mat-icon></button></mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 

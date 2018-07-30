@@ -10,6 +10,7 @@ import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-
 import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
+import { S3Service, S3File } from '@app/core/s3.service';
 
 const routes = {
   seededFormData: () => `/v1/mccr/registries`,
@@ -33,7 +34,8 @@ export class MccrRegistriesService {
 
   constructor(private authenticationService: AuthenticationService,
     private httpClient: HttpClient,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe,
+    private s3:S3Service) {
 
   }
 
@@ -173,6 +175,13 @@ export class MccrRegistriesService {
       );
 
   }
+
+  
+
+  public async downloadResource(filePath: string): Promise<S3File> {
+    return this.s3.downloadResource(filePath);
+  }
+  
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

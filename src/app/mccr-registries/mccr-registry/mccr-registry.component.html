@@ -14,8 +14,10 @@
           <h3 translate>Files</h3>
           <div>
             <ul>
-              <li *ngFor="let file of mccrRegistry?.files"> 
-                <a mat-button href="{{mediaUrl}}/{{file.file}}" download>{{file.file.split('/').pop()}}</a>
+              <li *ngFor="let file of mccrRegistry?.files">
+
+                <span>{{file.name}}<button mat-icon-button color="primary" (click)="download(file.file)" ><mat-icon color="white">vertical_align_bottom</mat-icon></button></span>
+                
               </li>
              </ul>
           </div>

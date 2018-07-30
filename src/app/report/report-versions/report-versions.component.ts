@@ -23,7 +23,7 @@ import { ReportService, Report, Version } from './../report.service';
 export class ReportVersionsComponent implements OnInit {
 
   version: string = environment.version;
-  mediaUrl: string = environment.mediaUrl;
+  serverUrl: string = environment.serverUrl;
   report: number;
   error: string;
   id: number;
@@ -44,6 +44,22 @@ export class ReportVersionsComponent implements OnInit {
     }
 
   ngOnInit() {
+  }
+
+  async download(file:string) {
+    this.isLoading = true;
+    const blob = await this.reportService.downloadResource(file);
+    console.log('start download:',blob);
+    var url = window.URL.createObjectURL(blob.data);
+    var a = document.createElement('a');
+    document.body.appendChild(a);
+    a.setAttribute('style', 'display: none');
+    a.href = url;
+    a.download = blob.filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove(); // remove the element
+    this.isLoading = false;
   }
 
 

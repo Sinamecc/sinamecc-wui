@@ -5,6 +5,7 @@ import { HttpClient} from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
+import { S3File, S3Service } from '@app/core/s3.service';
 
 export interface Response {
   // Customize received credentials here
@@ -48,7 +49,8 @@ export class ReportService {
 
 
   constructor(private authenticationService: AuthenticationService,
-    private httpClient: HttpClient) {
+    private httpClient: HttpClient,
+    private s3:S3Service) {
 
   }
 
@@ -151,6 +153,11 @@ export class ReportService {
         })
       );
   }
+
+
+public async downloadResource(filePath: string): Promise<S3File> {
+  return this.s3.downloadResource(filePath);
+}
 
   reportVersionsName(id:number): Observable<string> {
     const httpOptions = {
