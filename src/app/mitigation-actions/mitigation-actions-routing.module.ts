@@ -10,6 +10,7 @@ import { MitigationActionsUpdateComponent } from '@app/mitigation-actions/mitiga
 import { MitigationActionReviewsNewComponent } from './mitigation-action-reviews/mitigation-action-reviews-new/mitigation-action-reviews-new.component'
 import { MitigationActionsReviewsListComponent } from './mitigation-action-reviews/mitigation-actions-reviews-list/mitigation-actions-reviews-list.component'
 import { ConceptualIntegrationComponent } from '@app/mitigation-actions/conceptual-integration/conceptual-integration.component';
+import { ConceptualIntegrationNewComponent } from '@app/mitigation-actions/conceptual-integration-new/conceptual-integration-new.component';
 
 
 
@@ -22,7 +23,9 @@ const routes: Routes = [
     { path: 'mitigation/actions/:id/edit', component: MitigationActionsUpdateComponent, data: { id: extract('id') } },
     { path: 'mitigation/actions/:id/reviews/new', component: MitigationActionReviewsNewComponent, data: { id: extract('id') } },
     { path: 'mitigation/actions/:id/reviews', component: MitigationActionsReviewsListComponent, data: { id: extract('id') } },
-    { path: 'mitigation/actions/:id/conceptual/integration', component: ConceptualIntegrationComponent, data: { id: extract('id') } }
+    { path: 'mitigation/actions/:id/conceptual/integration', component: ConceptualIntegrationComponent, data: { id: extract('id') } },
+    { path: 'mitigation/actions/:id/conceptual/integration/new', component: ConceptualIntegrationNewComponent, data: { id: extract('id') }
+  }
 
     //ConceptualIntegrationComponent
   ])

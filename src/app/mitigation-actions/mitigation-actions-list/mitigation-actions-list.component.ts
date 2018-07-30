@@ -59,6 +59,10 @@ export class MitigationActionsListComponent implements OnInit {
     this.router.navigate([`mitigation/actions/${uuid}/reviews`], { replaceUrl: true });
   }
 
+  uploadProposal(uuid: string) {
+    this.router.navigate([`mitigation/actions/${uuid}/conceptual/integration/new`], { replaceUrl: true });
+  }
+
   delete(uuid: string) {
    this.isLoading = true;
     this.service.deleteMitigationAction(uuid).subscribe(() =>{

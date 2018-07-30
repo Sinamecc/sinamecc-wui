@@ -17,7 +17,8 @@ import { MitigationActionComponent } from './mitigation-action/mitigation-action
 import { MitigationActionsUpdateComponent } from './mitigation-actions-update/mitigation-actions-update.component';
 import { MitigationActionReviewsNewComponent } from './mitigation-action-reviews/mitigation-action-reviews-new/mitigation-action-reviews-new.component';
 import { MitigationActionsReviewsListComponent } from './mitigation-action-reviews/mitigation-actions-reviews-list/mitigation-actions-reviews-list.component';
-import { ConceptualIntegrationComponent } from './conceptual-integration/conceptual-integration.component'
+import { ConceptualIntegrationComponent } from './conceptual-integration/conceptual-integration.component';
+import { ConceptualIntegrationNewComponent } from './conceptual-integration-new/conceptual-integration-new.component'
 @NgModule({
   imports: [
     CommonModule,
@@ -37,7 +38,8 @@ import { ConceptualIntegrationComponent } from './conceptual-integration/concept
     MitigationActionsUpdateComponent,
     MitigationActionReviewsNewComponent,
     MitigationActionsReviewsListComponent,
-    ConceptualIntegrationComponent
+    ConceptualIntegrationComponent,
+    ConceptualIntegrationNewComponent
   ],
   providers: [
     MitigationActionsService,

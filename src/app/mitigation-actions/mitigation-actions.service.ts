@@ -21,7 +21,8 @@ const routes = {
   deleteMitigationAction: (uuid: string) => `/v1/mitigations/${uuid}`,
   getMitigationAction: (uuid: string, lang: string) => `/v1/mitigations/${lang}/${uuid}`,
   mitigationActionAvailableStatuses: () => `/v1/workflow/status`,
-  submitMitigationActionReview: (uuid: string) => `/v1/mitigations/${uuid}`
+  submitMitigationActionReview: (uuid: string) => `/v1/mitigations/${uuid}`,
+  submitNewHarmonizationForMitigation: () => `/v1/mitigations/harmonization/ingei/`
 
 };
 
@@ -32,6 +33,12 @@ export interface Response {
   id?: string;
 
 }
+
+export interface ReportContext {
+  comment: string;
+  file: string | any;
+}
+
 @Injectable()
 export class MitigationActionsService {
 
@@ -118,7 +125,6 @@ export class MitigationActionsService {
       .get(routes.mitigationActions(language), httpOptions) 
       .pipe(
         map((body: any) => {
-          debugger;
           return body;
         })
       );
@@ -142,6 +148,38 @@ export class MitigationActionsService {
     );
 
 
+  }
+
+  submitNewConceptualIntegration(context: any): Observable <Response> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.authenticationService.credentials.token
+      })
+    };
+
+    let fileList = context.fileCtrl.files;
+    if (fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData: FormData = new FormData();
+      formData.append('name', context.commentCtrl);
+      formData.append('file', file, file.name);
+      formData.append('mitigation', context.mitigationActionCtrl);
+
+      return this.httpClient
+        .post(routes.submitNewHarmonizationForMitigation(), formData, httpOptions)
+        .pipe(
+          map((body: any) => {
+            const response = {
+              statusCode: 200,
+              message: 'Form submitted correctly'
+            };
+            return response;
+          })
+        );
+    } else {
+      // raise exception
+    }
+    
   }
 
 
