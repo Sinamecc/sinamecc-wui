@@ -7,7 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import {Ppcn, GeographicLevel} from './ppcn'
+import {Ppcn, GeographicLevel} from '@app/ppcn/ppcn_registry'
 
 const routes = {
   getGeographicLevel: () => `/v1/ppcn/geographic/level/`,

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PpcnLevelComponent } from './ppcn-level.component';
+import { PpcnLevelComponent } from '@app/ppcn/ppcn-level/ppcn-level.component';
 
 describe('PpcnLevelComponent', () => {
   let component: PpcnLevelComponent;

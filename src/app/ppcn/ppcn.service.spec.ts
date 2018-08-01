@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { PpcnService } from './ppcn.service';
+import { PpcnService } from '@app/ppcn/ppcn.service';
 
 describe('PpcnService', () => {
   beforeEach(() => {

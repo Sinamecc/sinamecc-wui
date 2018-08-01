@@ -8,8 +8,8 @@ import { Logger, I18nService, AuthenticationService } from '@app/core';
 
 const log = new Logger('Report');
 
-import { PpcnService } from './../ppcn.service';
-import { Ppcn, GeographicLevel } from '@app/Ppcn/ppcn';
+import { PpcnService } from '@app/ppcn/ppcn.service';
+import { Ppcn, GeographicLevel } from '@app/ppcn/ppcn_registry';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
@@ -47,7 +47,7 @@ export class PpcnLevelComponent implements OnInit {
       ppcnCtrl: ['', Validators.required]
     });
     this.geographicLevel = this.initialFormData().pipe(
-      tap((geographicLevel: GeographicLevel[]) => { this.processedGeographicLevel = this.geographicLevel; })
+      tap((geographicLevel: GeographicLevel[]) => { this.processedGeographicLevel = geographicLevel; })
     );
     //this.initialFormData();
   }
