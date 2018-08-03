@@ -1,4 +1,14 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MaterialModule } from '@app/material.module';
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { CoreModule } from '@app/core';
+import { SharedModule } from '@app/shared';
+
 import { Routes, RouterModule } from '@angular/router';
 import { Route, extract } from '@app/core';
 import { PpcnLevelComponent } from '@app/ppcn/ppcn-level/ppcn-level.component';
@@ -11,7 +21,19 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [
+    RouterModule.forChild(routes),
+    CommonModule,
+    TranslateModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CoreModule,
+    SharedModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FlexLayoutModule,
+    MaterialModule,
+  ],
   exports: [RouterModule],
   providers: []
 })

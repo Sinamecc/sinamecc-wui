@@ -2,7 +2,6 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
-
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 
@@ -44,7 +43,7 @@ export class PpcnLevelComponent implements OnInit {
 
   private createForm() {
     this.form = this.formBuilder.group({
-      ppcnCtrl: ['', Validators.required]
+      geographicCtrl: ['', Validators.required]
     });
     this.geographicLevel = this.initialFormData().pipe(
       tap((geographicLevel: GeographicLevel[]) => { this.processedGeographicLevel = geographicLevel; })
@@ -53,7 +52,7 @@ export class PpcnLevelComponent implements OnInit {
   }
 
   private initialFormData(): Observable<GeographicLevel[]> {
-    return this.service.geographicLevel()
+    return this.service.geographicLevel(this.i18nService.language.split('-')[0])
     .pipe(finalize(() => { this.isLoading = false; }));
   }
 

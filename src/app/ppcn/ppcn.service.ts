@@ -10,7 +10,7 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import {Ppcn, GeographicLevel} from '@app/ppcn/ppcn_registry'
 
 const routes = {
-  getGeographicLevel: () => `/v1/ppcn/geographic/level/`,
+  getGeographicLevel: (lang: string) => `/v1/ppcn/geographic/level/${lang}`,
   getRequiredLevel: () => `/v1/ppcn/required/level`
 }
 
@@ -30,14 +30,14 @@ export class PpcnService {
 
     }
   
-    geographicLevel(): Observable < GeographicLevel[] > {
+    geographicLevel(lang: string): Observable < GeographicLevel[] > {
       const httpOptions = {
         headers: new HttpHeaders({
           'Authorization': this.authenticationService.credentials.token
         })
       };
       return this.httpClient
-        .get(routes.getGeographicLevel(), httpOptions) 
+        .get(routes.getGeographicLevel(lang), httpOptions) 
         .pipe(
           map((body: any) => {
             return body;

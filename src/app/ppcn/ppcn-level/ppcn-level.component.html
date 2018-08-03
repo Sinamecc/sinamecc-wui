@@ -1,36 +1,34 @@
 <div class="container">
-    <mat-card>
-      <h1>
-        <mat-card-title translate>APP_NAME</mat-card-title>
-        <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
-      </h1>
-      <h3>
-        <mat-card-title translate>Create a new PPCN Registry:</mat-card-title>
-      </h3>
-      <mat-card-content>
-        <form  [formGroup]="form" novalidate>
-          <div class="form-error" [hidden]="!error || isLoading" translate>
-            <span translate>Error submitting the form.</span>
-          </div>
+  <mat-card>
+    <h1>
+      <mat-card-title translate>APP_NAME</mat-card-title>
+      <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
+    </h1>
+    <h3>
+      <mat-card-title translate>Create a new PPCN Registry:</mat-card-title>
+    </h3>
+    <mat-card-content>
+      <form *ngIf="geographicLevel | async"  [formGroup]="form" novalidate>
+        <div class="form-error" [hidden]="!error || isLoading" translate>
+          <span translate>Error submitting the form.</span>
+        </div>
+        <br/>
+        <div fxLayout="column">
+          <mat-form-field>
+            <mat-select formControlName="geographicCtrl" [placeholder]="'Geographic Level' | translate">
+              <mat-option *ngFor="let geographicLevel of processedGeographicLevel" [value]="geographicLevel.id">
+                {{ geographicLevel.level }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
           <br/>
-          <div fxLayout="column">
-  
-            <mat-form-field>
-                <mat-select  formControlName="ppcnCtrl" [placeholder]="'Geographic Level' | translate">
-                    <mat-option *ngFor="let geographicLevel of processedGeographicLevel" [value]="ppcn.id">
-                      {{ ppcn.level }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <br/>
-  
-            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">
-              <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-              <span translate>Next</span>
-            </button>
-          </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </div>
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">
+            <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
+            <span translate>Next</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
   
