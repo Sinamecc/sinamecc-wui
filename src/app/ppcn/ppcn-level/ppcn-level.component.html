@@ -5,10 +5,10 @@
         <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
       </h1>
       <h3>
-        <mat-card-title translate>Create a new mccr registry:</mat-card-title>
+        <mat-card-title translate>Create a new PPCN Registry:</mat-card-title>
       </h3>
       <mat-card-content>
-        <form (ngSubmit)="submitForm()" *ngIf="mitigationActions | async"  [formGroup]="form" novalidate>
+        <form  [formGroup]="form" novalidate>
           <div class="form-error" [hidden]="!error || isLoading" translate>
             <span translate>Error submitting the form.</span>
           </div>
@@ -16,11 +16,11 @@
           <div fxLayout="column">
   
             <mat-form-field>
-                <mat-select  formControlName="mitigationActionCtrl" [placeholder]="'Mitigation Action' | translate">
-                    <mat-option *ngFor="let mitigationAction of processedMitigationActions" [value]="mitigationAction.id">
-                      {{ mitigationAction.name }}
+                <mat-select  formControlName="ppcnCtrl" [placeholder]="'Geographic Level' | translate">
+                    <mat-option *ngFor="let geographicLevel of processedGeographicLevel" [value]="ppcn.id">
+                      {{ ppcn.level }}
                     </mat-option>
-                  </mat-select>
+                </mat-select>
             </mat-form-field>
             <br/>
   
