@@ -16,6 +16,7 @@ import { MccrRegistryComponent } from './mccr-registry/mccr-registry.component';
 import { MccrRegistriesUpdateComponent } from './mccr-registries-update/mccr-registries-update.component';
 import { MccrRegistriesRoutingModule } from '@app/mccr-registries/mccr-registries-routing.module';
 import { MccrRegistriesService } from './mccr-registries.service';
+import { MccrRegistriesOvvSelectorComponent } from './mccr-registries-ovv-selector/mccr-registries-ovv-selector.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { MccrRegistriesService } from './mccr-registries.service';
     MccrRegistriesListComponent,
     MccrRegistriesNewComponent,
     MccrRegistryComponent,
-    MccrRegistriesUpdateComponent
+    MccrRegistriesUpdateComponent,
+    MccrRegistriesOvvSelectorComponent
   ],
   providers: [
     MccrRegistriesService,

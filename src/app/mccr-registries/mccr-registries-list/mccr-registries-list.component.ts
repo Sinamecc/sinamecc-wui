@@ -31,6 +31,7 @@ export class MccrRegistriesListComponent implements OnInit {
   error: string;
   isLoading = false;
   dataSource = new MccrRegistriesDataSource(this.service);
+  currentMccrRegistry: MccrRegistry;
   displayedColumns = ['id', 'status', 'mitigation', 'files', 'actions'];
   
   // @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -64,6 +65,13 @@ export class MccrRegistriesListComponent implements OnInit {
     this.router.navigate([`mccr/registries/${uuid}/edit`], { replaceUrl: true });
   }
 
+  selectOvv(uuid: string) {
+    let listedMccrRegistries = this.dataSource.mccrRegistries;
+    let currentMccrRegistry = listedMccrRegistries.find(element => element.id === uuid);
+    this.service.updateCurrentMccrRegistry(currentMccrRegistry);
+    this.router.navigate([`mccr/registries/${uuid}/ovv`], { replaceUrl: true });
+  }
+
   openDeleteConfirmationDialog(uuid:string) {
     const data = {
       title: "Delete MCCR Registry",
@@ -91,11 +99,14 @@ export class MccrRegistriesListComponent implements OnInit {
 
 export class MccrRegistriesDataSource extends DataSource<any> {
   id: number;
+  mccrRegistries: MccrRegistry[];
   constructor(private service: MccrRegistriesService) {
     super();
   }
   connect(): Observable < MccrRegistry[] > {
-    return this.service.mccrRegistries();
+    let mccrRegistriesPromise:Observable < MccrRegistry[] > = this.service.mccrRegistries();
+    mccrRegistriesPromise.subscribe(mccrRegistries => this.mccrRegistries = mccrRegistries);
+    return mccrRegistriesPromise;
   }
   disconnect() {}
 }
