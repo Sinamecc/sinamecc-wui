@@ -16,18 +16,17 @@ import { MatSnackBar } from '@angular/material';
 import { PpcnFlowComponent } from 'app/ppcn/ppcn-flow/ppcn-flow.component';
 
 @Component({
-  selector: 'app-ppcn-level',
-  templateUrl: './ppcn-level.component.html',
-  styleUrls: ['./ppcn-level.component.scss']
+  selector: 'app-ppcn-new',
+  templateUrl: './ppcn-new.component.html',
+  styleUrls: ['./ppcn-new.component.scss']
 })
+export class PpcnNewComponent implements OnInit {
 
-export class PpcnLevelComponent implements OnInit {
-  
   version: string = environment.version;
   error: string;
   form: FormGroup;
-  geographicLevel: Observable<GeographicLevel[]>;
-  processedGeographicLevel: GeographicLevel[] = [];
+  ppcn: Observable<Ppcn[]>;
+  processedPpcn: Ppcn[] = [];
   isLoading = false;
 
   constructor(private router: Router,
@@ -46,14 +45,14 @@ export class PpcnLevelComponent implements OnInit {
     this.form = this.formBuilder.group({
       geographicCtrl: ['', Validators.required]
     });
-    this.geographicLevel = this.initialFormData().pipe(
-      tap((geographicLevel: GeographicLevel[]) => { this.processedGeographicLevel = geographicLevel; })
+    this.ppcn = this.initialFormData().pipe(
+      tap((ppcn: Ppcn[]) => { this.processedPpcn = ppcn; })
     );
     //this.initialFormData();
   }
 
-  private initialFormData(): Observable<GeographicLevel[]> {
-    return this.service.geographicLevel(this.i18nService.language.split('-')[0])
+  private initialFormData(): Observable<Ppcn[]> {
+    return this.service.ppcn(this.i18nService.language.split('-')[0])
     .pipe(finalize(() => { this.isLoading = false; }));
   }
 

@@ -12,11 +12,13 @@ import { SharedModule } from '@app/shared';
 import { Routes, RouterModule } from '@angular/router';
 import { Route, extract } from '@app/core';
 import { PpcnLevelComponent } from '@app/ppcn/ppcn-level/ppcn-level.component';
+import { PpcnFlowComponent } from '@app/ppcn/ppcn-flow/ppcn-flow.component';
 
 const routes: Routes = [
   Route.withShell([
     { path: '', redirectTo: 'mccr/registries', pathMatch: 'full' },
-    { path: 'ppcn/level', component: PpcnLevelComponent, data: { title: extract('PpcnLevel') } }
+    { path: 'ppcn/geographic', component: PpcnLevelComponent, data: { title: extract('PpcnLevel') } },
+    { path: 'ppcn/flow', component: PpcnFlowComponent, data: { title: extract('PpcnFlow') } }
   ])
 ];
 

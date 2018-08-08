@@ -29,6 +29,22 @@ export class PpcnService {
     private datePipe: DatePipe) { 
 
     }
+
+    ppcn(lang: string): Observable < Ppcn[] > {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': this.authenticationService.credentials.token
+        })
+      };
+      return this.httpClient
+        .get(routes.getGeographicLevel(lang), httpOptions) 
+        .pipe(
+          map((body: any) => {
+            return body;
+          })
+        );
+  
+    }
   
     geographicLevel(lang: string): Observable < GeographicLevel[] > {
       const httpOptions = {

@@ -1,0 +1,46 @@
+<div class="container">
+  <mat-card>
+    <h1>
+      <mat-card-title translate>APP_NAME</mat-card-title>
+      <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
+    </h1>
+    <h3>
+      <mat-card-title translate>Create a new PPCN Registry:</mat-card-title>
+    </h3>
+<mat-horizontal-stepper [linear]="true" #stepper>
+  <mat-step>
+    <ng-template matStepLabel>Geographic Level</ng-template>
+    <app-ppcn-level></app-ppcn-level>
+      <div>
+        <button mat-button matStepperNext >Next</button>
+      </div>
+  </mat-step>
+  <mat-step >
+    <form >
+      <ng-template matStepLabel>PPCN Form</ng-template>
+      <app-ppcn-new></app-ppcn-new>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Download file</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Upload file</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
+</mat-card>
+</div>

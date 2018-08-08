@@ -12,6 +12,8 @@ import { SharedModule } from '@app/shared';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 import { PpcnLevelComponent } from '@app/ppcn/ppcn-level/ppcn-level.component';
 import { PpcnRoutingModule } from '@app/ppcn/ppcn-routing.module';
+import { PpcnFlowComponent } from './ppcn-flow/ppcn-flow.component';
+import { PpcnNewComponent } from './ppcn-new/ppcn-new.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { PpcnRoutingModule } from '@app/ppcn/ppcn-routing.module';
     PpcnRoutingModule
   ],
   declarations: [
-    PpcnLevelComponent
+    PpcnLevelComponent,
+    PpcnFlowComponent,
+    PpcnNewComponent
   ],
   providers: [
     PpcnService,
