@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
 import { PpcnFlowComponent } from 'app/ppcn/ppcn-flow/ppcn-flow.component';
+import { PpcnNewFormData } from 'app/ppcn/ppcn-new-form-data';
 
 @Component({
   selector: 'app-ppcn-new',
@@ -27,6 +28,7 @@ export class PpcnNewComponent implements OnInit {
   form: FormGroup;
   ppcn: Observable<Ppcn[]>;
   processedPpcn: Ppcn[] = [];
+  initialRequiredData: Observable<PpcnNewFormData>;
   isLoading = false;
 
   constructor(private router: Router,
@@ -43,17 +45,25 @@ export class PpcnNewComponent implements OnInit {
 
   private createForm() {
     this.form = this.formBuilder.group({
-      geographicCtrl: ['', Validators.required]
-    });
-    this.ppcn = this.initialFormData().pipe(
-      tap((ppcn: Ppcn[]) => { this.processedPpcn = ppcn; })
-    );
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          nameCtrl: ['', Validators.required],
+          representativeNameCtrl: ['', Validators.required],
+          telephoneCtrl: ['', Validators.required],
+          faxCtrl: null,
+          postalCodeCtrl: null,
+          addressCtrl: ['', Validators.required],
+        }),
+      ])
+    // this.initialRequiredData = this.initialFormData().pipe(
+    //   tap((ppcn: Ppcn[]) => { this.processedPpcn = ppcn; })
+    // );
     //this.initialFormData();
+    });
   }
 
-  private initialFormData(): Observable<Ppcn[]> {
-    return this.service.ppcn(this.i18nService.language.split('-')[0])
-    .pipe(finalize(() => { this.isLoading = false; }));
-  }
-
+  // private initialFormData(): Observable<PpcnNewFormData> {
+  //   return this.service.newPpcnFormData()
+  //   .pipe(finalize(() => { this.isLoading = false; }));
+  // 
 }
