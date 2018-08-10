@@ -13,13 +13,13 @@
           <ng-template matStepLabel>Geographic Level</ng-template>
           <app-ppcn-level></app-ppcn-level>
           <div>
-            <button mat-button matStepperNext (click)="onSaving()">Next</button>
+            <button mat-button matStepperNext >Next</button>
           </div>
         </mat-step>
 
         <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
           <ng-template matStepLabel>PPCN Form</ng-template>
-          <app-ppcn-new></app-ppcn-new>
+          <app-ppcn-new> </app-ppcn-new>
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>

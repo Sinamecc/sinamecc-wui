@@ -72,6 +72,7 @@ export class PpcnService {
       .get(routes.seededFormData(lang), httpOptions) 
       .pipe(
         map((body: any) => {
+          console.log(body);
           return body;
         })
       );

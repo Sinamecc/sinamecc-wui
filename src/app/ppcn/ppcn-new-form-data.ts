@@ -1,10 +1,8 @@
 export interface PpcnNewFormData{
     id: string;
-    organization:Organization;
-    geographic: GeographicLevel;
-    requiredLevel: RequiredLevel;
-    recognitionType: RecognitionType;
-    subsector: SubSector;
+    required_level: RequiredLevel[];
+    recognition_type: RecognitionType[];
+    sector: Sector[];
 
 }
 
@@ -29,13 +27,13 @@ export interface GeographicLevel{
 
 export interface RequiredLevel{
     id: Number;
-    level_type: string;
+    level: string;
 
 }
 
 export interface RecognitionType{
     id: Number;
-    recognition_type: string;
+    recognition: string;
 
 }
 

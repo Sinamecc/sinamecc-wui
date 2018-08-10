@@ -1,7 +1,7 @@
 export interface Ppcn {
     name: string;
     id: string;
-    geographic_level: GeographicLevel;
+    geographic: GeographicLevel;
   }
 
 export interface GeographicLevel{

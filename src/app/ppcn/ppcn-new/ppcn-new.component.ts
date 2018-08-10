@@ -34,9 +34,9 @@ export class PpcnNewComponent implements OnInit {
   initialRequiredData: Observable<PpcnNewFormData>;
   isLoading = false;
 
-  requiredLevel: RequiredLevel[];
-  recognitionType: RecognitionType[];
-  sector: Sector[];
+  required_levels: RequiredLevel[];
+  recognition_types: RecognitionType[];
+  sectors: Sector[];
   subSector: SubSector[];
   
 
@@ -53,15 +53,25 @@ export class PpcnNewComponent implements OnInit {
   }
 
   private createForm(){
+    console.log("Llegue a initial required");
     this.formGroup = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
           nameCtrl: ['', Validators.required],
           representativeNameCtrl: ['', Validators.required],
-          telephoneCtrl: ['', Validators.required],
+          telephoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
           faxCtrl: null,
           postalCodeCtrl:null,
-          addressCtrl: ['', Validators.required] 
+          addressCtrl: ['', Validators.required],
+        }),
+        this.formBuilder.group({
+          contactNameCtrl: ['', Validators.required],
+          positionCtrl: ['', Validators.required],
+          emailFormCtrl: ['', Validators.email],
+          phoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
+        }),
+        this.formBuilder.group({
+          requiredCtrl:['', Validators.required],
         }),
       ])
     });
@@ -69,11 +79,11 @@ export class PpcnNewComponent implements OnInit {
     this.initialRequiredData = this.initialFormData().pipe(
       tap(ppcnNewFormData => {
         this.isLoading = false;
-        this.requiredLevel = ppcnNewFormData[0].requiredLevel;
-        this.recognitionType = ppcnNewFormData[0].recognitionType;
-        this.sector = ppcnNewFormData[0].sector;
-        this.subSector = ppcnNewFormData[0].subSector;
+        this.required_levels = ppcnNewFormData.required_level;
+        this.recognition_types = ppcnNewFormData.recognition_type;
+        this.sectors = ppcnNewFormData.sector;
       }));
+      
   }
 
   private initialFormData():Observable<PpcnNewFormData> {
