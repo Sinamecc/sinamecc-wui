@@ -39,7 +39,8 @@ export class PpcnFlowComponent implements OnInit {
   }
 
   onSaving(){
-    this.formArray[0]
+    this.formArray[0];
+    console.log(this.geographicLvl.formData);
   }
 
   get frmGeographic() {

@@ -61,11 +61,9 @@ export class PpcnLevelComponent implements OnInit {
   }
 
   onSaving(context:any){
-    console.log(context.geographicCtrl);
-    this.formData.append('geographic',context.geographicCtrl);
+    // console.log(context.geographicCtrl);
+    // this.formData.append('geographic',context.geographicCtrl);
     
   }
-
-  
 
 }

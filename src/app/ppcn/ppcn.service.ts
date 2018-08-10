@@ -13,7 +13,7 @@ import { PpcnNewFormData } from '@app/ppcn/ppcn-new-form-data';
 const routes = {
   getGeographicLevel: (lang: string) => `/v1/ppcn/geographic/level/${lang}`,
   getRequiredLevel: () => `/v1/ppcn/required/level`,
-  seededFormData: () => `/v1/ppcn/`,
+  seededFormData: (lang: string) => `/v1/ppcn/form/${lang}`,
 }
 
 export interface Response {
@@ -62,14 +62,14 @@ export class PpcnService {
         );
     }
 
-    newPpcnFormData(): Observable < PpcnNewFormData > {
+    newPpcnFormData(lang: string): Observable < PpcnNewFormData > {
       const httpOptions = {
         headers: new HttpHeaders({
           'Authorization': this.authenticationService.credentials.token
         })
       };
       return this.httpClient
-      .get(routes.seededFormData(), httpOptions) 
+      .get(routes.seededFormData(lang), httpOptions) 
       .pipe(
         map((body: any) => {
           return body;

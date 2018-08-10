@@ -13,7 +13,7 @@
           <ng-template matStepLabel>Geographic Level</ng-template>
           <app-ppcn-level></app-ppcn-level>
           <div>
-            <button mat-button matStepperNext >Next</button>
+            <button mat-button matStepperNext (click)="onSaving()">Next</button>
           </div>
         </mat-step>
 
@@ -39,7 +39,7 @@
           You are now done.
           <div>
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
+            <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
           </div>
         </mat-step>
       </mat-horizontal-stepper>

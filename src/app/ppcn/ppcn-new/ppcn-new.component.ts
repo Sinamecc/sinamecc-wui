@@ -15,7 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
 import { PpcnFlowComponent } from 'app/ppcn/ppcn-flow/ppcn-flow.component';
 import { PpcnLevelComponent } from 'app/ppcn/ppcn-level/ppcn-level.component';
-import { PpcnNewFormData } from 'app/ppcn/ppcn-new-form-data';
+import { PpcnNewFormData, RequiredLevel, RecognitionType, Sector, SubSector } from 'app/ppcn/ppcn-new-form-data';
 
 @Component({
   selector: 'app-ppcn-new',
@@ -25,7 +25,7 @@ import { PpcnNewFormData } from 'app/ppcn/ppcn-new-form-data';
 export class PpcnNewComponent implements OnInit {
   
   @Input() dataShared:boolean = false;
-  
+
   version: string = environment.version;
   error: string;
   formGroup: FormGroup;
@@ -33,6 +33,11 @@ export class PpcnNewComponent implements OnInit {
   processedPpcn: Ppcn[] = [];
   initialRequiredData: Observable<PpcnNewFormData>;
   isLoading = false;
+
+  requiredLevel: RequiredLevel[];
+  recognitionType: RecognitionType[];
+  sector: Sector[];
+  subSector: SubSector[];
   
 
   get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
@@ -60,6 +65,20 @@ export class PpcnNewComponent implements OnInit {
         }),
       ])
     });
+
+    this.initialRequiredData = this.initialFormData().pipe(
+      tap(ppcnNewFormData => {
+        this.isLoading = false;
+        this.requiredLevel = ppcnNewFormData[0].requiredLevel;
+        this.recognitionType = ppcnNewFormData[0].recognitionType;
+        this.sector = ppcnNewFormData[0].sector;
+        this.subSector = ppcnNewFormData[0].subSector;
+      }));
+  }
+
+  private initialFormData():Observable<PpcnNewFormData> {
+    return this.service.newPpcnFormData(this.i18nService.language.split('-')[0])
+    .pipe(finalize(() => { this.isLoading = false; }));
   }
 
 
