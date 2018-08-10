@@ -7,7 +7,8 @@ const routes: Routes = [
     { path: 'about', loadChildren: 'app/about/about.module#AboutModule' },
     { path: 'report', loadChildren: 'app/report/report.module#ReportModule' },
     { path: 'mitigation/actions', loadChildren: 'app/mitigation-actions/mitigation-actions.module#MitigationActionsModule' },
-    { path: 'mccr/registries', loadChildren: 'app/mccr-registries/mccr-registries.module#MccrRegistriesModule' }
+    { path: 'mccr/registries', loadChildren: 'app/mccr-registries/mccr-registries.module#MccrRegistriesModule' },
+    { path: 'ppcn', loadChildren: 'app/ppcn/ppcn.module#PpcnModule' }
   ]),
   // Fallback when no prior route is matched
   { path: '**', redirectTo: '', pathMatch: 'full' }

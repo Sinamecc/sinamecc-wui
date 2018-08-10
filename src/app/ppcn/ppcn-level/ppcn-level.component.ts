@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
@@ -22,10 +22,13 @@ import { PpcnFlowComponent } from 'app/ppcn/ppcn-flow/ppcn-flow.component';
 })
 
 export class PpcnLevelComponent implements OnInit {
+
+  @Output() emitEvent:EventEmitter<number> = new EventEmitter<number>();
   
   version: string = environment.version;
   error: string;
   form: FormGroup;
+  formData: FormData;
   geographicLevel: Observable<GeographicLevel[]>;
   processedGeographicLevel: GeographicLevel[] = [];
   isLoading = false;
@@ -36,6 +39,7 @@ export class PpcnLevelComponent implements OnInit {
     private service: PpcnService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar) {
+      this.formData = new FormData();
       this.createForm();
      }
 
@@ -49,12 +53,19 @@ export class PpcnLevelComponent implements OnInit {
     this.geographicLevel = this.initialFormData().pipe(
       tap((geographicLevel: GeographicLevel[]) => { this.processedGeographicLevel = geographicLevel; })
     );
-    //this.initialFormData();
   }
 
   private initialFormData(): Observable<GeographicLevel[]> {
     return this.service.geographicLevel(this.i18nService.language.split('-')[0])
     .pipe(finalize(() => { this.isLoading = false; }));
   }
+
+  onSaving(context:any){
+    console.log(context.geographicCtrl);
+    this.formData.append('geographic',context.geographicCtrl);
+    
+  }
+
+  
 
 }

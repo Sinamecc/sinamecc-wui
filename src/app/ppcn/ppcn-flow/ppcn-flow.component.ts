@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { PpcnLevelComponent } from 'app/ppcn/ppcn-level/ppcn-level.component';
 import { PpcnNewComponent } from 'app/ppcn/ppcn-new/ppcn-new.component';
 
@@ -13,11 +13,33 @@ export class PpcnFlowComponent implements OnInit {
   @ViewChild('PpcnLevelComponent') geographicLvl:PpcnLevelComponent;
   @ViewChild('PpcnNewComponent') ppcnForm:PpcnNewComponent;
 
+  mainGroup: FormGroup;
+
+  get formArray(): AbstractControl | null { return this.mainGroup.get('formArray'); }
+  
+  formData: FormData;
   isLoading = false;
-  secondFormGroup: FormGroup;
+  generalFormData: FormData;
 
   constructor(private _formBuilder: FormBuilder) {
+    this.formData = new FormData();
+    this.createForm();
+  }
+
+  ngOnInit() {
     
+  }
+
+  createForm(){
+    this.mainGroup = this._formBuilder.group({
+      formArray: this._formBuilder.array([this.frmGeographic,this.frmPpcn])
+    })
+  }
+  onSubmit(context:any){
+  }
+
+  onSaving(){
+    this.formArray[0]
   }
 
   get frmGeographic() {
@@ -25,14 +47,7 @@ export class PpcnFlowComponent implements OnInit {
   }
 
   get frmPpcn() {
-    return this.ppcnForm ? this.ppcnForm.form : null;
-  }
-
-  ngOnInit() {
-    
-  }
-
-  onSubmit(context:any){
+    return this.ppcnForm ? this.ppcnForm.formGroup : null;
   }
 
 }
