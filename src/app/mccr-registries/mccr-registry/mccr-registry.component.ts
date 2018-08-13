@@ -41,7 +41,7 @@ export class MccrRegistryComponent implements OnInit {
     this.isLoading = true;
     this.service.getMccrRegistry(this.id)
      .pipe(finalize(() => { this.isLoading = false; }))
-     .subscribe((response: MccrRegistry) => { debugger; this.mccrRegistry = response; }); 
+     .subscribe((response: MccrRegistry) => { this.mccrRegistry = response; }); 
   }
 
   async download(file:string) {

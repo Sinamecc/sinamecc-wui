@@ -132,6 +132,8 @@
   "Conceptual Proposal Integration":"Propuesta Conceptual de Integración",
   "Code":"Código",
   "Download formulary":"Descargar Formulario",
-  "You must download the file, fill it and load your proposal for review":"Debe descargar el formulario, posteriormente debe llenarlo y cargar su propuesta para ser revisada"
+  "You must download the file, fill it and load your proposal for review":"Debe descargar el formulario, posteriormente debe llenarlo y cargar su propuesta para ser revisada",
+  "assignOvv":"Asignar OVV",
+  "selectOVVTitle":"Seleccionar Organismo Validador Verificador"
   
   }

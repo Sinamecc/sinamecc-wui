@@ -8,6 +8,7 @@ import { MccrRegistriesNewComponent } from '@app/mccr-registries/mccr-registries
 import { MccrRegistryComponent } from '@app/mccr-registries/mccr-registry/mccr-registry.component';
 import { MccrRegistriesUpdateComponent } from '@app/mccr-registries/mccr-registries-update/mccr-registries-update.component';
 import { MaterialModule } from '@app/material.module';
+import { MccrRegistriesOvvSelectorComponent } from '@app/mccr-registries/mccr-registries-ovv-selector/mccr-registries-ovv-selector.component';
 
 
 
@@ -18,6 +19,7 @@ const routes: Routes = [
     { path: 'mccr/registries/new', component: MccrRegistriesNewComponent, data: { title: extract('New') } },
     { path: 'mccr/registries/:id', component: MccrRegistryComponent, data: { id: extract('id') } },
     { path: 'mccr/registries/:id/edit', component: MccrRegistriesUpdateComponent, data: { id: extract('id') } },
+    { path: 'mccr/registries/:id/ovv', component: MccrRegistriesOvvSelectorComponent, data: { id: extract('id') } }
   ])
 ];
 

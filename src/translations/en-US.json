@@ -127,5 +127,7 @@
   "Conceptual Proposal Integration":"Conceptual Proposal Integration",
   "Code":"Code",
   "Download formulary":"Download formulary",
-  "You must download the file, fill it and load your proposal for review":"You must download the file, fill it and load your proposal for review"
+  "You must download the file, fill it and load your proposal for review":"You must download the file, fill it and load your proposal for review",
+  "assignOvv":"Assign OVV",
+  "selectOVVTitle":"Select Verifier Validating Organism"
   }
