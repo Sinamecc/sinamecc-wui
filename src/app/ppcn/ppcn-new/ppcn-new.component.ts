@@ -72,6 +72,7 @@ export class PpcnNewComponent implements OnInit {
         }),
         this.formBuilder.group({
           requiredCtrl:['', Validators.required],
+          recognitionCtrl: ['',Validators.required],
         }),
       ])
     });

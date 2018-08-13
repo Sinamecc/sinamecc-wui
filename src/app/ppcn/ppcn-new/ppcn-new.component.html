@@ -102,7 +102,7 @@
                 <mat-label translate>Recognition Type</mat-label>
                 <mat-select formControlName="recognitionCtrl" [placeholder]="'Recognition Type' | translate">
                   <mat-option *ngFor="let recognition_type of recognition_types" [value]="recognition_type.id">
-                    {{ recognition_type.level }}
+                    {{ recognition_type.recognition }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
