@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InputFileComponent } from './input-file.component';
+import { InputFileComponent } from '@app/shared/input-file/input-file.component';
 
 describe('InputFileComponent', () => {
   let component: InputFileComponent;

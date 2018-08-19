@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { HomeService } from './home.service';
+import { HomeService } from '@app/home/home.service';
 
 describe('HomeService', () => {
   beforeEach(() => {

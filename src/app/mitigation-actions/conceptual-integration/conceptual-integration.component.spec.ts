@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConceptualIntegrationComponent } from './conceptual-integration.component';
+import { ConceptualIntegrationComponent } from '@app/mitigation-actions/conceptual-integration/conceptual-integration.component';
 
 describe('ConceptualIntegrationComponent', () => {
   let component: ConceptualIntegrationComponent;

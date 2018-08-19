@@ -1,0 +1,118 @@
+<div class="container">
+  <mat-card-content>
+    <form *ngIf="initialRequiredData | async" [formGroup]="formGroup">
+      <div fxLayout="column">
+        <mat-vertical-stepper formArrayName="formArray" linear>
+          <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+            <ng-template matStepLabel>
+              <span translate>Basic Info</span>
+            </ng-template>
+            <mat-form-field>
+              <mat-label translate>Name</mat-label>
+              <input matInput formControlName="nameCtrl" required>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br/>
+            <mat-form-field>
+              <mat-label translate>Representative Name</mat-label>
+              <input matInput formControlName="representativeNameCtrl" required>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br/>
+            <mat-form-field>
+              <mat-label translate>Telephone </mat-label>
+              <input matInput formControlName="telephoneCtrl" required>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br/>
+            <mat-form-field>
+              <mat-label translate>Fax</mat-label>
+              <input matInput formControlName="faxCtrl">
+            </mat-form-field>
+            <br/>
+            <mat-form-field>
+              <mat-label translate>Postal Code</mat-label>
+              <input matInput formControlName="postalCodeCtrl">
+            </mat-form-field>
+            <br/>
+            <mat-form-field>
+              <mat-label translate>Address</mat-label>
+              <input matInput formControlName="addressCtrl" required>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br/>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </mat-step>
+          <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+            <ng-template matStepLabel>
+              <div translate>Contact Info</div>
+            </ng-template>
+            <mat-form-field>
+              <mat-label translate>Name</mat-label>
+              <input matInput formControlName="contactNameCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br/>
+            <mat-form-field>
+              <mat-label translate>Position</mat-label>
+              <input matInput formControlName="positionCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-form-field>
+              <mat-label translate>Email address</mat-label>
+              <input matInput formControlName="emailFormCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <mat-form-field>
+              <mat-label translate>Phone</mat-label>
+              <input matInput formControlName="phoneCtrl" type="tel">
+              <mat-error translate>The input is required or length is incorrect.</mat-error>
+            </mat-form-field>
+            <br/>
+
+            <div>
+              <button mat-button matStepperPrevious type="button">
+                <span translate>Back</span>
+              </button>
+              <button mat-button matStepperNext type="button">
+                <span translate>Next</span>
+              </button>
+            </div>
+          </mat-step>
+          <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
+            <ng-template matStepLabel>
+              <span translate>Request Level</span>
+            </ng-template>
+            <mat-form-field>
+              <mat-label translate>Required Level</mat-label>
+              <mat-select formControlName="requiredCtrl" [placeholder]="'Required Level' | translate">
+                <mat-option *ngFor="let required_level of required_levels" [value]="required_level.id">
+                  {{ required_level.level }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br/>
+            <mat-form-field>
+                <mat-label translate>Recognition Type</mat-label>
+                <mat-select formControlName="recognitionCtrl" [placeholder]="'Recognition Type' | translate">
+                  <mat-option *ngFor="let recognition_type of recognition_types" [value]="recognition_type.id">
+                    {{ recognition_type.recognition }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br/>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </mat-step>
+        </mat-vertical-stepper>
+      </div>
+    </form>
+  </mat-card-content>
+</div>

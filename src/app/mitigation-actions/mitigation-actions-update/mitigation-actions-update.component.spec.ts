@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MitigationActionsUpdateComponent } from './mitigation-actions-update.component';
+import { MitigationActionsUpdateComponent } from '@app/mitigation-actions/mitigation-actions-update/mitigation-actions-update.component';
 
 describe('MitigationActionsUpdateComponent', () => {
   let component: MitigationActionsUpdateComponent;

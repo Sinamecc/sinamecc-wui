@@ -1,0 +1,17 @@
+<mat-card-content>
+  <form *ngIf="geographicLevel | async" [formGroup]="form" novalidate>
+    <div class="form-error" [hidden]="!error || isLoading" translate>
+      <span translate>Error submitting the form.</span>
+    </div>
+    <br/>
+    <div fxLayout="column">
+      <mat-form-field>
+        <mat-select  formControlName="geographicCtrl" (change)="onSaving()" [placeholder]="'Geographic Level' | translate">
+          <mat-option *ngFor="let geographicLevel of processedGeographicLevel" [value]="geographicLevel.id">
+            {{ geographicLevel.level }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-card-content>

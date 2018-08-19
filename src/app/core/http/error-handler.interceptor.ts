@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
-import { Logger } from '../logger.service';
+import { Logger } from '@app/core/logger.service';
 import { Router } from '@angular/router';
 
 const log = new Logger('ErrorHandlerInterceptor');

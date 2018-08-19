@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { extract } from '@app/core';
-import { ReportComponent } from './report.component';
+import { ReportComponent } from '@app/report/report.component';
 import { ReportVersionsComponent } from '@app/report/report-versions/report-versions.component';
 import { ReportNewComponent } from '@app/report/report-new/report-new.component';
 import { ReportVersionsNewComponent } from '@app/report/report-versions-new/report-versions-new.component';

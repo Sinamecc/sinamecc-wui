@@ -9,7 +9,7 @@ import { Logger, I18nService, AuthenticationService } from '@app/core';
 const log = new Logger('Report');
 
 
-import { MccrRegistriesService } from './../mccr-registries.service';
+import { MccrRegistriesService } from '@app/mccr-registries/mccr-registries.service';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { Observable } from 'rxjs/Observable';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';

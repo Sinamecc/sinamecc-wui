@@ -11,6 +11,7 @@ export interface MitigationAction {
   location: Location;
   progress_indicator: ProgressIndicator;
   review_status: ReviewStatus;
+  next_state: ReviewStatus[];
   created: string;
   updated: string;
 }
@@ -39,6 +40,5 @@ export interface Institution {
 }
 
 export interface ReviewStatus { 
-  id: number;
   status: string;
 }

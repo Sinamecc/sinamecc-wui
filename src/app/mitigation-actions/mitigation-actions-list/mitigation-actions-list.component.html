@@ -25,9 +25,9 @@
     </ng-container>
 
     <!-- Status Column -->
-    <ng-container matColumnDef="status">
+    <ng-container matColumnDef="fsm_state">
       <mat-header-cell *matHeaderCellDef translate> Status </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.review_status.status}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.fsm_state}} </mat-cell>
     </ng-container>
   <!-- Updated Column -->
   <ng-container matColumnDef="updated">
@@ -56,7 +56,7 @@
 
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row [ngClass]="row.review_status.status" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-row [ngClass]="row.fsm_state" *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 
 <mat-paginator #paginator

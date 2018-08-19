@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '@app/core';
 
-import { MccrRegistriesListComponent } from './mccr-registries-list/mccr-registries-list.component';
+import { MccrRegistriesListComponent } from '@app/mccr-registries/mccr-registries-list/mccr-registries-list.component';
 import { MccrRegistriesNewComponent } from '@app/mccr-registries/mccr-registries-new/mccr-registries-new.component';
 import { MccrRegistryComponent } from '@app/mccr-registries/mccr-registry/mccr-registry.component';
 import { MccrRegistriesUpdateComponent } from '@app/mccr-registries/mccr-registries-update/mccr-registries-update.component';

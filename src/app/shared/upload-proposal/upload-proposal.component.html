@@ -1,0 +1,50 @@
+<div class="container">
+  <mat-card>
+    <h1>
+      <mat-card-title translate>APP_NAME</mat-card-title>
+      <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
+    </h1>
+    <h3>
+      <mat-card-title translate>{{title}}</mat-card-title>
+    </h3>
+    <mat-card-content>
+      <form (ngSubmit)="submitForm()" *ngIf="!isLoading" [formGroup]="form" novalidate>
+        <div class="report-error" [hidden]="!error || isLoading" translate>
+          <span translate>Error submitting the form.</span>
+        </div>
+        <br/>
+        <div fxLayout="column">
+          <mat-form-field>
+              <textarea matInput formControlName="commentCtrl" [placeholder]="'Some corrective comment' | translate" matTextareaAutosize
+                matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+
+              <mat-label translate>Code</mat-label>
+              <input matInput formControlName="entityCtrl" required readonly>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+          <br/>
+          <mat-form-field>
+              <app-input-file formControlName="fileCtrl" [placeholder]="'Required input' | translate" valuePlaceholder="No file selected" required></app-input-file>
+              <mat-icon matSuffix>folder</mat-icon>
+              <mat-error *ngIf="form.get('fileCtrl').hasError('required')" translate>
+                Please select a file
+              </mat-error>
+              <mat-error *ngIf="form.get('fileCtrl').hasError('maxContentSize')">
+                  <span translate>The total size must not exceed {{formDoc.get('fileCtrl')?.getError('maxContentSize').maxSize | byteFormat}}
+                ({{form.get('fileCtrl')?.getError('maxContentSize').actualSize | byteFormat}}).</span>
+              </mat-error>
+            </mat-form-field>
+          <br/>
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">
+            <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
+            <span translate>Register Proposal</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

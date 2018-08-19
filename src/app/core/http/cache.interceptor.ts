@@ -3,7 +3,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } fr
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 
-import { HttpCacheService } from './http-cache.service';
+import { HttpCacheService } from '@app/core/http/http-cache.service';
 
 /**
  * Caches HTTP requests.

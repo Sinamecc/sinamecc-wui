@@ -12,7 +12,7 @@ import { map, catchError } from 'rxjs/operators';
 const log = new Logger('Report');
 
 
-import { MitigationActionsService } from './../mitigation-actions.service';
+import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 
 import {MatDialog, MatDialogConfig} from "@angular/material";
@@ -31,7 +31,7 @@ export class MitigationActionsListComponent implements OnInit {
   error: string;
   isLoading = false;
   dataSource = new MitigationActionSource(this.service, this.i18nService);
-  displayedColumns = ['name', 'strategy_name', 'purpose', 'status', 'updated', 'created', 'actions'];
+  displayedColumns = ['name', 'strategy_name', 'purpose', 'fsm_state', 'updated', 'created', 'actions'];
 
 
   constructor(private router: Router,

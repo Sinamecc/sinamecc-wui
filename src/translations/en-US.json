@@ -126,8 +126,10 @@
   "Add a new review for this mitigation action":"Add a new review for this mitigation action",
   "Conceptual Proposal Integration":"Conceptual Proposal Integration",
   "Code":"Code",
-  "Download formulary":"Download formulary",
   "You must download the file, fill it and load your proposal for review":"You must download the file, fill it and load your proposal for review",
+  "harmonization_ingei_proposal":"Harmonization INGEI Proposal",
+  "Some corrective comment":"Some corrective comment",
+  "Download formulary":"Download formulary",
   "assignOvv":"Assign OVV",
   "selectOVVTitle":"Select Verifier Validating Organism"
   }

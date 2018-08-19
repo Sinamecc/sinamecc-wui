@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from '@app/material.module';
-import { AboutComponent } from './about.component';
+import { AboutComponent } from '@app/about/about.component';
 
 describe('AboutComponent', () => {
   let component: AboutComponent;

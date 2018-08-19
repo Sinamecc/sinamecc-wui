@@ -4,7 +4,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import { FileInput } from './file-input.model';
+import { FileInput } from '@app/shared/input-file/file-input.model';
 
 @Component({
   selector: 'app-input-file',

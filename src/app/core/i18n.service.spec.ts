@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Subject } from 'rxjs/Subject';
 
-import { extract, I18nService } from './i18n.service';
+import { extract, I18nService } from '@app/core/i18n.service';
 
 const defaultLanguage = 'en-US';
 const supportedLanguages = ['eo', 'en-US', 'fr-FR'];

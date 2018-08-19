@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MccrRegistriesUpdateComponent } from './mccr-registries-update.component';
+import { MccrRegistriesUpdateComponent } from '@app/mccr-registries/mccr-registries-update/mccr-registries-update.component';
 
 describe('MccrRegistriesUpdateComponent', () => {
   let component: MccrRegistriesUpdateComponent;

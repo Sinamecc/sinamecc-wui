@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { MccrRegistriesService } from './mccr-registries.service';
+import { MccrRegistriesService } from '@app/mccr-registries/mccr-registries.service';
 
 describe('MccrRegistriesService', () => {
   beforeEach(() => {

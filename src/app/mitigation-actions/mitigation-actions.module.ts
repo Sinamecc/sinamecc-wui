@@ -8,17 +8,19 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
 import { MaterialModule } from '@app/material.module';
-import { MitigationActionsRoutingModule } from './mitigation-actions-routing.module';
-import { MitigationActionsListComponent } from './mitigation-actions-list/mitigation-actions-list.component';
-import { MitigationActionsService } from './mitigation-actions.service';
-import { MitigationActionsNewComponent } from './mitigation-actions-new/mitigation-actions-new.component';
+import { MitigationActionsRoutingModule } from '@app/mitigation-actions/mitigation-actions-routing.module';
+import { MitigationActionsListComponent } from '@app/mitigation-actions/mitigation-actions-list/mitigation-actions-list.component';
+import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
+import { MitigationActionsNewComponent } from '@app/mitigation-actions/mitigation-actions-new/mitigation-actions-new.component';
 import { DatePipe } from '@angular/common';
-import { MitigationActionComponent } from './mitigation-action/mitigation-action.component';
-import { MitigationActionsUpdateComponent } from './mitigation-actions-update/mitigation-actions-update.component';
-import { MitigationActionReviewsNewComponent } from './mitigation-action-reviews/mitigation-action-reviews-new/mitigation-action-reviews-new.component';
-import { MitigationActionsReviewsListComponent } from './mitigation-action-reviews/mitigation-actions-reviews-list/mitigation-actions-reviews-list.component';
-import { ConceptualIntegrationComponent } from './conceptual-integration/conceptual-integration.component';
-import { ConceptualIntegrationNewComponent } from './conceptual-integration-new/conceptual-integration-new.component'
+import { MitigationActionComponent } from '@app/mitigation-actions/mitigation-action/mitigation-action.component';
+import { MitigationActionsUpdateComponent } from '@app/mitigation-actions/mitigation-actions-update/mitigation-actions-update.component';
+import { MitigationActionReviewsNewComponent } from '@app/mitigation-actions/mitigation-action-reviews/mitigation-action-reviews-new/mitigation-action-reviews-new.component';
+import { MitigationActionsReviewsListComponent } from '@app/mitigation-actions/mitigation-action-reviews/mitigation-actions-reviews-list/mitigation-actions-reviews-list.component';
+import { ConceptualIntegrationComponent } from '@app/mitigation-actions/conceptual-integration/conceptual-integration.component';
+import { IngeiHarmonizationComponent } from '@app/mitigation-actions/ingei-harmonization/ingei-harmonization.component'
+import { ConceptualIntegrationNewComponent } from '@app/mitigation-actions/conceptual-integration-new/conceptual-integration-new.component';
+import { HarmonizationProposalNewComponent } from '@app/mitigation-actions/harmonization-proposal-new/harmonization-proposal-new.component'
 @NgModule({
   imports: [
     CommonModule,
@@ -39,7 +41,9 @@ import { ConceptualIntegrationNewComponent } from './conceptual-integration-new/
     MitigationActionReviewsNewComponent,
     MitigationActionsReviewsListComponent,
     ConceptualIntegrationComponent,
-    ConceptualIntegrationNewComponent
+    IngeiHarmonizationComponent,
+    ConceptualIntegrationNewComponent,
+    HarmonizationProposalNewComponent
   ],
   providers: [
     MitigationActionsService,

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReportVersionsComponent } from './report-versions.component';
+import { ReportVersionsComponent } from '@app/report/report-versions/report-versions.component';
 
 describe('ReportVersionsComponent', () => {
   let component: ReportVersionsComponent;
