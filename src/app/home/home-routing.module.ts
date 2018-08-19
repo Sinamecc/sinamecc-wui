@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '@app/core';
-import { HomeComponent } from './home.component';
+import { HomeComponent } from '@app/home/home.component';
 
 const routes: Routes = [
   Route.withShell([

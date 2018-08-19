@@ -1,4 +1,4 @@
-import { Logger, LogLevel, LogOutput } from './logger.service';
+import { Logger, LogLevel, LogOutput } from '@app/core/logger.service';
 
 const logMethods = ['log', 'info', 'warn', 'error'];
 

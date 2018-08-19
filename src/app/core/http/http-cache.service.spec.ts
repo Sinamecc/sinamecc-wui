@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpResponse } from '@angular/common/http';
 
-import { HttpCacheService, HttpCacheEntry } from './http-cache.service';
+import { HttpCacheService, HttpCacheEntry } from '@app/core/http/http-cache.service';
 
 const cachePersistenceKey = 'httpCache';
 

@@ -6,10 +6,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
 import { MaterialModule } from '@app/material.module';
-import { HomeRoutingModule } from './home-routing.module';
-import { HomeComponent } from './home.component';
-import { QuoteService } from './quote.service';
-import { HomeService } from './home.service';
+import { HomeRoutingModule } from '@app/home/home-routing.module';
+import { HomeComponent } from '@app/home/home.component';
+import { QuoteService } from '@app/home/quote.service';
+import { HomeService } from '@app/home/home.service';
 
 @NgModule({
   imports: [

@@ -14,13 +14,13 @@
   <!-- Strategy Name Column -->
   <ng-container matColumnDef="current_status">
     <mat-header-cell *matHeaderCellDef translate> Current Status </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.current_status?.status }} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.current_status }} </mat-cell>
   </ng-container>
 
     <!-- Objective Column -->
-    <ng-container matColumnDef="previous_status">
+    <ng-container matColumnDef="previous_state">
       <mat-header-cell *matHeaderCellDef translate> Previous Status </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.previous_status?.status}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.previous_state}} </mat-cell>
     </ng-container>
 
 

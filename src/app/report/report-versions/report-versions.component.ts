@@ -12,7 +12,7 @@ import { Observable } from 'rxjs/Observable';
 const log = new Logger('Report');
 
 
-import { ReportService, Report, Version } from './../report.service';
+import { ReportService, Report, Version } from '@app/report/report.service';
 
 
 @Component({

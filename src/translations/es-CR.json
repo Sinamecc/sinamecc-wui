@@ -120,7 +120,6 @@
   "Add new file":"Agregar nuevo archivo",
   "Edit a mccr registry:":"Editar un registro MCCR",
   "General Data": "Datos Generales",
-  "Status":"Estatus",
   "Previous Status":"Estado Previo",
   "Current Status":"Estado Actual",
   "Date":"Fecha",
@@ -131,7 +130,9 @@
   "Download":"Descargar",
   "Conceptual Proposal Integration":"Propuesta Conceptual de Integración",
   "Code":"Código",
-  "Download formulary":"Descargar Formulario",
+  "Download formulary:":"Descargar Formulario",
+  "harmonization_ingei_proposal":"Propuesta Armonización de INGEI",
+  "Some corrective comment":"Algun comentario correctivo",
   "You must download the file, fill it and load your proposal for review":"Debe descargar el formulario, posteriormente debe llenarlo y cargar su propuesta para ser revisada",
   "assignOvv":"Asignar OVV",
   "selectOVVTitle":"Seleccionar Organismo Validador Verificador"

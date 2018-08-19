@@ -5,7 +5,7 @@ import { HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
-import { MccrRegistry } from './mccr-registry';
+import { MccrRegistry } from '@app/mccr-registries/mccr-registry';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';

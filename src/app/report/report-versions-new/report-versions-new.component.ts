@@ -11,7 +11,7 @@ import { tap } from 'rxjs/operators';
 const log = new Logger('Report');
 
 
-import { ReportService } from './../report.service';
+import { ReportService } from '@app/report/report.service';
 import { Observable } from 'rxjs/Observable';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';

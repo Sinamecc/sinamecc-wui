@@ -3,10 +3,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AuthenticationService } from '../authentication/authentication.service';
-import { MockAuthenticationService } from '../authentication/authentication.service.mock';
-import { CoreModule } from '../core.module';
-import { ShellComponent } from './shell.component';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
+import { MockAuthenticationService } from '@app/core/authentication/authentication.service.mock';
+import { CoreModule } from '@app/core/core.module';
+import { ShellComponent } from '@app/core/shell/shell.component';
 
 describe('ShellComponent', () => {
   let component: ShellComponent;

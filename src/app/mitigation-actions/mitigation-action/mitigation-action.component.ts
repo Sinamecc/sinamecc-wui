@@ -8,7 +8,7 @@ import { Logger, I18nService, AuthenticationService } from '@app/core';
 const log = new Logger('Report');
 
 
-import { MitigationActionsService } from './../mitigation-actions.service';
+import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 
 

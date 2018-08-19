@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MitigationActionsReviewsListComponent } from './mitigation-actions-reviews-list.component';
+import { MitigationActionsReviewsListComponent } from '@app/mitigation-actions/mitigation-action-reviews/mitigation-actions-reviews-list/mitigation-actions-reviews-list.component';
 
 describe('MitigationActionsReviewsListComponent', () => {
   let component: MitigationActionsReviewsListComponent;

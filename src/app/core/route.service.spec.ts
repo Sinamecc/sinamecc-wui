@@ -1,10 +1,10 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { AuthenticationService } from './authentication/authentication.service';
-import { MockAuthenticationService } from './authentication/authentication.service.mock';
-import { AuthenticationGuard } from './authentication/authentication.guard';
-import { ShellComponent } from './shell/shell.component';
-import { Route } from './route.service';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
+import { MockAuthenticationService } from '@app/core/authentication/authentication.service.mock';
+import { AuthenticationGuard } from '@app/core/authentication/authentication.guard';
+import { ShellComponent } from '@app/core/shell/shell.component';
+import { Route } from '@app/core/route.service';
 
 describe('Route', () => {
   let route: Route;

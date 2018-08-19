@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { includes } from 'lodash';
 
-import { Logger } from './logger.service';
+import { Logger } from '@app/core/logger.service';
 import * as enUS from '../../translations/en-US.json';
 // import * as frFR from '../../translations/fr-FR.json';
 import * as esCR from '../../translations/es-CR.json';

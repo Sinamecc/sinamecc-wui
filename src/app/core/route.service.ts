@@ -1,7 +1,7 @@
 import { Route as ngRoute, Routes } from '@angular/router';
 
-import { ShellComponent } from './shell/shell.component';
-import { AuthenticationGuard } from './authentication/authentication.guard';
+import { ShellComponent } from '@app/core/shell/shell.component';
+import { AuthenticationGuard } from '@app/core/authentication/authentication.guard';
 
 /**
  * Provides helper methods to create routes.

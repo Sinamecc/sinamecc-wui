@@ -2,8 +2,8 @@ import { Inject, Injectable, InjectionToken, Injector, Optional } from '@angular
 import { HttpClient, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-import { ErrorHandlerInterceptor } from './error-handler.interceptor';
-import { CacheInterceptor } from './cache.interceptor';
+import { ErrorHandlerInterceptor } from '@app/core/http/error-handler.interceptor';
+import { CacheInterceptor } from '@app/core/http/cache.interceptor';
 
 // HttpClient is declared in a re-exported module, so we have to extend the original module to make it work properly
 // (see https://github.com/Microsoft/TypeScript/issues/13897)

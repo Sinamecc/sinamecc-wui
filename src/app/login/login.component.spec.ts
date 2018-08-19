@@ -8,7 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
 import { MaterialModule } from '@app/material.module';
-import { LoginComponent } from './login.component';
+import { LoginComponent } from '@app/login/login.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;

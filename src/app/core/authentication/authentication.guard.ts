@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 
-import { Logger } from '../logger.service';
-import { AuthenticationService } from './authentication.service';
+import { Logger } from '@app/core/logger.service';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
 
 const log = new Logger('AuthenticationGuard');
 

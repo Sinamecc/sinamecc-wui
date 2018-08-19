@@ -25,7 +25,7 @@ export class MitigationActionsReviewsListComponent implements OnInit {
   dataSource = new MitigationActionReviewSource(this.service, this.route.snapshot.paramMap.get('id'));
 
   //dataSource = new ReportVersionsDataSource(this.reportService,+this.route.snapshot.paramMap.get('id'));
-  displayedColumns = ['date', 'current_status', 'previous_status'];
+  displayedColumns = ['date', 'current_status', 'previous_state'];
 
 
 

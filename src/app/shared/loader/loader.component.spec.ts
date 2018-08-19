@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from '@app/material.module';
-import { LoaderComponent } from './loader.component';
+import { LoaderComponent } from '@app/shared/loader/loader.component';
 
 describe('LoaderComponent', () => {
   let component: LoaderComponent;

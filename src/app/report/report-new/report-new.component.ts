@@ -9,7 +9,7 @@ import { Logger, I18nService, AuthenticationService } from '@app/core';
 const log = new Logger('Report');
 
 
-import { ReportService } from './../report.service';
+import { ReportService } from '@app/report/report.service';
 import { MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 

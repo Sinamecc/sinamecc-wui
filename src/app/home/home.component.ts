@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 
-import { QuoteService } from './quote.service';
-import { HomeService } from './home.service';
+import { QuoteService } from '@app/home/quote.service';
+import { HomeService } from '@app/home/home.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

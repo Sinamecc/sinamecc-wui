@@ -1,0 +1,23 @@
+<div class="container">
+  <mat-card>
+    <h1>
+      <mat-card-title translate>APP_NAME</mat-card-title>
+      <!-- <app-loader [isLoading]="isLoading" size="1.5"></app-loader> -->
+    </h1>
+    <h3>
+      <mat-card-title translate>{{title}}</mat-card-title>
+    </h3>
+    <mat-card-content>
+      <strong translate>Code</strong>: {{code}} <br>
+
+      <span translate>Download formulary:&nbsp;&nbsp;&nbsp;<a href="assets/{{fileName}}" download>{{fileName}}</a></span>
+      <br/>
+      <br/>
+      <strong translate>Note:</strong><span translate>You must download the file, fill it and load your proposal for review</span>
+      <br/>
+      <div class="button-row">
+        <button mat-raised-button color="primary" (click)="next()"><span translate>Next</span></button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

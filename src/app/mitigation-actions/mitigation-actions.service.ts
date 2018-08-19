@@ -5,8 +5,8 @@ import { HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
-import { MitigationAction } from './mitigation-action';
-import { MitigationActionReview } from './mitigation-action-review';
+import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
+import { MitigationActionReview } from '@app/mitigation-actions/mitigation-action-review';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
@@ -148,38 +148,6 @@ export class MitigationActionsService {
     );
 
 
-  }
-
-  submitNewConceptualIntegration(context: any): Observable <Response> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': this.authenticationService.credentials.token
-      })
-    };
-
-    let fileList = context.fileCtrl.files;
-    if (fileList.length > 0) {
-      let file: File = fileList[0];
-      let formData: FormData = new FormData();
-      formData.append('name', context.commentCtrl);
-      formData.append('file', file, file.name);
-      formData.append('mitigation', context.mitigationActionCtrl);
-
-      return this.httpClient
-        .post(routes.submitNewHarmonizationForMitigation(), formData, httpOptions)
-        .pipe(
-          map((body: any) => {
-            const response = {
-              statusCode: 200,
-              message: 'Form submitted correctly'
-            };
-            return response;
-          })
-        );
-    } else {
-      // raise exception
-    }
-    
   }
 
 

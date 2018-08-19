@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { MitigationActionsService } from './mitigation-actions.service';
+import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 
 describe('MitigationActionsService', () => {
   beforeEach(() => {

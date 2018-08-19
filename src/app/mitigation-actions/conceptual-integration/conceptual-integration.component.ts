@@ -1,16 +1,13 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import { finalize } from 'rxjs/operators';
 
-import { Logger, I18nService, AuthenticationService } from '@app/core';
+import { Logger } from '@app/core';
 
 const log = new Logger('Report');
 
 
-import { MitigationActionsService } from './../mitigation-actions.service';
-import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
-
+import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 
 @Component({
   selector: 'app-conceptual-integration',
@@ -19,27 +16,21 @@ import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 })
 export class ConceptualIntegrationComponent implements OnInit {
 
-  mitigationAction: MitigationAction;
   isLoading: boolean;
+  title: string;
   id: string;
+  fileName: string;
+  nextRoute: string;
 
-  constructor(private router: Router,
-    private i18nService: I18nService,
-    private service: MitigationActionsService,
-    private route: ActivatedRoute) { 
+  constructor(private route: ActivatedRoute) { 
       this.id = this.route.snapshot.paramMap.get('id');
+      this.title = "Conceptual Proposal Integration";
+      this.fileName = "conceptual_proposal.xlsx";
+      this.nextRoute = `mitigation/actions/${this.id}/conceptual/integration/new`;
     }
 
     ngOnInit() {
-      this.isLoading = true;
-      this.service.getMitigationAction(this.id, this.i18nService.language.split('-')[0])
-       .pipe(finalize(() => { this.isLoading = false; }))
-       .subscribe((response: MitigationAction) => { this.mitigationAction = response; }); 
-      
-    }
-
-    dashboard() {
-      this.router.navigate([`mitigation/actions`], { replaceUrl: true });
+    
     }
 
 }

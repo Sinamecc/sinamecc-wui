@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MitigationActionsListComponent } from './mitigation-actions-list.component';
+import { MitigationActionsListComponent } from '@app/mitigation-actions/mitigation-actions-list/mitigation-actions-list.component';
 
 describe('MitigationActionsListComponent', () => {
   let component: MitigationActionsListComponent;
