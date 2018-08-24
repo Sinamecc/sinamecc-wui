@@ -1,11 +1,13 @@
 <div class="container">
   <mat-card>
-    <h1>
+    <!--<h1>
       <mat-card-title translate>APP_NAME</mat-card-title>
       <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
-    </h1>
+    </h1>-->
     <h3>
-      <mat-card-title translate>Submit a new report file version:</mat-card-title>
+      <mat-card-title > <div translate class="section-heading">Submit a new report file version:</div> </mat-card-title>
+      <mat-divider class="divider-custom"></mat-divider>
+        <mat-divider class="divider-custom"></mat-divider>
     </h3>
     <mat-card-content>
       <form (ngSubmit)="submitForm()" *ngIf="!isLoading" [formGroup]="reportForm" novalidate>
@@ -32,8 +34,10 @@
                 ({{reportForm.get('file')?.getError('maxContentSize').actualSize | byteFormat}}).</span>
               </mat-error>
             </mat-form-field>
-          <br/>
-          <button mat-raised-button color="primary" type="submit" [disabled]="reportForm.invalid || isLoading">
+          <br/>  
+        </div>
+        <div class="box-button">
+          <button mat-button class="mat-raised-button mat-primary"  type="submit" [disabled]="reportForm.invalid || isLoading">
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
             <span translate>Submit Report</span>
           </button>

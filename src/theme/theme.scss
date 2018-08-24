@@ -4,6 +4,8 @@
  */
 
 // stylelint-disable-next-line selector-max-universal
+@import 'https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800';
+
 * {
   box-sizing: border-box;
 }
@@ -14,4 +16,63 @@ body {
   flex-direction: column;
   margin: 0;
   height: 100%;
+}
+
+// .mat-toolbar.mat-primary{
+
+//   background: #8bc444;
+// }
+
+.section-heading {
+  position: relative;
+  font-size: 30px;
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 800;
+  display: inline-block;
+  color: #333333;
+  margin-bottom: 15px;
+}
+.section-heading span {
+  color: #333333;
+}
+.section-heading-alt {
+  color: #FFFFFF;
+}
+.section-heading-alt span {
+  font-style: 400;
+  color: #FFFFFF;
+}
+.section-heading-inline {
+  position: relative;
+  font-size: 40px;
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 800;
+  display: inline-block;
+  color: #333333;
+  margin-top: 0px;
+  margin-right: auto;
+  margin-bottom: 15px;
+  margin-left: auto;
+}
+.section-heading-inline:before {
+  color: #77C720;
+  content: "=========";
+  display: block;
+  font-size: 16px;
+  font-weight: normal;
+  letter-spacing: -2px;
+  margin-right: -110px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 3px;
+  width: 120px;
+}
+mat-toolbar>div{
+  text-align: right;
+  width: 100%;
+  text-transform: uppercase;
+  padding-top: 8px;
 }

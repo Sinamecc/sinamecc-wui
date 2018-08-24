@@ -1,17 +1,19 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <mat-card-title translate>MCCR Registry</mat-card-title>
+      <mat-card-title translate  class="section-heading">MCCR Registry</mat-card-title>
+      <mat-divider class="divider-custom"></mat-divider>
+      <mat-divider class="divider-custom"></mat-divider>
       <mat-card-subtitle>
         <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
       </mat-card-subtitle>
-      <div class="container mat-elevation-z8" [hidden]="isLoading">
-          <h3 translate>General Data</h3>
+      <div class="container" [hidden]="isLoading">
+          <h3 translate class="text-color">General Data</h3>
           <strong translate>Code</strong>: {{mccrRegistry?.id}} <br>
           <strong translate>Mitigation Action:</strong> {{mccrRegistry?.mitigation}} <br>
           <strong translate>Status:</strong> {{mccrRegistry?.status}} <br>
-          <mat-divider></mat-divider>
-          <h3 translate>Files</h3>
+          <!--<mat-divider></mat-divider>-->
+          <h3 translate class="text-color">Files</h3>
           <div>
             <ul>
               <li *ngFor="let file of mccrRegistry?.files">

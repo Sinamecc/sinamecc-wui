@@ -1,11 +1,15 @@
 <div class="container">
   <mat-card>
-    <h1>
+    <!-- <h1>
       <mat-card-title translate>APP_NAME</mat-card-title>
       <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
-    </h1>
+    </h1> -->
     <h3>
-      <mat-card-title><span translate>Edit a mitigation action: </span></mat-card-title>
+      <mat-card-title>
+        <span translate class="section-heading">Edit a mitigation action: </span>
+        <mat-divider class="divider-custom"></mat-divider>
+        <mat-divider class="divider-custom"></mat-divider>
+      </mat-card-title>
     </h3>
     <mat-card-content>
       <form (ngSubmit)="submitForm()" *ngIf="formValues | async" [formGroup]="formGroup">

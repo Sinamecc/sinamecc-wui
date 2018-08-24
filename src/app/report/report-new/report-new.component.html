@@ -1,11 +1,13 @@
 <div class="container">
   <mat-card>
-    <h1>
+    <!--<h1>
       <mat-card-title translate>APP_NAME</mat-card-title>
       <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
-    </h1>
+    </h1>-->
     <h3>
-      <mat-card-title translate>Create a new report file:</mat-card-title>
+      <mat-card-title  translate class="section-heading">Create a new report file:</mat-card-title>
+      <mat-divider class="divider-custom"></mat-divider>
+      <mat-divider class="divider-custom"></mat-divider>
     </h3>
     <mat-card-content>
       <form (ngSubmit)="submitForm()" [formGroup]="reportForm" novalidate>
@@ -21,22 +23,27 @@
             </mat-error>
           </mat-form-field>
           <br/>
-          <mat-form-field>
-              <app-input-file formControlName="file" [placeholder]="'Required input' | translate" valuePlaceholder="No file selected" required></app-input-file>
-              <mat-icon matSuffix >folder</mat-icon>
-              <mat-error *ngIf="reportForm.get('file').hasError('required')" translate>
-                Please select a file
+        <mat-form-field>
+          <p class="text_upload">Upload File:</p> 
+         <app-input-file id="#FileInput" #FileInput class="mat-raised-button mat-primary" formControlName="file" (change)="FileInput" valuePlaceholder="Select file" required>
+            <mat-icon >vertical_align_top</mat-icon>
+            Please select a file 
+          </app-input-file>
+             <mat-error *ngIf="reportForm.get('file').hasError('required')" translate>
+                Please select a file 
               </mat-error>
               <mat-error *ngIf="reportForm.get('file').hasError('maxContentSize')">
                   <span translate>The total size must not exceed {{formDoc.get('file')?.getError('maxContentSize').maxSize | byteFormat}}
                 ({{reportForm.get('file')?.getError('maxContentSize').actualSize | byteFormat}}).</span>
               </mat-error>
-          </mat-form-field>
+            </mat-form-field>
           <br/>
-          <button mat-raised-button color="primary" type="submit" [disabled]="reportForm.invalid || isLoading">
-            <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-            <span translate>Submit Report</span>
-          </button>
+        </div>
+        <div class="box-button">
+            <button mat-raised-button color="primary" type="submit" [disabled]="reportForm.invalid || isLoading">
+                <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
+                <span translate>Submit Report</span>
+              </button>
         </div>
       </form>
     </mat-card-content>

@@ -1,25 +1,36 @@
+@import "src/theme/theme-variables";
+
 .container {
     text-align: center;
     padding: 1rem;
   }
-  
+
   .mat-icon {
     vertical-align: middle;
   }
-  
 
-.rejected {
-  background: lightpink;
+
+.rejected>mat-cell:nth-child(4) {
+  color: #F44336;
 }
 
-.in-review {
-  background: yellow;
+.in-review>mat-cell:nth-child(4) {
+  color: #FF9800;
 }
 
-.approved {
-  background: lightgreen;
+.approved>mat-cell:nth-child(4) {
+  color: #2E7D32;
 }
 
-.on-change {
-  background: lightblue;
+.on-change>mat-cell:nth-child(4) {
+  color: #1565C0;
+}
+.submitted>mat-cell:nth-child(4), .rejected>mat-cell:nth-child(4), .in-review>mat-cell:nth-child(4), .approved>mat-cell:nth-child(4),.on-change>mat-cell:nth-child(4){
+ font-weight: bold;
+ text-transform: uppercase;  
+}
+
+.toolbar-title{
+  margin: 0px auto !important;
+  background: transparent;
 }
