@@ -53,7 +53,7 @@ export class ReportVersionsNewComponent implements OnInit {
       .subscribe(response => {
         // :id/versions
         this.router.navigate([`/report/${this.route.snapshot.paramMap.get('id')}/versions`], { replaceUrl: true });
-        this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res); });
+        this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
         log.debug(`${response.statusCode} status code received from form`);
 
       }, error => {
