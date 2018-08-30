@@ -15,7 +15,7 @@
 // rgb(139,196,68)
 $app-primary: mat-palette($mat-blue, 500);
 
-$app-accent:  mat-palette($mat-orange, A200, A100, A400);
+$app-accent:  mat-palette($mat-orange, 500, A200, A700);
 
 // The warn palette is optional (defaults to red).
 $app-warn:    mat-palette($mat-red);
@@ -82,6 +82,7 @@ mat-toolbar[_ngcontent-c6], .mat-toolbar.mat-primary {
 
 .divider-custom{
   border-color: #2aa7d9 !important;
+  background:  #2aa7d9 !important;
   max-width: 150px;
   min-width: 100px;
   margin: 5px auto 0px auto;
@@ -102,6 +103,10 @@ mat-toolbar[_ngcontent-c6], .mat-toolbar.mat-primary {
   background: #e5e5e5 !important;
   text-align: center;
 }
+.mat-row{
+  text-align: center;
+  
+} 
 .mat-table>.mat-header-row>.mat-header-cell{
   color: #2aa7d9;
   font-weight: bold;
@@ -138,7 +143,30 @@ mat-toolbar[_ngcontent-c6], .mat-toolbar.mat-primary {
   text-align: center;
 }
 .text_upload{
-    position: relative;
-    float: left;
-    margin-right: 10px;
+  position: relative;
+  float: left;
+  margin-right: 10px;
+  margin-right: 10px;
+}
+
+.field-ppcn {
+  width: 100%;
+}
+.center{
+  text-align: center;
+}
+.align-right{
+  text-align: right;
+}
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #3F51B5 !important;
+}
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #3F51B5 !important;
+}
+.mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
+  color:#ffffff !important;
+}
+.login-label .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, .login-label .mat-form-field-empty.mat-form-field-label{
+  font-weight: 800 !important;
 }

@@ -1,19 +1,14 @@
-<div class="container">
-    <mat-toolbar class="toolbar-title"><div translate class="section-heading">Report File</div></mat-toolbar>
-      <mat-divider class="divider-custom"></mat-divider>
-      <mat-divider class="divider-custom"></mat-divider>
-      
-</div>
+<mat-toolbar class="toolbar-title"><div translate class="section-heading">Report Versions</div></mat-toolbar>
+<mat-divider class="divider-custom"></mat-divider>
+<mat-divider class="divider-custom"></mat-divider>
 <div class="box-button">
   <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
   <mat-toolbar>
-  <p [hidden]="isLoading" translate>Name of report file: {{reportFileName | async}}</p>
+   <p [hidden]="isLoading" translate>Name of report file: {{reportFileName | async}}</p>
   </mat-toolbar>
-<mat-toolbar>
-    <span translate >Report Versions</span>
-  </mat-toolbar>
-  <a mat-button color="primary" routerLink="/report/{{id}}/versions/new" translate>Add new version</a>
-<div class="container mat-elevation-z8">
+  <a mat-button class="mat-raised-button mat-primary" routerLink="/report/{{id}}/versions/new" translate>Add new version</a>
+</div>
+<div class="container mat-elevation-z8 table-sinamecc">
   
   <mat-table #table [dataSource]="dataSource">
 
@@ -34,8 +29,9 @@
     
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-
-</div>
+  </div>
+<div class="box-button">
 <a mat-fab routerLink="/report">
   <mat-icon aria-label="Go to Data for Report">undo</mat-icon>
 </a>
+</div>

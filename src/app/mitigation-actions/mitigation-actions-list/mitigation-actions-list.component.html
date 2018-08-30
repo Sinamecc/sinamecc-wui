@@ -1,5 +1,5 @@
 <mat-toolbar class="toolbar-title">
-  <div translate class="section-heading">Data for Report</div>
+  <div translate class="section-heading">Mitigation Actions</div>
 </mat-toolbar>
   <mat-divider class="divider-custom"></mat-divider>
   <mat-divider class="divider-custom"></mat-divider> 
@@ -38,13 +38,13 @@
   <!-- Updated Column -->
   <ng-container matColumnDef="updated">
     <mat-header-cell *matHeaderCellDef translate> Last update: </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.updated}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.updated | date:"MM/dd/yyy hh:mm:ss"}} </mat-cell>
   </ng-container>
 
   <!-- Created Column -->
   <ng-container matColumnDef="created">
     <mat-header-cell *matHeaderCellDef translate> Created At </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.created}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.created | date:"MM/dd/yyy hh:mm:ss"}} </mat-cell>
   </ng-container>
 
   <!-- Actions Column -->

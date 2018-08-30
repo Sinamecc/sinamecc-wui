@@ -10,7 +10,7 @@ import { MaterialModule } from '@app/material.module';
 import { environment } from '@env/environment';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
-import { HomeModule } from '@app/home/home.module';
+/*import { HomeModule } from '@app/home/home.module';*/
 import { ReportModule } from '@app/report/report.module';
 import { MitigationActionsModule } from '@app/mitigation-actions/mitigation-actions.module';
 import { LoginModule } from '@app/login/login.module';
@@ -30,7 +30,7 @@ import { PpcnModule } from '@app/ppcn/ppcn.module';
     MaterialModule,
     CoreModule,
     SharedModule,
-    HomeModule,
+   /* HomeModule,*/
     ReportModule,
     MitigationActionsModule,
     MccrRegistriesModule,

@@ -54,10 +54,13 @@
             </mat-form-field>
             <br/>
 
-            <div>
-              <br/>
-              <button mat-button matStepperNext type="button"><span translate>Next</span></button>
-            </div>
+            <div class="center">
+                <br/>
+                <button mat-button matStepperNext type="button" class="mat-raised-button mat-primary">
+                    <span translate>Next</span>
+                    <mat-icon color="white">arrow_forward</mat-icon>
+                  </button>
+                </div>
           </mat-step>
 
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
@@ -93,10 +96,16 @@
             </mat-form-field>
             <br/>
 
-            <div>
-              <button mat-button matStepperPrevious type="button"> <span translate>Back</span></button>
-              <button mat-button matStepperNext type="button"> <span translate>Next</span></button>
-            </div>
+            <div class="center">
+                <button mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent">
+                    <mat-icon color="white">arrow_back</mat-icon>
+                    <span translate>Back</span>
+                  </button>
+                  <button mat-button matStepperNext type="button" class="mat-raised-button mat-primary">
+                    <span translate>Next</span>
+                    <mat-icon color="white">arrow_forward</mat-icon>
+                  </button>
+            </div> 
           </mat-step>
           <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
             <ng-template matStepLabel>
@@ -141,8 +150,16 @@
               <mat-datepicker #implementationEndDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
             <br/>
-            <button mat-button matStepperPrevious type="button" > <span translate>Back </span></button>
-            <button mat-button matStepperNext type="button" > <span translate>Next </span></button>
+            <div class="center">
+                <button mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent">
+                    <mat-icon color="white">arrow_back</mat-icon>
+                    <span translate>Back</span>
+                  </button>
+                  <button mat-button matStepperNext type="button" class="mat-raised-button mat-primary">
+                    <span translate>Next</span>
+                    <mat-icon color="white">arrow_forward</mat-icon>
+                  </button>
+            </div> 
           </mat-step>
 
           <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
@@ -179,8 +196,16 @@
 
             <br/>
 
-            <button mat-button matStepperPrevious type="button" > <span translate>Back </span></button>
-            <button mat-button matStepperNext type="button" > <span translate>Next </span></button>
+            <div class="center">
+                <button mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent">
+                    <mat-icon color="white">arrow_back</mat-icon>
+                    <span translate>Back</span>
+                  </button>
+                  <button mat-button matStepperNext type="button" class="mat-raised-button mat-primary">
+                    <span translate>Next</span>
+                    <mat-icon color="white">arrow_forward</mat-icon>
+                  </button>
+            </div> 
           </mat-step>
 
           <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
@@ -215,10 +240,16 @@
 
             <br/>
 
-            <div>
-              <button mat-button matStepperPrevious type="button" > <span translate>Back </span></button>
-              <button mat-button matStepperNext type="button" > <span translate>Next </span></button>
-            </div>
+            <div class="center">
+                <button mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent">
+                    <mat-icon color="white">arrow_back</mat-icon>
+                    <span translate>Back</span>
+                  </button>
+                  <button mat-button matStepperNext type="button" class="mat-raised-button mat-primary">
+                    <span translate>Next</span>
+                    <mat-icon color="white">arrow_forward</mat-icon>
+                  </button>
+            </div> 
           </mat-step>
 
           <mat-step formGroupName="5" [stepControl]="formArray?.get([5])">
@@ -234,10 +265,16 @@
               
 
             <br/>
-            <div>
-              <button mat-button matStepperPrevious type="button" > <span translate>Back </span></button>
-              <button mat-button matStepperNext type="button" > <span translate>Next </span></button>
-            </div>
+            <div class="center">
+                <button mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent">
+                    <mat-icon color="white">arrow_back</mat-icon>
+                    <span translate>Back</span>
+                  </button>
+                  <button mat-button matStepperNext type="button" class="mat-raised-button mat-primary">
+                    <span translate>Next</span>
+                    <mat-icon color="white">arrow_forward</mat-icon>
+                  </button>
+            </div> 
           </mat-step>
 
           <mat-step formGroupName="6" [stepControl]="formArray?.get([6])">
@@ -253,10 +290,16 @@
                 </mat-select>
               </mat-form-field>
 
-            <div>
-              <button mat-button matStepperPrevious type="button" > <span translate>Back </span></button>
-              <button mat-button matStepperNext type="button" > <span translate>Next </span></button>
-            </div>
+              <div class="center">
+                  <button mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent">
+                      <mat-icon color="white">arrow_back</mat-icon>
+                      <span translate>Back</span>
+                    </button>
+                    <button mat-button matStepperNext type="button" class="mat-raised-button mat-primary">
+                      <span translate>Next</span>
+                      <mat-icon color="white">arrow_forward</mat-icon>
+                    </button>
+              </div> 
           </mat-step>
 
           <mat-step formGroupName="7" [stepControl]="formArray?.get([7])">
@@ -277,8 +320,16 @@
             </mat-radio-group>
 
             <div>
-              <button mat-button matStepperPrevious type="button" > <span translate> Back </span></button>
-              <button mat-button matStepperNext type="button" > <span translate>Next </span></button>
+                <div class="center">
+                    <button mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent">
+                        <mat-icon color="white">arrow_back</mat-icon>
+                        <span translate>Back</span>
+                      </button>
+                      <button mat-button matStepperNext type="button" class="mat-raised-button mat-primary">
+                        <span translate>Next</span>
+                        <mat-icon color="white">arrow_forward</mat-icon>
+                      </button>
+                </div> 
             </div>
           </mat-step>
 
@@ -344,10 +395,16 @@
             <br/>
 
 
-            <div>
-              <button mat-button matStepperPrevious type="button" > <span translate>Back</span></button>
-              <button mat-button matStepperNext type="button" > <span translate> Next </span></button>
-            </div>
+            <div class="center">
+                <button mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent">
+                    <mat-icon color="white">arrow_back</mat-icon>
+                    <span translate>Back</span>
+                  </button>
+                  <button mat-button matStepperNext type="button" class="mat-raised-button mat-primary">
+                    <span translate>Next</span>
+                    <mat-icon color="white">arrow_forward</mat-icon>
+                  </button>
+            </div> 
           </mat-step>
 
           <mat-step>
@@ -356,8 +413,8 @@
             <div *ngIf="formGroup.valid; else elseBlock" translate>Everything seems correct. </div>
             
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
-            <div>
-              <button mat-raised-button color="primary"><span translate>Done</span></button>
+            <div class="align-right">
+              <button mat-raised-button type="button" color="primary"><span translate>Done</span></button>
             </div>
           </mat-step>
         </mat-vertical-stepper>

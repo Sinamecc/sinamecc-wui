@@ -24,8 +24,9 @@
           </mat-form-field>
           <br/>
           <mat-form-field>
-              <app-input-file formControlName="file" [placeholder]="'Required input' | translate" valuePlaceholder="No file selected" required></app-input-file>
-              <mat-icon matSuffix>folder</mat-icon>
+              
+              <app-input-file class="mat-raised-button mat-primary" formControlName="file" [placeholder]="'Required input' | translate" valuePlaceholder="No file selected" required><mat-icon >vertical_align_top</mat-icon></app-input-file>
+             
               <mat-error *ngIf="reportForm.get('file').hasError('required')" translate>
                 Please select a file
               </mat-error>
