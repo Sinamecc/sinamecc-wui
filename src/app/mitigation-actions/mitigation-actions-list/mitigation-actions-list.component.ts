@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
-import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material'
+import {MatPaginator, MatTableDataSource, MatSort, MatSnackBar} from '@angular/material'
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators';
@@ -18,7 +18,7 @@ import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
 
-
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-mitigation-actions-list',
@@ -37,7 +37,9 @@ export class MitigationActionsListComponent implements OnInit {
   constructor(private router: Router,
     private i18nService: I18nService,
     private service: MitigationActionsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private translateService: TranslateService,
+    public snackBar: MatSnackBar
     ) { }
 
   ngOnInit() {
@@ -69,6 +71,7 @@ export class MitigationActionsListComponent implements OnInit {
       // here i need to refresh table
       this.isLoading = false;
       this.dataSource = new MitigationActionSource(this.service, this.i18nService);
+      this.translateService.get('Sucessfully deleted element').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
     } );
 
   }

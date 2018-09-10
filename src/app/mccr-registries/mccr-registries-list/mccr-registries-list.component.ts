@@ -53,7 +53,9 @@ export class MccrRegistriesListComponent implements OnInit {
        // here i need to refresh table
        this.isLoading = false;
        this.dataSource = new MccrRegistriesDataSource(this.service);
-       this.translateService.get('Sucessfully deleted element').subscribe((res: string) => { this.snackBar.open(res); });
+       this.translateService.get('Sucessfully deleted element').subscribe((res: string) => { this.snackBar.open(res, null, {
+        duration: 3000
+      }); });
      } )
    }
 

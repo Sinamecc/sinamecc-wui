@@ -3,6 +3,9 @@
  * Component-specific style should not go here and be included directly as part of the components.
  */
 
+// Theme customization
+@import "theme/theme";
+
 // Theme variables, must be included before the libraries to allow overriding defaults
 @import "theme/theme-variables";
 
@@ -23,5 +26,4 @@
 // that you are using.
 @include angular-material-theme($app-theme);
 
-// Theme customization
-@import "theme/theme";
+

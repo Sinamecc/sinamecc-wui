@@ -1,6 +1,6 @@
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSidenav } from '@angular/material';
 
 import { AuthenticationService } from '@app/core/authentication/authentication.service';
@@ -12,13 +12,16 @@ import { I18nService } from '@app/core/i18n.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
+  logoName : string
   @Input() sidenav: MatSidenav;
 
   constructor(private router: Router,
               private titleService: Title,
               private authenticationService: AuthenticationService,
-              private i18nService: I18nService) { }
+              private i18nService: I18nService,
+              private route: ActivatedRoute) {
+                this.logoName = "logo-white-nav.png";
+               }
 
   ngOnInit() { }
 

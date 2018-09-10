@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { Route } from '@app/core';
+import { ReportComponent } from '@app/report/report.component'
 
 const routes: Routes = [
   Route.withShell([
+    { path: '', redirectTo: '/home',  pathMatch: 'full' },
+    { path: 'home', component: ReportComponent },
     { path: 'about', loadChildren: 'app/about/about.module#AboutModule' },
     { path: 'report', loadChildren: 'app/report/report.module#ReportModule' },
     { path: 'mitigation/actions', loadChildren: 'app/mitigation-actions/mitigation-actions.module#MitigationActionsModule' },

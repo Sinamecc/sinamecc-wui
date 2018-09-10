@@ -7,81 +7,86 @@
             <ng-template matStepLabel>
               <span translate>Basic Info</span>
             </ng-template>
-            <mat-form-field>
+            <mat-form-field class="field-ppcn">
               <mat-label translate>Name</mat-label>
               <input matInput formControlName="nameCtrl" required>
               <mat-error translate>This field is required</mat-error>
             </mat-form-field>
             <br/>
-            <mat-form-field>
+            <mat-form-field class="field-ppcn">
               <mat-label translate>Representative Name</mat-label>
               <input matInput formControlName="representativeNameCtrl" required>
               <mat-error translate>This field is required</mat-error>
             </mat-form-field>
             <br/>
-            <mat-form-field>
+            <mat-form-field class="field-ppcn">
               <mat-label translate>Telephone </mat-label>
               <input matInput formControlName="telephoneCtrl" required>
               <mat-error translate>This field is required</mat-error>
             </mat-form-field>
             <br/>
-            <mat-form-field>
+            <mat-form-field class="field-ppcn">
               <mat-label translate>Fax</mat-label>
               <input matInput formControlName="faxCtrl">
             </mat-form-field>
             <br/>
-            <mat-form-field>
+            <mat-form-field class="field-ppcn">
               <mat-label translate>Postal Code</mat-label>
               <input matInput formControlName="postalCodeCtrl">
             </mat-form-field>
             <br/>
-            <mat-form-field>
+            <mat-form-field class="field-ppcn">
               <mat-label translate>Address</mat-label>
               <input matInput formControlName="addressCtrl" required>
               <mat-error translate>This field is required</mat-error>
             </mat-form-field>
             <br/>
-            <div>
-              <button mat-button matStepperNext>Next</button>
+            <div class="center">
+              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
+                <span translate>Next</span>
+                <mat-icon color="white">arrow_forward</mat-icon>
+              </button>
             </div>
           </mat-step>
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
             <ng-template matStepLabel>
               <div translate>Contact Info</div>
             </ng-template>
-            <mat-form-field>
+            <mat-form-field class="field-ppcn">
               <mat-label translate>Name</mat-label>
               <input matInput formControlName="contactNameCtrl">
               <mat-error translate>The input is required.</mat-error>
             </mat-form-field>
             <br/>
-            <mat-form-field>
+            <mat-form-field class="field-ppcn">
               <mat-label translate>Position</mat-label>
               <input matInput formControlName="positionCtrl">
               <mat-error translate>The input is required.</mat-error>
             </mat-form-field>
             <br/>
 
-            <mat-form-field>
+            <mat-form-field class="field-ppcn">
               <mat-label translate>Email address</mat-label>
               <input matInput formControlName="emailFormCtrl">
               <mat-error translate>The input is required.</mat-error>
             </mat-form-field>
             <br/>
 
-            <mat-form-field>
+            <mat-form-field class="field-ppcn">
               <mat-label translate>Phone</mat-label>
               <input matInput formControlName="phoneCtrl" type="tel">
               <mat-error translate>The input is required or length is incorrect.</mat-error>
             </mat-form-field>
             <br/>
 
-            <div>
-              <button mat-button matStepperPrevious type="button">
+            <div class="center">
+              <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
+                <mat-icon color="white">arrow_back</mat-icon>
                 <span translate>Back</span>
               </button>
-              <button mat-button matStepperNext type="button">
+              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
                 <span translate>Next</span>
+                <mat-icon color="white">arrow_forward</mat-icon>
               </button>
             </div>
           </mat-step>
@@ -89,7 +94,7 @@
             <ng-template matStepLabel>
               <span translate>Request Level</span>
             </ng-template>
-            <mat-form-field>
+            <mat-form-field class="field-ppcn">
               <mat-label translate>Required Level</mat-label>
               <mat-select formControlName="requiredCtrl" [placeholder]="'Required Level' | translate">
                 <mat-option *ngFor="let required_level of required_levels" [value]="required_level.id">
@@ -98,7 +103,7 @@
               </mat-select>
             </mat-form-field>
             <br/>
-            <mat-form-field>
+            <mat-form-field class="field-ppcn">
                 <mat-label translate>Recognition Type</mat-label>
                 <mat-select formControlName="recognitionCtrl" [placeholder]="'Recognition Type' | translate">
                   <mat-option *ngFor="let recognition_type of recognition_types" [value]="recognition_type.id">
@@ -107,9 +112,6 @@
                 </mat-select>
               </mat-form-field>
               <br/>
-            <div>
-              <button mat-button matStepperNext>Next</button>
-            </div>
           </mat-step>
         </mat-vertical-stepper>
       </div>

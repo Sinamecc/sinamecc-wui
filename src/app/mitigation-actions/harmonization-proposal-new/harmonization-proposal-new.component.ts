@@ -35,7 +35,7 @@ export class HarmonizationProposalNewComponent implements OnInit {
     this.title = "Harmonization Proposal Integration";
     this.nextRoute = `mitigation/actions/${this.id}/conceptual/integration`;
     this.formData = new FormData();
-    this.formSubmitRoute = "/v1/mitigations/harmonization/ingei/";
+    this.formSubmitRoute = "/v1/mitigations/step/harmonization_ingei/";
     
 
     this.mitigationActionObservable = this.service.getMitigationAction(this.id, this.i18nService.language.split('-')[0])
@@ -48,7 +48,9 @@ export class HarmonizationProposalNewComponent implements OnInit {
 
   onSubmission(context: any) {
     this.formData.append('mitigation', context.entityCtrl);
-    this.formData.append('name', context.commentCtrl);
+    this.formData.append('name', 'harmonization_ingei');
+    this.formData.append('entry_name', context.commentCtrl);
+    this.formData.append('step_status', 'approved');
     //formData.append('file', context.commentCtrl);
     let fileList = context.fileCtrl.files;
     if (fileList.length > 0) {

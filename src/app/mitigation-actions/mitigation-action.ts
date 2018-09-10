@@ -25,7 +25,7 @@ export interface ProgressIndicator {
 export interface Contact {
   full_name: string;
   email: string;
-  position: string;
+  job_title: string;
   phone: string;
 }
 

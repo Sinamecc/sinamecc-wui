@@ -1,10 +1,16 @@
-<mat-toolbar>
-  <span translate>Data for Report</span>
+<mat-toolbar class="toolbar-title">
+  <div translate class="section-heading">Mitigation Actions</div>
 </mat-toolbar>
-<a mat-button color="primary" routerLink="/mitigation/actions/new" > <span translate> Add new mitigation action</span></a>
-<div class="container mat-elevation-z8">
-<mat-table #table [dataSource]="dataSource">
+  <mat-divider class="divider-custom"></mat-divider>
+  <mat-divider class="divider-custom"></mat-divider> 
+<br>
 
+<div class="box-button">
+<a mat-button class="mat-raised-button mat-primary" routerLink="/mitigation/actions/new" > <span translate> Add new mitigation action</span></a>
+</div>
+
+<div class="container mat-elevation-z8 table-sinamecc">
+<mat-table #table [dataSource]="dataSource">
 
   <!-- Name Column -->
   <ng-container matColumnDef="name">
@@ -32,19 +38,19 @@
   <!-- Updated Column -->
   <ng-container matColumnDef="updated">
     <mat-header-cell *matHeaderCellDef translate> Last update: </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.updated}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.updated | date:"MM/dd/yyy hh:mm:ss"}} </mat-cell>
   </ng-container>
 
   <!-- Created Column -->
   <ng-container matColumnDef="created">
     <mat-header-cell *matHeaderCellDef translate> Created At </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.created}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.created | date:"MM/dd/yyy hh:mm:ss"}} </mat-cell>
   </ng-container>
 
   <!-- Actions Column -->
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef translate> Actions </mat-header-cell>
-    <mat-cell *matCellDef="let element"> 
+    <mat-cell *matCellDef="let element" class="login-box">
       <button mat-icon-button color="primary" (click)="view(element.id)" ><mat-icon color="white">visibility</mat-icon></button>
       <button mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)" > <mat-icon color="white">delete</mat-icon></button>
       <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button>
@@ -52,8 +58,7 @@
       <button mat-icon-button color="primary" (click)="changelog(element.id)" > <mat-icon color="white">history</mat-icon></button>
       <button mat-icon-button color="primary" (click)="uploadProposal(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button>
     </mat-cell>
-</ng-container>
-
+  </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row [ngClass]="row.fsm_state" *matRowDef="let row; columns: displayedColumns;"></mat-row>

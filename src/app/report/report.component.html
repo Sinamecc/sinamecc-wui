@@ -1,8 +1,14 @@
 <mat-toolbar>
-  <span translate>Data for Report</span>
+  <div class="section-heading" translate>Data for Report</div>
+
 </mat-toolbar>
-<a mat-button color="primary" routerLink="/report/new" ><span translate>Add new report file</span></a>
-<div class="container mat-elevation-z8">
+<mat-divider class="divider-custom"></mat-divider>
+<mat-divider class="divider-custom"></mat-divider>
+<div class="box-button">
+    <a mat-button class="mat-raised-button mat-primary" routerLink="/report/new" ><span translate>Add new report file</span></a>
+
+</div>
+<div class="container mat-elevation-z8 table-sinamecc">
 <mat-table #table [dataSource]="dataSource">
 
 
@@ -21,13 +27,13 @@
   <!-- Created Column -->
   <ng-container matColumnDef="updated">
     <mat-header-cell *matHeaderCellDef translate> Last update: </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.updated}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.updated | date:"MM/dd/yyy hh:mm:ss"}} </mat-cell>
   </ng-container>
 
   <!-- Updates Column -->
   <ng-container matColumnDef="created">
     <mat-header-cell *matHeaderCellDef translate> Created At </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.created}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.created | date:"MM/dd/yyy hh:mm:ss"}} </mat-cell>
   </ng-container>
 
       <!-- Versions Column -->
