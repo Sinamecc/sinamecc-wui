@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
 import { PpcnFlowComponent } from 'app/ppcn/ppcn-flow/ppcn-flow.component';
+import { PpcnNewComponent } from '@app/ppcn/ppcn-new/ppcn-new.component';
 
 @Component({
   selector: 'app-ppcn-level',
@@ -29,6 +30,7 @@ export class PpcnLevelComponent implements OnInit {
   error: string;
   form: FormGroup;
   formData: FormData;
+  levelId = "1";
   geographicLevel: Observable<GeographicLevel[]>;
   processedGeographicLevel: GeographicLevel[] = [];
   isLoading = false;
@@ -44,6 +46,7 @@ export class PpcnLevelComponent implements OnInit {
      }
 
   ngOnInit() {
+    this.service.currentLevelId.subscribe(levelId => this.levelId = levelId);
   }
 
   private createForm() {
@@ -61,8 +64,7 @@ export class PpcnLevelComponent implements OnInit {
   }
 
   onSaving(context:any){
-    // console.log(context.geographicCtrl);
-    // this.formData.append('geographic',context.geographicCtrl);
+    this.service.updateCurrentGeographicalLevel(context.value);
     
   }
 
