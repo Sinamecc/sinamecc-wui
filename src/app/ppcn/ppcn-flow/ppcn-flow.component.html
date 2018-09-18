@@ -1,62 +1,35 @@
 <div class="container">
   <mat-card>
     <h3>
-        <mat-card-title translate class="section-heading">Create a new PPCN Registry:</mat-card-title>
-        <mat-divider class="divider-custom"></mat-divider>
-        <mat-divider class="divider-custom"></mat-divider> 
+      <mat-card-title>
+          <span translate class="section-heading">Create a new PPCN Registry:</span>
+          <mat-divider class="divider-custom"></mat-divider>
+          <mat-divider class="divider-custom"></mat-divider>
+      </mat-card-title>
     </h3>
     <form [formGroup]="mainGroup">
-      <mat-horizontal-stepper formArrayName="formArray" linear>
+      <mat-horizontal-stepper [linear] = "true" formArrayName="formArray">
         <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
-          <ng-template matStepLabel>Geographic Level</ng-template>
+          <ng-template matStepLabel><span translate>Geographic Level</span></ng-template>
           <app-ppcn-level></app-ppcn-level>
           <div class="align-right">
-              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
+              <button [disabled] = "levelId === ''" mat-button matStepperNext class="mat-raised-button mat-primary">
                   <span translate>Next</span>
                   <mat-icon color="white">arrow_forward</mat-icon>
-                </button>
+              </button>
           </div>
         </mat-step>
 
         <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
-          <ng-template matStepLabel>PPCN Form</ng-template>
+          <ng-template matStepLabel><span translate>PPCN Form</span></ng-template>
           <app-ppcn-new> </app-ppcn-new>
           <div class="align-right">
             <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
                 <mat-icon color="white">arrow_back</mat-icon>
                 <span translate>Back</span>
               </button>
-              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
-                <span translate>Next</span>
-                <mat-icon color="white">arrow_forward</mat-icon>
-              </button>
           </div>
 
-        </mat-step>
-        <mat-step>
-          <ng-template matStepLabel>Download file</ng-template>
-          You are now done.
-          <div class="align-right">
-              <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
-                  <mat-icon color="white">arrow_back</mat-icon>
-                  <span translate>Back</span>
-                </button>
-                <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
-                  <span translate>Next</span>
-                  <mat-icon color="white">arrow_forward</mat-icon>
-                </button>
-          </div>
-        </mat-step>
-        <mat-step>
-          <ng-template matStepLabel>Upload file</ng-template>
-          You are now done.
-          <div class="align-right">
-              <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
-                  <mat-icon color="white">arrow_back</mat-icon>
-                  <span translate>Back</span>
-                </button>
-            <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
-          </div>
         </mat-step>
       </mat-horizontal-stepper>
     </form>

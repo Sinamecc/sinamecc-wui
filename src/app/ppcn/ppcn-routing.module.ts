@@ -13,12 +13,24 @@ import { Routes, RouterModule } from '@angular/router';
 import { Route, extract } from '@app/core';
 import { PpcnLevelComponent } from '@app/ppcn/ppcn-level/ppcn-level.component';
 import { PpcnFlowComponent } from '@app/ppcn/ppcn-flow/ppcn-flow.component';
+import { PpcnListComponent } from '@app/ppcn/ppcn-list/ppcn-list.component';
+import { PpcnUpdateComponent } from '@app/ppcn/ppcn-update/ppcn-update.component';
+import { PpcnComponent } from '@app/ppcn/ppcn/ppcn.component';
+import { PpcnDownloadComponent } from '@app/ppcn/ppcn-download/ppcn-download.component';
+import { PpcnUploadComponent } from '@app/ppcn/ppcn-upload/ppcn-upload.component';
 
 const routes: Routes = [
   Route.withShell([
-    { path: '', redirectTo: 'mccr/registries', pathMatch: 'full' },
+    { path: '', redirectTo: 'ppcn/registries', pathMatch: 'full' },
+    { path: 'ppcn/flow', component: PpcnFlowComponent, data: { title: extract('PpcnFlow') } },
+    { path: 'ppcn/registries', component:PpcnListComponent, data:{title: extract('PpcnList')} },
+    { path: 'ppcn/registries/new', component:PpcnFlowComponent, data:{title: extract('NewPPCN')} },
+    { path: 'ppcn/:id/edit', component: PpcnUpdateComponent, data: { id: extract('EditPPCN') } },
+    { path: 'ppcn/:id', component: PpcnComponent, data: { id: extract('id') } },
     { path: 'ppcn/geographic', component: PpcnLevelComponent, data: { title: extract('PpcnLevel') } },
-    { path: 'ppcn/flow', component: PpcnFlowComponent, data: { title: extract('PpcnFlow') } }
+    { path: 'ppcn/:id/download/:geographic', component: PpcnDownloadComponent , data: { id: extract('id') } },
+    { path: 'ppcn/:id/upload/new', component: PpcnUploadComponent, data: {id: extract('id') } },
+    
   ])
 ];
 

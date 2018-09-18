@@ -14,6 +14,11 @@ import { PpcnLevelComponent } from '@app/ppcn/ppcn-level/ppcn-level.component';
 import { PpcnRoutingModule } from '@app/ppcn/ppcn-routing.module';
 import { PpcnFlowComponent } from './ppcn-flow/ppcn-flow.component';
 import { PpcnNewComponent } from './ppcn-new/ppcn-new.component';
+import { PpcnDownloadComponent } from './ppcn-download/ppcn-download.component';
+import { PpcnUploadComponent } from './ppcn-upload/ppcn-upload.component';
+import { PpcnComponent } from './ppcn/ppcn.component';
+import { PpcnListComponent } from './ppcn-list/ppcn-list.component';
+import { PpcnUpdateComponent } from './ppcn-update/ppcn-update.component';
 
 
 @NgModule({
@@ -31,7 +36,12 @@ import { PpcnNewComponent } from './ppcn-new/ppcn-new.component';
   declarations: [
     PpcnLevelComponent,
     PpcnFlowComponent,
-    PpcnNewComponent
+    PpcnNewComponent,
+    PpcnDownloadComponent,
+    PpcnUploadComponent,
+    PpcnComponent,
+    PpcnListComponent,
+    PpcnUpdateComponent
   ],
   providers: [
     PpcnService,

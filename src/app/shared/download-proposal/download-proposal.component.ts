@@ -14,9 +14,11 @@ export class DownloadProposalComponent implements OnInit {
   @Input() code: string;
   @Input() fileName: string;
   @Input() nextRoute: string;
+  @Input() isButton: boolean;
+  @Input() formSubmitRoute: string;
 
   constructor(private router: Router,
-              private i18nService: I18nService,) { }
+              private i18nService: I18nService) { }
 
   ngOnInit() {
   }
