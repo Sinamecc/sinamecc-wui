@@ -253,6 +253,7 @@ export class PpcnService {
       let contact = {};
 
       this.currentLevelId.subscribe(levelId => formData['geographicLevel'] = levelId);
+      formData['user']= String(this.authenticationService.credentials.id);
       if(geographicFormId){
         formData['geographicLevel'] = String(geographicFormId);
       }
