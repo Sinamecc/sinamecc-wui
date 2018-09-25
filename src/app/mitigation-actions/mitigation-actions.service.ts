@@ -11,6 +11,7 @@ import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-
 import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { MitigationActionReviewNewFormData } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
+import { S3File, S3Service } from '@app/core/s3.service';
 
 const routes = {
   seededFormData: (lang: string, registration_type: string) => `/v1/mitigations/form/${lang}/${registration_type}`,
@@ -44,7 +45,8 @@ export class MitigationActionsService {
 
   constructor(private authenticationService: AuthenticationService,
     private httpClient: HttpClient,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe,
+    private s3:S3Service) {
 
   }
 
@@ -161,6 +163,7 @@ export class MitigationActionsService {
       .get(routes.getMitigationAction(uuid, lang), httpOptions) 
       .pipe(
         map((body: any) => {
+          console.log('MA', body);
           return body;
         })
       );
@@ -301,5 +304,8 @@ export class MitigationActionsService {
 
   }
 
+  public async downloadResource(filePath: string): Promise<S3File> {
+    return this.s3.downloadResource(filePath);
+  }
 
 }
