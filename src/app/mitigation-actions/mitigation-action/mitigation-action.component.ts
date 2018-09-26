@@ -43,4 +43,21 @@ export class MitigationActionComponent implements OnInit {
     this.router.navigate([`mitigation/actions/${uuid}/reviews`], { replaceUrl: true });
   }
 
+  async download(file:string) {
+    this.isLoading = true;
+    const blob = await this.service.downloadResource(file);
+    console.log('start download:',blob);
+    var url = window.URL.createObjectURL(blob.data);
+    var a = document.createElement('a');
+    document.body.appendChild(a);
+    a.setAttribute('style', 'display: none');
+    a.href = url;
+    a.download = blob.filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove(); // remove the element
+    this.isLoading = false;
+  }
+
+
 }
