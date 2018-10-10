@@ -50,6 +50,14 @@ export class PpcnListComponent implements OnInit {
     this.router.navigate([`ppcn/${uuid}/edit`], { replaceUrl: true });
   }
 
+  addReview(uuid: string) {
+    this.router.navigate([`ppcn/${uuid}/review/status/new`], { replaceUrl: true });
+  }
+
+  changelog(uuid: string) {
+    this.router.navigate([`ppcn/${uuid}/reviews`], { replaceUrl: true });
+  }
+
   openDeleteConfirmationDialog(uuid:string) {
     const data = {
       title: "Delete PPCN",

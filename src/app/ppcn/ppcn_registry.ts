@@ -8,6 +8,8 @@ export interface Ppcn {
   subsector: SubSector;
   contact: Contact;
   base_year: string;
+  fsm_state: ReviewStatus;
+  next_state: ReviewStatus[];
 
 }
 
@@ -57,5 +59,10 @@ export interface Contact {
     job_title: string;
     phone: string;
   }
+
+export interface ReviewStatus {
+  status: string;
+}
+
 
 

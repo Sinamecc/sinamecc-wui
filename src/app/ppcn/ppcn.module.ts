@@ -19,6 +19,8 @@ import { PpcnUploadComponent } from './ppcn-upload/ppcn-upload.component';
 import { PpcnComponent } from './ppcn/ppcn.component';
 import { PpcnListComponent } from './ppcn-list/ppcn-list.component';
 import { PpcnUpdateComponent } from './ppcn-update/ppcn-update.component';
+import { NewReviewComponent } from './ppcn-reviews/new-review/new-review.component';
+import { ReviewsListComponent } from './ppcn-reviews/reviews-list/reviews-list.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { PpcnUpdateComponent } from './ppcn-update/ppcn-update.component';
     PpcnUploadComponent,
     PpcnComponent,
     PpcnListComponent,
-    PpcnUpdateComponent
+    PpcnUpdateComponent,
+    NewReviewComponent,
+    ReviewsListComponent
   ],
   providers: [
     PpcnService,

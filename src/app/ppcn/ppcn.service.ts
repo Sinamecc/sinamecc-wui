@@ -12,6 +12,7 @@ import { PpcnNewFormData } from '@app/ppcn/ppcn-new-form-data';
 import { BehaviorSubject } from 'rxjs';
 import { FormArray, FormGroup } from '@angular/forms';
 import { Contact } from '@app/mitigation-actions/mitigation-action';
+import { PpcnReview } from '@app/ppcn/ppcn-review';
 
 const routes = {
   getGeographicLevel: (lang: string) => `/v1/ppcn/geographic/level/${lang}`,
@@ -24,6 +25,7 @@ const routes = {
   deletePpcn: (uuid:string) => `/v1/ppcn/${uuid}`,
   getPpcn: (uuid: string, lang:string) => `/v1/ppcn/${uuid}/${lang}`,
   submitNewFilePPCN: () => `/v1/ppcn/file/`,
+  ppcnReviews: (id:string) => `/v1/ppcn/changelog/${id}`,
 
 }
 
@@ -238,6 +240,21 @@ export class PpcnService {
         // raise exception
       }
       
+    }
+
+    ppcnReviews (id: string) : Observable < PpcnReview[] > {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': this.authenticationService.credentials.token
+        })
+      };
+      return this.httpClient
+    .get(routes.ppcnReviews(id), httpOptions) 
+    .pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
     }
 
     private buildFormData(context: any,
