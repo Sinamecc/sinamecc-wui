@@ -36,10 +36,9 @@
             <strong translate>Geographic Site:</strong> {{mitigationAction?.location.geographical_site}} <br>
             <strong translate>Is Gis Annexed?:</strong> {{mitigationAction?.location.is_gis_annexed}}
             <h3 translate class="text-color">Files</h3>
-            <!-- <div *ngFor="let file of mitigationAction.files">
+            <div *ngFor="let file of mitigationAction?.files">
               <strong translate>File Name</strong>: {{file.name}} <button mat-icon-button color="primary" (click)="download(file.file)" ><mat-icon color="white">vertical_align_bottom</mat-icon></button>
-
-            </div> -->
+            </div>
             <!--<mat-divider></mat-divider>-->
             <h3 class="text-color" translate>Actions</h3>
             <button mat-icon-button color="primary" (click)="review(mitigationAction?.id)" > <mat-icon color="white">rate_review</mat-icon></button>
