@@ -11,6 +11,7 @@ import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-
 import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { MitigationActionReviewNewFormData } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
+import { StatusRoutesMap } from '@app/mitigation-actions/status-routes-map';
 import { S3File, S3Service } from '@app/core/s3.service';
 
 const routes = {
@@ -33,6 +34,15 @@ export interface Response {
   message: string;
   id?: string;
 
+}
+
+const fsm_next_state = {
+  "decision_step_DCC":['registering', 'rejected_by_DCC', 'changes_requested_by_DCC'],
+  "submit_INGEI_changes_proposal_evaluation_result": ["INGEI_changes_proposal_changes_requested_by_DCC_IMN", 
+                                                      "INGEI_changes_proposal_rejected_by_DCC_IMN",
+                                                      "INGEI_changes_proposal_accepted_by_DCC_IMN"],
+  "submit_INGEI_harmonization_required":['INGEI_harmonization_required', 'submitted_SINAMECC_conceptual_proposal_integration'],
+  "INGEI_harmonization_required": ['updating_INGEI_changes_proposal', 'submitted_SINAMECC_conceptual_proposal_integration']
 }
 
 export interface ReportContext {
@@ -212,7 +222,6 @@ export class MitigationActionsService {
         'Authorization': this.authenticationService.credentials.token
       })
     };
-    console.log('context before submitting a review', context);
 
     context['user'] = this.authenticationService.credentials.id;
     const url = routes.submitMitigationActionReview(uuid);
@@ -227,6 +236,20 @@ export class MitigationActionsService {
         return response;
       })
     );
+  }
+
+  commonStatusses(mitigationAction:MitigationAction): string[] {
+    return fsm_next_state[mitigationAction.fsm_state];
+  }
+
+  mapRoutesStatuses(uuid:string): StatusRoutesMap[] {
+    return [
+      {route: `mitigation/actions/${uuid}/edit`, status: 'changes_requested_by_DCC'},
+      {route: `mitigation/actions/${uuid}/harmonization/integration`, status: 'updating_INGEI_changes_proposal'},
+      {route: `mitigation/actions/${uuid}/harmonization/integration`, status: 'updating_INGEI_changes_proposal_by_request_of_DCC_IMN'},
+      {route: `mitigation/actions/${uuid}/conceptual/integration`, status: 'implementing_INGEI_changes'},
+      // implementing_INGEI_changes
+    ];
   }
 
   private handleError(error: HttpErrorResponse) {

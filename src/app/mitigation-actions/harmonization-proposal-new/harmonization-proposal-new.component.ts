@@ -33,7 +33,7 @@ export class HarmonizationProposalNewComponent implements OnInit {
     private i18nService: I18nService) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = "Harmonization Proposal Integration";
-    this.nextRoute = `mitigation/actions/${this.id}/conceptual/integration`;
+    this.nextRoute = `mitigation/actions`;
     this.formData = new FormData();
     this.formSubmitRoute = "/v1/mitigations/step/harmonization_ingei/";
     

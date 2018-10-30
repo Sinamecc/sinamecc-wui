@@ -288,7 +288,7 @@
                 <mat-select [placeholder]="'Geographic Scale' | translate" formControlName="geographicScaleCtrl" [compareWith]="compareIds">
                   <mat-option *ngFor="let geographicScale of geographicScales" [value]="geographicScale.id">{{geographicScale.name}}</mat-option>
                 </mat-select>
-              </mat-form-field>
+            </mat-form-field>
 
               <div class="center">
                   <button mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent">
@@ -414,7 +414,7 @@
             
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <button mat-raised-button type="button" color="primary"><span translate>Done</span></button>
+              <button mat-raised-button color="primary"><span translate>Done</span></button>
             </div>
           </mat-step>
         </mat-vertical-stepper>

@@ -23,6 +23,7 @@ export class UpdateStatusComponent implements OnInit {
   @Input() entity: any;
   @Input() statusses: any;
   @Input() formData: FormData;
+  @Input() shouldDisplayComment: boolean;
   @Output() formSubmitted = new EventEmitter<any>();
 
 
@@ -45,7 +46,7 @@ export class UpdateStatusComponent implements OnInit {
   private createForm() {
     this.form = this.formBuilder.group({
       statusCtrl: ['', Validators.required],
-      descriptionCtrl: ['', Validators.required]
+      descriptionCtrl: ['', null]
     });
   }
 

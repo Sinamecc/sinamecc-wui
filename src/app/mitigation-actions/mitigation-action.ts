@@ -10,10 +10,10 @@ export interface MitigationAction {
   contact: Contact;
   location: Location;
   progress_indicator: ProgressIndicator;
-  review_status: ReviewStatus;
-  next_state: ReviewStatus[];
+  next_state: string;
   created: string;
   updated: string;
+  fsm_state: string;
   files: Files[];
 }
 

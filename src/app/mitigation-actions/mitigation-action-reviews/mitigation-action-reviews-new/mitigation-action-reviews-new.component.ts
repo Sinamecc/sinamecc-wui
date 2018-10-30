@@ -26,14 +26,14 @@ export class MitigationActionReviewsNewComponent implements OnInit {
   isLoading = false;
   id: string;
   mitigationActionObservable: Observable<MitigationAction>;
-  // initalRequiredData: Observable<MitigationActionReviewNewFormData>;
 
   mitigationAction: MitigationAction;
   title: string;
   nextRoute: string;
   formData: FormData;
   formSubmitRoute: string;
-  statusses: ReviewStatus[];
+  statusses: string[];
+  shouldDisplayComment: boolean;
 
 
   processedMitigationActionsStatusses: MitigationActionReviewNewFormData;
@@ -55,103 +55,26 @@ export class MitigationActionReviewsNewComponent implements OnInit {
   
       this.mitigationActionObservable = this.service.getMitigationAction(this.id, this.i18nService.language.split('-')[0])
       .pipe(
-        tap((mitigationAction: MitigationAction) => { this.mitigationAction = mitigationAction; this.statusses = mitigationAction.next_state })
-      );
-
-      
-      // this.id = this.route.snapshot.paramMap.get('id');
-      // this.createForm();
+        tap((mitigationAction: MitigationAction) => {
+          this.mitigationAction = mitigationAction;
+          if (mitigationAction.next_state ) {
+            this.statusses  = [mitigationAction.next_state];
+            this.shouldDisplayComment = false;
+          } else {
+            this.statusses  = this.service.commonStatusses(mitigationAction);
+            this.shouldDisplayComment = true;
+          }
+        }
+      ));
     }
 
   ngOnInit() {
   }
 
-  // private createForm() {
-  //   this.formGroup = this.formBuilder.group({
-  //     review_status: ['', Validators.required],
-  //     comment: ['', Validators.required]
-  //   });
-
-  //   this.formValues = forkJoin(
-  //     this.initFormData(),
-  //     this.initFormOptions(),   
-  //     (formOptions, formData) => { 
-  //       return { formOptions, formData };
-  //     }
-  //   );
-  // }
-
-  // private initFormOptions():Observable<MitigationActionReviewNewFormData> {
-  //   let initialRequiredData = this.initialFormData().pipe(
-  //     tap(mitigationActionReviewNewFormData => {
-  //       this.isLoading = false;
-  //       this.processedMitigationActionsStatusses = mitigationActionReviewNewFormData;
-  //     }));
-  //     return initialRequiredData;
-  // }
-
-  // private initialFormData():Observable<MitigationActionReviewNewFormData> {
-  //   return this.service.getMitigationActionReviewStatuses()
-  //   .pipe(finalize(() => { this.isLoading = false; }));
-
-  // }
-
-
-  // private initFormData():Observable<MitigationAction> {
-  //   let mitigationAction = this.getMitigation().pipe(
-      
-  //     tap(mitigationAction => {
-  //       this.formGroup.setValue({
-  //         review_status: mitigationAction['review_status']['id'],
-  //         comment: ''
-  //       });
-     
-  //     }));
-  //     return mitigationAction;
-  // }
-
-  // private getMitigation():Observable<MitigationAction> {
-  //   return this.service.getMitigationAction(this.id, this.i18nService.language.split('-')[0])
-  //   .pipe(finalize(() => { this.isLoading = false; }));
-
-  // }
-
-  // submitForm() {
-
-  //   this.isLoading = true;
-  //   this.service.submitNewMitigationActionReviewForm(this.formGroup.value, this.id)
-  //     .pipe(finalize(() => {
-  //       this.formGroup.markAsPristine();
-  //       this.isLoading = false;
-  //     }))
-  //     .subscribe(response => {
-  //       this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
-  //       log.debug(`${response.statusCode} status code received from form`);
-
-  //     }, error => {
-  //       log.debug(`Mitigation Action Review error: ${error}`);
-  //       this.error = error;
-  //     });
-
-  // }
-
   onSubmission(context: any) {
-    this.formData.append('comment', context.commentCtrl);
+    this.formData.append('comment', context.descriptionCtrl);
     this.formData.append('fsm_state', context.statusCtrl);
     this.formData.append('user',  String(this.authenticationService.credentials.id));
   }
 
-  // compareIds(id1: any, id2: any): boolean {
-  //   const a1 = determineId(id1);
-  //   const a2 = determineId(id2);
-  //   return a1 === a2;
-  // }
-
 }
-
-// export function determineId(id: any): string {
-//   if (id.constructor.name === 'array' && id.length > 0) {
-//      return '' + id[0];
-//   }
-//   return '' + id;
-// }

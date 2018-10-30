@@ -7,9 +7,9 @@
         <mat-card-subtitle>
           <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
         </mat-card-subtitle>
-        <div class="container " [hidden]="isLoading">
-            <h3 translate class="text-color">General Data</h3>
-            <strong translate>Status</strong>: {{mitigationAction?.review_status?.status}} <br>
+        <div class="container" [hidden]="isLoading">
+            <h3 translate>General Data</h3>
+            <strong translate>Status</strong>: {{mitigationAction?.fsm_state}} <br>
 
             <strong translate>Code</strong>: {{mitigationAction?.id}} <br>
             <strong translate>Name:</strong> {{mitigationAction?.name}} <br>

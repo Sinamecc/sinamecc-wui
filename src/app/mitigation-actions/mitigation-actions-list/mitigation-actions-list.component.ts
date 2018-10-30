@@ -31,6 +31,7 @@ export class MitigationActionsListComponent implements OnInit {
   error: string;
   isLoading = false;
   dataSource = new MitigationActionSource(this.service, this.i18nService);
+  canUpdateStatus: boolean = false;
   displayedColumns = ['name', 'strategy_name', 'purpose', 'fsm_state', 'updated', 'created', 'actions'];
 
 
@@ -54,16 +55,26 @@ export class MitigationActionsListComponent implements OnInit {
   }
 
   addReview(uuid: string) {
-    this.router.navigate([`mitigation/actions/${uuid}/reviews/new`], { replaceUrl: true });
+
+    const selectedMitigationAction = this.dataSource.mitigationActions.find((ma) => ma.id === uuid);
+    const status = selectedMitigationAction.fsm_state;
+    
+    const route = this.service.mapRoutesStatuses(uuid).find(x => x.status === status );
+    if(route) {
+      this.router.navigate([route.route], { replaceUrl: true });
+    } else {
+      this.router.navigate([`mitigation/actions/${uuid}/reviews/new`], { replaceUrl: true });
+    }
+    
   }
 
   changelog(uuid: string) {
     this.router.navigate([`mitigation/actions/${uuid}/reviews`], { replaceUrl: true });
   }
 
-  uploadProposal(uuid: string) {
-    this.router.navigate([`mitigation/actions/${uuid}/conceptual/integration/new`], { replaceUrl: true });
-  }
+  // uploadProposal(uuid: string) {
+  //   this.router.navigate([`mitigation/actions/${uuid}/conceptual/integration/new`], { replaceUrl: true });
+  // }
 
   delete(uuid: string) {
    this.isLoading = true;
@@ -99,12 +110,20 @@ export class MitigationActionsListComponent implements OnInit {
 }
 
 export class MitigationActionSource extends DataSource<any> {
+
+  mitigationActions: MitigationAction[];
+  mitigationActions$: Observable<MitigationAction[]>;
+
   constructor(private service: MitigationActionsService,
               private i18nService: I18nService,) {
     super();
   }
   connect(): Observable < MitigationAction[] > {
-    return this.service.mitigationActions(this.i18nService.language.split('-')[0]);
+    this.mitigationActions$ = this.service.mitigationActions(this.i18nService.language.split('-')[0]);
+    this.mitigationActions$.subscribe((mitigationActions) => {
+      this.mitigationActions = mitigationActions;
+    });
+    return this.mitigationActions$;
   }
   disconnect() {}
 }

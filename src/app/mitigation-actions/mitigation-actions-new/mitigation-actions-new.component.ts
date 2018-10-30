@@ -63,8 +63,8 @@ export class MitigationActionsNewComponent implements OnInit {
         this.isLoading = false;
       }))
       .subscribe(response => {
-        this.router.navigate([`/mitigation/actions/${response.id}/harmonization/integration`], { replaceUrl: true });
-        
+        // this.router.navigate([`/mitigation/actions/${response.id}/harmonization/integration`], { replaceUrl: true });
+        this.router.navigate([`/mitigation/actions`], { replaceUrl: true });
       }, error => {
         log.debug(`New Mitigation Action Form error: ${error}`);
         this.error = error;

@@ -20,14 +20,14 @@
         <hr>
         <mat-form-field>
             <mat-select  formControlName="statusCtrl" placeholder="Next Status" [compareWith]="compareIds">
-                <mat-option *ngFor="let status of statusses" [value]="status.state">
-                  {{ status.state }}
+                <mat-option *ngFor="let status of statusses" [value]="status">
+                  {{ status }}
                 </mat-option>
               </mat-select>
         </mat-form-field>
         <br/>
   
-        <mat-form-field>
+        <mat-form-field *ngIf="shouldDisplayComment">
           <textarea matInput formControlName="descriptionCtrl" [placeholder]="'Description of the review update' | translate" matTextareaAutosize
             matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
           <mat-error translate>This field is required</mat-error>
