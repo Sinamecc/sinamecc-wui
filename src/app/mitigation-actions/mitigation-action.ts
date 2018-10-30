@@ -14,6 +14,7 @@ export interface MitigationAction {
   next_state: ReviewStatus[];
   created: string;
   updated: string;
+  files: Files[];
 }
 
 export interface ProgressIndicator {
@@ -42,3 +43,9 @@ export interface Institution {
 export interface ReviewStatus { 
   status: string;
 }
+
+export interface Files {
+  name: string;
+  file: string;
+}
+
