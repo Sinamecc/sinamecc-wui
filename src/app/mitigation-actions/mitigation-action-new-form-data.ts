@@ -6,7 +6,7 @@ export interface MitigationActionNewFormData {
   ingei_compliances: IngeiCompliance[];
   geographic_scales: GeographicScale[];
   finance_source_types: FinanceSourceType[];
-  
+  finance_status: FinanceStatus[];
   }
 
  export interface RegistrationType {
@@ -41,6 +41,18 @@ export interface MitigationActionNewFormData {
   }
 
 export interface FinanceSourceType {
+  id: Number;
+  name: String;
+}
+
+export interface FinanceStatus {
+  id: Number;
+  status: String;
+}
+
+
+
+export interface InitiativeType {
   id: Number;
   name: String;
 }

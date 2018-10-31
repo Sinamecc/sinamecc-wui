@@ -20,7 +20,13 @@ import { MitigationActionsReviewsListComponent } from '@app/mitigation-actions/m
 import { ConceptualIntegrationComponent } from '@app/mitigation-actions/conceptual-integration/conceptual-integration.component';
 import { IngeiHarmonizationComponent } from '@app/mitigation-actions/ingei-harmonization/ingei-harmonization.component'
 import { ConceptualIntegrationNewComponent } from '@app/mitigation-actions/conceptual-integration-new/conceptual-integration-new.component';
-import { HarmonizationProposalNewComponent } from '@app/mitigation-actions/harmonization-proposal-new/harmonization-proposal-new.component'
+import { HarmonizationProposalNewComponent } from '@app/mitigation-actions/harmonization-proposal-new/harmonization-proposal-new.component';
+import { MitigationActionFormFlowComponent } from './mitigation-action-form-flow/mitigation-action-form-flow.component';
+import { InitiativeFormComponent } from './initiative-form/initiative-form.component';
+import { BasicInformationFormComponent } from './basic-information-form/basic-information-form.component';
+import { KeyAspectsFormComponent } from './key-aspects-form/key-aspects-form.component';
+import { EmissionsMitigationFormComponent } from './emissions-mitigation-form/emissions-mitigation-form.component';
+import { ImpactFormComponent } from './impact-form/impact-form.component'
 @NgModule({
   imports: [
     CommonModule,
@@ -43,7 +49,13 @@ import { HarmonizationProposalNewComponent } from '@app/mitigation-actions/harmo
     ConceptualIntegrationComponent,
     IngeiHarmonizationComponent,
     ConceptualIntegrationNewComponent,
-    HarmonizationProposalNewComponent
+    HarmonizationProposalNewComponent,
+    MitigationActionFormFlowComponent,
+    InitiativeFormComponent,
+    BasicInformationFormComponent,
+    KeyAspectsFormComponent,
+    EmissionsMitigationFormComponent,
+    ImpactFormComponent
   ],
   providers: [
     MitigationActionsService,

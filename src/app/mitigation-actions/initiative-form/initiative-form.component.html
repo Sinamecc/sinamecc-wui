@@ -1,0 +1,210 @@
+<div class="container">
+  <mat-card-content>
+    <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
+      <div class="form-error" [hidden]="!error || isLoading" translate>
+        <span translate>Error submitting the form.</span>
+      </div>
+      <br />
+      <div fxLayout="column">
+
+        <mat-vertical-stepper formArrayName="formArray" linear>
+          <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+            <ng-template matStepLabel>
+              <span translate>Initiative</span>
+            </ng-template>
+
+            <h3 *ngIf="isUpdating">
+              <span translate>Code</span>:<span>{{mitigationAction?.id}}</span>
+            </h3>
+
+            <!-- <mat-form-field class="field-ppcn">
+              <mat-select formControlName="initiativeRegisterTypeCtrl" [placeholder]="'Registered Type' | translate">
+                <mat-option *ngFor="let registerType of processedNewFormData.registration_types" [value]="registerType.id">
+                  {{ registerType.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field> -->
+            <br />
+            <mat-form-field class="field-ppcn">
+              <mat-select formControlName="initiativeTypeCtrl" [placeholder]="'Initiative Type' | translate">
+                <mat-option *ngFor="let initiativeType of processedNewFormData.initiative_types" [value]="initiativeType.id">
+                  {{ initiativeType.types }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br />
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Initiative Name</mat-label>
+              <input matInput formControlName="initiativeNameCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br />
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Entity Responsible Name</mat-label>
+              <input matInput formControlName="entityIniativeResponsibleCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br />
+            <mat-form-field class="field-ppcn">
+              <textarea matInput formControlName="initiativeObjectiveCtrl" [placeholder]="'Objective of the initiative' | translate"
+                matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field class="field-ppcn">
+              <textarea matInput formControlName="initiativeDescriptionCtrl" [placeholder]="'Description of the initiative' | translate"
+                matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br />
+            <mat-form-field class="field-ppcn">
+              <textarea matInput formControlName="initiativeGoalCtrl" [placeholder]="'Goal of the initiative' | translate"
+                matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br />
+            <mat-form-field class="field-ppcn">
+              <mat-select formControlName="initiativeStatusCtrl" [placeholder]="'Initiative Status' | translate">
+                <mat-option *ngFor="let status of processedNewFormData.statuses" [value]="status.id">
+                  {{ status.status }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br />
+            <!-- <div class="margin-20">
+              <div>step details:-</div>
+              <pre>Is formArray?.get([0]) valid?: <br>{{formArray?.get([0]).valid | json}}</pre>
+              <pre>formArray?.get([0]) value: <br>{{formArray?.get([0]).value | json}}</pre>
+              <pre>formArray?.get([0]) : <br>{{formArray?.get([0]) | json }}</pre>
+              <pre>first step valid? : <br>{{formArray?.get([0]).valid | json}}</pre>
+  
+            </div> -->
+            <div class="center">
+              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
+                <span translate>Next</span>
+                <mat-icon color="white">arrow_forward</mat-icon>
+              </button>
+            </div>
+          </mat-step>
+
+          <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+
+            <ng-template matStepLabel>
+              <div translate>Initiative Finance Info</div>
+            </ng-template>
+
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Initiative Finance Status</mat-label>
+              <mat-select formControlName="initiativeFinancingStatusCtrl" [placeholder]="'Finance Source Status' | translate"
+                (selectionChange)="financialSourceInputShown($event)">
+                <mat-option *ngFor="let financeStatus of processedNewFormData.finance_status" [value]="financeStatus.id">
+                  {{ financeStatus.status }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br />
+            <mat-form-field class="field-ppcn">
+            <mat-label translate>Initiative Finance Type</mat-label>
+              <mat-select formControlName="initiativeFinancingStatusTypeCtrl" [placeholder]="'Finance Source Type' | translate">
+                <mat-option *ngFor="let financeStatus of processedNewFormData.finance_source_types" [value]="financeStatus.id">
+                  {{ financeStatus.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br />
+            <div *ngIf="displayFinancialSource">
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>In case of cooperation, list sources</mat-label>
+                <input matInput formControlName="initiatveFinancingSourceCtrl">
+                <mat-error translate>The input is required.</mat-error>
+              </mat-form-field>
+            </div>
+
+            <br />
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Budget in USD $</mat-label>
+              <input matInput formControlName="initiativeBudgetCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br />
+
+            <div class="center">
+              <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
+                <mat-icon color="white">arrow_back</mat-icon>
+                <span translate>Back</span>
+              </button>
+              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
+                <span translate>Next</span>
+                <mat-icon color="white">arrow_forward</mat-icon>
+              </button>
+            </div>
+          </mat-step>
+
+
+          <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
+            <ng-template matStepLabel>
+              <span translate>Initiative Contact Info</span>
+            </ng-template>
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Contact Name</mat-label>
+              <input matInput formControlName="initiativeContactNameCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br />
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Position</mat-label>
+              <input matInput formControlName="initiativePositionCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Email address</mat-label>
+              <input matInput formControlName="initiativeEmailFormCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Phone</mat-label>
+              <input matInput formControlName="initiativePhoneCtrl" type="tel">
+              <mat-error translate>The input is required or length is incorrect.</mat-error>
+            </mat-form-field>
+            <br />
+            <div class="center">
+              <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
+                <mat-icon color="white">arrow_back</mat-icon>
+                <span translate>Back</span>
+              </button>
+              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
+                <span translate>Next</span>
+                <mat-icon color="white">arrow_forward</mat-icon>
+              </button>
+            </div>
+          </mat-step>
+
+          <mat-step>
+            <ng-template matStepLabel> <span translate> Confirm your information </span></ng-template>
+            
+            <div *ngIf="form.valid; else elseBlock" translate>Everything seems correct. </div>
+            
+            <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
+            <div class="align-right">
+              <button mat-raised-button type="submit" color="primary" [disabled]="wasSubmittedSuccessfully"><span translate>Done</span></button>
+            </div>
+          </mat-step>
+        </mat-vertical-stepper>
+
+        <!-- <div class="margin-20">
+            <div>form details:-</div>
+            <pre>Is myForm valid?: <br>{{form.valid | json}}</pre>
+            <pre>form value: <br>{{form.value | json}}</pre>
+            <pre>formArray?.get([0]) : <br>{{formArray?.get([0]) | json }}</pre>
+            <pre>first step valid? : <br>{{formArray?.get([0]).valid | json}}</pre>
+
+          </div> -->
+      </div>
+    </form>
+  </mat-card-content>
+</div>

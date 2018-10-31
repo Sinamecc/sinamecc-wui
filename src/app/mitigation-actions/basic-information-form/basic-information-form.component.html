@@ -1,0 +1,125 @@
+<div class="container">
+  <mat-card-content>
+    <form *ngIf="newFormData | async"  [formGroup]="form" (ngSubmit)="submitForm()">
+      <div class="form-error" [hidden]="!error || isLoading" translate>
+        <span translate>Error submitting the form.</span>
+      </div>
+      <br />
+      <div fxLayout="column">
+
+        <mat-vertical-stepper formArrayName="formArray" linear>
+          <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+            <ng-template matStepLabel>
+              <span translate>Basic Info</span>
+            </ng-template>
+
+            <h3>
+              <span translate>Code</span>:<span>{{mitigationAction?.id}}</span>
+            </h3>
+
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Program</mat-label>
+              <input matInput formControlName="programCtrl">
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br />
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Name</mat-label>
+              <input matInput formControlName="nameCtrl">
+              <mat-error translate>This field is required</mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field class="field-ppcn">
+              <mat-select formControlName="entityCtrl" [placeholder]="'Entity or Institution' | translate">
+                <mat-option *ngFor="let institution of processedNewFormData.institutions" [value]="institution.id">
+                  {{ institution.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Costa Rica Compensation Unit</mat-label>
+              <input matInput formControlName="uccCtrl">
+              <mat-error>Some error happened with this field</mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Validation Verification Body</mat-label>
+              <input matInput formControlName="ovvCtrl">
+              <mat-error>This field is required</mat-error>
+            </mat-form-field>
+            <br />
+            <div class="center">
+              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
+                <span translate>Next</span>
+                <mat-icon color="white">arrow_forward</mat-icon>
+              </button>
+            </div>
+          </mat-step>
+
+          <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+
+            <ng-template matStepLabel>
+              <div translate>Contact Info</div>
+            </ng-template>
+
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Name</mat-label>
+              <input matInput formControlName="contactNameCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br />
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Position</mat-label>
+              <input matInput formControlName="positionCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Email address</mat-label>
+              <input matInput formControlName="emailFormCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Phone</mat-label>
+              <input matInput formControlName="phoneCtrl" type="tel">
+              <mat-error translate>The input is required or length is incorrect.</mat-error>
+            </mat-form-field>
+            <br />
+            <br />
+
+            <div class="center">
+              <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
+                <mat-icon color="white">arrow_back</mat-icon>
+                <span translate>Back</span>
+              </button>
+              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
+                <span translate>Next</span>
+                <mat-icon color="white">arrow_forward</mat-icon>
+              </button>
+            </div>
+          </mat-step>
+
+          <mat-step>
+            <ng-template matStepLabel> <span translate> Confirm your information </span></ng-template>
+            
+            <div *ngIf="form.valid; else elseBlock" translate>Everything seems correct. </div>
+            
+            <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
+            <div class="align-right">
+              <button mat-raised-button type="submit" color="primary" [disabled]="wasSubmittedSuccessfully"><span translate>Done</span></button>
+            </div>
+          </mat-step>
+
+        </mat-vertical-stepper>
+
+      </div>
+    </form>
+  </mat-card-content>
+</div>
