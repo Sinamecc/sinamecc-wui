@@ -18,6 +18,7 @@ import { PpcnUpdateComponent } from '@app/ppcn/ppcn-update/ppcn-update.component
 import { PpcnComponent } from '@app/ppcn/ppcn/ppcn.component';
 import { PpcnDownloadComponent } from '@app/ppcn/ppcn-download/ppcn-download.component';
 import { PpcnUploadComponent } from '@app/ppcn/ppcn-upload/ppcn-upload.component';
+import { FileVersionComponent } from '@app/ppcn/file-version/file-version.component';
 import { NewReviewComponent } from '@app/ppcn/ppcn-reviews/new-review/new-review.component';
 import { ReviewsListComponent } from '@app/ppcn/ppcn-reviews/reviews-list/reviews-list.component';
 
@@ -32,6 +33,7 @@ const routes: Routes = [
     { path: 'ppcn/geographic', component: PpcnLevelComponent, data: { title: extract('PpcnLevel') } },
     { path: 'ppcn/:id/download/:geographic', component: PpcnDownloadComponent , data: { id: extract('id') } },
     { path: 'ppcn/:id/upload/new', component: PpcnUploadComponent, data: {id: extract('id') } },
+    { path: 'ppcn/:id/file/version/new', component: FileVersionComponent, data: {id: extract('id') }  },
     { path: 'ppcn/:id/review/status/new', component: NewReviewComponent, data: {id: extract('id')}},
     { path: 'ppcn/:id/reviews', component: ReviewsListComponent, data: {id: extract('id')} },
     
