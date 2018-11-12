@@ -2,7 +2,7 @@
   <mat-card>
     <h3>
       <mat-card-title>
-        <span translate class="section-heading">{{title}}:</span>
+        <span class="section-heading" translate>{{title}}</span>
         <mat-divider class="divider-custom"></mat-divider>
         <mat-divider class="divider-custom"></mat-divider>
       </mat-card-title>
@@ -14,7 +14,7 @@
   
           
             <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
-                <ng-template matStepLabel>Register Initiatives</ng-template>
+                <ng-template matStepLabel><span translate>Register Initiatives</span></ng-template>
                 <app-initiative-form 
                 [newFormData]="newFormData" 
                 [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating"></app-initiative-form>
@@ -28,7 +28,7 @@
   
   
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
-            <ng-template matStepLabel>Basic Information</ng-template>
+            <ng-template matStepLabel><span translate>Basic Information</span></ng-template>
             <app-basic-information-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating">
             </app-basic-information-form>
             <div class="align-right">
@@ -49,7 +49,7 @@
   
   
             <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
-                <ng-template matStepLabel>Key Aspects</ng-template>
+                <ng-template matStepLabel><span translate>Key Aspects</span></ng-template>
                 <app-key-aspects-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating">
                 </app-key-aspects-form>
                 <div class="align-right">
@@ -69,7 +69,7 @@
   
   
           <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
-            <ng-template matStepLabel>Mitigation of Emissions</ng-template>
+            <ng-template matStepLabel><span translate>Mitigation of Emissions</span></ng-template>
             <app-emissions-mitigation-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating">
             </app-emissions-mitigation-form>
             <div class="align-right">
@@ -88,7 +88,7 @@
           </mat-step>
   
           <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
-            <ng-template matStepLabel>Impact and Implementation</ng-template>
+            <ng-template matStepLabel><span translate> Impact and Implementation</span></ng-template>
             <app-impact-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating"> </app-impact-form>
             <div class="align-right">
               <button type="button" mat-button matStepperPrevious [disabled]="impactForm.wasSubmittedSuccessfully" class="mat-raised-button mat-accent">

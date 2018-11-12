@@ -44,7 +44,7 @@
   "Add new version":"Add new version",
   "Name of Version":"Name of Version",
   "File":"File",
-  "Create a new mitigation action:":"Create a new mitigation action:",
+  "Create new mitigation action:":"Create new mitigation action:",
   "This field is required":"This field is required",
   "Basic Info":"Basic Info",
   "Program":"Program",
@@ -176,6 +176,26 @@
   "Recognition Request":"Recognition Request",
   "Add new PPCN":"Add new PPCN",
   "Download":"Download",
-  "File Name":"File Name"
+  "File Name":"File Name",
+  "Register Initiatives":"Registrar Iniciativas",
+  "Initiative":"Initiative",
+  "Basic Information":"Basic Information",
+  "Key Aspects":"Key Aspects",
+  "Mitigation of Emissions":"Mitigation of Emissions",
+  "Impact and Implementation":"Impact and Implementation",
+  "Initiative Type":"Initiative Type",
+  "Initiative Name":"Initiative Name",
+  "Entity Responsible Name":"Entity Responsible Name",
+  "Objective of the initiative":"Objective of the initiative",
+  "Description of the initiative":"Description of the initiative",
+  "Goal of the initiative":"Goal of the initiative",
+  "Initiative Status":"Initiative Status",
+  "Initiative Finance Info":"Initiative Finance Info",
+  "Initiative Finance Status":"Initiative Finance Status",
+  "Initiative Finance Type":"Initiative Finance Type",
+  "In case of cooperation, list sources":"In case of cooperation, list sources",
+  "Budget in USD $":"Budget in USD $",
+  "Initiative Contact Info":"Initiative Contact Info"
+
   }
   
