@@ -13,6 +13,7 @@ import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { Ovv } from '@app/mccr-registries/mccr-registries-ovv-selector/ovv';
 import { BehaviorSubject } from 'rxjs';
 import { S3Service, S3File } from '@app/core/s3.service';
+import { StatusRoutesMap } from '@app/shared/status-routes-map';
 
 const routes = {
   seededFormData: () => `/v1/mccr/registries`,
@@ -36,6 +37,14 @@ export interface Response {
 
 export interface SelectedOvv {
   ovvId: string;
+}
+
+const fsm_next_state = {
+  "mccr_ovv_accept_reject":['mccr_ovv_accept_assignation', 'mccr_ovv_reject_assignation'],
+  "mccr_ovv_upload_evaluation": ["mccr_ovv_request_changes_dp", 
+                                 "mccr_ovv_accept_dp",
+                                 "mccr_ovv_reject_dp"],
+
 }
 @Injectable()
 export class MccrRegistriesService {
@@ -229,6 +238,20 @@ export class MccrRegistriesService {
 
   public async downloadResource(filePath: string): Promise<S3File> {
     return this.s3.downloadResource(filePath);
+  }
+
+  commonStatusses(mccrRegistry:MccrRegistry): string[] {
+    return fsm_next_state[mccrRegistry.fsm_state];
+  }
+
+  mapRoutesStatuses(uuid:string): StatusRoutesMap[] {
+    return [
+      {route: `mccr/registries/${uuid}/ovv`, status: 'mccr_ovv_assigned_first_review'},
+      {route: `mccr/registries/${uuid}/ovv/proposal`, status: 'mccr_ovv_accept_assignation'},
+      {route: `mccr/registries/${uuid}`, status: 'mccr_on_evaluation_by_secretary'}
+      // {route: `mitigation/actions/${uuid}/edit`, status: 'changes_requested_by_DCC'},
+
+    ];
   }
   
 

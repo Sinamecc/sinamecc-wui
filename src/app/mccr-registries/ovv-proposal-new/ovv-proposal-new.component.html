@@ -1,0 +1,11 @@
+<app-upload-proposal *ngIf="mccrRegistryObservable | async" [title]="title"
+              [code]="id"
+              [nextRoute]="nextRoute"
+              [entity]="mccrRegistry"
+              [(formData)]="formData"
+              [formData]="formData"
+              [formSubmitRoute]="formSubmitRoute"
+              (formSubmitted)="onSubmission($event)"></app-upload-proposal>
+
+
+ 

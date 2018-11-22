@@ -21,9 +21,9 @@
     </ng-container>
 
     <!--Status Column -->
-    <ng-container matColumnDef="status">
+    <ng-container matColumnDef="fsm_state">
       <mat-header-cell *matHeaderCellDef translate> Status </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.fsm_state}} </mat-cell>
     </ng-container>
 
     <!--Status Column -->
@@ -42,10 +42,11 @@
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef translate> Actions </mat-header-cell>
     <mat-cell *matCellDef="let element"> 
-      <button mat-icon-button color="primary" (click)="view(element.id)"><mat-icon color="white">visibility</mat-icon></button>
+      <!-- <button mat-icon-button color="primary" (click)="view(element.id)"><mat-icon color="white">visibility</mat-icon></button> -->
       <button mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)"><mat-icon color="white">delete</mat-icon></button>
-      <button mat-icon-button color="accent" (click)="update(element.id)"><mat-icon color="white">edit</mat-icon></button>
-      <button mat-icon-button color="primary" (click)="selectOvv(element.id)"><mat-icon color="white">library_add</mat-icon></button>
+      <!-- <button mat-icon-button color="accent" (click)="update(element.id)"><mat-icon color="white">edit</mat-icon></button> -->
+      <button mat-icon-button color="primary" *ngIf="element.fsm_state !== 'end'" (click)="addReview(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button>
+
     </mat-cell>
 </ng-container>
 

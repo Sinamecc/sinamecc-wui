@@ -59,4 +59,12 @@ export class MccrRegistryComponent implements OnInit {
     this.isLoading = false;
   }
 
+  addReview(uuid: string) {
+
+    const status = this.mccrRegistry.fsm_state;
+    
+    this.router.navigate([`mccr/registries/${uuid}/reviews/new`], { replaceUrl: true });
+    
+  }
+
 }

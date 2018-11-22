@@ -32,7 +32,7 @@ export class MccrRegistriesListComponent implements OnInit {
   isLoading = false;
   dataSource = new MccrRegistriesDataSource(this.service);
   currentMccrRegistry: MccrRegistry;
-  displayedColumns = ['id', 'status', 'mitigation', 'files', 'actions'];
+  displayedColumns = ['id', 'fsm_state', 'mitigation', 'files', 'actions'];
   
   // @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ViewChild(MatSort) sort: MatSort;
@@ -67,11 +67,25 @@ export class MccrRegistriesListComponent implements OnInit {
     this.router.navigate([`mccr/registries/${uuid}/edit`], { replaceUrl: true });
   }
 
-  selectOvv(uuid: string) {
-    let listedMccrRegistries = this.dataSource.mccrRegistries;
-    let currentMccrRegistry = listedMccrRegistries.find(element => element.id === uuid);
-    this.service.updateCurrentMccrRegistry(currentMccrRegistry);
-    this.router.navigate([`mccr/registries/${uuid}/ovv`], { replaceUrl: true });
+  // selectOvv(uuid: string) {
+  //   let listedMccrRegistries = this.dataSource.mccrRegistries;
+  //   let currentMccrRegistry = listedMccrRegistries.find(element => element.id === uuid);
+  //   this.service.updateCurrentMccrRegistry(currentMccrRegistry);
+  //   this.router.navigate([`mccr/registries/${uuid}/ovv`], { replaceUrl: true });
+  // }
+
+  addReview(uuid: string) {
+
+    const selectedMccr = this.dataSource.mccrRegistries.find((mccr) => mccr.id === uuid);
+    const status = selectedMccr.fsm_state;
+    
+    const route = this.service.mapRoutesStatuses(uuid).find(x => x.status === status );
+    if(route) {
+      this.router.navigate([route.route], { replaceUrl: true });
+    } else {
+      this.router.navigate([`mccr/registries/${uuid}/reviews/new`], { replaceUrl: true });
+    }
+    
   }
 
   openDeleteConfirmationDialog(uuid:string) {

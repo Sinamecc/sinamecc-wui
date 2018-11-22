@@ -9,6 +9,9 @@ import { MccrRegistryComponent } from '@app/mccr-registries/mccr-registry/mccr-r
 import { MccrRegistriesUpdateComponent } from '@app/mccr-registries/mccr-registries-update/mccr-registries-update.component';
 import { MaterialModule } from '@app/material.module';
 import { MccrRegistriesOvvSelectorComponent } from '@app/mccr-registries/mccr-registries-ovv-selector/mccr-registries-ovv-selector.component';
+import { MccrRegistriesReviewComponent } from './mccr-registries-review/mccr-registries-review.component';
+import { OvvProposalComponent } from './ovv-proposal/ovv-proposal.component';
+import { OvvProposalNewComponent } from './ovv-proposal-new/ovv-proposal-new.component';
 
 
 
@@ -19,7 +22,11 @@ const routes: Routes = [
     { path: 'mccr/registries/new', component: MccrRegistriesNewComponent, data: { title: extract('New') } },
     { path: 'mccr/registries/:id', component: MccrRegistryComponent, data: { id: extract('id') } },
     { path: 'mccr/registries/:id/edit', component: MccrRegistriesUpdateComponent, data: { id: extract('id') } },
-    { path: 'mccr/registries/:id/ovv', component: MccrRegistriesOvvSelectorComponent, data: { id: extract('id') } }
+    { path: 'mccr/registries/:id/ovv', component: MccrRegistriesOvvSelectorComponent, data: { id: extract('id') } },
+    { path: 'mccr/registries/:id/reviews/new', component: MccrRegistriesReviewComponent, data: { id: extract('id') } },
+    { path: 'mccr/registries/:id/ovv/proposal', component: OvvProposalComponent, data: { id: extract('id') } },
+    { path: 'mccr/registries/:id/ovv/proposal/new', component: OvvProposalNewComponent, data: { id: extract('id') } },
+
   ])
 ];
 

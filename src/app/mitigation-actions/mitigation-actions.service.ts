@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { MitigationActionReviewNewFormData } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
 import { BehaviorSubject } from 'rxjs';
-import { StatusRoutesMap } from '@app/mitigation-actions/status-routes-map';
+import { StatusRoutesMap } from '@app/shared/status-routes-map';
 import { S3File, S3Service } from '@app/core/s3.service';
 
 const routes = {

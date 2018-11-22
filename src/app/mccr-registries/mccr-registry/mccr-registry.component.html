@@ -11,7 +11,7 @@
           <h3 translate class="text-color">General Data</h3>
           <strong translate>Code</strong>: {{mccrRegistry?.id}} <br>
           <strong translate>Mitigation Action:</strong> {{mccrRegistry?.mitigation}} <br>
-          <strong translate>Status:</strong> {{mccrRegistry?.status}} <br>
+          <strong translate>Status:</strong> {{mccrRegistry?.fsm_state}} <br>
           <!--<mat-divider></mat-divider>-->
           <h3 translate class="text-color">Files</h3>
           <div>
@@ -23,6 +23,9 @@
               </li>
              </ul>
           </div>
+          <!--<mat-divider></mat-divider>-->
+          <h3 class="text-color" translate>Actions</h3>
+          <button mat-icon-button color="primary" *ngIf="mccrRegistry?.fsm_state !== 'end'" (click)="addReview(mccrRegistry?.id)" > <mat-icon color="white">navigate_next</mat-icon>Next State</button>
       </div>
 
     </mat-card-content>

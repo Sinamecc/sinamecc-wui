@@ -41,7 +41,7 @@
                   <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="3.5%" fxLayoutAlign="center">
                     
   
-                    <mat-form-field>
+                    <mat-form-field class="input-full-width">
                         <app-input-file class="mat-raised-button mat-primary" formControlName="file" [placeholder]="'Required input' | translate" valuePlaceholder="No file selected" required></app-input-file>
                         <mat-icon matSuffix>folder</mat-icon>
                         <mat-error *ngIf="file.controls.file.hasError('required')">
