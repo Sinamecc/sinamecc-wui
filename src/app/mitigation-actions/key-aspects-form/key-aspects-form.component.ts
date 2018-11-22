@@ -93,14 +93,14 @@ ngOnInit() {
         this.formBuilder.group({
           financingStatusCtrl: ['', Validators.required],
           financingSourceCtrl: [''],
-          gasInventoryCtrl: [null],
+          gasInventoryCtrl: ['0'],
         }),
         this.formBuilder.group({
           geographicScaleCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
           locationNameCtrl: ['', Validators.required],
-          gisAnnexedCtrl: ['', Validators.required],
+          gisAnnexedCtrl: ['0', Validators.required],
         }),
       ])
     });
