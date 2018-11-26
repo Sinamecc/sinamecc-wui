@@ -8,8 +8,9 @@ export interface Ppcn {
   subsector: SubSector;
   contact: Contact;
   base_year: string;
-  fsm_state: ReviewStatus;
-  next_state: ReviewStatus[];
+  fsm_state: string;
+  next_state: string;
+  files: Files[];
 
 }
 
@@ -42,26 +43,34 @@ export interface Organization {
 }
 
 export interface Sector{
-    id: Number;
-    sector: string;
+  id: Number;
+  sector: string;
 }
 
 export interface SubSector{
-    id: Number;
-    name: string;
-    sector: Sector;
+  id: Number;
+  name: string;
+  sector: Sector;
 
 }
 
 export interface Contact {
-    full_name: string;
-    email: string;
-    job_title: string;
-    phone: string;
+  full_name: string;
+  email: string;
+  job_title: string;
+  phone: string;
+
   }
 
 export interface ReviewStatus {
   status: string;
+
+}
+
+export interface Files{
+  name: string;
+  file: string;
+  
 }
 
 

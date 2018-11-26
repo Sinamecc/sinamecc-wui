@@ -21,7 +21,7 @@ export class PpcnListComponent implements OnInit {
   error: string;
   isLoading = false;
   dataSource = new PpcnSource(this.service,this.i18nService);
-  displayedColumns = ['id_ppcn', 'organization_ppcn', 'request_type', 'required_recognition', 'sector','subsector', 'actions'];
+  displayedColumns = ['id_ppcn', 'organization_ppcn','request_type','fsm_state', 'required_recognition', 'sector', 'actions'];
 
   constructor(private router: Router,
     private i18nService: I18nService,
@@ -51,7 +51,17 @@ export class PpcnListComponent implements OnInit {
   }
 
   addReview(uuid: string) {
-    this.router.navigate([`ppcn/${uuid}/review/status/new`], { replaceUrl: true });
+
+    const selectedPpcn = this.dataSource.ppcns.find((PPCN) => PPCN.id === uuid);
+    const status = selectedPpcn.fsm_state;
+    
+    const route = this.service.mapRoutesStatuses(uuid).find(x => x.status === status );
+    if(route) {
+      this.router.navigate([route.route], { replaceUrl: true });
+    } else {
+      this.router.navigate([`ppcn/${uuid}/review/status/new`], { replaceUrl: true });
+    }
+    
   }
 
   changelog(uuid: string) {
@@ -82,12 +92,20 @@ export class PpcnListComponent implements OnInit {
 
 
 export class PpcnSource extends DataSource<any> {
+
+  ppcns: Ppcn[];
+  ppcns$: Observable<Ppcn[]>;
+
   constructor(private service: PpcnService,
               private i18nService: I18nService,) {
     super();
   }
   connect(): Observable < Ppcn[] > {
-    return this.service.ppcn(this.i18nService.language.split('-')[0]);
+    this.ppcns$ = this.service.ppcn(this.i18nService.language.split('-')[0]);
+    this.ppcns$.subscribe((ppcns) => {
+      this.ppcns = ppcns;
+    });
+    return this.ppcns$;
   }
   disconnect() {}
 }

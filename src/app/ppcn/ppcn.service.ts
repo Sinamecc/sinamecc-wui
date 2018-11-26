@@ -13,6 +13,8 @@ import { BehaviorSubject } from 'rxjs';
 import { FormArray, FormGroup } from '@angular/forms';
 import { Contact } from '@app/mitigation-actions/mitigation-action';
 import { PpcnReview } from '@app/ppcn/ppcn-review';
+import { S3File, S3Service } from '@app/core/s3.service';
+import { StatusRoutesMap } from '@app/ppcn/status-routes-map';
 
 const routes = {
   getGeographicLevel: (lang: string) => `/v1/ppcn/geographic/level/${lang}`,
@@ -26,6 +28,7 @@ const routes = {
   getPpcn: (uuid: string, lang:string) => `/v1/ppcn/${uuid}/${lang}`,
   submitNewFilePPCN: () => `/v1/ppcn/file/`,
   ppcnReviews: (id:string) => `/v1/ppcn/changelog/${id}`,
+  ppcnAvailableStatuses: () => `/v1/workflow/status`,
 
 }
 
@@ -37,6 +40,18 @@ export interface Response {
   geographic?: string;
 
 }
+
+const fsm_next_state = {
+  "PPCN_decision_step_DCC":['PPCN_accepted_request_by_DCC', 'PPCN_rejected_request_by_DCC', 'PPCN_changes_requested_by_DCC'],
+  "PPCN_evaluation_by_CA":["PPCN_decision_step_CA"],
+  "PPCN_decision_step_CA": ["PPCN_accepted_request_by_CA", "PPCN_rejected_request_by_CA"]
+}
+
+export interface ReportContext {
+  comment: string;
+  file: string | any;
+}
+
 @Injectable()
 export class PpcnService {
 
@@ -46,7 +61,8 @@ export class PpcnService {
 
   constructor(private authenticationService: AuthenticationService,
     private httpClient: HttpClient,
-    private datePipe: DatePipe) { 
+    private datePipe: DatePipe,
+    private s3:S3Service) { 
 
     }
 
@@ -202,6 +218,7 @@ export class PpcnService {
       .get(routes.getPpcn(uuid, lang), httpOptions) 
       .pipe(
         map((body: any) => {
+          console.log('PPCN', body);
           return body;
         })
       );
@@ -257,6 +274,32 @@ export class PpcnService {
     );
     }
 
+    getPpcnReviewStatuses(): Observable < PpcnNewFormData > {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': this.authenticationService.credentials.token
+        })
+      };
+      return this.httpClient
+      .get(routes.ppcnAvailableStatuses(), httpOptions) 
+      .pipe(
+        map((body: any) => {
+          return body;
+        })
+      );
+    }
+
+    commonStatusses(ppcn:Ppcn): string[] {
+      return fsm_next_state[ppcn.fsm_state];
+    }
+
+    mapRoutesStatuses(uuid:string): StatusRoutesMap[] {
+      return [
+        {route: `ppcn/${uuid}/edit`, status: 'PPCN_changes_requested_by_DCC'},
+        // implementing_INGEI_changes
+      ];
+    }
+
     private buildFormData(context: any,
                           contactFormId:number = null,
                           geographicFormId:number = null,
@@ -303,6 +346,10 @@ export class PpcnService {
 
 
       return formData;
+    }
+
+    public async downloadResource(filePath: string): Promise<S3File> {
+      return this.s3.downloadResource(filePath);
     }
 
 }

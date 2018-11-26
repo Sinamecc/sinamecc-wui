@@ -30,7 +30,8 @@ export class NewReviewComponent implements OnInit {
   nextRoute: string;
   formData: FormData;
   formSubmitRoute: string;
-  statusses: ReviewStatus[];
+  statusses: string[];
+  shouldDisplayComment: boolean;
 
   processedPpcnsStatusses: PpcnReviewNewFormData;
   formValues: any;
@@ -49,7 +50,16 @@ export class NewReviewComponent implements OnInit {
 
       this.ppcnObservable = this.service.getPpcn(this.id, this.i18nService.language.split('-')[0])
       .pipe(
-        tap((ppcn: Ppcn) => { this.ppcn = ppcn; this.statusses = ppcn.next_state })
+        tap((ppcn: Ppcn) => { 
+          this.ppcn = ppcn;
+          if (ppcn.next_state ) {
+            this.statusses  = [ppcn.next_state];
+            this.shouldDisplayComment = false;
+          } else {
+            this.statusses  = this.service.commonStatusses(ppcn);
+            this.shouldDisplayComment = true;
+          }
+        })
       );
     }
 

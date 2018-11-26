@@ -32,6 +32,11 @@
             <strong translate>Subsector:</strong> {{ppcn?.subsector.name}} <br>
             <strong translate>Base year for report:</strong> {{ppcn?.base_year}} <br>
             <strong translate>Status: </strong> {{ppcn?.fsm_state}}<br>
+            <!--<mat-divider></mat-divider>-->
+            <h3 translate class="text-color">Files</h3>
+            <div *ngFor="let file of ppcn?.files">
+              <strong translate>File Name</strong>: {{file.name}} <button mat-icon-button color="primary" (click)="download(file.file)" ><mat-icon color="white">vertical_align_bottom</mat-icon></button>
+            </div>
             <mat-divider></mat-divider>
         </div>
 
