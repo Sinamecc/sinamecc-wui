@@ -8,7 +8,7 @@ import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import {Ppcn, GeographicLevel, SubSector} from '@app/ppcn/ppcn_registry'
-import { PpcnNewFormData } from '@app/ppcn/ppcn-new-form-data';
+import { PpcnNewFormData, Ovv } from '@app/ppcn/ppcn-new-form-data';
 import { BehaviorSubject } from 'rxjs';
 import { FormArray, FormGroup } from '@angular/forms';
 import { Contact } from '@app/mitigation-actions/mitigation-action';
@@ -28,6 +28,7 @@ const routes = {
   getPpcn: (uuid: string, lang:string) => `/v1/ppcn/${uuid}/${lang}`,
   submitNewFilePPCN: () => `/v1/ppcn/file/`,
   ppcnReviews: (id:string) => `/v1/ppcn/changelog/${id}`,
+  getAllOvv: () => `/v1/ppcn/ovv/`,
   ppcnAvailableStatuses: () => `/v1/workflow/status`,
 
 }
@@ -84,6 +85,7 @@ export class PpcnService {
             geographic: body.geographicLevel,
             message: 'Form submitted correctly'
           };
+          console.log("PPCN",response);
           return response;
         })
       );
@@ -97,13 +99,14 @@ export class PpcnService {
                           requiredFormId: number,
                           recognitionFormId: number,
                           sectorFormId: number,
-                          subsectorFormId: number): Observable<Response>{
+                          subsectorFormId: number,
+                          ovvFormId: number): Observable<Response>{
       const httpOptions = {
         headers: new HttpHeaders({
           'Authorization': this.authenticationService.credentials.token
         })
       };
-      let formData= this.buildFormData(context,contactFormId,geographicFormId,requiredFormId,recognitionFormId,sectorFormId,subsectorFormId);
+      let formData= this.buildFormData(context,contactFormId,geographicFormId,requiredFormId,recognitionFormId,sectorFormId,subsectorFormId, ovvFormId);
       return this.httpClient
       .put(routes.submitUpdatePpcn(id),formData,httpOptions)
       .pipe(
@@ -174,6 +177,22 @@ export class PpcnService {
             return body;
           })
         );
+    }
+
+    ovvFormData(): Observable<Ovv> {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': this.authenticationService.credentials.token
+        })
+      };
+      return this.httpClient
+      .get(routes.getAllOvv(), httpOptions) 
+      .pipe(
+        map((body: any) => {
+          return body;
+        })
+      );
+
     }
 
     newPpcnFormData(levelId:string, lang: string): Observable < PpcnNewFormData > {
@@ -307,11 +326,13 @@ export class PpcnService {
                           recognitionFormId:number = null,
                           sectorFormId:number = null,
                           subsectorFormId:number = null,
+                          geiOrganizationId: number = null,
                         ){
       let formData = {};
       let organization = {};
       let contact = {};
-
+      let geiOrganization = {};
+      debugger;
       this.currentLevelId.subscribe(levelId => formData['geographicLevel'] = levelId);
       formData['user']= String(this.authenticationService.credentials.id);
       if(geographicFormId){
@@ -320,15 +341,14 @@ export class PpcnService {
       formData['requiredLevel'] = context.formArray[2].requiredCtrl;
       formData['subsector'] = context.formArray[2].subSectorCtrl;
       formData['sector'] = context.formArray[2].sectorCtrl;
-      formData['base_year'] = this.datePipe.transform(context.formArray[3].implementationEndDateCtrl, 'yyyy-MM-dd');
       formData['recognitionType'] =  context.formArray[2].recognitionCtrl;  
-
+      formData['base_year'] = this.datePipe.transform(context.formArray[3].implementationBaseDateCtrl, 'yyyy-MM-dd');
       organization['name']  = context.formArray[0].nameCtrl;
       organization['representative_name'] = context.formArray[0].representativeNameCtrl;
       organization['phone_organization'] = context.formArray[0].telephoneCtrl;
       organization['postal_code'] = context.formArray[0].postalCodeCtrl;
       organization['fax'] = context.formArray[0].faxCtrl;
-      organization['ciuu'] = context.formArray[0].ciuuCodeCtrl;
+      organization['ciiu'] = context.formArray[0].ciuuCodeCtrl;
       organization['address'] = context.formArray[0].addressCtrl;
 
       if(contactFormId) {
@@ -341,9 +361,23 @@ export class PpcnService {
 
       organization['contact'] = contact;
       formData['organization'] = organization;
-      
 
+      if(context.formArray[3].ovvCtrl=='' || context.formArray[3].ovvCtrl==null){
+        formData['base_year'] = this.datePipe.transform(context.formArray[3].implementationBaseDateCtrl, 'yyyy-MM-dd');
+      }
+      else{
+        if(geiOrganizationId) {
+          geiOrganization['id'] =  String(geiOrganizationId);
+        }
+        geiOrganization['activity_type'] = context.formArray[2].activityCtrl;
+        geiOrganization['ovv'] = context.formArray[3].ovvCtrl;
+        geiOrganization['emission_OVV'] = this.datePipe.transform(context.formArray[3].implementationEmissionDateCtrl, 'yyyy-MM-dd');
+        geiOrganization['report_date_start'] = this.datePipe.transform(context.formArray[3].implementationInitialDateCtrl, 'yyyy-MM-dd');
+        geiOrganization['report_date_end'] = this.datePipe.transform(context.formArray[3].implementationEndDateCtrl, 'yyyy-MM-dd');
+        geiOrganization['base_year'] = this.datePipe.transform(context.formArray[3].implementationEndDateCtrl, 'yyyy-MM-dd');
 
+        formData['gei_organization'] = geiOrganization;
+      }
 
       return formData;
     }

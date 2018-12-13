@@ -8,6 +8,8 @@ export interface Ppcn {
   subsector: SubSector;
   contact: Contact;
   base_year: string;
+  ovv: Ovv[];
+  gei_organization: GeiOrganization;
   fsm_state: string;
   next_state: string;
   files: Files[];
@@ -73,5 +75,22 @@ export interface Files{
   
 }
 
+export interface Ovv{
+  id: Number;
+  email: string;
+  phone: string;
+  name: string;
+}
+
+export interface GeiOrganization {
+  id: Number;
+  activity_type: string;
+  ovv: Ovv;
+  emission_OVV: string;
+  report_date_start: string;
+  report_date_end: string;
+  base_year: string;
+
+}
 
 

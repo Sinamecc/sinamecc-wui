@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PpcnNewFormData, RequiredLevel, RecognitionType, Sector, SubSector } from '@app/ppcn/ppcn-new-form-data';
+import { PpcnNewFormData, RequiredLevel, RecognitionType, Sector, SubSector , Ovv} from '@app/ppcn/ppcn-new-form-data';
 import { finalize, tap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { environment } from '@env/environment';
@@ -33,6 +33,18 @@ export class PpcnUpdateComponent implements OnInit {
   recognitionFormId: number;
   sectorFormId: number;
   subsectorFormId: number;
+  geiOrganizationFormId: number;
+  activity_type: string = "";
+  ovv_id: string = "";
+  emission_OVV: string = "";
+  report_date_start: string = "";
+  report_date_end: string = "";
+
+
+
+
+
+
 
   levelId: string = "1";
   levelIdTmp: string = this.levelId;
@@ -42,6 +54,7 @@ export class PpcnUpdateComponent implements OnInit {
   recognition_types: RecognitionType[];
   sectors: Sector[];
   subSectors: SubSector[];
+  ovvs: Ovv[];
 
   values$: any;
 
@@ -81,9 +94,14 @@ export class PpcnUpdateComponent implements OnInit {
           recognitionCtrl: ['', Validators.required],
           sectorCtrl: ['', Validators.required],
           subSectorCtrl: ['', Validators.required],
+          activityCtrl:['',null],
         }),
         this.formBuilder.group({
-          implementationEndDateCtrl: ['', Validators.required],
+          implementationBaseDateCtrl: ['', Validators.required],
+          ovvCtrl:null,
+          implementationEmissionDateCtrl:null,
+          implementationInitialDateCtrl: null,
+          implementationEndDateCtrl: null,
         }),
       ])
     });
@@ -107,7 +125,8 @@ export class PpcnUpdateComponent implements OnInit {
                                       this.requiredFormId,
                                       this.recognitionFormId,
                                       this.sectorFormId,
-                                      this.subsectorFormId)
+                                      this.subsectorFormId, 
+                                      this.geiOrganizationFormId)
       .pipe(finalize(() => {
         this.formGroup.markAsPristine();
         this.isLoading = false;
@@ -144,7 +163,7 @@ export class PpcnUpdateComponent implements OnInit {
         this.recognition_types = ppcnNewFormData.recognition_type;
         this.sectors = ppcnNewFormData.sector;
         this.subSectors = ppcnNewFormData.subSector;
-
+        this.ovvs = ppcnNewFormData.ovv;
       }));
     return initialRequiredData;
   }
@@ -160,12 +179,23 @@ export class PpcnUpdateComponent implements OnInit {
   private initFormData(): Observable < Ppcn > {
     let ppcn = this.loadFormData().pipe(
       tap(ppcn => {
+        this.levelId = String(ppcn['geographicLevel']['id']);
         this.contactFormId = +ppcn['organization']['contact']['id'];
         this.geographicFormId = +ppcn['geographicLevel']['id'];
         this.requiredFormId = +ppcn['requiredLevel']['id'];
         this.recognitionFormId = +ppcn['recognitionType']['id'];
         this.sectorFormId = +ppcn['sector']['id'];
         this.subsectorFormId = +ppcn['subsector']['id'];
+        if(ppcn['gei_organization'] != null){
+          this.geiOrganizationFormId = +ppcn['gei_organization']['id'];
+          this.activity_type = ppcn['gei_organization']['activity_type'];
+          this.ovv_id = String(ppcn['gei_organization']['ovv']['id']);
+          this.emission_OVV = ppcn['gei_organization']['emission_OVV'];
+          this.report_date_start = ppcn['gei_organization']['report_date_start'];
+          this.report_date_end = ppcn['gei_organization']['report_date_end'];
+
+        }
+        
         
         let ppcnArray = this.formBuilder.array([
           this.formBuilder.group({
@@ -188,9 +218,14 @@ export class PpcnUpdateComponent implements OnInit {
             recognitionCtrl: [ppcn['recognitionType']['id'], Validators.required],
             sectorCtrl: [ppcn['sector']['id'], Validators.required],
             subSectorCtrl: [ppcn['subsector']['id'], Validators.required],
+            activityCtrl:[this.activity_type,null],
           }),
           this.formBuilder.group({
-            implementationEndDateCtrl: [ppcn['base_year'], Validators.required],
+            implementationBaseDateCtrl: [ppcn['base_year'], Validators.required],
+            ovvCtrl:[this.ovv_id,null],
+            implementationEmissionDateCtrl:[this.emission_OVV,null],
+            implementationInitialDateCtrl: [this.report_date_start,null],
+            implementationEndDateCtrl: [this.report_date_end,null],
           }),
         ]);
         this.formGroup.setControl('formArray', ppcnArray);

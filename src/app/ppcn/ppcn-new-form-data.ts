@@ -8,6 +8,8 @@ export interface PpcnNewFormData{
     sector: Sector[];
     subSector: SubSector[];
     organization: Organization[];
+    ovv: Ovv[];
+    gei_organization: GeiOrganization;
 
 }
 
@@ -62,3 +64,21 @@ export interface SubSector{
     sector: Sector;
 
 }
+
+export interface Ovv{
+    id: Number;
+    email: string;
+    phone: string;
+    name: string;
+  }
+  
+  export interface GeiOrganization {
+    id: Number;
+    activity_type: string;
+    ovv: Ovv;
+    emission_OVV: string;
+    report_date_start: string;
+    report_date_end: string;
+    base_year: string;
+  
+  }

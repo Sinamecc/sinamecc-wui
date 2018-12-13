@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 const log = new Logger('Report');
 
 import { PpcnService } from '@app/ppcn/ppcn.service';
-import { Ppcn, GeographicLevel, Sector, SubSector } from '@app/ppcn/ppcn_registry';
+import { Ppcn, GeographicLevel, Sector, SubSector, Ovv } from '@app/ppcn/ppcn_registry';
 import { Observable } from 'rxjs/Observable';
 
 import { PpcnNewFormData, RequiredLevel, RecognitionType } from 'app/ppcn/ppcn-new-form-data';
@@ -37,6 +37,7 @@ export class PpcnNewComponent implements OnInit {
   recognition_types: RecognitionType[];
   sectors: Sector[];
   subSectors: SubSector[];
+  ovvs: Ovv[];
 
   values$: any;
   
@@ -106,9 +107,14 @@ export class PpcnNewComponent implements OnInit {
           recognitionCtrl: ['',Validators.required],
           sectorCtrl: ['', Validators.required],
           subSectorCtrl: ['', Validators.required],
+          activityCtrl:null,
         }),
         this.formBuilder.group({
-          implementationEndDateCtrl:['', Validators.required],
+          implementationBaseDateCtrl:['', Validators.required],
+          ovvCtrl:null,
+          implementationEmissionDateCtrl:null,
+          implementationInitialDateCtrl: null,
+          implementationEndDateCtrl: null,
         }),
       ])
     });
@@ -121,6 +127,7 @@ export class PpcnNewComponent implements OnInit {
       this.sectors = results[1].sector;
       this.required_levels = results[1].required_level;
       this.recognition_types = results[1].recognition_type;
+      this.ovvs = results[1].ovv;
     });
 
   }

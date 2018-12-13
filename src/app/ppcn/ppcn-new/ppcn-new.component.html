@@ -26,7 +26,7 @@
             </mat-form-field>
             <br />
 
-             <mat-form-field class="field-ppcn">
+            <mat-form-field class="field-ppcn">
               <mat-label translate>{{levelId==2 ? "Telephone" : "Major Telephone" }} </mat-label>
 
               <input matInput formControlName="telephoneCtrl" required>
@@ -50,7 +50,7 @@
                 <input matInput formControlName="ciuuCodeCtrl">
               </mat-form-field>
             </ng-template>
-          
+
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{levelId==2 ? "Address" : "District council address" }}</mat-label>
 
@@ -151,19 +151,31 @@
               <mat-select formControlName="subSectorCtrl" [placeholder]="'Subsector' | translate">
                 <mat-option *ngFor="let subsector of subSectors" [value]="subsector.id">
                   {{ subsector.name }}
-
                 </mat-option>
               </mat-select>
               <mat-error translate>The input is required.</mat-error>
             </mat-form-field>
-
+            <br />
+            <div *ngIf="levelId==2; then activity"></div>
+            <ng-template #activity>
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Specify the activity carried out by organization</mat-label>
+                <input matInput formControlName="activityCtrl">
+              </mat-form-field>
+            </ng-template>
 
             <br />
-            <div class="center">
-              <button type="button" mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent"><span translate>Back </span><mat-icon color="white">arrow_back</mat-icon></button>
-              <button type="button" mat-button matStepperNext type="button" class="mat-raised-button mat-primary"><span translate>Next </span><mat-icon color="white">arrow_forward</mat-icon></button>
-            </div>
 
+            <div class="center">
+              <button type="button" mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent"><span
+                  translate>Back </span>
+                <mat-icon color="white">arrow_back</mat-icon>
+              </button>
+              <button type="button" mat-button matStepperNext type="button" class="mat-raised-button mat-primary"><span
+                  translate>Next </span>
+                <mat-icon color="white">arrow_forward</mat-icon>
+              </button>
+            </div>
           </mat-step>
           <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
             <ng-template matStepLabel>
@@ -172,15 +184,64 @@
             <mat-form-field class="field-ppcn">
               <mat-label translate>Base year for report:</mat-label>
               <input matInput [matDatepicker]="implementationEndDatePicker" [placeholder]="'Choose a date' | translate"
-                formControlName="implementationEndDateCtrl">
+                formControlName="implementationBaseDateCtrl">
               <mat-datepicker-toggle matSuffix [for]="implementationEndDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationEndDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
               <mat-error translate>The input is required.</mat-error>
             </mat-form-field>
+
+            <div *ngIf="levelId==2; then GEIorganization"></div>
+            <ng-template #GEIorganization>
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Select OVV:</mat-label>
+                <mat-select formControlName="ovvCtrl" [placeholder]="'OVV Selector' | translate">
+                  <mat-option *ngFor="let ovv of ovvs" [value]="ovv.id">
+                    {{ ovv.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br />
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Emission Date of the declaration of verification:</mat-label>
+                <input matInput [matDatepicker]="implementationEmissionDatePicker" [placeholder]="'Choose a date' | translate"
+                  formControlName="implementationEmissionDateCtrl">
+                <mat-datepicker-toggle matSuffix [for]="implementationEmissionDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #implementationEmissionDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+              </mat-form-field>
+              <br />
+              <div>
+                <mat-label translate>Indicate the GEI Inventory reporting period:</mat-label>
+
+                <mat-form-field class="field-ppcn">
+                  <mat-label translate>Choose initial date:</mat-label>
+                  <input matInput [matDatepicker]="implementationInitialDatePicker" [placeholder]="'Choose a date' | translate"
+                    formControlName="implementationInitialDateCtrl">
+                  <mat-datepicker-toggle matSuffix [for]="implementationInitialDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #implementationInitialDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+                </mat-form-field>
+                <br />
+
+                <mat-form-field class="field-ppcn">
+                  <mat-label translate>Choose end date:</mat-label>
+                  <input matInput [matDatepicker]="implementationEndDatePicker" [placeholder]="'Choose a date' | translate"
+                    formControlName="implementationEndDateCtrl">
+                  <mat-datepicker-toggle matSuffix [for]="implementationEndDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #implementationEndDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+            </ng-template>
+
             <br />
             <div class="center">
-              <button type="button" mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent"><span translate>Back </span><mat-icon color="white">arrow_back</mat-icon></button>
-              <button type="button" mat-button matStepperNext type="button" class="mat-raised-button mat-primary"><span translate>Next </span><mat-icon color="white">arrow_forward</mat-icon></button>
+              <button type="button" mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent"><span
+                  translate>Back </span>
+                <mat-icon color="white">arrow_back</mat-icon>
+              </button>
+              <button type="button" mat-button matStepperNext type="button" class="mat-raised-button mat-primary"><span
+                  translate>Next </span>
+                <mat-icon color="white">arrow_forward</mat-icon>
+              </button>
             </div>
           </mat-step>
 
@@ -191,7 +252,9 @@
 
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <button mat-raised-button color="primary" class="mat-raised-button mat-primary"><span translate>Done</span><mat-icon color="white">done</mat-icon></button>
+              <button mat-raised-button color="primary" class="mat-raised-button mat-primary"><span translate>Done</span>
+                <mat-icon color="white">done</mat-icon>
+              </button>
             </div>
           </mat-step>
         </mat-vertical-stepper>
