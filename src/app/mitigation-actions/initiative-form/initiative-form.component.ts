@@ -160,7 +160,7 @@ export class InitiativeFormComponent implements OnInit {
       context.initiative['id'] = this.mitigationAction.initiative.id;
       context.initiative.contact['id'] = this.mitigationAction.initiative.contact.id;
       context.initiative.finance['id'] = this.mitigationAction.initiative.finance.id;
-      context['update_existing_mitigation_action'] = true;
+      // context['update_existing_mitigation_action'] = true;
       this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id, this.i18nService.language.split('-')[0])
       .pipe(finalize(() => {
         this.form.markAsPristine();
@@ -197,7 +197,7 @@ export class InitiativeFormComponent implements OnInit {
 
   financialSourceInputShown($event: any) {
     // todo: when we traslate in the backend we need to traslate this hardcoded value here
-    const insuredSourceTypeId = this.processedNewFormData.finance_status.filter(financeSource => financeSource.status == 'Asegurado').map(({ id }) => id);
+    const insuredSourceTypeId = this.processedNewFormData.finance_status.filter(financeSource => financeSource.status == 'Insured' || financeSource.status == 'Asegurado' ).map(({ id }) => id);
     this.displayFinancialSource = $event.value == insuredSourceTypeId;
   }
 

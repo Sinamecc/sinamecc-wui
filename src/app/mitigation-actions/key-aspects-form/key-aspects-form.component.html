@@ -23,13 +23,6 @@
               <mat-error translate>This field is required</mat-error>
             </mat-form-field>
             <br />
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>Quantitative Objective </mat-label>
-              <input matInput formControlName="quantitativeObjectiveCtrl">
-              <mat-error translate>The input is required.</mat-error>
-            </mat-form-field>
-            <br />
-            <br />
 
             <mat-form-field class="field-ppcn">
 
@@ -71,7 +64,60 @@
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
 
             <ng-template matStepLabel>
-              <div translate>Financing and Gas Inventory</div>
+              <div translate>Geographic Scale</div>
+            </ng-template>
+
+            <mat-form-field class="field-ppcn">
+              <mat-select [placeholder]="'Geographic Scale' | translate" formControlName="geographicScaleCtrl">
+                <mat-option *ngFor="let geographicScale of processedNewFormData.geographic_scales" [value]="geographicScale.id">{{geographicScale.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br />
+            <div class="center">
+                <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
+                  <mat-icon color="white">arrow_back</mat-icon>
+                  <span translate>Back</span>
+                </button>
+                <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
+                  <span translate>Next</span>
+                  <mat-icon color="white">arrow_forward</mat-icon>
+                </button>
+              </div>
+          </mat-step>
+
+          <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
+
+            <ng-template matStepLabel>
+              <div translate>Location</div>
+            </ng-template>
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Geographic Site</mat-label>
+              <input matInput formControlName="locationNameCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-label translate>GIS information Annexed?</mat-label>
+            <mat-radio-group matInput formControlName="gisAnnexedCtrl">
+              <mat-radio-button value="1"><span translate> Yes </span></mat-radio-button>
+              <mat-radio-button value="0"><span translate>No </span></mat-radio-button>
+            </mat-radio-group>
+            <div class="center">
+              <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
+                <mat-icon color="white">arrow_back</mat-icon>
+                <span translate>Back</span>
+              </button>
+              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
+                <span translate>Next</span>
+                <mat-icon color="white">arrow_forward</mat-icon>
+              </button>
+            </div>
+          </mat-step>
+
+          <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
+
+            <ng-template matStepLabel>
+              <div translate>Financing</div>
             </ng-template>
             <mat-form-field class="field-ppcn">
               <mat-label translate>Finance Status</mat-label>
@@ -110,58 +156,6 @@
               </div>
           </mat-step>
 
-          <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
-
-            <ng-template matStepLabel>
-              <div translate>Geographic Scale</div>
-            </ng-template>
-
-            <mat-form-field class="field-ppcn">
-              <mat-select [placeholder]="'Geographic Scale' | translate" formControlName="geographicScaleCtrl">
-                <mat-option *ngFor="let geographicScale of processedNewFormData.geographic_scales" [value]="geographicScale.id">{{geographicScale.name}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <br />
-            <div class="center">
-                <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
-                  <mat-icon color="white">arrow_back</mat-icon>
-                  <span translate>Back</span>
-                </button>
-                <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
-                  <span translate>Next</span>
-                  <mat-icon color="white">arrow_forward</mat-icon>
-                </button>
-              </div>
-          </mat-step>
-
-          <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
-
-            <ng-template matStepLabel>
-              <div translate>Location</div>
-            </ng-template>
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>Geographic Site</mat-label>
-              <input matInput formControlName="locationNameCtrl">
-              <mat-error translate>The input is required.</mat-error>
-            </mat-form-field>
-            <br />
-
-            <mat-label translate>GIS information Annexed?</mat-label>
-            <mat-radio-group matInput formControlName="gisAnnexedCtrl">
-              <mat-radio-button value="1"><span translate> Yes </span></mat-radio-button>
-              <mat-radio-button value="0"><span translate>No </span></mat-radio-button>
-            </mat-radio-group>
-            <div class="center">
-              <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
-                <mat-icon color="white">arrow_back</mat-icon>
-                <span translate>Back</span>
-              </button>
-              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
-                <span translate>Next</span>
-                <mat-icon color="white">arrow_forward</mat-icon>
-              </button>
-            </div>
-          </mat-step>
 
           <mat-step>
             <ng-template matStepLabel> <span translate> Confirm your information </span></ng-template>

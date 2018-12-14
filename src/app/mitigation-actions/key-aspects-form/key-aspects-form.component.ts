@@ -85,15 +85,9 @@ ngOnInit() {
       formArray: this.formBuilder.array([
         this.formBuilder.group({
           actionObjectiveCtrl: ['', Validators.required],
-          quantitativeObjectiveCtrl: ['', Validators.required],
           actionStatusCtrl: ['', Validators.required],
           implementationInitialDateCtrl:['', Validators.required],
           implementationEndDateCtrl: ['', Validators.required],
-        }),
-        this.formBuilder.group({
-          financingStatusCtrl: ['', Validators.required],
-          financingSourceCtrl: [''],
-          gasInventoryCtrl: ['0'],
         }),
         this.formBuilder.group({
           geographicScaleCtrl: ['', Validators.required],
@@ -101,6 +95,11 @@ ngOnInit() {
         this.formBuilder.group({
           locationNameCtrl: ['', Validators.required],
           gisAnnexedCtrl: ['0', Validators.required],
+        }),
+        this.formBuilder.group({
+          financingStatusCtrl: ['', Validators.required],
+          financingSourceCtrl: [''],
+          gasInventoryCtrl: ['0'],
         }),
       ])
     });
@@ -112,15 +111,9 @@ ngOnInit() {
       formArray: this.formBuilder.array([
         this.formBuilder.group({
           actionObjectiveCtrl: [this.mitigationAction.purpose, Validators.required],
-          quantitativeObjectiveCtrl: [this.mitigationAction.quantitative_purpose, Validators.required],
           actionStatusCtrl: [this.mitigationAction.status.id, Validators.required],
           implementationInitialDateCtrl:[this.mitigationAction.start_date, Validators.required],
           implementationEndDateCtrl: [this.mitigationAction.end_date, Validators.required],
-        }),
-        this.formBuilder.group({
-          financingStatusCtrl: [this.mitigationAction.finance.status.id, Validators.required],
-          financingSourceCtrl: [this.mitigationAction.finance.source],
-          gasInventoryCtrl: [this.mitigationAction.gas_inventory],
         }),
         this.formBuilder.group({
           geographicScaleCtrl: [this.mitigationAction.geographic_scale.id, Validators.required],
@@ -128,6 +121,11 @@ ngOnInit() {
         this.formBuilder.group({
           locationNameCtrl: [this.mitigationAction.location.geographical_site, Validators.required],
           gisAnnexedCtrl: [String(+this.mitigationAction.location.is_gis_annexed), Validators.required],
+        }),
+        this.formBuilder.group({
+          financingStatusCtrl: [this.mitigationAction.finance.status.id, Validators.required],
+          financingSourceCtrl: [this.mitigationAction.finance.source],
+          gasInventoryCtrl: [this.mitigationAction.gas_inventory],
         }),
       ])
     });
@@ -149,18 +147,17 @@ ngOnInit() {
     }
     let context = {
       purpose: this.form.value.formArray[0].actionObjectiveCtrl,
-      quantitative_purpose: this.form.value.formArray[0].quantitativeObjectiveCtrl,
       status: this.form.value.formArray[0].actionStatusCtrl,
       start_date: startDate,
       end_date: endDate,
       finance: {
-        status: this.form.value.formArray[1].financingStatusCtrl,
-        source: this.form.value.formArray[1].financingSourceCtrl },
-      gas_inventory: this.form.value.formArray[1].gasInventoryCtrl,
-      geographic_scale: this.form.value.formArray[2].geographicScaleCtrl,
+        status: this.form.value.formArray[3].financingStatusCtrl,
+        source: this.form.value.formArray[3].financingSourceCtrl },
+      gas_inventory: this.form.value.formArray[3].gasInventoryCtrl,
+      geographic_scale: this.form.value.formArray[1].geographicScaleCtrl,
       location:{
-        geographical_site: this.form.value.formArray[3].locationNameCtrl,
-        is_gis_annexed: this.form.value.formArray[3].gisAnnexedCtrl,
+        geographical_site: this.form.value.formArray[2].locationNameCtrl,
+        is_gis_annexed: this.form.value.formArray[2].gisAnnexedCtrl,
       },
       user: String(this.authenticationService.credentials.id),
       registration_type: this.processedNewFormData.registration_types[0].id
@@ -169,7 +166,7 @@ ngOnInit() {
     if(this.isUpdating) {
       context.finance['id'] = this.mitigationAction.finance.id;
       context.location['id'] = this.mitigationAction.location.id;
-      context['update_existing_mitigation_action'] = true;
+      // context['update_existing_mitigation_action'] = true;
     } 
     this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id, this.i18nService.language.split('-')[0])
     .pipe(finalize(() => {
@@ -190,7 +187,7 @@ ngOnInit() {
 
   financialSourceInputShown($event:any) {
     // todo: when we traslate in the backend we need to traslate this hardcoded value here
-    const insuredSourceTypeId = this.processedNewFormData.finance_status.filter(financeSource => financeSource.status == 'Asegurado').map(({ id }) => id);
+    const insuredSourceTypeId = this.processedNewFormData.finance_status.filter(financeSource => financeSource.status == 'Asegurado' || financeSource.status == 'Insured').map(({ id }) => id);
     this.displayFinancialSource = $event.value == insuredSourceTypeId;
   }
 

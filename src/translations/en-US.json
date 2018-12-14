@@ -67,7 +67,7 @@
   "Type":"Type",
   "Unit":"Unit",
   "Year when it started:":"Year when it started:",
-  "Financing and Gas Inventory":"Financing and Gas Inventory",
+  "Financing":"Financing",
   "Finance Status":"Finance Status",
   "To achieve":"To achieve",
   "Insured":"Insured",
@@ -193,9 +193,12 @@
   "Initiative Finance Info":"Initiative Finance Info",
   "Initiative Finance Status":"Initiative Finance Status",
   "Initiative Finance Type":"Initiative Finance Type",
-  "In case of cooperation, list sources":"In case of cooperation, list sources",
+  "In case of cooperation or public budget, list sources":"In case of cooperation or public budget, list sources",
   "Budget in USD $":"Budget in USD $",
-  "Initiative Contact Info":"Initiative Contact Info"
+  "Initiative Contact Info":"Initiative Contact Info",
+  "Mitigation Initiative Name": "Mitigation Initiative Name",
+  "Emission Sector and Gas Absorption":"Emission Sector and Gas Absorption",
+  "Sources consulted for the calculation methodology":"Sources consulted for the calculation methodology"
 
   }
   

@@ -18,7 +18,7 @@
             </h3>
 
             <mat-form-field class="field-ppcn">
-              <mat-select [placeholder]="'Ingei Compliance' | translate" formControlName="ingeiComplianceCtrl" multiple>
+              <mat-select [placeholder]="'Emission Sector and Gas Absorption' | translate" formControlName="ingeiComplianceCtrl" multiple>
                 <mat-option *ngFor="let ingei of processedNewFormData.ingei_compliances" [value]="ingei.id">{{ingei.name}}</mat-option>
               </mat-select>
               <mat-error translate>The input is required.</mat-error>
@@ -49,12 +49,7 @@
               <mat-error translate>The input is required.</mat-error>
             </mat-form-field>
             <br />
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>How the impact in emissions will be achieved?</mat-label>
-              <input matInput formControlName="emissionImpactCtrl">
-              <mat-error translate>The input is required.</mat-error>
-            </mat-form-field>
-            <br />
+            
             <div class="center">
               <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
                 <mat-icon color="white">arrow_back</mat-icon>

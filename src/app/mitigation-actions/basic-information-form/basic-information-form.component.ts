@@ -61,8 +61,6 @@ export class BasicInformationFormComponent implements OnInit {
           programCtrl: ['', Validators.required],
           nameCtrl: ['', Validators.required],
           entityCtrl: ['', Validators.required],
-          uccCtrl: ['', Validators.required],
-          ovvCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
           contactNameCtrl: ['', Validators.required],
@@ -81,8 +79,6 @@ export class BasicInformationFormComponent implements OnInit {
           programCtrl: [this.mitigationAction.strategy_name, Validators.required],
           nameCtrl: [this.mitigationAction.name, Validators.required],
           entityCtrl: [this.mitigationAction.institution.id, Validators.required],
-          uccCtrl: [this.mitigationAction.question_ucc, Validators.required],
-          ovvCtrl: [this.mitigationAction.question_ovv, Validators.required],
         }),
         this.formBuilder.group({
           contactNameCtrl: [this.mitigationAction.contact.full_name, Validators.required],
@@ -109,15 +105,13 @@ export class BasicInformationFormComponent implements OnInit {
       },
       strategy_name: this.form.value.formArray[0].programCtrl,
       name: this.form.value.formArray[0].nameCtrl,
-      question_ucc: this.form.value.formArray[0].uccCtrl,
-      question_ovv: this.form.value.formArray[0].ovvCtrl,
       institution: this.form.value.formArray[0].entityCtrl,
       user: String(this.authenticationService.credentials.id),
       registration_type: this.processedNewFormData.registration_types[0].id
     };
     if(this.isUpdating) {
       context.contact['id'] = this.mitigationAction.contact.id;
-      context['update_existing_mitigation_action'] = true;
+      
     } 
     this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id, this.i18nService.language.split('-')[0])
     .pipe(finalize(() => {

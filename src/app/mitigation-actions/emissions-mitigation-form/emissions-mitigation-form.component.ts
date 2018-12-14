@@ -62,7 +62,6 @@ export class EmissionsMitigationFormComponent implements OnInit {
         this.formBuilder.group({
           emissionSourceCtrl: ['', Validators.required],
           carbonSinksCtrl: ['', Validators.required],
-          emissionImpactCtrl: ['', Validators.required]
         })
       ])
     });
@@ -77,8 +76,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
         }),
         this.formBuilder.group({
           emissionSourceCtrl: [this.mitigationAction.emissions_source, Validators.required],
-          carbonSinksCtrl: [this.mitigationAction.carbon_sinks, Validators.required],
-          emissionImpactCtrl: [this.mitigationAction.impact, Validators.required]
+          carbonSinksCtrl: [this.mitigationAction.carbon_sinks, Validators.required]
         })
       ])
     });
@@ -93,13 +91,10 @@ export class EmissionsMitigationFormComponent implements OnInit {
       ingei_compliances: this.form.value.formArray[0].ingeiComplianceCtrl ? this.form.value.formArray[0].ingeiComplianceCtrl.join() : '',
       emissions_source: this.form.value.formArray[1].emissionSourceCtrl,
       carbon_sinks: this.form.value.formArray[1].carbonSinksCtrl,
-      impact: this.form.value.formArray[1].emissionImpactCtrl,
       user: String(this.authenticationService.credentials.id),
       registration_type: this.processedNewFormData.registration_types[0].id
     };
-    if(this.isUpdating) {
-      context['update_existing_mitigation_action'] = true;
-    } 
+    
     this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id, this.i18nService.language.split('-')[0])
     .pipe(finalize(() => {
       this.form.markAsPristine();

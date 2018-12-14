@@ -67,7 +67,7 @@
   "Type":"Tipo",
   "Unit":"Unidad",
   "Year when it started:":"Año cuando se inició:",
-  "Financing and Gas Inventory":"Financiamiento e Inventario GEI",
+  "Financing":"Financiamiento",
   "Finance Status":"Estado financiero",
   "To achieve":"Por obtener",
   "Insured":"Asegurado",
@@ -191,13 +191,16 @@
   "Entity Responsible Name":"Nombre de Entidad Responsable",
   "Objective of the initiative":"Objectivo de la iniciativa",
   "Description of the initiative":"Descripción de la iniciativa",
-  "Goal of the initiative":"Objetivo de la iniciativa",
+  "Goal of the initiative":"Meta de la iniciativa",
   "Initiative Status":"Estado de la Iniciativa",
   "Initiative Finance Info":"Información Financiera de la Iniciativa",
   "Initiative Finance Status":"Estado Financiero de la Iniciativa",
   "Initiative Finance Type":"Tipo de Financiación de la Iniciativa",
-  "In case of cooperation, list sources":"En caso de cooperación, liste las fuentes",
+  "In case of cooperation or public budget, list sources":"En caso de cooperación ó presupuesto público, liste las fuentes",
   "Budget in USD $":"Presupuesto en USD $",
-  "Initiative Contact Info":"Información de Contacto de la Iniciativa"
+  "Initiative Contact Info":"Información de Contacto de la Iniciativa",
+  "Mitigation Initiative Name":"Nombre de la Iniciativa de mitigación",
+  "Emission Sector and Gas Absorption":"Sectores de Emisión y Absorción de gases",
+  "Sources consulted for the calculation methodology":"Fuentes consultadas para la metodología de cálculo"
 
   }

@@ -21,7 +21,7 @@ export interface MitigationAction {
   carbon_sinks: string;
   impact: string;
   impact_plan:string;
-  bibliographic_sources: string;
+  calculation_methodology: string;
   is_international: boolean;
   international_participation: string;
   sustainability: string;

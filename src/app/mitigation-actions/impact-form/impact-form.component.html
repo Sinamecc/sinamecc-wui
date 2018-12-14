@@ -25,8 +25,15 @@
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>Bibliographical Sources</mat-label>
-              <input matInput formControlName="bibliographicalSourcesCtrl">
+              <mat-label translate>How the impact in emissions will be achieved?</mat-label>
+              <input matInput formControlName="emissionImpactCtrl">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <br /> 
+
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Sources consulted for the calculation methodology.</mat-label>
+              <input matInput formControlName="calculationMethodologyCtrl">
               <mat-error translate>The input is required.</mat-error>
             </mat-form-field>
             <br />
@@ -44,13 +51,6 @@
               <mat-label translate>International Market Participation</mat-label>
               <input matInput formControlName="internationalParticipationDetailCtrl">
               <mat-error translate>The input is required.</mat-error>
-            </mat-form-field>
-            <br />
-
-            <mat-form-field class="field-ppcn">
-              <textarea matInput formControlName="sustainabilityObjectivesCtrl" [placeholder]="'Sustainable Development Objectives' | translate"
-                matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
-              <mat-error translate>This field is required</mat-error>
             </mat-form-field>
             <br />
             <br />

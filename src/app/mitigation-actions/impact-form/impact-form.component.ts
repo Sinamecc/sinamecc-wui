@@ -61,10 +61,10 @@ export class ImpactFormComponent implements OnInit {
       formArray: this.formBuilder.array([
         this.formBuilder.group({
           mitigationActionImpactCtrl: ['', Validators.required],
-          bibliographicalSourcesCtrl: ['', Validators.required],
+          emissionImpactCtrl: ['', Validators.required],
+          calculationMethodologyCtrl: ['', Validators.required],
           internationalParticipationCtrl: ['', Validators.required],
-          internationalParticipationDetailCtrl: null,
-          sustainabilityObjectivesCtrl: ['', Validators.required]
+          internationalParticipationDetailCtrl: null
         })
       ])
     });
@@ -75,10 +75,10 @@ export class ImpactFormComponent implements OnInit {
       formArray: this.formBuilder.array([
         this.formBuilder.group({
           mitigationActionImpactCtrl: [this.mitigationAction.impact_plan, Validators.required],
-          bibliographicalSourcesCtrl: [this.mitigationAction.bibliographic_sources, Validators.required],
+          emissionImpactCtrl: [this.mitigationAction.impact, Validators.required],
+          calculationMethodologyCtrl: [this.mitigationAction.calculation_methodology, Validators.required],
           internationalParticipationCtrl: [String(+this.mitigationAction.is_international), Validators.required],
-          internationalParticipationDetailCtrl: this.mitigationAction.international_participation,
-          sustainabilityObjectivesCtrl: [this.mitigationAction.sustainability, Validators.required]
+          internationalParticipationDetailCtrl: this.mitigationAction.international_participation
         })
       ])
     });
@@ -92,10 +92,10 @@ export class ImpactFormComponent implements OnInit {
     this.isLoading = true;
     let context = {
       impact_plan: this.form.value.formArray[0].mitigationActionImpactCtrl,
-      bibliographic_sources: this.form.value.formArray[0].bibliographicalSourcesCtrl,
+      impact: this.form.value.formArray[0].emissionImpactCtrl,
+      calculation_methodology: this.form.value.formArray[0].calculationMethodologyCtrl,
       is_international: this.form.value.formArray[0].internationalParticipationCtrl,
       international_participation: this.form.value.formArray[0].internationalParticipationDetailCtrl,
-      sustainability: this.form.value.formArray[0].sustainabilityObjectivesCtrl,
       user: String(this.authenticationService.credentials.id),
       registration_type: this.processedNewFormData.registration_types[0].id
       // update_new_mitigation_action: false
