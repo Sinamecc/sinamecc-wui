@@ -332,17 +332,17 @@ export class PpcnService {
       let organization = {};
       let contact = {};
       let geiOrganization = {};
-      debugger;
-      this.currentLevelId.subscribe(levelId => formData['geographicLevel'] = levelId);
+      let geiActivityTypes = {};
+
+      this.currentLevelId.subscribe(levelId => formData['geographic_level'] = levelId);
       formData['user']= String(this.authenticationService.credentials.id);
       if(geographicFormId){
-        formData['geographicLevel'] = String(geographicFormId);
+        formData['geographic_level'] = String(geographicFormId);
       }
-      formData['requiredLevel'] = context.formArray[2].requiredCtrl;
-      formData['subsector'] = context.formArray[2].subSectorCtrl;
-      formData['sector'] = context.formArray[2].sectorCtrl;
-      formData['recognitionType'] =  context.formArray[2].recognitionCtrl;  
-      formData['base_year'] = this.datePipe.transform(context.formArray[3].implementationBaseDateCtrl, 'yyyy-MM-dd');
+      formData['required_level'] = context.formArray[2].requiredCtrl;
+      formData['subsector'] = context.formArray[4].subSectorCtrl;
+      formData['sector'] = context.formArray[4].sectorCtrl;
+      formData['recognition_type'] =  context.formArray[2].recognitionCtrl;  
       organization['name']  = context.formArray[0].nameCtrl;
       organization['representative_name'] = context.formArray[0].representativeNameCtrl;
       organization['phone_organization'] = context.formArray[0].telephoneCtrl;
@@ -363,22 +363,31 @@ export class PpcnService {
       formData['organization'] = organization;
 
       if(context.formArray[3].ovvCtrl=='' || context.formArray[3].ovvCtrl==null){
-        formData['base_year'] = this.datePipe.transform(context.formArray[3].implementationBaseDateCtrl, 'yyyy-MM-dd');
+        formData['base_year'] = this.datePipe.transform(context.formArray[3].reportYearCtrl, 'yyyy-MM-dd');
       }
       else{
         if(geiOrganizationId) {
           geiOrganization['id'] =  String(geiOrganizationId);
         }
-        geiOrganization['activity_type'] = context.formArray[2].activityCtrl;
+        // geiOrganization['activity_type'] = context.formArray[4].activityCtrl;
         geiOrganization['ovv'] = context.formArray[3].ovvCtrl;
-        geiOrganization['emission_OVV'] = this.datePipe.transform(context.formArray[3].implementationEmissionDateCtrl, 'yyyy-MM-dd');
-        geiOrganization['report_date_start'] = this.datePipe.transform(context.formArray[3].implementationInitialDateCtrl, 'yyyy-MM-dd');
-        geiOrganization['report_date_end'] = this.datePipe.transform(context.formArray[3].implementationEndDateCtrl, 'yyyy-MM-dd');
-        geiOrganization['base_year'] = this.datePipe.transform(context.formArray[3].implementationEndDateCtrl, 'yyyy-MM-dd');
-
+        geiOrganization['emission_ovv_date'] = this.datePipe.transform(context.formArray[3].implementationEmissionDateCtrl, 'yyyy-MM-dd');
+        geiOrganization['base_year'] = context.formArray[3].baseYearCtrl;
+        geiOrganization['report_year'] = context.formArray[3].reportYearCtrl;
+  
         formData['gei_organization'] = geiOrganization;
       }
+      formData['gei_activity_types'] = [];
+      if(context.formArray[4].activities) {
+        context.formArray[4].activities.forEach((activity:any) => {
 
+          const objectToPush = { 'activity_type': activity.activityCtrl, 
+                           'sub_sector': activity.subSectorCtrl, 
+                            'sector': activity.sectorCtrl
+                          }
+          formData['gei_activity_types'].push(objectToPush);
+        });
+      }
       return formData;
     }
 

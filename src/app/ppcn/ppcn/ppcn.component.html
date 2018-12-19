@@ -25,27 +25,20 @@
         <strong translate>Contact Email:</strong> {{ppcn?.organization?.contact.email}} <br>
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">Request Level</h3>
-        <strong translate>Geographic Level:</strong> {{ppcn?.geographicLevel?.level}} <br>
-        <strong translate>Required Level:</strong> {{ppcn?.requiredLevel?.level_type}} <br>
-        <strong translate>Recognition Type:</strong> {{ppcn?.recognitionType?.recognition_type}} <br>
-        <strong translate>Sector:</strong> {{ppcn?.sector?.sector}} <br>
-        <strong translate>Subsector:</strong> {{ppcn?.subsector.name}} <br>
-        <div *ngIf="ppcn?.geographicLevel?.level!=='Cantonal'; then activity"></div>
-        <ng-template #activity>
-          <strong translate>Activity carried out by organization:</strong> {{ppcn?.gei_organization?.activity_type}}
-          <br>
-        </ng-template>
+        <strong translate>Geographic Level:</strong> {{ppcn?.geographic_level?.level}} <br>
+        <strong translate>Required Level:</strong> {{ppcn?.required_level?.level_type}} <br>
+        <strong translate>Recognition Type:</strong> {{ppcn?.recognition_type?.recognition_type}} <br>
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">GEI Information</h3>
-        <strong translate>Base year for report:</strong> {{ppcn?.base_year}} <br>
-        <div *ngIf="ppcn?.geographicLevel?.level!=='Cantonal'; then GeiInfo"></div>
-        <ng-template #GeiInfo>
-          <strong translate>OVV:</strong> {{ppcn?.gei_organization?.ovv?.name}} <br>
-          <strong translate>Emission Date:</strong> {{ppcn?.gei_organization?.emission_OVV}} <br>
-          <strong translate>Initial Date:</strong> {{ppcn?.gei_organization?.report_date_start}} <br>
-          <strong translate>End Date:</strong> {{ppcn?.gei_organization?.report_date_end}} <br>
-        </ng-template>
-
+        <strong translate>OVV:</strong> {{ppcn?.gei_organization?.ovv?.name}} <br>
+        <strong translate>Emission Date:</strong> {{ppcn?.gei_organization?.emission_ovv_date}} <br>
+        <strong translate>Report Year:</strong> {{ppcn?.gei_organization?.report_year}} <br>
+        <strong translate>Base Year:</strong> {{ppcn?.gei_organization?.base_year}} <br>
+        <div *ngFor="let activity of ppcn?.gei_organization?.gei_activity_types">
+          <strong translate>Sector:</strong> {{activity.sector?.name}} <br>
+          <strong translate>Subsector:</strong> {{activity.sub_sector?.name}} <br>
+          <strong translate>Activity carried out by organization:</strong> {{activity.activity_type}} <br>
+        </div>
         <strong translate>Status: </strong> {{ppcn?.fsm_state}}<br>
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">Files</h3>

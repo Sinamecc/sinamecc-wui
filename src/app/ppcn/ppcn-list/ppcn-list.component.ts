@@ -21,7 +21,7 @@ export class PpcnListComponent implements OnInit {
   error: string;
   isLoading = false;
   dataSource = new PpcnSource(this.service,this.i18nService);
-  displayedColumns = ['id_ppcn', 'organization_ppcn','request_type','fsm_state', 'required_recognition', 'sector', 'actions'];
+  displayedColumns = ['id_ppcn', 'organization_ppcn','request_type','fsm_state', 'required_recognition', 'geographic_level', 'actions'];
 
   constructor(private router: Router,
     private i18nService: I18nService,

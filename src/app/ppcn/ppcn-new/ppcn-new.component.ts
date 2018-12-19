@@ -32,6 +32,7 @@ export class PpcnNewComponent implements OnInit {
   isLoading = false;
   levelId = "1";
   levelIdTmp: string = this.levelId;
+  activitiesList:FormArray;
 
   required_levels: RequiredLevel[];
   recognition_types: RecognitionType[];
@@ -91,8 +92,8 @@ export class PpcnNewComponent implements OnInit {
           nameCtrl: ['', Validators.required],
           representativeNameCtrl: ['', Validators.required],
           telephoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-          faxCtrl: null,
-          postalCodeCtrl:null,
+          faxCtrl: '',
+          postalCodeCtrl: '',
           addressCtrl: ['', Validators.required],
           ciuuCodeCtrl: (this.levelId=="1"? null:['',Validators.required] )
         }),
@@ -105,17 +106,19 @@ export class PpcnNewComponent implements OnInit {
         this.formBuilder.group({
           requiredCtrl:['', Validators.required],
           recognitionCtrl: ['',Validators.required],
-          sectorCtrl: ['', Validators.required],
-          subSectorCtrl: ['', Validators.required],
-          activityCtrl:null,
+          
         }),
         this.formBuilder.group({
-          implementationBaseDateCtrl:['', Validators.required],
-          ovvCtrl:null,
+          baseYearCtrl:['', Validators.required],
+          reportYearCtrl:['',Validators.required],
+          ovvCtrl:['',Validators.required],
           implementationEmissionDateCtrl:null,
           implementationInitialDateCtrl: null,
           implementationEndDateCtrl: null,
         }),
+        this.formBuilder.group({
+          activities: this.formBuilder.array([ this.createActivityForm() ]),
+        }),   
       ])
     });
 
@@ -132,6 +135,23 @@ export class PpcnNewComponent implements OnInit {
 
   }
 
+  createActivityForm() : FormGroup{
+    return this.formBuilder.group({
+      activityCtrl:['',Validators.required],
+      sectorCtrl: ['', Validators.required],
+      subSectorCtrl: ['', Validators.required],
+    })
+  }
+  addItems(): void {
+    const control = <FormArray>this.formGroup.controls.formArray['controls'][4].controls['activities'];
+    control.push(this.createActivityForm());
+  }
+
+  deleteItems(i:number):void{
+    const control = <FormArray>this.formGroup.controls.formArray['controls'][4].controls['activities'];
+    control.removeAt(i);
+  }
+
   onSectorChange(newValue:any) {
     this.service.subsectors(String(newValue.value), this.i18nService.language.split('-')[0])
     .subscribe((subsectors: SubSector[]) => { this.subSectors = subsectors; });
@@ -142,6 +162,5 @@ export class PpcnNewComponent implements OnInit {
     return this.service.newPpcnFormData(this.levelId, this.i18nService.language.split('-')[0])
     .pipe(finalize(() => { this.isLoading = false; }));
   }
-
 
 }

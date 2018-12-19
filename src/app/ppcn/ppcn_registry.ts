@@ -4,8 +4,6 @@ export interface Ppcn {
   recognitionType: RecognitionType;
   requiredLevel: RequiredLevel;
   organization: Organization;
-  sector: Sector;
-  subsector: SubSector;
   contact: Contact;
   base_year: string;
   ovv: Ovv[];
@@ -90,7 +88,14 @@ export interface GeiOrganization {
   report_date_start: string;
   report_date_end: string;
   base_year: string;
+  gei_activity_types: GeiActivityType[];
 
 }
 
+export interface GeiActivityType{
+  id: Number;
+  sector: Sector;
+  sub_sector: SubSector;
+  activity_type: string;
+}
 

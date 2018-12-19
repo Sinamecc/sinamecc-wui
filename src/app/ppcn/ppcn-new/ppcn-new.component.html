@@ -135,37 +135,56 @@
               <mat-error translate>The input is required.</mat-error>
             </mat-form-field>
             <br />
+            <div class="center">
+              <button type="button" mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent"><span
+                  translate>Back </span>
+                <mat-icon color="white">arrow_back</mat-icon>
+              </button>
+              <button type="button" mat-button matStepperNext type="button" class="mat-raised-button mat-primary"><span
+                  translate>Next </span>
+                <mat-icon color="white">arrow_forward</mat-icon>
+              </button>
+            </div>
+            <br />
 
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>Sector</mat-label>
-              <mat-select formControlName="sectorCtrl" [placeholder]="'Sector' | translate" (selectionChange)="onSectorChange($event)">
-                <mat-option *ngFor="let sector of sectors" [value]="sector.id">
-                  {{ sector.name }}
-                </mat-option>
-              </mat-select>
-              <mat-error translate>The input is required.</mat-error>
-            </mat-form-field>
-            <br />
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>Subsector</mat-label>
-              <mat-select formControlName="subSectorCtrl" [placeholder]="'Subsector' | translate">
-                <mat-option *ngFor="let subsector of subSectors" [value]="subsector.id">
-                  {{ subsector.name }}
-                </mat-option>
-              </mat-select>
-              <mat-error translate>The input is required.</mat-error>
-            </mat-form-field>
-            <br />
-            <div *ngIf="levelId==2; then activity"></div>
-            <ng-template #activity>
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>Specify the activity carried out by organization</mat-label>
-                <input matInput formControlName="activityCtrl">
-              </mat-form-field>
+          </mat-step>
+          <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
+            <ng-template matStepLabel>
+              <span translate>GEI Information</span>
             </ng-template>
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Select OVV:</mat-label>
+              <mat-select formControlName="ovvCtrl" [placeholder]="'OVV Selector' | translate">
+                <mat-option *ngFor="let ovv of ovvs" [value]="ovv.id">
+                  {{ ovv.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br />
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Base year:</mat-label>
+              <input matInput type="number" [placeholder]="'Choose a year' | translate" formControlName="baseYearCtrl"
+                min="1990">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
 
             <br />
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Report year:</mat-label>
+              <input matInput type="number" [placeholder]="'Choose a year' | translate" formControlName="reportYearCtrl"
+                min="1990">
+              <mat-error translate>The input is required.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>Emission Date of the declaration of verification:</mat-label>
+              <input matInput [matDatepicker]="implementationEmissionDatePicker" [placeholder]="'Choose a date' | translate"
+                formControlName="implementationEmissionDateCtrl">
+              <mat-datepicker-toggle matSuffix [for]="implementationEmissionDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #implementationEmissionDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+            <br />
 
+            <br />
             <div class="center">
               <button type="button" mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent"><span
                   translate>Back </span>
@@ -177,62 +196,56 @@
               </button>
             </div>
           </mat-step>
-          <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
+
+          <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
             <ng-template matStepLabel>
-              <span translate>GEI Information</span>
+              <span translate>GEI Activity Types</span>
             </ng-template>
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>Base year for report:</mat-label>
-              <input matInput [matDatepicker]="implementationEndDatePicker" [placeholder]="'Choose a date' | translate"
-                formControlName="implementationBaseDateCtrl">
-              <mat-datepicker-toggle matSuffix [for]="implementationEndDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #implementationEndDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
-              <mat-error translate>The input is required.</mat-error>
-            </mat-form-field>
-
-            <div *ngIf="levelId==2; then GEIorganization"></div>
-            <ng-template #GEIorganization>
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>Select OVV:</mat-label>
-                <mat-select formControlName="ovvCtrl" [placeholder]="'OVV Selector' | translate">
-                  <mat-option *ngFor="let ovv of ovvs" [value]="ovv.id">
-                    {{ ovv.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <br />
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>Emission Date of the declaration of verification:</mat-label>
-                <input matInput [matDatepicker]="implementationEmissionDatePicker" [placeholder]="'Choose a date' | translate"
-                  formControlName="implementationEmissionDateCtrl">
-                <mat-datepicker-toggle matSuffix [for]="implementationEmissionDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #implementationEmissionDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
-              </mat-form-field>
-              <br />
-              <div>
-                <mat-label translate>Indicate the GEI Inventory reporting period:</mat-label>
-
-                <mat-form-field class="field-ppcn">
-                  <mat-label translate>Choose initial date:</mat-label>
-                  <input matInput [matDatepicker]="implementationInitialDatePicker" [placeholder]="'Choose a date' | translate"
-                    formControlName="implementationInitialDateCtrl">
-                  <mat-datepicker-toggle matSuffix [for]="implementationInitialDatePicker"></mat-datepicker-toggle>
-                  <mat-datepicker #implementationInitialDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
-                </mat-form-field>
-                <br />
-
-                <mat-form-field class="field-ppcn">
-                  <mat-label translate>Choose end date:</mat-label>
-                  <input matInput [matDatepicker]="implementationEndDatePicker" [placeholder]="'Choose a date' | translate"
-                    formControlName="implementationEndDateCtrl">
-                  <mat-datepicker-toggle matSuffix [for]="implementationEndDatePicker"></mat-datepicker-toggle>
-                  <mat-datepicker #implementationEndDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
-                </mat-form-field>
+            <div formArrayName="activities">
+              <div *ngFor="let activity of formGroup.controls.formArray['controls'][4].controls['activities'].controls; let i = index">
+                <!-- row divider show for every nex row exclude if first row -->
+                <mat-divider *ngIf="formGroup.controls.formArray['controls'][4].controls['activities'].controls.length > 1 && i > 0" ></mat-divider><br>
+                <div [formGroupName]="i">
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate>Specify the activity carried out by organization</mat-label>
+                    <input matInput formControlName="activityCtrl">
+                  </mat-form-field>
+                  <br />
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate>Sector</mat-label>
+                    <mat-select formControlName="sectorCtrl" [placeholder]="'Sector' | translate" (selectionChange)="onSectorChange($event)">
+                      <mat-option *ngFor="let sector of sectors" [value]="sector.id">
+                        {{ sector.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error translate>The input is required.</mat-error>
+                  </mat-form-field>
+                  <br />
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate>Subsector</mat-label>
+                    <mat-select formControlName="subSectorCtrl" [placeholder]="'Subsector' | translate">
+                      <mat-option *ngFor="let subsector of subSectors" [value]="subsector.id">
+                        {{ subsector.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error translate>The input is required.</mat-error>
+                  </mat-form-field>
+                  <br />
+                  <!-- row delete button, hidden if there is just one row -->
+                  <button mat-mini-fab color="warn" *ngIf="formGroup.controls.formArray['controls'][4].controls['activities'].controls.length > 1" (click)="deleteItems(i)"
+                    type="button">
+                    <mat-icon>delete forever</mat-icon>
+                  </button>
+                </div>
               </div>
-
-            </ng-template>
-
-            <br />
+            </div>
+            <!-- <mat-divider></mat-divider> -->
+            <button mat-raised-button (click)="addItems()" type="button" *ngIf="activityFormGroup?.controls.length <= 10">
+              <mat-icon>add box</mat-icon>
+              <span translate> Add new activity</span>
+            </button>
+            <br/>
+            <br/>
             <div class="center">
               <button type="button" mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent"><span
                   translate>Back </span>
@@ -243,6 +256,7 @@
                 <mat-icon color="white">arrow_forward</mat-icon>
               </button>
             </div>
+            <br />
           </mat-step>
 
           <mat-step>

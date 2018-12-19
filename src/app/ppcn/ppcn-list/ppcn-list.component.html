@@ -35,18 +35,18 @@
     <!-- Status Column -->
     <ng-container matColumnDef="request_type">
       <mat-header-cell *matHeaderCellDef translate> Request Type </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.requiredLevel.level_type }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.required_level.level_type }} </mat-cell>
     </ng-container>
     
     <!-- Status Column -->
     <ng-container matColumnDef="required_recognition">
       <mat-header-cell *matHeaderCellDef translate> Required Recognition </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.recognitionType.recognition_type }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.recognition_type.recognition_type }} </mat-cell>
     </ng-container>
     <!-- Updated Column -->
-    <ng-container matColumnDef="sector">
-      <mat-header-cell *matHeaderCellDef translate> Sector </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.sector.sector }} </mat-cell>
+    <ng-container matColumnDef="geographic_level">
+      <mat-header-cell *matHeaderCellDef translate> Geographic Level </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.geographic_level.level }} </mat-cell>
     </ng-container>
 
     <!-- Actions Column -->

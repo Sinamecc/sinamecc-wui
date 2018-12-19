@@ -80,5 +80,13 @@ export interface Ovv{
     report_date_start: string;
     report_date_end: string;
     base_year: string;
+    gei_activity_types: GeiActivityType[];
   
+  }
+  
+  export interface GeiActivityType{
+    id: Number;
+    sector: Sector;
+    sub_sector: SubSector;
+    activity_type: string;
   }
