@@ -1,8 +1,8 @@
 export interface Ppcn {
   id: string;
-  geographicLevel: GeographicLevel;
-  recognitionType: RecognitionType;
-  requiredLevel: RequiredLevel;
+  geographic_level: GeographicLevel;
+  recognition_type: RecognitionType;
+  required_level: RequiredLevel;
   organization: Organization;
   contact: Contact;
   base_year: string;
@@ -84,9 +84,8 @@ export interface GeiOrganization {
   id: Number;
   activity_type: string;
   ovv: Ovv;
-  emission_OVV: string;
-  report_date_start: string;
-  report_date_end: string;
+  emission_ovv_date: string;
+  report_year: string;
   base_year: string;
   gei_activity_types: GeiActivityType[];
 
