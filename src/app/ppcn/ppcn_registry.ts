@@ -1,3 +1,5 @@
+import { NextState } from '@app/shared/next-state';
+
 export interface Ppcn {
   id: string;
   geographic_level: GeographicLevel;
@@ -9,7 +11,7 @@ export interface Ppcn {
   ovv: Ovv[];
   gei_organization: GeiOrganization;
   fsm_state: string;
-  next_state: string;
+  next_state: NextState;
   files: Files[];
 
 }
@@ -97,4 +99,6 @@ export interface GeiActivityType{
   sub_sector: SubSector;
   activity_type: string;
 }
+
+
 
