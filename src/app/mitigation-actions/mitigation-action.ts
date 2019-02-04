@@ -1,4 +1,5 @@
 import { GeographicScale } from "./mitigation-action-new-form-data";
+import { NextState } from '@app/shared/next-state';
 
 export interface MitigationAction {
   initiative: Initiative;
@@ -27,7 +28,7 @@ export interface MitigationAction {
   sustainability: string;
   location: Location;
   progress_indicator: ProgressIndicator;
-  next_state: string;
+  next_state: NextState;
   created: string;
   updated: string;
   fsm_state: string;

@@ -37,14 +37,6 @@ export interface Response {
 
 }
 
-const fsm_next_state = {
-  "decision_step_DCC":['registering', 'rejected_by_DCC', 'changes_requested_by_DCC'],
-  "submit_INGEI_changes_proposal_evaluation_result": ["INGEI_changes_proposal_changes_requested_by_DCC_IMN", 
-                                                      "INGEI_changes_proposal_rejected_by_DCC_IMN",
-                                                      "INGEI_changes_proposal_accepted_by_DCC_IMN"],
-  "submit_INGEI_harmonization_required":['INGEI_harmonization_required', 'submitted_SINAMECC_conceptual_proposal_integration'],
-  "INGEI_harmonization_required": ['updating_INGEI_changes_proposal', 'submitted_SINAMECC_conceptual_proposal_integration']
-}
 
 export interface ReportContext {
   comment: string;
@@ -241,9 +233,7 @@ export class MitigationActionsService {
     );
   }
 
-  commonStatusses(mitigationAction:MitigationAction): string[] {
-    return fsm_next_state[mitigationAction.fsm_state];
-  }
+ 
 
   mapRoutesStatuses(uuid:string): StatusRoutesMap[] {
     return [

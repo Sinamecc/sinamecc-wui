@@ -58,11 +58,8 @@ export class MitigationActionReviewsNewComponent implements OnInit {
         tap((mitigationAction: MitigationAction) => {
           this.mitigationAction = mitigationAction;
           if (mitigationAction.next_state ) {
-            this.statusses  = [mitigationAction.next_state];
-            this.shouldDisplayComment = false;
-          } else {
-            this.statusses  = this.service.commonStatusses(mitigationAction);
-            this.shouldDisplayComment = true;
+            this.statusses  = mitigationAction.next_state.states;
+            this.shouldDisplayComment = mitigationAction.next_state.required_comments;
           }
         }
       ));
