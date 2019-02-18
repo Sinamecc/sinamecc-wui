@@ -7,7 +7,7 @@ export const environment = {
   production: false,
   version: '(dev)',
   serverUrl: '/api',
-  mediaUrl: '/api',
+  carbonUrl: '/carbonmarket',
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',

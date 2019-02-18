@@ -5,14 +5,14 @@ import { DatePipe } from '@angular/common';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { S3File, S3Service } from '@app/core/s3.service';
 import { BehaviorSubject } from 'rxjs';
-import { Mccr_POC } from '@app/mccr/mccr-poc/Mccr_POC';
+import { MccrPoc } from '@app/mccr/mccr-poc/mccr-poc';
 import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 
 
 const routes = {
-  getMccr_POC: (uuid: string, lang: string) => `/v1/ucc/${uuid}/balance`
+  getMccrPoc: (uuid: string, lang: string) => `/v1/ucc/${uuid}/balance`
 }
 
 export interface Response {
@@ -40,19 +40,23 @@ export class MccrPocService {
     currentMmcr_POC = this.mccr_POCActionSource.asObservable();
 
     
-  getMccr_POC(uuid: string, lang: string): Observable <Mccr_POC>{
+  getMccrPoc(uuid: string, lang: string): Observable <MccrPoc>{
 
     const httpOptions = {
       headers: new HttpHeaders({
        
-      })
+      }),
+      params: {
+        remoteUrl: '/carbonmarket'
+      }
     };
 
+
     return this.httpClient
-      .get(routes.getMccr_POC(uuid, lang), httpOptions) 
+      .get(routes.getMccrPoc(uuid, lang), httpOptions) 
       .pipe(
         map((body: any) => {
-          console.log('MA', body);
+          console.log('POC', body);
           return body;
         })
       );

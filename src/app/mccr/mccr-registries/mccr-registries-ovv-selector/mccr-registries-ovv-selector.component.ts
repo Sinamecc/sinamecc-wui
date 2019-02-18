@@ -4,9 +4,9 @@ import { finalize } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Ovv } from '@app/mccr-registries/mccr-registries-ovv-selector/ovv';
-import { MccrRegistry } from '@app/mccr-registries/mccr-registry';
-import { MccrRegistriesService } from '@app/mccr-registries/mccr-registries.service';
+import { Ovv } from '@app/mccr/mccr-registries/mccr-registries-ovv-selector/ovv';
+import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
+import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { Logger, I18nService, AuthenticationService } from '@app/core'; 

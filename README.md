@@ -42,6 +42,11 @@ reports/                     test and coverage reports
 proxy.conf.js                backend proxy configuration
 ```
 
+# Backend
+
+Please run sinamecc-backend in localhost:8000 and sinamecc-mccr in localhost:8001. The proxy
+will talk to these both apps.
+
 # Main tasks
 
 Task automation is based on [NPM scripts](https://docs.npmjs.com/misc/scripts).

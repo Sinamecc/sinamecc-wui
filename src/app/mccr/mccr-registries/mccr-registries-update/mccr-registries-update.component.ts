@@ -8,14 +8,12 @@ import { Logger, I18nService, AuthenticationService } from '@app/core';
 
 const log = new Logger('Report');
 
-import { MccrRegistriesService } from '@app/mccr-registries/mccr-registries.service';
+import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { Observable } from 'rxjs/Observable';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { Subscription } from 'rxjs/Subscription';
 import { forkJoin } from 'rxjs/observable/forkJoin';
-import { MccrRegistry } from '@app/mccr-registries/mccr-registry';
-import { of } from 'rxjs/observable/of';
+import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
 
