@@ -45,7 +45,20 @@ proxy.conf.js                backend proxy configuration
 # Backend
 
 Please run sinamecc-backend in localhost:8000 and sinamecc-mccr in localhost:8001. The proxy
-will talk to these both apps.
+will talk to these both apps. By default, any service will talk to sinamecc-backend. If you want
+to talk to sinamecc-mccr, you need to add the following param:
+
+```js
+    const httpOptions = {
+      headers: new HttpHeaders({
+       
+      }),
+      params: {
+        remoteUrl: '/carbonmarket'
+      }
+    };
+```
+The `remoteUrl` param with `/carbonmarket` value will indicate the proxy, the api interceptor and the server rewrite rule to go to carbonmarket url.
 
 # Main tasks
 
