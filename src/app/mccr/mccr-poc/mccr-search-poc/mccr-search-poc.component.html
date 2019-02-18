@@ -1,0 +1,40 @@
+<div class="search">
+  <mat-form-field class="seach_field">
+      <input #idUcc matInput class= "input_search" placeholder="search-something" (keyup.enter)="search(idUcc.value)" translate>
+  </mat-form-field>
+  <a mat-button class="mat-raised-button mat-primary search_button" (click)="search(idUcc.value)"> <span translate> Search something</span></a>
+</div>
+
+<div class="container">
+
+
+  <mat-card>
+
+    <mat-card-content>
+        <mat-card-title class="section-heading" translate>MMCR POC Detail</mat-card-title>
+        <mat-divider class="divider-custom"></mat-divider>
+        <mat-card-subtitle>
+            <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
+        </mat-card-subtitle>
+
+        <div class="container" [hidden]="isLoading">
+
+            <strong translate>Ucc Code</strong>: {{mccr_poc?.ucc_code}} <br>
+            <strong translate>Minusq Account</strong>: {{mccr_poc?.minusq_account}} <br>
+            <strong translate>Generation Account</strong>: {{mccr_poc?.generation_account}} <br>
+            <strong translate>Final Balance</strong>: {{mccr_poc?.final_balance}} <br>
+            <strong translate>Reserve Account</strong>: {{mccr_poc?.reserve_account}} <br>
+
+
+        </div>
+
+
+    </mat-card-content>
+  
+  
+  
+  </mat-card>
+
+
+
+</div>

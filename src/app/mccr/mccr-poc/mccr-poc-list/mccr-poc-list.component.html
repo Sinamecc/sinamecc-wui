@@ -21,7 +21,7 @@
                 <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
             </mat-card-subtitle>
 
-            <div class="container" [hidden]="isLoading">
+            <div class="cardContainer" [hidden]="isLoading">
                 <h3 translate class="text-color">Data</h3>
                   <strong translate>Ucc Code</strong>: {{mccr_poc?.ucc_code}} <br>
                   <strong translate>Minusq Account</strong>: {{mccr_poc?.minusq_account}} <br>
@@ -33,6 +33,11 @@
                   <strong translate>Developer Current Debit Balance</strong>: {{mccr_poc?.developer_account.developer_current_debit_balance}} <br>
                   <strong translate>Developer Current Credit Balance</strong>: {{mccr_poc?.developer_account.developer_current_credit_balance}} <br>
                   <strong translate>Developer Final Balance</strong>: {{mccr_poc?.developer_account.developer_final_balance}} <br>
+                 
+                 <h3 translate class="text-color">Buyer Account</h3>
+                  <strong translate>Buyer Current Debit Balance</strong>: {{mccr_poc?.buyer_account.buyer_current_debit_balance}} <br>
+                  <strong translate>Buyer Current Credit Balance</strong>: {{mccr_poc?.buyer_account.buyer_current_credit_balance}} <br>
+                  <strong translate>Buyer Final Balance</strong>: {{mccr_poc?.buyer_account.buyer_final_balance}} <br>
 
             </div>
 

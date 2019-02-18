@@ -12,10 +12,10 @@ import { map, catchError } from 'rxjs/operators';
 const log = new Logger('Report');
 
 
-import { MccrRegistriesService } from '@app/mccr-registries/mccr-registries.service';
+import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 
-import { MccrRegistry } from '@app/mccr-registries/mccr-registry';
+import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
 
 
 @Component({
@@ -28,7 +28,6 @@ export class MccrRegistryComponent implements OnInit {
   mccrRegistry: MccrRegistry;
   isLoading: boolean;
   id: string;
-  mediaUrl: string = environment.mediaUrl;
 
   constructor(private router: Router,
     private i18nService: I18nService,
