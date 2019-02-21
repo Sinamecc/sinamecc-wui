@@ -53,6 +53,10 @@ export class MccrPocAddPocComponent implements OnInit {
 
   }
 
+  back(){
+    this.router.navigate([`/mccr/poc`], { replaceUrl: true });
+  }
+
   createForm(){
 
     this.form = this.formBuilder.group({

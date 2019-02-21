@@ -56,6 +56,10 @@ export class MccrPocAddDeveloperComponent implements OnInit {
 
   }
 
+  back(){
+    this.router.navigate([`/mccr/poc/detail/${this.id}`], { replaceUrl: true });
+  }
+
   private createForm() {
     this.form = this.formBuilder.group({
       uccBaseCode: ['', Validators.required],
