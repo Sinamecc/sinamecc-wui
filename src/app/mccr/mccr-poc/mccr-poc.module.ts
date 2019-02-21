@@ -11,6 +11,10 @@ import { MaterialModule } from '@app/material.module';
 import { MccrPocRoutingModule } from './mccr-poc-routing.module';
 import { MccrPocService } from './mccr-poc.service';
 import { MccrSearchPocComponent } from '@app/mccr/mccr-poc/mccr-search-poc/mccr-search-poc.component';
+import { MccrPocAddBuyerComponent } from '@app/mccr/mccr-poc/mccr-poc-add-buyer/mccr-poc-add-buyer.component';
+import { MccrPocAddDeveloperComponent } from '@app/mccr/mccr-poc/mccr-poc-add-developer/mccr-poc-add-developer.component';
+import { FormGroup , FormControl , ReactiveFormsModule , FormsModule } from '@angular/forms';
+import { MccrPocAddPocComponent } from '@app/mccr/mccr-poc/mccr-poc-add-poc/mccr-poc-add-poc.component';
 
 
 @NgModule({
@@ -21,10 +25,12 @@ import { MccrSearchPocComponent } from '@app/mccr/mccr-poc/mccr-search-poc/mccr-
     SharedModule,
     FlexLayoutModule,
     MaterialModule,
-    MccrPocRoutingModule
+    MccrPocRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
 
   ],
-  declarations: [MccrPocListComponent, MccrSearchPocComponent],
+  declarations: [MccrPocListComponent, MccrSearchPocComponent, MccrPocAddBuyerComponent, MccrPocAddDeveloperComponent, MccrPocAddPocComponent],
   providers: [
     MccrPocService
   ]

@@ -12,7 +12,11 @@ import { HttpHeaders } from '@angular/common/http';
 
 
 const routes = {
-  getMccrPoc: (uuid: string, lang: string) => `/v1/ucc/${uuid}/balance`
+  getMccrPoc: (uuid: string, lang: string) => `/v1/ucc/${uuid}/balance`,
+  cancelUcc:(uuid: string) => `/v1/ucc/${uuid}/cancel`,
+  submitUccBuyerTransfer:() => '/v1/account/buyer/transfer',
+  submitUccDeveloperTransfer:() => '/v1/account/developer/transfer',
+  submitNewUcc:() => '/v1/ucc'
 }
 
 export interface Response {
@@ -61,6 +65,131 @@ export class MccrPocService {
         })
       );
       
+  }
+
+  cancelUcc(uuid: string): Observable <{} | Object> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+       
+      }),
+      params: {
+        remoteUrl: '/carbonmarket'
+      }
+    };
+    return this.httpClient
+      .get(routes.cancelUcc(uuid), httpOptions) 
+      .pipe(
+        map((body: any) => {
+          const response = {
+            statusCode: 200,
+            message: 'UCC cancel correctly'
+          };
+          return response;
+        })
+      );
+
+  }
+
+
+  submitUccBuyerTransfer(context: any): Observable <Response> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+       
+      }),
+      params: {
+        remoteUrl: '/carbonmarket'
+      }
+    }; 
+
+    let formData: FormData = new FormData();
+    formData.append('user_id',String(1));
+    formData.append('ucc_base_code',context.uccBaseCode);
+    formData.append('developer_account_number',context.developerAccountNUmber);
+    formData.append('buyer_account_number' ,context.buyerAccountNUmber);
+    formData.append('number_ucc_to_transfer',context.numberUccToTransfer);
+    formData.append('status', 'created');
+
+      return this.httpClient
+      .post(routes.submitUccBuyerTransfer(),formData,httpOptions)
+      .pipe(
+        map((body: any) => {
+          const response = {
+            statusCode: 200,
+            message: 'Form submitted correctly'
+          };
+          return response;
+        })
+      );
+  }
+
+  submitNewUcc(context: any): Observable <Response> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+       
+      }),
+      params: {
+        remoteUrl: '/carbonmarket'
+      }
+    }; 
+
+    let formData: FormData = new FormData();
+
+    console.log("holaaaaaaaaaaaaaaa");
+    console.log(formData);
+
+    formData.append('user_id',String(1));
+    formData.append('ucc_batch_base',context.uccBatchCode);
+    formData.append('ucc_batch_size',context.uccBatchSize);
+    formData.append('status', 'created');
+
+    console.log("holaaaaaaaaaaaaaaa");
+    console.log(formData);
+    
+
+    return this.httpClient
+        .post(routes.submitNewUcc(), formData, httpOptions)
+        .pipe(
+          map((body: any) => {
+            const response = {
+              statusCode: 200,
+              message: 'Form submitted correctly'
+            };
+            return response;
+          })
+        );
+
+
+  }
+
+  submitUccDeveloperTransfer(context: any): Observable <Response> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+       
+      }),
+      params: {
+        remoteUrl: '/carbonmarket'
+      }
+    }; 
+
+
+    let formData: FormData = new FormData();
+    formData.append('user_id',String(1));
+    formData.append('ucc_base_code',context.uccBaseCode);
+    formData.append('developer_account_number',context.developerAccountNUmber);
+    formData.append('status', 'created');
+
+    return this.httpClient
+        .post(routes.submitUccDeveloperTransfer(), formData, httpOptions)
+        .pipe(
+          map((body: any) => {
+            const response = {
+              statusCode: 200,
+              message: 'Form submitted correctly'
+            };
+            return response;
+          })
+        );
+
   }
 
 }

@@ -1,13 +1,4 @@
-
-
 <br>
-
-<div class="search">
-    <mat-form-field class="seach_field">
-        <input matInput class= "input_search" placeholder="search-something" translate>
-    </mat-form-field>
-    <a mat-button class="mat-raised-button mat-primary search_button"  > <span translate> Search something</span></a>
-</div>
 <div class="container">
 
     <mat-card>
@@ -21,24 +12,29 @@
                 <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
             </mat-card-subtitle>
 
-            <div class="cardContainer" [hidden]="isLoading">
+            <div class="container" [hidden]="isLoading">
                 <h3 translate class="text-color">Data</h3>
                   <strong translate>Ucc Code</strong>: {{mccr_poc?.ucc_code}} <br>
                   <strong translate>Minusq Account</strong>: {{mccr_poc?.minusq_account}} <br>
                   <strong translate>Generation Account</strong>: {{mccr_poc?.generation_account}} <br>
                   <strong translate>Final Balance</strong>: {{mccr_poc?.final_balance}} <br>
-                  <strong translate>Reserve Account</strong>: {{mccr_poc?.reserve_account}} <br>
-
+                  <strong *ngIf="mccr_poc.buyer_account != null" translate>Reserve Account:</strong> {{mccr_poc?.reserve_account}} <br>
+                <div *ngIf="mccr_poc.developer_account != null"> 
                  <h3 translate class="text-color">Developer Account</h3>
                   <strong translate>Developer Current Debit Balance</strong>: {{mccr_poc?.developer_account.developer_current_debit_balance}} <br>
                   <strong translate>Developer Current Credit Balance</strong>: {{mccr_poc?.developer_account.developer_current_credit_balance}} <br>
                   <strong translate>Developer Final Balance</strong>: {{mccr_poc?.developer_account.developer_final_balance}} <br>
-                 
-                 <h3 translate class="text-color">Buyer Account</h3>
-                  <strong translate>Buyer Current Debit Balance</strong>: {{mccr_poc?.buyer_account.buyer_current_debit_balance}} <br>
-                  <strong translate>Buyer Current Credit Balance</strong>: {{mccr_poc?.buyer_account.buyer_current_credit_balance}} <br>
-                  <strong translate>Buyer Final Balance</strong>: {{mccr_poc?.buyer_account.buyer_final_balance}} <br>
-
+                </div>
+                <div *ngIf="mccr_poc.buyer_account != null"> 
+                    <h3 translate class="text-color">Buyer Account</h3>
+                    <strong translate>Buyer Current Debit Balance</strong>: {{mccr_poc?.buyer_account.buyer_current_debit_balance}} <br>
+                    <strong translate>Buyer Current Credit Balance</strong>: {{mccr_poc?.buyer_account.buyer_current_credit_balance}} <br>
+                    <strong translate>Buyer Final Balance</strong>: {{mccr_poc?.buyer_account.buyer_final_balance}} <br>
+                </div> 
+                <div class="options">
+                 <button class="options-button" mat-icon-button color="black" matTooltip="{{ 'Add Buyer account' | translate:lang }}" *ngIf="mccr_poc.buyer_account == null" (click)="openAddBuyer(mccr_poc.ucc_code)"> <mat-icon color="white">folder</mat-icon></button>
+                 <button class="options-button" mat-icon-button color="black" matTooltip="{{ 'Add Developer account' | translate:lang }}" *ngIf="mccr_poc.developer_account == null" (click)="openAddDeveloper(mccr_poc.ucc_code)"> <mat-icon color="white">person</mat-icon></button>
+                </div>
             </div>
 
         </mat-card-content>

@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatTableDataSource,MatSnackBar} from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
-import { Mccr_POC } from '@app/mccr/mccr-poc/Mccr_POC';
+import { MccrPoc } from '@app/mccr/mccr-poc/mccr-poc';
 import { MccrPocService } from '@app/mccr/mccr-poc/mccr-poc.service';
 import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { finalize } from 'rxjs/operators';
+import {MatDialog, MatDialogConfig} from "@angular/material";
+import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-mccr-search-poc',
@@ -16,12 +20,15 @@ import { finalize } from 'rxjs/operators';
 export class MccrSearchPocComponent implements OnInit {
 
   idMccrPoc:string
-  mccr_poc: Mccr_POC;
+  mccr_poc: MccrPoc;
   isLoading: boolean;
   id: string;
   constructor(private router: Router,
     private i18nService: I18nService,
     private service: MccrPocService,
+    private dialog: MatDialog,
+    private translateService: TranslateService,
+    public snackBar: MatSnackBar,
     private route: ActivatedRoute) { 
       this.id = this.route.snapshot.paramMap.get('id');
   }
@@ -32,10 +39,51 @@ export class MccrSearchPocComponent implements OnInit {
   search(value:string){
 
     this.isLoading = true;
-    this.service.getMccr_POC(value, this.i18nService.language.split('-')[0])
+    this.service.getMccrPoc(value.trim(), this.i18nService.language.split('-')[0])
      .pipe(finalize(() => { this.isLoading = false; }))
-     .subscribe((response: Mccr_POC) => { this.mccr_poc = response; }); 
+     .subscribe((response: MccrPoc) => { this.mccr_poc = response; }); 
      
   }
+
+  view(uuid: string) {
+    this.router.navigate([`/mccr/poc/detail/${uuid}`], { replaceUrl: true });
+  }
+
+  cancel(uuid:string){
+    this.isLoading = true;
+    this.service.cancelUcc(uuid).subscribe(() =>{
+      // here i need to refresh table
+      this.isLoading = false;
+      this.translateService.get('Sucessfully cancel element').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+    } );
+
+  }
+
+  openDeleteConfirmationDialog(uuid:string){
+    const data = {
+      title: "Cancel UCC",
+      question: "Are you sure?",
+      uuid: uuid
+    };
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = data;
+    dialogConfig.width = '350px';
+    let dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.cancel(uuid);
+      }
+    });
+
+  }
+
+  addUCC(){
+    this.router.navigate([`/mccr/poc/new`], { replaceUrl: true });
+  }
+
+
 
 }
