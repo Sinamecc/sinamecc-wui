@@ -19,7 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./report-new.component.scss']
 })
 export class ReportNewComponent implements OnInit {
-
+  value = "Example: e-mail, web page, REST API Call, SFTP, FTP, WeTransfer, other.";
   version: string = environment.version;
   error: string;
   reportForm: FormGroup;
@@ -58,6 +58,13 @@ export class ReportNewComponent implements OnInit {
     this.reportForm = this.formBuilder.group({
       name: ['', Validators.required],
       file: [{ value: undefined, disabled: false }, []],
+      institution:['', Validators.required],
+      department:['', Validators.required],
+      personName:['', Validators.required],
+      personLastName:['', Validators.required],
+      personEmail:['', Validators.required],
+      sent:['', Validators.required],
+      updatePeriod:['', Validators.required]
     });
   }
 

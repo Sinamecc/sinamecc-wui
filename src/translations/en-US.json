@@ -198,7 +198,20 @@
   "Initiative Contact Info":"Initiative Contact Info",
   "Mitigation Initiative Name": "Mitigation Initiative Name",
   "Emission Sector and Gas Absorption":"Emission Sector and Gas Absorption",
-  "Sources consulted for the calculation methodology":"Sources consulted for the calculation methodology"
+  "Sources consulted for the calculation methodology":"Sources consulted for the calculation methodology",
+  "Institution":"Institution",
+  "Department":"Department",
+  "Attendant":"Attendant",
+  "Last name":"Last name",
+  "Email":"Email",
+  "How this file is sent to other institutions?":"How this file is sent to other institutions?",
+  "Daily":"Daily",
+  "Update period":"Update period",
+  "Weekly":"Weekly",
+  "Monthly":"Monthly",
+  "Yearly":"Yearly",
+  "Methodological file":"Methodological file",
+  "Example: e-mail, web page, REST API Call, SFTP, FTP, WeTransfer, other.":"Example: e-mail, web page, REST API Call, SFTP, FTP, WeTransfer, other."
 
   }
   

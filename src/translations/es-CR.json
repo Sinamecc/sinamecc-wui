@@ -201,6 +201,20 @@
   "Initiative Contact Info":"Información de Contacto de la Iniciativa",
   "Mitigation Initiative Name":"Nombre de la Iniciativa de mitigación",
   "Emission Sector and Gas Absorption":"Sectores de Emisión y Absorción de gases",
-  "Sources consulted for the calculation methodology":"Fuentes consultadas para la metodología de cálculo"
+  "Sources consulted for the calculation methodology":"Fuentes consultadas para la metodología de cálculo",
+  "Institution":"Institución",
+  "Department":"Departamento",
+  "Attendant":"Encargado",
+  "Last name":"Apellido",
+  "Email":"Correo",
+  "How this file is sent to other institutions?":"¿Cómo se envía este archivo a otras instituciones?",
+  "Daily":"Diario",
+  "Weekly":"Semanalmente",
+  "Monthly":"Mensualmente",
+  "Yearly":"Anualmente",
+  "Methodological file":"Archivo metodológico",
+  "Update period":"Periodo de actualización",
+  "Example: e-mail, web page, REST API Call, SFTP, FTP, WeTransfer, other.":"ejemplo: correo, página web, REST API Call, SFTP, FTP, WeTransfer, otro."
+  
 
   }
