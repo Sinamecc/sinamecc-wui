@@ -12,8 +12,8 @@ import { MccrRegistriesOvvSelectorComponent } from '@app/mccr-registries/mccr-re
 import { MccrRegistriesReviewComponent } from './mccr-registries-review/mccr-registries-review.component';
 import { OvvProposalComponent } from './ovv-proposal/ovv-proposal.component';
 import { OvvProposalNewComponent } from './ovv-proposal-new/ovv-proposal-new.component';
-
-
+import { MonitoringProposalNewComponent } from './monitoring-proposal-new/monitoring-proposal-new.component';
+import { MonitoringProposalVerificationNewComponent } from './monitoring-proposal-verification-new/monitoring-proposal-verification-new.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -26,6 +26,8 @@ const routes: Routes = [
     { path: 'mccr/registries/:id/reviews/new', component: MccrRegistriesReviewComponent, data: { id: extract('id') } },
     { path: 'mccr/registries/:id/ovv/proposal', component: OvvProposalComponent, data: { id: extract('id') } },
     { path: 'mccr/registries/:id/ovv/proposal/new', component: OvvProposalNewComponent, data: { id: extract('id') } },
+    { path: 'mccr/registries/:id/monitoring/proposal/new', component: MonitoringProposalNewComponent, data: { id: extract('id') } },
+    { path: 'mccr/registries/:id/monitoring/verification/proposal/new', component: MonitoringProposalVerificationNewComponent, data: { id: extract('id') } },
 
   ])
 ];

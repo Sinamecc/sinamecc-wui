@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
-import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material'
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material'
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 
@@ -28,28 +28,27 @@ export class ReportVersionsComponent implements OnInit {
   error: string;
   id: number;
   isLoading = false;
-  dataSource = new ReportVersionsDataSource(this.reportService,+this.route.snapshot.paramMap.get('id'));
+  dataSource = new ReportVersionsDataSource(this.reportService, +this.route.snapshot.paramMap.get('id'));
   displayedColumns = ['version', 'file'];
   reportFileName: Observable<string>;
-  
+
   // @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ViewChild(MatSort) sort: MatSort;
 
   constructor(private router: Router,
     private i18nService: I18nService,
     private reportService: ReportService,
-    private route: ActivatedRoute) { 
-      this.id = +this.route.snapshot.paramMap.get('id');
-      this.reportFileName = this.reportService.reportVersionsName(this.id);
-    }
+    private route: ActivatedRoute) {
+    this.id = +this.route.snapshot.paramMap.get('id');
+    this.reportFileName = this.reportService.reportVersionsName(this.id);
+  }
 
   ngOnInit() {
   }
 
-  async download(file:string) {
+  async download(file: string) {
     this.isLoading = true;
     const blob = await this.reportService.downloadResource(file);
-    console.log('start download:',blob);
     var url = window.URL.createObjectURL(blob.data);
     var a = document.createElement('a');
     document.body.appendChild(a);
@@ -68,14 +67,14 @@ export class ReportVersionsComponent implements OnInit {
 export class ReportVersionsDataSource extends DataSource<any> {
   id: number;
   constructor(private reportService: ReportService,
-              private current_id: number) {
+    private current_id: number) {
     super();
     this.id = current_id;
   }
-  connect(): Observable < Version[] > {
+  connect(): Observable<Version[]> {
     return this.reportService.versions(this.id);
     // this.singleEvents$.subscribe(event => this.event = event);
-  //return this.reportService.reportVersions(this.id).subscribe(versions =>this.ver)versions();
+    //return this.reportService.reportVersions(this.id).subscribe(versions =>this.ver)versions();
   }
-  disconnect() {}
+  disconnect() { }
 }

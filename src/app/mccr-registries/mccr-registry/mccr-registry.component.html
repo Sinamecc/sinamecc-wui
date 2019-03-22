@@ -23,6 +23,16 @@
               </li>
              </ul>
           </div>
+          <h3 translate class="text-color">Workflow Files</h3>
+          <div>
+            <ul>
+              <li *ngFor="let file of mccrRegistry?.workflow_step_files">
+
+                <span>{{file.name}}<button mat-icon-button color="primary" (click)="download(file.file)" ><mat-icon color="white">vertical_align_bottom</mat-icon></button></span>
+                
+              </li>
+             </ul>
+          </div>
           <!--<mat-divider></mat-divider>-->
           <h3 class="text-color" translate>Actions</h3>
           <button mat-icon-button color="primary" *ngIf="mccrRegistry?.fsm_state !== 'end'" (click)="addReview(mccrRegistry?.id)" > <mat-icon color="white">navigate_next</mat-icon>Next State</button>
