@@ -7,17 +7,16 @@
   </div>
   <div fxHide.lt-md>
     <a class="brand" href="./home" translate><img src="assets/{{logoName}}"></a>
-    <button mat-button routerLink="/report" routerLinkActive="active">
+    <button *ngIf="permissions.report_data != undefined" mat-button routerLink="/report" routerLinkActive="active">
       <span translate>REPORTS</span>
     </button>
-    <button mat-button routerLink="/mitigation/actions" routerLinkActive="active">
+    <button *ngIf="permissions.mitigation_action != undefined"  mat-button routerLink="/mitigation/actions" routerLinkActive="active">
       <span translate>MITIGATION ACTIONS</span>
     </button>
-    <button mat-button routerLink="/mccr/registries" routerLinkActive="active">
+    <button *ngIf="permissions.mccr != undefined" mat-button routerLink="/mccr/registries" routerLinkActive="active">
       <span translate>MCCR REGISTRIES</span>
     </button>
-    <button mat-button routerLink="/ppcn/registries" routerLinkActive="active">
-
+    <button *ngIf="permissions.ppcn != undefined" mat-button routerLink="/ppcn/registries" routerLinkActive="active">
       <span translate>PPCN</span>
     </button>
   </div>

@@ -32,7 +32,7 @@ import { S3Service } from '@app/core/s3.service';
   declarations: [
     HeaderComponent,
     ShellComponent,
-    ComponentDialogComponent
+    ComponentDialogComponent,
   ],
   entryComponents: [
     ComponentDialogComponent

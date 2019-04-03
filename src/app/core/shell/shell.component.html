@@ -4,19 +4,19 @@
       <nav>
         <mat-list>
           <mat-divider></mat-divider>
-          <a mat-list-item routerLink="/report" routerLinkActive="active" (click)="sidenav.close()">
+          <a *ngIf="permissions.report_data != undefined" mat-list-item routerLink="/report" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>REPORTS</span>
           </a>
           <mat-divider></mat-divider>
-          <a mat-list-item routerLink="/mitigation/actions" routerLinkActive="active" (click)="sidenav.close()">
+          <a *ngIf="permissions.mitigation_action != undefined"  mat-list-item routerLink="/mitigation/actions" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>MITIGATIONS ACTIONS</span>
           </a>  
           <mat-divider></mat-divider>
-          <a mat-list-item routerLink="/mccr/registries" routerLinkActive="active" (click)="sidenav.close()">
+          <a *ngIf="permissions.mccr != undefined" mat-list-item routerLink="/mccr/registries" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>MCCR REGISTRIES</span>
           </a>
           <mat-divider></mat-divider>
-          <a mat-list-item routerLink="/ppcn/registries" routerLinkActive="active" (click)="sidenav.close()">
+          <a *ngIf="permissions.ppcn != undefined" mat-list-item routerLink="/ppcn/registries" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>PPCN</span>
           </a>  
         </mat-list>

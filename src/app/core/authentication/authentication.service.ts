@@ -1,9 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnChanges, group } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { map, catchError, flatMap } from 'rxjs/operators';
+import { viewClassName, createAotCompiler } from '@angular/compiler';
+import { Permissions } from '../permissions';
+
 
 export interface Credentials {
   // Customize received credentials here
@@ -11,13 +14,20 @@ export interface Credentials {
   email: string;
   username: string;
   token: string;
+  groups: object;
+  permissions:Permissions;
+  is_administrador_dcc:boolean;
+
 }
 
 export interface LoginContext {
   username: string;
   password: string;
   remember?: boolean;
+  groups: object;
 }
+
+
 
 const routes = {
   login: () => `/v1/token/`,
@@ -32,14 +42,15 @@ const credentialsKey = 'credentials';
  */
 @Injectable()
 export class AuthenticationService {
-
+  
   private _credentials: Credentials | null;
-
+  
   constructor(private httpClient: HttpClient) {
     const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
     }
+    
   }
 
   /**
@@ -76,16 +87,17 @@ export class AuthenticationService {
               username: req.username,
               token: 'JWT ' + body.token,
               id: req.id,
-              email: req.email
+              email: req.email,
+              groups: req.groups,
+              permissions:req.available_apps,
+              is_administrador_dcc: req.is_administrador_dcc
+              
             };
             this.setCredentials(data, context.remember);
             return data;
           }));
         })
       );
-
-      
-      
   }
 
   /**
@@ -132,5 +144,7 @@ export class AuthenticationService {
       localStorage.removeItem(credentialsKey);
     }
   }
+
+
 
 }

@@ -142,13 +142,14 @@ export class MccrRegistriesService {
         'Authorization': this.authenticationService.credentials.token
       })
     };
-
     return this.httpClient
       .get(routes.mccrRegistries(), httpOptions)
       .pipe(
         map((body: any) => {
           return body;
-        })
+        }
+        )
+        
       );
   }
 
@@ -158,7 +159,6 @@ export class MccrRegistriesService {
         'Authorization': this.authenticationService.credentials.token
       })
     };
-
 
     return this.httpClient
       .get(routes.getMccrRegistry(uuid), httpOptions)

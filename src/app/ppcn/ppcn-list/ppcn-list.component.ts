@@ -3,7 +3,7 @@ import { environment } from '@env/environment';
 import { DataSource } from '@angular/cdk/table';
 
 import { PpcnService } from '@app/ppcn/ppcn.service';
-import { I18nService } from '@app/core';
+import { I18nService, AuthenticationService } from '@app/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Ppcn } from '@app/ppcn/ppcn_registry';
@@ -26,7 +26,8 @@ export class PpcnListComponent implements OnInit {
   constructor(private router: Router,
     private i18nService: I18nService,
     private service: PpcnService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authenticationService: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -45,6 +46,10 @@ export class PpcnListComponent implements OnInit {
      } );
  
    }
+
+  getAuthenticationService(){
+    return this.authenticationService;
+  }
   
   update(uuid: string) {
     this.router.navigate([`ppcn/${uuid}/edit`], { replaceUrl: true });
@@ -101,7 +106,7 @@ export class PpcnSource extends DataSource<any> {
     super();
   }
   connect(): Observable < Ppcn[] > {
-    this.ppcns$ = this.service.ppcn(this.i18nService.language.split('-')[0]);
+    this.ppcns$ = this.service.reRoutePpcn(this.i18nService.language.split('-')[0]);
     this.ppcns$.subscribe((ppcns) => {
       this.ppcns = ppcns;
     });

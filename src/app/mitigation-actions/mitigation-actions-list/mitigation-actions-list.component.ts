@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
-import {MatPaginator, MatTableDataSource, MatSort, MatSnackBar} from '@angular/material'
+import { MatPaginator, MatTableDataSource, MatSort, MatSnackBar } from '@angular/material'
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators';
@@ -15,7 +15,7 @@ const log = new Logger('Report');
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 
-import {MatDialog, MatDialogConfig} from "@angular/material";
+import { MatDialog, MatDialogConfig } from "@angular/material";
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -40,7 +40,8 @@ export class MitigationActionsListComponent implements OnInit {
     private service: MitigationActionsService,
     private dialog: MatDialog,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private authenticationService: AuthenticationService
     ) { }
 
   ngOnInit() {
@@ -54,18 +55,22 @@ export class MitigationActionsListComponent implements OnInit {
     this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
   }
 
+  getAuthentification(){
+    return this.authenticationService;
+  }
+
   addReview(uuid: string) {
 
     const selectedMitigationAction = this.dataSource.mitigationActions.find((ma) => ma.id === uuid);
     const status = selectedMitigationAction.fsm_state;
-    
-    const route = this.service.mapRoutesStatuses(uuid).find(x => x.status === status );
-    if(route) {
+
+    const route = this.service.mapRoutesStatuses(uuid).find(x => x.status === status);
+    if (route) {
       this.router.navigate([route.route], { replaceUrl: true });
     } else {
       this.router.navigate([`mitigation/actions/${uuid}/reviews/new`], { replaceUrl: true });
     }
-    
+
   }
 
   changelog(uuid: string) {
@@ -77,17 +82,17 @@ export class MitigationActionsListComponent implements OnInit {
   // }
 
   delete(uuid: string) {
-   this.isLoading = true;
-    this.service.deleteMitigationAction(uuid).subscribe(() =>{
+    this.isLoading = true;
+    this.service.deleteMitigationAction(uuid).subscribe(() => {
       // here i need to refresh table
       this.isLoading = false;
       this.dataSource = new MitigationActionSource(this.service, this.i18nService);
-      this.translateService.get('Sucessfully deleted element').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
-    } );
+      this.translateService.get('Sucessfully deleted element').subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
+    });
 
   }
 
-  openDeleteConfirmationDialog(uuid:string) {
+  openDeleteConfirmationDialog(uuid: string) {
     const data = {
       title: "Delete Mitigation Action",
       question: "Are you sure?",
@@ -101,7 +106,7 @@ export class MitigationActionsListComponent implements OnInit {
     let dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.delete(uuid);
       }
     });
@@ -115,15 +120,15 @@ export class MitigationActionSource extends DataSource<any> {
   mitigationActions$: Observable<MitigationAction[]>;
 
   constructor(private service: MitigationActionsService,
-              private i18nService: I18nService,) {
+    private i18nService: I18nService, ) {
     super();
   }
-  connect(): Observable < MitigationAction[] > {
+  connect(): Observable<MitigationAction[]> {
     this.mitigationActions$ = this.service.mitigationActions(this.i18nService.language.split('-')[0]);
     this.mitigationActions$.subscribe((mitigationActions) => {
       this.mitigationActions = mitigationActions;
     });
     return this.mitigationActions$;
   }
-  disconnect() {}
+  disconnect() { }
 }

@@ -21,6 +21,7 @@ const routes = {
   getRequiredLevel: () => `/v1/ppcn/required/level`,
   seededFormData: (levelId: string, lang: string) => `/v1/ppcn/form/${levelId}/${lang}`,
   ppcns: (lang: string) => `/v1/ppcn/${lang}`,
+  ppcnsAll: (lang:string) => `/v1/ppcn/all/${lang}`,
   submitNewPpcn: () => `/v1/ppcn/`,
   submitUpdatePpcn: (ppcnId: string) => `/v1/ppcn/${ppcnId}`,
   subsectors: (subsector: string, lang: string) => `/v1/ppcn/${subsector}/subsector/${lang}/`,
@@ -161,6 +162,32 @@ export class PpcnService {
           return body;
         })
       );
+  }
+
+  ppcnAll(lang: string): Observable < Ppcn[] > {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.authenticationService.credentials.token
+      })
+    };
+    return this.httpClient
+      .get(routes.ppcnsAll(lang), httpOptions) 
+      .pipe(
+        map((body: any) => {
+          return body;
+        })
+      );
+
+  }
+
+  reRoutePpcn(lang: string): Observable < Ppcn[] > {
+    
+    if(this.authenticationService.credentials.is_administrador_dcc){
+      return this.ppcnAll(lang)
+    }
+
+    return this.ppcn(lang)
   }
 
   geographicLevel(lang: string): Observable<GeographicLevel[]> {
