@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material';
 
-import { AuthenticationService} from '@app/core/authentication/authentication.service';
+import { AuthenticationService, Credentials} from '@app/core/authentication/authentication.service';
 import { I18nService } from '@app/core/i18n.service';
 import { Permissions } from '@app/core/permissions';
 
@@ -44,6 +44,10 @@ export class HeaderComponent implements OnInit {
 
   get permissions(): Permissions{
     return this.authenticationService.credentials.permissions;
+  }
+
+  get credential():Credentials{
+    return this.authenticationService.credentials;
   }
 
   get username(): string {

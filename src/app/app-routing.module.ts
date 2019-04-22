@@ -13,6 +13,7 @@ const routes: Routes = [
     { path: 'mitigation/actions', loadChildren: 'app/mitigation-actions/mitigation-actions.module#MitigationActionsModule' },
     { path: 'mccr/registries', loadChildren: 'app/mccr-registries/mccr-registries.module#MccrRegistriesModule' },
     { path: 'ppcn', loadChildren: 'app/ppcn/ppcn.module#PpcnModule' },
+    { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule' },
     { path: 'error', component: ErrorComponent },
   ]),
   // Fallback when no prior route is matched

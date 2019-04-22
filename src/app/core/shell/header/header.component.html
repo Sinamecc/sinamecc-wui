@@ -7,7 +7,12 @@
   </div>
   <div fxHide.lt-md>
     <a class="brand" href="./home" translate><img src="assets/{{logoName}}"></a>
+    <button *ngIf="credential.is_administrador_dcc" mat-button routerLink="/admin" routerLinkActive="active">
+      <span translate>ADMIN</span>
+    </button>
+
     <button *ngIf="permissions.report_data != undefined" mat-button routerLink="/report" routerLinkActive="active">
+
       <span translate>REPORTS</span>
     </button>
     <button *ngIf="permissions.mitigation_action != undefined"  mat-button routerLink="/mitigation/actions" routerLinkActive="active">

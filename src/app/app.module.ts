@@ -18,6 +18,7 @@ import { AppComponent } from '@app/app.component';
 import { AppRoutingModule } from '@app/app-routing.module';
 import { MccrRegistriesModule } from '@app/mccr-registries/mccr-registries.module';
 import { PpcnModule } from '@app/ppcn/ppcn.module';
+import { AdminModule } from './admin/admin.module';
 import { ErrorComponent } from './error/error.component';
 
 
@@ -35,6 +36,7 @@ import { ErrorComponent } from './error/error.component';
     SharedModule,
    /* HomeModule,*/
     ReportModule,
+    AdminModule,
     MitigationActionsModule,
     MccrRegistriesModule,
     PpcnModule,

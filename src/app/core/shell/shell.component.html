@@ -4,6 +4,9 @@
       <nav>
         <mat-list>
           <mat-divider></mat-divider>
+          <a *ngIf="credential.is_administrador_dcc" mat-list-item routerLink="/admin" routerLinkActive="active" (click)="sidenav.close()">
+            <span translate>ADMIN</span>
+          </a>
           <a *ngIf="permissions.report_data != undefined" mat-list-item routerLink="/report" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>REPORTS</span>
           </a>

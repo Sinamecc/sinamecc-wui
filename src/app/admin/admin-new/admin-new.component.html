@@ -1,0 +1,93 @@
+<div class="container">
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="{{ 'User' | translate }}"> 
+        <mat-card>
+            <h3>
+                <mat-card-title class="section-heading" translate>Create a new User</mat-card-title>
+                <mat-divider class="divider-custom"></mat-divider>
+                <mat-divider class="divider-custom"></mat-divider>
+            </h3>
+            <mat-card-content>
+
+                <form (ngSubmit)="submitForm()" [formGroup]="createUserForm" novalidate>
+
+                    <div class="report-error" [hidden]="!error || isLoading" translate>
+                        <span translate>Error submitting the form.</span>
+                    </div>
+
+                    <div fxLayout="column">
+
+                        <mat-form-field>
+                          <input type="text" matInput formControlName="name" [placeholder]="'Name' | translate"/>
+                          <mat-error *ngIf="createUserForm.controls.name.invalid || createUserForm.controls.name.untouched">
+                                <span translate>Name is required</span>
+                          </mat-error>
+
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input type="text" matInput formControlName="lastName"  [placeholder]="'Last Name' | translate"/>
+                            <mat-error *ngIf="createUserForm.controls.lastName.invalid || createUserForm.controls.lastName.untouched">
+                                    <span translate>Last Name is required</span>
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input type="text" matInput formControlName="userName" [placeholder]="'User Name' | translate"/>
+                            <mat-error *ngIf="createUserForm.controls.userName.invalid || createUserForm.controls.userName.untouched">
+                                    <span translate>User Name is required</span>
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input type="email" matInput formControlName="email"  [placeholder]="'Email' | translate"/>
+                            <mat-error *ngIf="createUserForm.controls.email.invalid || createUserForm.controls.email.untouched">
+                                    <span translate>Email is required</span>
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input type="password" matInput formControlName="password" [placeholder]="'Password' | translate"/>
+                            <mat-error *ngIf="createUserForm.controls.password.invalid || createUserForm.controls.password.untouched">
+                                    <span translate>password is required</span>
+                            </mat-error>
+                        </mat-form-field>
+                        <br>
+                      
+                        <mat-checkbox (change)="checkCheckBoxvalue($event,'staff')"><span translate>Staff</span></mat-checkbox>
+                        <mat-checkbox (change)="checkCheckBoxvalue($event,'active')"><span translate>User active</span></mat-checkbox>
+                        <mat-checkbox (change)="checkCheckBoxvalue($event,'provider')"><span translate>Provider</span></mat-checkbox>
+                        <mat-checkbox (change)="checkCheckBoxvalue($event,'dccUser')"><span translate>Dcc User</span></mat-checkbox>
+
+                    </div>
+                    <div class="box-button">
+                        <button mat-raised-button color="primary" type="submit">
+                            <span translate>Create User</span>
+                        </button>
+                    </div>
+
+                </form>
+
+            </mat-card-content>
+            
+        </mat-card>
+    
+    </mat-tab>
+    <mat-tab label="{{ 'Permissions' | translate }}"> 
+        <button mat-icon-button (click)="openDialogPermissions()">
+            <mat-icon >visibility</mat-icon>
+        </button>
+
+        <app-admin-permission-list *ngIf="this.permList$ | async; let perm" #table [dataTable] = "perm">
+        </app-admin-permission-list>
+
+    </mat-tab>
+    <mat-tab label="{{ 'Groups' | translate }}"> 
+    <button mat-icon-button (click)="openDialogGroups()">
+        <mat-icon >visibility</mat-icon>
+    </button>
+    <app-admin-group-list *ngIf="this.groupsList$ | async; let group" #tableGroup [dataTable] = "group"></app-admin-group-list>
+    
+    </mat-tab>
+  </mat-tab-group>
+</div>

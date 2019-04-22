@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 import { MatSidenav } from '@angular/material';
 import { filter } from 'rxjs/operators';
-import { AuthenticationService } from '../authentication/authentication.service';
+import { AuthenticationService, Credentials } from '../authentication/authentication.service';
 import { Permissions } from '../permissions';
 
 @Component({
@@ -29,6 +29,10 @@ export class ShellComponent implements OnInit {
 
   get permissions(): Permissions{
     return this.authenticationService.credentials.permissions;
+  }
+
+  get credential():Credentials{
+    return this.authenticationService.credentials;
   }
 
 
