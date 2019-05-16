@@ -224,7 +224,14 @@
   "had its name changed, is temporally unavailable or you do not have access":"had its name changed, is temporally unavailable or you do not have access",
   "404 PAGE NOT FOUND":"404 PAGE NOT FOUND",
   "The Page you are looking for might have been removed":"The Page you are looking for might have been removed",
-  "Go to Home":"Go to Home"
+  "Go to Home":"Go to Home",
+  "Active":"Active",
+  "Create Permissions":"Create Permissions",
+  "Edit Permissions":"Edit Permissions",
+  "Create Groups":"Create Groups",
+  "Create Group":"Create Group",
+  "Users":"Users"
+
 
   }
   

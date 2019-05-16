@@ -7,9 +7,15 @@
   </div>
   <div fxHide.lt-md>
     <a class="brand" href="./home" translate><img src="assets/{{logoName}}"></a>
-    <button *ngIf="credential.is_administrador_dcc" mat-button routerLink="/admin" routerLinkActive="active">
+    
+    <button mat-button [matMenuTriggerFor]="admin" >
       <span translate>ADMIN</span>
     </button>
+    <mat-menu  #admin="matMenu" [overlapTrigger]="false">
+      <button mat-menu-item routerLink="/admin/users" routerLinkActive="active">Users</button>
+      <button  mat-menu-item routerLink="/admin/permissions" routerLinkActive="active">Permissions</button>
+      <button  mat-menu-item routerLink="/admin/groups" routerLinkActive="active">Groups</button>
+    </mat-menu>
 
     <button *ngIf="permissions.report_data != undefined" mat-button routerLink="/report" routerLinkActive="active">
 

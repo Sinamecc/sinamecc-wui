@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, Optional, Inject } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatDialog, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
-import { Groups } from '../groups';
-import { GroupsData } from '../groupsData';
+import { Groups } from '../../groups';
+import { GroupsData } from '../../groupsData';
 
 @Component({
   selector: 'app-admin-group-list',

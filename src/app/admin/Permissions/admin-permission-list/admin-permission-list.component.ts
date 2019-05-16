@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject, Optional, Input, ViewChild } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatTableDataSource, MatSnackBar, MatDialogRef, MatSort, MatPaginator } from '@angular/material';
-import { Permissions } from '../permissions';
-import { PermissionsData } from '../permissionsData';
+import { Permissions } from '../../permissions';
+import { PermissionsData } from '../../permissionsData';
 import { I18nService } from '@app/core';
-import { AdminService } from '../admin.service';
+import { AdminService } from '../../admin.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -15,7 +15,7 @@ export class AdminPermissionListComponent implements OnInit {
   displayedColumns = ['name', 'type','action'];
   dataSource:MatTableDataSource<Permissions>
   listOfPermissions: Permissions [] = [];
-  componentType:string = "add";
+  componentType:string;
   removePermissionsList:Permissions [] = [];
   removeTempPermissionsList:Permissions [] = [];
 
@@ -27,11 +27,13 @@ export class AdminPermissionListComponent implements OnInit {
     this.paginator = mp;
     this.dataSource.paginator = this.paginator;
   }
+
   
   constructor(public dialog: MatDialog,
     private snackBar: MatSnackBar,
     @Optional() @Inject(MAT_DIALOG_DATA)
-    public data: PermissionsData) { 
+    public data: PermissionsData) {
+      this.componentType = "add"; 
       if(data != null){
         this.componentType = data.componentType;
         this.dataTable = data.array;
@@ -43,7 +45,6 @@ export class AdminPermissionListComponent implements OnInit {
     if(!this.data){
       this.dataSource = new MatTableDataSource<Permissions>(this.dataTable);
     }
-
     for(let perm of this.dataTable){
       this.removeTempPermissionsList.push(perm);
     }
@@ -72,7 +73,6 @@ export class AdminPermissionListComponent implements OnInit {
     this.dataTable = this.removeTempPermissionsList;
     this.removeTempPermissionsList = [];
   }
-
 
   searchByNae(name:string){
     let listOfPerm: Permissions [] = []
@@ -103,9 +103,7 @@ export class AdminPermissionListComponent implements OnInit {
       return this.dataTable;
     }
   }
-  
   search(name:string="", type:string="all"){
-    
     if(name == ""&& type == "all"){
       this.dataSource = new MatTableDataSource<Permissions>(this.dataTable);
     }else{
@@ -115,5 +113,4 @@ export class AdminPermissionListComponent implements OnInit {
       this.dataSource = new MatTableDataSource<Permissions>(intersectionList);
     }
   }
-
 }

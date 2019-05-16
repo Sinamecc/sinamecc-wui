@@ -226,7 +226,13 @@
   "had its name changed, is temporally unavailable or you do not have access":"ha cambiado su nombre, no está disponible temporalmente o usted no tiene acceso",
   "404 PAGE NOT FOUND":"404 PAGINA NO ENCONTRADA",
   "The Page you are looking for might have been removed":"La página que estás buscando podría haber sido eliminada.",
-  "Go to Home":"Volver a Casa"
+  "Go to Home":"Volver a Casa",
+  "Active":"Activo",
+  "Create Permissions":"Crear Permisos",
+  "Edit Permissions":"Editar Permiso",
+  "Create Groups":"Crear Grupos",
+  "Create Group":"Crear Grupo",
+  "Users":"Usuarios"
 
 
   }
