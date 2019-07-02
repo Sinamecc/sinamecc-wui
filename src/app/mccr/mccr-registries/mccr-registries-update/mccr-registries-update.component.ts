@@ -43,12 +43,12 @@ export class MccrRegistriesUpdateComponent implements OnInit {
     private route: ActivatedRoute,
     private translateService: TranslateService,
     public snackBar: MatSnackBar) {
-      this.id = this.route.snapshot.paramMap.get('id');
-      this.createForm();
-    
-    }
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.createForm();
 
-  ngOnInit() {}
+  }
+
+  ngOnInit() { }
 
   submitForm() {
 
@@ -60,7 +60,7 @@ export class MccrRegistriesUpdateComponent implements OnInit {
       }))
       .subscribe(response => {
         this.router.navigate(['/mccr/registries'], { replaceUrl: true });
-        this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+        this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
         log.debug(`${response.statusCode} status code received from form`);
 
       }, error => {
@@ -78,41 +78,40 @@ export class MccrRegistriesUpdateComponent implements OnInit {
 
     this.formValues = forkJoin(
       this.initialFormData(),
-      this.initialMitigationActions(),    
+      this.initialMitigationActions(),
       (formOptions, formData) => {
-        this.isLoading = false; 
+        this.isLoading = false;
         return { formOptions, formData };
       }
     );
   }
-  
+
   private initialMitigationActions(): Observable<MitigationAction[]> {
     let mitigationActions = this.mitigationService.mitigationActions(this.i18nService.language.split('-')[0]).pipe(
       tap(actions => {
-      this.processedMitigationActions = actions;
-    }));
+        this.processedMitigationActions = actions;
+      }));
     return mitigationActions;
   }
 
-  private loadFormData():Observable<MccrRegistry> {
+  private loadFormData(): Observable<MccrRegistry> {
     return this.service.getMccrRegistry(this.id)
-    .pipe(finalize(() => { this.isLoading = false; }));
+      .pipe(finalize(() => { this.isLoading = false; }));
   }
 
-  private initialFormData():Observable<MccrRegistry> {
+  private initialFormData(): Observable<MccrRegistry> {
     let mccrRegistry = this.loadFormData().pipe(
       tap(mccrRegistry => {
-       // console.log('Here we fill the form with', mccrRegistry);
         this.form.setValue({
           mitigation: mccrRegistry['mitigation'],
           status: mccrRegistry['status']
         });
-        
+
       })
-    
+
     );
     return mccrRegistry;
-     
+
   }
 
   compareIds(id1: any, id2: any): boolean {
@@ -126,7 +125,7 @@ export class MccrRegistriesUpdateComponent implements OnInit {
 
 export function determineId(id: any): string {
   if (id.constructor.name === 'array' && id.length > 0) {
-     return '' + id[0];
+    return '' + id[0];
   }
   return '' + id;
 } 

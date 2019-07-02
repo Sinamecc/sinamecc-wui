@@ -3,13 +3,21 @@ import { of } from 'rxjs/observable/of';
 
 import { Credentials, LoginContext } from '@app/core/authentication/authentication.service';
 
-export class MockAuthenticationService {
 
+export class MockAuthenticationService {
   credentials: Credentials | null = {
     username: 'test',
     token: '123',
     id: 24,
-    email: 'test@test.com'
+    email: 'test@test.com',
+    groups: {},
+    permissions:{
+      mitigation_action:false,
+      ppcn:false,
+      mccr:false,
+      report_data:false
+    },
+    is_administrador_dcc:false
   };
 
   login(context: LoginContext): Observable<Credentials> {
@@ -17,7 +25,16 @@ export class MockAuthenticationService {
       username: context.username,
       token: '123456',
       id: 24,
-      email: 'test@test.com'
+      email: 'test@test.com',
+      groups: {},
+      permissions:{
+        mitigation_action:false,
+        ppcn:false,
+        mccr:false,
+        report_data:false
+      },
+      is_administrador_dcc:false
+      
     });
   }
 

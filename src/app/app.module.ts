@@ -19,6 +19,10 @@ import { AppRoutingModule } from '@app/app-routing.module';
 import { MccrRegistriesModule } from '@app/mccr/mccr-registries/mccr-registries.module';
 import { PpcnModule } from '@app/ppcn/ppcn.module';
 import { MccrPocModule } from '@app/mccr/mccr-poc/mccr-poc.module';
+import { AdminModule } from './admin/admin.module';
+import { ErrorComponent } from './error/error.component';
+
+
 
 @NgModule({
   imports: [
@@ -33,14 +37,15 @@ import { MccrPocModule } from '@app/mccr/mccr-poc/mccr-poc.module';
     SharedModule,
    /* HomeModule,*/
     ReportModule,
+    AdminModule,
     MitigationActionsModule,
     MccrRegistriesModule,
     MccrPocModule,
     PpcnModule,
     LoginModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, ErrorComponent],
   providers: [
   ],
   bootstrap: [AppComponent]

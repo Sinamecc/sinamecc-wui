@@ -7,10 +7,21 @@
   </div>
   <div fxHide.lt-md>
     <a class="brand" href="./home" translate><img src="assets/{{logoName}}"></a>
-    <button mat-button routerLink="/report" routerLinkActive="active">
+    
+    <button mat-button [matMenuTriggerFor]="admin" >
+      <span translate>ADMIN</span>
+    </button>
+    <mat-menu  #admin="matMenu" [overlapTrigger]="false">
+      <button mat-menu-item routerLink="/admin/users" routerLinkActive="active">Users</button>
+      <button  mat-menu-item routerLink="/admin/permissions" routerLinkActive="active">Permissions</button>
+      <button  mat-menu-item routerLink="/admin/groups" routerLinkActive="active">Groups</button>
+    </mat-menu>
+
+    <button *ngIf="permissions.report_data != undefined" mat-button routerLink="/report" routerLinkActive="active">
+
       <span translate>REPORTS</span>
     </button>
-    <button mat-button routerLink="/mitigation/actions" routerLinkActive="active">
+    <button *ngIf="permissions.mitigation_action != undefined"  mat-button routerLink="/mitigation/actions" routerLinkActive="active">
       <span translate>MITIGATION ACTIONS</span>
     </button>
 
@@ -18,7 +29,7 @@
       <span translate>MCCR</span>
     </button>
     <mat-menu  #mccr="matMenu" [overlapTrigger]="false">
-      <button mat-menu-item routerLink="/mccr/registries" routerLinkActive="active">MCCR REGISTRIES</button>
+      <button *ngIf="permissions.mccr != undefined" mat-menu-item routerLink="/mccr/registries" routerLinkActive="active">MCCR REGISTRIES</button>
       <button mat-menu-item routerLink="/mccr/poc" routerLinkActive="active">UCC POC</button>
     </mat-menu>
 
@@ -28,10 +39,11 @@
       <button mat-menu-item>Help</button>
     </mat-menu>
 
-    <button mat-button routerLink="/ppcn/registries" routerLinkActive="active">
-
+    <button *ngIf="permissions.ppcn != undefined" mat-button routerLink="/ppcn/registries" routerLinkActive="active">
       <span translate>PPCN</span>
     </button>
+
+
   </div>
   <span fxFlex></span>
   <button mat-icon-button [matMenuTriggerFor]="languageMenu">

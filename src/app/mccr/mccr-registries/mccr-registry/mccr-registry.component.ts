@@ -32,18 +32,18 @@ export class MccrRegistryComponent implements OnInit {
   constructor(private router: Router,
     private i18nService: I18nService,
     private service: MccrRegistriesService,
-    private route: ActivatedRoute) { 
-      this.id = this.route.snapshot.paramMap.get('id');
-    }
+    private route: ActivatedRoute) {
+    this.id = this.route.snapshot.paramMap.get('id');
+  }
 
   ngOnInit() {
     this.isLoading = true;
     this.service.getMccrRegistry(this.id)
-     .pipe(finalize(() => { this.isLoading = false; }))
-     .subscribe((response: MccrRegistry) => { this.mccrRegistry = response; }); 
+      .pipe(finalize(() => { this.isLoading = false; }))
+      .subscribe((response: MccrRegistry) => { this.mccrRegistry = response; });
   }
 
-  async download(file:string) {
+  async download(file: string) {
     this.isLoading = true;
     const blob = await this.service.downloadResource(file);
     var url = window.URL.createObjectURL(blob.data);
@@ -61,9 +61,9 @@ export class MccrRegistryComponent implements OnInit {
   addReview(uuid: string) {
 
     const status = this.mccrRegistry.fsm_state;
-    
+
     this.router.navigate([`mccr/registries/${uuid}/reviews/new`], { replaceUrl: true });
-    
+
   }
 
 }

@@ -1,10 +1,11 @@
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material';
 
-import { AuthenticationService } from '@app/core/authentication/authentication.service';
+import { AuthenticationService, Credentials} from '@app/core/authentication/authentication.service';
 import { I18nService } from '@app/core/i18n.service';
+import { Permissions } from '@app/core/permissions';
 
 @Component({
   selector: 'app-header',
@@ -18,8 +19,7 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router,
               private titleService: Title,
               private authenticationService: AuthenticationService,
-              private i18nService: I18nService,
-              private route: ActivatedRoute) {
+              private i18nService: I18nService) {
                 this.logoName = "logo-white-nav.png";
                }
 
@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
     this.i18nService.language = language;
   }
 
-  logout() {
+  logout() { 
     this.authenticationService.logout()
       .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
@@ -42,11 +42,22 @@ export class HeaderComponent implements OnInit {
     return this.i18nService.supportedLanguages;
   }
 
+  get permissions(): Permissions{
+    return this.authenticationService.credentials.permissions;
+  }
+
+  get credential():Credentials{
+    return this.authenticationService.credentials;
+  }
+
   get username(): string {
     const credentials = this.authenticationService.credentials;
     return credentials ? credentials.username : null;
   }
-
+  get groups(): object {
+    const credentials = this.authenticationService.credentials;
+    return credentials ? credentials.groups : null;
+  }
   get title(): string {
     return this.titleService.getTitle();
   }

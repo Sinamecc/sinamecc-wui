@@ -6,7 +6,7 @@
 <br>
 
 <div class="box-button">
-<a mat-button class="mat-raised-button mat-primary" routerLink="/mitigation/actions/new" > <span translate> Add new mitigation action</span></a>
+<a  mat-button class="mat-raised-button mat-primary" routerLink="/mitigation/actions/new" > <span translate> Add new mitigation action</span></a>
 </div>
 
 <div class="container mat-elevation-z8 table-sinamecc">
@@ -51,10 +51,10 @@
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef translate> Actions </mat-header-cell>
     <mat-cell *matCellDef="let element" class="login-box">
-      <button mat-icon-button color="primary" (click)="view(element.id)" ><mat-icon color="white">visibility</mat-icon></button>
-      <button mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)" > <mat-icon color="white">delete</mat-icon></button>
+      <button  mat-icon-button color="primary" (click)="view(element.id)" ><mat-icon color="white">visibility</mat-icon></button>
+      <button  mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)" > <mat-icon color="white">delete</mat-icon></button>
       <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
-      <button mat-icon-button color="primary" *ngIf="element.fsm_state !== 'end'" (click)="addReview(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button>
+      <button  mat-icon-button color="primary" *ngIf="element.fsm_state !== 'end'" (click)="addReview(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button>
       <button mat-icon-button color="primary" (click)="changelog(element.id)" > <mat-icon color="white">history</mat-icon></button>
       <!-- <button mat-icon-button color="primary" (click)="uploadProposal(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button> -->
     </mat-cell>

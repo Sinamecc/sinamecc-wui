@@ -4,7 +4,6 @@ import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
-import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material'
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 
@@ -32,13 +31,21 @@ export class ReportComponent implements OnInit {
 
   constructor(private router: Router,
     private i18nService: I18nService,
+    private authenticationService: AuthenticationService,
     private reportService: ReportService
     ) { }
 
     ngOnInit() {
+      
+    }
+
+    getAuthenticationService(){
+      return this.authenticationService;
     }
 
 }
+
+
 
 export class ReportDataSource extends DataSource<any> {
   constructor(private reportService: ReportService) {

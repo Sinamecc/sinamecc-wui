@@ -27,15 +27,15 @@ export class MitigationActionComponent implements OnInit {
   constructor(private router: Router,
     private i18nService: I18nService,
     private service: MitigationActionsService,
-    private route: ActivatedRoute) { 
-      this.id = this.route.snapshot.paramMap.get('id');
-    }
+    private route: ActivatedRoute) {
+    this.id = this.route.snapshot.paramMap.get('id');
+  }
 
   ngOnInit() {
     this.isLoading = true;
     this.service.getMitigationAction(this.id, this.i18nService.language.split('-')[0])
-     .pipe(finalize(() => { this.isLoading = false; }))
-     .subscribe((response: MitigationAction) => { this.mitigationAction = response; }); 
+      .pipe(finalize(() => { this.isLoading = false; }))
+      .subscribe((response: MitigationAction) => { this.mitigationAction = response; });
   }
 
 
@@ -43,10 +43,9 @@ export class MitigationActionComponent implements OnInit {
     this.router.navigate([`mitigation/actions/${uuid}/reviews`], { replaceUrl: true });
   }
 
-  async download(file:string) {
+  async download(file: string) {
     this.isLoading = true;
     const blob = await this.service.downloadResource(file);
-    console.log('start download:',blob);
     var url = window.URL.createObjectURL(blob.data);
     var a = document.createElement('a');
     document.body.appendChild(a);

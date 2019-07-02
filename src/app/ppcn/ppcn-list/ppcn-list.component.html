@@ -6,7 +6,7 @@
 <br>
 
 <div class="box-button">
-  <a mat-button class="mat-raised-button mat-primary" routerLink="/ppcn/registries/new">
+  <a  mat-button class="mat-raised-button mat-primary" routerLink="/ppcn/registries/new">
     <span translate> Add new PPCN</span>
   </a>
 </div>
@@ -54,9 +54,9 @@
       <mat-header-cell *matHeaderCellDef translate> Actions </mat-header-cell>
       <mat-cell *matCellDef="let element" class="login-box">
         <button mat-icon-button color="primary" (click)="view(element.id)"><mat-icon color="white">visibility</mat-icon></button>
-        <button mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)"><mat-icon color="white">delete</mat-icon></button>
+        <button  mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)"><mat-icon color="white">delete</mat-icon></button>
         <button mat-icon-button color="primary" *ngIf="!(element.fsm_state === 'PPCN_end' || element.fsm_state === 'PPCN_send_recognition_certificate')" (click)="addReview(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button>
-        <button mat-icon-button color="primary" (click)="changelog(element.id)" > <mat-icon color="white">history</mat-icon></button>
+        <button  mat-icon-button color="primary" (click)="changelog(element.id)" > <mat-icon color="white">history</mat-icon></button>
       </mat-cell>
     </ng-container>
 

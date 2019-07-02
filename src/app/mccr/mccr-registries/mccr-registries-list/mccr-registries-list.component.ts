@@ -41,9 +41,15 @@ export class MccrRegistriesListComponent implements OnInit {
     private service: MccrRegistriesService,
     private dialog: MatDialog,
     private translateService: TranslateService,
+    private authenticationService: AuthenticationService,
     public snackBar: MatSnackBar) { }
 
   ngOnInit() {
+
+  }
+
+  getAuthentificationService(){
+    return this.authenticationService;
   }
 
   delete(uuid: string) {
