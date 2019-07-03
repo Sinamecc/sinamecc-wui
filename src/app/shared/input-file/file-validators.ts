@@ -12,7 +12,6 @@ export class FileValidators {
      */
     static maxContentSize(bytes: number): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } => {
-            console.log(typeof control, control);
             const size = control && control.value ? (control.value as FileInput).files.map(f => f.size).reduce((acc, i) => acc + i, 0) : 0;
             const condition = bytes > size;
             return condition ? null : {

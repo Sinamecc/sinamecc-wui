@@ -4,19 +4,30 @@
       <nav>
         <mat-list>
           <mat-divider></mat-divider>
-          <a mat-list-item routerLink="/report" routerLinkActive="active" (click)="sidenav.close()">
+          
+
+          <button mat-menu-item [matMenuTriggerFor]="admin" >
+            <span translate>ADMIN</span>
+          </button>
+          <mat-menu  #admin="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item routerLink="/admin/users" routerLinkActive="active" (click)="sidenav.close()">Users</button>
+            <button  mat-menu-item routerLink="/admin/permissions" routerLinkActive="active" (click)="sidenav.close()">Permissions</button>
+            <button  mat-menu-item routerLink="/admin/groups" routerLinkActive="active" (click)="sidenav.close()">Groups</button>
+          </mat-menu>
+
+          <a *ngIf="permissions.report_data != undefined" mat-list-item routerLink="/report" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>REPORTS</span>
           </a>
           <mat-divider></mat-divider>
-          <a mat-list-item routerLink="/mitigation/actions" routerLinkActive="active" (click)="sidenav.close()">
+          <a *ngIf="permissions.mitigation_action != undefined"  mat-list-item routerLink="/mitigation/actions" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>MITIGATIONS ACTIONS</span>
           </a>  
           <mat-divider></mat-divider>
-          <a mat-list-item routerLink="/mccr/registries" routerLinkActive="active" (click)="sidenav.close()">
+          <a *ngIf="permissions.mccr != undefined" mat-list-item routerLink="/mccr/registries" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>MCCR REGISTRIES</span>
           </a>
           <mat-divider></mat-divider>
-          <a mat-list-item routerLink="/ppcn/registries" routerLinkActive="active" (click)="sidenav.close()">
+          <a *ngIf="permissions.ppcn != undefined" mat-list-item routerLink="/ppcn/registries" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>PPCN</span>
           </a>  
         </mat-list>

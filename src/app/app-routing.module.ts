@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { Route } from '@app/core';
 import { ReportComponent } from '@app/report/report.component'
+import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -11,7 +12,9 @@ const routes: Routes = [
     { path: 'report', loadChildren: 'app/report/report.module#ReportModule' },
     { path: 'mitigation/actions', loadChildren: 'app/mitigation-actions/mitigation-actions.module#MitigationActionsModule' },
     { path: 'mccr/registries', loadChildren: 'app/mccr-registries/mccr-registries.module#MccrRegistriesModule' },
-    { path: 'ppcn', loadChildren: 'app/ppcn/ppcn.module#PpcnModule' }
+    { path: 'ppcn', loadChildren: 'app/ppcn/ppcn.module#PpcnModule' },
+    { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule' },
+    { path: 'error', component: ErrorComponent },
   ]),
   // Fallback when no prior route is matched
   { path: '**', redirectTo: '', pathMatch: 'full' }

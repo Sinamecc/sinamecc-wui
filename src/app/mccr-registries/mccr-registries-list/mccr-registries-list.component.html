@@ -9,7 +9,7 @@
     <p [hidden]="isLoading"></p>
   </mat-card-subtitle>
   <div class="box-button">
-  <a mat-button class="mat-raised-button mat-primary" routerLink="/mccr/registries/new"><span translate>Add new mccr registry</span></a>
+  <a  mat-button class="mat-raised-button mat-primary" routerLink="/mccr/registries/new"><span translate>Add new mccr registry</span></a>
   </div>
 <div class="container mat-elevation-z8 table-sinamecc">
   <mat-table #table [dataSource]="dataSource">
@@ -43,9 +43,9 @@
     <mat-header-cell *matHeaderCellDef translate> Actions </mat-header-cell>
     <mat-cell *matCellDef="let element"> 
       <!-- <button mat-icon-button color="primary" (click)="view(element.id)"><mat-icon color="white">visibility</mat-icon></button> -->
-      <button mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)"><mat-icon color="white">delete</mat-icon></button>
+      <button  mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)"><mat-icon color="white">delete</mat-icon></button>
       <!-- <button mat-icon-button color="accent" (click)="update(element.id)"><mat-icon color="white">edit</mat-icon></button> -->
-      <button mat-icon-button color="primary" *ngIf="element.fsm_state !== 'end'" (click)="addReview(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button>
+      <button mat-icon-button color="primary" *ngIf="element.fsm_state !== 'mccr_end'" (click)="addReview(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button>
 
     </mat-cell>
 </ng-container>

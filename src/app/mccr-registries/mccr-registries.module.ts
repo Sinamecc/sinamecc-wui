@@ -20,6 +20,8 @@ import { MccrRegistriesOvvSelectorComponent } from './mccr-registries-ovv-select
 import { MccrRegistriesReviewComponent } from './mccr-registries-review/mccr-registries-review.component';
 import { OvvProposalComponent } from './ovv-proposal/ovv-proposal.component';
 import { OvvProposalNewComponent } from './ovv-proposal-new/ovv-proposal-new.component';
+import { MonitoringProposalNewComponent } from './monitoring-proposal-new/monitoring-proposal-new.component';
+import { MonitoringProposalVerificationNewComponent } from './monitoring-proposal-verification-new/monitoring-proposal-verification-new.component';
 
 
 @NgModule({
@@ -42,7 +44,9 @@ import { OvvProposalNewComponent } from './ovv-proposal-new/ovv-proposal-new.com
     MccrRegistriesOvvSelectorComponent,
     MccrRegistriesReviewComponent,
     OvvProposalComponent,
-    OvvProposalNewComponent
+    OvvProposalNewComponent,
+    MonitoringProposalNewComponent,
+    MonitoringProposalVerificationNewComponent
   ],
   providers: [
     MccrRegistriesService,

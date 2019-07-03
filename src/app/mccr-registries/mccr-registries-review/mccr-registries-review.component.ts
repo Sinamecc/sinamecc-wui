@@ -45,27 +45,23 @@ export class MccrRegistriesReviewComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private service: MccrRegistriesService) {
 
-      this.id = this.route.snapshot.paramMap.get('id');
-      this.title = "Add a new review for this mccr registry";
-      this.nextRoute = `mccr/registries`;
-      this.formData = new FormData();
-      this.formSubmitRoute =  `/v1/mccr/${this.id}`;
-      this.statusses = [];
-      
-  
-      this.mccrRegistryObservable = this.service.getMccrRegistry(this.id)
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.title = "Add a new review for this mccr registry";
+    this.nextRoute = `mccr/registries`;
+    this.formData = new FormData();
+    this.formSubmitRoute = `/v1/mccr/${this.id}`;
+    this.statusses = [];
+
+
+    this.mccrRegistryObservable = this.service.getMccrRegistry(this.id)
       .pipe(finalize(() => { this.isLoading = false; }));
-      this.mccrRegistryObservable.subscribe((response: MccrRegistry) => { 
-        this.mccrRegistry = response; 
-         if(this.mccrRegistry.next_state) {
-           this.statusses = [response.next_state];
-           this.shouldDisplayComment = false;
-         } else {
-          this.statusses  = this.service.commonStatusses(response);
-          this.shouldDisplayComment = true;
-         }
-      }); 
-    }
+    this.mccrRegistryObservable.subscribe((response: MccrRegistry) => {
+      this.mccrRegistry = response;
+      console.log(this.mccrRegistry.next_state.states);
+      this.statusses = this.mccrRegistry.next_state.states;
+      this.shouldDisplayComment = this.mccrRegistry.next_state.required_comments;
+    });
+  }
 
   ngOnInit() {
   }
@@ -73,7 +69,7 @@ export class MccrRegistriesReviewComponent implements OnInit {
   onSubmission(context: any) {
     this.formData.append('comment', context.descriptionCtrl);
     this.formData.append('fsm_state', context.statusCtrl);
-    this.formData.append('user',  String(this.authenticationService.credentials.id));
+    this.formData.append('user', String(this.authenticationService.credentials.id));
   }
 
 }
