@@ -19,19 +19,18 @@ export class MccrPocAddBuyerComponent implements OnInit {
   error: string;
   form: FormGroup;
   
-  constructor(private route: ActivatedRoute,private formBuilder: FormBuilder,private reportService: MccrPocService,
+  constructor(private route: ActivatedRoute,private formBuilder: FormBuilder,
     private service: MccrPocService,private router: Router,private translateService: TranslateService,public snackBar: MatSnackBar) { 
     this.createForm();
   }
   id=this.route.snapshot.paramMap.get('id');
 
   ngOnInit() {
-    
   }
 
   submitForm(){
     this.isLoading = true;
-    this.form.value.uccBaseCode=this.id
+    this.form.value.uccBaseCode=this.id;
     this.service.submitUccBuyerTransfer(this.form.value)
     .pipe(finalize(() => {
       this.form.markAsPristine();
@@ -43,10 +42,9 @@ export class MccrPocAddBuyerComponent implements OnInit {
       log.debug(`${response.statusCode} status code received from form`);
 
     }, error => {
-      log.debug(`Mccr Registry File error: ${error}`);
+      log.debug(`Mccr error: ${error}`);
       this.error = error;
     });
-
 
   }
 
@@ -59,7 +57,8 @@ export class MccrPocAddBuyerComponent implements OnInit {
       uccBaseCode: ['', Validators.required],
       developerAccountNUmber: ['', Validators.required],
       buyerAccountNUmber: ['', Validators.required],
-      numberUccToTransfer: ['', Validators.required]
+      numberUccToTransfer: ['', Validators.required],
+      userId:['', Validators.required]
     });
 
   }

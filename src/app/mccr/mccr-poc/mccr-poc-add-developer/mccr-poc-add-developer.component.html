@@ -15,13 +15,24 @@
             </div>
 
             <div fxLayout="column">
+
+                <mat-form-field>
+                    <input type="text" matInput formControlName="userId" [placeholder]="'ID user'| translate" />
+                    <mat-error *ngIf="form.controls.userId.invalid || form.controls.userId.untouched">
+                        <span translate>ID user is required</span>
+                    </mat-error>
+                </mat-form-field> 
               
                 <mat-form-field>
                     <input [disabled]="true" value="{{id}}"  matInput placeholder="{{ 'ucc Base Code' | translate }}" />
+                    
                 </mat-form-field> 
                 
                 <mat-form-field>
                     <input type="text" matInput formControlName="developerAccountNUmber" [placeholder]="'Developer account number'| translate"/>
+                    <mat-error *ngIf="form.controls.developerAccountNUmber.invalid || form.controls.developerAccountNUmber.untouched">
+                        <span translate>Developer account number</span>
+                    </mat-error>
                 </mat-form-field> 
             </div>
 

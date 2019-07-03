@@ -10,6 +10,8 @@ import { finalize } from 'rxjs/operators';
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import { MccrPocNewDeveloperAccountComponent } from '../mccr-poc-new-developer-account/mccr-poc-new-developer-account.component';
+import { MccrPocNewBuyerAccountComponent } from '../mccr-poc-new-buyer-account/mccr-poc-new-buyer-account.component';
 
 
 @Component({
@@ -23,6 +25,7 @@ export class MccrSearchPocComponent implements OnInit {
   mccr_poc: MccrPoc;
   isLoading: boolean;
   id: string;
+
   constructor(private router: Router,
     private i18nService: I18nService,
     private service: MccrPocService,
@@ -36,13 +39,23 @@ export class MccrSearchPocComponent implements OnInit {
   ngOnInit() {
   }
 
-  search(value:string){
+  openDialogDeveloper(): void {
+    let dialogRef = this.dialog.open(MccrPocNewDeveloperAccountComponent, {
+      width: '70%',
+    });
+  }
 
+  openDialogBuyer(): void {
+    let dialogRef = this.dialog.open(MccrPocNewBuyerAccountComponent, {
+      width: '70%',
+    });
+  }
+
+  search(value:string){
     this.isLoading = true;
     this.service.getMccrPoc(value.trim(), this.i18nService.language.split('-')[0])
      .pipe(finalize(() => { this.isLoading = false; }))
      .subscribe((response: MccrPoc) => { this.mccr_poc = response; }); 
-     
   }
 
   view(uuid: string) {
@@ -52,11 +65,9 @@ export class MccrSearchPocComponent implements OnInit {
   cancel(uuid:string){
     this.isLoading = true;
     this.service.cancelUcc(uuid).subscribe(() =>{
-      // here i need to refresh table
       this.isLoading = false;
       this.translateService.get('Sucessfully cancel element').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
     } );
-
   }
 
   openDeleteConfirmationDialog(uuid:string){
@@ -77,9 +88,8 @@ export class MccrSearchPocComponent implements OnInit {
         this.cancel(uuid);
       }
     });
-
   }
-
+  
   addUCC(){
     this.router.navigate([`/mccr/poc/new`], { replaceUrl: true });
   }

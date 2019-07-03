@@ -15,6 +15,8 @@ import { MccrPocAddBuyerComponent } from '@app/mccr/mccr-poc/mccr-poc-add-buyer/
 import { MccrPocAddDeveloperComponent } from '@app/mccr/mccr-poc/mccr-poc-add-developer/mccr-poc-add-developer.component';
 import { FormGroup , FormControl , ReactiveFormsModule , FormsModule } from '@angular/forms';
 import { MccrPocAddPocComponent } from '@app/mccr/mccr-poc/mccr-poc-add-poc/mccr-poc-add-poc.component';
+import { MccrPocNewDeveloperAccountComponent } from './mccr-poc-new-developer-account/mccr-poc-new-developer-account.component';
+import { MccrPocNewBuyerAccountComponent } from './mccr-poc-new-buyer-account/mccr-poc-new-buyer-account.component';
 
 
 @NgModule({
@@ -30,7 +32,8 @@ import { MccrPocAddPocComponent } from '@app/mccr/mccr-poc/mccr-poc-add-poc/mccr
     FormsModule
 
   ],
-  declarations: [MccrPocListComponent, MccrSearchPocComponent, MccrPocAddBuyerComponent, MccrPocAddDeveloperComponent, MccrPocAddPocComponent],
+  entryComponents: [MccrPocNewDeveloperAccountComponent,MccrPocNewBuyerAccountComponent],
+  declarations: [MccrPocListComponent, MccrSearchPocComponent, MccrPocAddBuyerComponent, MccrPocAddDeveloperComponent, MccrPocAddPocComponent,MccrPocNewDeveloperAccountComponent,MccrPocNewBuyerAccountComponent],
   providers: [
     MccrPocService
   ]

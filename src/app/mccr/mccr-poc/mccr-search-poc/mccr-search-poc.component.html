@@ -4,8 +4,8 @@
       <input #idUcc matInput class= "input_search" placeholder="{{ 'search-UCC' | translate }}" (keyup.enter)="search(idUcc.value)" translate>
   </mat-form-field>
   <a mat-button class="mat-raised-button mat-primary search_button" (click)="search(idUcc.value)"> <span translate> Search</span></a>
-  <button translate matTooltip="{{ 'Add new developer account' | translate }}" mat-icon-button color="blue"  ><mat-icon  color="white">person_add</mat-icon></button>
-  <button translate matTooltip="{{ 'Add new buyer account' | translate }}" mat-icon-button color="black" ><mat-icon color="white">work</mat-icon></button>
+  <button translate matTooltip="{{ 'Add new developer account' | translate }}" (click)="openDialogDeveloper()" mat-icon-button color="blue"  ><mat-icon  color="white">person_add</mat-icon></button>
+  <button translate matTooltip="{{ 'Add new buyer account' | translate }}" (click)="openDialogBuyer()" mat-icon-button color="black" ><mat-icon color="white">work</mat-icon></button>
   <button translate matTooltip="{{ 'Add new UCC' | translate }}" (click)=(addUCC()) mat-icon-button color="black" ><mat-icon color="white">add</mat-icon></button>
 
 </div>

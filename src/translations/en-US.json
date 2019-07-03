@@ -264,7 +264,17 @@
   "Edit Permissions":"Edit Permissions",
   "Create Groups":"Create Groups",
   "Create Group":"Create Group",
-  "Users":"Users"
+  "Users":"Users",
+  "ID User is required":"ID User is required",
+  "ID user":"ID user",
+  "Add a new Buyer account:":"Add a new Buyer account:",
+  "Create":"Create",
+  "Account number:":"Account number:",
+  "Add a new developer account:":"Add a new developer account:"
+  
+
+
+
 
 
   }

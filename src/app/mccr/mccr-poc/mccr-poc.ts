@@ -1,3 +1,6 @@
+import { buyerAccount } from "./mccr-poc-buyer-account";
+import { developerAccount } from "./mccr-poc-developer-account";
+
 export interface MccrPoc {
     ucc_code:string;
     minusq_account:Number;
@@ -10,16 +13,3 @@ export interface MccrPoc {
     
 }
 
-export interface buyerAccount{
-    buyer_current_debit_balance:Number;
-    buyer_current_credit_balance:Number;
-    buyer_final_balance:Number;
-}
-
-export interface developerAccount{
-
-    developer_current_debit_balance:Number;
-    developer_current_credit_balance:Number;
-    developer_final_balance:Number;
-    
-}

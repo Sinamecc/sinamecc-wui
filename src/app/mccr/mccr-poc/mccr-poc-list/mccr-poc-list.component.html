@@ -18,14 +18,14 @@
                   <strong translate>Minusq Account</strong>: {{mccr_poc?.minusq_account}} <br>
                   <strong translate>Generation Account</strong>: {{mccr_poc?.generation_account}} <br>
                   <strong translate>Final Balance</strong>: {{mccr_poc?.final_balance}} <br>
-                  <strong *ngIf="mccr_poc.buyer_account != null" translate>Reserve Account:</strong> {{mccr_poc?.reserve_account}} <br>
-                <div *ngIf="mccr_poc.developer_account != null"> 
+                  <strong *ngIf="mccr_poc.buyer_account != undefined" translate>Reserve Account:</strong> {{mccr_poc?.reserve_account}} <br>
+                <div *ngIf="mccr_poc.developer_account != undefined"> 
                  <h3 translate class="text-color">Developer Account</h3>
                   <strong translate>Developer Current Debit Balance</strong>: {{mccr_poc?.developer_account.developer_current_debit_balance}} <br>
                   <strong translate>Developer Current Credit Balance</strong>: {{mccr_poc?.developer_account.developer_current_credit_balance}} <br>
                   <strong translate>Developer Final Balance</strong>: {{mccr_poc?.developer_account.developer_final_balance}} <br>
                 </div>
-                <div *ngIf="mccr_poc.buyer_account != null"> 
+                <div *ngIf="mccr_poc.buyer_account != undefined "> 
                     <h3 translate class="text-color">Buyer Account</h3>
                     <strong translate>Buyer Current Debit Balance</strong>: {{mccr_poc?.buyer_account.buyer_current_debit_balance}} <br>
                     <strong translate>Buyer Current Credit Balance</strong>: {{mccr_poc?.buyer_account.buyer_current_credit_balance}} <br>

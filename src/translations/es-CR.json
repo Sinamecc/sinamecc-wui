@@ -267,7 +267,13 @@
   "Edit Permissions":"Editar Permiso",
   "Create Groups":"Crear Grupos",
   "Create Group":"Crear Grupo",
-  "Users":"Usuarios"
+  "Users":"Usuarios",
+  "ID User is required":"El ID del usuario es requerido",
+  "ID user":"ID Usuario",
+  "Add a new Buyer account:":"Agregar una nueva cuenta de comprador:",
+  "Create":"Crear",
+  "Account number:":"Número de cuenta:",
+  "Add a new developer account:":"Agregar una nueva cuenta de desarrollador:"
 
 
   }

@@ -28,17 +28,13 @@ export class MccrPocAddDeveloperComponent implements OnInit {
     private service: MccrPocService,private router: Router,private translateService: TranslateService,public snackBar: MatSnackBar) { 
     this.createForm();
   }
-  
 
   ngOnInit() {
   }
 
-
   submitForm(){
-    
     this.isLoading = true;
-    
-    this.form.value.uccBaseCode=this.id
+    this.form.value.uccBaseCode=this.id;
     this.service.submitUccDeveloperTransfer(this.form.value)
     .pipe(finalize(() => {
       this.form.markAsPristine();
@@ -48,12 +44,10 @@ export class MccrPocAddDeveloperComponent implements OnInit {
       this.router.navigate([`/mccr/poc/detail/${this.id}`], { replaceUrl: true });
       this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
       log.debug(`${response.statusCode} status code received from form`);
-
     }, error => {
       log.debug(`Mccr Registry File error: ${error}`);
       this.error = error;
     });
-
   }
 
   back(){
@@ -63,7 +57,8 @@ export class MccrPocAddDeveloperComponent implements OnInit {
   private createForm() {
     this.form = this.formBuilder.group({
       uccBaseCode: ['', Validators.required],
-      developerAccountNUmber: ['', Validators.required]
+      developerAccountNUmber: ['', Validators.required],
+      userId: ['', Validators.required],
     });
   }
 

@@ -21,8 +21,6 @@ export class MccrPocAddPocComponent implements OnInit {
   isLoading = false;
   error: string;
   form: FormGroup;
-  
-  
 
   constructor(private route: ActivatedRoute,private formBuilder: FormBuilder,private reportService: MccrPocService,
     private service: MccrPocService,private router: Router,private translateService: TranslateService,public snackBar: MatSnackBar) { 
@@ -30,7 +28,6 @@ export class MccrPocAddPocComponent implements OnInit {
   }
 
   ngOnInit() {
-    
   }
 
   submitForm(){
@@ -49,8 +46,6 @@ export class MccrPocAddPocComponent implements OnInit {
       log.debug(`Mccr Registry File error: ${error}`);
       this.error = error;
     });
-
-
   }
 
   back(){
@@ -58,12 +53,11 @@ export class MccrPocAddPocComponent implements OnInit {
   }
 
   createForm(){
-
     this.form = this.formBuilder.group({
       uccBatchCode: ['', Validators.required],
-      uccBatchSize: ['', Validators.required]
+      uccBatchSize: ['', Validators.required],
+      userId: ['', Validators.required]
     });
-
   }
 
 }
