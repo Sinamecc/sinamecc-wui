@@ -77,7 +77,7 @@ export class ReportService {
       formData.append('name', context.name);
       formData.append('file', file, file.name);
 
-      let metadata = []
+      const metadata = []
       for(let element in context){
 
         if(element != "file" && context[element] != ''){
