@@ -24,7 +24,7 @@ export class ReportNewComponent implements OnInit {
   error: string;
   reportForm: FormGroup;
   isLoading = false;
-  methodological:boolean; 
+  methodological:boolean = false; 
 
   constructor(private router: Router,
     private formBuilder: FormBuilder,
