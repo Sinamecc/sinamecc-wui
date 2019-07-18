@@ -7,7 +7,7 @@ import { extract, I18nService } from '@app/core/i18n.service';
 const defaultLanguage = 'en-US';
 const supportedLanguages = ['eo', 'en-US', 'fr-FR'];
 
-class MockTranslateService {
+export class MockTranslateService {
 
   currentLang: string;
   onLangChange = new Subject();
