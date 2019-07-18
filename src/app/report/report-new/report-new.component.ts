@@ -24,6 +24,7 @@ export class ReportNewComponent implements OnInit {
   error: string;
   reportForm: FormGroup;
   isLoading = false;
+  methodological:boolean; 
 
   constructor(private router: Router,
     private formBuilder: FormBuilder,
@@ -36,7 +37,12 @@ export class ReportNewComponent implements OnInit {
 
   ngOnInit() {}
 
+  checkCheckBoxvalue(value:boolean){
+    this.methodological = value;
+  }
+
   submitForm() {
+    this.reportForm.value.methodological = this.methodological.toString();
     this.isLoading = true;
     this.reportService.submitReport(this.reportForm.value)
       .pipe(finalize(() => {
@@ -58,14 +64,17 @@ export class ReportNewComponent implements OnInit {
     this.reportForm = this.formBuilder.group({
       name: ['', Validators.required],
       file: [{ value: undefined, disabled: false }, []],
-      institution:['', Validators.required],
-      department:['', Validators.required],
-      personName:['', Validators.required],
-      personLastName:['', Validators.required],
-      personEmail:['', Validators.required],
-      sent:['', Validators.required],
-      updatePeriod:['', Validators.required]
+      institution:[''],
+      department:[''],
+      personName:[''],
+      personLastName:[''],
+      personEmail:[''],
+      sent:[''],
+      updatePeriod:[''],
+      methodological:['']
     });
   }
+
+  
 
 }

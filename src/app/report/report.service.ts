@@ -77,17 +77,16 @@ export class ReportService {
       formData.append('name', context.name);
       formData.append('file', file, file.name);
 
-      let metadata:any = []
+      let metadata = []
       for(let element in context){
 
-        if(element != "file"){
+        if(element != "file" && context[element] != ''){
           let value =  {"name":element,"value":context[element]}
           metadata.push(value) 
         }
         
       }
-      console.log(metadata)
-      formData.append('metadata[]', metadata); 
+      formData.append('metadata', JSON.stringify(metadata)); 
 
       return this.httpClient
         .post(routes.submitReport(), formData, httpOptions)

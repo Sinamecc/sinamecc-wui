@@ -17,7 +17,7 @@
                 </div>
                 <br/>
                 <div fxLayout="column">
-                 <mat-icon  [matTooltip]="'File'|translate">folder</mat-icon>
+                 <mat-icon  [matTooltip]="'File'|translate">folder </mat-icon>
                   <mat-form-field>
                     <input type="text" matInput formControlName="name" [placeholder]="'Name' | translate"/>
                     <mat-error *ngIf="reportForm.controls.name.valid || reportForm.controls.name.untouched">
@@ -44,6 +44,9 @@
               <mat-icon  [matTooltip]="'Institution'|translate">home</mat-icon>
               <mat-form-field>
                <input type="text" matInput formControlName="institution" [placeholder]="'Institution'| translate"/>
+               <mat-error *ngIf="reportForm.controls.institution.valid || reportForm.controls.institution.untouched">
+                  Institution field is required
+                </mat-error>
                <br/>
               </mat-form-field>
 
@@ -90,7 +93,7 @@
                       <input type="input" matInput [placeholder]="'other' | translate"/>
               </mat-form-field>
 
-              <mat-checkbox ><span translate>Methodological file</span></mat-checkbox>
+              <mat-checkbox (change)="checkCheckBoxvalue($event.checked)" ><span translate>Methodological file</span></mat-checkbox>
             
                 </div>
                 <div class="box-button">
