@@ -7,6 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { S3File, S3Service } from '@app/core/s3.service';
 
+
 export interface Response {
   // Customize received credentials here
   statusCode: number;
@@ -67,12 +68,27 @@ export class ReportService {
       })
     };
 
+
     let fileList = context.file.files;
     if (fileList.length > 0) {
       let file: File = fileList[0];
       let formData: FormData = new FormData();
+
       formData.append('name', context.name);
       formData.append('file', file, file.name);
+
+      let metadata:any = []
+      for(let element in context){
+
+        if(element != "file"){
+          let value =  {"name":element,"value":context[element]}
+          metadata.push(value) 
+        }
+        
+      }
+      console.log(metadata)
+      formData.append('metadata[]', metadata); 
+
       return this.httpClient
         .post(routes.submitReport(), formData, httpOptions)
         .pipe(
@@ -88,6 +104,7 @@ export class ReportService {
       // raise exception
     }
   }
+
 
     /**
    * Submit Report Version Forms.
