@@ -1,6 +1,6 @@
 import { AuthenticationService } from "@app/core";
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, forwardRef } from '@angular/core';
 
 export interface S3File {
   filename: string;
@@ -11,7 +11,7 @@ export interface S3File {
 export class S3Service {
 
 
-  constructor(private authenticationService: AuthenticationService,
+  constructor(@Inject(forwardRef(() => AuthenticationService)) private authenticationService: AuthenticationService,
     private httpClient: HttpClient) { }
 
 

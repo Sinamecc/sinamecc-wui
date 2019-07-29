@@ -11,4 +11,5 @@ export * from '@app/core/http/error-handler.interceptor';
 export * from '@app/core/route.service';
 export * from '@app/core/route-reusable-strategy';
 export * from '@app/core/logger.service';
+export * from '@app/core/s3.service';
 

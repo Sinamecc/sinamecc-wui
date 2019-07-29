@@ -12,13 +12,13 @@ import { RouteReusableStrategy } from '@app/core/route-reusable-strategy';
 import { AuthenticationService } from '@app/core/authentication/authentication.service';
 import { AuthenticationGuard } from '@app/core/authentication/authentication.guard';
 import { I18nService } from '@app/core/i18n.service';
+import { S3Service } from '@app/core/s3.service';
 import { HttpService } from '@app/core/http/http.service';
 import { HttpCacheService } from '@app/core/http/http-cache.service';
 import { ApiPrefixInterceptor } from '@app/core/http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from '@app/core/http/error-handler.interceptor';
 import { CacheInterceptor } from '@app/core/http/cache.interceptor';
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
-import { S3Service } from '@app/core/s3.service';
 
 @NgModule({
   imports: [

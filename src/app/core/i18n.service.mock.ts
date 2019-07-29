@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, forwardRef } from '@angular/core';
 import { LangChangeEvent } from '@ngx-translate/core';
-import { MockTranslateService } from '@app/core/i18n.service.spec';
 import { includes } from 'lodash';
 
 import { Logger } from '@app/core/logger.service';
 import * as enUS from '../../translations/en-US.json';
 // import * as frFR from '../../translations/fr-FR.json';
 import * as esCR from '../../translations/es-CR.json';
+import { Subject } from 'rxjs';
+import { MockTranslateService } from '@app/core/translate.service.mock.js';
 
 const log = new Logger('I18nService');
 const languageKey = 'language';
@@ -25,12 +26,15 @@ export class MockI18nService {
 
   defaultLanguage: string;
   supportedLanguages: string[];
+  translateService: MockTranslateService;
+  // constructor(@Inject(forwardRef(() => AuthenticationService)) private authenticationService: AuthenticationService,
 
-  constructor(private translateService: MockTranslateService) {
+  constructor(@Inject(forwardRef(() => MockTranslateService)) translateService: MockTranslateService) {
     // Embed languages to avoid extra HTTP requests
-    translateService.setTranslation('en-US', enUS);
+    this.translateService = translateService;
+    this.translateService.setTranslation('en-US', enUS);
     // translateService.setTranslation('fr-FR', frFR);
-    translateService.setTranslation('es-CR', esCR);
+    this.translateService.setTranslation('es-CR', esCR);
   }
 
   /**
@@ -43,6 +47,13 @@ export class MockI18nService {
     this.defaultLanguage = defaultLanguage;
     this.supportedLanguages = supportedLanguages;
     this.language = '';
+    let onLangChangeSpy: jasmine.Spy;
+    // Create spies
+    // onLangChangeSpy = jasmine.createSpy('onLangChangeSpy');
+    // this.translateService.onLangChange
+    //   .subscribe((event: LangChangeEvent) => {
+    //     onLangChangeSpy(event.lang);
+    //   });
 
     this.translateService.onLangChange
       .subscribe((event: LangChangeEvent) => { localStorage.setItem(languageKey, event.lang); });
