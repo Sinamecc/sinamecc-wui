@@ -31,10 +31,9 @@ describe('MccrRegistriesListComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [ MccrRegistriesListComponent, LoaderComponent ],
-      providers: [I18nService, DatePipe, MccrRegistriesService, 
+      providers: [I18nService, DatePipe, MccrRegistriesService,
                   { provide: AuthenticationService, useClass: MockAuthenticationService },
                   { provide: S3Service, useClass: MockS3Service }]
-                  
     })
     .compileComponents();
   }));

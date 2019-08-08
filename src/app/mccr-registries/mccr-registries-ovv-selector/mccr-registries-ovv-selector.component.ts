@@ -41,7 +41,7 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
     this.service.currentMccrRegistry.subscribe(message => this.mccrRegistry = message);
     this.service.getOvvs()
      .pipe(finalize(() => { this.isLoading = false; }))
-     .subscribe((response: Ovv[]) => { this.ovvs = response; }); 
+     .subscribe((response: Ovv[]) => { this.ovvs = response; });
   }
 
 

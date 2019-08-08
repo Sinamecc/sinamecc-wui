@@ -20,13 +20,14 @@ export class MockMccrRegistriesService {
   mitigationActionMockService: MockMitigationActionsService;
   someMccrRegistries: MccrRegistry[];
   someMitigationActions: MitigationAction[];
-  constructor(@Inject(MockMitigationActionsService) mitigationActionMockService: MockMitigationActionsService, 
-              @Inject(MockS3Service) s3: MockS3Service) {
-    // @Inject(OtherService)
+  currentMccrRegistry: Observable<MccrRegistry>;
+
+  constructor(@Inject(MockMitigationActionsService) mitigationActionMockService: MockMitigationActionsService,
+    @Inject(MockS3Service) s3: MockS3Service) {
     this.someMccrRegistries = [
       {
         mitigation: 'Some mitigation 1',
-        id: Math.random().toString(36).substring(30),
+        id: '1',
         files: ['', ''],
         workflow_step_files: ['', ''],
         created: moment(new Date(+(new Date()) - Math.floor(Math.random() * 10000000000)))
@@ -41,7 +42,7 @@ export class MockMccrRegistriesService {
       },
       {
         mitigation: 'Some mitigation 2',
-        id: Math.random().toString(36).substring(30),
+        id: '2',
         files: ['', ''],
         workflow_step_files: ['', ''],
         created: moment(new Date(+(new Date()) - Math.floor(Math.random() * 10000000000)))
@@ -57,10 +58,10 @@ export class MockMccrRegistriesService {
     ];
     this.someMitigationActions = mitigationActionMockService.someMitigationActions;
     this.s3 = s3;
+    this.currentMccrRegistry = of(this.someMccrRegistries[0]);
   }
 
   updateCurrentMccrRegistry(newMccrRegistry: MccrRegistry) {
-    //   this.mccrRegistrySource.next(newMccrRegistry)
     return true;
   }
 
@@ -89,7 +90,9 @@ export class MockMccrRegistriesService {
   }
 
   getMccrRegistry(uuid: string): Observable<MccrRegistry> {
-    return of(this.someMccrRegistries.find((mccr) => mccr.id == uuid));
+    // console.log('UUID', uuid);
+    // console.log('SOME MMCR REGISTRIES FILTERED', this.someMccrRegistries.find((mccr) => mccr.id == uuid));
+    return of(this.someMccrRegistries.find((mccr) => mccr.id === uuid));
   }
 
   deleteMccrRegistry(uuid: string): Observable<{} | Object> {
