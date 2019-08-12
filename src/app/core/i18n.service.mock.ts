@@ -26,16 +26,16 @@ export class MockI18nService {
 
   defaultLanguage: string;
   supportedLanguages: string[];
-  translateService: MockTranslateService;
+  translateService: MockTranslateService = new MockTranslateService;
   // constructor(@Inject(forwardRef(() => AuthenticationService)) private authenticationService: AuthenticationService,
 
-  constructor(@Inject(forwardRef(() => MockTranslateService)) translateService: MockTranslateService) {
-    // Embed languages to avoid extra HTTP requests
-    this.translateService = translateService;
-    this.translateService.setTranslation('en-US', enUS);
-    // translateService.setTranslation('fr-FR', frFR);
-    this.translateService.setTranslation('es-CR', esCR);
-  }
+  // constructor(@Inject(forwardRef(() => MockTranslateService)) translateService: MockTranslateService) {
+  //   // Embed languages to avoid extra HTTP requests
+  //   this.translateService = translateService;
+  //   this.translateService.setTranslation('en-US', enUS);
+  //   // translateService.setTranslation('fr-FR', frFR);
+  //   this.translateService.setTranslation('es-CR', esCR);
+  // }
 
   /**
    * Initializes i18n for the application.
@@ -47,7 +47,7 @@ export class MockI18nService {
     this.defaultLanguage = defaultLanguage;
     this.supportedLanguages = supportedLanguages;
     this.language = '';
-    let onLangChangeSpy: jasmine.Spy;
+    // let onLangChangeSpy: jasmine.Spy;
     // Create spies
     // onLangChangeSpy = jasmine.createSpy('onLangChangeSpy');
     // this.translateService.onLangChange
@@ -55,8 +55,8 @@ export class MockI18nService {
     //     onLangChangeSpy(event.lang);
     //   });
 
-    this.translateService.onLangChange
-      .subscribe((event: LangChangeEvent) => { localStorage.setItem(languageKey, event.lang); });
+    // this.translateService.onLangChange
+    //   .subscribe((event: LangChangeEvent) => { localStorage.setItem(languageKey, event.lang); });
   }
 
   /**
@@ -66,7 +66,7 @@ export class MockI18nService {
    * @param {string} language The IETF language code to set.
    */
   set language(language: string) {
-    language = language || localStorage.getItem(languageKey) || this.translateService.getBrowserCultureLang();
+    language = language || localStorage.getItem(languageKey) || 'en-US';
     let isSupportedLanguage = includes(this.supportedLanguages, language);
 
     // If no exact match is found, search without the region

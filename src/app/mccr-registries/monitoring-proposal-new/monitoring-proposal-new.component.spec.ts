@@ -34,7 +34,11 @@ describe('MonitoringProposalNewComponent', () => {
         FormsModule,
         ReactiveFormsModule,
       ],
-      declarations: [ MonitoringProposalNewComponent, LoaderComponent, UploadProposalComponent, InputFileComponent, ByteFormatPipe ],
+      declarations: [ MonitoringProposalNewComponent,
+                      LoaderComponent,
+                      UploadProposalComponent,
+                      InputFileComponent,
+                      ByteFormatPipe ],
       providers: [I18nService, DatePipe, MccrRegistriesService,
         { provide: AuthenticationService, useClass: MockAuthenticationService },
         { provide: S3Service, useClass: MockS3Service }]

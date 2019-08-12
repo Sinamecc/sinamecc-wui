@@ -20,7 +20,7 @@ import { convertToParamMap, ActivatedRoute} from '@angular/router';
 import { UpdateStatusService } from '@app/shared/update-status/update-status.service';
 import { MockUpdateStatusService } from '@app/shared/update-status/update-status.service.mock';
 
-fdescribe('MccrRegistriesReviewComponent', () => {
+describe('MccrRegistriesReviewComponent', () => {
   let component: MccrRegistriesReviewComponent;
   let fixture: ComponentFixture<MccrRegistriesReviewComponent>;
 

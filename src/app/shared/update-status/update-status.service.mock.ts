@@ -14,7 +14,7 @@ export class MockUpdateStatusService {
 
   constructor() { }
 
-  updateStatus(context: any, entity: any, routeToUpload:string, formData: FormData): Observable <Response> {
+  updateStatus(context: any, entity: any, routeToUpload: string, formData: FormData): Observable <Response> {
     const response = {
         statusCode: 200,
         message: 'Form submitted correctly'
