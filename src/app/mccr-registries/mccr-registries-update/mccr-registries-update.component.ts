@@ -103,10 +103,10 @@ export class MccrRegistriesUpdateComponent implements OnInit {
 
   private initialFormData(): Observable<MccrRegistry> {
     const mccrRegistry = this.loadFormData().pipe(
-      tap(mccrRegistry => {
+      tap(incomingMccrRegistry => {
         this.form.setValue({
-          mitigation: mccrRegistry['mitigation'],
-          status: mccrRegistry['status']
+          mitigation: incomingMccrRegistry['mitigation'],
+          status: incomingMccrRegistry['fsm_state']
         });
 
       })

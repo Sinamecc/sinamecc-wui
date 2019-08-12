@@ -38,7 +38,7 @@ export class MockMccrRegistriesService {
           required_comments: true,
           states: ['Approved by DCC', 'Rejected by DCC']
         },
-        fsm_state: 'Approved'
+        fsm_state: 'Approved',
       },
       {
         mitigation: 'Some mitigation 2',

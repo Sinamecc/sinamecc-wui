@@ -22,7 +22,7 @@ import { MockMccrRegistriesService } from '../mccr-registries.service.mock';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
 import { MockS3Service } from '@app/core/s3.service.mock';
 
-describe('MccrRegistriesNewComponent', () => {
+fdescribe('MccrRegistriesNewComponent', () => {
   let component: MccrRegistriesNewComponent;
   let fixture: ComponentFixture<MccrRegistriesNewComponent>;
 
@@ -38,16 +38,14 @@ describe('MccrRegistriesNewComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         CoreModule
-      ],      
-      providers: [MockTranslateService, MockS3Service, DatePipe, MockMitigationActionsService, MockI18nService,
+      ],
+      providers: [
+        MockMccrRegistriesService, MockI18nService, MockMitigationActionsService, MockS3Service, MockTranslateService,
         { provide: AuthenticationService, useClass: MockAuthenticationService },
-        { provide: TranslateService, useClass: MockTranslateService },
-        { provide: I18nService, useClass: MockI18nService},
-        { provide: AuthenticationService, useClass: MockAuthenticationService },
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService},
         { provide: MccrRegistriesService, useClass: MockMccrRegistriesService },
-        { provide: AuthenticationService, useClass: MockAuthenticationService }
-        ],
+        { provide: MitigationActionsService, useClass: MockMitigationActionsService},
+        { provide: I18nService, useClass: MockI18nService}
+      ],
         // { provide: I18nService, useClass: MockI18nService}],
       declarations: [ MccrRegistriesNewComponent, InputFileComponent, LoaderComponent ]
     })

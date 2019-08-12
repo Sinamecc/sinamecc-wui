@@ -21,7 +21,7 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { MockI18nService } from '@app/core/i18n.service.mock';
 import { MockTranslateService } from '@app/core/translate.service.mock';
 
-fdescribe('MccrRegistriesUpdateComponent', () => {
+describe('MccrRegistriesUpdateComponent', () => {
   let component: MccrRegistriesUpdateComponent;
   let fixture: ComponentFixture<MccrRegistriesUpdateComponent>;
 
@@ -39,7 +39,6 @@ fdescribe('MccrRegistriesUpdateComponent', () => {
       declarations: [ MccrRegistriesUpdateComponent, LoaderComponent ],
       providers: [
         MockMccrRegistriesService, MockMitigationActionsService, MockS3Service, MockTranslateService,
-        // I18nService, TranslateService,
         { provide: AuthenticationService, useClass: MockAuthenticationService },
         { provide: MccrRegistriesService, useClass: MockMccrRegistriesService },
         { provide: UpdateStatusService, useClass: MockUpdateStatusService },
