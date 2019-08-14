@@ -8,6 +8,14 @@ describe('MitigationActionFormFlowComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MaterialModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
       declarations: [ MitigationActionFormFlowComponent ]
     })
     .compileComponents();

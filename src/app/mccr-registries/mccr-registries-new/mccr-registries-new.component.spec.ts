@@ -22,7 +22,7 @@ import { MockMccrRegistriesService } from '../mccr-registries.service.mock';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
 import { MockS3Service } from '@app/core/s3.service.mock';
 
-fdescribe('MccrRegistriesNewComponent', () => {
+describe('MccrRegistriesNewComponent', () => {
   let component: MccrRegistriesNewComponent;
   let fixture: ComponentFixture<MccrRegistriesNewComponent>;
 

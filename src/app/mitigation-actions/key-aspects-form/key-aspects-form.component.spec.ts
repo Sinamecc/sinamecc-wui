@@ -8,6 +8,14 @@ describe('KeyAspectsFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MaterialModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
       declarations: [ KeyAspectsFormComponent ]
     })
     .compileComponents();
