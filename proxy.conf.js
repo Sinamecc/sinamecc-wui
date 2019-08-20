@@ -15,6 +15,16 @@ const proxyConfig = [
     logLevel: 'debug',
     changeOrigin: true,
     secure: false
+  },
+  {
+    context: '/carbonmarket',
+    target: 'http://localhost:8001',
+    logLevel: 'debug',
+    pathRewrite: {
+      "^/carbonmarket": "api"
+    },
+    changeOrigin: true,
+    secure: false
   }
 ];
 

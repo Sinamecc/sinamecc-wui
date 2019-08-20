@@ -16,8 +16,9 @@ import { MitigationActionsModule } from '@app/mitigation-actions/mitigation-acti
 import { LoginModule } from '@app/login/login.module';
 import { AppComponent } from '@app/app.component';
 import { AppRoutingModule } from '@app/app-routing.module';
-import { MccrRegistriesModule } from '@app/mccr-registries/mccr-registries.module';
+import { MccrRegistriesModule } from '@app/mccr/mccr-registries/mccr-registries.module';
 import { PpcnModule } from '@app/ppcn/ppcn.module';
+import { MccrPocModule } from '@app/mccr/mccr-poc/mccr-poc.module';
 import { AdminModule } from './admin/admin.module';
 import { ErrorComponent } from './error/error.component';
 
@@ -39,6 +40,7 @@ import { ErrorComponent } from './error/error.component';
     AdminModule,
     MitigationActionsModule,
     MccrRegistriesModule,
+    MccrPocModule,
     PpcnModule,
     LoginModule,
     AppRoutingModule,

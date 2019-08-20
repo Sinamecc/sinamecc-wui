@@ -7,8 +7,8 @@ import { Logger, I18nService, AuthenticationService } from '@app/core';
 import {MatPaginator, MatTableDataSource, MatSort, MatDialogConfig, MatDialog, MatSnackBar} from '@angular/material'
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
-import { MccrRegistry } from '@app/mccr-registries/mccr-registry';
-import { MccrRegistriesService } from '@app/mccr-registries/mccr-registries.service';
+import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
+import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -26,7 +26,6 @@ const log = new Logger('Report');
 export class MccrRegistriesListComponent implements OnInit {
 
   version: string = environment.version;
-  mediaUrl: string = environment.mediaUrl;
   report: number;
   error: string;
   isLoading = false;
