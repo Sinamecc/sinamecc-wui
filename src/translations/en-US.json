@@ -240,7 +240,6 @@
   "User Name is required":"User Name is required",
   "User Name":"User Name",
   "Email is required":"Email is required",
-  "Email":"Email",
   "password is required":"password is required",
   "User active":"User active",
   "Provider":"Provider",
@@ -270,12 +269,20 @@
   "Add a new Buyer account:":"Add a new Buyer account:",
   "Create":"Create",
   "Account number:":"Account number:",
-  "Add a new developer account:":"Add a new developer account:"
-  
-
-
-
-
+  "Add a new developer account:":"Add a new developer account:",
+  "Institution":"Institution",
+  "Department":"Department",
+  "Attendant":"Attendant",
+  "Last name":"Last name",
+  "Email":"Email",
+  "How this file is sent to other institutions?":"How this file is sent to other institutions?",
+  "Daily":"Daily",
+  "Update period":"Update period",
+  "Weekly":"Weekly",
+  "Monthly":"Monthly",
+  "Yearly":"Yearly",
+  "Methodological file":"Methodological file",
+  "Example: e-mail, web page, REST API Call, SFTP, FTP, WeTransfer, other.":"Example: e-mail, web page, REST API Call, SFTP, FTP, WeTransfer, other."
 
   }
   
