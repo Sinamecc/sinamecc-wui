@@ -10,7 +10,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UpdateStatusComponent } from '@app/shared/update-status/update-status.component';
 import { LoaderComponent } from '@app/shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, S3Service, I18nService } from '@app/core';
+import { CoreModule, I18nService } from '@app/core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
 import { MockS3Service } from '@app/core/s3.service.mock';
