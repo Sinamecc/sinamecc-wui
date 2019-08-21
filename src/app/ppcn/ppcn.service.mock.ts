@@ -329,18 +329,7 @@ export class MockPpcnService {
     }
 
     getPpcnReviewStatuses(): Observable<PpcnNewFormData> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Authorization': this.authenticationService.credentials.token
-            })
-        };
-        return this.httpClient
-            .get(routes.ppcnAvailableStatuses(), httpOptions)
-            .pipe(
-                map((body: any) => {
-                    return body;
-                })
-            );
+      return of({});
     }
 
     commonStatusses(ppcn: Ppcn): string[] {

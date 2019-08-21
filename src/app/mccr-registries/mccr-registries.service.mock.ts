@@ -120,7 +120,7 @@ export class MockMccrRegistriesService {
         phone: '40008003',
         id: Math.random().toString(36).substring(30)
       }
-    ])
+    ]);
 
   }
 
