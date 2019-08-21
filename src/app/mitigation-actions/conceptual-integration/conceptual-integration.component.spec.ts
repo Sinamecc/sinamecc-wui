@@ -7,6 +7,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CoreModule } from '@app/core';
+import { DownloadProposalComponent } from '@app/shared/download-proposal/download-proposal.component';
 
 describe('ConceptualIntegrationComponent', () => {
   let component: ConceptualIntegrationComponent;
@@ -20,9 +23,12 @@ describe('ConceptualIntegrationComponent', () => {
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CoreModule
       ],
-      declarations: [ ConceptualIntegrationComponent ]
+      declarations: [ ConceptualIntegrationComponent, DownloadProposalComponent ]
     })
     .compileComponents();
   }));

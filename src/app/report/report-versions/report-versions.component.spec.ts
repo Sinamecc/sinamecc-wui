@@ -7,6 +7,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { LoaderComponent } from '@app/shared/loader/loader.component';
+import { I18nService, AuthenticationService, MockAuthenticationService } from '@app/core';
+import { ReportService } from '../report.service';
+import { MockReportService } from '../report.service.mock';
 
 describe('ReportVersionsComponent', () => {
   let component: ReportVersionsComponent;
@@ -22,7 +26,10 @@ describe('ReportVersionsComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ ReportVersionsComponent ]
+      declarations: [ ReportVersionsComponent, LoaderComponent ],
+      providers: [I18nService,
+        { provide: AuthenticationService, useClass: MockAuthenticationService },
+        { provide: ReportService, useClass: MockReportService }]
     })
     .compileComponents();
   }));

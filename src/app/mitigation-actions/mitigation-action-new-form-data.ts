@@ -7,6 +7,7 @@ export interface MitigationActionNewFormData {
   geographic_scales: GeographicScale[];
   finance_source_types: FinanceSourceType[];
   finance_status: FinanceStatus[];
+  initiative_types: InitiativeType[];
   }
 
  export interface RegistrationType {
@@ -49,10 +50,7 @@ export interface FinanceStatus {
   id: Number;
   status: String;
 }
-
-
-
 export interface InitiativeType {
   id: Number;
-  name: String;
+  types: String;
 }

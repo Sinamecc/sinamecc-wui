@@ -7,6 +7,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { I18nService, AuthenticationService, MockAuthenticationService, CoreModule } from '@app/core';
+import { ReportService } from '../report.service';
+import { MockReportService } from '../report.service.mock';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InputFileComponent, LoaderComponent } from '@app/shared';
+import { ByteFormatPipe } from '@app/shared/input-file/byte-format.pipe';
 
 describe('ReportNewComponent', () => {
   let component: ReportNewComponent;
@@ -20,9 +26,15 @@ describe('ReportNewComponent', () => {
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CoreModule
       ],
-      declarations: [ ReportNewComponent ]
+      declarations: [ ReportNewComponent, InputFileComponent, LoaderComponent, ByteFormatPipe ],
+      providers: [I18nService,
+        { provide: AuthenticationService, useClass: MockAuthenticationService },
+        { provide: ReportService, useClass: MockReportService }]
     })
     .compileComponents();
   }));

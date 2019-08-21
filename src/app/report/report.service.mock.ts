@@ -1,9 +1,9 @@
-import { Response, Version, Report, ReportContext } from "./report.service";
-import { Observable } from "rxjs";
-import { MockS3Service } from "@app/core/s3.service.mock";
-import { of } from "rxjs/observable/of";
+import { Response, Version, Report, ReportContext } from './report.service';
+import { Observable } from 'rxjs/Observable';
+import { MockS3Service } from '@app/core/s3.service.mock';
+import { of } from 'rxjs/observable/of';
 import * as _moment from 'moment';
-import { S3File } from "@app/core/s3.service";
+import { S3File } from '@app/core/s3.service';
 const moment = _moment;
 
 export class MockReportService {
@@ -54,19 +54,19 @@ export class MockReportService {
         return of([
             {
                 version: '1.0.0',
-                file: Math.random().toString(64)
+                file: Math.random().toString(32)
             },
             {
                 version: '1.0.1',
-                file: Math.random().toString(64)
+                file: Math.random().toString(32)
             },
             {
                 version: '1.1.0',
-                file: Math.random().toString(64)
+                file: Math.random().toString(32)
             },
             {
                 version: '1.1.1',
-                file: Math.random().toString(64)
+                file: Math.random().toString(32)
             }
         ]);
     }

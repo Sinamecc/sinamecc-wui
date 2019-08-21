@@ -7,6 +7,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { UpdateStatusComponent } from '@app/shared/update-status/update-status.component';
+import { LoaderComponent } from '@app/shared';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CoreModule, S3Service, I18nService } from '@app/core';
+import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
+import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
+import { MockS3Service } from '@app/core/s3.service.mock';
+import { MockI18nService } from '@app/core/i18n.service.mock';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { UpdateStatusService } from '@app/shared/update-status/update-status.service';
+import { MockUpdateStatusService } from '@app/shared/update-status/update-status.service.mock';
 
 describe('MitigationActionReviewsNewComponent', () => {
   let component: MitigationActionReviewsNewComponent;
@@ -20,9 +31,25 @@ describe('MitigationActionReviewsNewComponent', () => {
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CoreModule
       ],
-      declarations: [ MitigationActionReviewsNewComponent ]
+      declarations: [ MitigationActionReviewsNewComponent, UpdateStatusComponent, LoaderComponent ],
+      providers: [ MockS3Service,
+        { provide: I18nService, useClass: MockI18nService },
+        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              paramMap: convertToParamMap({id: '1'})
+            }
+          }
+        },
+        { provide: UpdateStatusService, useClass: MockUpdateStatusService },
+      ]
     })
     .compileComponents();
   }));

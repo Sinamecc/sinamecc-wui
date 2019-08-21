@@ -4,7 +4,7 @@ import { MccrRegistriesNewComponent } from '@app/mccr-registries/mccr-registries
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { LoaderComponent, InputFileComponent } from '@app/shared';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockTranslateService } from '@app/core/translate.service.mock';
@@ -14,8 +14,6 @@ import { MockI18nService } from '@app/core/i18n.service.mock';
 import { MccrRegistriesService } from '../mccr-registries.service';
 import { AuthenticationService, MockAuthenticationService, CoreModule } from '@app/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { DatePipe } from '@angular/common';
-import { UploadProposalComponent } from '@app/shared/upload-proposal/upload-proposal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MockMccrRegistriesService } from '../mccr-registries.service.mock';

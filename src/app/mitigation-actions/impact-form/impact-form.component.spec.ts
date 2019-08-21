@@ -7,6 +7,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CoreModule, S3Service, I18nService } from '@app/core';
+import { MockS3Service } from '@app/core/s3.service.mock';
+import { MitigationActionsService } from '../mitigation-actions.service';
+import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
+import { MockI18nService } from '@app/core/i18n.service.mock';
 
 describe('ImpactFormComponent', () => {
   let component: ImpactFormComponent;
@@ -20,9 +26,16 @@ describe('ImpactFormComponent', () => {
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CoreModule
       ],
-      declarations: [ ImpactFormComponent ]
+      declarations: [ ImpactFormComponent ],
+      providers: [ MockS3Service,
+        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
+        { provide: S3Service, useClass: MockS3Service },
+        { provide: I18nService, useClass: MockI18nService } ]
     })
     .compileComponents();
   }));

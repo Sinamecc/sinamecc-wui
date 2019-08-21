@@ -7,6 +7,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { LoaderComponent } from '@app/shared';
+import { I18nService } from '@app/core';
+import { MitigationActionsService } from '../mitigation-actions.service';
+import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
+import { MockS3Service } from '@app/core/s3.service.mock';
+import { MockI18nService } from '@app/core/i18n.service.mock';
 
 describe('MitigationActionComponent', () => {
   let component: MitigationActionComponent;
@@ -22,7 +28,12 @@ describe('MitigationActionComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ MitigationActionComponent ]
+      declarations: [ MitigationActionComponent, LoaderComponent ],
+      providers: [
+        I18nService, MockS3Service,
+        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
+        { provide: I18nService, useClass: MockI18nService }
+      ]
     })
     .compileComponents();
   }));
