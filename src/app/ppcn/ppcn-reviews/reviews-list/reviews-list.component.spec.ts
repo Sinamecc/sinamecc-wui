@@ -7,6 +7,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MockS3Service } from '@app/core/s3.service.mock';
+import { PpcnService } from '@app/ppcn/ppcn.service';
+import { MockPpcnService } from '@app/ppcn/ppcn.service.mock';
+import { I18nService } from '@app/core';
+import { MockI18nService } from '@app/core/i18n.service.mock';
 
 describe('ReviewsListComponent', () => {
   let component: ReviewsListComponent;
@@ -22,7 +27,12 @@ describe('ReviewsListComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ ReviewsListComponent ]
+      declarations: [ ReviewsListComponent ],
+      providers: [
+        MockS3Service,
+        { provide: PpcnService, useClass: MockPpcnService },
+        { provide: I18nService, useClass: MockI18nService}
+      ]
     })
     .compileComponents();
   }));

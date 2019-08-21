@@ -1,12 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { HttpHeaders } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
-import { Ppcn, GeographicLevel, SubSector } from '@app/ppcn/ppcn_registry'
-import { PpcnNewFormData, Ovv } from '@app/ppcn/ppcn-new-form-data';
+import { Ppcn, GeographicLevel, SubSector, Organization } from '@app/ppcn/ppcn_registry';
+import { PpcnNewFormData, Ovv, GeiOrganization } from '@app/ppcn/ppcn-new-form-data';
 import { PpcnReview } from '@app/ppcn/ppcn-review';
-import { S3File, S3Service } from '@app/core/s3.service';
+import { S3File } from '@app/core/s3.service';
 import { StatusRoutesMap } from '@app/ppcn/status-routes-map';
 import { MockS3Service } from '@app/core/s3.service.mock';
 import * as _moment from 'moment';
@@ -25,7 +23,7 @@ const fsm_next_state = {
     'PPCN_decision_step_DCC': ['PPCN_accepted_request_by_DCC', 'PPCN_rejected_request_by_DCC', 'PPCN_changes_requested_by_DCC'],
     'PPCN_evaluation_by_CA': ['PPCN_decision_step_CA'],
     'PPCN_decision_step_CA': ['PPCN_accepted_request_by_CA', 'PPCN_rejected_request_by_CA']
-}
+};
 
 export interface ReportContext {
     comment: string;
@@ -35,11 +33,30 @@ export interface ReportContext {
 export class MockPpcnService {
 
     s3: MockS3Service;
+    oneOrganization: Organization;
+    geiOrganization: GeiOrganization;
     somePpcnRegistries: Ppcn[];
     currentLevelId: Observable<string>;
+    ppcnNewFormData: PpcnNewFormData;
 
     constructor(@Inject(MockS3Service) s3: MockS3Service) {
         this.s3 = s3;
+        this.oneOrganization = {
+            id: 1,
+            name: 'MINAE',
+            representative_name: 'Some rep',
+            phone_organization: '22334455',
+            postal_code: '10311',
+            fax: '22334400',
+            ciiu: 'Some data',
+            address: 'Some address',
+            contact: {
+                full_name: 'Carl Michael',
+                email: 'job@minae.com',
+                job_title: 'Manager',
+                phone: '88990066'
+            }
+        };
         this.somePpcnRegistries = [
             {
                 id: '1',
@@ -55,22 +72,7 @@ export class MockPpcnService {
                     id: 1,
                     level_type: 'Some level'
                 },
-                organization: {
-                    id: 1,
-                    name: 'MINAE',
-                    representative_name: 'Some rep',
-                    phone_organization: '22334455',
-                    postal_code: '10311',
-                    fax: '22334400',
-                    ciiu: 'Some data',
-                    address: 'Some address',
-                    contact: {
-                        full_name: 'Carl Michael',
-                        email: 'job@minae.com',
-                        job_title: 'Manager',
-                        phone: '88990066'
-                    }
-                },
+                organization: this.oneOrganization,
                 contact: {
                     full_name: 'Carl Michael',
                     email: 'job@minae.com',
@@ -192,6 +194,146 @@ export class MockPpcnService {
                 files: [{ name: '', file: '' }, { name: '', file: '' }],
             }
         ];
+        this.ppcnNewFormData = {
+            id: '1',
+            geographic: [
+                {
+                    id: 1,
+                    level: 'Regional'
+                },
+                {
+                    id: 2,
+                    level: 'National'
+                }
+            ],
+            required_level: [
+                {
+                    id: 1,
+                    level: 'Some level'
+                },
+                {
+                    id: 2,
+                    level: 'Some other level'
+                }
+            ],
+            recognition_type: [
+                {
+                    id: 1,
+                    recognition: 'Some recognition'
+                },
+                {
+                    id: 2,
+                    recognition: 'Other recognition'
+                }
+            ],
+            sector: [
+                {
+                    id: 1,
+                    sector: 'Guanacaste'
+                },
+                {
+                    id: 2,
+                    sector: 'Alajuela'
+                }
+            ],
+            subSector: [
+                {
+                    id: 1,
+                    name: 'Liberia',
+                    sector: {
+                        id: 1,
+                        sector: 'Guanacaste'
+                    }
+                },
+                {
+                    id: 2,
+                    name: 'Nicoya',
+                    sector: {
+                        id: 1,
+                        sector: 'Guanacaste'
+                    }
+                }
+            ],
+            organization: [
+                {
+                    id: 1,
+                    name: 'MINAE',
+                    representative_name: 'Some rep',
+                    phone_organization: '22334455',
+                    postal_code: '10311',
+                    fax: '22334400',
+                    ciiu: 'Some data',
+                    address: 'Some address',
+                    contact: {
+                        full_name: 'Carl Michael',
+                        email: 'job@minae.com',
+                        position: 'Manager',
+                        phone: '88990066'
+                    }
+                }
+            ],
+            ovv: [
+                {
+                    name: 'Some ovv',
+                    email: 'ovv@me.com',
+                    phone: '40008000',
+                    id: +Math.random().toString(36).substring(30)
+                },
+                {
+                    name: 'Some ovv 2',
+                    email: 'ovv2@me.com',
+                    phone: '40228000',
+                    id: +Math.random().toString(36).substring(30)
+                }
+            ],
+            gei_organization: {
+                id: 1,
+                activity_type: 'Farming',
+                ovv: { id: 1, email: 'ovv1@minae.com', phone: '22440077', name: 'Random OVV 1' },
+                emission_OVV: moment(new Date(+(new Date()) - Math.floor(Math.random() * 10000000000)))
+                .format('MM/DD/YYYY'),
+                report_date_start: moment(new Date(+(new Date()) - Math.floor(Math.random() * 10000000000)))
+                .format('MM/DD/YYYY'),
+                report_date_end: moment(new Date(+(new Date()) - Math.floor(Math.random() * 10000000000)))
+                .format('MM/DD/YYYY'),
+                base_year: '2001',
+                gei_activity_types: [
+                    {
+                        id: 1,
+                        sector: {
+                            id: 1,
+                            sector: 'Guanacaste'
+                        },
+                        sub_sector: {
+                            id: 1,
+                            name: 'Liberia',
+                            sector: {
+                                id: 1,
+                                sector: 'Guanacaste'
+                            }
+                        },
+                        activity_type: 'Mining'
+                    },
+                    {
+                        id: 2,
+                        sector: {
+                            id: 2,
+                            sector: 'Alajuela'
+                        },
+                        sub_sector: {
+                            id: 1,
+                            name: 'San Carlos',
+                            sector: {
+                                id: 1,
+                                sector: 'Alajuela'
+                            }
+                        },
+                        activity_type: 'Farming'
+                    }
+                ]
+            }
+        };
+        this.currentLevelId = of('1');
     }
 
     submitNewPpcnForm(context: any): Observable<Response> {
@@ -272,8 +414,7 @@ export class MockPpcnService {
     }
 
     newPpcnFormData(levelId: string, lang: string): Observable<PpcnNewFormData> {
-
-
+        return of(this.ppcnNewFormData);
     }
 
     subsectors(sector: string, lang: string): Observable<SubSector[]> {
@@ -329,7 +470,7 @@ export class MockPpcnService {
     }
 
     getPpcnReviewStatuses(): Observable<PpcnNewFormData> {
-      return of({});
+        return of(this.ppcnNewFormData);
     }
 
     commonStatusses(ppcn: Ppcn): string[] {

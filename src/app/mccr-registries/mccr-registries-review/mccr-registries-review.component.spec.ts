@@ -42,6 +42,7 @@ describe('MccrRegistriesReviewComponent', () => {
         { provide: MccrRegistriesService, useClass: MockMccrRegistriesService },
         { provide: UpdateStatusService, useClass: MockUpdateStatusService },
         { provide: MitigationActionsService, useClass: MockMitigationActionsService},
+        { provide: UpdateStatusService, useClass: MockUpdateStatusService },
         {
           provide: ActivatedRoute,
           useValue: {

@@ -19,7 +19,7 @@ import { MockMitigationActionsService } from '../mitigation-actions.service.mock
 import { MockS3Service } from '@app/core/s3.service.mock';
 import { MockI18nService } from '@app/core/i18n.service.mock';
 
-fdescribe('MitigationActionFormFlowComponent', () => {
+describe('MitigationActionFormFlowComponent', () => {
   let component: MitigationActionFormFlowComponent;
   let fixture: ComponentFixture<MitigationActionFormFlowComponent>;
 

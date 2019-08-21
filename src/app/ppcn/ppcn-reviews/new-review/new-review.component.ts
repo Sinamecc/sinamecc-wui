@@ -42,7 +42,7 @@ export class NewReviewComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private service: PpcnService) { 
       this.id = this.route.snapshot.paramMap.get('id');
-      this.title = "Add a new review for this PPCN Registry";
+      this.title = 'Add a new review for this PPCN Registry';
       this.nextRoute = `ppcn/registries`;
       this.formData = new FormData();
       this.formSubmitRoute =  `/v1/ppcn/${this.id}`;
