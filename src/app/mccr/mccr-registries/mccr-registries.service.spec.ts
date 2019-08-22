@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { MccrRegistriesService } from '@app/mccr-registries/mccr-registries.service';
+import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { AuthenticationService, MockAuthenticationService } from '@app/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DatePipe } from '@angular/common';

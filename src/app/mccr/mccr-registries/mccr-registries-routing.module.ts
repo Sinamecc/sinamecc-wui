@@ -3,12 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '@app/core';
 
-import { MccrRegistriesListComponent } from '@app/mccr-registries/mccr-registries-list/mccr-registries-list.component';
-import { MccrRegistriesNewComponent } from '@app/mccr-registries/mccr-registries-new/mccr-registries-new.component';
-import { MccrRegistryComponent } from '@app/mccr-registries/mccr-registry/mccr-registry.component';
-import { MccrRegistriesUpdateComponent } from '@app/mccr-registries/mccr-registries-update/mccr-registries-update.component';
+import { MccrRegistriesListComponent } from '@app/mccr/mccr-registries/mccr-registries-list/mccr-registries-list.component';
+import { MccrRegistriesNewComponent } from '@app/mccr/mccr-registries/mccr-registries-new/mccr-registries-new.component';
+import { MccrRegistryComponent } from '@app/mccr/mccr-registries/mccr-registry/mccr-registry.component';
+import { MccrRegistriesUpdateComponent } from '@app/mccr/mccr-registries/mccr-registries-update/mccr-registries-update.component';
 import { MaterialModule } from '@app/material.module';
-import { MccrRegistriesOvvSelectorComponent } from '@app/mccr-registries/mccr-registries-ovv-selector/mccr-registries-ovv-selector.component';
+import { MccrRegistriesOvvSelectorComponent } from '@app/mccr/mccr-registries/mccr-registries-ovv-selector/mccr-registries-ovv-selector.component';
 import { MccrRegistriesReviewComponent } from './mccr-registries-review/mccr-registries-review.component';
 import { OvvProposalComponent } from './ovv-proposal/ovv-proposal.component';
 import { OvvProposalNewComponent } from './ovv-proposal-new/ovv-proposal-new.component';

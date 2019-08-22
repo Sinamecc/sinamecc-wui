@@ -1,0 +1,58 @@
+<div class="container">
+  <mat-card>
+
+
+    <h3>
+      <mat-card-title  translate class="section-heading">Add a new POC</mat-card-title>
+      <mat-divider class="divider-custom"></mat-divider>
+      <mat-divider class="divider-custom"></mat-divider>
+    </h3>
+
+    <mat-card-content>
+
+      <form (ngSubmit)="submitForm()" [formGroup]="form"  novalidate>
+        <div class="report-error" [hidden]="!error || isLoading" translate>
+          <span translate>Error submitting the form.</span>
+        </div>
+
+        <div fxLayout="column">
+
+          <mat-form-field>
+                <input type="text" matInput formControlName="userId" [placeholder]="'ID user'| translate" />
+                <mat-error *ngIf="form.controls.userId.invalid || form.controls.userId.untouched">
+                    <span translate>ID User is required</span>
+                </mat-error>
+          </mat-form-field> 
+
+          <mat-form-field>
+            <input type="text" matInput formControlName="uccBatchCode" [placeholder]="'UCC Batch Base'| translate" />
+            <mat-error *ngIf="form.controls.uccBatchCode.invalid || form.controls.uccBatchCode.untouched">
+                <span translate>UCC Batch Base is required</span>
+            </mat-error>
+          </mat-form-field> 
+          <mat-form-field>
+            <input type="number" matInput formControlName="uccBatchSize" [placeholder]="'UCC Batch Size'| translate" />
+            <mat-error *ngIf="form.controls.uccBatchSize.invalid || form.controls.uccBatchSize.untouched">
+                <span translate>UCC Batch Size is required</span>
+            </mat-error>
+          </mat-form-field> 
+
+        </div>
+
+        <div>
+            <button mat-button class="mat-raised-button mat-primary options" type="submit" >
+                        <app-loader class="inline-loader"  [isLoading]="isLoading"></app-loader>
+                        <span translate>add</span>
+            </button>
+            <button class="options" mat-raised-button color="primary" (click)="back()"><span translate>cancel</span></button>
+
+        </div>
+
+        
+
+      </form>
+
+    </mat-card-content>
+
+</mat-card>
+</div>
