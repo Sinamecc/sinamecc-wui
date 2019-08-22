@@ -1,6 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminPermissionsDetailComponent } from './admin-permissions-detail.component';
+import { MaterialModule } from '@app/material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AdminPermissionsNewComponent } from '../admin-permissions-new/admin-permissions-new.component';
+import { AdminService } from '@app/admin/admin.service';
+import { AuthenticationService, MockAuthenticationService } from '@app/core';
 
 describe('AdminPermissionsDetailComponent', () => {
   let component: AdminPermissionsDetailComponent;
@@ -8,7 +18,18 @@ describe('AdminPermissionsDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminPermissionsDetailComponent ]
+      imports: [
+        MaterialModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        TranslateModule.forRoot(),
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ],
+      declarations: [ AdminPermissionsDetailComponent, AdminPermissionsNewComponent ],
+      providers: [AdminService, { provide: AuthenticationService, useClass: MockAuthenticationService }]
     })
     .compileComponents();
   }));
@@ -16,6 +37,13 @@ describe('AdminPermissionsDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminPermissionsDetailComponent);
     component = fixture.componentInstance;
+
+    component.permission = {
+      id:'1',
+      name:'wtf',
+      codename:'wtf',
+      content_type:'wtf'
+    };
     fixture.detectChanges();
   });
 

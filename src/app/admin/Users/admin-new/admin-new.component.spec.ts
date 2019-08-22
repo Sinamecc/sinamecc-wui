@@ -6,12 +6,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AdminPermissionListComponent } from '../admin-permission-list/admin-permission-list.component';
-import { AdminGroupListComponent } from '../admin-group-list/admin-group-list.component';
-import { AdminService } from '../admin.service';
 import { AuthenticationService, MockAuthenticationService } from '@app/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AdminPermissionListComponent } from '@app/admin/Permissions/admin-permission-list/admin-permission-list.component';
+import { AdminGroupListComponent } from '@app/admin/Groups/admin-group-list/admin-group-list.component';
+import { AdminService } from '@app/admin/admin.service';
+import { AdminGroupsListEditComponent } from '@app/admin/Groups/admin-groups-list-edit/admin-groups-list-edit.component';
+import { AdminPermissionsListEditComponent } from '@app/admin/Permissions/admin-permissions-list-edit/admin-permissions-list-edit.component';
 
 describe('AdminNewComponent', () => {
   let component: AdminNewComponent;
@@ -19,7 +21,7 @@ describe('AdminNewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminNewComponent, AdminPermissionListComponent, AdminGroupListComponent ],
+      declarations: [ AdminNewComponent, AdminPermissionListComponent, AdminGroupListComponent, AdminGroupsListEditComponent, AdminPermissionsListEditComponent ],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,

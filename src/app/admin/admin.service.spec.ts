@@ -9,7 +9,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 describe('AdminService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [
+        HttpClientTestingModule,
+      ],
       providers: [AdminService, AuthenticationService, HttpClient]
     });
   });
