@@ -4,9 +4,17 @@
       <nav>
         <mat-list>
           <mat-divider></mat-divider>
-          <a *ngIf="credential.is_administrador_dcc" mat-list-item routerLink="/admin" routerLinkActive="active" (click)="sidenav.close()">
+          
+
+          <button mat-menu-item [matMenuTriggerFor]="admin" >
             <span translate>ADMIN</span>
-          </a>
+          </button>
+          <mat-menu  #admin="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item routerLink="/admin/users" routerLinkActive="active" (click)="sidenav.close()">Users</button>
+            <button  mat-menu-item routerLink="/admin/permissions" routerLinkActive="active" (click)="sidenav.close()">Permissions</button>
+            <button  mat-menu-item routerLink="/admin/groups" routerLinkActive="active" (click)="sidenav.close()">Groups</button>
+          </mat-menu>
+
           <a *ngIf="permissions.report_data != undefined" mat-list-item routerLink="/report" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>REPORTS</span>
           </a>
