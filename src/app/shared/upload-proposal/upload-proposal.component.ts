@@ -41,10 +41,11 @@ export class UploadProposalComponent implements OnInit, OnChanges {
     }
 
   ngOnInit() {
+    this.createForm();
   }
   
   ngOnChanges(changes: SimpleChanges) {
-    this.createForm();
+    // this.createForm();
   }
 
   submitForm() {
