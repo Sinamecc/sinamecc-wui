@@ -7,16 +7,13 @@ import { MaterialModule } from '@app/material.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoaderComponent } from '@app/shared';
 import { RouterTestingModule } from '@angular/router/testing';
-import { I18nService } from '@app/core/i18n.service';
 import { MccrRegistriesService } from '../mccr-registries.service';
-import { AuthenticationService, MockAuthenticationService } from '@app/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { DatePipe } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MockMccrRegistriesService } from '../mccr-registries.service.mock';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
 import { MockS3Service } from '@app/core/s3.service.mock';
+import { MockMccrRegistriesService } from '@app/mccr-registries/mccr-registries.service.mock';
 
 
 describe('MccrRegistriesOvvSelectorComponent', () => {

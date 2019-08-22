@@ -2,22 +2,22 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MaterialModule } from '@app/material.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { LoaderComponent } from '@app/shared';
 import { RouterTestingModule } from '@angular/router/testing';
-import { I18nService } from '@app/core/i18n.service';
-import { MccrRegistriesService } from '../mccr-registries.service';
-import { AuthenticationService, MockAuthenticationService } from '@app/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { I18nService, AuthenticationService, MockAuthenticationService } from '@app/core';
 import { DatePipe } from '@angular/common';
-import { S3Service } from '@app/core/s3.service';
+import { OvvProposalComponent } from '@app/mccr/mccr-registries/ovv-proposal/ovv-proposal.component';
+import { MaterialModule } from '@app/material.module';
+import { DownloadProposalComponent } from '@app/shared/download-proposal/download-proposal.component';
+import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { MockS3Service } from '@app/core/s3.service.mock';
-import { MccrRegistryComponent } from './mccr-registry.component';
+import { S3Service } from '@app/core/s3.service';
 
-describe('MccrRegistryComponent', () => {
-  let component: MccrRegistryComponent;
-  let fixture: ComponentFixture<MccrRegistryComponent>;
+describe('OvvProposalComponent', () => {
+  let component: OvvProposalComponent;
+  let fixture: ComponentFixture<OvvProposalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -27,9 +27,11 @@ describe('MccrRegistryComponent', () => {
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
       ],
-      declarations: [ MccrRegistryComponent, LoaderComponent ],
+      declarations: [ OvvProposalComponent, DownloadProposalComponent ],
       providers: [I18nService, DatePipe, MccrRegistriesService,
         { provide: AuthenticationService, useClass: MockAuthenticationService },
         { provide: S3Service, useClass: MockS3Service }]
@@ -38,7 +40,7 @@ describe('MccrRegistryComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MccrRegistryComponent);
+    fixture = TestBed.createComponent(OvvProposalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

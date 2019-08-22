@@ -147,3 +147,18 @@ Development, build and quality processes are based on [angular-cli](https://gith
 - [Updating dependencies and tools](docs/updating.md)
 - [Using a backend proxy for development](docs/backend-proxy.md)
 - [Browser routing](docs/routing.md)
+
+
+### Run Unit Tests
+
+You can:
+
+`npm run test -- --sourcemaps=false`
+
+To debug, you can go localhost:9876 and see how tests are executed. You can inspect the console if there are errors
+
+
+To run them once instead of live mode and with code coverage report:
+
+`npm run test -- --sourcemaps=false --no-watch --code-coverage`
+

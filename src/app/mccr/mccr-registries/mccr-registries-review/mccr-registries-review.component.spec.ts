@@ -11,7 +11,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoaderComponent } from '@app/shared/loader/loader.component';
 import { AuthenticationService, MockAuthenticationService, I18nService } from '@app/core';
-import { MockMccrRegistriesService } from '../mccr-registries.service.mock';
 import { MccrRegistriesService } from '../mccr-registries.service';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
@@ -19,6 +18,7 @@ import { MockS3Service } from '@app/core/s3.service.mock';
 import { convertToParamMap, ActivatedRoute} from '@angular/router';
 import { UpdateStatusService } from '@app/shared/update-status/update-status.service';
 import { MockUpdateStatusService } from '@app/shared/update-status/update-status.service.mock';
+import { MockMccrRegistriesService } from '@app/mccr-registries/mccr-registries.service.mock';
 
 describe('MccrRegistriesReviewComponent', () => {
   let component: MccrRegistriesReviewComponent;

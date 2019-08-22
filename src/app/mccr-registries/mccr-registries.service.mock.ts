@@ -1,7 +1,7 @@
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
-import { Response } from './mccr-registries.service';
-import { MccrRegistry } from './mccr-registry';
+import { Response } from '@app/mccr/mccr-poc/mccr-poc.service';
+import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { MockS3Service } from '@app/core/s3.service.mock';
 import { StatusRoutesMap } from '@app/shared/status-routes-map';
@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import * as _moment from 'moment';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { Ovv } from '@app/mccr-registries/mccr-registries-ovv-selector/ovv';
+import { Ovv } from '@app/mccr/mccr-registries/mccr-registries-ovv-selector/ovv';
 import { Inject } from '@angular/core';
 
 const moment = _moment;
