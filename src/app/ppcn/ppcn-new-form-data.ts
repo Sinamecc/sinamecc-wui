@@ -1,6 +1,6 @@
 import { SubSector, Sector } from "@app/ppcn/ppcn_registry";
 
-export interface PpcnNewFormData{
+export interface PpcnNewFormData {
     id: string;
     geographic: GeographicLevel[];
     required_level: RequiredLevel[];
@@ -13,7 +13,7 @@ export interface PpcnNewFormData{
 
 }
 
-export interface Organization{
+export interface Organization {
     id: Number;
     name: string;
     representative_name: string;
@@ -23,22 +23,21 @@ export interface Organization{
     ciiu: string;
     address: string;
     contact: Contact;
-
 }
 
-export interface GeographicLevel{
+export interface GeographicLevel {
     id: Number;
     level: string;
 
 }
 
-export interface RequiredLevel{
+export interface RequiredLevel {
     id: Number;
     level: string;
 
 }
 
-export interface RecognitionType{
+export interface RecognitionType {
     id: Number;
     recognition: string;
 
@@ -50,29 +49,29 @@ export interface Contact {
     position: string;
     phone: string;
 
-  }
-
-export interface Sector{
-    id: Number;
-    sector: string;
-    
 }
 
-export interface SubSector{
+export interface Sector {
+    id: Number;
+    sector: string;
+
+}
+
+export interface SubSector {
     id: Number;
     name: string;
     sector: Sector;
 
 }
 
-export interface Ovv{
+export interface Ovv {
     id: Number;
     email: string;
     phone: string;
     name: string;
-  }
-  
-  export interface GeiOrganization {
+}
+
+export interface GeiOrganization {
     id: Number;
     activity_type: string;
     ovv: Ovv;
@@ -81,12 +80,12 @@ export interface Ovv{
     report_date_end: string;
     base_year: string;
     gei_activity_types: GeiActivityType[];
-  
-  }
-  
-  export interface GeiActivityType{
+
+}
+
+export interface GeiActivityType {
     id: Number;
     sector: Sector;
     sub_sector: SubSector;
     activity_type: string;
-  }
+}

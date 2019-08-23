@@ -11,7 +11,9 @@ export class AdminPermissionsDetailComponent implements OnInit {
   permission:any
 
   constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
+    if(data) {
       this.permission = data.perm;
+    } 
    }
 
   ngOnInit() {

@@ -3,25 +3,26 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Subject } from 'rxjs/Subject';
 
 import { extract, I18nService } from '@app/core/i18n.service';
+// import { MockTranslateService } from './translate.service.mock';
 
 const defaultLanguage = 'en-US';
 const supportedLanguages = ['eo', 'en-US', 'fr-FR'];
 
-class MockTranslateService {
+export class MockTranslateService {
 
   currentLang: string;
   onLangChange = new Subject();
 
   use(language: string) {
-    this.currentLang = language;
-    this.onLangChange.next({
-      lang: this.currentLang,
-      translations: {}
-    });
+      this.currentLang = language;
+      this.onLangChange.next({
+          lang: this.currentLang,
+          translations: {}
+      });
   }
 
   getBrowserCultureLang() {
-    return 'en-US';
+      return 'en-US';
   }
 
   setTranslation(lang: string, translations: Object, shouldMerge?: boolean) { }
@@ -36,6 +37,7 @@ describe('I18nService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        MockTranslateService,
         I18nService,
         { provide: TranslateService, useClass: MockTranslateService },
       ]

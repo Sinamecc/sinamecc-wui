@@ -2,6 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HttpResponse } from '@angular/common/http';
 
 import { HttpCacheService, HttpCacheEntry } from '@app/core/http/http-cache.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const cachePersistenceKey = 'httpCache';
 
@@ -11,6 +12,7 @@ describe('HttpCacheService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       providers: [HttpCacheService]
     });
 

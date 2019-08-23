@@ -70,10 +70,10 @@ export class InputFileComponent implements MatFormFieldControl<FileInput>, Contr
     return this._elementRef.nativeElement.disabled;
   }
   set disabled(dis: boolean) {
-    this.setDisabledState( coerceBooleanProperty(dis) )
+    this.setDisabledState(coerceBooleanProperty(dis))
     this.stateChanges.next();
   }
-  
+
   @Input() get errorState() {
     return this.ngControl.errors !== null && this.ngControl.touched;
   }
@@ -97,7 +97,10 @@ export class InputFileComponent implements MatFormFieldControl<FileInput>, Contr
   constructor(public ngControl: NgControl,
     private fm: FocusMonitor, private _elementRef: ElementRef, private _renderer: Renderer2) {
 
-    ngControl.valueAccessor = this;
+    if (ngControl) {
+      ngControl.valueAccessor = this;
+    }
+
     fm.monitor(_elementRef.nativeElement, _renderer, true).subscribe(origin => {
       this.focused = !!origin;
       this.stateChanges.next();
@@ -119,7 +122,7 @@ export class InputFileComponent implements MatFormFieldControl<FileInput>, Contr
     this._onTouched = fn;
   }
 
-  @HostListener('change', ['$event']) change(event:any) {
+  @HostListener('change', ['$event']) change(event: any) {
     const fileList = event.target.files;
     const fileArray = [];
     if (fileList) {

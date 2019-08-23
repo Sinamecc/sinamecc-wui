@@ -87,7 +87,7 @@ export class MccrRegistriesUpdateComponent implements OnInit {
   }
 
   private initialMitigationActions(): Observable<MitigationAction[]> {
-    let mitigationActions = this.mitigationService.mitigationActions(this.i18nService.language.split('-')[0]).pipe(
+    const mitigationActions = this.mitigationService.mitigationActions(this.i18nService.language.split('-')[0]).pipe(
       tap(actions => {
         this.processedMitigationActions = actions;
       }));
@@ -100,11 +100,11 @@ export class MccrRegistriesUpdateComponent implements OnInit {
   }
 
   private initialFormData(): Observable<MccrRegistry> {
-    let mccrRegistry = this.loadFormData().pipe(
-      tap(mccrRegistry => {
+    const mccrRegistry = this.loadFormData().pipe(
+      tap(incomingMccrRegistry => {
         this.form.setValue({
-          mitigation: mccrRegistry['mitigation'],
-          status: mccrRegistry['status']
+          mitigation: incomingMccrRegistry['mitigation'],
+          status: incomingMccrRegistry['fsm_state']
         });
 
       })

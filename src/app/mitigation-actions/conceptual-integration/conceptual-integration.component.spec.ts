@@ -1,6 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConceptualIntegrationComponent } from '@app/mitigation-actions/conceptual-integration/conceptual-integration.component';
+import { MaterialModule } from '@app/material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CoreModule } from '@app/core';
+import { DownloadProposalComponent } from '@app/shared/download-proposal/download-proposal.component';
 
 describe('ConceptualIntegrationComponent', () => {
   let component: ConceptualIntegrationComponent;
@@ -8,7 +17,18 @@ describe('ConceptualIntegrationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConceptualIntegrationComponent ]
+      imports: [
+        MaterialModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+        HttpClientTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CoreModule
+      ],
+      declarations: [ ConceptualIntegrationComponent, DownloadProposalComponent ]
     })
     .compileComponents();
   }));

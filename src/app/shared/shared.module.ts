@@ -14,6 +14,8 @@ import { UploadProposalComponent } from '@app/shared/upload-proposal/upload-prop
 import { UploadProposalService } from '@app/shared/upload-proposal/upload-proposal.service';
 import { UpdateStatusComponent } from '@app/shared/update-status/update-status.component';
 import { UpdateStatusService } from '@app/shared/update-status/update-status.service';
+import { MockUpdateStatusService } from '@app/shared/update-status/update-status.service.mock';
+
 @NgModule({
   imports: [
     FlexLayoutModule,
@@ -33,7 +35,8 @@ import { UpdateStatusService } from '@app/shared/update-status/update-status.ser
   ],
   providers: [
     UploadProposalService,
-    UpdateStatusService
+    UpdateStatusService,
+    MockUpdateStatusService
   ],
   exports: [
     LoaderComponent,

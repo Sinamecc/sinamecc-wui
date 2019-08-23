@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { AuthenticationService } from '@app/core';
-import { DatePipe } from '@angular/common';
 import { map } from 'rxjs/operators';
 import { Permissions } from './permissions';
 import { Groups } from './groups';
@@ -38,8 +37,7 @@ export class AdminService {
 
 
   constructor(private authenticationService: AuthenticationService,
-    private httpClient: HttpClient,
-    private datePipe: DatePipe,) { }
+    private httpClient: HttpClient) { }
 
 
    permissions(){

@@ -60,20 +60,20 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     private service: MitigationActionsService,
     private i18nService: I18nService) {
     this.formData = new FormData();
-    this.isLoading = true; 
+    this.isLoading = true;
     this.createForm();
   }
 
   ngOnInit() {
     this.newFormData = this.initFormOptions().pipe(
-      tap((processedNewFormData: MitigationActionNewFormData) => { this.processedNewFormData = processedNewFormData; })
+      tap((processedNewFormData: MitigationActionNewFormData) => { console.log('PROCESSED NEW FORM DATA', processedNewFormData); this.processedNewFormData = processedNewFormData; })
     );
     this.isUpdating = this.action === 'update';
     this.isLinear = !this.isUpdating;
-    this.isLoading = false; 
+    this.isLoading = false;
   }
 
-  createForm(){
+  createForm() {
     this.mainGroup = this._formBuilder.group({
       // this.formBuilder.array([])
       formArray: this._formBuilder.array([
@@ -82,8 +82,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
         this.keyAspectsFrm,
         this.emissionsMitigationFrm,
         this.impactFrm
-       ])
-                              
+      ])
     });
   }
 
@@ -94,7 +93,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   }
 
   private initFormOptions():Observable<MitigationActionNewFormData> {
-    let initialRequiredData = this.initialFormData().pipe(
+    const initialRequiredData = this.initialFormData().pipe(
       tap(mitigationActionNewFormData => {
         this.isLoading = false;
         this.registrationTypeId = mitigationActionNewFormData.registration_types[0].id;
@@ -128,7 +127,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   }
 
   ngAfterViewInit() {
-    setTimeout(() => this.createForm(), 0)
+    setTimeout(() => this.createForm(), 0);
   }
 
 }
