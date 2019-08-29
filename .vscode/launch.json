@@ -38,7 +38,7 @@
             "program": "${workspaceFolder}/node_modules/protractor/bin/protractor",
             "protocol": "inspector",
             "args": [
-                "${workspaceFolder}/e2e/protractor.conf.js"
+                "${workspaceFolder}/protractor.conf.js"
             ]
         }
     ]

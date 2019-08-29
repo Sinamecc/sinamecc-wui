@@ -21,12 +21,14 @@ export class AppPage {
   }
 
   login() {
-    this.usernameField.sendKeys('test');
-    this.passwordField.sendKeys('123');
+    this.usernameField.sendKeys('admin');
+    this.passwordField.sendKeys('cambiame');
     this.loginButton.click();
   }
 
   getParagraphText() {
-    return element(by.css('app-root mat-card-title')).getText();
+    // console.log('CONSOLEEEE LOGGGG', element(by.css('app-root')));
+    // browser.get('/')
+    return element(by.css('app-root mat-toolbar')).getText();
   }
 }
