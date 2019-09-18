@@ -1,19 +1,19 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <mat-card-title translate  class="section-heading">MCCR Registry</mat-card-title>
+      <mat-card-title translate  class="section-heading">mccr.MCCRRegistry</mat-card-title>
       <mat-divider class="divider-custom"></mat-divider>
       <mat-divider class="divider-custom"></mat-divider>
       <mat-card-subtitle>
         <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
       </mat-card-subtitle>
       <div class="container" [hidden]="isLoading">
-          <h3 translate class="text-color">General Data</h3>
-          <strong translate>Code</strong>: {{mccrRegistry?.id}} <br>
-          <strong translate>Mitigation Action:</strong> {{mccrRegistry?.mitigation}} <br>
-          <strong translate>Status:</strong> {{mccrRegistry?.fsm_state}} <br>
+          <h3 translate class="text-color">Info.generalData</h3>
+          <strong translate>Info.code</strong>: {{mccrRegistry?.id}} <br>
+          <strong translate>mitigationAction.MA</strong>: {{mccrRegistry?.mitigation}} <br>
+          <strong translate>general.status</strong>: {{mccrRegistry?.fsm_state}} <br>
           <!--<mat-divider></mat-divider>-->
-          <h3 translate class="text-color">Files</h3>
+          <h3 translate class="text-color">reportData.files</h3>
           <div>
             <ul>
               <li *ngFor="let file of mccrRegistry?.files">
@@ -23,7 +23,7 @@
               </li>
              </ul>
           </div>
-          <h3 translate class="text-color">Workflow Files</h3>
+          <h3 translate class="text-color">reportData.workflowFiles</h3>
           <div>
             <ul>
               <li *ngFor="let file of mccrRegistry?.workflow_step_files">
@@ -34,7 +34,7 @@
              </ul>
           </div>
           <!--<mat-divider></mat-divider>-->
-          <h3 class="text-color" translate>Actions</h3>
+          <h3 class="text-color" translate>general.actions</h3>
           <button mat-icon-button color="primary" *ngIf="mccrRegistry?.fsm_state !== 'end'" (click)="addReview(mccrRegistry?.id)" > <mat-icon color="white">navigate_next</mat-icon>Next State</button>
       </div>
 

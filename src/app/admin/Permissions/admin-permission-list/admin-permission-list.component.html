@@ -1,6 +1,6 @@
 <mat-card >
     <h3>
-        <mat-card-title class="section-heading" translate>Permissions</mat-card-title>
+        <mat-card-title class="section-heading" translate>admin.permissions</mat-card-title>
         <mat-divider class="divider-custom"></mat-divider>
         <mat-divider class="divider-custom"></mat-divider>
     </h3>
@@ -9,11 +9,11 @@
 
           <div>
               <mat-form-field>
-                <mat-label><span translate>Permission Type</span></mat-label>
+                <mat-label><span translate>admin.permissionType</span></mat-label>
                 <mat-select #searchType name="search" >
                     <mat-option value="0">All</mat-option>
                     <mat-option value="1">MA</mat-option>
-                    <mat-option value="4">Report</mat-option>
+                    <mat-option value="4" >{{ 'reportData.report' | translate }}</mat-option>
                     <mat-option value="3">MCCR</mat-option>
                     <mat-option value="2">PPCN</mat-option>
                 </mat-select>
@@ -21,7 +21,7 @@
               </mat-form-field>
 
               <mat-form-field >
-                  <input #searchPerm matInput placeholder="{{ 'Search permission' | translate }}">
+                  <input #searchPerm matInput placeholder="{{ 'admin.searchPermission' | translate }}">
               </mat-form-field>
               <button mat-icon-button (click)="search(searchPerm.value,searchType.value)">
                   <mat-icon >search</mat-icon>
@@ -34,17 +34,17 @@
 
                 <mat-table  #table [dataSource]="dataSource" >
                         <ng-container matColumnDef="name">
-                            <mat-header-cell *matHeaderCellDef translate>Permissions Name</mat-header-cell>
+                            <mat-header-cell *matHeaderCellDef translate>admin.permName</mat-header-cell>
                             <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
                         </ng-container>
         
                         <ng-container matColumnDef="type">
-                            <mat-header-cell *matHeaderCellDef translate> Type </mat-header-cell>
+                            <mat-header-cell *matHeaderCellDef translate> general.type </mat-header-cell>
                             <mat-cell *matCellDef="let element"> {{element.content_type}} </mat-cell>
                         </ng-container>
         
                         <ng-container matColumnDef="action">
-                            <mat-header-cell *matHeaderCellDef translate> Action </mat-header-cell>
+                            <mat-header-cell *matHeaderCellDef translate> admin.action  </mat-header-cell>
                             <mat-cell *matCellDef="let element"> 
                                 <button *ngIf="componentType == 'delete' " (click)="removePermissions(element)" mat-icon-button color="warn" ><mat-icon color="white">delete</mat-icon></button>
                                 <button *ngIf="componentType == 'add' " mat-icon-button color="primary" (click)="addPermissions(element)"><mat-icon color="white">add</mat-icon></button>

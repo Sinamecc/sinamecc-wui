@@ -46,7 +46,7 @@ export class MitigationActionReviewsNewComponent implements OnInit {
     private service: MitigationActionsService) {
 
       this.id = this.route.snapshot.paramMap.get('id');
-      this.title = "Add a new review for this mitigation action";
+      this.title = "mitigationAction.addReviewMA";
       this.nextRoute = `mitigation/actions`;
       this.formData = new FormData();
       this.formSubmitRoute =  `/v1/mitigations/${this.id}`;

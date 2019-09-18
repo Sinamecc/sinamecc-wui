@@ -2,14 +2,14 @@
     <mat-card>
 
         <h3>
-            <mat-card-title class="section-heading" translate>Groups</mat-card-title>
+            <mat-card-title class="section-heading" translate>admin.groups</mat-card-title>
             <mat-divider class="divider-custom"></mat-divider>
             <mat-divider class="divider-custom"></mat-divider>
         </h3>
 
         <div class="box-button">
             <a disabled mat-button class="mat-raised-button mat-primary" >
-              <span translate> Create Groups</span>
+              <span translate>admin.createGroups</span>
             </a>
         </div>
 
@@ -18,13 +18,13 @@
             <mat-table  #table [dataSource]="dataSource" >
 
                 <ng-container matColumnDef="name">
-                    <mat-header-cell *matHeaderCellDef translate>Group Name</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef translate>admin.groupName</mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.label}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="action">
-                    <mat-header-cell *matHeaderCellDef translate>Action</mat-header-cell>
-                    <mat-header-cell *matHeaderCellDef translate>Action</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef translate>admin.action </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef translate>admin.action </mat-header-cell>
                     <mat-cell *matCellDef="let element"> 
                         <button disabled mat-icon-button color="primary" ><mat-icon color="white">visibility</mat-icon></button>
                         <button disabled mat-icon-button color="warn" (click)="openDeleteConfirmationDialog()"><mat-icon color="white">delete</mat-icon></button>

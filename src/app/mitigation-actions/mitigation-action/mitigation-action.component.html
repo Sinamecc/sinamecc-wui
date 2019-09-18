@@ -1,43 +1,43 @@
 <div class="container">
     <mat-card>
       <mat-card-content>
-        <mat-card-title class="section-heading" translate>Mitigation Action</mat-card-title>
+        <mat-card-title class="section-heading" translate>mitigationAction.MA</mat-card-title>
         <mat-divider class="divider-custom"></mat-divider>
         <mat-divider class="divider-custom"></mat-divider>
         <mat-card-subtitle>
           <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
         </mat-card-subtitle>
         <div class="container" [hidden]="isLoading">
-            <h3 translate class="text-color">General Data</h3>
+            <h3 translate class="text-color">Info.generalData</h3>
             <!--<mat-divider></mat-divider>-->
-            <strong translate>Status</strong>: {{mitigationAction?.fsm_state}} <br>
-            <strong translate>Code</strong>: {{mitigationAction?.id}} <br>
-            <strong translate>Name:</strong> {{mitigationAction?.name}} <br>
-            <strong translate>Program:</strong> {{mitigationAction?.strategy_name}} <br>
-            <strong translate>Objective:</strong> {{mitigationAction?.purpose}} <br>
-            <strong translate>Entity:</strong> {{mitigationAction?.institution.name}} <br>
+            <strong translate>general.status</strong>: {{mitigationAction?.fsm_state}} <br>
+            <strong translate>Info.code</strong>: {{mitigationAction?.id}} <br>
+            <strong translate>Info.name</strong>: {{mitigationAction?.name}} <br>
+            <strong translate>general.program</strong>: {{mitigationAction?.strategy_name}} <br>
+            <strong translate>general.objective</strong>: {{mitigationAction?.purpose}} <br>
+            <strong translate>general.entity</strong>: {{mitigationAction?.institution.name}} <br>
             <!--<mat-divider></mat-divider>-->
-            <h3 translate class="text-color">Contact</h3>
-            <strong translate>Contact Name:</strong> {{mitigationAction?.contact.full_name}} <br>
-            <strong translate>Contact Position:</strong> {{mitigationAction?.contact.job_title}} <br>
-            <strong translate>Contact Phone:</strong> {{mitigationAction?.contact.phone}} <br>
-            <strong translate>Contact Email:</strong> {{mitigationAction?.contact.email}} <br>
+            <h3 translate class="text-color">Info.contact</h3>
+            <strong translate>Info.contactName</strong> {{mitigationAction?.contact.full_name}} <br>
+            <strong translate>Info.contactPosition</strong>: {{mitigationAction?.contact.job_title}} <br>
+            <strong translate>Info.contactPhone</strong>: {{mitigationAction?.contact.phone}} <br>
+            <strong translate>Info.contactEmail</strong>: {{mitigationAction?.contact.email}} <br>
             <!--<mat-divider></mat-divider>-->
-            <h3 translate class="text-color">Progress Indicator</h3>
-            <strong translate>Name:</strong> {{mitigationAction?.progress_indicator.name}} <br>
-            <strong translate>Type:</strong> {{mitigationAction?.progress_indicator.type}} <br>
-            <strong translate>Unit:</strong> {{mitigationAction?.progress_indicator.unit}} <br>
-            <strong translate>Start Date:</strong> {{mitigationAction?.progress_indicator.start_date}} <br>
+            <h3 translate class="text-color">specificLabel.progressIndicators</h3>
+            <strong translate>specificLabel.organitationDistrictCanton</strong>: {{mitigationAction?.progress_indicator.name}} <br>
+            <strong translate>general.type</strong>: {{mitigationAction?.progress_indicator.type}} <br>
+            <strong translate>general.unit</strong>: {{mitigationAction?.progress_indicator.unit}} <br>
+            <strong translate>specificLabel.startDate</strong>: {{mitigationAction?.progress_indicator.start_date}} <br>
             <!--<mat-divider></mat-divider>-->
-            <h3 translate class="text-color">Localization</h3>
-            <strong translate>Geographic Site:</strong> {{mitigationAction?.location.geographical_site}} <br>
-            <strong translate>Is Gis Annexed?:</strong> {{mitigationAction?.location.is_gis_annexed}}
-            <h3 translate class="text-color">Files</h3>
+            <h3 translate class="text-color">specificLabel.localization</h3>
+            <strong translate>geographyLabel.geographicSite</strong>: {{mitigationAction?.location.geographical_site}} <br>
+            <strong translate>specificLabel.GisAnnexed</strong>: {{mitigationAction?.location.is_gis_annexed}}
+            <h3 translate class="text-color">reportData.files</h3>
             <div *ngFor="let file of mitigationAction?.files">
-              <strong translate>File Name</strong>: {{file.name}} <button mat-icon-button color="primary" (click)="download(file.file)" ><mat-icon color="white">vertical_align_bottom</mat-icon></button>
+              <strong translate>reportData.fileName</strong>: {{file.name}} <button mat-icon-button color="primary" (click)="download(file.file)" ><mat-icon color="white">vertical_align_bottom</mat-icon></button>
             </div>
             <!--<mat-divider></mat-divider>-->
-            <h3 class="text-color" translate>Actions</h3>
+            <h3 class="text-color" translate>general.actions</h3>
             <button mat-icon-button color="primary" (click)="review(mitigationAction?.id)" > <mat-icon color="white">rate_review</mat-icon></button>
         </div>
 

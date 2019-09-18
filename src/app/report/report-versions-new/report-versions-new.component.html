@@ -5,30 +5,30 @@
       <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
     </h1>-->
     <h3>
-      <mat-card-title > <div translate class="section-heading">Submit a new report file version:</div> </mat-card-title>
+      <mat-card-title > <div translate class="section-heading">reportData.submitNewFileVersion</div> </mat-card-title>
       <mat-divider class="divider-custom"></mat-divider>
         <mat-divider class="divider-custom"></mat-divider>
     </h3>
     <mat-card-content>
       <form (ngSubmit)="submitForm()" *ngIf="!isLoading" [formGroup]="reportForm" novalidate>
         <div class="report-error" [hidden]="!error || isLoading" translate>
-          <span translate>Error submitting the form.</span>
+          <span translate>errorLabel.errorSubmittingForm</span>
         </div>
         <br/>
         <div fxLayout="column">
           <mat-form-field>
-            <input type="text" matInput formControlName="name" [placeholder]="'Name' | translate"/>
+            <input type="text" matInput formControlName="name" [placeholder]="'Info.name' | translate"/>
             <mat-error *ngIf="reportForm.controls.name.valid || reportForm.controls.name.untouched">
-              <span translate>Name is required</span>
+              <span translate>errorLabel.nameRequired</span>
             </mat-error>
           </mat-form-field>
           <br/>
           <mat-form-field>
               
-              <app-input-file class="mat-raised-button mat-primary" formControlName="file" [placeholder]="'Required input' | translate" valuePlaceholder="No file selected" required><mat-icon >vertical_align_top</mat-icon></app-input-file>
+              <app-input-file class="mat-raised-button mat-primary" formControlName="file" [placeholder]="'errorLabel.requiredInput' | translate" [valuePlaceholder]="'reportData.noFileSelected' | translate"  required><mat-icon >vertical_align_top</mat-icon></app-input-file>
              
               <mat-error *ngIf="reportForm.get('file').hasError('required')" translate>
-                Please select a file
+               reportData.selectFile
               </mat-error>
               <mat-error *ngIf="reportForm.get('file').hasError('maxContentSize')">
                   <span translate>The total size must not exceed {{formDoc.get('file')?.getError('maxContentSize').maxSize | byteFormat}}
@@ -40,7 +40,7 @@
         <div class="box-button">
           <button mat-button class="mat-raised-button mat-primary"  type="submit" [disabled]="reportForm.invalid || isLoading">
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-            <span translate>Submit Report</span>
+            <span translate>reportData.submitReport</span>
           </button>
         </div>
       </form>

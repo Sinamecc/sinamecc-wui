@@ -19,7 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./report-new.component.scss']
 })
 export class ReportNewComponent implements OnInit {
-  value = "Example: e-mail, web page, REST API Call, SFTP, FTP, WeTransfer, other.";
+  value = "example: email, web page, REST API Call, SFTP, FTP, WeTransfer, other.";
   version: string = environment.version;
   error: string;
   reportForm: FormGroup;

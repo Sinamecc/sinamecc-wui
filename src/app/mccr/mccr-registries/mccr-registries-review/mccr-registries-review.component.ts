@@ -41,7 +41,7 @@ export class MccrRegistriesReviewComponent implements OnInit {
     private service: MccrRegistriesService) {
 
     this.id = this.route.snapshot.paramMap.get('id');
-    this.title = 'Add a new review for this mccr registry';
+    this.title = 'specificLabel.addReviewMCCRRegistry';
     this.nextRoute = `mccr/registries`;
     this.formData = new FormData();
     this.formSubmitRoute = `/v1/mccr/${this.id}`;

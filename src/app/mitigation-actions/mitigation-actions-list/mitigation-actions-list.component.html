@@ -1,12 +1,12 @@
 <mat-toolbar class="toolbar-title">
-  <div translate class="section-heading">Mitigation Actions</div>
+  <div translate class="section-heading">mitigationAction.MAs</div>
 </mat-toolbar>
   <mat-divider class="divider-custom"></mat-divider>
   <mat-divider class="divider-custom"></mat-divider> 
 <br>
 
 <div class="box-button">
-<a  mat-button class="mat-raised-button mat-primary" routerLink="/mitigation/actions/new" > <span translate> Add new mitigation action</span></a>
+<a  mat-button class="mat-raised-button mat-primary" routerLink="/mitigation/actions/new" > <span translate>mitigationAction.addMA</span></a>
 </div>
 
 <div class="container mat-elevation-z8 table-sinamecc">
@@ -14,42 +14,42 @@
 
   <!-- Name Column -->
   <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef translate> Name </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef translate> Info.name</mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
   </ng-container>
 
   <!-- Strategy Name Column -->
   <ng-container matColumnDef="strategy_name">
-    <mat-header-cell *matHeaderCellDef translate> Program, Strategy or Initiative </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef translate> mitigationAction.ProgramStrategyInitiative</mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.strategy_name}} </mat-cell>
   </ng-container>
 
     <!-- Objective Column -->
     <ng-container matColumnDef="purpose">
-      <mat-header-cell *matHeaderCellDef translate> Objective </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate> general.objective</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.purpose}} </mat-cell>
     </ng-container>
 
     <!-- Status Column -->
     <ng-container matColumnDef="fsm_state">
-      <mat-header-cell *matHeaderCellDef translate> Status </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate> general.status</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.fsm_state}} </mat-cell>
     </ng-container>
   <!-- Updated Column -->
   <ng-container matColumnDef="updated">
-    <mat-header-cell *matHeaderCellDef translate> Last update: </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef translate>general.lastUpdate </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.updated | date:"MM/dd/yyy hh:mm:ss"}} </mat-cell>
   </ng-container>
 
   <!-- Created Column -->
   <ng-container matColumnDef="created">
-    <mat-header-cell *matHeaderCellDef translate> Created At </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef translate> general.createdAt</mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.created | date:"MM/dd/yyy hh:mm:ss"}} </mat-cell>
   </ng-container>
 
   <!-- Actions Column -->
   <ng-container matColumnDef="actions">
-    <mat-header-cell *matHeaderCellDef translate> Actions </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
     <mat-cell *matCellDef="let element" class="login-box">
       <button  mat-icon-button color="primary" (click)="view(element.id)" ><mat-icon color="white">visibility</mat-icon></button>
       <button  mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)" > <mat-icon color="white">delete</mat-icon></button>

@@ -1,5 +1,5 @@
 <mat-toolbar class="toolbar-title">
-  <div translate class="section-heading">Data for PPCN</div>
+  <div translate class="section-heading">ppcn.dataPPCN</div>
 </mat-toolbar>
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
@@ -7,7 +7,7 @@
 
 <div class="box-button">
   <a  mat-button class="mat-raised-button mat-primary" routerLink="/ppcn/registries/new">
-    <span translate> Add new PPCN</span>
+    <span translate> ppcn.addPPCN</span>
   </a>
 </div>
 
@@ -22,36 +22,36 @@
 
     <!-- Strategy Name Column -->
     <ng-container matColumnDef="organization_ppcn">
-      <mat-header-cell *matHeaderCellDef translate> Organization </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate> specificLabel.OrganizationDistrictCanton </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.organization.name }} </mat-cell>
     </ng-container>
 
     <!-- Objective Column -->
     <ng-container matColumnDef="fsm_state">
-      <mat-header-cell *matHeaderCellDef translate> Status </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate> general.status </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.fsm_state}} </mat-cell>
     </ng-container>
 
     <!-- Status Column -->
     <ng-container matColumnDef="request_type">
-      <mat-header-cell *matHeaderCellDef translate> Request Type </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate> geographyLabel.requestType </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.required_level.level_type }} </mat-cell>
     </ng-container>
     
     <!-- Status Column -->
     <ng-container matColumnDef="required_recognition">
-      <mat-header-cell *matHeaderCellDef translate> Required Recognition </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate> specificLabel.requiredRecognition </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.recognition_type.recognition_type }} </mat-cell>
     </ng-container>
     <!-- Updated Column -->
     <ng-container matColumnDef="geographic_level">
-      <mat-header-cell *matHeaderCellDef translate> Geographic Level </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate> geographyLabel.geographicLevel</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.geographic_level.level }} </mat-cell>
     </ng-container>
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef translate> Actions </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
       <mat-cell *matCellDef="let element" class="login-box">
         <button mat-icon-button color="primary" (click)="view(element.id)"><mat-icon color="white">visibility</mat-icon></button>
         <button  mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)"><mat-icon color="white">delete</mat-icon></button>

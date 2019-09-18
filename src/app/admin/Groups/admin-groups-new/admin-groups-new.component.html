@@ -4,7 +4,7 @@
 
         <h3>
             <mat-card-title translate class="section-heading">
-                <span translate>Create Group</span>
+                <span translate>admin.createGroup</span>
             </mat-card-title>
             <mat-divider class="divider-custom"></mat-divider>
             <mat-divider class="divider-custom"></mat-divider>
@@ -17,14 +17,14 @@
                 <div fxLayout="column">
 
                     <mat-form-field>
-                        <input type="text" #textbox  [ngModel]="name" formControlName="name" matInput [placeholder]="'Group Name' | translate"/>
+                        <input type="text" #textbox  [ngModel]="name" formControlName="name" matInput [placeholder]="'admin.groupName' | translate"/>
                     </mat-form-field>
 
                 </div>
 
                 <div class="box-button">
                     <button mat-raised-button color="primary" type="submit">
-                        <span translate>Create Group</span>
+                        <span translate>admin.createGroup</span>
                     </button>
                     
                 </div>

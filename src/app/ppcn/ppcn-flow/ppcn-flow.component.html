@@ -2,7 +2,7 @@
   <mat-card>
     <h3>
       <mat-card-title>
-          <span translate class="section-heading">Create a new PPCN Registry:</span>
+          <span translate class="section-heading">ppcn.createPPCN</span>
           <mat-divider class="divider-custom"></mat-divider>
           <mat-divider class="divider-custom"></mat-divider>
       </mat-card-title>
@@ -10,23 +10,23 @@
     <form [formGroup]="mainGroup">
       <mat-horizontal-stepper [linear] = "true" formArrayName="formArray">
         <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
-          <ng-template matStepLabel><span translate>Geographic Level</span></ng-template>
+          <ng-template matStepLabel><span translate>geographyLabel.geographicLevel</span></ng-template>
           <app-ppcn-level></app-ppcn-level>
           <div class="align-right">
               <button [disabled] = "levelId === ''" mat-button matStepperNext class="mat-raised-button mat-primary">
-                  <span translate>Next</span>
+                  <span translate>general.next</span>
                   <mat-icon color="white">arrow_forward</mat-icon>
               </button>
           </div>
         </mat-step>
 
         <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
-          <ng-template matStepLabel><span translate>PPCN Form</span></ng-template>
+          <ng-template matStepLabel><span translate>ppcn.PPCNForm</span></ng-template>
           <app-ppcn-new> </app-ppcn-new>
           <div class="align-right">
             <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
                 <mat-icon color="white">arrow_back</mat-icon>
-                <span translate>Back</span>
+                <span translate>general.back</span>
               </button>
           </div>
 
