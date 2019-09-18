@@ -4,7 +4,7 @@
   "credentialsSection":{
     "passwordRequired":"Contraseña requerida",
     "remember": "Recuerdame",
-    "loggedAss": "Inicio de sesión como",
+    "loggedAs": "Inicio de sesión como",
     "login": "Iniciar Sesión",
     "logout": "Cerrar Sesión",
     "password": "Contraseña",
@@ -111,7 +111,7 @@
     "yes":"Si",
     "no":"No",
     "done":"Listo",
-    "youSure":"Esta seguro?",
+    "youSure":"¿Esta seguro?",
     "status":"Estado",
     "previousStatus":"Estado Previo",
     "currentStatus":"Estado Actual",
@@ -139,7 +139,7 @@
 
   },
 
-  "Info":{
+  "info":{
     "contact":"Contacto",
     "contactName":"Nombre del Contacto",
     "contactPosition":"Posicion",
@@ -161,7 +161,7 @@
     "name": "Nombre"
   },
 
-  "MCCRPOC":{
+  "mccrPoc":{
     "addDAC":"Anadir nueva cuenta de desarrollador",
     "addBAC":"Anadir nueva cuenta de comprador",
     "addUCC":"Añadir nueva UCC",
@@ -338,7 +338,6 @@
     "goHome":"Volver a Casa",
     "requiredRecognition":"Reconocimiento requerido",
     "registerProposal":"Registrar propuesta",
-    "youSure":"¿Está seguro?",
     "addReviewMCCRRegistry":"Agregar una nueva revisión para este registro mccr"
   },
 

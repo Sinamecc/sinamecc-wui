@@ -96,7 +96,7 @@ export class MccrRegistriesListComponent implements OnInit {
   openDeleteConfirmationDialog(uuid:string) {
     const data = {
       title: "mccr.deleteMCCR",
-      question: "specificLabel.youSure",
+      question: "general.youSure",
       uuid: uuid
     };
     const dialogConfig = new MatDialogConfig();

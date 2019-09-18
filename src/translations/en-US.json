@@ -4,7 +4,7 @@
   "credentialsSection":{
     "passwordRequired":"Password is required",
     "remember": "Remember me",
-    "loggedAss": "Logged in as",
+    "loggedAs": "Logged in as",
     "login": "Login",
     "logout": "Logout",
     "password": "Password",
@@ -138,7 +138,7 @@
 
   },
 
-  "Info":{
+  "info":{
     "contact":"Contact",
     "contactName":"Contact Name",
     "contactPosition":"Contact Position",
@@ -161,7 +161,7 @@
 
   },
 
-  "MCCRPOC":{
+  "mccrPoc":{
     "addDAC":"Add new developer account",
     "addBAC":"Add new buyer account",
     "addUCC":"Add new UCC",

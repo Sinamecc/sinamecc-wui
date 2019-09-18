@@ -95,7 +95,7 @@ export class MitigationActionsListComponent implements OnInit {
   openDeleteConfirmationDialog(uuid: string) {
     const data = {
       title: "mitigationAction.deleteMA",
-      question: "specificLabel.youSure",
+      question: "general.youSure",
       uuid: uuid
     };
     const dialogConfig = new MatDialogConfig();

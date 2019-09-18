@@ -76,7 +76,7 @@ export class PpcnListComponent implements OnInit {
   openDeleteConfirmationDialog(uuid:string) {
     const data = {
       title: "ppcn.deletePPCN",
-      question: "specificLabel.youSure",
+      question: "general.youSure",
       uuid: uuid
     };
     const dialogConfig = new MatDialogConfig();

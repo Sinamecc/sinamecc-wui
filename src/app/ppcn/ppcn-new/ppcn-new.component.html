@@ -6,7 +6,7 @@
 
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
-              <span *ngIf="levelId == 1" translate>Info.basicInfo </span>
+              <span *ngIf="levelId == 1" translate>infobasicInfo </span>
               <span *ngIf="levelId == 2" translate>specificLabel.organizationInfo </span>
             </ng-template>
 
@@ -34,12 +34,12 @@
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
-              <mat-label translate> Info.fax </mat-label>
+              <mat-label translate> infofax </mat-label>
               <input matInput formControlName="faxCtrl">
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
-              <mat-label translate> Info.postalCode </mat-label>
+              <mat-label translate> infopostalCode </mat-label>
               <input matInput formControlName="postalCodeCtrl">
             </mat-form-field>
             <br />
@@ -69,7 +69,7 @@
 
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
             <ng-template matStepLabel>
-              <div translate> Info.contactInfo </div>
+              <div translate> infocontactInfo </div>
             </ng-template>
             <mat-form-field class="field-ppcn">
               <mat-label translate>Name</mat-label>
@@ -85,14 +85,14 @@
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate> Info.emailAddress </mat-label>
+              <mat-label translate> infoemailAddress </mat-label>
               <input matInput formControlName="emailFormCtrl">
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate> Info.phone </mat-label>
+              <mat-label translate> infophone </mat-label>
               <input matInput formControlName="phoneCtrl" type="tel">
               <mat-error translate> errorLabel.inputOrLengthIncorrect</mat-error>
             </mat-form-field>

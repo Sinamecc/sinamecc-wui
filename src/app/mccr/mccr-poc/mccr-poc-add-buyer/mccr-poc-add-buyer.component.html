@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
     <h3>
-      <mat-card-title  translate class="section-heading">MCCRPOC.addBuyerTransfer</mat-card-title>
+      <mat-card-title  translate class="section-heading">mccrPoc.addBuyerTransfer</mat-card-title>
       <mat-divider class="divider-custom"></mat-divider>
       <mat-divider class="divider-custom"></mat-divider>
     </h3>
@@ -22,25 +22,25 @@
                         </mat-form-field> 
                 
                         <mat-form-field >
-                          <input [disabled]="true" value="{{id}}" matInput placeholder="{{ 'MCCRPOC.uccCode' | translate }}" >
+                          <input [disabled]="true" value="{{id}}" matInput placeholder="{{ 'mccrPoc.uccCode' | translate }}" >
                         </mat-form-field>
                       
                         <mat-form-field >
-                          <input formControlName="developerAccountNUmber" matInput placeholder="{{ 'MCCRPOC.DevAccountNumber' | translate }}">
+                          <input formControlName="developerAccountNUmber" matInput placeholder="{{ 'mccrPoc.DevAccountNumber' | translate }}">
                           <mat-error *ngIf="form.controls.developerAccountNUmber.invalid || form.controls.developerAccountNUmber.untouched">
                               <span translate>errorLabel.devAccountNumRequired</span>
                           </mat-error>
                         </mat-form-field>
 
                         <mat-form-field >
-                          <input formControlName="buyerAccountNUmber" matInput placeholder="{{ 'MCCRPOC.buyerAccountNumber' | translate }}">
+                          <input formControlName="buyerAccountNUmber" matInput placeholder="{{ 'mccrPoc.buyerAccountNumber' | translate }}">
                           <mat-error *ngIf="form.controls.buyerAccountNUmber.invalid || form.controls.buyerAccountNUmber.untouched">
                               <span translate>errorLabel.buyerAccountNumRequired</span>
                           </mat-error>
                         </mat-form-field>
 
                         <mat-form-field >
-                          <input type="number" formControlName="numberUccToTransfer" matInput placeholder="{{  'MCCRPOC.numberUCCTransfer' | translate }}">
+                          <input type="number" formControlName="numberUccToTransfer" matInput placeholder="{{  'mccrPoc.numberUCCTransfer' | translate }}">
                           <mat-error *ngIf="form.controls.numberUccToTransfer.invalid || form.controls.numberUccToTransfer.untouched">
                               <span translate>errorLabel.numUCCTransferRequired</span>
                           </mat-error>

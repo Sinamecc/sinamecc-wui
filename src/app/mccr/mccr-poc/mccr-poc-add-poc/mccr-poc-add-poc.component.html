@@ -3,7 +3,7 @@
 
 
     <h3>
-      <mat-card-title  translate class="section-heading">MCCRPOC.addPOC</mat-card-title>
+      <mat-card-title  translate class="section-heading">mccrPoc.addPOC</mat-card-title>
       <mat-divider class="divider-custom"></mat-divider>
       <mat-divider class="divider-custom"></mat-divider>
     </h3>
@@ -25,15 +25,15 @@
           </mat-form-field> 
 
           <mat-form-field>
-            <input type="text" matInput formControlName="uccBatchCode" [placeholder]="'MCCRPOC.UCCBatchBase'| translate" />
+            <input type="text" matInput formControlName="uccBatchCode" [placeholder]="'mccrPoc.UCCBatchBase'| translate" />
             <mat-error *ngIf="form.controls.uccBatchCode.invalid || form.controls.uccBatchCode.untouched">
-                <span translate>MCCRPOC.batchBaseRequired</span>
+                <span translate>mccrPoc.batchBaseRequired</span>
             </mat-error>
           </mat-form-field> 
           <mat-form-field>
-            <input type="number" matInput formControlName="uccBatchSize" [placeholder]="'MCCRPOC.UCCBatchSize'| translate" />
+            <input type="number" matInput formControlName="uccBatchSize" [placeholder]="'mccrPoc.UCCBatchSize'| translate" />
             <mat-error *ngIf="form.controls.uccBatchSize.invalid || form.controls.uccBatchSize.untouched">
-                <span translate>MCCRPOC.batchSizeRequired</span>
+                <span translate>mccrPoc.batchSizeRequired</span>
             </mat-error>
           </mat-form-field> 
 

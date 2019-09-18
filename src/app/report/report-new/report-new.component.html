@@ -18,7 +18,7 @@
         <div fxLayout="column">
           <mat-icon  [matTooltip]="'general.file' | translate">folder </mat-icon>
           <mat-form-field>
-            <input type="text" matInput formControlName="name" [placeholder]="'Info.name' | translate"/>
+            <input type="text" matInput formControlName="name" [placeholder]="'infoname' | translate"/>
             <mat-error *ngIf="reportForm.controls.name.valid || reportForm.controls.name.untouched">
               <span translate>errorLabel.nameRequired</span>
             </mat-error>
@@ -59,7 +59,7 @@
             <br/>
 
             <mat-form-field>
-                <input type="text" matInput formControlName="personName" [placeholder]="'Info.name'| translate"/>
+                <input type="text" matInput formControlName="personName" [placeholder]="'infoname'| translate"/>
                 <br/>
             </mat-form-field>
 

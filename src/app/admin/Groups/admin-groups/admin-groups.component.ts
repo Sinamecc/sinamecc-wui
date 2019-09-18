@@ -22,7 +22,7 @@ export class AdminGroupsComponent implements OnInit {
   openDeleteConfirmationDialog() {
     const data = {
       title: "Delete Group",
-      question: "{{ 'general.youSure' | translate }}",
+      question: "general.youSure",
       
     };
     const dialogConfig = new MatDialogConfig();

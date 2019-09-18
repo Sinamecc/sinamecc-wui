@@ -14,7 +14,7 @@
             </ng-template>
 
             <h3>
-              <span translate>Info.code</span>:<span>{{mitigationAction?.id}}</span>
+              <span translate>infocode</span>:<span>{{mitigationAction?.id}}</span>
             </h3>
 
             <mat-form-field class="field-ppcn">
@@ -38,7 +38,7 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>mitigationAction.StartMA:</mat-label>
-              <input matInput [matDatepicker]="implementationInitialDatePicker" [placeholder]="'Info.chooseDate' | translate"
+              <input matInput [matDatepicker]="implementationInitialDatePicker" [placeholder]="'infochooseDate' | translate"
                 formControlName="implementationInitialDateCtrl">
               <mat-datepicker-toggle matSuffix [for]="implementationInitialDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationInitialDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
@@ -47,7 +47,7 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>mitigationAction.lastMA:</mat-label>
-              <input matInput [matDatepicker]="implementationEndDatePicker" [placeholder]="'Info.chooseDate' | translate"
+              <input matInput [matDatepicker]="implementationEndDatePicker" [placeholder]="'infochooseDate' | translate"
                 formControlName="implementationEndDateCtrl">
               <mat-datepicker-toggle matSuffix [for]="implementationEndDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationEndDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
@@ -88,7 +88,7 @@
           <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
 
             <ng-template matStepLabel>
-              <div translate>Info.location</div>
+              <div translate>infolocation</div>
             </ng-template>
             <mat-form-field class="field-ppcn">
               <mat-label translate>geographyLabel.geographicSite</mat-label>

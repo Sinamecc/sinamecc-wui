@@ -32,7 +32,7 @@ export class AdminUsersComponent implements OnInit {
   openDeleteConfirmationDialog() {
     const data = {
       title: "Delete User",
-      question: "'general.youSure' | translate",
+      question: "general.youSure",
       
     };
     const dialogConfig = new MatDialogConfig();

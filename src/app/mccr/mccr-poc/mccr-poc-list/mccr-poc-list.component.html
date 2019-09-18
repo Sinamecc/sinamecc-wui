@@ -14,26 +14,26 @@
 
             <div class="container" [hidden]="isLoading">
                 <h3 translate class="text-color">{{ 'general.data' | translate }}</h3>
-                  <strong translate>{{ 'MCCRPOC.uccCode' | translate }}</strong>: {{mccr_poc?.ucc_code}} <br>
-                  <strong translate>{{ 'MCCRPOC.minusqAccount' | translate }}</strong>: {{mccr_poc?.minusq_account}} <br>
-                  <strong translate>{{ 'MCCRPOC.generationAccount' | translate }}</strong>: {{mccr_poc?.generation_account}} <br>
-                  <strong translate>{{ 'MCCRPOC.finalBalance' | translate }}</strong>: {{mccr_poc?.final_balance}} <br>
-                  <strong *ngIf="mccr_poc.buyer_account != undefined" translate>{{ 'MCCRPOC.reserveAccount' | translate }}:</strong> {{mccr_poc?.reserve_account}} <br>
+                  <strong translate>{{ 'mccrPoc.uccCode' | translate }}</strong>: {{mccr_poc?.ucc_code}} <br>
+                  <strong translate>{{ 'mccrPoc.minusqAccount' | translate }}</strong>: {{mccr_poc?.minusq_account}} <br>
+                  <strong translate>{{ 'mccrPoc.generationAccount' | translate }}</strong>: {{mccr_poc?.generation_account}} <br>
+                  <strong translate>{{ 'mccrPoc.finalBalance' | translate }}</strong>: {{mccr_poc?.final_balance}} <br>
+                  <strong *ngIf="mccr_poc.buyer_account != undefined" translate>{{ 'mccrPoc.reserveAccount' | translate }}:</strong> {{mccr_poc?.reserve_account}} <br>
                 <div *ngIf="mccr_poc.developer_account != undefined"> 
-                 <h3 translate class="text-color">  {{ 'MCCRPOC.devAccount' | translate }}</h3>
-                  <strong translate>{{ 'MCCRPOC.devCurrentDebitBalance' | translate }}</strong>: {{mccr_poc?.developer_account.developer_current_debit_balance}} <br>
-                  <strong translate>{{ 'MCCRPOC.devCurrentCreditBalance' | translate }}</strong>: {{mccr_poc?.developer_account.developer_current_credit_balance}} <br>
-                  <strong translate>{{ 'MCCRPOC.devFinalBalance' | translate }}</strong>: {{mccr_poc?.developer_account.developer_final_balance}} <br>
+                 <h3 translate class="text-color">  {{ 'mccrPoc.devAccount' | translate }}</h3>
+                  <strong translate>{{ 'mccrPoc.devCurrentDebitBalance' | translate }}</strong>: {{mccr_poc?.developer_account.developer_current_debit_balance}} <br>
+                  <strong translate>{{ 'mccrPoc.devCurrentCreditBalance' | translate }}</strong>: {{mccr_poc?.developer_account.developer_current_credit_balance}} <br>
+                  <strong translate>{{ 'mccrPoc.devFinalBalance' | translate }}</strong>: {{mccr_poc?.developer_account.developer_final_balance}} <br>
                 </div>
                 <div *ngIf="mccr_poc.buyer_account != undefined "> 
-                    <h3 translate class="text-color">  {{ 'MCCRPOC.buyerAccount' | translate }}</h3>
-                    <strong translate>{{ 'MCCRPOC.buyerCurrentDebitBalance' | translate }}</strong>: {{mccr_poc?.buyer_account.buyer_current_debit_balance}} <br>
-                    <strong translate>{{ 'MCCRPOC.buyerCurrentCreditBalance' | translate }}</strong>: {{mccr_poc?.buyer_account.buyer_current_credit_balance}} <br>
-                    <strong translate>{{ 'MCCRPOC.buyerFinalBalance' | translate }}</strong>: {{mccr_poc?.buyer_account.buyer_final_balance}} <br>
+                    <h3 translate class="text-color">  {{ 'mccrPoc.buyerAccount' | translate }}</h3>
+                    <strong translate>{{ 'mccrPoc.buyerCurrentDebitBalance' | translate }}</strong>: {{mccr_poc?.buyer_account.buyer_current_debit_balance}} <br>
+                    <strong translate>{{ 'mccrPoc.buyerCurrentCreditBalance' | translate }}</strong>: {{mccr_poc?.buyer_account.buyer_current_credit_balance}} <br>
+                    <strong translate>{{ 'mccrPoc.buyerFinalBalance' | translate }}</strong>: {{mccr_poc?.buyer_account.buyer_final_balance}} <br>
                 </div> 
                 <div class="options">
-                 <button class="options-button" mat-icon-button color="black" matTooltip="{{ 'MCCRPOC.addBuyerAccount' | translate:lang }}" *ngIf="mccr_poc.buyer_account == null" (click)="openAddBuyer(mccr_poc.ucc_code)"> <mat-icon color="white">folder</mat-icon></button>
-                 <button class="options-button" mat-icon-button color="black" matTooltip="{{ 'MCCRPOC.AddDevAccount' | translate:lang }}" *ngIf="mccr_poc.developer_account == null" (click)="openAddDeveloper(mccr_poc.ucc_code)"> <mat-icon color="white">person</mat-icon></button>
+                 <button class="options-button" mat-icon-button color="black" matTooltip="{{ 'mccrPoc.addBuyerAccount' | translate:lang }}" *ngIf="mccr_poc.buyer_account == null" (click)="openAddBuyer(mccr_poc.ucc_code)"> <mat-icon color="white">folder</mat-icon></button>
+                 <button class="options-button" mat-icon-button color="black" matTooltip="{{ 'mccrPoc.AddDevAccount' | translate:lang }}" *ngIf="mccr_poc.developer_account == null" (click)="openAddDeveloper(mccr_poc.ucc_code)"> <mat-icon color="white">person</mat-icon></button>
                 </div>
             </div>
 
