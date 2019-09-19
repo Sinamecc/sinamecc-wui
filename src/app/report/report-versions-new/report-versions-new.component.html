@@ -17,7 +17,7 @@
         <br/>
         <div fxLayout="column">
           <mat-form-field>
-            <input type="text" matInput formControlName="name" [placeholder]="'infoname' | translate"/>
+            <input type="text" matInput formControlName="name" [placeholder]="'info.name' | translate"/>
             <mat-error *ngIf="reportForm.controls.name.valid || reportForm.controls.name.untouched">
               <span translate>errorLabel.nameRequired</span>
             </mat-error>

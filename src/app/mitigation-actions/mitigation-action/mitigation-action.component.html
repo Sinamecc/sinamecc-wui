@@ -8,20 +8,20 @@
           <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
         </mat-card-subtitle>
         <div class="container" [hidden]="isLoading">
-            <h3 translate class="text-color">infogeneralData</h3>
+            <h3 translate class="text-color">info.generalData</h3>
             <!--<mat-divider></mat-divider>-->
             <strong translate>general.status</strong>: {{mitigationAction?.fsm_state}} <br>
-            <strong translate>infocode</strong>: {{mitigationAction?.id}} <br>
-            <strong translate>infoname</strong>: {{mitigationAction?.name}} <br>
+            <strong translate>info.code</strong>: {{mitigationAction?.id}} <br>
+            <strong translate>info.name</strong>: {{mitigationAction?.name}} <br>
             <strong translate>general.program</strong>: {{mitigationAction?.strategy_name}} <br>
             <strong translate>general.objective</strong>: {{mitigationAction?.purpose}} <br>
             <strong translate>general.entity</strong>: {{mitigationAction?.institution.name}} <br>
             <!--<mat-divider></mat-divider>-->
             <h3 translate class="text-color">infocontact</h3>
-            <strong translate>infocontactName</strong> {{mitigationAction?.contact.full_name}} <br>
-            <strong translate>infocontactPosition</strong>: {{mitigationAction?.contact.job_title}} <br>
-            <strong translate>infocontactPhone</strong>: {{mitigationAction?.contact.phone}} <br>
-            <strong translate>infocontactEmail</strong>: {{mitigationAction?.contact.email}} <br>
+            <strong translate>info.contactName</strong> {{mitigationAction?.contact.full_name}} <br>
+            <strong translate>info.contactPosition</strong>: {{mitigationAction?.contact.job_title}} <br>
+            <strong translate>info.contactPhone</strong>: {{mitigationAction?.contact.phone}} <br>
+            <strong translate>info.contactEmail</strong>: {{mitigationAction?.contact.email}} <br>
             <!--<mat-divider></mat-divider>-->
             <h3 translate class="text-color">specificLabel.progressIndicators</h3>
             <strong translate>specificLabel.organitationDistrictCanton</strong>: {{mitigationAction?.progress_indicator.name}} <br>

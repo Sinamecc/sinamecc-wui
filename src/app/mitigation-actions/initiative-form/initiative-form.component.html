@@ -14,7 +14,7 @@
             </ng-template>
 
             <h3 *ngIf="isUpdating">
-              <span translate>infocode</span>:<span>{{mitigationAction?.id}}</span>
+              <span translate>info.code</span>:<span>{{mitigationAction?.id}}</span>
             </h3>
 
             <!-- <mat-form-field class="field-ppcn">
@@ -147,7 +147,7 @@
               <span translate>specificLabel.initiativeContactInfo</span>
             </ng-template>
             <mat-form-field class="field-ppcn">
-              <mat-label translate>infocontactName</mat-label>
+              <mat-label translate>info.contactName</mat-label>
               <input matInput formControlName="initiativeContactNameCtrl">
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
@@ -160,14 +160,14 @@
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>infoemailAddress</mat-label>
+              <mat-label translate>info.emailAddress</mat-label>
               <input matInput formControlName="initiativeEmailFormCtrl">
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>infophone</mat-label>
+              <mat-label translate>info.phone</mat-label>
               <input matInput formControlName="initiativePhoneCtrl" type="tel">
               <mat-error translate> errorLabel.inputOrLengthIncorrect</mat-error>
             </mat-form-field>

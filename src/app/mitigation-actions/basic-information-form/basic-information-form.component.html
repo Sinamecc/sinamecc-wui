@@ -10,11 +10,11 @@
         <mat-vertical-stepper formArrayName="formArray" linear>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
-              <span translate>infobasicInfo</span>
+              <span translate>info.basicInfo</span>
             </ng-template>
 
             <h3>
-              <span translate>infocode</span>:<span>{{mitigationAction?.id}}</span>
+              <span translate>info.code</span>:<span>{{mitigationAction?.id}}</span>
             </h3>
 
             <mat-form-field class="field-ppcn">
@@ -49,11 +49,11 @@
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
 
             <ng-template matStepLabel>
-              <div translate>infocontactInfo</div>
+              <div translate>info.contactInfo</div>
             </ng-template>
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>infoname</mat-label>
+              <mat-label translate>info.name</mat-label>
               <input matInput formControlName="contactNameCtrl">
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
@@ -66,14 +66,14 @@
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>infoemailAddress</mat-label>
+              <mat-label translate>info.emailAddress</mat-label>
               <input matInput formControlName="emailFormCtrl">
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>infophone</mat-label>
+              <mat-label translate>info.phone</mat-label>
               <input matInput formControlName="phoneCtrl" type="tel">
               <mat-error translate> errorLabel.inputOrLengthIncorrect</mat-error>
             </mat-form-field>
