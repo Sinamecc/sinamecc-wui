@@ -276,7 +276,7 @@
     "carbonSinks":"Sumideros de Carbono",
     "impactInEmissions":"Cómo se logrará el impacto en las emisiones?",
     "bibliographicalSources":"Fuentes bibliograficas",
-    "everythingCorrect.":"Todo parece bien.",
+    "everythingCorrect":"Todo parece bien.",
     "CRCompensationUnit":"Unidades de compensación costarricense",
     "ingeiCompliance":"Conformidad Ingei",
     "sucessfullySubmittedForm":"Formulario enviado exitosamente",
@@ -324,7 +324,7 @@
     "baseYear":"Año base:",
     "reportYear":"Año del informe:",
     "chooseYear":"Elige un año",
-    "emissionDateDeclarationVerification:":"Fecha de emisión de la declaración de verificación:",
+    "emissionDateDeclarationVerification":"Fecha de emisión de la declaración de verificación:",
     "activityCarriedOrganization":"Especificar la actividad que realiza la organización.",
     "addActivity":"Agregar nueva actividad",
     "currentStatus":"Estado actual:",
@@ -338,7 +338,8 @@
     "goHome":"Volver a Casa",
     "requiredRecognition":"Reconocimiento requerido",
     "registerProposal":"Registrar propuesta",
-    "addReviewMCCRRegistry":"Agregar una nueva revisión para este registro mccr"
+    "addReviewMCCRRegistry":"Agregar una nueva revisión para este registro mccr",
+    "districtCouncilAddress":"Discurso del consejo de distrito"
   },
 
   "APP_NAME": "sinamecc wui"

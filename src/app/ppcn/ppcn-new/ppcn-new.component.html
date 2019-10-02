@@ -52,7 +52,7 @@
             </ng-template>
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>{{levelId==2 ? "Address" : "District council address" }}</mat-label>
+              <mat-label translate>{{levelId==2 ? "Address" : "specificLabel.districtCouncilAddress" }}</mat-label>
 
               <input matInput formControlName="addressCtrl" required>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -72,7 +72,7 @@
               <div translate> info.contactInfo </div>
             </ng-template>
             <mat-form-field class="field-ppcn">
-              <mat-label translate>Name</mat-label>
+              <mat-label translate>info.name</mat-label>
               <input matInput formControlName="contactNameCtrl">
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>

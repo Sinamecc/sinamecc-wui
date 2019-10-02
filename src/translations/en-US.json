@@ -323,7 +323,7 @@
     "baseYear":"Base year",
     "reportYear":"Report year",
     "chooseYear":"Choose a year",
-    "emissionDateDeclarationVerification:":"Emission Date of the declaration of verification",
+    "emissionDateDeclarationVerification":"Emission Date of the declaration of verification",
     "activityCarriedOrganization":"Specify the activity carried out by organization",
     "addActivity":"Add new activity",
     "currentStatus":"Current Status",
@@ -338,7 +338,8 @@
     "requiredRecognition":"Required Recognition",
     "registerProposal":"Register Proposal",
     "youSure":"Are you sure?",
-    "addReviewMCCRRegistry":"Add a new review for this mccr registry"
+    "addReviewMCCRRegistry":"Add a new review for this mccr registry",
+    "districtCouncilAddress":"District council address"
   },
 
   "APP_NAME": "sinamecc wui"
