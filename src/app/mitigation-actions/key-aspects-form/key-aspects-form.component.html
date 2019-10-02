@@ -2,7 +2,7 @@
   <mat-card-content>
     <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
       <div class="form-error" [hidden]="!error || isLoading" translate>
-        <span translate>Error submitting the form.</span>
+        <span translate>errorLabel.errorSubmittingForm</span>
       </div>
       <br />
       <div fxLayout="column">
@@ -10,23 +10,23 @@
         <mat-vertical-stepper formArrayName="formArray" linear>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
-              <span translate>Objectives</span>
+              <span translate>general.objectives</span>
             </ng-template>
 
             <h3>
-              <span translate>Code</span>:<span>{{mitigationAction?.id}}</span>
+              <span translate>info.code</span>:<span>{{mitigationAction?.id}}</span>
             </h3>
 
             <mat-form-field class="field-ppcn">
-              <textarea matInput formControlName="actionObjectiveCtrl" [placeholder]="'Objective of the mitigation action' | translate"
+              <textarea matInput formControlName="actionObjectiveCtrl" [placeholder]="'mitigationAction.ObjectiveMA' | translate"
                 matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
-              <mat-error translate>This field is required</mat-error>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
 
-              <mat-select formControlName="actionStatusCtrl" [placeholder]="'Mitigation Action Status' | translate">
+              <mat-select formControlName="actionStatusCtrl" [placeholder]="'mitigationAction.MAstatus' | translate">
 
                 <mat-option *ngFor="let status of processedNewFormData.statuses" [value]="status.id">
                   {{ status.status }}
@@ -37,8 +37,8 @@
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>Starting year of Mitigation Action:</mat-label>
-              <input matInput [matDatepicker]="implementationInitialDatePicker" [placeholder]="'Choose a date' | translate"
+              <mat-label translate>mitigationAction.StartMA:</mat-label>
+              <input matInput [matDatepicker]="implementationInitialDatePicker" [placeholder]="'info.chooseDate' | translate"
                 formControlName="implementationInitialDateCtrl">
               <mat-datepicker-toggle matSuffix [for]="implementationInitialDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationInitialDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
@@ -46,8 +46,8 @@
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>Last year of Mitigation Action:</mat-label>
-              <input matInput [matDatepicker]="implementationEndDatePicker" [placeholder]="'Choose a date' | translate"
+              <mat-label translate>mitigationAction.lastMA:</mat-label>
+              <input matInput [matDatepicker]="implementationEndDatePicker" [placeholder]="'info.chooseDate' | translate"
                 formControlName="implementationEndDateCtrl">
               <mat-datepicker-toggle matSuffix [for]="implementationEndDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationEndDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
@@ -55,7 +55,7 @@
 
             <div class="center">
               <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
-                <span translate>Next</span>
+                <span translate>general.next</span>
                 <mat-icon color="white">arrow_forward</mat-icon>
               </button>
             </div>
@@ -64,11 +64,11 @@
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
 
             <ng-template matStepLabel>
-              <div translate>Geographic Scale</div>
+              <div translate>geographyLabel.geographicScale</div>
             </ng-template>
 
             <mat-form-field class="field-ppcn">
-              <mat-select [placeholder]="'Geographic Scale' | translate" formControlName="geographicScaleCtrl">
+              <mat-select [placeholder]="'geographyLabel.geographicScale' | translate" formControlName="geographicScaleCtrl">
                 <mat-option *ngFor="let geographicScale of processedNewFormData.geographic_scales" [value]="geographicScale.id">{{geographicScale.name}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -76,10 +76,10 @@
             <div class="center">
                 <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
                   <mat-icon color="white">arrow_back</mat-icon>
-                  <span translate>Back</span>
+                  <span translate>general.back</span>
                 </button>
                 <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
-                  <span translate>Next</span>
+                  <span translate>general.next</span>
                   <mat-icon color="white">arrow_forward</mat-icon>
                 </button>
               </div>
@@ -88,27 +88,27 @@
           <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
 
             <ng-template matStepLabel>
-              <div translate>Location</div>
+              <div translate>info.location</div>
             </ng-template>
             <mat-form-field class="field-ppcn">
-              <mat-label translate>Geographic Site</mat-label>
+              <mat-label translate>geographyLabel.geographicSite</mat-label>
               <input matInput formControlName="locationNameCtrl">
-              <mat-error translate>The input is required.</mat-error>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
-            <mat-label translate>GIS information Annexed?</mat-label>
+            <mat-label translate>specificLabel.GISInformationAnnexed</mat-label>?
             <mat-radio-group matInput formControlName="gisAnnexedCtrl">
-              <mat-radio-button value="1"><span translate> Yes </span></mat-radio-button>
-              <mat-radio-button value="0"><span translate>No </span></mat-radio-button>
+              <mat-radio-button value="1"><span translate> general.yes </span></mat-radio-button>
+              <mat-radio-button value="0"><span translate>general.no </span></mat-radio-button>
             </mat-radio-group>
             <div class="center">
               <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
                 <mat-icon color="white">arrow_back</mat-icon>
-                <span translate>Back</span>
+                <span translate>general.back</span>
               </button>
               <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
-                <span translate>Next</span>
+                <span translate>general.next</span>
                 <mat-icon color="white">arrow_forward</mat-icon>
               </button>
             </div>
@@ -117,11 +117,11 @@
           <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
 
             <ng-template matStepLabel>
-              <div translate>Financing</div>
+              <div translate>specificLabel.financing</div>
             </ng-template>
             <mat-form-field class="field-ppcn">
-              <mat-label translate>Finance Status</mat-label>
-              <mat-select formControlName="financingStatusCtrl" [placeholder]="'Finance Source Status' | translate"
+              <mat-label translate>specificLabel.financeStatus</mat-label>
+              <mat-select formControlName="financingStatusCtrl" [placeholder]="'specificLabel.financeSourceStatus' | translate"
                 (selectionChange)="financialSourceInputShown($event)">
                 <mat-option *ngFor="let financeStatus of processedNewFormData.finance_status" [value]="financeStatus.id">
                   {{ financeStatus.status }}
@@ -132,25 +132,25 @@
 
             <div *ngIf="displayFinancialSource">
               <mat-form-field class="field-ppcn">
-                <mat-label translate>In case of insured, list sources</mat-label>
+                <mat-label translate>specificLabel.caseInsuredListSources</mat-label>
                 <input matInput formControlName="financingSourceCtrl">
-                <mat-error translate>The input is required.</mat-error>
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
             </div>
             <br />
 
-            <mat-label translate>Gas Inventory</mat-label>
+            <mat-label translate>specificLabel.gasInventory</mat-label>
             <mat-radio-group matInput formControlName="gasInventoryCtrl">
-              <mat-radio-button value="1" translate class="mat-primary"><span translate>Energy</span></mat-radio-button>
+              <mat-radio-button value="1" translate class="mat-primary"><span translate>general.energy</span></mat-radio-button>
             </mat-radio-group>
             <br />
             <div class="center">
                 <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
                   <mat-icon color="white">arrow_back</mat-icon>
-                  <span translate>Back</span>
+                  <span translate>general.back</span>
                 </button>
                 <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
-                  <span translate>Next</span>
+                  <span translate>general.next</span>
                   <mat-icon color="white">arrow_forward</mat-icon>
                 </button>
               </div>
@@ -158,13 +158,13 @@
 
 
           <mat-step>
-            <ng-template matStepLabel> <span translate> Confirm your information </span></ng-template>
+            <ng-template matStepLabel> <span translate> specificLabel.confirmInformation </span></ng-template>
             
-            <div *ngIf="form.valid; else elseBlock" translate>Everything seems correct. </div>
+            <div *ngIf="form.valid; else elseBlock" translate>specificLabel.everythingCorrect</div>
             
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <button mat-raised-button type="submit" color="primary" [disabled]="wasSubmittedSuccessfully"><span translate>Done</span></button>
+              <button mat-raised-button type="submit" color="primary" [disabled]="wasSubmittedSuccessfully"><span translate>general.done</span></button>
             </div>
           </mat-step>
           <!-- <div class="margin-20">

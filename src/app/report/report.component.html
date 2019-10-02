@@ -1,11 +1,11 @@
 <mat-toolbar>
-  <div class="section-heading" translate>Data for Report</div>
+  <div class="section-heading" translate>reportData.dataReport</div>
 
 </mat-toolbar>
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
 <div class="box-button">
-    <a  mat-button class="mat-raised-button mat-primary" routerLink="/report/new" ><span translate>Add new report file</span></a>
+    <a  mat-button class="mat-raised-button mat-primary" routerLink="/report/new" ><span translate>reportData.addReport</span></a>
 
 </div>
 <div class="container mat-elevation-z8 table-sinamecc">
@@ -14,31 +14,31 @@
 
   <!-- Name Column -->
   <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef translate> Name </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef translate> info.name </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
   </ng-container>
 
   <!-- Last Active Version -->
   <ng-container matColumnDef="last_active_version">
-    <mat-header-cell *matHeaderCellDef translate> Last Active Version </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef translate> reportData.lastActiveVer </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.last_active_version}} </mat-cell>
   </ng-container>
 
   <!-- Created Column -->
   <ng-container matColumnDef="updated">
-    <mat-header-cell *matHeaderCellDef translate> Last update: </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef translate>general.lastUpdate </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.updated | date:"MM/dd/yyy hh:mm:ss"}} </mat-cell>
   </ng-container>
 
   <!-- Updates Column -->
   <ng-container matColumnDef="created">
-    <mat-header-cell *matHeaderCellDef translate> Created At </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef translate> general.createdAt </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.created | date:"MM/dd/yyy hh:mm:ss"}} </mat-cell>
   </ng-container>
 
       <!-- Versions Column -->
       <ng-container matColumnDef="versions">
-        <mat-header-cell *matHeaderCellDef translate> Versions </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef translate>general.versions </mat-header-cell>
         <mat-cell *matCellDef="let element"><a mat-button routerLink="/report/{{element.id}}/versions">{{element.versions}}</a></mat-cell>
       </ng-container>
 

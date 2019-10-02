@@ -5,17 +5,17 @@
       <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
     </h1>
     <h3>
-      <mat-card-title translate>selectOVVTitle</mat-card-title>
+      <mat-card-title translate>specificLabel.selectOVVTitle</mat-card-title>
     </h3>
     <mat-card-content>
       <form (ngSubmit)="submitForm()" *ngIf="!isLoading" [formGroup]="form" novalidate>
         <div class="report-error" [hidden]="!error || isLoading" translate>
-          <span translate>Error submitting the form.</span>
+          <span translate>errorLabel.errorSubmittingForm</span>
         </div>
         <br/>
         <div fxLayout="column">
           <h3>
-            <span translate>Code</span>:<span>{{mccrRegistry?.id}}</span>
+            <span translate>info.code</span>:<span>{{mccrRegistry?.id}}</span>
           </h3>
           <mat-form-field>
             <mat-select  formControlName="ovvCtrl" [placeholder]="'OVV' | translate">
@@ -28,7 +28,7 @@
           <br/>
           <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-            <span translate>assignOvv</span>
+            <span translate>specificLabel.assignOvv</span>
           </button>
         </div>
       </form>

@@ -3,7 +3,7 @@
   
   
       <h3>
-        <mat-card-title  translate class="section-heading">Add a new Developer transfer</mat-card-title>
+        <mat-card-title  translate class="section-heading">mccrPoc.addDevTransfer</mat-card-title>
         <mat-divider class="divider-custom"></mat-divider>
         <mat-divider class="divider-custom"></mat-divider>
       </h3>
@@ -11,27 +11,27 @@
             <form (ngSubmit)="submitForm()"  [formGroup]="form" novalidate>
               
             <div class="report-error" [hidden]="!error || isLoading" translate>
-              <span translate>Error submitting the form.</span>
+              <span translate>errorLabel.errorSubmittingForm</span>
             </div>
 
             <div fxLayout="column">
 
                 <mat-form-field>
-                    <input type="text" matInput formControlName="userId" [placeholder]="'ID user'| translate" />
+                    <input type="text" matInput formControlName="userId" [placeholder]="'admin.IDuser'| translate" />
                     <mat-error *ngIf="form.controls.userId.invalid || form.controls.userId.untouched">
-                        <span translate>ID user is required</span>
+                        <span translate>errorLabel.IDUserRequired</span>
                     </mat-error>
                 </mat-form-field> 
               
                 <mat-form-field>
-                    <input [disabled]="true" value="{{id}}"  matInput placeholder="{{ 'ucc Base Code' | translate }}" />
+                    <input [disabled]="true" value="{{id}}"  matInput placeholder="{{ 'mccrPoc.uccBaseCode' | translate }}" />
                     
                 </mat-form-field> 
                 
                 <mat-form-field>
                     <input type="text" matInput formControlName="developerAccountNUmber" [placeholder]="'Developer account number'| translate"/>
                     <mat-error *ngIf="form.controls.developerAccountNUmber.invalid || form.controls.developerAccountNUmber.untouched">
-                        <span translate>Developer account number</span>
+                        <span translate>mccrPoc.DevAccountNumber</span>
                     </mat-error>
                 </mat-form-field> 
             </div>
@@ -39,9 +39,9 @@
             <div>
                 <button mat-button class="mat-raised-button mat-primary options" type="submit" >
                             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-                            <span translate>add</span>
+                            <span translate>general.add</span>
                 </button>
-                <button class="options" mat-raised-button color="primary" (click)="back()"><span translate>cancel</span></button>
+                <button class="options" mat-raised-button color="primary" (click)="back()"><span translate>general.cancel</span></button>
     
             </div>
   

@@ -10,17 +10,17 @@
             <span translate>ADMIN</span>
           </button>
           <mat-menu  #admin="matMenu" [overlapTrigger]="false">
-            <button mat-menu-item routerLink="/admin/users" routerLinkActive="active" (click)="sidenav.close()">Users</button>
-            <button  mat-menu-item routerLink="/admin/permissions" routerLinkActive="active" (click)="sidenav.close()">Permissions</button>
-            <button  mat-menu-item routerLink="/admin/groups" routerLinkActive="active" (click)="sidenav.close()">Groups</button>
+            <button mat-menu-item routerLink="/admin/users" routerLinkActive="active" (click)="sidenav.close()"><span translate>admin.users</span></button>
+            <button  mat-menu-item routerLink="/admin/permissions" routerLinkActive="active" (click)="sidenav.close()"><span translate>admin.permissions</span></button>
+            <button  mat-menu-item routerLink="/admin/groups" routerLinkActive="active" (click)="sidenav.close()"><span translate>admin.groups</span></button>
           </mat-menu>
 
           <a *ngIf="permissions.report_data != undefined" mat-list-item routerLink="/report" routerLinkActive="active" (click)="sidenav.close()">
-            <span translate>REPORTS</span>
+            <span translate>reportData.reportsM</span>
           </a>
           <mat-divider></mat-divider>
           <a *ngIf="permissions.mitigation_action != undefined"  mat-list-item routerLink="/mitigation/actions" routerLinkActive="active" (click)="sidenav.close()">
-            <span translate>MITIGATIONS ACTIONS</span>
+            <span translate>{{ 'mitigationAction.MAt.toUpperCase()' | translate }}</span>
           </a>  
           <mat-divider></mat-divider>
 

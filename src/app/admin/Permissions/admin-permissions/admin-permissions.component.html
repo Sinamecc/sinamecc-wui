@@ -2,14 +2,14 @@
   <mat-card>
 
     <h3>
-      <mat-card-title class="section-heading" translate>Permissions</mat-card-title>
+      <mat-card-title class="section-heading" translate>admin.permissions</mat-card-title>
       <mat-divider class="divider-custom"></mat-divider>
       <mat-divider class="divider-custom"></mat-divider>
     </h3>
 
     <div class="box-button">
         <a disabled mat-button class="mat-raised-button mat-primary" >
-          <span translate> Create Permissions</span>
+          <span translate> admin.createPerm</span>
         </a>
     </div>
 
@@ -18,18 +18,18 @@
       <mat-table  #table [dataSource]="dataSource" >
 
           <ng-container matColumnDef="name">
-              <mat-header-cell *matHeaderCellDef translate>Permissions Name</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef translate>admin.permName</mat-header-cell>
               <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="content_type">
-              <mat-header-cell *matHeaderCellDef translate>Type</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef translate>{{ 'general.type' | translate }}</mat-header-cell>
               <mat-cell *matCellDef="let element"> {{element.content_type}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="action">
-              <mat-header-cell *matHeaderCellDef translate>Action</mat-header-cell>
-              <mat-header-cell *matHeaderCellDef translate>Action</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef translate>admin.action </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef translate>admin.action </mat-header-cell>
               <mat-cell *matCellDef="let element"> 
                   <button mat-icon-button color="primary" (click)="openEditDialog(element)"><mat-icon color="white">visibility</mat-icon></button>
                   <button disabled mat-icon-button color="warn" (click)="openDeleteConfirmationDialog()"><mat-icon color="white">delete</mat-icon></button>

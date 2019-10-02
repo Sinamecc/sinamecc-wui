@@ -1,9 +1,9 @@
 <div class="container">
   <mat-tab-group mat-align-tabs="center">
-    <mat-tab label="{{ 'User' | translate }}"> 
+    <mat-tab label="{{ 'admin.user' | translate }}"> 
         <mat-card>
             <h3>
-                <mat-card-title class="section-heading" translate>Create a new User</mat-card-title>
+                <mat-card-title class="section-heading" translate>admin.createUser</mat-card-title>
                 <mat-divider class="divider-custom"></mat-divider>
                 <mat-divider class="divider-custom"></mat-divider>
             </h3>
@@ -12,13 +12,13 @@
                 <form (ngSubmit)="submit()" [formGroup]="createUserForm" novalidate>
 
                     <div class="report-error" [hidden]="!error || isLoading" translate>
-                        <span translate>Error submitting the form.</span>
+                        <span translate>errorLabel.errorSubmittingForm</span>
                     </div>
 
                     <div fxLayout="column">
 
                         <mat-form-field>
-                          <input type="text"  [ngModel]="name" matInput formControlName="name" [placeholder]="'Name' | translate"/>
+                          <input type="text"  [ngModel]="name" matInput formControlName="name" [placeholder]="'info.name' | translate"/>
                           <mat-error *ngIf="createUserForm.controls.name.invalid || createUserForm.controls.name.untouched">
                                 <span translate>Name is required</span>
                           </mat-error>
@@ -26,53 +26,53 @@
                         </mat-form-field>
 
                         <mat-form-field>
-                            <input type="text" [ngModel]="lastName" matInput formControlName="lastName"  [placeholder]="'Last Name' | translate"/>
+                            <input type="text" [ngModel]="lastName" matInput formControlName="lastName"  [placeholder]="'admin.lastName' | translate"/>
                             <mat-error *ngIf="createUserForm.controls.lastName.invalid || createUserForm.controls.lastName.untouched">
-                                    <span translate>Last Name is required</span>
+                                    <span translate>errorLabel.lastNameRequired</span>
                             </mat-error>
                         </mat-form-field>
 
                         <mat-form-field>
-                            <input type="text" [ngModel]="userName" matInput formControlName="userName" [placeholder]="'User Name' | translate"/>
+                            <input type="text" [ngModel]="userName" matInput formControlName="userName" [placeholder]="'credentialsSection.username' | translate"/>
                             <mat-error *ngIf="createUserForm.controls.userName.invalid || createUserForm.controls.userName.untouched">
-                                    <span translate>User Name is required</span>
+                                    <span translate>errorLabel.userNameRequired</span>
                             </mat-error>
                         </mat-form-field>
 
                         <mat-form-field>
-                            <input type="email" [ngModel]="email" matInput  formControlName="email"  [placeholder]="'Email' | translate"/>
+                            <input type="email" [ngModel]="email" matInput  formControlName="email"  [placeholder]="'admin.email' | translate"/>
                             <mat-error *ngIf="createUserForm.controls.email.invalid || createUserForm.controls.email.untouched">
-                                    <span translate>Email is required</span>
+                                    <span translate>errorLabel.emailRequired</span>
                             </mat-error>
                         </mat-form-field>
 
                         <mat-form-field *ngIf="!edit">
-                            <input type="password" [ngModel]="password" matInput formControlName="password" [placeholder]="'Password' | translate"/>
+                            <input type="password" [ngModel]="password" matInput formControlName="password" [placeholder]="'credentialsSection.password' | translate"/>
                             <mat-error *ngIf="createUserForm.controls.password.invalid || createUserForm.controls.password.untouched">
-                                    <span translate>password is required</span>
+                                    <span translate>credentialsSection.passwordRequired</span>
                             </mat-error>
                         </mat-form-field>
                         <br>
                       
                         <mat-checkbox [ngModel]="staff" [ngModelOptions]="{standalone: true}" (change)="checkCheckBoxvalue($event,'staff')"><span translate>Staff</span></mat-checkbox>
-                        <mat-checkbox [ngModel]="active" [ngModelOptions]="{standalone: true}" (change)="checkCheckBoxvalue($event,'active')"><span translate>User active</span></mat-checkbox>
-                        <mat-checkbox [ngModel]="provider" [ngModelOptions]="{standalone: true}" (change)="checkCheckBoxvalue($event,'provider')"><span translate>Provider</span></mat-checkbox>
-                        <mat-checkbox [ngModel]="dcc" [ngModelOptions]="{standalone: true}" (change)="checkCheckBoxvalue($event,'dccUser')"><span translate>Dcc User</span></mat-checkbox>
+                        <mat-checkbox [ngModel]="active" [ngModelOptions]="{standalone: true}" (change)="checkCheckBoxvalue($event,'active')"><span translate>admin.userActive</span></mat-checkbox>
+                        <mat-checkbox [ngModel]="provider" [ngModelOptions]="{standalone: true}" (change)="checkCheckBoxvalue($event,'provider')"><span translate>admin.provider</span></mat-checkbox>
+                        <mat-checkbox [ngModel]="dcc" [ngModelOptions]="{standalone: true}" (change)="checkCheckBoxvalue($event,'dccUser')"><span translate>admin.DCCUser</span></mat-checkbox>
 
                     </div>
                     <div *ngIf="!edit" class="box-button">
                         <button  mat-raised-button color="primary" type="submit">
-                            <span translate>Create User</span>
+                            <span translate>admin.createUser</span>
                         </button>
                     </div>  
                     
                     <div *ngIf="edit"  class="box-button">
                         <button  disabled type="button" mat-raised-button color="primary" (click)="openChangePasswordDialog()">
-                                    <span translate>Change password</span>
+                                    <span translate>credentialsSection.changePass</span>
                         </button>
 
                         <button  mat-raised-button color="primary" >
-                                <span translate>Edit User</span>
+                                <span translate>credentialsSection.editUser</span>
                         </button>
 
                     </div>
@@ -84,7 +84,7 @@
         </mat-card>
     
     </mat-tab>
-    <mat-tab label="{{ 'Permissions' | translate }}"> 
+    <mat-tab label="{{ 'admin.permissions' | translate }}"> 
         <button mat-icon-button (click)="openDialogPermissions()">
             <mat-icon >visibility</mat-icon>
         </button>
@@ -100,7 +100,7 @@
         </div>
 
     </mat-tab>
-    <mat-tab label="{{ 'Groups' | translate }}"> 
+    <mat-tab label="{{ 'admin.groups' | translate }}"> 
 
     <div *ngIf="!edit">
             <button mat-icon-button (click)="openDialogGroups()">

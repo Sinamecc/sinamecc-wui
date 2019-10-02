@@ -2,7 +2,7 @@
     <mat-card>
 
         <h3>
-            <mat-card-title  translate class="section-heading">Add a new Buyer account:</mat-card-title>
+            <mat-card-title  translate class="section-heading">mccrPoc.addBAC</mat-card-title>
             <mat-divider class="divider-custom"></mat-divider>
             <mat-divider class="divider-custom"></mat-divider>
         </h3>
@@ -10,15 +10,15 @@
         <mat-card-content>
             <form (ngSubmit)="submitForm()"  [formGroup]="form" novalidate>
                 <div class="report-error" [hidden]="!error || isLoading" translate>
-                    <span translate>Error submitting the form.</span>
+                    <span translate>errorLabel.errorSubmittingForm</span>
                 </div>
 
                 <div fxLayout="column">
 
                     <mat-form-field >
-                        <input formControlName="user_id" matInput placeholder="{{ 'ID user' | translate }}">
+                        <input formControlName="user_id" matInput placeholder="{{ 'admin.IDuser' | translate }}">
                         <mat-error *ngIf="form.controls.user_id.invalid || form.controls.user_id.untouched">
-                                <span translate>ID User is required</span>
+                                <span translate>errorLabel.IDUserRequired</span>
                         </mat-error>
                     </mat-form-field>
 
@@ -27,10 +27,10 @@
 
                 <button disabled="{{createDisable}}" mat-button class="mat-raised-button mat-primary options" type="submit" >
                     <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-                    <span translate>Create</span>
+                    <span translate>general.create</span>
                </button>
                <br>
-               <h2 *ngIf="createDisable" class="mat-h2"><span translate>Account number:</span><span>{{account_number}} </span></h2>
+               <h2 *ngIf="createDisable" class="mat-h2"><span translate>mccrPoc.accountNumber</span>:<span>{{account_number}} </span></h2>
             </form>
 
           

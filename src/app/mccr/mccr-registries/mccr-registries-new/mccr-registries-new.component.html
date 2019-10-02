@@ -6,20 +6,20 @@
       <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
     </h1>-->
     <h3>
-      <mat-card-title class="section-heading" translate>Create a new mccr registry:</mat-card-title>
+      <mat-card-title class="section-heading" translate>mccr.createMCCR</mat-card-title>
       <mat-divider class="divider-custom"></mat-divider>
       <mat-divider class="divider-custom"></mat-divider>
     </h3>
     <mat-card-content>
       <form (ngSubmit)="submitForm()" *ngIf="mitigationActions | async"  [formGroup]="form" novalidate>
         <div class="form-error" [hidden]="!error || isLoading" translate>
-          <span translate>Error submitting the form.</span>
+          <span translate>errorLabel.errorSubmittingForm</span>
         </div>
         <br/>
         <div fxLayout="column">
 
           <mat-form-field>
-              <mat-select  formControlName="mitigationActionCtrl" [placeholder]="'Mitigation Action' | translate">
+              <mat-select  formControlName="mitigationActionCtrl" [placeholder]="'mitigationAction.MA' | translate">
                   <mat-option *ngFor="let mitigationAction of processedMitigationActions" [value]="mitigationAction.id">
                     {{ mitigationAction.name }}
                   </mat-option>
@@ -27,7 +27,7 @@
           </mat-form-field>
           <br/>
           <mat-card formArrayName="files">
-              <mat-card-title translate>Files</mat-card-title>
+              <mat-card-title translate>reportData.files</mat-card-title>
               <mat-divider></mat-divider>
               
               <!-- loop throught units -->
@@ -42,10 +42,10 @@
                     
   
                     <mat-form-field class="input-full-width">
-                        <app-input-file class="mat-raised-button mat-primary" formControlName="file" [placeholder]="'Required input' | translate" valuePlaceholder="No file selected" required></app-input-file>
+                        <app-input-file class="mat-raised-button mat-primary" formControlName="file" [placeholder]="'errorLabel.requiredInput' | translate" [valuePlaceholder]="'reportData.noFileSelected' | translate" required></app-input-file>
                         <mat-icon matSuffix>folder</mat-icon>
                         <mat-error *ngIf="file.controls.file.hasError('required')">
-                          Please select a file
+                          <span translate="">reportData.selectFile</span>
                         </mat-error>
            
                     </mat-form-field>
@@ -66,7 +66,7 @@
               <mat-card-actions>
                 <button mat-raised-button (click)="addFile()" type="button"  *ngIf="form.controls.files.controls.length <= 10">
                   <mat-icon>add box</mat-icon>
-                  <span translate> Add new file</span>
+                  <span translate>reportData.addFile</span>
                 </button>
               </mat-card-actions>
             </mat-card> <!-- End form units array -->    
@@ -75,7 +75,7 @@
           <div class="box-button">
               <button mat-button class="mat-raised-button mat-primary" type="submit" [disabled]="form.invalid || isLoading">
                   <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-                  <span translate>Submit Mccr Registry</span>
+                  <span translate>mccr.submitMccr</span>
                 </button>
           </div>
       </form>
