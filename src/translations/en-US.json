@@ -304,6 +304,7 @@
     "impactImplementation":"Impact and Implementation",
     "initiativeType":"Initiative Type",
     "initiativeName":"Initiative Name",
+    "initiative":"Initiative",
     "entityResponsibleName":"Entity Responsible Name",
     "initiativeObjective":"Objective of the initiative",
     "initiativeDescription":"Description of the initiative",
