@@ -1,0 +1,24 @@
+<div class="mainDiv" [@fadeInOut]>
+  <div class="imageContainer">
+  </div>
+  <div class="textContainer">
+    <span class="mat-h1 customText" translate>specificLabel.sinamecc</span>
+    <br>
+    <br>
+    <span class="mat-h2 customText" translate>specificLabel.learnMore</span>
+    <br>
+    <br>
+    <button class="customButton" mat-raised-button color="primary"><span translate>specificLabel.goWebSite</span></button>
+  </div>
+<div>
+
+<div fxLayout="row" class="customContainer" >
+
+    <div *ngFor="let item of dataImage" class="mainCardContainer" [@fadeInOut]>
+        <div [style.background-image]="item.image" class="cardImageContainer"></div>
+        <div matRipple matRippleColor="rgb(61, 61, 61,0.5)" (click)="goToSite(item.url)" class="cardContainer"><span class="mat-h2" >{{item.name}}</span></div>
+    </div>
+
+</div>
+
+
