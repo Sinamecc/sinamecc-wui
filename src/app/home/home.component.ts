@@ -15,9 +15,7 @@ import { Router } from '@angular/router';
   ]
 })
 export class HomeComponent implements OnInit {
-
-
-
+  
   dataImage= [
     {
       image:'url(assets/ma_image.jpg)',
