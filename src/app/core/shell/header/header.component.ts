@@ -43,8 +43,7 @@ export class HeaderComponent implements OnInit {
   }
 
   get permissions(): Permissions{
-    const permissions = this.authenticationService.credentials.permissions;
-    return permissions
+    return this.authenticationService.credentials.permissions;
   }
 
   get credential():Credentials{
@@ -64,7 +63,6 @@ export class HeaderComponent implements OnInit {
   }
 
   showModule(permissions:Permissions,module:string){
-    console.log(Boolean(permissions[module]))
     if(permissions.all){
       return true;
     }else{
