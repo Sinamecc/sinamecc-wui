@@ -4,9 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { Route, extract } from '@app/core';
 
 const routes: Routes = [
-    Route.withShell([
-    { path: '', component: HomeComponent, data: { title: extract('Home') } },
-  ])
+    { path: '',component: HomeComponent, data: { title: extract('Home') } },
 ];
 
 @NgModule({

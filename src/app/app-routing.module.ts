@@ -20,7 +20,7 @@ const routes: Routes = [
     { path: 'error', component: ErrorComponent },
   ]),
   // Fallback when no prior route is matched
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '**', redirectTo: 'error', pathMatch: 'full' }
 ];
 
 @NgModule({
