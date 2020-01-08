@@ -17,7 +17,7 @@ export class MockAuthenticationService {
         provider: false,
         admin: false
        },
-       mitigation_action:{
+       ma:{
         reviewer:false,
         provider:false
       },
@@ -50,7 +50,7 @@ export class MockAuthenticationService {
           provider: false,
           admin: false
          },
-         mitigation_action:{
+         ma:{
           reviewer:false,
           provider:false
         },

@@ -5,7 +5,7 @@
   <mat-divider class="divider-custom"></mat-divider> 
 <br>
 
-<div class="box-button">
+<div class="box-button" *ngIf="hasPermProvider()">
 <a  mat-button class="mat-raised-button mat-primary" routerLink="/mitigation/actions/new" > <span translate>mitigationAction.addMA</span></a>
 </div>
 
@@ -52,7 +52,7 @@
     <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
     <mat-cell *matCellDef="let element" class="login-box">
       <button  mat-icon-button color="primary" (click)="view(element.id)" ><mat-icon color="white">visibility</mat-icon></button>
-      <button  mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)" > <mat-icon color="white">delete</mat-icon></button>
+      <button *ngIf="hasPermProvider()"  mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)" > <mat-icon color="white">delete</mat-icon></button>
       <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
       <button  mat-icon-button color="primary" *ngIf="element.fsm_state !== 'end'" (click)="addReview(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button>
       <button mat-icon-button color="primary" (click)="changelog(element.id)" > <mat-icon color="white">history</mat-icon></button>

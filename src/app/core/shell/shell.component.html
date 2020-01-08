@@ -19,7 +19,7 @@
             <span translate>reportData.reportsM</span>
           </a>
           <mat-divider></mat-divider>
-          <a *ngIf="permissions.mitigation_action != undefined"  mat-list-item routerLink="/mitigation/actions" routerLinkActive="active" (click)="sidenav.close()">
+          <a *ngIf="permissions.ma != undefined"  mat-list-item routerLink="/mitigation/actions" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>{{ 'mitigationAction.MAt.toUpperCase()' | translate }}</span>
           </a>  
           <mat-divider></mat-divider>
