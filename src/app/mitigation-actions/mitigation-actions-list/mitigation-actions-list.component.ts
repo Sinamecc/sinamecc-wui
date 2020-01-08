@@ -112,6 +112,12 @@ export class MitigationActionsListComponent implements OnInit {
     });
   }
 
+  hasPermProvider(){
+    console.log(this.getAuthentification().credentials.permissions)
+    return Boolean(this.getAuthentification().credentials.permissions.all || 
+                   this.getAuthentification().credentials.permissions.ma.provider)
+  }
+
 }
 
 export class MitigationActionSource extends DataSource<any> {

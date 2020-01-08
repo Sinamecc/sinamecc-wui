@@ -4,7 +4,7 @@ export interface Permissions {
         provider: boolean,
         admin: boolean
     },
-    mitigation_action:{
+    ma:{
         reviewer:boolean
         provider:boolean
     },
