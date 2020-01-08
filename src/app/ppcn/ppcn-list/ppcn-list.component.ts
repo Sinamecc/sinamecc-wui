@@ -93,6 +93,12 @@ export class PpcnListComponent implements OnInit {
     });
   }
 
+
+  hasPermProvider(){
+    return Boolean(this.getAuthenticationService().credentials.permissions.all || 
+                   this.getAuthenticationService().credentials.permissions.ppcn.provider)
+  }
+
 }
 
 
