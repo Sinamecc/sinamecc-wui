@@ -16,7 +16,7 @@ import { ReportService, Report } from '@app/report/report.service';
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
-  styleUrls: ['./report.component.scss']
+  styleUrls: ['./report.component.scss','../../customCss.scss']
 })
 export class ReportComponent implements OnInit {
 

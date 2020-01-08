@@ -4,10 +4,6 @@
 </mat-toolbar>
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
-<div class="box-button">
-    <a  mat-button class="mat-raised-button mat-primary" routerLink="/report/new" ><span translate>reportData.addReport</span></a>
-
-</div>
 <div class="container mat-elevation-z8 table-sinamecc">
 <mat-table #table [dataSource]="dataSource">
 
@@ -51,4 +47,12 @@
 [pageSizeOptions]="[5, 10, 20]"
 [showFirstLastButtons]="true">
 </mat-paginator>
+
 </div>
+
+<br>
+
+<div class="box-button">
+  <a  mat-button class="mat-raised-button mat-primary customSinameccButton" routerLink="/report/new" ><span translate>reportData.addReport</span></a>
+</div>
+
