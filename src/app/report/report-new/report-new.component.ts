@@ -16,7 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-report-new',
   templateUrl: './report-new.component.html',
-  styleUrls: ['./report-new.component.scss']
+  styleUrls: ['./report-new.component.scss','../../../customCss.scss']
 })
 export class ReportNewComponent implements OnInit {
   value = "example: email, web page, REST API Call, SFTP, FTP, WeTransfer, other.";

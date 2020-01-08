@@ -26,7 +26,7 @@
             <br/>
           <mat-form-field>
             <p translate class="text_upload" ><span translate>reportData.uploadFile</span></p>: 
-            <app-input-file id="#FileInput" #FileInput class="mat-raised-button mat-primary" formControlName="file" (change)="FileInput" [valuePlaceholder]="'reportData.selectFile' | translate" required>
+            <app-input-file id="#FileInput" #FileInput class="mat-raised-button mat-primary customSinameccButton" formControlName="file" (change)="FileInput" [valuePlaceholder]="'reportData.selectFile' | translate" required>
               <mat-icon >vertical_align_top</mat-icon>
               reportData.selectFile
             </app-input-file>
@@ -98,7 +98,7 @@
               
         </div>
         <div class="box-button">
-          <button mat-raised-button color="primary" type="submit" [disabled]="reportForm.invalid || isLoading">
+          <button mat-raised-button class="customSinameccButton" color="primary" type="submit" [disabled]="reportForm.invalid || isLoading">
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
               <span translate> reportData.submitReport</span>
           </button>

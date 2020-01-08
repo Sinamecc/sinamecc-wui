@@ -19,7 +19,7 @@ import { MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-report-versions-new',
   templateUrl: './report-versions-new.component.html',
-  styleUrls: ['./report-versions-new.component.scss']
+  styleUrls: ['./report-versions-new.component.scss','../../../customCss.scss']
 })
 export class ReportVersionsNewComponent implements OnInit {
 
