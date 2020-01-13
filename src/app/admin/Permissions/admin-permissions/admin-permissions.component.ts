@@ -12,7 +12,7 @@ import { PermissionsDataSource } from '../../Users/tablePermissions';
 @Component({
   selector: 'app-admin-permissions',
   templateUrl: './admin-permissions.component.html',
-  styleUrls: ['./admin-permissions.component.scss']
+  styleUrls: ['./admin-permissions.component.scss','../../../../customCss.scss']
 })
 export class AdminPermissionsComponent implements OnInit {
   displayedColumns = ['name', 'content_type','action'];

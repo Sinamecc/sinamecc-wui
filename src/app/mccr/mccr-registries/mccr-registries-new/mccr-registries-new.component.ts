@@ -20,7 +20,7 @@ import { MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-mccr-registries-new',
   templateUrl: './mccr-registries-new.component.html',
-  styleUrls: ['./mccr-registries-new.component.scss']
+  styleUrls: ['./mccr-registries-new.component.scss','../../../../customCss.scss']
 })
 export class MccrRegistriesNewComponent implements OnInit {
 

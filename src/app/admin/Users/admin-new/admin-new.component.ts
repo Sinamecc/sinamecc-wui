@@ -25,7 +25,7 @@ const log = new Logger('CreateUser');
 @Component({
   selector: 'app-admin-new',
   templateUrl: './admin-new.component.html',
-  styleUrls: ['./admin-new.component.scss']
+  styleUrls: ['./admin-new.component.scss','../../../../customCss.scss']
 })
 export class AdminNewComponent implements OnInit {
 

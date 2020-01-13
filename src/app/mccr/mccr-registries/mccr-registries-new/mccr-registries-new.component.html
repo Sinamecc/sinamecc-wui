@@ -63,17 +63,19 @@
       
               <!-- New unit button -->
               <mat-divider></mat-divider>
+              <br>
               <mat-card-actions>
-                <button mat-raised-button (click)="addFile()" type="button"  *ngIf="form.controls.files.controls.length <= 10">
+                <button style="color: white;" mat-raised-button (click)="addFile()" type="button" class="customSinameccButton" *ngIf="form.controls.files.controls.length <= 10">
                   <mat-icon>add box</mat-icon>
                   <span translate>reportData.addFile</span>
                 </button>
               </mat-card-actions>
             </mat-card> <!-- End form units array -->    
           <br/>
+          <br>
         </div>
           <div class="box-button">
-              <button mat-button class="mat-raised-button mat-primary" type="submit" [disabled]="form.invalid || isLoading">
+              <button mat-button class="mat-raised-button mat-primary customSinameccButton" type="submit" [disabled]="form.invalid || isLoading">
                   <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
                   <span translate>mccr.submitMccr</span>
                 </button>

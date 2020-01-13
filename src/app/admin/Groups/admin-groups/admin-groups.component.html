@@ -7,12 +7,6 @@
             <mat-divider class="divider-custom"></mat-divider>
         </h3>
 
-        <div class="box-button">
-            <a disabled mat-button class="mat-raised-button mat-primary" >
-              <span translate>admin.createGroups</span>
-            </a>
-        </div>
-
         <mat-card-content>
 
             <mat-table  #table [dataSource]="dataSource" >
@@ -39,6 +33,10 @@
         </mat-card-content>
     </mat-card>
 
+</div>
 
-
+<div class="box-button">
+    <a disabled mat-button class="mat-raised-button mat-primary customSinameccButton" >
+      <span translate>admin.createGroups</span>
+    </a>
 </div>

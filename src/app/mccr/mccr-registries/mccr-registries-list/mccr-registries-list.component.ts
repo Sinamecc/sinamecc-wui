@@ -21,7 +21,7 @@ const log = new Logger('Report');
 @Component({
   selector: 'app-mccr-registries-list',
   templateUrl: './mccr-registries-list.component.html',
-  styleUrls: ['./mccr-registries-list.component.scss']
+  styleUrls: ['./mccr-registries-list.component.scss','../../../../customCss.scss']
 })
 export class MccrRegistriesListComponent implements OnInit {
 
