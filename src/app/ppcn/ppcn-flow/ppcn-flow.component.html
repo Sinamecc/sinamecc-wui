@@ -13,7 +13,7 @@
           <ng-template matStepLabel><span translate>geographyLabel.geographicLevel</span></ng-template>
           <app-ppcn-level></app-ppcn-level>
           <div class="align-right">
-              <button [disabled] = "levelId === ''" mat-button matStepperNext class="mat-raised-button mat-primary">
+              <button  [disabled] = "levelId === ''" mat-button matStepperNext class="mat-raised-button mat-primary customSinameccButton">
                   <span translate>general.next</span>
                   <mat-icon color="white">arrow_forward</mat-icon>
               </button>
@@ -24,7 +24,7 @@
           <ng-template matStepLabel><span translate>ppcn.PPCNForm</span></ng-template>
           <app-ppcn-new> </app-ppcn-new>
           <div class="align-right">
-            <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
+            <button type="button" mat-button matStepperPrevious>
                 <mat-icon color="white">arrow_back</mat-icon>
                 <span translate>general.back</span>
               </button>

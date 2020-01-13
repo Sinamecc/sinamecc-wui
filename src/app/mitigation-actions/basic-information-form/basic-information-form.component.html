@@ -37,9 +37,9 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <br />
-            <div class="center">
-              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
+            <br/>
+            <div class="box-button">
+              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary customSinameccButton">
                 <span translate>general.next</span>
                 <mat-icon color="white">arrow_forward</mat-icon>
               </button>
@@ -80,12 +80,12 @@
             <br />
             <br />
 
-            <div class="center">
-              <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
+            <div class="box-button">
+              <button type="button" mat-button matStepperPrevious >
                 <mat-icon color="white">arrow_back</mat-icon>
                 <span translate>general.back</span>
               </button>
-              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
+              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary customSinameccButton">
                 <span translate>general.next</span>
                 <mat-icon color="white">arrow_forward</mat-icon>
               </button>
@@ -99,7 +99,7 @@
             
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <button mat-raised-button type="submit" color="primary" [disabled]="wasSubmittedSuccessfully"><span translate>general.done</span></button>
+              <button class="customSinameccButton" mat-raised-button type="submit" color="primary" [disabled]="wasSubmittedSuccessfully"><span translate>general.done</span></button>
             </div>
           </mat-step>
 

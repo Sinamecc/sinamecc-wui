@@ -5,12 +5,6 @@
 <mat-divider class="divider-custom"></mat-divider>
 <br>
 
-<div class="box-button">
-  <a  mat-button class="mat-raised-button mat-primary" routerLink="/ppcn/registries/new">
-    <span translate> ppcn.addPPCN</span>
-  </a>
-</div>
-
 <div class="container mat-elevation-z8 table-sinamecc">
   <mat-table #table [dataSource]="dataSource">
 
@@ -66,4 +60,10 @@
 
   <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
   </mat-paginator>
+</div>
+<br>
+<div class="box-button">
+  <a  mat-button class="mat-raised-button mat-primary customSinameccButton" routerLink="/ppcn/registries/new">
+    <span translate> ppcn.addPPCN</span>
+  </a>
 </div>

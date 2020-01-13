@@ -5,10 +5,6 @@
   <mat-divider class="divider-custom"></mat-divider> 
 <br>
 
-<div class="box-button">
-<a  mat-button class="mat-raised-button mat-primary" routerLink="/mitigation/actions/new" > <span translate>mitigationAction.addMA</span></a>
-</div>
-
 <div class="container mat-elevation-z8 table-sinamecc">
 <mat-table #table [dataSource]="dataSource">
 
@@ -69,4 +65,8 @@
 [pageSizeOptions]="[5, 10, 20]"
 [showFirstLastButtons]="true">
 </mat-paginator>
+</div>
+<br>
+<div class="box-button">
+  <a  mat-button class="mat-raised-button mat-primary customSinameccButton" routerLink="/mitigation/actions/new" > <span translate>mitigationAction.addMA</span></a>
 </div>

@@ -25,7 +25,7 @@ import { ImpactFormComponent } from '@app/mitigation-actions/impact-form/impact-
 @Component({
   selector: 'app-mitigation-action-form-flow',
   templateUrl: './mitigation-action-form-flow.component.html',
-  styleUrls: ['./mitigation-action-form-flow.component.scss']
+  styleUrls: ['./mitigation-action-form-flow.component.scss','../../../customCss.scss']
 })
 export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit {
   @ViewChild(InitiativeFormComponent) initiativeForm:InitiativeFormComponent;

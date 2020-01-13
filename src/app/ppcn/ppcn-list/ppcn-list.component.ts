@@ -13,7 +13,7 @@ import { ComponentDialogComponent } from '@app/core/component-dialog/component-d
 @Component({
   selector: 'app-ppcn-list',
   templateUrl: './ppcn-list.component.html',
-  styleUrls: ['./ppcn-list.component.scss']
+  styleUrls: ['./ppcn-list.component.scss','../../../customCss.scss']
 })
 export class PpcnListComponent implements OnInit {
 

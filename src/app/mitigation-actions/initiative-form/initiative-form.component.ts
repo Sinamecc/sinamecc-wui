@@ -18,7 +18,7 @@ const log = new Logger('MitigationAction');
 @Component({
   selector: 'app-initiative-form',
   templateUrl: './initiative-form.component.html',
-  styleUrls: ['./initiative-form.component.scss']
+  styleUrls: ['./initiative-form.component.scss','../../../customCss.scss']
 })
 export class InitiativeFormComponent implements OnInit {
 

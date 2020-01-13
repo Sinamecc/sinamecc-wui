@@ -16,7 +16,7 @@ const log = new Logger('MitigationAction');
 @Component({
   selector: 'app-impact-form',
   templateUrl: './impact-form.component.html',
-  styleUrls: ['./impact-form.component.scss']
+  styleUrls: ['./impact-form.component.scss','../../../customCss.scss']
 })
 export class ImpactFormComponent implements OnInit {
 

@@ -17,7 +17,7 @@ const log = new Logger('MitigationAction');
 @Component({
   selector: 'app-basic-information-form',
   templateUrl: './basic-information-form.component.html',
-  styleUrls: ['./basic-information-form.component.scss']
+  styleUrls: ['./basic-information-form.component.scss','../../../customCss.scss']
 })
 export class BasicInformationFormComponent implements OnInit {
 

@@ -8,7 +8,7 @@
       </mat-card-title>
     </h3>
 
-      <form [formGroup]="mainGroup" *ngIf="processedNewFormData | async">
+      <form [formGroup]="mainGroup">
         <!-- {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}} -->
         <mat-horizontal-stepper formArrayName="formArray" [linear]="isLinear">
   
@@ -19,7 +19,7 @@
                 [newFormData]="newFormData" 
                 [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating"></app-initiative-form>
                 <div class="align-right">
-                  <button  mat-button matStepperNext [disabled]="!initiativeForm.wasSubmittedSuccessfully" class="mat-raised-button mat-primary">
+                  <button  mat-button matStepperNext [disabled]="!initiativeForm.wasSubmittedSuccessfully" class="mat-raised-button mat-primary customSinameccButton">
                     <span translate>general.next</span>
                     <mat-icon color="white">arrow_forward</mat-icon>
                   </button>
@@ -30,17 +30,24 @@
             <ng-template matStepLabel><span translate>info.basicInfo</span></ng-template>
             <app-basic-information-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating">
             </app-basic-information-form>
-            <div class="align-right">
-                <button mat-button matStepperNext [disabled]="!basicInfoForm.wasSubmittedSuccessfully" class="mat-raised-button mat-primary">
+
+            <div fxLayout="row">
+
+              <div>
+                <button type="button" mat-button matStepperPrevious [disabled]="basicInfoForm.wasSubmittedSuccessfully">
+                  <mat-icon color="white">arrow_back</mat-icon>
+                  <span translate>general.back</span>
+                </button>
+              </div>
+
+              <div>
+                <button mat-button matStepperNext [disabled]="!basicInfoForm.wasSubmittedSuccessfully" class="mat-raised-button mat-primary customSinameccButton">
                   <span translate>general.next</span>
                   <mat-icon color="white">arrow_forward</mat-icon>
                 </button>
               </div>
-            <div class="align-right">
-              <button type="button" mat-button matStepperPrevious [disabled]="basicInfoForm.wasSubmittedSuccessfully" class="mat-raised-button mat-accent">
-                <mat-icon color="white">arrow_back</mat-icon>
-                <span translate>general.back</span>
-              </button>
+             
+              
             </div>
   
           </mat-step>
@@ -51,18 +58,23 @@
                 <ng-template matStepLabel><span translate>general.keyAspects</span></ng-template>
                 <app-key-aspects-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating">
                 </app-key-aspects-form>
-                <div class="align-right">
-                    <button mat-button matStepperNext [disabled]="!keyAspectsForm.wasSubmittedSuccessfully" class="mat-raised-button mat-primary">
+
+                <div fxLayout="row">
+                  <div >
+                    <button type="button" mat-button matStepperPrevious [disabled]="keyAspectsForm.wasSubmittedSuccessfully">
+                      <mat-icon color="white">arrow_back</mat-icon>
+                      <span translate>general.back</span>
+                    </button>
+                  </div>
+
+                  <div>
+                    <button mat-button matStepperNext [disabled]="!keyAspectsForm.wasSubmittedSuccessfully"  class="mat-raised-button mat-accent customSinameccButton">
                       <span translate>general.next</span>
                       <mat-icon color="white">arrow_forward</mat-icon>
                     </button>
-                  </div>
-                <div class="align-right">
-                  <button type="button" mat-button matStepperPrevious [disabled]="keyAspectsForm.wasSubmittedSuccessfully" class="mat-raised-button mat-accent">
-                    <mat-icon color="white">arrow_back</mat-icon>
-                    <span translate>general.back</span>
-                  </button>
                 </div>
+
+               </div>
       
               </mat-step>
   
@@ -71,26 +83,32 @@
             <ng-template matStepLabel><span translate>specificLabel.mitigationEmissions</span></ng-template>
             <app-emissions-mitigation-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating">
             </app-emissions-mitigation-form>
-            <div class="align-right">
-                <button mat-button matStepperNext [disabled]="!emissionsMitigationForm.wasSubmittedSuccessfully" class="mat-raised-button mat-primary">
+
+            <div fxLayout="row">
+
+              <div class="align-right">
+                <button type="button" mat-button matStepperPrevious [disabled]="emissionsMitigationForm.wasSubmittedSuccessfully">
+                  <mat-icon color="white">arrow_back</mat-icon>
+                  <span translate>general.back</span>
+                </button>
+              </div>
+
+              <div class="align-right">
+                <button mat-button matStepperNext [disabled]="!emissionsMitigationForm.wasSubmittedSuccessfully" class="mat-raised-button mat-accent customSinameccButton">
                   <span translate>general.next</span>
                   <mat-icon color="white">arrow_forward</mat-icon>
                 </button>
               </div>
-            <div class="align-right">
-              <button type="button" mat-button matStepperPrevious [disabled]="emissionsMitigationForm.wasSubmittedSuccessfully" class="mat-raised-button mat-accent">
-                <mat-icon color="white">arrow_back</mat-icon>
-                <span translate>general.back</span>
-              </button>
+
             </div>
-  
+
           </mat-step>
   
           <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
             <ng-template matStepLabel><span translate>specificLabel.impactImplementation</span></ng-template>
             <app-impact-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating"> </app-impact-form>
             <div class="align-right">
-              <button type="button" mat-button matStepperPrevious [disabled]="impactForm.wasSubmittedSuccessfully" class="mat-raised-button mat-accent">
+              <button type="button" mat-button matStepperPrevious [disabled]="impactForm.wasSubmittedSuccessfully" >
                 <mat-icon color="white">arrow_back</mat-icon>
                 <span translate>general.back</span>
               </button>

@@ -15,7 +15,7 @@ const log = new Logger('MitigationAction');
 @Component({
   selector: 'app-emissions-mitigation-form',
   templateUrl: './emissions-mitigation-form.component.html',
-  styleUrls: ['./emissions-mitigation-form.component.scss']
+  styleUrls: ['./emissions-mitigation-form.component.scss','../../../customCss.scss']
 })
 export class EmissionsMitigationFormComponent implements OnInit {
 
