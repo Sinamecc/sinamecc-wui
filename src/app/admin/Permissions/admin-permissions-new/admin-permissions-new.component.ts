@@ -13,7 +13,7 @@ const log = new Logger('CreatePermission');
 @Component({
   selector: 'app-admin-permissions-new',
   templateUrl: './admin-permissions-new.component.html',
-  styleUrls: ['./admin-permissions-new.component.scss','../../../../customCss.scss']
+  styleUrls: ['./admin-permissions-new.component.scss']
 })
 export class AdminPermissionsNewComponent implements OnInit {
   

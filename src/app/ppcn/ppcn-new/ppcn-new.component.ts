@@ -17,7 +17,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 @Component({
   selector: 'app-ppcn-new',
   templateUrl: './ppcn-new.component.html',
-  styleUrls: ['./ppcn-new.component.scss','../../../customCss.scss']
+  styleUrls: ['./ppcn-new.component.scss',]
 })
 export class PpcnNewComponent implements OnInit {
   

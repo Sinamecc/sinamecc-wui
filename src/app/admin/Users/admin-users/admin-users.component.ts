@@ -10,7 +10,7 @@ import { AdminUserDetailComponent } from '../admin-user-detail/admin-user-detail
 @Component({
   selector: 'app-admin-users',
   templateUrl: './admin-users.component.html',
-  styleUrls: ['./admin-users.component.scss','../../../../customCss.scss']
+  styleUrls: ['./admin-users.component.scss']
 })
 export class AdminUsersComponent implements OnInit {
 

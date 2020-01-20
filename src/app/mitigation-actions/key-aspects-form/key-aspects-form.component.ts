@@ -33,7 +33,7 @@ const log = new Logger('MitigationAction');
 @Component({
   selector: 'app-key-aspects-form',
   templateUrl: './key-aspects-form.component.html',
-  styleUrls: ['./key-aspects-form.component.scss','../../../customCss.scss'],
+  styleUrls: ['./key-aspects-form.component.scss'],
   providers: [
     // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
     // application's root module. We provide it at the component level here, due to limitations of

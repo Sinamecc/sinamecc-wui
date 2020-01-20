@@ -10,7 +10,7 @@ import { PpcnUploadComponent } from '@app/ppcn/ppcn-upload/ppcn-upload.component
 @Component({
   selector: 'app-ppcn-flow',
   templateUrl: './ppcn-flow.component.html',
-  styleUrls: ['./ppcn-flow.component.scss','../../../customCss.scss']
+  styleUrls: ['./ppcn-flow.component.scss']
 })
 export class PpcnFlowComponent implements OnInit {
   @ViewChild('PpcnLevelComponent') geographicLvl:PpcnLevelComponent;

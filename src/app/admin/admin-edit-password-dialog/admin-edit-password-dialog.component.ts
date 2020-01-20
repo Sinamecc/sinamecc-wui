@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-admin-edit-password-dialog',
   templateUrl: './admin-edit-password-dialog.component.html',
-  styleUrls: ['./admin-edit-password-dialog.component.scss','../../../customCss.scss']
+  styleUrls: ['./admin-edit-password-dialog.component.scss']
 })
 export class AdminEditPasswordDialogComponent implements OnInit {
 

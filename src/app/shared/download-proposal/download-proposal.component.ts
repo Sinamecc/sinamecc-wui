@@ -6,7 +6,7 @@ import { Logger, I18nService } from '@app/core';
 @Component({
   selector: 'app-download-proposal',
   templateUrl: './download-proposal.component.html',
-  styleUrls: ['./download-proposal.component.scss','../../../customCss.scss']
+  styleUrls: ['./download-proposal.component.scss']
 })
 export class DownloadProposalComponent implements OnInit {
 

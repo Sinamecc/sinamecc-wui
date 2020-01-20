@@ -23,7 +23,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-mitigation-actions-list',
   templateUrl: './mitigation-actions-list.component.html',
-  styleUrls: ['./mitigation-actions-list.component.scss','../../../customCss.scss']
+  styleUrls: ['./mitigation-actions-list.component.scss']
 })
 export class MitigationActionsListComponent implements OnInit {
 

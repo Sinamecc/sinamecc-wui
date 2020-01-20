@@ -61,20 +61,12 @@
 
                     </div>
                     <div *ngIf="!edit" class="box-button">
-                        <button class="customSinameccButton"  mat-raised-button color="primary" type="submit">
-                            <span translate>admin.createUser</span>
-                        </button>
+                        <app-generic-button type="submit" name="admin.createUser"></app-generic-button>
                     </div>  
                     
                     <div *ngIf="edit"  class="box-button">
-                        <button  disabled type="button" mat-raised-button  (click)="openChangePasswordDialog()">
-                                    <span translate>credentialsSection.changePass</span>
-                        </button>
-
-                        <button class="customSinameccButton"  mat-raised-button color="primary" >
-                                <span translate>credentialsSection.editUser</span>
-                        </button>
-
+                        <app-generic-button  (click)="openChangePasswordDialog()" disabled="true" type="button" name="credentialsSection.changePass"></app-generic-button>
+                        <app-generic-button type="submit" name="credentialsSection.editUser"></app-generic-button>
                     </div>
 
                 </form>

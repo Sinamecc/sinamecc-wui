@@ -7,7 +7,7 @@
       <br />
       <div fxLayout="column">
 
-        <mat-vertical-stepper formArrayName="formArray" linear>
+        <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
               <span translate>specificLabel.ingeiCompliance</span>
@@ -25,10 +25,7 @@
             </mat-form-field>
 
             <div class="box-button">
-              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary customSinameccButton">
-                <span translate>general.next</span>
-                <mat-icon color="white">arrow_forward</mat-icon>
-              </button>
+              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
             </div>
           </mat-step>
 
@@ -51,14 +48,8 @@
             <br />
             
             <div class="box-button">
-              <button type="button" mat-button matStepperPrevious>
-                <mat-icon color="white">arrow_back</mat-icon>
-                <span translate>general.back</span>
-              </button>
-              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary customSinameccButton">
-                <span translate>general.next</span>
-                <mat-icon color="white">arrow_forward</mat-icon>
-              </button>
+              <app-generic-button-secondary type="button" (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
             </div>
           </mat-step>
 
@@ -71,7 +62,7 @@
             
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <button class="customSinameccButton" mat-raised-button type="submit" color="primary" [disabled]="wasSubmittedSuccessfully"><span translate>general.done</span></button>
+              <app-generic-button type="submit" [disabled]="wasSubmittedSuccessfully" name="general.done"></app-generic-button>
             </div>
           </mat-step>
         </mat-vertical-stepper>

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-admin-permission-list',
   templateUrl: './admin-permission-list.component.html',
-  styleUrls: ['./admin-permission-list.component.scss','../../../../customCss.scss']
+  styleUrls: ['./admin-permission-list.component.scss']
 })
 export class AdminPermissionListComponent implements OnInit {
   displayedColumns = ['name', 'type','action'];

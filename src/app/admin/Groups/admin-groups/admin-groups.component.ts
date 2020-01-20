@@ -9,7 +9,7 @@ import { ComponentDialogComponent } from '@app/core/component-dialog/component-d
 @Component({
   selector: 'app-admin-groups',
   templateUrl: './admin-groups.component.html',
-  styleUrls: ['./admin-groups.component.scss','../../../../customCss.scss']
+  styleUrls: ['./admin-groups.component.scss']
 })
 export class AdminGroupsComponent implements OnInit {
   displayedColumns = ['name','action'];

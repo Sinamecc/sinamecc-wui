@@ -36,12 +36,8 @@
                 </div>
 
                 <div class="box-button">
-                    <button mat-raised-button class="customSinameccButton" color="primary" type="submit">
-                        <span *ngIf="!edit" translate>admin.createPerm</span>
-                        <span *ngIf="edit" translate>admin.editPerm</span>
-                    </button>
-
-                    
+                    <app-generic-button *ngIf="!edit" type="submit"  name=" admin.createPerm"></app-generic-button>
+                    <app-generic-button *ngIf="edit" type="submit"  name=" admin.editPerm"></app-generic-button>
                 </div>
               
             </form>
