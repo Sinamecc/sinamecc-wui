@@ -38,10 +38,8 @@
           <br/>  
         </div>
         <div class="box-button">
-          <button mat-button class="mat-raised-button mat-primary"  type="submit" [disabled]="reportForm.invalid || isLoading">
-            <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-            <span translate>reportData.submitReport</span>
-          </button>
+          <app-generic-button  type="submit" [disabled]="reportForm.invalid || isLoading" name="reportData.submitReport"></app-generic-button>
+          <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
         </div>
       </form>
     </mat-card-content>

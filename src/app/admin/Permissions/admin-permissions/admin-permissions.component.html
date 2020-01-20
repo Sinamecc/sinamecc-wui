@@ -7,11 +7,6 @@
       <mat-divider class="divider-custom"></mat-divider>
     </h3>
 
-    <div class="box-button">
-        <a disabled mat-button class="mat-raised-button mat-primary" >
-          <span translate> admin.createPerm</span>
-        </a>
-    </div>
 
     <mat-card-content>
 
@@ -46,4 +41,8 @@
     </mat-card-content>
 
   </mat-card>
+</div>
+
+<div class="box-button">
+  <app-generic-button [disabled]="true" name=" admin.createPerm"></app-generic-button>
 </div>
