@@ -103,19 +103,19 @@
               <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
             </div>
           </mat-step>
+
           <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
             <ng-template matStepLabel>
               <span translate>geographyLabel.requestLevel</span>
             </ng-template>
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>geographyLabel.requestLevel</mat-label>
-              <mat-select formControlName="requiredCtrl" [placeholder]="'geographyLabel.requestLevel' | translate">
-                <mat-option *ngFor="let required_level of required_levels" [value]="required_level.id">
+            <br>
+            <span translate>geographyLabel.requestLevel</span><br><br>
+            <mat-radio-group formControlName="requiredCtrl" (change)="onSaving($event)">
+                <mat-radio-button *ngFor="let required_level of required_levels" [value]="required_level.id">
                   {{ required_level.level }}
-                </mat-option>
-              </mat-select>
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
+                </mat-radio-button>
+            </mat-radio-group>
+            <br />
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>geographyLabel.recognitionType</mat-label>
@@ -134,6 +134,7 @@
             <br />
 
           </mat-step>
+
           <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
             <ng-template matStepLabel>
               <span translate>specificLabel.GEIInformation</span>
@@ -243,6 +244,7 @@
                <app-generic-button type="submit" mat-raised-button name="general.done"></app-generic-button>
             </div>
           </mat-step>
+
         </mat-vertical-stepper>
       </div>
     </form>
