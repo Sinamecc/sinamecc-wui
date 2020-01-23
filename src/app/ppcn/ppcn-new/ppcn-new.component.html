@@ -2,7 +2,7 @@
   <mat-card-content>
     <form (ngSubmit)="submitForm()" *ngIf="!isLoading" [formGroup]="formGroup">
       <div fxLayout="column">
-        <mat-vertical-stepper formArrayName="formArray" linear>
+        <mat-vertical-stepper formArrayName="formArray" linear #stepper>
 
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
@@ -59,11 +59,10 @@
             </mat-form-field>
             <br />
 
-            <div class="center">
-              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
-                <span translate> general.next </span>
-                <mat-icon color="white">arrow_forward</mat-icon>
-              </button>
+            <div class="box-button">
+              <app-generic-button (click)="stepper.next();" name="general.next">
+              </app-generic-button>
+
             </div>
           </mat-step>
 
@@ -99,16 +98,9 @@
             <br />
 
 
-            <div class="center">
-              <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
-                <mat-icon color="white">arrow_back</mat-icon>
-                <span translate> general.back </span>
-              </button>
-              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
-                <span translate> general.next </span>
-                <mat-icon color="white">arrow_forward</mat-icon>
-              </button>
-
+            <div class="box-button">
+              <app-generic-button-secondary (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
             </div>
           </mat-step>
           <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
@@ -135,15 +127,9 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
-            <div class="center">
-              <button type="button" mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent"><span
-                  translate> general.back  </span>
-                <mat-icon color="white">arrow_back</mat-icon>
-              </button>
-              <button type="button" mat-button matStepperNext type="button" class="mat-raised-button mat-primary"><span
-                  translate> general.next  </span>
-                <mat-icon color="white">arrow_forward</mat-icon>
-              </button>
+            <div class="box-button">
+              <app-generic-button-secondary (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
             </div>
             <br />
 
@@ -185,15 +171,9 @@
             <br />
 
             <br />
-            <div class="center">
-              <button type="button" mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent"><span
-                  translate> general.back  </span>
-                <mat-icon color="white">arrow_back</mat-icon>
-              </button>
-              <button type="button" mat-button matStepperNext type="button" class="mat-raised-button mat-primary"><span
-                  translate> general.next  </span>
-                <mat-icon color="white">arrow_forward</mat-icon>
-              </button>
+            <div class="box-button">
+              <app-generic-button-secondary (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
             </div>
           </mat-step>
 
@@ -246,15 +226,9 @@
             </button>
             <br/>
             <br/>
-            <div class="center">
-              <button type="button" mat-button matStepperPrevious type="button" class="mat-raised-button mat-accent"><span
-                  translate> general.back  </span>
-                <mat-icon color="white">arrow_back</mat-icon>
-              </button>
-              <button type="button" mat-button matStepperNext type="button" class="mat-raised-button mat-primary"><span
-                  translate> general.next  </span>
-                <mat-icon color="white">arrow_forward</mat-icon>
-              </button>
+            <div class="box-button">
+              <app-generic-button-secondary (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
             </div>
             <br />
           </mat-step>
@@ -266,9 +240,7 @@
 
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <button mat-raised-button color="primary" class="mat-raised-button mat-primary"><span translate> general.done </span>
-                <mat-icon color="white">done</mat-icon>
-              </button>
+               <app-generic-button type="submit" mat-raised-button name="general.done"></app-generic-button>
             </div>
           </mat-step>
         </mat-vertical-stepper>

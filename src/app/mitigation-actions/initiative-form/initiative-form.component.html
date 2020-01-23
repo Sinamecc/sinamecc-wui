@@ -7,7 +7,7 @@
       <br />
       <div fxLayout="column">
 
-        <mat-vertical-stepper formArrayName="formArray" linear>
+        <mat-vertical-stepper formArrayName="formArray" linear  #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
               <span translate>specificLabel.initiative</span>
@@ -81,12 +81,10 @@
               <pre>first step valid? : <br>{{formArray?.get([0]).valid | json}}</pre>
   
             </div> -->
-            <div class="center">
-              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
-                <span translate>general.next</span>
-                <mat-icon color="white">arrow_forward</mat-icon>
-              </button>
+            <div class="box-button">
+              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
             </div>
+
           </mat-step>
 
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
@@ -128,16 +126,11 @@
             </mat-form-field>
             <br />
 
-            <div class="center">
-              <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
-                <mat-icon color="white">arrow_back</mat-icon>
-                <span translate>general.back</span>
-              </button>
-              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
-                <span translate>general.next</span>
-                <mat-icon color="white">arrow_forward</mat-icon>
-              </button>
+            <div class="box-button">
+              <app-generic-button-secondary type="button" (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
             </div>
+
           </mat-step>
 
 
@@ -171,15 +164,9 @@
               <mat-error translate> errorLabel.inputOrLengthIncorrect</mat-error>
             </mat-form-field>
             <br />
-            <div class="center">
-              <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
-                <mat-icon color="white">arrow_back</mat-icon>
-                <span translate>general.back</span>
-              </button>
-              <button type="button" mat-button matStepperNext class="mat-raised-button mat-primary">
-                <span translate>general.next</span>
-                <mat-icon color="white">arrow_forward</mat-icon>
-              </button>
+            <div class="box-button">
+              <app-generic-button-secondary type="button" (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
             </div>
           </mat-step>
 
@@ -190,7 +177,7 @@
             
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <button mat-raised-button type="submit" color="primary" [disabled]="wasSubmittedSuccessfully"><span translate>general.done</span></button>
+              <app-generic-button type="submit" [disabled]="wasSubmittedSuccessfully" name="general.done"></app-generic-button>
             </div>
           </mat-step>
         </mat-vertical-stepper>

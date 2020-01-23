@@ -8,15 +8,12 @@
       </mat-card-title>
     </h3>
     <form [formGroup]="mainGroup">
-      <mat-horizontal-stepper [linear] = "true" formArrayName="formArray">
+      <mat-horizontal-stepper [linear] = "true" formArrayName="formArray" #stepper>
         <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
           <ng-template matStepLabel><span translate>geographyLabel.geographicLevel</span></ng-template>
           <app-ppcn-level></app-ppcn-level>
           <div class="align-right">
-              <button [disabled] = "levelId === ''" mat-button matStepperNext class="mat-raised-button mat-primary">
-                  <span translate>general.next</span>
-                  <mat-icon color="white">arrow_forward</mat-icon>
-              </button>
+              <app-generic-button  [disabled] = "levelId === ''" (click)="stepper.next();" name="general.next"></app-generic-button>
           </div>
         </mat-step>
 
@@ -24,10 +21,7 @@
           <ng-template matStepLabel><span translate>ppcn.PPCNForm</span></ng-template>
           <app-ppcn-new> </app-ppcn-new>
           <div class="align-right">
-            <button type="button" mat-button matStepperPrevious class="mat-raised-button mat-accent">
-                <mat-icon color="white">arrow_back</mat-icon>
-                <span translate>general.back</span>
-              </button>
+              <app-generic-button-secondary (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
           </div>
 
         </mat-step>
