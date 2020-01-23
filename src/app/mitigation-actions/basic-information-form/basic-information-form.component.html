@@ -30,13 +30,14 @@
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn">
-              <mat-select formControlName="entityCtrl" [placeholder]="'specificLabel.entityInstitution' | translate">
-                <mat-option *ngFor="let institution of processedNewFormData.institutions" [value]="institution.id">
-                  {{ institution.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <span translate>specificLabel.entityInstitution</span><br><br>
+            <mat-radio-group formControlName="entityCtrl">
+              <mat-radio-button  *ngFor="let institution of processedNewFormData.institutions" [value]="institution.id">
+                {{ institution.name }}
+               </mat-radio-button>
+            </mat-radio-group>
+
+
             <br/>
             <div class="box-button">
               <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
