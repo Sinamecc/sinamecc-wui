@@ -95,7 +95,7 @@
 
             <span translate>specificLabel.initiativeFinanceStatus</span><br><br>
             <mat-radio-group formControlName="initiativeFinancingStatusCtrl">
-              <mat-radio-button *ngFor="let financeStatus of processedNewFormData.finance_status" [value]="financeStatus.id">
+              <mat-radio-button *ngFor="let financeStatus of processedNewFormData.finance_status" [value]="financeStatus.id" (change)="financialSourceInputShown($event)">
                 {{ financeStatus.status }}
                </mat-radio-button>
             </mat-radio-group>
