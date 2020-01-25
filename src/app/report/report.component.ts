@@ -12,7 +12,15 @@ const log = new Logger('Report');
 
 import { ReportService, Report } from '@app/report/report.service';
 
-
+export class ReportDataSource extends DataSource<any> {
+  constructor(private reportService: ReportService) {
+    super();
+  }
+  connect(): Observable < Report[] > {
+    return this.reportService.reports();
+  }
+  disconnect() {}
+}
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -43,16 +51,4 @@ export class ReportComponent implements OnInit {
       return this.authenticationService;
     }
 
-}
-
-
-
-export class ReportDataSource extends DataSource<any> {
-  constructor(private reportService: ReportService) {
-    super();
-  }
-  connect(): Observable < Report[] > {
-    return this.reportService.reports();
-  }
-  disconnect() {}
 }

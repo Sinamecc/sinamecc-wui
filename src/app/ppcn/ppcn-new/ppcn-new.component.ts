@@ -59,7 +59,7 @@ export class PpcnNewComponent implements OnInit {
 
   ngDoCheck() {
 
-      if (this.levelId != this.levelIdTmp && this.levelId !== '') {
+      if (this.levelId !== this.levelIdTmp && this.levelId !== '') {
         this.createForm();
         this.levelIdTmp = this.levelId;
       }
@@ -93,7 +93,7 @@ export class PpcnNewComponent implements OnInit {
           faxCtrl: '',
           postalCodeCtrl: '',
           addressCtrl: ['', Validators.required],
-          ciuuCodeCtrl: (this.levelId == '1' ? null : ['', Validators.required] )
+          ciuuCodeCtrl: (this.levelId === '1' ? null : ['', Validators.required] )
         }),
         this.formBuilder.group({
           contactNameCtrl: ['', Validators.required],

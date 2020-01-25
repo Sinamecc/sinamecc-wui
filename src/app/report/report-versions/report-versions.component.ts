@@ -14,7 +14,20 @@ const log = new Logger('Report');
 
 import { ReportService, Report, Version } from '@app/report/report.service';
 
-
+export class ReportVersionsDataSource extends DataSource<any> {
+  id: number;
+  constructor(private reportService: ReportService,
+    private current_id: number) {
+    super();
+    this.id = current_id;
+  }
+  connect(): Observable<Version[]> {
+    return this.reportService.versions(this.id);
+    // this.singleEvents$.subscribe(event => this.event = event);
+    //return this.reportService.reportVersions(this.id).subscribe(versions =>this.ver)versions();
+  }
+  disconnect() { }
+}
 @Component({
   selector: 'app-report-versions',
   templateUrl: './report-versions.component.html',
@@ -62,19 +75,4 @@ export class ReportVersionsComponent implements OnInit {
   }
 
 
-}
-
-export class ReportVersionsDataSource extends DataSource<any> {
-  id: number;
-  constructor(private reportService: ReportService,
-    private current_id: number) {
-    super();
-    this.id = current_id;
-  }
-  connect(): Observable<Version[]> {
-    return this.reportService.versions(this.id);
-    // this.singleEvents$.subscribe(event => this.event = event);
-    //return this.reportService.reportVersions(this.id).subscribe(versions =>this.ver)versions();
-  }
-  disconnect() { }
 }

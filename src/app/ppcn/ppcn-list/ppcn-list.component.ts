@@ -10,6 +10,25 @@ import { Ppcn } from '@app/ppcn/ppcn_registry';
 import { Observable } from 'rxjs';
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
 
+export class PpcnSource extends DataSource<any> {
+
+  ppcns: Ppcn[];
+  ppcns$: Observable<Ppcn[]>;
+
+  constructor(private service: PpcnService,
+              private i18nService: I18nService, ) {
+    super();
+  }
+  connect(): Observable < Ppcn[] > {
+    this.ppcns$ = this.service.reRoutePpcn(this.i18nService.language.split('-')[0]);
+    this.ppcns$.subscribe((ppcns) => {
+      this.ppcns = ppcns;
+    });
+    return this.ppcns$;
+  }
+  disconnect() {}
+}
+
 @Component({
   selector: 'app-ppcn-list',
   templateUrl: './ppcn-list.component.html',
@@ -96,21 +115,4 @@ export class PpcnListComponent implements OnInit {
 }
 
 
-export class PpcnSource extends DataSource<any> {
 
-  ppcns: Ppcn[];
-  ppcns$: Observable<Ppcn[]>;
-
-  constructor(private service: PpcnService,
-              private i18nService: I18nService, ) {
-    super();
-  }
-  connect(): Observable < Ppcn[] > {
-    this.ppcns$ = this.service.reRoutePpcn(this.i18nService.language.split('-')[0]);
-    this.ppcns$.subscribe((ppcns) => {
-      this.ppcns = ppcns;
-    });
-    return this.ppcns$;
-  }
-  disconnect() {}
-}

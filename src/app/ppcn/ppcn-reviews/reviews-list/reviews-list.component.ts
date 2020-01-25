@@ -20,7 +20,6 @@ export class ReviewsListComponent implements OnInit {
 
   dataSource = new PpcnReviewSource(this.service, this.route.snapshot.paramMap.get('id'));
 
-  //dataSource = new ReportVersionsDataSource(this.reportService,+this.route.snapshot.paramMap.get('id'));
   displayedColumns = ['date', 'current_status', 'previous_state'];
 
   constructor( private router: Router,

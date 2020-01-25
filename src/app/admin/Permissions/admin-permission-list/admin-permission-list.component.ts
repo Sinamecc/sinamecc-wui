@@ -19,7 +19,7 @@ export class AdminPermissionListComponent implements OnInit {
   removePermissionsList: Permissions [] = [];
   removeTempPermissionsList: Permissions [] = [];
 
-  @Input('dataTable') dataTable: Permissions [];
+  @Input('dataTable') table: Permissions [];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -36,24 +36,24 @@ export class AdminPermissionListComponent implements OnInit {
       this.componentType = 'add';
       if (data != null) {
         this.componentType = data.componentType;
-        this.dataTable = data.array;
-        this.dataSource = new MatTableDataSource<Permissions>(this.dataTable);
+        this.table = data.array;
+        this.dataSource = new MatTableDataSource<Permissions>(this.table);
       }
     }
 
   ngOnInit() {
     if (!this.data) {
-      this.dataSource = new MatTableDataSource<Permissions>(this.dataTable);
+      this.dataSource = new MatTableDataSource<Permissions>(this.table);
     }
-    for (const perm of this.dataTable) {
+    for (const perm of this.table) {
       this.removeTempPermissionsList.push(perm);
     }
   }
 
   addPermissions(perm: Permissions) {
     this.listOfPermissions.push(perm);
-    this.dataTable.splice( this.dataTable.indexOf(perm), 1 );
-    this.dataSource = new MatTableDataSource<Permissions>(this.dataTable);
+    this.table.splice( this.table.indexOf(perm), 1 );
+    this.dataSource = new MatTableDataSource<Permissions>(this.table);
     this.snackBar.open(perm.name + ' anadido correctamente ', 'add' , {
       duration: 2000,
     });
@@ -70,21 +70,21 @@ export class AdminPermissionListComponent implements OnInit {
 
   close() {
     this.dataSource = new MatTableDataSource<Permissions>(this.removeTempPermissionsList);
-    this.dataTable = this.removeTempPermissionsList;
+    this.table = this.removeTempPermissionsList;
     this.removeTempPermissionsList = [];
   }
 
   searchByNae(name: string) {
     const listOfPerm: Permissions [] = [];
     if (name !== '') {
-      for (const perm of this.dataTable) {
+      for (const perm of this.table) {
           if (perm.name === name ) {
             listOfPerm.push(perm);
           }
       }
       return listOfPerm;
     } else {
-      return this.dataTable;
+      return this.table;
     }
   }
 
@@ -92,7 +92,7 @@ export class AdminPermissionListComponent implements OnInit {
     const listOfPerm: Permissions [] = [];
     if (type != '0') {
 
-      for (const perm of this.dataTable) {
+      for (const perm of this.table) {
         if (perm.content_type === type ) {
           listOfPerm.push(perm);
         }
@@ -100,12 +100,12 @@ export class AdminPermissionListComponent implements OnInit {
     return listOfPerm;
 
     } else {
-      return this.dataTable;
+      return this.table;
     }
   }
   search(name: string= '', type: string= 'all') {
     if (name === '' && type === 'all') {
-      this.dataSource = new MatTableDataSource<Permissions>(this.dataTable);
+      this.dataSource = new MatTableDataSource<Permissions>(this.table);
     } else {
       const listByName = this.searchByNae(name);
       const listByType = this.searchByType(type);

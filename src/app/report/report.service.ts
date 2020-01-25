@@ -80,7 +80,7 @@ export class ReportService {
       const metadata = [];
       for (const element in context) {
 
-        if (element != 'file' && context[element] != '') {
+        if (element !== 'file' && context[element] !== '') {
           const value =  {'name': element, 'value': context[element]};
           metadata.push(value);
         }

@@ -13,7 +13,7 @@ export class AdminGroupsListEditComponent implements OnInit {
 
   displayedColumns = ['name', 'action'];
   dataSource: MatTableDataSource<Groups>;
-  @Input('dataTable') dataTable: Groups [];
+  @Input('dataTable') table: Groups [];
   @Input() userGroups: Groups[];
 
   public groups: Groups[];
@@ -26,11 +26,11 @@ export class AdminGroupsListEditComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
   constructor(private adminService: AdminService) {
-    this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
+    this.dataSource = new MatTableDataSource<Groups>(this.table);
    }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
+    this.dataSource = new MatTableDataSource<Groups>(this.table);
     this.initTempList();
   }
 
@@ -42,7 +42,7 @@ export class AdminGroupsListEditComponent implements OnInit {
     this.newListOfUserGroups = [];
     this.listOfDeleteUserGroups = [];
     this.groups = [];
-    for (const perm of this.dataTable) {
+    for (const perm of this.table) {
       if (this.containsGroups(perm.id)) {
         this.newListOfUserGroups.push(perm);
         this.groups.push(perm);

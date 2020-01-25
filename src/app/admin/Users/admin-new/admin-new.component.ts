@@ -13,7 +13,6 @@ import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { User } from '../../users';
-import { of } from 'rxjs/observable/of';
 import { AdminEditPasswordDialogComponent } from '../../admin-edit-password-dialog/admin-edit-password-dialog.component';
 import { AdminPermissionsListEditComponent } from '../../Permissions/admin-permissions-list-edit/admin-permissions-list-edit.component';
 import { AdminGroupsListEditComponent } from '../../Groups/admin-groups-list-edit/admin-groups-list-edit.component';
