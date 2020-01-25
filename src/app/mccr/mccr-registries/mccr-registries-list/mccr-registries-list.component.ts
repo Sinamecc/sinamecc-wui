@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
-import {MatPaginator, MatTableDataSource, MatSort, MatDialogConfig, MatDialog, MatSnackBar} from '@angular/material'
+import {MatPaginator, MatTableDataSource, MatSort, MatDialogConfig, MatDialog, MatSnackBar} from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
@@ -32,7 +32,7 @@ export class MccrRegistriesListComponent implements OnInit {
   dataSource = new MccrRegistriesDataSource(this.service);
   currentMccrRegistry: MccrRegistry;
   displayedColumns = ['id', 'fsm_state', 'mitigation', 'files', 'actions'];
-  
+
   // @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ViewChild(MatSort) sort: MatSort;
 
@@ -48,20 +48,20 @@ export class MccrRegistriesListComponent implements OnInit {
 
   }
 
-  getAuthentificationService(){
+  getAuthentificationService() {
     return this.authenticationService;
   }
 
   delete(uuid: string) {
     this.isLoading = true;
-    this.service.deleteMccrRegistry(uuid).subscribe(() =>{
+    this.service.deleteMccrRegistry(uuid).subscribe(() => {
        // here i need to refresh table
        this.isLoading = false;
        this.dataSource = new MccrRegistriesDataSource(this.service);
        this.translateService.get('Sucessfully deleted element').subscribe((res: string) => { this.snackBar.open(res, null, {
         duration: 3000
       }); });
-     } )
+     } );
    }
 
    view(uuid: string) {
@@ -83,20 +83,20 @@ export class MccrRegistriesListComponent implements OnInit {
 
     const selectedMccr = this.dataSource.mccrRegistries.find((mccr) => mccr.id === uuid);
     const status = selectedMccr.fsm_state;
-    
+
     const route = this.service.mapRoutesStatuses(uuid).find(x => x.status === status );
-    if(route) {
+    if (route) {
       this.router.navigate([route.route], { replaceUrl: true });
     } else {
       this.router.navigate([`mccr/registries/${uuid}/reviews/new`], { replaceUrl: true });
     }
-    
+
   }
 
-  openDeleteConfirmationDialog(uuid:string) {
+  openDeleteConfirmationDialog(uuid: string) {
     const data = {
-      title: "mccr.deleteMCCR",
-      question: "general.youSure",
+      title: 'mccr.deleteMCCR',
+      question: 'general.youSure',
       uuid: uuid
     };
     const dialogConfig = new MatDialogConfig();
@@ -104,10 +104,10 @@ export class MccrRegistriesListComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.data = data;
     dialogConfig.width = '350px';
-    let dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.delete(uuid);
       }
     });
@@ -125,7 +125,7 @@ export class MccrRegistriesDataSource extends DataSource<any> {
     super();
   }
   connect(): Observable < MccrRegistry[] > {
-    let mccrRegistriesPromise:Observable < MccrRegistry[] > = this.service.mccrRegistries();
+    const mccrRegistriesPromise: Observable < MccrRegistry[] > = this.service.mccrRegistries();
     mccrRegistriesPromise.subscribe(mccrRegistries => this.mccrRegistries = mccrRegistries);
     return mccrRegistriesPromise;
   }

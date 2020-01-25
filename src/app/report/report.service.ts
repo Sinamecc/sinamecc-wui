@@ -20,7 +20,7 @@ export interface Report {
   updated: string;
 }
 
-export interface Version{
+export interface Version {
   version: string;
   file: string;
 }
@@ -51,7 +51,7 @@ export class ReportService {
 
   constructor(private authenticationService: AuthenticationService,
     private httpClient: HttpClient,
-    private s3:S3Service) {
+    private s3: S3Service) {
 
   }
 
@@ -69,24 +69,24 @@ export class ReportService {
     };
 
 
-    let fileList = context.file.files;
+    const fileList = context.file.files;
     if (fileList.length > 0) {
-      let file: File = fileList[0];
-      let formData: FormData = new FormData();
+      const file: File = fileList[0];
+      const formData: FormData = new FormData();
 
       formData.append('name', context.name);
       formData.append('file', file, file.name);
 
-      const metadata = []
-      for(let element in context){
+      const metadata = [];
+      for (const element in context) {
 
-        if(element != "file" && context[element] != ''){
-          let value =  {"name":element,"value":context[element]}
-          metadata.push(value) 
+        if (element != 'file' && context[element] != '') {
+          const value =  {'name': element, 'value': context[element]};
+          metadata.push(value);
         }
-        
+
       }
-      formData.append('metadata', JSON.stringify(metadata)); 
+      formData.append('metadata', JSON.stringify(metadata));
 
       return this.httpClient
         .post(routes.submitReport(), formData, httpOptions)
@@ -105,12 +105,13 @@ export class ReportService {
   }
 
 
-    /**
+  /**
    * Submit Report Version Forms.
    * @param {ReportContext} context The report version form parameters.
    * @return {Observable<Response>} The report response.
    */
-  submitReportVersion(context: ReportContext, id:number): Observable < Response > {
+
+  submitReportVersion(context: ReportContext, id: number): Observable < Response > {
     // Replace by proper api call, verify params in component
     const httpOptions = {
       headers: new HttpHeaders({
@@ -118,10 +119,10 @@ export class ReportService {
       })
     };
 
-    let fileList = context.file.files;
+    const fileList = context.file.files;
     if (fileList.length > 0) {
-      let file: File = fileList[0];
-      let formData: FormData = new FormData();
+      const file: File = fileList[0];
+      const formData: FormData = new FormData();
       formData.append('name', context.name);
       formData.append('file', file, file.name);
       return this.httpClient
@@ -147,7 +148,7 @@ export class ReportService {
       })
     };
     return this.httpClient
-      .get(routes.reports(), httpOptions) 
+      .get(routes.reports(), httpOptions)
       .pipe(
         map((body: any) => {
           return body;
@@ -155,14 +156,14 @@ export class ReportService {
       );
   }
 
-  versions(id:number): Observable<Version[]> {
+  versions(id: number): Observable<Version[]> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
       })
     };
     return this.httpClient
-      .get(routes.versions(id), httpOptions) 
+      .get(routes.versions(id), httpOptions)
       .pipe(
         map((body: any) => {
           return body.versions;
@@ -175,14 +176,14 @@ public async downloadResource(filePath: string): Promise<S3File> {
   return this.s3.downloadResource(filePath);
 }
 
-  reportVersionsName(id:number): Observable<string> {
+  reportVersionsName(id: number): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
       })
     };
     return this.httpClient
-      .get(routes.versions(id), httpOptions) 
+      .get(routes.versions(id), httpOptions)
       .pipe(
         map((body: any) => {
           return body.name;

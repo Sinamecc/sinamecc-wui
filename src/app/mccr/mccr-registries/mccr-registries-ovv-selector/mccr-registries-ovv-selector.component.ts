@@ -9,7 +9,7 @@ import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
 import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
-import { Logger, I18nService, AuthenticationService } from '@app/core'; 
+import { Logger, I18nService, AuthenticationService } from '@app/core';
 
 const log = new Logger('Report');
 

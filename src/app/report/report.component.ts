@@ -25,7 +25,7 @@ export class ReportComponent implements OnInit {
   isLoading = false;
   dataSource = new ReportDataSource(this.reportService);
   displayedColumns = ['name', 'last_active_version', 'created', 'updated', 'versions'];
-  
+
   // @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ViewChild(MatSort) sort: MatSort;
 
@@ -36,10 +36,10 @@ export class ReportComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-      
+
     }
 
-    getAuthenticationService(){
+    getAuthenticationService() {
       return this.authenticationService;
     }
 

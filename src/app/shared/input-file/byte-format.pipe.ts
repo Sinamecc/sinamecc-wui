@@ -15,7 +15,7 @@ export class ByteFormatPipe implements PipeTransform {
   }
 
   private formatBytes(bytes: number, decimals?: number) {
-    if (bytes === 0) { return '0 ' + this.unit };
+    if (bytes === 0) { return '0 ' + this.unit; }
     const B = this.unit.charAt(0);
     const k = 1024,
       dm = decimals || 2,

@@ -14,43 +14,43 @@ import { AdminUserDetailComponent } from '../admin-user-detail/admin-user-detail
 })
 export class AdminUsersComponent implements OnInit {
 
-  displayedColumns = ['username', 'email','is_active','is_provider','is_administrador_dcc','action'];
+  displayedColumns = ['username', 'email', 'is_active', 'is_provider', 'is_administrador_dcc', 'action'];
   dataSource = new UsersDataSource(this.adminService);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
- 
+
 
   constructor(
-    private adminService:AdminService,
+    private adminService: AdminService,
     public dialog: MatDialog) { }
 
   ngOnInit() {
-    
+
   }
 
   openDeleteConfirmationDialog() {
     const data = {
-      title: "Delete User",
-      question: "general.youSure",
-      
+      title: 'Delete User',
+      question: 'general.youSure',
+
     };
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = data;
     dialogConfig.width = '350px';
-    let dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-       
+      if (result) {
+
       }
     });
   }
 
-  openUserDetail(user:string){
-    let dialogRef = this.dialog.open(AdminUserDetailComponent, {
+  openUserDetail(user: string) {
+    const dialogRef = this.dialog.open(AdminUserDetailComponent, {
       width: '70%',
       data: {
         user : user
@@ -69,7 +69,7 @@ export class UsersDataSource extends DataSource<any> {
   users: User[];
   users$: Observable<User[]>;
 
-  constructor(private adminService:AdminService){
+  constructor(private adminService: AdminService) {
     super();
   }
 

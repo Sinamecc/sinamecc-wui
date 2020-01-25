@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { Route } from '@app/core';
-import { ReportComponent } from '@app/report/report.component'
+import { ReportComponent } from '@app/report/report.component';
 import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [

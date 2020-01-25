@@ -39,10 +39,10 @@ describe('AdminPermissionsDetailComponent', () => {
     component = fixture.componentInstance;
 
     component.permission = {
-      id:'1',
-      name:'wtf',
-      codename:'wtf',
-      content_type:'wtf'
+      id: '1',
+      name: 'wtf',
+      codename: 'wtf',
+      content_type: 'wtf'
     };
     fixture.detectChanges();
   });

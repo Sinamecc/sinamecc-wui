@@ -26,8 +26,8 @@
                     <ng-container matColumnDef="action">
                         <mat-header-cell *matHeaderCellDef translate> admin.action </mat-header-cell>
                         <mat-cell *matCellDef="let element"> 
-                            <button *ngIf="componentType == 'delete' " (click)="removePermissions(element)" mat-icon-button color="warn" ><mat-icon color="white">delete</mat-icon></button>
-                            <button *ngIf="componentType == 'add' " mat-icon-button color="primary" (click)="addPermissions(element)"><mat-icon color="white">add</mat-icon></button>
+                            <button *ngIf="componentType === 'delete' " (click)="removePermissions(element)" mat-icon-button color="warn" ><mat-icon color="white">delete</mat-icon></button>
+                            <button *ngIf="componentType === 'add' " mat-icon-button color="primary" (click)="addPermissions(element)"><mat-icon color="white">add</mat-icon></button>
                         </mat-cell>
                     </ng-container>
 

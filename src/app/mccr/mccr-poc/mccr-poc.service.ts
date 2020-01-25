@@ -20,7 +20,7 @@ const routes = {
   submitNewDeveloperAccount: () => '/v1/account/developer',
   submitNewBuyerAccount: () => '/v1/account/buyer',
 
-}
+};
 
 export interface Response {
   // Customize received credentials here
@@ -98,7 +98,7 @@ export class MccrPocService {
       }
     };
 
-    let formData: FormData = new FormData();
+    const formData: FormData = new FormData();
     formData.append('user_id', context.userId);
     formData.append('ucc_base_code', context.uccBaseCode);
     formData.append('developer_account_number', context.developerAccountNUmber);
@@ -128,7 +128,7 @@ export class MccrPocService {
       }
     };
 
-    let formData: FormData = new FormData();
+    const formData: FormData = new FormData();
     formData.append('user_id', context.user_id);
 
     return this.httpClient
@@ -157,7 +157,7 @@ export class MccrPocService {
       }
     };
 
-    let formData: FormData = new FormData();
+    const formData: FormData = new FormData();
     formData.append('user_id', context.user_id);
 
     return this.httpClient
@@ -186,7 +186,7 @@ export class MccrPocService {
       }
     };
 
-    let formData: FormData = new FormData();
+    const formData: FormData = new FormData();
 
     formData.append('user_id', context.userId);
     formData.append('ucc_batch_base', context.uccBatchCode);
@@ -217,7 +217,7 @@ export class MccrPocService {
       }
     };
 
-    let formData: FormData = new FormData();
+    const formData: FormData = new FormData();
     formData.append('user_id', context.userId);
     formData.append('ucc_base_code', context.uccBaseCode);
     formData.append('developer_account_number', context.developerAccountNUmber);

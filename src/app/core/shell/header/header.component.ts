@@ -13,14 +13,14 @@ import { Permissions } from '@app/core/permissions';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  logoName : string
+  logoName: string;
   @Input() sidenav: MatSidenav;
 
   constructor(private router: Router,
               private titleService: Title,
               private authenticationService: AuthenticationService,
               private i18nService: I18nService) {
-                this.logoName = "logo-white-nav.png";
+                this.logoName = 'logo-white-nav.png';
                }
 
   ngOnInit() { }
@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
     this.i18nService.language = language;
   }
 
-  logout() { 
+  logout() {
     this.authenticationService.logout()
       .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
@@ -42,11 +42,11 @@ export class HeaderComponent implements OnInit {
     return this.i18nService.supportedLanguages;
   }
 
-  get permissions(): Permissions{
+  get permissions(): Permissions {
     return this.authenticationService.credentials.permissions;
   }
 
-  get credential():Credentials{
+  get credential(): Credentials {
     return this.authenticationService.credentials;
   }
 

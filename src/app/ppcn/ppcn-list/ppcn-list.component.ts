@@ -20,8 +20,8 @@ export class PpcnListComponent implements OnInit {
   version: string = environment.version;
   error: string;
   isLoading = false;
-  dataSource = new PpcnSource(this.service,this.i18nService);
-  displayedColumns = ['id_ppcn', 'organization_ppcn','request_type','fsm_state', 'required_recognition', 'geographic_level', 'actions'];
+  dataSource = new PpcnSource(this.service, this.i18nService);
+  displayedColumns = ['id_ppcn', 'organization_ppcn', 'request_type', 'fsm_state', 'required_recognition', 'geographic_level', 'actions'];
 
   constructor(private router: Router,
     private i18nService: I18nService,
@@ -39,18 +39,18 @@ export class PpcnListComponent implements OnInit {
 
   delete(uuid: string) {
     this.isLoading = true;
-     this.service.deletePpcn(uuid).subscribe(() =>{
+     this.service.deletePpcn(uuid).subscribe(() => {
        // here i need to refresh table
        this.isLoading = false;
        this.dataSource = new PpcnSource(this.service, this.i18nService);
      } );
- 
+
    }
 
-  getAuthenticationService(){
+  getAuthenticationService() {
     return this.authenticationService;
   }
-  
+
   update(uuid: string) {
     this.router.navigate([`ppcn/${uuid}/edit`], { replaceUrl: true });
   }
@@ -59,24 +59,24 @@ export class PpcnListComponent implements OnInit {
 
     const selectedPpcn = this.dataSource.ppcns.find((PPCN) => PPCN.id === uuid);
     const status = selectedPpcn.fsm_state;
-    
+
     const route = this.service.mapRoutesStatuses(uuid).find(x => x.status === status );
-    if(route) {
+    if (route) {
       this.router.navigate([route.route], { replaceUrl: true });
     } else {
       this.router.navigate([`ppcn/${uuid}/review/status/new`], { replaceUrl: true });
     }
-    
+
   }
 
   changelog(uuid: string) {
     this.router.navigate([`ppcn/${uuid}/reviews`], { replaceUrl: true });
   }
 
-  openDeleteConfirmationDialog(uuid:string) {
+  openDeleteConfirmationDialog(uuid: string) {
     const data = {
-      title: "ppcn.deletePPCN",
-      question: "general.youSure",
+      title: 'ppcn.deletePPCN',
+      question: 'general.youSure',
       uuid: uuid
     };
     const dialogConfig = new MatDialogConfig();
@@ -84,10 +84,10 @@ export class PpcnListComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.data = data;
     dialogConfig.width = '350px';
-    let dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.delete(uuid);
       }
     });
@@ -102,7 +102,7 @@ export class PpcnSource extends DataSource<any> {
   ppcns$: Observable<Ppcn[]>;
 
   constructor(private service: PpcnService,
-              private i18nService: I18nService,) {
+              private i18nService: I18nService, ) {
     super();
   }
   connect(): Observable < Ppcn[] > {

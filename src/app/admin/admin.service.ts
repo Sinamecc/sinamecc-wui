@@ -22,15 +22,15 @@ export interface ReportContext {
 }
 
 const routes = {
-  permissions:() => `/v1/user/permission/`,
-  groups:() => `/v1/user/group/`,
-  submitUser:() =>  `/v1/user/`,
-  submitPermissions:(userName:string) => `/v1/user/${userName}/permission/`,
-  submitGroups:(userName:string) =>`/v1/user/${userName}/group/`,
-  users:() => `/v1/user/`,
-  user:(userName:string) => `/v1/user/${userName}`,
-  editUser:(userId:string) => `/v1/user/${userId}`
-}
+  permissions: () => `/v1/user/permission/`,
+  groups: () => `/v1/user/group/`,
+  submitUser: () =>  `/v1/user/`,
+  submitPermissions: (userName: string) => `/v1/user/${userName}/permission/`,
+  submitGroups: (userName: string) => `/v1/user/${userName}/group/`,
+  users: () => `/v1/user/`,
+  user: (userName: string) => `/v1/user/${userName}`,
+  editUser: (userId: string) => `/v1/user/${userId}`
+};
 
 @Injectable()
 export class AdminService {
@@ -40,41 +40,41 @@ export class AdminService {
     private httpClient: HttpClient) { }
 
 
-   permissions(){
+   permissions() {
 
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
       })
     };
-    let asyncResult =  this.httpClient
-      .get<Permissions[]>(routes.permissions(), httpOptions) 
+    const asyncResult =  this.httpClient
+      .get<Permissions[]>(routes.permissions(), httpOptions)
       .pipe(
         map((body: any) => {
           return body;
         })
       );
 
-      return asyncResult
+      return asyncResult;
 
   }
 
-  groups(){
+  groups() {
 
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
       })
     };
-    let asyncResult =  this.httpClient
-      .get<Groups[]>(routes.groups(), httpOptions) 
+    const asyncResult =  this.httpClient
+      .get<Groups[]>(routes.groups(), httpOptions)
       .pipe(
         map((body: any) => {
           return body;
         })
       );
 
-      return asyncResult
+      return asyncResult;
 
   }
 
@@ -85,7 +85,7 @@ export class AdminService {
       })
     };
     return this.httpClient
-      .get(routes.users(), httpOptions) 
+      .get(routes.users(), httpOptions)
       .pipe(
         map((body: any) => {
           return body;
@@ -93,7 +93,7 @@ export class AdminService {
       );
   }
 
-  user(username:string){
+  user(username: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
@@ -109,27 +109,27 @@ export class AdminService {
 
   }
 
-  editUser(userId:string,context: any): Observable <Response> {
+  editUser(userId: string, context: any): Observable <Response> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
       })
     };
 
-    let formData: FormData = new FormData();
-    formData.append('username',context.userName);
-    formData.append('email',context.email);
-    formData.append('first_name',context.name);
-    formData.append('last_name',context.lastName);
-    formData.append('is_staff',context.staff);
-    formData.append('is_active',context.active);
-    formData.append('is_provider',context.provider);
-    formData.append('is_administrador_dcc',context.dccUser);
+    const formData: FormData = new FormData();
+    formData.append('username', context.userName);
+    formData.append('email', context.email);
+    formData.append('first_name', context.name);
+    formData.append('last_name', context.lastName);
+    formData.append('is_staff', context.staff);
+    formData.append('is_active', context.active);
+    formData.append('is_provider', context.provider);
+    formData.append('is_administrador_dcc', context.dccUser);
     formData.append('status', 'created');
 
 
     return this.httpClient
-    .put(routes.editUser(userId), formData ,httpOptions)
+    .put(routes.editUser(userId), formData , httpOptions)
     .pipe(
       map((body: any) => {
         return body;
@@ -146,9 +146,9 @@ export class AdminService {
         'Authorization': this.authenticationService.credentials.token
       })
     };
-    let form = {
-      "permissions": context.permissions
-    }
+    const form = {
+      'permissions': context.permissions
+    };
 
     return this.httpClient
         .post(routes.submitPermissions(context.userName), form, httpOptions)
@@ -165,16 +165,16 @@ export class AdminService {
 
   }
 
-  deletePermissions(context: any,permissions:any): Observable <Response> {
+  deletePermissions(context: any, permissions: any): Observable <Response> {
 
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
       }),
     };
-    let form = {
-      "permissions": permissions
-    }
+    const form = {
+      'permissions': permissions
+    };
 
     return this.httpClient
         .put(routes.submitPermissions(context.userName), form, httpOptions)
@@ -190,14 +190,14 @@ export class AdminService {
 
   }
 
-  submitDetail(context: any,type:string): Observable <Response> {
-    if(type == "permissions"){
+  submitDetail(context: any, type: string): Observable <Response> {
+    if (type === 'permissions') {
 
-      return this.submitPermissions(context)
+      return this.submitPermissions(context);
 
     }
 
-    return this.submitGroups(context)
+    return this.submitGroups(context);
   }
 
   submitGroups(context: any): Observable <Response> {
@@ -207,9 +207,9 @@ export class AdminService {
         'Authorization': this.authenticationService.credentials.token
       })
     };
-    let form = {
-      "groups": context.groups
-    }
+    const form = {
+      'groups': context.groups
+    };
     return this.httpClient
         .post(routes.submitGroups(context.userName), form, httpOptions)
         .pipe(
@@ -225,16 +225,16 @@ export class AdminService {
 
   }
 
-  deleteGroups(context: any,groups:any): Observable <Response> {
+  deleteGroups(context: any, groups: any): Observable <Response> {
 
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
       }),
     };
-    let form = {
-      "groups": groups
-    }
+    const form = {
+      'groups': groups
+    };
 
     return this.httpClient
         .put(routes.submitGroups(context.userName), form, httpOptions)
@@ -257,10 +257,10 @@ export class AdminService {
       })
     };
 
-    let formData: FormData = new FormData();
-    formData.append('name',context.name);
-    formData.append('codename',context.codename);
-    formData.append('content_type',context.content_type);
+    const formData: FormData = new FormData();
+    formData.append('name', context.name);
+    formData.append('codename', context.codename);
+    formData.append('content_type', context.content_type);
     formData.append('status', 'created');
 
     return this.httpClient
@@ -285,18 +285,18 @@ export class AdminService {
       })
     };
 
-    let formData: FormData = new FormData();
-    formData.append('username',context.userName);
-    formData.append('password',context.password);
-    formData.append('email',context.email);
-    formData.append('first_name',context.name);
-    formData.append('last_name',context.lastName);
-    formData.append('is_staff',context.staff);
-    formData.append('is_active',context.active);
-    formData.append('is_provider',context.provider);
-    formData.append('is_administrador_dcc',context.dccUser);
+    const formData: FormData = new FormData();
+    formData.append('username', context.userName);
+    formData.append('password', context.password);
+    formData.append('email', context.email);
+    formData.append('first_name', context.name);
+    formData.append('last_name', context.lastName);
+    formData.append('is_staff', context.staff);
+    formData.append('is_active', context.active);
+    formData.append('is_provider', context.provider);
+    formData.append('is_administrador_dcc', context.dccUser);
     formData.append('status', 'created');
-    
+
     return this.httpClient
         .post(routes.submitUser(), formData, httpOptions)
         .pipe(

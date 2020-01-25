@@ -17,29 +17,29 @@ export class MccrPocNewDeveloperAccountComponent implements OnInit {
   error: string;
   form: FormGroup;
   createDisable = false;
-  account_number = "";
-  constructor(private formBuilder: FormBuilder,private service: MccrPocService,
-    private translateService: TranslateService,public snackBar: MatSnackBar) { 
+  account_number = '';
+  constructor(private formBuilder: FormBuilder, private service: MccrPocService,
+    private translateService: TranslateService, public snackBar: MatSnackBar) {
       this.createForm();
     }
 
   ngOnInit() {
   }
 
-  createForm(){
+  createForm() {
     this.form = this.formBuilder.group({
       user_id: ['', Validators.required],
     });
   }
 
-  submitForm(){
+  submitForm() {
     this.isLoading = true;
     this.service.submitNewDeveloperAccount(this.form.value)
     .pipe(finalize(() => {
       this.form.markAsPristine();
       this.isLoading = false;
     }))
-    .subscribe((response:any) => {
+    .subscribe((response: any) => {
       this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
       log.debug(`${response.statusCode} status code received from form`);
       this.createDisable = true;
@@ -50,5 +50,5 @@ export class MccrPocNewDeveloperAccountComponent implements OnInit {
       this.error = error;
     });
   }
-  
+
 }

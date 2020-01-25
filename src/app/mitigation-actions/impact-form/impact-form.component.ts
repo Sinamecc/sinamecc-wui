@@ -24,7 +24,7 @@ export class ImpactFormComponent implements OnInit {
   error: string;
   form: FormGroup;
   isLoading = false;
-  wasSubmittedSuccessfully:boolean = false;
+  wasSubmittedSuccessfully = false;
 
   mitigationAction: MitigationAction;
 
@@ -87,10 +87,10 @@ export class ImpactFormComponent implements OnInit {
     // this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
   }
 
-  
+
   submitForm() {
     this.isLoading = true;
-    let context = {
+    const context = {
       impact_plan: this.form.value.formArray[0].mitigationActionImpactCtrl,
       impact: this.form.value.formArray[0].emissionImpactCtrl,
       calculation_methodology: this.form.value.formArray[0].calculationMethodologyCtrl,
@@ -100,7 +100,7 @@ export class ImpactFormComponent implements OnInit {
       registration_type: this.processedNewFormData.registration_types[0].id
       // update_new_mitigation_action: false
     };
-    if(this.isUpdating) {
+    if (this.isUpdating) {
       context['update_existing_mitigation_action'] = true;
     } else {
       context['update_new_mitigation_action'] = true;
@@ -115,7 +115,7 @@ export class ImpactFormComponent implements OnInit {
         this.wasSubmittedSuccessfully = true;
         setTimeout(() => {
           this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
-       }, 2000);       
+       }, 2000);
       }, error => {
         this.translateService.get('Error submitting form').subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
         log.debug(`New Mitigation Action Form error: ${error}`);

@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material'
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 
@@ -49,8 +49,8 @@ export class ReportVersionsComponent implements OnInit {
   async download(file: string) {
     this.isLoading = true;
     const blob = await this.reportService.downloadResource(file);
-    var url = window.URL.createObjectURL(blob.data);
-    var a = document.createElement('a');
+    const url = window.URL.createObjectURL(blob.data);
+    const a = document.createElement('a');
     document.body.appendChild(a);
     a.setAttribute('style', 'display: none');
     a.href = url;

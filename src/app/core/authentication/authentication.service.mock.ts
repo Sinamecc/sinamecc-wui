@@ -11,13 +11,13 @@ export class MockAuthenticationService {
     id: 24,
     email: 'test@test.com',
     groups: {},
-    permissions:{
-      mitigation_action:false,
-      ppcn:false,
-      mccr:false,
-      report_data:false
+    permissions: {
+      mitigation_action: false,
+      ppcn: false,
+      mccr: false,
+      report_data: false
     },
-    is_administrador_dcc:false
+    is_administrador_dcc: false
   };
 
   login(context: LoginContext): Observable<Credentials> {
@@ -27,14 +27,14 @@ export class MockAuthenticationService {
       id: 24,
       email: 'test@test.com',
       groups: {},
-      permissions:{
-        mitigation_action:false,
-        ppcn:false,
-        mccr:false,
-        report_data:false
+      permissions: {
+        mitigation_action: false,
+        ppcn: false,
+        mccr: false,
+        report_data: false
       },
-      is_administrador_dcc:false
-      
+      is_administrador_dcc: false
+
     });
   }
 

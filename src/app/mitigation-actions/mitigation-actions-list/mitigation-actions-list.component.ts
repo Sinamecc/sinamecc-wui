@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
-import { MatPaginator, MatTableDataSource, MatSort, MatSnackBar } from '@angular/material'
+import { MatPaginator, MatTableDataSource, MatSort, MatSnackBar } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators';
@@ -15,11 +15,29 @@ const log = new Logger('Report');
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 
-import { MatDialog, MatDialogConfig } from "@angular/material";
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
 
 import { TranslateService } from '@ngx-translate/core';
 
+export class MitigationActionSource extends DataSource<any> {
+
+  mitigationActions: MitigationAction[];
+  mitigationActions$: Observable<MitigationAction[]>;
+
+  constructor(private service: MitigationActionsService,
+    private i18nService: I18nService, ) {
+    super();
+  }
+  connect(): Observable<MitigationAction[]> {
+    this.mitigationActions$ = this.service.mitigationActions(this.i18nService.language.split('-')[0]);
+    this.mitigationActions$.subscribe((mitigationActions) => {
+      this.mitigationActions = mitigationActions;
+    });
+    return this.mitigationActions$;
+  }
+  disconnect() { }
+}
 @Component({
   selector: 'app-mitigation-actions-list',
   templateUrl: './mitigation-actions-list.component.html',
@@ -31,7 +49,7 @@ export class MitigationActionsListComponent implements OnInit {
   error: string;
   isLoading = false;
   dataSource = new MitigationActionSource(this.service, this.i18nService);
-  canUpdateStatus: boolean = false;
+  canUpdateStatus = false;
   displayedColumns = ['name', 'strategy_name', 'purpose', 'fsm_state', 'updated', 'created', 'actions'];
 
 
@@ -55,7 +73,7 @@ export class MitigationActionsListComponent implements OnInit {
     this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
   }
 
-  getAuthentification(){
+  getAuthentification() {
     return this.authenticationService;
   }
 
@@ -94,8 +112,8 @@ export class MitigationActionsListComponent implements OnInit {
 
   openDeleteConfirmationDialog(uuid: string) {
     const data = {
-      title: "mitigationAction.deleteMA",
-      question: "general.youSure",
+      title: 'mitigationAction.deleteMA',
+      question: 'general.youSure',
       uuid: uuid
     };
     const dialogConfig = new MatDialogConfig();
@@ -103,7 +121,7 @@ export class MitigationActionsListComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.data = data;
     dialogConfig.width = '350px';
-    let dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -112,23 +130,4 @@ export class MitigationActionsListComponent implements OnInit {
     });
   }
 
-}
-
-export class MitigationActionSource extends DataSource<any> {
-
-  mitigationActions: MitigationAction[];
-  mitigationActions$: Observable<MitigationAction[]>;
-
-  constructor(private service: MitigationActionsService,
-    private i18nService: I18nService, ) {
-    super();
-  }
-  connect(): Observable<MitigationAction[]> {
-    this.mitigationActions$ = this.service.mitigationActions(this.i18nService.language.split('-')[0]);
-    this.mitigationActions$.subscribe((mitigationActions) => {
-      this.mitigationActions = mitigationActions;
-    });
-    return this.mitigationActions$;
-  }
-  disconnect() { }
 }

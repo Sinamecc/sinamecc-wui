@@ -14,13 +14,13 @@
           <mat-vertical-stepper formArrayName="formArray" linear>
             <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
               <ng-template matStepLabel>
-                <span *ngIf="levelId == 1" translate>info.basicInfo </span>
-                <span *ngIf="levelId == 2" translate>specificLabel.organizationInfo </span>
+                <span *ngIf="levelId === 1" translate>info.basicInfo </span>
+                <span *ngIf="levelId === 2" translate>specificLabel.organizationInfo </span>
 
               </ng-template>
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>{{levelId==2 ? "specificLabel.organizationName" : "geographyLabel.cantonDistrictName" }}</mat-label>
+                <mat-label translate>{{levelId === 2 ? "specificLabel.organizationName" : "geographyLabel.cantonDistrictName" }}</mat-label>
 
                 <input matInput formControlName="nameCtrl" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -28,7 +28,7 @@
               <br />
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>{{levelId==2 ? "specificLabel.representativeName" : "specificLabel.majorName" }} </mat-label>
+                <mat-label translate>{{levelId === 2 ? "specificLabel.representativeName" : "specificLabel.majorName" }} </mat-label>
 
                 <input matInput formControlName="representativeNameCtrl" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -36,7 +36,7 @@
               <br />
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>{{levelId==2 ? "Telephone" : "specificLabel.majorTelephone" }} </mat-label>
+                <mat-label translate>{{levelId === 2 ? "Telephone" : "specificLabel.majorTelephone" }} </mat-label>
 
                 <input matInput formControlName="telephoneCtrl" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -52,7 +52,7 @@
                 <input matInput formControlName="postalCodeCtrl">
               </mat-form-field>
               <br />
-              <div *ngIf="levelId==2; then thenBlock"></div>
+              <div *ngIf="levelId === 2; then thenBlock"></div>
               <ng-template #thenBlock>
                 <mat-form-field class="field-ppcn">
                   <mat-label translate>general.CIUUCode</mat-label>
@@ -61,7 +61,7 @@
               </ng-template>
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>{{levelId==2 ? "Address" : "District council address" }}</mat-label>
+                <mat-label translate>{{levelId === 2 ? "Address" : "District council address" }}</mat-label>
 
                 <input matInput formControlName="addressCtrl" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>

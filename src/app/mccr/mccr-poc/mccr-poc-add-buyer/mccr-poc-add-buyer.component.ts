@@ -18,19 +18,19 @@ export class MccrPocAddBuyerComponent implements OnInit {
   isLoading = false;
   error: string;
   form: FormGroup;
-  
-  constructor(private route: ActivatedRoute,private formBuilder: FormBuilder,
-    private service: MccrPocService,private router: Router,private translateService: TranslateService,public snackBar: MatSnackBar) { 
+
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder,
+    private service: MccrPocService, private router: Router, private translateService: TranslateService, public snackBar: MatSnackBar) {
     this.createForm();
   }
-  id=this.route.snapshot.paramMap.get('id');
+  id = this.route.snapshot.paramMap.get('id');
 
   ngOnInit() {
   }
 
-  submitForm(){
+  submitForm() {
     this.isLoading = true;
-    this.form.value.uccBaseCode=this.id;
+    this.form.value.uccBaseCode = this.id;
     this.service.submitUccBuyerTransfer(this.form.value)
     .pipe(finalize(() => {
       this.form.markAsPristine();
@@ -48,21 +48,21 @@ export class MccrPocAddBuyerComponent implements OnInit {
 
   }
 
-  back(){
+  back() {
     this.router.navigate([`/mccr/poc/detail/${this.id}`], { replaceUrl: true });
   }
 
-  createForm(){
+  createForm() {
     this.form = this.formBuilder.group({
       uccBaseCode: ['', Validators.required],
       developerAccountNUmber: ['', Validators.required],
       buyerAccountNUmber: ['', Validators.required],
       numberUccToTransfer: ['', Validators.required],
-      userId:['', Validators.required]
+      userId: ['', Validators.required]
     });
 
   }
 
-  
+
 
 }

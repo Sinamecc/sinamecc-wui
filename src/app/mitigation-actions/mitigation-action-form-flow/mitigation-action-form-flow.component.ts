@@ -28,8 +28,8 @@ import { ImpactFormComponent } from '@app/mitigation-actions/impact-form/impact-
   styleUrls: ['./mitigation-action-form-flow.component.scss']
 })
 export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit {
-  @ViewChild(InitiativeFormComponent) initiativeForm:InitiativeFormComponent;
-  @ViewChild(BasicInformationFormComponent) basicInfoForm:BasicInformationFormComponent;
+  @ViewChild(InitiativeFormComponent) initiativeForm: InitiativeFormComponent;
+  @ViewChild(BasicInformationFormComponent) basicInfoForm: BasicInformationFormComponent;
   @ViewChild(KeyAspectsFormComponent) keyAspectsForm: KeyAspectsFormComponent;
   @ViewChild(EmissionsMitigationFormComponent) emissionsMitigationForm: EmissionsMitigationFormComponent;
   @ViewChild(ImpactFormComponent) impactForm: ImpactFormComponent;
@@ -86,13 +86,13 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     });
   }
 
-  private initialFormData():Observable<MitigationActionNewFormData> {
+  private initialFormData(): Observable<MitigationActionNewFormData> {
     return this.service.newMitigationActionFormData(this.i18nService.language.split('-')[0], this.action)
     .pipe(finalize(() => { this.isLoading = false; }));
 
   }
 
-  private initFormOptions():Observable<MitigationActionNewFormData> {
+  private initFormOptions(): Observable<MitigationActionNewFormData> {
     const initialRequiredData = this.initialFormData().pipe(
       tap(mitigationActionNewFormData => {
         this.isLoading = false;

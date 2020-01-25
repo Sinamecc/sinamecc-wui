@@ -96,7 +96,7 @@ export class BasicInformationFormComponent implements OnInit {
   submitForm() {
     this.isLoading = true;
 
-    let context = {
+    const context = {
       contact: {
         full_name:  this.form.value.formArray[1].contactNameCtrl,
         job_title: this.form.value.formArray[1].positionCtrl,
@@ -109,10 +109,10 @@ export class BasicInformationFormComponent implements OnInit {
       user: String(this.authenticationService.credentials.id),
       registration_type: this.processedNewFormData.registration_types[0].id
     };
-    if(this.isUpdating) {
+    if (this.isUpdating) {
       context.contact['id'] = this.mitigationAction.contact.id;
-      
-    } 
+
+    }
     this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id, this.i18nService.language.split('-')[0])
     .pipe(finalize(() => {
       this.form.markAsPristine();
@@ -120,7 +120,7 @@ export class BasicInformationFormComponent implements OnInit {
     }))
     .subscribe(response => {
       this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
-      this.wasSubmittedSuccessfully = true;        
+      this.wasSubmittedSuccessfully = true;
     }, error => {
       this.translateService.get('Error submitting form').subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
       log.debug(`New Mitigation Action Form error: ${error}`);

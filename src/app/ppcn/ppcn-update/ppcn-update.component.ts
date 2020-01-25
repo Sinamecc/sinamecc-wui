@@ -34,12 +34,12 @@ export class PpcnUpdateComponent implements OnInit {
   sectorFormId: number;
   subsectorFormId: number;
   geiOrganizationFormId: number;
-  activity_type: string = "";
-  ovv_id: string = "";
-  emission_OVV: string = "";
-  report_date_start: string = "";
-  report_date_end: string = "";
-  levelId: string = "1";
+  activity_type = '';
+  ovv_id = '';
+  emission_OVV = '';
+  report_date_start = '';
+  report_date_end = '';
+  levelId = '1';
   levelIdTmp: string = this.levelId;
   id: string;
   formValues: any;
@@ -83,21 +83,21 @@ export class PpcnUpdateComponent implements OnInit {
           phoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
         }),
         this.formBuilder.group({
-          requiredCtrl:['', Validators.required],
-          recognitionCtrl: ['',Validators.required],
-          
+          requiredCtrl: ['', Validators.required],
+          recognitionCtrl: ['', Validators.required],
+
         }),
         this.formBuilder.group({
-          baseYearCtrl:['', Validators.required],
-          reportYearCtrl:['',Validators.required],
-          ovvCtrl:['',Validators.required],
-          implementationEmissionDateCtrl:null,
+          baseYearCtrl: ['', Validators.required],
+          reportYearCtrl: ['', Validators.required],
+          ovvCtrl: ['', Validators.required],
+          implementationEmissionDateCtrl: null,
           implementationInitialDateCtrl: null,
           implementationEndDateCtrl: null,
         }),
         this.formBuilder.group({
           activities: this.formBuilder.array([ this.createActivityForm() ]),
-        }),   
+        }),
       ])
     });
 
@@ -110,26 +110,26 @@ export class PpcnUpdateComponent implements OnInit {
     );
   }
 
-  createActivityForm() : FormGroup{
+  createActivityForm(): FormGroup {
     return this.formBuilder.group({
-      activityCtrl:['',Validators.required],
+      activityCtrl: ['', Validators.required],
       sectorCtrl: ['', Validators.required],
       subSectorCtrl: ['', Validators.required],
-    })
+    });
   }
-  loadActivityForm(ppcn : any) : FormGroup{
+  loadActivityForm(ppcn: any): FormGroup {
     return this.formBuilder.group({
       activityCtrl: [ppcn['gei_organization']['gei_activity_types']['0']['activity_type']],
       sectorCtrl: [ppcn['gei_organization']['gei_activity_types']['0']['sector']],
       subSectorCtrl: [ppcn['gei_organization']['gei_activity_types']['0']['sub_sector']],
-    })
+    });
   }
   addItems(): void {
     const control = <FormArray>this.formGroup.controls.formArray['controls'][4].controls['activities'];
     control.push(this.createActivityForm());
   }
 
-  deleteItems(i:number):void{
+  deleteItems(i: number): void {
     const control = <FormArray>this.formGroup.controls.formArray['controls'][4].controls['activities'];
     control.removeAt(i);
   }
@@ -144,7 +144,7 @@ export class PpcnUpdateComponent implements OnInit {
                                       this.requiredFormId,
                                       this.recognitionFormId,
                                       this.sectorFormId,
-                                      this.subsectorFormId, 
+                                      this.subsectorFormId,
                                       this.geiOrganizationFormId)
       .pipe(finalize(() => {
         this.formGroup.markAsPristine();
@@ -164,8 +164,8 @@ export class PpcnUpdateComponent implements OnInit {
       .pipe(finalize(() => { this.isLoading = false; }));
   }
 
-  
-  
+
+
   onSectorChange(newValue: any) {
     this.service.subsectors(String(newValue.value), this.i18nService.language.split('-')[0])
       .subscribe((subsectors: SubSector[]) => {
@@ -196,14 +196,14 @@ export class PpcnUpdateComponent implements OnInit {
 
 
   private initFormData(): Observable < Ppcn > {
-    let ppcn = this.loadFormData().pipe(
+    const ppcn = this.loadFormData().pipe(
       tap(ppcn => {
         this.levelId = String(ppcn['geographic_level']['id']);
         this.contactFormId = +ppcn['organization']['contact']['id'];
         this.geographicFormId = +ppcn['geographic_level']['id'];
         this.requiredFormId = +ppcn['required_level']['id'];
         this.recognitionFormId = +ppcn['recognition_type']['id'];
-        if(ppcn['gei_organization'] != null){
+        if (ppcn['gei_organization'] != null) {
           this.geiOrganizationFormId = +ppcn['gei_organization']['id'];
           this.ovv_id = String(ppcn['gei_organization']['ovv']['id']);
           this.emission_OVV = ppcn['gei_organization']['emission_OVV'];
@@ -214,15 +214,15 @@ export class PpcnUpdateComponent implements OnInit {
           this.activity_type = ppcn['gei_organization']['gei_activity_types']['0']['activity_type'];
 
         }
-        
-        
-        let ppcnArray = this.formBuilder.array([
+
+
+        const ppcnArray = this.formBuilder.array([
           this.formBuilder.group({
             nameCtrl: [ppcn['organization']['name'], Validators.required],
             representativeNameCtrl: [ppcn['organization']['representative_name'], Validators.required],
             telephoneCtrl: [ppcn['organization']['phone_organization'], Validators.compose([Validators.required, Validators.minLength(8)])],
             faxCtrl: [ppcn['organization']['fax'], null],
-            postalCodeCtrl: [ppcn['organization']['postal_code'],null],
+            postalCodeCtrl: [ppcn['organization']['postal_code'], null],
             addressCtrl: [ppcn['organization']['address'], Validators.required],
             ciuuCodeCtrl: [ppcn['organization']['ciiu'], Validators.required],
           }),
@@ -237,10 +237,10 @@ export class PpcnUpdateComponent implements OnInit {
             recognitionCtrl: [ppcn['recognition_type']['id'], Validators.required],
           }),
           this.formBuilder.group({
-            baseYearCtrl:[ppcn['gei_organization']['base_year'], Validators.required],
-            reportYearCtrl:[ppcn['gei_organization']['report_year'],Validators.required],
-            ovvCtrl:[ppcn['gei_organization']['ovv'],Validators.required],
-            implementationEmissionDateCtrl:[ppcn['gei_organization']['emission_ovv_date'], Validators.required],
+            baseYearCtrl: [ppcn['gei_organization']['base_year'], Validators.required],
+            reportYearCtrl: [ppcn['gei_organization']['report_year'], Validators.required],
+            ovvCtrl: [ppcn['gei_organization']['ovv'], Validators.required],
+            implementationEmissionDateCtrl: [ppcn['gei_organization']['emission_ovv_date'], Validators.required],
           }),
           this.formBuilder.group({
             activities: this.formBuilder.array([ this.loadActivityForm(ppcn) ]),

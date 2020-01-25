@@ -420,7 +420,7 @@ export class MockMitigationActionsService {
       { id: +Math.random().toString(36).substring(5), name: 'International' }],
       finance_status: [{ id: +Math.random().toString(36).substring(5), status: 'To be approved' },
       { id: +Math.random().toString(36).substring(5), status: 'Approved' }]
-    }
+    };
     return of(newFormData);
   }
 

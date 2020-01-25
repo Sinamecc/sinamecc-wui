@@ -10,7 +10,7 @@ import { ReportVersionsNewComponent } from '@app/report/report-versions-new/repo
 const routes: Routes = [
   // Module is lazy loaded, see app-routing.module.ts
   { path: '', redirectTo: '/home',  pathMatch: 'full' },
-  { path: '',component: ReportComponent, data: { title: extract('Report') } },
+  { path: '', component: ReportComponent, data: { title: extract('Report') } },
   { path: ':id/versions', component: ReportVersionsComponent, data: { id: extract('id') } },
   { path: 'new', component: ReportNewComponent, data: { title: extract('New') } },
   { path: ':id/versions/new', component: ReportVersionsNewComponent, data: { title: extract('New') } },

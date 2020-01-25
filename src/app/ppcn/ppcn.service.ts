@@ -7,7 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { Ppcn, GeographicLevel, SubSector } from '@app/ppcn/ppcn_registry'
+import { Ppcn, GeographicLevel, SubSector } from '@app/ppcn/ppcn_registry';
 import { PpcnNewFormData, Ovv } from '@app/ppcn/ppcn-new-form-data';
 import { BehaviorSubject } from 'rxjs';
 import { PpcnReview } from '@app/ppcn/ppcn-review';
@@ -19,7 +19,7 @@ const routes = {
   getRequiredLevel: () => `/v1/ppcn/required/level`,
   seededFormData: (levelId: string, lang: string) => `/v1/ppcn/form/${levelId}/${lang}`,
   ppcns: (lang: string) => `/v1/ppcn/${lang}`,
-  ppcnsAll: (lang:string) => `/v1/ppcn/all/${lang}`,
+  ppcnsAll: (lang: string) => `/v1/ppcn/all/${lang}`,
   submitNewPpcn: () => `/v1/ppcn/`,
   submitUpdatePpcn: (ppcnId: string) => `/v1/ppcn/${ppcnId}`,
   subsectors: (subsector: string, lang: string) => `/v1/ppcn/${subsector}/subsector/${lang}/`,
@@ -30,7 +30,7 @@ const routes = {
   getAllOvv: () => `/v1/ppcn/ovv/`,
   ppcnAvailableStatuses: () => `/v1/workflow/status`,
 
-}
+};
 
 export interface Response {
   // Customize received credentials here
@@ -42,10 +42,10 @@ export interface Response {
 }
 
 const fsm_next_state = {
-  "PPCN_decision_step_DCC": ['PPCN_accepted_request_by_DCC', 'PPCN_rejected_request_by_DCC', 'PPCN_changes_requested_by_DCC'],
-  "PPCN_evaluation_by_CA": ["PPCN_decision_step_CA"],
-  "PPCN_decision_step_CA": ["PPCN_accepted_request_by_CA", "PPCN_rejected_request_by_CA"]
-}
+  'PPCN_decision_step_DCC': ['PPCN_accepted_request_by_DCC', 'PPCN_rejected_request_by_DCC', 'PPCN_changes_requested_by_DCC'],
+  'PPCN_evaluation_by_CA': ['PPCN_decision_step_CA'],
+  'PPCN_decision_step_CA': ['PPCN_accepted_request_by_CA', 'PPCN_rejected_request_by_CA']
+};
 
 export interface ReportContext {
   comment: string;
@@ -73,7 +73,7 @@ export class PpcnService {
         'Authorization': this.authenticationService.credentials.token
       })
     };
-    let formData = this.buildFormData(context);
+    const formData = this.buildFormData(context);
     return this.httpClient
       .post(routes.submitNewPpcn(), formData, httpOptions)
       .pipe(
@@ -104,7 +104,7 @@ export class PpcnService {
         'Authorization': this.authenticationService.credentials.token
       })
     };
-    let formData = this.buildFormData(context, contactFormId, geographicFormId, requiredFormId, recognitionFormId, sectorFormId, subsectorFormId, ovvFormId);
+    const formData = this.buildFormData(context, contactFormId, geographicFormId, requiredFormId, recognitionFormId, sectorFormId, subsectorFormId, ovvFormId);
     return this.httpClient
       .put(routes.submitUpdatePpcn(id), formData, httpOptions)
       .pipe(
@@ -112,7 +112,7 @@ export class PpcnService {
           const response = {
             statusCode: 200,
             id: body.id,
-            geographic: "",
+            geographic: '',
             message: 'Form updated correctly'
           };
           return response;
@@ -170,7 +170,7 @@ export class PpcnService {
       })
     };
     return this.httpClient
-      .get(routes.ppcnsAll(lang), httpOptions) 
+      .get(routes.ppcnsAll(lang), httpOptions)
       .pipe(
         map((body: any) => {
           return body;
@@ -180,12 +180,12 @@ export class PpcnService {
   }
 
   reRoutePpcn(lang: string): Observable < Ppcn[] > {
-    
-    if(this.authenticationService.credentials.is_administrador_dcc){
-      return this.ppcnAll(lang)
+
+    if (this.authenticationService.credentials.is_administrador_dcc) {
+      return this.ppcnAll(lang);
     }
 
-    return this.ppcn(lang)
+    return this.ppcn(lang);
   }
 
   geographicLevel(lang: string): Observable<GeographicLevel[]> {
@@ -247,7 +247,7 @@ export class PpcnService {
         map((body: any) => {
           return body;
         })
-      )
+      );
 
   }
 
@@ -274,14 +274,14 @@ export class PpcnService {
       })
     };
 
-    let fileList = context.files;
+    const fileList = context.files;
 
-    let formData: FormData = new FormData();
+    const formData: FormData = new FormData();
     formData.append('ppcn_form', context.ppcnCtrl);
 
     if (fileList.length > 0) {
-      for (let file of fileList) {
-        let fileToUpload = file.file.files[0];
+      for (const file of fileList) {
+        const fileToUpload = file.file.files[0];
         formData.append('files[]', fileToUpload, fileToUpload.name);
       }
       return this.httpClient
@@ -351,11 +351,11 @@ export class PpcnService {
     subsectorFormId: number = null,
     geiOrganizationId: number = null,
   ) {
-    let formData = {};
-    let organization = {};
-    let contact = {};
-    let geiOrganization = {};
-    let geiActivityTypes = {};
+    const formData = {};
+    const organization = {};
+    const contact = {};
+    const geiOrganization = {};
+    const geiActivityTypes = {};
 
     this.currentLevelId.subscribe(levelId => formData['geographic_level'] = levelId);
     formData['user'] = String(this.authenticationService.credentials.id);
@@ -385,10 +385,9 @@ export class PpcnService {
     organization['contact'] = contact;
     formData['organization'] = organization;
 
-    if (context.formArray[3].ovvCtrl == '' || context.formArray[3].ovvCtrl == null) {
+    if (!context.formArray[3]) {
       formData['base_year'] = this.datePipe.transform(context.formArray[3].reportYearCtrl, 'yyyy-MM-dd');
-    }
-    else {
+    } else {
       if (geiOrganizationId) {
         geiOrganization['id'] = String(geiOrganizationId);
       }
@@ -408,7 +407,7 @@ export class PpcnService {
           'activity_type': activity.activityCtrl,
           'sub_sector': activity.subSectorCtrl,
           'sector': activity.sectorCtrl
-        }
+        };
         formData['gei_activity_types'].push(objectToPush);
       });
     }

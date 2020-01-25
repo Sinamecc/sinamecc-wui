@@ -1,5 +1,5 @@
-import { buyerAccount } from "./mccr-poc-buyer-account";
-import { developerAccount } from "./mccr-poc-developer-account";
+import { buyerAccount } from './mccr-poc-buyer-account';
+import { developerAccount } from './mccr-poc-developer-account';
 
 export interface MccrPoc {
     ucc_code: string;

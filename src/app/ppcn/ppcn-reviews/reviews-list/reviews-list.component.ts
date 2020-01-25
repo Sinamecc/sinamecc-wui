@@ -25,7 +25,7 @@ export class ReviewsListComponent implements OnInit {
 
   constructor( private router: Router,
     private route: ActivatedRoute,
-    private service: PpcnService,) { 
+    private service: PpcnService, ) {
       this.id = this.route.snapshot.paramMap.get('id');
     }
 
@@ -41,10 +41,10 @@ export class PpcnReviewSource extends DataSource<any> {
               private current_id: string) {
       super();
       this.id = current_id;
-              
+
   }
 
-  
+
   connect(): Observable < PpcnReview[] > {
     return this.service.ppcnReviews(this.id);
   }

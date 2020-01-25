@@ -17,7 +17,7 @@ const log = new Logger('Report');
   styleUrls: ['./ppcn-upload.component.scss']
 })
 export class PpcnUploadComponent implements OnInit {
-  
+
   version: string = environment.version;
   error: string;
   form: FormGroup;
@@ -30,15 +30,15 @@ export class PpcnUploadComponent implements OnInit {
     private formBuilder: FormBuilder,
     private i18nService: I18nService,
     private translateService: TranslateService,
-    private ppcnService : PpcnService,
-    public snackBar: MatSnackBar) { 
+    private ppcnService: PpcnService,
+    public snackBar: MatSnackBar) {
       this.createForm();
     }
 
   ngOnInit() {
   }
 
-  submitForm(){
+  submitForm() {
     this.isLoading = true;
     this.ppcnService.submitPpcnNewFile(this.form.value)
       .pipe(finalize(() => {
@@ -60,10 +60,10 @@ export class PpcnUploadComponent implements OnInit {
   private createForm() {
     this.form = this.formBuilder.group({
       ppcnCtrl: ['', Validators.required],
-      files: this.formBuilder.array([ 
+      files: this.formBuilder.array([
         this.createItem(), this.createItem(), this.createItem()
       ])
-      
+
     });
     this.ppcns = this.initialFormData().pipe(
       tap((ppcns: Ppcn[]) => { this.processedPpcns = ppcns; })
@@ -84,7 +84,7 @@ export class PpcnUploadComponent implements OnInit {
     const control = <FormArray>this.form.controls['files'];
     control.removeAt(i);
   }
-  
+
   private initialFormData(): Observable<Ppcn[]> {
     return this.ppcnService.ppcn(this.i18nService.language.split('-')[0])
     .pipe(finalize(() => { this.isLoading = false; }));

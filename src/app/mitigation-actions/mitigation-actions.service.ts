@@ -58,7 +58,7 @@ export class MitigationActionsService {
 
 
   updateCurrentMitigationAction(newMitigationAction: MitigationAction) {
-    this.mitigationActionSource.next(newMitigationAction)
+    this.mitigationActionSource.next(newMitigationAction);
   }
 
 
@@ -232,7 +232,7 @@ export class MitigationActionsService {
       );
   }
 
- 
+
 
   mapRoutesStatuses(uuid: string): StatusRoutesMap[] {
     return [

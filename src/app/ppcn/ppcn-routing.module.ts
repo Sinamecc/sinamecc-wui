@@ -25,18 +25,18 @@ import { ReviewsListComponent } from '@app/ppcn/ppcn-reviews/reviews-list/review
 const routes: Routes = [
   Route.withShell([
     { path: '', redirectTo: 'ppcn/registries', pathMatch: 'full' },
-    { path: 'ppcn/flow',component: PpcnFlowComponent, data: { title: extract('PpcnFlow') } },
-    { path: 'ppcn/registries', component:PpcnListComponent, data:{title: extract('PpcnList')} },
-    { path: 'ppcn/registries/new',component:PpcnFlowComponent, data:{title: extract('NewPPCN')} },
+    { path: 'ppcn/flow', component: PpcnFlowComponent, data: { title: extract('PpcnFlow') } },
+    { path: 'ppcn/registries', component: PpcnListComponent, data: {title: extract('PpcnList')} },
+    { path: 'ppcn/registries/new', component: PpcnFlowComponent, data: {title: extract('NewPPCN')} },
     { path: 'ppcn/:id/edit', component: PpcnUpdateComponent, data: { id: extract('EditPPCN') } },
     { path: 'ppcn/:id', component: PpcnComponent, data: { id: extract('id') } },
-    { path: 'ppcn/geographic',component: PpcnLevelComponent, data: { title: extract('PpcnLevel') } },
-    { path: 'ppcn/:id/download/:geographic',component: PpcnDownloadComponent , data: { id: extract('id') } },
+    { path: 'ppcn/geographic', component: PpcnLevelComponent, data: { title: extract('PpcnLevel') } },
+    { path: 'ppcn/:id/download/:geographic', component: PpcnDownloadComponent , data: { id: extract('id') } },
     { path: 'ppcn/:id/upload/new', component: PpcnUploadComponent, data: {id: extract('id') } },
     { path: 'ppcn/:id/file/version/new', component: FileVersionComponent, data: {id: extract('id') }  },
-    { path: 'ppcn/:id/review/status/new',component: NewReviewComponent, data: {id: extract('id')}},
-    { path: 'ppcn/:id/reviews',component: ReviewsListComponent, data: {id: extract('id')} },
-    
+    { path: 'ppcn/:id/review/status/new', component: NewReviewComponent, data: {id: extract('id')}},
+    { path: 'ppcn/:id/reviews', component: ReviewsListComponent, data: {id: extract('id')} },
+
   ])
 ];
 

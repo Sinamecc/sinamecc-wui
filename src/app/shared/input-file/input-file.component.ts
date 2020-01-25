@@ -70,7 +70,7 @@ export class InputFileComponent implements MatFormFieldControl<FileInput>, Contr
     return this._elementRef.nativeElement.disabled;
   }
   set disabled(dis: boolean) {
-    this.setDisabledState(coerceBooleanProperty(dis))
+    this.setDisabledState(coerceBooleanProperty(dis));
     this.stateChanges.next();
   }
 

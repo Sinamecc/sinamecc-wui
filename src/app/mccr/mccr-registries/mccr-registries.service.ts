@@ -53,7 +53,7 @@ export class MccrRegistriesService {
 
 
   updateCurrentMccrRegistry(newMccrRegistry: MccrRegistry) {
-    this.mccrRegistrySource.next(newMccrRegistry)
+    this.mccrRegistrySource.next(newMccrRegistry);
   }
 
   submitMccrRegistryNewForm(context: any): Observable<Response> {
@@ -63,15 +63,15 @@ export class MccrRegistriesService {
       })
     };
 
-    let fileList = context.files;
-    let formData: FormData = new FormData();
+    const fileList = context.files;
+    const formData: FormData = new FormData();
     formData.append('mitigation', context.mitigationActionCtrl);
     formData.append('user', String(this.authenticationService.credentials.id));
     formData.append('user_type', String(1));
     formData.append('status', 'created');
     if (fileList.length > 0) {
-      for (let file of fileList) {
-        let fileToUpload = file.file.files[0];
+      for (const file of fileList) {
+        const fileToUpload = file.file.files[0];
         formData.append('files[]', fileToUpload, fileToUpload.name);
       }
       return this.httpClient
@@ -260,5 +260,5 @@ export class MccrRegistriesService {
     // return an ErrorObservable with a user-facing error message
     return new ErrorObservable(
       'Something bad happened; please try again later.');
-  };
+  }
 }

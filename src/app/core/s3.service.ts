@@ -1,4 +1,4 @@
-import { AuthenticationService } from "@app/core";
+import { AuthenticationService } from '@app/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable, Inject, forwardRef } from '@angular/core';
 
@@ -25,13 +25,13 @@ export class S3Service {
       observe: 'response' as 'body'
     };
 
-    let regex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+    const regex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
     let matches;
     const file = await this.httpClient.get<any>(
       filePath, httpOptions
     ).toPromise();
 
-    let str = file.headers.get('Content-Disposition');
+    const str = file.headers.get('Content-Disposition');
     matches = str.match(regex);
 
     return {

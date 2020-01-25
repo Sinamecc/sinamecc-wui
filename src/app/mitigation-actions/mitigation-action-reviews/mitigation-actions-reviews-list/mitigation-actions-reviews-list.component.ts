@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
-import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material'
+import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators';
@@ -31,7 +31,7 @@ export class MitigationActionsReviewsListComponent implements OnInit {
 
   constructor(private router: Router,
     private route: ActivatedRoute,
-    private service: MitigationActionsService,) { 
+    private service: MitigationActionsService, ) {
       this.id = this.route.snapshot.paramMap.get('id');
     }
 
@@ -48,10 +48,10 @@ export class MitigationActionReviewSource extends DataSource<any> {
               private current_id: string) {
       super();
       this.id = current_id;
-              
+
   }
 
-  
+
   connect(): Observable < MitigationActionReview[] > {
     return this.service.mitigationActionReviews(this.id);
   }

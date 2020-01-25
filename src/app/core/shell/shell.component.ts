@@ -16,7 +16,7 @@ export class ShellComponent implements OnInit {
 
   constructor(
     private media: ObservableMedia,
-    private authenticationService: AuthenticationService,) { }
+    private authenticationService: AuthenticationService, ) { }
 
   ngOnInit() {
     // Automatically close side menu on screens > sm breakpoint
@@ -24,14 +24,14 @@ export class ShellComponent implements OnInit {
       .pipe(filter((change: MediaChange) => (change.mqAlias !== 'xs' && change.mqAlias !== 'sm')))
       .subscribe(() => this.sidenav.close());
 
-      
+
   }
 
-  get permissions(): Permissions{
+  get permissions(): Permissions {
     return this.authenticationService.credentials.permissions;
   }
 
-  get credential():Credentials{
+  get credential(): Credentials {
     return this.authenticationService.credentials;
   }
 

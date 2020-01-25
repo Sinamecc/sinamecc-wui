@@ -9,15 +9,15 @@ import { GroupsData } from '../../groupsData';
   styleUrls: ['./admin-group-list.component.scss']
 })
 export class AdminGroupListComponent implements OnInit {
-  displayedColumnsGroups = ['name','action'];
-  dataSource:MatTableDataSource<Groups>
+  displayedColumnsGroups = ['name', 'action'];
+  dataSource: MatTableDataSource<Groups>;
   listOfGroups: Groups [] = [];
-  componentType:string = "add";
+  componentType = 'add';
 
-  removeGroupsList:Groups [] = [];
-  removeTempGroupsList:Groups [] = [];
+  removeGroupsList: Groups [] = [];
+  removeTempGroupsList: Groups [] = [];
 
-  @Input('dataTable') dataTable: Groups [];
+  @Input('dataTable') table: Groups [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
     this.paginator = mp;
@@ -27,61 +27,61 @@ export class AdminGroupListComponent implements OnInit {
   constructor(public dialog: MatDialog,
     private snackBar: MatSnackBar,
     @Optional() @Inject(MAT_DIALOG_DATA)
-    public data: GroupsData) { 
+    public data: GroupsData) {
 
-      if(this.data != null){
+      if (this.data != null) {
         this.componentType = data.componentType;
-        this.dataTable = data.array;
-        this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
+        this.table = data.array;
+        this.dataSource = new MatTableDataSource<Groups>(this.table);
       }
      }
 
   ngOnInit() {
-    if(!this.data){
-      this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
+    if (!this.data) {
+      this.dataSource = new MatTableDataSource<Groups>(this.table);
     }
-    for(let group of this.dataTable){
+    for (const group of this.table) {
       this.removeTempGroupsList.push(group);
     }
 
   }
 
-  addPermissions(group:Groups){
+  addPermissions(group: Groups) {
     this.listOfGroups.push(group);
-    this.dataTable.splice( this.dataTable.indexOf(group), 1 );
-    this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
-    this.snackBar.open(group.name+" anadido correctamente ",'add' ,{
+    this.table.splice( this.table.indexOf(group), 1 );
+    this.dataSource = new MatTableDataSource<Groups>(this.table);
+    this.snackBar.open(group.name + ' anadido correctamente ', 'add' , {
       duration: 2000,
-    })
+    });
   }
 
-  removePermissions(group:Groups){
+  removePermissions(group: Groups) {
     this.removeTempGroupsList.splice( this.removeTempGroupsList.indexOf(group), 1 );
     this.dataSource = new MatTableDataSource<Groups>(this.removeTempGroupsList);
     this.removeGroupsList.push(group);
-    this.snackBar.open(group.name+" Eliminado correctamente de lista de permisos",'remove' ,{
+    this.snackBar.open(group.name + ' Eliminado correctamente de lista de permisos', 'remove' , {
       duration: 2000,
     });
 
   }
 
-  close(){
+  close() {
     this.dataSource = new MatTableDataSource<Groups>(this.removeTempGroupsList);
-    this.dataTable = this.removeTempGroupsList;
+    this.table = this.removeTempGroupsList;
     this.removeTempGroupsList = [];
   }
 
-  searchByName(name:string){
-    let listOfGroups: Groups [] = []
-    if(name != ""){
-      for(let perm of this.dataTable){
-          if(perm.name == name ){
+  searchByName(name: string) {
+    const listOfGroups: Groups [] = [];
+    if (name !== '') {
+      for (const perm of this.table) {
+          if (perm.name === name ) {
             listOfGroups.push(perm);
           }
       }
       this.dataSource = new MatTableDataSource<Groups>(listOfGroups);
-    }else{
-      this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
+    } else {
+      this.dataSource = new MatTableDataSource<Groups>(this.table);
     }
   }
 }

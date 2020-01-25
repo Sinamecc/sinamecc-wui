@@ -46,13 +46,13 @@ export class MitigationActionReviewsNewComponent implements OnInit {
     private service: MitigationActionsService) {
 
       this.id = this.route.snapshot.paramMap.get('id');
-      this.title = "mitigationAction.addReviewMA";
+      this.title = 'mitigationAction.addReviewMA';
       this.nextRoute = `mitigation/actions`;
       this.formData = new FormData();
       this.formSubmitRoute =  `/v1/mitigations/${this.id}`;
       this.statusses = [];
-      
-  
+
+
       this.mitigationActionObservable = this.service.getMitigationAction(this.id, this.i18nService.language.split('-')[0])
       .pipe(
         tap((mitigationAction: MitigationAction) => {

@@ -22,19 +22,19 @@ export class MccrPocAddDeveloperComponent implements OnInit {
   isLoading = false;
   error: string;
   form: FormGroup;
-  id=this.route.snapshot.paramMap.get('id');
+  id = this.route.snapshot.paramMap.get('id');
 
-  constructor(private route: ActivatedRoute,private formBuilder: FormBuilder,private reportService: MccrPocService,
-    private service: MccrPocService,private router: Router,private translateService: TranslateService,public snackBar: MatSnackBar) { 
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private reportService: MccrPocService,
+    private service: MccrPocService, private router: Router, private translateService: TranslateService, public snackBar: MatSnackBar) {
     this.createForm();
   }
 
   ngOnInit() {
   }
 
-  submitForm(){
+  submitForm() {
     this.isLoading = true;
-    this.form.value.uccBaseCode=this.id;
+    this.form.value.uccBaseCode = this.id;
     this.service.submitUccDeveloperTransfer(this.form.value)
     .pipe(finalize(() => {
       this.form.markAsPristine();
@@ -50,7 +50,7 @@ export class MccrPocAddDeveloperComponent implements OnInit {
     });
   }
 
-  back(){
+  back() {
     this.router.navigate([`/mccr/poc/detail/${this.id}`], { replaceUrl: true });
   }
 

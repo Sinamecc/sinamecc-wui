@@ -25,9 +25,9 @@ export class InitiativeFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
   form: FormGroup;
-  isLoading: boolean = false;
-  isLinear: boolean = true;
-  wasSubmittedSuccessfully: boolean = false;
+  isLoading = false;
+  isLinear = true;
+  wasSubmittedSuccessfully = false;
   initiativeTypes: InitiativeType[];
   displayFinancialSource: boolean;
 
@@ -131,7 +131,7 @@ export class InitiativeFormComponent implements OnInit {
 
   submitForm() {
     this.isLoading = true;
-    let context = {
+    const context = {
       initiative: {
         name: this.form.value.formArray[0].initiativeNameCtrl,
         objective: this.form.value.formArray[0].initiativeObjectiveCtrl,
@@ -156,7 +156,7 @@ export class InitiativeFormComponent implements OnInit {
       user: String(this.authenticationService.credentials.id),
       registration_type: this.processedNewFormData.registration_types[0].id
     };
-    if(this.isUpdating) {
+    if (this.isUpdating) {
       context.initiative['id'] = this.mitigationAction.initiative.id;
       context.initiative.contact['id'] = this.mitigationAction.initiative.contact.id;
       context.initiative.finance['id'] = this.mitigationAction.initiative.finance.id;
@@ -176,7 +176,7 @@ export class InitiativeFormComponent implements OnInit {
         this.wasSubmittedSuccessfully = false;
       });
     } else {
-      
+
       this.service.submitMitigationActionNewForm(context)
       .pipe(finalize(() => {
         this.form.markAsPristine();

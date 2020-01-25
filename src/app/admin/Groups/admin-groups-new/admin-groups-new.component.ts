@@ -9,20 +9,20 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 export class AdminGroupsNewComponent implements OnInit {
 
   createGroupForm: FormGroup;
-  isLoading:boolean = false;
+  isLoading = false;
   error: string;
-  name:string;
-  
+  name: string;
+
   constructor(private formBuilder: FormBuilder) {
     this.createForm();
-    this.name = "";
+    this.name = '';
    }
 
   ngOnInit() {
   }
 
 
-  private createForm(){
+  private createForm() {
     this.createGroupForm = this.formBuilder.group({
       name: ['', Validators.required],
     });

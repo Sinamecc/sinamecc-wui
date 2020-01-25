@@ -29,162 +29,162 @@ const log = new Logger('CreateUser');
 })
 export class AdminNewComponent implements OnInit {
 
-  permList$: Observable<Permissions[]>
-  groupsList$: Observable<Groups[]>
+  permList$: Observable<Permissions[]>;
+  groupsList$: Observable<Groups[]>;
 
   createUserForm: FormGroup;
-  isLoading:boolean = false;
+  isLoading = false;
   error: string;
 
-  displayedColumnsGroups = ['name','action'];
+  displayedColumnsGroups = ['name', 'action'];
 
-  @ViewChild('table') perm:AdminPermissionListComponent ;
-  @ViewChild('tableGroup') group:AdminGroupListComponent;
+  @ViewChild('table') perm: AdminPermissionListComponent ;
+  @ViewChild('tableGroup') group: AdminGroupListComponent;
 
-  @ViewChild('tableEdit') permEdit:AdminPermissionsListEditComponent;
-  @ViewChild('tableGroupEdit') groupEdit:AdminGroupsListEditComponent;
+  @ViewChild('tableEdit') permEdit: AdminPermissionsListEditComponent;
+  @ViewChild('tableGroupEdit') groupEdit: AdminGroupsListEditComponent;
 
   @Input() edit: boolean;
   @Input() editData: User;
 
-  name:string;
-  lastName:string;
-  userName:string;
-  email:string;
-  password:string;
-  active:boolean;
-  staff:boolean;
-  provider:boolean;
-  dcc:boolean;
+  name: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  password: string;
+  active: boolean;
+  staff: boolean;
+  provider: boolean;
+  dcc: boolean;
 
   checkList = [
-    {state: false,name:"staff"},
-    {state: false,name:"active"},
-    {state: false,name:"provider"},
-    {state: false,name:"dccUser"},
-  ]
-  
+    {state: false, name: 'staff'},
+    {state: false, name: 'active'},
+    {state: false, name: 'provider'},
+    {state: false, name: 'dccUser'},
+  ];
+
   constructor(public dialog: MatDialog, @Optional() public dialogRef: MatDialogRef<AdminNewComponent>,
     private service: AdminService,
     private formBuilder: FormBuilder,
-    private router: Router,private translateService: TranslateService,
+    private router: Router, private translateService: TranslateService,
     public snackBar: MatSnackBar) {
       this.createForm();
-      this.name = ""
-      this.lastName= ""
-      this.userName = ""
-      this.email = ""
-      this.password = ""
+      this.name = '';
+      this.lastName = '';
+      this.userName = '';
+      this.email = '';
+      this.password = '';
     }
 
   ngOnInit() {
     this.getPermissions();
     this.getGroups();
     this.setData();
-    
+
   }
 
-  setData(){
+  setData() {
     //falta staff,
-    if(this.edit){
+    if (this.edit) {
       this.name = this.editData.first_name;
       this.lastName = this.editData.last_name;
-      this.userName = this.editData.username
-      this.email = this.editData.email
-      
+      this.userName = this.editData.username;
+      this.email = this.editData.email;
+
       this.checkList[0].state = this.editData.is_staff;
       this.checkList[1].state = this.editData.is_active;
       this.checkList[2].state = this.editData.is_provider;
       this.checkList[3].state = this.editData.is_administrador_dcc;
 
       this.staff = this.editData.is_staff;
-      this.active=this.editData.is_active;
-      this.provider=this.editData.is_provider;
-      this.dcc=this.editData.is_administrador_dcc;
+      this.active = this.editData.is_active;
+      this.provider = this.editData.is_provider;
+      this.dcc = this.editData.is_administrador_dcc;
 
       this.createFormEdit();
-      
+
     }
   }
 
   openDialogPermissions(): void {
-    let dialogRef = this.dialog.open(AdminPermissionListComponent, {
+    const dialogRef = this.dialog.open(AdminPermissionListComponent, {
       width: '70%',
       data: {
-        componentType : "delete",
+        componentType : 'delete',
         array: this.perm.listOfPermissions
       }
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
-      if(!result){
-        for(let perm of result){
+      if (!result) {
+        for (const perm of result) {
           this.perm.listOfPermissions.splice(this.perm.listOfPermissions.indexOf(perm), 1 );
-          this.perm.dataTable.push(perm)
+          this.perm.dataTable.push(perm);
         }
         this.perm.dataSource = new MatTableDataSource<Permissions>(this.perm.dataTable);
       }
 
-    }); 
+    });
   }
 
 
-  openChangePasswordDialog(){
-    let dialogRef = this.dialog.open(AdminEditPasswordDialogComponent, {
+  openChangePasswordDialog() {
+    const dialogRef = this.dialog.open(AdminEditPasswordDialogComponent, {
       width: '40%',
       data: {
-        componentType : "delete",
+        componentType : 'delete',
       }
     });
   }
 
   openDialogGroups(): void {
-    let dialogRef = this.dialog.open(AdminGroupListComponent, {
+    const dialogRef = this.dialog.open(AdminGroupListComponent, {
       width: '70%',
       data: {
-        componentType : "delete",
+        componentType : 'delete',
         array: this.group.listOfGroups
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(!result){
-        for(let group of result){
+      if (!result) {
+        for (const group of result) {
           this.group.listOfGroups.splice(this.group.listOfGroups.indexOf(group), 1 );
-          this.group.dataTable.push(group)
+          this.group.dataTable.push(group);
         }
         this.group.dataSource = new MatTableDataSource<Groups>(this.group.dataTable);
       }
     });
   }
 
-  getPermissions(){
-    this.permList$ = this.service.permissions()
+  getPermissions() {
+    this.permList$ = this.service.permissions();
   }
 
-  getGroups(){
-    this.groupsList$ = this.service.groups()
+  getGroups() {
+    this.groupsList$ = this.service.groups();
   }
 
-  submitForm(){
+  submitForm() {
 
-    this.createUserForm.value.staff=this.checkList[0].state
-    this.createUserForm.value.active=this.checkList[1].state
-    this.createUserForm.value.provider=this.checkList[2].state
-    this.createUserForm.value.dccUser=this.checkList[3].state
+    this.createUserForm.value.staff = this.checkList[0].state;
+    this.createUserForm.value.active = this.checkList[1].state;
+    this.createUserForm.value.provider = this.checkList[2].state;
+    this.createUserForm.value.dccUser = this.checkList[3].state;
     this.isLoading = true;
-    
+
     this.service.submitUser(this.createUserForm.value)
     .pipe(finalize(() => {
       this.createUserForm.markAsPristine();
       this.isLoading = false;
     }))
     .subscribe(response => {
-      
+
       this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
       log.debug(`${response.statusCode} status code received from form`);
-      this.submitUserDetail('permissions',this.perm.listOfPermissions)
-      this.submitUserDetail('groups',this.group.listOfGroups)
+      this.submitUserDetail('permissions', this.perm.listOfPermissions);
+      this.submitUserDetail('groups', this.group.listOfGroups);
 
     }, error => {
       log.debug(`Create user error: ${error}`);
@@ -192,27 +192,27 @@ export class AdminNewComponent implements OnInit {
     });
   }
 
-  editForm(){
+  editForm() {
 
-    this.createUserForm.value.staff=this.checkList[0].state
-    this.createUserForm.value.active=this.checkList[1].state
-    this.createUserForm.value.provider=this.checkList[2].state
-    this.createUserForm.value.dccUser=this.checkList[3].state
+    this.createUserForm.value.staff = this.checkList[0].state;
+    this.createUserForm.value.active = this.checkList[1].state;
+    this.createUserForm.value.provider = this.checkList[2].state;
+    this.createUserForm.value.dccUser = this.checkList[3].state;
     this.isLoading = true;
 
-    this.service.editUser(this.editData.id,this.createUserForm.value)
+    this.service.editUser(this.editData.id, this.createUserForm.value)
     .pipe(finalize(() => {
       this.createUserForm.markAsPristine();
       this.isLoading = false;
     }))
     .subscribe(response => {
-      
+
       this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
       log.debug(`${response.statusCode} status code received from form`);
-      
-      this.submitUserDetail('permissions',this.permEdit.newListOfUserpermission)
-      this.submitDeletePermission(this.permEdit.getRemovePerm()); 
-      this.submitUserDetail('groups',this.groupEdit.newListOfUserGroups);
+
+      this.submitUserDetail('permissions', this.permEdit.newListOfUserpermission);
+      this.submitDeletePermission(this.permEdit.getRemovePerm());
+      this.submitUserDetail('groups', this.groupEdit.newListOfUserGroups);
       this.submitDeleteGroup(this.groupEdit.getRemoveGroups());
       this.dialogRef.close();
 
@@ -223,23 +223,23 @@ export class AdminNewComponent implements OnInit {
 
   }
 
-  submit(){
-    if(this.edit){
+  submit() {
+    if (this.edit) {
       this.editForm();
-    }else{
+    } else {
       this.submitForm();
     }
   }
 
-  submitDeleteGroup(list:any[]){
-    const tempList:string[]= [];
+  submitDeleteGroup(list: any[]) {
+    const tempList: string[] = [];
 
-    for(let group of list){
-      tempList.push(group.id)
+    for (const group of list) {
+      tempList.push(group.id);
     }
 
     this.isLoading = true;
-    this.service.deleteGroups(this.createUserForm.value,tempList)
+    this.service.deleteGroups(this.createUserForm.value, tempList)
     .pipe(finalize(() => {
       this.createUserForm.markAsPristine();
       this.isLoading = false;
@@ -255,15 +255,15 @@ export class AdminNewComponent implements OnInit {
     });
   }
 
-  submitDeletePermission(list:any[]){
-    const tempList:string[]= [];
+  submitDeletePermission(list: any[]) {
+    const tempList: string[] = [];
 
-    for(let perm of list){
-      tempList.push(perm.id)
+    for (const perm of list) {
+      tempList.push(perm.id);
     }
 
     this.isLoading = true;
-    this.service.deletePermissions(this.createUserForm.value,tempList)
+    this.service.deletePermissions(this.createUserForm.value, tempList)
     .pipe(finalize(() => {
       this.createUserForm.markAsPristine();
       this.isLoading = false;
@@ -278,25 +278,25 @@ export class AdminNewComponent implements OnInit {
 
   }
 
-  submitUserDetail(type:string,list:any[]){
-    let tempList:string[]= [];
-    let addList= list;
-    let message:string;
+  submitUserDetail(type: string, list: any[]) {
+    const tempList: string[] = [];
+    const addList = list;
+    let message: string;
 
-    for(let perm of addList){
-      tempList.push(perm.id)
+    for (const perm of addList) {
+      tempList.push(perm.id);
     }
 
-    if(type == "permissions"){
-      this.createUserForm.value.permissions = tempList
-      message = "permissions"
-    }else{
-      this.createUserForm.value.groups = tempList
-      message = "groups"
+    if (type == 'permissions') {
+      this.createUserForm.value.permissions = tempList;
+      message = 'permissions';
+    } else {
+      this.createUserForm.value.groups = tempList;
+      message = 'groups';
     }
 
     this.isLoading = true;
-    this.service.submitDetail(this.createUserForm.value,type)
+    this.service.submitDetail(this.createUserForm.value, type)
     .pipe(finalize(() => {
       this.createUserForm.markAsPristine();
       this.isLoading = false;
@@ -312,7 +312,7 @@ export class AdminNewComponent implements OnInit {
     });
   }
 
-  private createForm(){
+  private createForm() {
     this.createUserForm = this.formBuilder.group({
       name: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -323,12 +323,12 @@ export class AdminNewComponent implements OnInit {
       active: ['', Validators.required],
       provider: ['', Validators.required],
       dccUser: ['', Validators.required],
-      permissions:['', Validators.required],
-      groups:['', Validators.required],
+      permissions: ['', Validators.required],
+      groups: ['', Validators.required],
     });
   }
 
-  private createFormEdit(){
+  private createFormEdit() {
     this.createUserForm = this.formBuilder.group({
       name: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -339,15 +339,15 @@ export class AdminNewComponent implements OnInit {
       active: ['', Validators.required],
       provider: ['', Validators.required],
       dccUser: ['', Validators.required],
-      permissions:['', Validators.required],
-      groups:['', Validators.required],
+      permissions: ['', Validators.required],
+      groups: ['', Validators.required],
     });
   }
 
-  checkCheckBoxvalue(event: { checked: any; },name:string){
-    for(let value of this.checkList){
-      if(value.name == name){
-        value.state = event.checked
+  checkCheckBoxvalue(event: { checked: any; }, name: string) {
+    for (const value of this.checkList) {
+      if (value.name === name) {
+        value.state = event.checked;
       }
     }
   }

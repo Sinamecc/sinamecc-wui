@@ -18,13 +18,13 @@ import { MonitoringProposalVerificationNewComponent } from './monitoring-proposa
 const routes: Routes = [
   Route.withShell([
     { path: '', redirectTo: 'mccr/registries', pathMatch: 'full' },
-    { path: 'mccr/registries',component: MccrRegistriesListComponent, data: { title: extract('MccrRegistry') } },
+    { path: 'mccr/registries', component: MccrRegistriesListComponent, data: { title: extract('MccrRegistry') } },
     { path: 'mccr/registries/new', component: MccrRegistriesNewComponent, data: { title: extract('New') } },
     { path: 'mccr/registries/:id', component: MccrRegistryComponent, data: { id: extract('id') } },
     { path: 'mccr/registries/:id/edit', component: MccrRegistriesUpdateComponent, data: { id: extract('id') } },
-    { path: 'mccr/registries/:id/ovv',component: MccrRegistriesOvvSelectorComponent, data: { id: extract('id') } },
+    { path: 'mccr/registries/:id/ovv', component: MccrRegistriesOvvSelectorComponent, data: { id: extract('id') } },
     { path: 'mccr/registries/:id/reviews/new', component: MccrRegistriesReviewComponent, data: { id: extract('id') } },
-    { path: 'mccr/registries/:id/ovv/proposal',component: OvvProposalComponent, data: { id: extract('id') } },
+    { path: 'mccr/registries/:id/ovv/proposal', component: OvvProposalComponent, data: { id: extract('id') } },
     { path: 'mccr/registries/:id/ovv/proposal/new', component: OvvProposalNewComponent, data: { id: extract('id') } },
     { path: 'mccr/registries/:id/monitoring/proposal/new', component: MonitoringProposalNewComponent, data: { id: extract('id') } },
     { path: 'mccr/registries/:id/monitoring/verification/proposal/new', component: MonitoringProposalVerificationNewComponent, data: { id: extract('id') } },

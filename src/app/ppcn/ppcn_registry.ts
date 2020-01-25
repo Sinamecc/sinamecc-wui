@@ -16,8 +16,7 @@ export interface Ppcn {
 
 }
 
-export interface RequiredLevel
-{
+export interface RequiredLevel {
   id: Number;
   level_type: string;
 }
@@ -27,7 +26,7 @@ export interface GeographicLevel {
 
 }
 
-export interface RecognitionType{
+export interface RecognitionType {
     id: Number;
     recognition_type: string;
 }
@@ -44,12 +43,12 @@ export interface Organization {
   contact: Contact;
 }
 
-export interface Sector{
+export interface Sector {
   id: Number;
   sector: string;
 }
 
-export interface SubSector{
+export interface SubSector {
   id: Number;
   name: string;
   sector: Sector;
@@ -69,13 +68,13 @@ export interface ReviewStatus {
 
 }
 
-export interface Files{
+export interface Files {
   name: string;
   file: string;
-  
+
 }
 
-export interface Ovv{
+export interface Ovv {
   id: Number;
   email: string;
   phone: string;
@@ -93,7 +92,7 @@ export interface GeiOrganization {
 
 }
 
-export interface GeiActivityType{
+export interface GeiActivityType {
   id: Number;
   sector: Sector;
   sub_sector: SubSector;

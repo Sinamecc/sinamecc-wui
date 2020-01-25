@@ -1,6 +1,6 @@
 export interface Permissions {
-    mitigation_action:boolean,
-    ppcn:boolean,
-    mccr:boolean,
-    report_data:boolean,
+    mitigation_action: boolean;
+    ppcn: boolean;
+    mccr: boolean;
+    report_data: boolean;
 }

@@ -67,15 +67,10 @@ export class MccrRegistriesNewComponent implements OnInit {
     this.form = this.formBuilder.group({
       mitigationActionCtrl: ['', Validators.required],
       files: this.formBuilder.array([ this.createItem() ])
-      // fileCtrl: [{ value: undefined, disabled: false }, []],
-      //units: this._fb.array([
-      //  this.getUnit()
-      //])
     });
     this.mitigationActions = this.initialFormData().pipe(
       tap((mitigationActions: MitigationAction[]) => { this.processedMitigationActions = mitigationActions; })
     );
-    //this.initialFormData();
   }
 
   private createItem(): FormGroup {
@@ -93,7 +88,7 @@ export class MccrRegistriesNewComponent implements OnInit {
     const control = <FormArray>this.form.controls['files'];
     control.removeAt(i);
   }
-  
+
   private initialFormData(): Observable<MitigationAction[]> {
     return this.mitigationService.mitigationActions(this.i18nService.language.split('-')[0])
     .pipe(finalize(() => { this.isLoading = false; }));

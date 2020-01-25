@@ -15,8 +15,8 @@ export interface Credentials {
   username: string;
   token: string;
   groups: object;
-  permissions:Permissions;
-  is_administrador_dcc:boolean;
+  permissions: Permissions;
+  is_administrador_dcc: boolean;
 
 }
 
@@ -42,15 +42,15 @@ const credentialsKey = 'credentials';
  */
 @Injectable()
 export class AuthenticationService {
-  
+
   private _credentials: Credentials | null;
-  
+
   constructor(private httpClient: HttpClient) {
     const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
     }
-    
+
   }
 
   /**
@@ -64,7 +64,7 @@ export class AuthenticationService {
       username: context.username,
       token: '123456'
     };
-    
+
     return of(data); */
     const httpOptions = {
       headers: new HttpHeaders({
@@ -72,9 +72,9 @@ export class AuthenticationService {
        // 'Authorization': 'my-auth-token'
       })
     };
-    
+
      return this.httpClient
-      .post(routes.login(), context, httpOptions) 
+      .post(routes.login(), context, httpOptions)
       .pipe(
         flatMap((body: any) => {
           const innerHttpOptions = {
@@ -82,16 +82,16 @@ export class AuthenticationService {
               'Authorization': 'JWT ' + body.token
             })
           };
-          return this.httpClient.get(routes.userData(context.username), innerHttpOptions).pipe(map((req:any) => {
+          return this.httpClient.get(routes.userData(context.username), innerHttpOptions).pipe(map((req: any) => {
             const data = {
               username: req.username,
               token: 'JWT ' + body.token,
               id: req.id,
               email: req.email,
               groups: req.groups,
-              permissions:req.available_apps,
+              permissions: req.available_apps,
               is_administrador_dcc: req.is_administrador_dcc
-              
+
             };
             this.setCredentials(data, context.remember);
             return data;

@@ -34,7 +34,7 @@ export class MitigationActionsNewComponent implements OnInit {
   title: string;
   isLinear: boolean;
   action: string;
-  
+
   startDate = new Date(1990, 0, 1);
   institutions: Institution[];
   ingeis: IngeiCompliance[];
@@ -59,10 +59,10 @@ export class MitigationActionsNewComponent implements OnInit {
   ngOnInit() { }
 
   activateInsured(id: number): void {
-    this.displayFinancialSource = id != 1 
+    this.displayFinancialSource = id != 1;
   }
 
-  financialSourceInputShown($event:any) {
+  financialSourceInputShown($event: any) {
     // todo: when we traslate in the backend we need to traslate this hardcoded value here
     const insuredSourceTypeId = this.financeSourceTypes.filter(financeSource => financeSource.name == 'Asegurado').map(({ id }) => id);
     this.displayFinancialSource = $event.value == insuredSourceTypeId;

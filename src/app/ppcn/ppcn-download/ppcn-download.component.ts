@@ -15,15 +15,15 @@ export class PpcnDownloadComponent implements OnInit {
   id: string;
   fileName: string;
   nextRoute: string;
-  levelId : string;
+  levelId: string;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
     private service: PpcnService) {
       this.id = this.route.snapshot.paramMap.get('id');
       this.levelId = this.route.snapshot.paramMap.get('geographic');
-      this.title = (this.levelId == '2') ? "PPCN-National" : "PPCN-Cantonal";
-      this.fileName = (this.levelId == '2') ? "PPCN_Nacional.xlsx" : "PPCN_CANTONAL.xlsx";
+      this.title = (this.levelId === '2') ? 'PPCN-National' : 'PPCN-Cantonal';
+      this.fileName = (this.levelId === '2') ? 'PPCN_Nacional.xlsx' : 'PPCN_CANTONAL.xlsx';
       this.nextRoute = `ppcn/${this.id}/upload/new`;
      }
 

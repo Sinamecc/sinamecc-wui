@@ -12,26 +12,26 @@ import { ComponentDialogComponent } from '@app/core/component-dialog/component-d
   styleUrls: ['./admin-groups.component.scss']
 })
 export class AdminGroupsComponent implements OnInit {
-  displayedColumns = ['name','action'];
+  displayedColumns = ['name', 'action'];
   dataSource = new GroupsDataSource(this.adminService);
-  constructor(private adminService:AdminService,public dialog: MatDialog) { }
+  constructor(private adminService: AdminService, public dialog: MatDialog) { }
 
   ngOnInit() {
   }
 
   openDeleteConfirmationDialog() {
     const data = {
-      title: "Delete Group",
-      question: "general.youSure",
-      
+      title: 'Delete Group',
+      question: 'general.youSure',
+
     };
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = data;
     dialogConfig.width = '350px';
-    let dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
-  
+    const dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
+
   }
 
 }
@@ -41,7 +41,7 @@ export class GroupsDataSource extends DataSource<any> {
   groups: Groups[];
   groups$: Observable<Groups[]>;
 
-  constructor(private adminService:AdminService){
+  constructor(private adminService: AdminService) {
     super();
   }
 

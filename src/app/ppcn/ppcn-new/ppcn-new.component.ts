@@ -17,12 +17,12 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 @Component({
   selector: 'app-ppcn-new',
   templateUrl: './ppcn-new.component.html',
-  styleUrls: ['./ppcn-new.component.scss',]
+  styleUrls: ['./ppcn-new.component.scss', ]
 })
 export class PpcnNewComponent implements OnInit {
-  
-  @Input() dataShared:boolean = false;
-  
+
+  @Input() dataShared = false;
+
   version: string = environment.version;
   error: string;
   formGroup: FormGroup;
@@ -30,9 +30,9 @@ export class PpcnNewComponent implements OnInit {
   processedPpcn: Ppcn[] = [];
   initialRequiredData: Observable<PpcnNewFormData>;
   isLoading = false;
-  levelId = "1";
+  levelId = '1';
   levelIdTmp: string = this.levelId;
-  activitiesList:FormArray;
+  activitiesList: FormArray;
 
   required_levels: RequiredLevel[];
   recognition_types: RecognitionType[];
@@ -41,7 +41,7 @@ export class PpcnNewComponent implements OnInit {
   ovvs: Ovv[];
 
   values$: any;
-  
+
 
   get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
 
@@ -57,20 +57,18 @@ export class PpcnNewComponent implements OnInit {
     this.service.currentLevelId.subscribe(levelId => this.levelId = levelId);
   }
 
-  ngDoCheck()
-  {
+  ngDoCheck() {
 
-      if (this.levelId != this.levelIdTmp && this.levelId !== '')
-      {
+      if (this.levelId != this.levelIdTmp && this.levelId !== '') {
         this.createForm();
         this.levelIdTmp = this.levelId;
       }
 
   }
 
-  submitForm(){
+  submitForm() {
     this.isLoading = true;
-    
+
     this.service.submitNewPpcnForm(this.formGroup.value)
       .pipe(finalize(() => {
         this.formGroup.markAsPristine();
@@ -78,14 +76,14 @@ export class PpcnNewComponent implements OnInit {
       }))
       .subscribe(response => {
         this.router.navigate([`/ppcn/${response.id}/download/${response.geographic}`], { replaceUrl: true });
-        
+
       }, error => {
         log.debug(`New PPCN Form error: ${error}`);
         this.error = error;
       });
   }
 
-  private createForm(){
+  private createForm() {
     this.formGroup = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
@@ -95,7 +93,7 @@ export class PpcnNewComponent implements OnInit {
           faxCtrl: '',
           postalCodeCtrl: '',
           addressCtrl: ['', Validators.required],
-          ciuuCodeCtrl: (this.levelId=="1"? null:['',Validators.required] )
+          ciuuCodeCtrl: (this.levelId == '1' ? null : ['', Validators.required] )
         }),
         this.formBuilder.group({
           contactNameCtrl: ['', Validators.required],
@@ -104,26 +102,26 @@ export class PpcnNewComponent implements OnInit {
           phoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
         }),
         this.formBuilder.group({
-          requiredCtrl:['', Validators.required],
-          recognitionCtrl: ['',Validators.required],
-          
+          requiredCtrl: ['', Validators.required],
+          recognitionCtrl: ['', Validators.required],
+
         }),
         this.formBuilder.group({
-          baseYearCtrl:['', Validators.required],
-          reportYearCtrl:['',Validators.required],
-          ovvCtrl:['',Validators.required],
-          implementationEmissionDateCtrl:null,
+          baseYearCtrl: ['', Validators.required],
+          reportYearCtrl: ['', Validators.required],
+          ovvCtrl: ['', Validators.required],
+          implementationEmissionDateCtrl: null,
           implementationInitialDateCtrl: null,
           implementationEndDateCtrl: null,
         }),
         this.formBuilder.group({
           activities: this.formBuilder.array([ this.createActivityForm() ]),
-        }),   
+        }),
       ])
     });
 
-    let subsectors = this.service.subsectors('1',this.i18nService.language.split('-')[0]);
-    let initialFormData = this.initialFormData();
+    const subsectors = this.service.subsectors('1', this.i18nService.language.split('-')[0]);
+    const initialFormData = this.initialFormData();
     this.values$ = forkJoin([subsectors, initialFormData]).subscribe(results => {
       this.isLoading = false;
       this.subSectors = results[0];
@@ -135,30 +133,30 @@ export class PpcnNewComponent implements OnInit {
 
   }
 
-  createActivityForm() : FormGroup{
+  createActivityForm(): FormGroup {
     return this.formBuilder.group({
-      activityCtrl:['',Validators.required],
+      activityCtrl: ['', Validators.required],
       sectorCtrl: ['', Validators.required],
       subSectorCtrl: ['', Validators.required],
-    })
+    });
   }
   addItems(): void {
     const control = <FormArray>this.formGroup.controls.formArray['controls'][4].controls['activities'];
     control.push(this.createActivityForm());
   }
 
-  deleteItems(i:number):void{
+  deleteItems(i: number): void {
     const control = <FormArray>this.formGroup.controls.formArray['controls'][4].controls['activities'];
     control.removeAt(i);
   }
 
-  onSectorChange(newValue:any) {
+  onSectorChange(newValue: any) {
     this.service.subsectors(String(newValue.value), this.i18nService.language.split('-')[0])
     .subscribe((subsectors: SubSector[]) => { this.subSectors = subsectors; });
 
   }
 
-  private initialFormData():Observable<PpcnNewFormData> {
+  private initialFormData(): Observable<PpcnNewFormData> {
     return this.service.newPpcnFormData(this.levelId, this.i18nService.language.split('-')[0])
     .pipe(finalize(() => { this.isLoading = false; }));
   }

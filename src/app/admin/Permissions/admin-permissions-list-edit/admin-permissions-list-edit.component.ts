@@ -12,16 +12,16 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class AdminPermissionsListEditComponent implements OnInit {
 
-  displayedColumns = ['name', 'content_type','action'];
-  dataSource:MatTableDataSource<Permissions>;
+  displayedColumns = ['name', 'content_type', 'action'];
+  dataSource: MatTableDataSource<Permissions>;
 
 
   @Input() userPermissions: Permissions[];
   @Input('dataTable') dataTable: Permissions [];
-  public permissions:Permissions[];
-  public newListOfUserpermission:Permissions[];
-  public listOfDeleteUserPermission:Permissions[];
-  
+  public permissions: Permissions[];
+  public newListOfUserpermission: Permissions[];
+  public listOfDeleteUserPermission: Permissions[];
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -30,7 +30,7 @@ export class AdminPermissionsListEditComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  constructor(private adminService:AdminService) { 
+  constructor(private adminService: AdminService) {
     this.dataSource = new MatTableDataSource<Permissions>(this.dataTable);
   }
 
@@ -42,37 +42,37 @@ export class AdminPermissionsListEditComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  initTempList(){
+  initTempList() {
     this.newListOfUserpermission = [];
     this.listOfDeleteUserPermission = [];
     this.permissions = [];
-    for(let perm of this.dataTable){
-      if(this.containsPermissions(perm.id)){
+    for (const perm of this.dataTable) {
+      if (this.containsPermissions(perm.id)) {
         this.newListOfUserpermission.push(perm);
         this.permissions.push(perm);
-      }else{
+      } else {
         this.listOfDeleteUserPermission.push(perm);
       }
     }
   }
 
-  containsPermissions(idPermissions:string){
-    return this.userPermissions.some(permission => permission.id== idPermissions);
+  containsPermissions(idPermissions: string) {
+    return this.userPermissions.some(permission => permission.id === idPermissions);
   }
 
-  add(perm:Permissions){
+  add(perm: Permissions) {
     this.newListOfUserpermission.push(perm);
     this.listOfDeleteUserPermission = this.listOfDeleteUserPermission.filter(permissions =>  permissions.id == perm.id);
     this.userPermissions.push(perm);
   }
-  remove(perm:Permissions){
+  remove(perm: Permissions) {
     this.listOfDeleteUserPermission.push(perm);
     this.newListOfUserpermission = this.newListOfUserpermission.filter(permissions =>  permissions.id != perm.id);
-    this.userPermissions=this.userPermissions.filter(permissions =>  permissions.id != perm.id);
+    this.userPermissions = this.userPermissions.filter(permissions =>  permissions.id != perm.id);
   }
 
-  getRemovePerm(){
-    const removePerm:Permissions[] = [];
+  getRemovePerm() {
+    const removePerm: Permissions[] = [];
     const filteredPerms = this.permissions.filter(useGroup => !this.containsPermissions(useGroup.id));
     removePerm.push(...filteredPerms);
     return removePerm;

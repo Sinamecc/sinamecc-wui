@@ -16,15 +16,15 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-report-new',
   templateUrl: './report-new.component.html',
-  styleUrls: ['./report-new.component.scss',]
+  styleUrls: ['./report-new.component.scss', ]
 })
 export class ReportNewComponent implements OnInit {
-  value = "example: email, web page, REST API Call, SFTP, FTP, WeTransfer, other.";
+  value = 'example: email, web page, REST API Call, SFTP, FTP, WeTransfer, other.';
   version: string = environment.version;
   error: string;
   reportForm: FormGroup;
   isLoading = false;
-  methodological:boolean = false; 
+  methodological = false;
 
   constructor(private router: Router,
     private formBuilder: FormBuilder,
@@ -37,7 +37,7 @@ export class ReportNewComponent implements OnInit {
 
   ngOnInit() {}
 
-  checkCheckBoxvalue(value:boolean){
+  checkCheckBoxvalue(value: boolean) {
     this.methodological = value;
   }
 
@@ -64,17 +64,17 @@ export class ReportNewComponent implements OnInit {
     this.reportForm = this.formBuilder.group({
       name: ['', Validators.required],
       file: [{ value: undefined, disabled: false }, []],
-      institution:[''],
-      department:[''],
-      personName:[''],
-      personLastName:[''],
-      personEmail:[''],
-      sent:[''],
-      updatePeriod:[''],
-      methodological:['']
+      institution: [''],
+      department: [''],
+      personName: [''],
+      personLastName: [''],
+      personEmail: [''],
+      sent: [''],
+      updatePeriod: [''],
+      methodological: ['']
     });
   }
 
-  
+
 
 }

@@ -37,13 +37,13 @@ export class UploadProposalComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder,
     private translateService: TranslateService,
     private service: UploadProposalService) {
-      
+
     }
 
   ngOnInit() {
     this.createForm();
   }
-  
+
   ngOnChanges(changes: SimpleChanges) {
     // this.createForm();
   }
@@ -56,12 +56,12 @@ export class UploadProposalComponent implements OnInit, OnChanges {
         this.form.markAsPristine();
         this.isLoading = false;
       }))
-      .subscribe((response:any) => {
+      .subscribe((response: any) => {
         this.router.navigate([this.nextRoute], { replaceUrl: true });
         this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
         log.debug(`${response.statusCode} status code received from form`);
 
-      }, (error:any) => {
+      }, (error: any) => {
         log.debug(`Upload Proposal error: ${error}`);
         this.error = error;
       });
