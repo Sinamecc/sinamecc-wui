@@ -14,7 +14,8 @@
     "translations:extract": "ngx-translate-extract --input ./src --output ./src/translations/template.json --format=json --clean -sort --marker extract",
     "docs": "hads ./docs -o",
     "env": "ngx-scripts env npm_package_version",
-    "generate": "ng generate"
+    "generate": "ng generate",
+    "duplicated:code": "jscpd src/"
   },
   "dependencies": {
     "@angular/animations": "^5.2.5",
@@ -58,6 +59,7 @@
     "https-proxy-agent": "^2.2.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "^4.1.0",
+    "jscpd": "^2.0.16",
     "karma": "~2.0.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-cli": "~1.0.1",
