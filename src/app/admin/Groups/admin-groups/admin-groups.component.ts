@@ -3,6 +3,8 @@ import { Groups } from '../../groups';
 import { AdminService } from '../../admin.service';
 import { MatDialogConfig, MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
+import { Observable } from 'rxjs';
+import { DataSource } from '@angular/cdk/table';
 
 @Component({
   selector: 'app-admin-groups',
