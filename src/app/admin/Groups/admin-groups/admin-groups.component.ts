@@ -47,3 +47,22 @@ export class AdminGroupsComponent implements OnInit {
 }
 
 
+export class GroupsDataSource extends DataSource<any> {
+
+  groups: Groups[];
+  groups$: Observable<Groups[]>;
+
+  constructor(private adminService:AdminService){
+    super();
+  }
+
+  connect(): Observable<Groups[]> {
+    this.groups$ = this.adminService.groups();
+    this.groups$.subscribe((groups) => {
+      this.groups = groups;
+    });
+    return this.groups$;
+  }
+  disconnect() { }
+
+}
