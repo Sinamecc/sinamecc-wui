@@ -21,6 +21,7 @@ import { PpcnModule } from '@app/ppcn/ppcn.module';
 import { MccrPocModule } from '@app/mccr/mccr-poc/mccr-poc.module';
 import { AdminModule } from './admin/admin.module';
 import { ErrorComponent } from './error/error.component';
+import { HomeModule } from './home/home.module';
 
 
 
@@ -38,6 +39,7 @@ import { ErrorComponent } from './error/error.component';
    /* HomeModule,*/
     ReportModule,
     AdminModule,
+    HomeModule,
     MitigationActionsModule,
     MccrRegistriesModule,
     MccrPocModule,
