@@ -113,7 +113,14 @@ export class MccrRegistriesListComponent implements OnInit {
     });
   }
 
+  getAuthentification(){
+    return this.authenticationService;
+  }
 
+  hasPermProvider(){
+    return Boolean(this.getAuthentification().credentials.permissions.all || 
+                   this.getAuthentification().credentials.permissions.mccr.provider)
+  }
 
 
 }
