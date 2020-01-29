@@ -6,6 +6,22 @@ import { PpcnService } from '@app/ppcn/ppcn.service';
 import { PpcnReview } from '@app/ppcn/ppcn-review';
 import { Router, ActivatedRoute } from '@angular/router';
 
+export class PpcnReviewSource extends DataSource<any> {
+  id: string;
+
+  constructor(private service: PpcnService,
+              private current_id: string) {
+      super();
+      this.id = current_id;
+
+  }
+
+
+  connect(): Observable < PpcnReview[] > {
+    return this.service.ppcnReviews(this.id);
+  }
+  disconnect() {}
+}
 @Component({
   selector: 'app-reviews-list',
   templateUrl: './reviews-list.component.html',
@@ -33,19 +49,4 @@ export class ReviewsListComponent implements OnInit {
 
 }
 
-export class PpcnReviewSource extends DataSource<any> {
-  id: string;
 
-  constructor(private service: PpcnService,
-              private current_id: string) {
-      super();
-      this.id = current_id;
-
-  }
-
-
-  connect(): Observable < PpcnReview[] > {
-    return this.service.ppcnReviews(this.id);
-  }
-  disconnect() {}
-}

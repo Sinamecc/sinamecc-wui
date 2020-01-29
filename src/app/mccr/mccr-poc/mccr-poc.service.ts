@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-import { DatePipe } from '@angular/common';
-import { Logger, I18nService, AuthenticationService } from '@app/core';
-import { S3File, S3Service } from '@app/core/s3.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MccrPoc } from '@app/mccr/mccr-poc/mccr-poc';
 import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators';

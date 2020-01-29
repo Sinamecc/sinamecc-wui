@@ -12,7 +12,7 @@ const routes: Routes = [
     { path: 'report', loadChildren: 'app/report/report.module#ReportModule' },
     { path: 'mitigation/actions',
       loadChildren: 'app/mitigation-actions/mitigation-actions.module#MitigationActionsModule' },
-    { path: 'mccr/registries', 
+    { path: 'mccr/registries',
       loadChildren: 'app/mccr/mccr-registries/mccr-registries.module#MccrRegistriesModule' },
     { path: 'mccr/poc', loadChildren: 'app/mccr/mccr-poc/mccr-poc.module#MccrPocModule' },
     { path: 'ppcn', loadChildren: 'app/ppcn/ppcn.module#PpcnModule' },

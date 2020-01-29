@@ -1,5 +1,5 @@
 import { DataSource } from '@angular/cdk/table';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { AdminService } from '../admin.service';
 import { Permissions } from '@app/core/permissions';
 

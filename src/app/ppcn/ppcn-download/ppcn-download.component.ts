@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PpcnService } from '@app/ppcn/ppcn.service';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-ppcn-download',

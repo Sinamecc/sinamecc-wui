@@ -7,7 +7,7 @@ import { I18nService, AuthenticationService } from '@app/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Ppcn } from '@app/ppcn/ppcn_registry';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
 
 export class PpcnSource extends DataSource<any> {

@@ -6,7 +6,7 @@ import { I18nService, Logger } from '@app/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
 import { Ppcn } from '@app/ppcn/ppcn_registry';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 import { tap, finalize } from 'rxjs/operators';
 const log = new Logger('Report');
@@ -47,7 +47,8 @@ export class PpcnUploadComponent implements OnInit {
       }))
       .subscribe(response => {
         this.router.navigate(['/ppcn/registries'], { replaceUrl: true });
-        this.translateService.get('Sucessfully submitted file').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+        this.translateService.get('Sucessfully submitted file')
+          .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
         log.debug(`${response.statusCode} status code received from form`);
 
       }, error => {

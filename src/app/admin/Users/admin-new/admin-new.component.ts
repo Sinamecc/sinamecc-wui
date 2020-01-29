@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, Optional } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatTableDataSource, MatCheckbox, MatSnackBar, MatDialogRef } from '@angular/material';
+import { Component, OnInit, ViewChild, Input, Optional } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatTableDataSource, MatSnackBar, MatDialogRef } from '@angular/material';
 import { AdminPermissionListComponent } from '../../Permissions/admin-permission-list/admin-permission-list.component';
 import { AdminGroupListComponent } from '../../Groups/admin-group-list/admin-group-list.component';
 import { Permissions } from '../../permissions';
-import { I18nService, Logger } from '@app/core';
+import { Logger } from '@app/core';
 import { AdminService } from '../../admin.service';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { DataSource } from '@angular/cdk/table';
+import { Observable } from 'rxjs/Observable';
 import { Groups } from '../../groups';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
@@ -84,7 +83,7 @@ export class AdminNewComponent implements OnInit {
   }
 
   setData() {
-    //falta staff,
+    // missing staff,
     if (this.edit) {
       this.name = this.editData.first_name;
       this.lastName = this.editData.last_name;
@@ -180,7 +179,8 @@ export class AdminNewComponent implements OnInit {
     }))
     .subscribe(response => {
 
-      this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+      this.translateService.get('Sucessfully submitted form')
+        .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
       log.debug(`${response.statusCode} status code received from form`);
       this.submitUserDetail('permissions', this.perm.listOfPermissions);
       this.submitUserDetail('groups', this.group.listOfGroups);
@@ -206,7 +206,8 @@ export class AdminNewComponent implements OnInit {
     }))
     .subscribe(response => {
 
-      this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+      this.translateService.get('Sucessfully submitted form')
+        .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
       log.debug(`${response.statusCode} status code received from form`);
 
       this.submitUserDetail('permissions', this.permEdit.newListOfUserpermission);
@@ -286,7 +287,7 @@ export class AdminNewComponent implements OnInit {
       tempList.push(perm.id);
     }
 
-    if (type == 'permissions') {
+    if (type === 'permissions') {
       this.createUserForm.value.permissions = tempList;
       message = 'permissions';
     } else {

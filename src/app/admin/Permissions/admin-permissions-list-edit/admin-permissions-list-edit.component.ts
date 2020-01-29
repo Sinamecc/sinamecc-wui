@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { AdminService } from '../../admin.service';
 import { Permissions } from '../../permissions';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
@@ -10,14 +10,14 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   templateUrl: './admin-permissions-list-edit.component.html',
   styleUrls: ['./admin-permissions-list-edit.component.scss']
 })
-export class AdminPermissionsListEditComponent implements OnInit {
+export class AdminPermissionsListEditComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['name', 'content_type', 'action'];
   dataSource: MatTableDataSource<Permissions>;
 
 
   @Input() userPermissions: Permissions[];
-  @Input('dataTable') dataTable: Permissions [];
+  @Input() dataTable: Permissions [];
   public permissions: Permissions[];
   public newListOfUserpermission: Permissions[];
   public listOfDeleteUserPermission: Permissions[];
@@ -62,13 +62,14 @@ export class AdminPermissionsListEditComponent implements OnInit {
 
   add(perm: Permissions) {
     this.newListOfUserpermission.push(perm);
-    this.listOfDeleteUserPermission = this.listOfDeleteUserPermission.filter(permissions =>  permissions.id == perm.id);
+    this.listOfDeleteUserPermission = this.listOfDeleteUserPermission
+      .filter(permissions =>  permissions.id === perm.id);
     this.userPermissions.push(perm);
   }
   remove(perm: Permissions) {
     this.listOfDeleteUserPermission.push(perm);
-    this.newListOfUserpermission = this.newListOfUserpermission.filter(permissions =>  permissions.id != perm.id);
-    this.userPermissions = this.userPermissions.filter(permissions =>  permissions.id != perm.id);
+    this.newListOfUserpermission = this.newListOfUserpermission.filter(permissions =>  permissions.id !== perm.id);
+    this.userPermissions = this.userPermissions.filter(permissions =>  permissions.id !== perm.id);
   }
 
   getRemovePerm() {

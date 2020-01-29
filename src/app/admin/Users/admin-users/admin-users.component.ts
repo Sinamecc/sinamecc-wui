@@ -1,11 +1,32 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataSource } from '@angular/cdk/table';
 import { User } from '../../users';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { AdminService } from '../../admin.service';
 import { MatPaginator, MatDialog, MatDialogConfig } from '@angular/material';
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
 import { AdminUserDetailComponent } from '../admin-user-detail/admin-user-detail.component';
+
+
+export class UsersDataSource extends DataSource<any> {
+
+  users: User[];
+  users$: Observable<User[]>;
+
+  constructor(private adminService: AdminService) {
+    super();
+  }
+
+  connect(): Observable<User[]> {
+    this.users$ = this.adminService.users();
+    this.users$.subscribe((ppcns) => {
+      this.users = ppcns;
+    });
+    return this.users$;
+  }
+  disconnect() { }
+
+}
 
 @Component({
   selector: 'app-admin-users',
@@ -61,25 +82,5 @@ export class AdminUsersComponent implements OnInit {
       this.dataSource = new UsersDataSource(this.adminService);
     });
   }
-
-}
-
-export class UsersDataSource extends DataSource<any> {
-
-  users: User[];
-  users$: Observable<User[]>;
-
-  constructor(private adminService: AdminService) {
-    super();
-  }
-
-  connect(): Observable<User[]> {
-    this.users$ = this.adminService.users();
-    this.users$.subscribe((ppcns) => {
-      this.users = ppcns;
-    });
-    return this.users$;
-  }
-  disconnect() { }
 
 }

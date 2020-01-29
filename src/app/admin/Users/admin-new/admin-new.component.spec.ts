@@ -21,7 +21,11 @@ describe('AdminNewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminNewComponent, AdminPermissionListComponent, AdminGroupListComponent, AdminGroupsListEditComponent, AdminPermissionsListEditComponent ],
+      declarations: [ AdminNewComponent,
+                      AdminPermissionListComponent,
+                      AdminGroupListComponent,
+                      AdminGroupsListEditComponent,
+                      AdminPermissionsListEditComponent],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,

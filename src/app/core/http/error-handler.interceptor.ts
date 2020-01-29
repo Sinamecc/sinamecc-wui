@@ -26,7 +26,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
     if (response instanceof HttpErrorResponse) {
        if (response.status === 401) {
-        //t his.authenticationService.logout();
+        // this.authenticationService.logout();
         this.router.navigate(['/login'], { replaceUrl: true });
        }
        if (response.status === 404) {

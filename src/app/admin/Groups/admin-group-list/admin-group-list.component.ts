@@ -17,7 +17,7 @@ export class AdminGroupListComponent implements OnInit {
   removeGroupsList: Groups [] = [];
   removeTempGroupsList: Groups [] = [];
 
-  @Input('dataTable') table: Groups [];
+  @Input() dataTable: Groups [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
     this.paginator = mp;
@@ -31,16 +31,16 @@ export class AdminGroupListComponent implements OnInit {
 
       if (this.data != null) {
         this.componentType = data.componentType;
-        this.table = data.array;
-        this.dataSource = new MatTableDataSource<Groups>(this.table);
+        this.dataTable = data.array;
+        this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
       }
      }
 
   ngOnInit() {
     if (!this.data) {
-      this.dataSource = new MatTableDataSource<Groups>(this.table);
+      this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
     }
-    for (const group of this.table) {
+    for (const group of this.dataTable) {
       this.removeTempGroupsList.push(group);
     }
 
@@ -48,8 +48,8 @@ export class AdminGroupListComponent implements OnInit {
 
   addPermissions(group: Groups) {
     this.listOfGroups.push(group);
-    this.table.splice( this.table.indexOf(group), 1 );
-    this.dataSource = new MatTableDataSource<Groups>(this.table);
+    this.dataTable.splice( this.dataTable.indexOf(group), 1 );
+    this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
     this.snackBar.open(group.name + ' anadido correctamente ', 'add' , {
       duration: 2000,
     });
@@ -67,21 +67,21 @@ export class AdminGroupListComponent implements OnInit {
 
   close() {
     this.dataSource = new MatTableDataSource<Groups>(this.removeTempGroupsList);
-    this.table = this.removeTempGroupsList;
+    this.dataTable = this.removeTempGroupsList;
     this.removeTempGroupsList = [];
   }
 
   searchByName(name: string) {
     const listOfGroups: Groups [] = [];
     if (name !== '') {
-      for (const perm of this.table) {
+      for (const perm of this.dataTable) {
           if (perm.name === name ) {
             listOfGroups.push(perm);
           }
       }
       this.dataSource = new MatTableDataSource<Groups>(listOfGroups);
     } else {
-      this.dataSource = new MatTableDataSource<Groups>(this.table);
+      this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
     }
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { PpcnNewFormData, RequiredLevel, RecognitionType, Sector, SubSector , Ovv} from '@app/ppcn/ppcn-new-form-data';
 import { finalize, tap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs/observable/forkJoin';

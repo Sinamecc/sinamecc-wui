@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DataSource } from '@angular/cdk/table';
-import { Observable } from 'rxjs';
 import { AdminService } from '../../admin.service';
 import { Permissions } from '@app/core/permissions';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
-import { AdminPermissionsNewComponent } from '../admin-permissions-new/admin-permissions-new.component';
 import { AdminPermissionsDetailComponent } from '../admin-permissions-detail/admin-permissions-detail.component';
 import { PermissionsDataSource } from '../../Users/tablePermissions';
 

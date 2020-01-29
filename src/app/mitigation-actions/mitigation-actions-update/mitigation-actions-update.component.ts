@@ -1,10 +1,10 @@
 import { Component, OnInit, ElementRef, ViewChild, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { finalize, map, tap } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
-import { Logger, I18nService, AuthenticationService } from '@app/core';
+import { Logger, I18nService } from '@app/core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MitigationActionNewFormData, FinanceSourceType } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { Institution } from '@app/mitigation-actions/mitigation-action-new-form-data';
@@ -62,14 +62,17 @@ export class MitigationActionsUpdateComponent implements OnInit {
     this.action = 'update';
     this.id = this.route.snapshot.paramMap.get('id');
     this.mitigationAction$ = this.service.getMitigationAction(this.id, this.i18nService.language.split('-')[0]).pipe(
-      tap((mitigationAction: MitigationAction) => { this.processedMitigationAction = mitigationAction; this.service.updateCurrentMitigationAction(mitigationAction); })
+      tap((mitigationAction: MitigationAction) => {
+        this.processedMitigationAction = mitigationAction;
+        this.service.updateCurrentMitigationAction(mitigationAction);
+      })
     );
   }
 
   ngOnInit() { }
 
   activateInsured(id: number): void {
-    this.displayFinancialSource = id != 1;
+    this.displayFinancialSource = id !== 1;
   }
 
   private initialFormData(): Observable<MitigationActionNewFormData> {
@@ -80,7 +83,8 @@ export class MitigationActionsUpdateComponent implements OnInit {
 
   financialSourceInputShown($event: any) {
     // todo: when we traslate in the backend we need to traslate this hardcoded value here
-    const insuredSourceTypeId = this.financeSourceTypes.filter(financeSource => financeSource.name === 'Asegurado').map(({ id }) => id);
+    const insuredSourceTypeId = this.financeSourceTypes
+      .filter(financeSource => financeSource.name === 'Asegurado').map(({ id }) => id);
     this.displayFinancialSource = $event.value === insuredSourceTypeId;
   }
 

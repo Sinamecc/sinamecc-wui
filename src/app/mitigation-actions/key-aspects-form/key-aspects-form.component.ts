@@ -7,7 +7,7 @@ import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { MitigationAction } from '../mitigation-action';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
@@ -187,7 +187,9 @@ ngOnInit() {
 
   financialSourceInputShown($event: any) {
     // todo: when we traslate in the backend we need to traslate this hardcoded value here
-    const insuredSourceTypeId = this.processedNewFormData.finance_status.filter(financeSource => financeSource.status === 'Asegurado' || financeSource.status === 'Insured').map(({ id }) => id);
+    const insuredSourceTypeId = this.processedNewFormData.finance_status
+      .filter(financeSource => financeSource.status === 'Asegurado' || financeSource.status === 'Insured')
+        .map(({ id }) => id);
     this.displayFinancialSource = $event.value == insuredSourceTypeId;
   }
 

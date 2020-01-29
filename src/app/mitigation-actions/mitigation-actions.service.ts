@@ -10,7 +10,7 @@ import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-
 import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { MitigationActionReviewNewFormData } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { StatusRoutesMap } from '@app/shared/status-routes-map';
 import { S3File, S3Service } from '@app/core/s3.service';
 

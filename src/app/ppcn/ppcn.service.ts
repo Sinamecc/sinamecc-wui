@@ -6,10 +6,9 @@ import { HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { DatePipe } from '@angular/common';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Ppcn, GeographicLevel, SubSector } from '@app/ppcn/ppcn_registry';
 import { PpcnNewFormData, Ovv } from '@app/ppcn/ppcn-new-form-data';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { PpcnReview } from '@app/ppcn/ppcn-review';
 import { S3File, S3Service } from '@app/core/s3.service';
 import { StatusRoutesMap } from '@app/ppcn/status-routes-map';
@@ -42,7 +41,9 @@ export interface Response {
 }
 
 const fsm_next_state = {
-  'PPCN_decision_step_DCC': ['PPCN_accepted_request_by_DCC', 'PPCN_rejected_request_by_DCC', 'PPCN_changes_requested_by_DCC'],
+  'PPCN_decision_step_DCC': ['PPCN_accepted_request_by_DCC', 
+                             'PPCN_rejected_request_by_DCC', 
+                             'PPCN_changes_requested_by_DCC'],
   'PPCN_evaluation_by_CA': ['PPCN_decision_step_CA'],
   'PPCN_decision_step_CA': ['PPCN_accepted_request_by_CA', 'PPCN_rejected_request_by_CA']
 };
@@ -104,7 +105,14 @@ export class PpcnService {
         'Authorization': this.authenticationService.credentials.token
       })
     };
-    const formData = this.buildFormData(context, contactFormId, geographicFormId, requiredFormId, recognitionFormId, sectorFormId, subsectorFormId, ovvFormId);
+    const formData = this.buildFormData(context, 
+                                        contactFormId, 
+                                        geographicFormId, 
+                                        requiredFormId, 
+                                        recognitionFormId, 
+                                        sectorFormId, 
+                                        subsectorFormId, 
+                                        ovvFormId);
     return this.httpClient
       .put(routes.submitUpdatePpcn(id), formData, httpOptions)
       .pipe(
@@ -393,7 +401,8 @@ export class PpcnService {
       }
       // geiOrganization['activity_type'] = context.formArray[4].activityCtrl;
       geiOrganization['ovv'] = context.formArray[3].ovvCtrl;
-      geiOrganization['emission_ovv_date'] = this.datePipe.transform(context.formArray[3].implementationEmissionDateCtrl, 'yyyy-MM-dd');
+      geiOrganization['emission_ovv_date'] = this.datePipe
+        .transform(context.formArray[3].implementationEmissionDateCtrl, 'yyyy-MM-dd');
       geiOrganization['base_year'] = context.formArray[3].baseYearCtrl;
       geiOrganization['report_year'] = context.formArray[3].reportYearCtrl;
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { GroupsDataSource } from '../admin-groups/admin-groups.component';
 import { Groups } from '../../groups';
 import { AdminService } from '../../admin.service';
@@ -9,11 +9,11 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
   templateUrl: './admin-groups-list-edit.component.html',
   styleUrls: ['./admin-groups-list-edit.component.scss']
 })
-export class AdminGroupsListEditComponent implements OnInit {
+export class AdminGroupsListEditComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['name', 'action'];
   dataSource: MatTableDataSource<Groups>;
-  @Input('dataTable') table: Groups [];
+  @Input() dataTable: Groups [];
   @Input() userGroups: Groups[];
 
   public groups: Groups[];
@@ -26,11 +26,11 @@ export class AdminGroupsListEditComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
   constructor(private adminService: AdminService) {
-    this.dataSource = new MatTableDataSource<Groups>(this.table);
+    this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
    }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource<Groups>(this.table);
+    this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
     this.initTempList();
   }
 
@@ -42,7 +42,7 @@ export class AdminGroupsListEditComponent implements OnInit {
     this.newListOfUserGroups = [];
     this.listOfDeleteUserGroups = [];
     this.groups = [];
-    for (const perm of this.table) {
+    for (const perm of this.dataTable) {
       if (this.containsGroups(perm.id)) {
         this.newListOfUserGroups.push(perm);
         this.groups.push(perm);
@@ -64,7 +64,7 @@ export class AdminGroupsListEditComponent implements OnInit {
   remove(group: Groups) {
     this.listOfDeleteUserGroups.push(group);
     this.newListOfUserGroups = this.newListOfUserGroups.filter(groups =>  groups.id !== group.id);
-    this.userGroups = this.userGroups.filter(groups =>  groups.id != group.id);
+    this.userGroups = this.userGroups.filter(groups =>  groups.id !== group.id);
   }
 
   getRemoveGroups() {

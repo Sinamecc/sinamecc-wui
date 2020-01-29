@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '@env/environment';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Ppcn } from '../ppcn_registry';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PpcnService } from '../ppcn.service';

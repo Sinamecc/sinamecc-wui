@@ -23,8 +23,6 @@ export class ReportVersionsDataSource extends DataSource<any> {
   }
   connect(): Observable<Version[]> {
     return this.reportService.versions(this.id);
-    // this.singleEvents$.subscribe(event => this.event = event);
-    //return this.reportService.reportVersions(this.id).subscribe(versions =>this.ver)versions();
   }
   disconnect() { }
 }

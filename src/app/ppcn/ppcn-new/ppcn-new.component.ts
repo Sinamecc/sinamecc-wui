@@ -1,10 +1,9 @@
-import { Component, OnInit, ElementRef, ViewChild, Input, AfterViewInit, OnChanges, SimpleChanges, SimpleChange} from '@angular/core';
+import { Component, OnInit, Input, DoCheck} from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
-import { Logger, I18nService, AuthenticationService } from '@app/core';
-import { BehaviorSubject } from 'rxjs';
+import { Logger, I18nService } from '@app/core';
 const log = new Logger('Report');
 
 import { PpcnService } from '@app/ppcn/ppcn.service';
@@ -19,7 +18,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
   templateUrl: './ppcn-new.component.html',
   styleUrls: ['./ppcn-new.component.scss', ]
 })
-export class PpcnNewComponent implements OnInit {
+export class PpcnNewComponent implements OnInit, DoCheck {
 
   @Input() dataShared = false;
 

@@ -1,6 +1,6 @@
 import { DataSource } from '@angular/cdk/table';
 import { Groups } from '../groups';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { AdminService } from '../admin.service';
 
 export class GroupsDataSource extends DataSource<any> {

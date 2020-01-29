@@ -8,8 +8,7 @@ import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
-import { Observable } from 'rxjs';
-import { of } from 'rxjs/observable/of';
+import { Observable } from 'rxjs/Observable';
 import { MitigationActionNewFormData, InitiativeType } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { MitigationAction } from '../mitigation-action';
 
@@ -197,7 +196,9 @@ export class InitiativeFormComponent implements OnInit {
 
   financialSourceInputShown($event: any) {
     // todo: when we traslate in the backend we need to traslate this hardcoded value here
-    const insuredSourceTypeId = this.processedNewFormData.finance_status.filter(financeSource => financeSource.status == 'Insured' || financeSource.status == 'Asegurado' ).map(({ id }) => id);
+    const insuredSourceTypeId = this.processedNewFormData.finance_status
+      .filter(financeSource => financeSource.status === 'Insured' || financeSource.status === 'Asegurado' )
+        .map(({ id }) => id);
     this.displayFinancialSource = $event.value == insuredSourceTypeId;
   }
 

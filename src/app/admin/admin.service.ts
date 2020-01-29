@@ -4,8 +4,7 @@ import { AuthenticationService } from '@app/core';
 import { map } from 'rxjs/operators';
 import { Permissions } from './permissions';
 import { Groups } from './groups';
-import { Observable } from 'rxjs';
-import { ReportContext } from '@app/report/report.service';
+import { Observable } from 'rxjs/Observable';
 import { User } from './users';
 
 export interface Response {
@@ -16,10 +15,10 @@ export interface Response {
 
 }
 
-export interface ReportContext {
-  comment: string;
-  file: string | any;
-}
+// export interface ReportContext {
+//   comment: string;
+//   file: string | any;
+// }
 
 const routes = {
   permissions: () => `/v1/user/permission/`,
