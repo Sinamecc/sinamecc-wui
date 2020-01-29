@@ -15,6 +15,8 @@ import { UploadProposalService } from '@app/shared/upload-proposal/upload-propos
 import { UpdateStatusComponent } from '@app/shared/update-status/update-status.component';
 import { UpdateStatusService } from '@app/shared/update-status/update-status.service';
 import { MockUpdateStatusService } from '@app/shared/update-status/update-status.service.mock';
+import { GenericButtonComponent } from './generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from './generic-button-secondary/generic-button-secondary.component';
 
 @NgModule({
   imports: [
@@ -31,7 +33,9 @@ import { MockUpdateStatusService } from '@app/shared/update-status/update-status
     ByteFormatPipe,
     DownloadProposalComponent,
     UploadProposalComponent,
-    UpdateStatusComponent
+    UpdateStatusComponent,
+    GenericButtonComponent,
+    GenericButtonSecondaryComponent
   ],
   providers: [
     UploadProposalService,
@@ -44,7 +48,9 @@ import { MockUpdateStatusService } from '@app/shared/update-status/update-status
     ByteFormatPipe,
     DownloadProposalComponent,
     UploadProposalComponent,
-    UpdateStatusComponent
+    UpdateStatusComponent,
+    GenericButtonComponent,
+    GenericButtonSecondaryComponent
   ]
 })
 export class SharedModule { }

@@ -339,7 +339,10 @@
     "requiredRecognition":"Reconocimiento requerido",
     "registerProposal":"Registrar propuesta",
     "addReviewMCCRRegistry":"Agregar una nueva revisión para este registro mccr",
-    "districtCouncilAddress":"Discurso del consejo de distrito"
+    "districtCouncilAddress":"Discurso del consejo de distrito",
+    "learnMore":"Conoce más sobre SINAMECC",
+    "sinamecc":"Sistema nacional de métricas de cambio climático",
+    "goWebSite":"Ir al sitio web"
   },
 
   "APP_NAME": "sinamecc wui"

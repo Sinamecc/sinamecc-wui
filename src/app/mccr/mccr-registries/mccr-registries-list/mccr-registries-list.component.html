@@ -8,9 +8,7 @@
     <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
     <p [hidden]="isLoading"></p>
   </mat-card-subtitle>
-  <div class="box-button">
-  <a  mat-button class="mat-raised-button mat-primary" routerLink="/mccr/registries/new"><span translate>mccr.addMCCR</span></a>
-  </div>
+
 <div class="container mat-elevation-z8 table-sinamecc">
   <mat-table #table [dataSource]="dataSource">
 
@@ -50,14 +48,18 @@
     </mat-cell>
 </ng-container>
 
-
-
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-
-    
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
 
+  </mat-table>
+  
+  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+  </mat-paginator>
+
+</div>
+<br>
+<div class="box-button">
+  <app-generic-button routerLink="/mccr/registries/new"  name="mccr.addMCCR"></app-generic-button>
 </div>
 <!--<a mat-fab routerLink="/report">
   <mat-icon aria-label="Go to Data for Report">undo</mat-icon>
