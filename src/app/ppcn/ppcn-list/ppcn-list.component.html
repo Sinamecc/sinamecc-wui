@@ -5,12 +5,6 @@
 <mat-divider class="divider-custom"></mat-divider>
 <br>
 
-<div class="box-button" *ngIf="hasPermProvider()">
-  <a  mat-button class="mat-raised-button mat-primary" routerLink="/ppcn/registries/new">
-    <span translate> ppcn.addPPCN</span>
-  </a>
-</div>
-
 <div class="container mat-elevation-z8 table-sinamecc">
   <mat-table #table [dataSource]="dataSource">
 
@@ -68,6 +62,6 @@
   </mat-paginator>
 </div>
 <br>
-<div class="box-button">
+<div class="box-button"  *ngIf="hasPermProvider()">
   <app-generic-button routerLink="/ppcn/registries/new" name="ppcn.addPPCN"></app-generic-button>
 </div>
