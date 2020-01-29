@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
@@ -68,7 +67,7 @@ export class InitiativeFormComponent implements OnInit {
       formArray: this.formBuilder.array([
         this.formBuilder.group({
           // initiativeRegisterTypeCtrl: ['', Validators.required],
-          initiativeTypeCtrl: ['', Validators.required],
+          initiativeTypeCtrl: ['',Validators.required],
           initiativeNameCtrl: ['', Validators.required],
           entityIniativeResponsibleCtrl: ['', Validators.required],
           initiativeObjectiveCtrl: ['', Validators.required],
@@ -200,5 +199,5 @@ export class InitiativeFormComponent implements OnInit {
     const insuredSourceTypeId = this.processedNewFormData.finance_status.filter(financeSource => financeSource.status == 'Insured' || financeSource.status == 'Asegurado' ).map(({ id }) => id);
     this.displayFinancialSource = $event.value == insuredSourceTypeId;
   }
-
+  
 }

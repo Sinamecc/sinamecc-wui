@@ -63,20 +63,17 @@
       
               <!-- New unit button -->
               <mat-divider></mat-divider>
+              <br>
               <mat-card-actions>
-                <button mat-raised-button (click)="addFile()" type="button"  *ngIf="form.controls.files.controls.length <= 10">
-                  <mat-icon>add box</mat-icon>
-                  <span translate>reportData.addFile</span>
-                </button>
+                <app-generic-button style="color: white;" (click)="addFile()" *ngIf="form.controls.files.controls.length <= 10" name="reportData.addFile"></app-generic-button>
               </mat-card-actions>
             </mat-card> <!-- End form units array -->    
           <br/>
+          <br>
         </div>
           <div class="box-button">
-              <button mat-button class="mat-raised-button mat-primary" type="submit" [disabled]="form.invalid || isLoading">
-                  <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-                  <span translate>mccr.submitMccr</span>
-                </button>
+              <app-generic-button  type="submit" [disabled]="form.invalid || isLoading" routerLink="/mccr/registries/new"  name="mccr.submitMccr"></app-generic-button>
+              <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
           </div>
       </form>
     </mat-card-content>
