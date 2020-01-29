@@ -39,7 +39,7 @@ export class AdminGroupsComponent implements OnInit {
   }
 
   loadGroups(){
-    this.adminService.groups().subscribe((groups) => {
+    this.adminService.groups().subscribe((groups:Groups[]) => {
       const groupsList = groups;
       this.dataSource = new MatTableDataSource<Groups>(groupsList);
       this.dataSource.paginator = this.paginator

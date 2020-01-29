@@ -59,7 +59,7 @@ export class AdminUsersComponent implements OnInit {
   }
 
   loadUsers(){
-    this.adminService.users().subscribe((users) => {
+    this.adminService.users().subscribe((users:User[]) => {
       const usersList = users;
       this.dataSource = new MatTableDataSource<User>(usersList);
       this.dataSource.paginator = this.paginator

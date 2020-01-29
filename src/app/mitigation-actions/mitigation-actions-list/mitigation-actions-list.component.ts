@@ -58,7 +58,7 @@ export class MitigationActionsListComponent implements OnInit {
   }
 
   loadMAData(){
-    this.service.mitigationActions(this.i18nService.language.split('-')[0]).subscribe((mas) => {
+    this.service.mitigationActions(this.i18nService.language.split('-')[0]).subscribe((mas:MitigationAction[]) => {
       const maList = mas;
       this.dataSource = new MatTableDataSource<MitigationAction>(maList);
       this.dataSource.paginator = this.paginator

@@ -35,7 +35,7 @@ export class PpcnListComponent implements OnInit {
   }
 
   loadData(){
-    this.service.reRoutePpcn(this.i18nService.language.split('-')[0]).subscribe((ppcns) => {
+    this.service.reRoutePpcn(this.i18nService.language.split('-')[0]).subscribe((ppcns:Ppcn[]) => {
       const ppcnList = ppcns;
       this.dataSource = new MatTableDataSource<Ppcn>(ppcnList);
       this.dataSource.paginator = this.paginator

@@ -24,7 +24,7 @@ export class AdminPermissionsComponent implements OnInit {
   }
 
   loadPermissions(){
-    this.adminService.permissions().subscribe((permissions) => {
+    this.adminService.permissions().subscribe((permissions:Permissions[]) => {
       const permissionsList = permissions;
       this.dataSource = new MatTableDataSource<Permissions>(permissionsList);
       this.dataSource.paginator = this.paginator

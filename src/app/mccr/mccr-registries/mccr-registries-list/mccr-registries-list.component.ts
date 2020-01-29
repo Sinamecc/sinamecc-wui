@@ -113,7 +113,7 @@ export class MccrRegistriesListComponent implements OnInit {
   }
 
   loadMCCRData(){
-    this.service.mccrRegistries().subscribe((mccrs) => {
+    this.service.mccrRegistries().subscribe((mccrs:MccrRegistry[]) => {
       const mccrList = mccrs;
       this.dataSource = new MatTableDataSource<MccrRegistry>(mccrList);
       this.dataSource.paginator = this.paginator
