@@ -7,6 +7,10 @@
             <mat-divider class="divider-custom"></mat-divider>
         </h3>
 
+        <br>
+            <app-custom-search-bar  [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar >
+        <br>
+        
         <mat-card-content>
 
             <mat-table  #table [dataSource]="dataSource" >
