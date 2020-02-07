@@ -20,14 +20,14 @@ export class CustomSearchBarComponent implements OnInit {
   
   applyFilter(text:string){
 
-    if(this.initialDataSource === undefined){
+    if(!this.initialDataSource){
       this.initialDataSource = this.table.data;
     }
 
     this.table.data = this.initialDataSource
     let newArray:any[] = [];
 
-    if(text === ''){
+    if(!text){
       newArray = this.initialDataSource
     }else{
       let tempFieldToSearch = this.fieldsToSearch;
