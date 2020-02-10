@@ -14,6 +14,7 @@ export class AdminUsersComponent implements OnInit {
 
   displayedColumns = ['username', 'email','is_active','is_provider','is_administrador_dcc','action'];
   dataSource:MatTableDataSource<User>
+  fieldsToSearch:string[][] = [ ['username'], ['email'] ]
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

@@ -20,6 +20,10 @@ export class PpcnListComponent implements OnInit {
   displayedColumns = ['id_ppcn', 'organization_ppcn','request_type','fsm_state', 'required_recognition', 'geographic_level', 'actions'];
   dataSource:MatTableDataSource<Ppcn>
 
+  fieldsToSearch:string[][] = [ ['id'], ['organization','name'], 
+                              ['fsm_state'], ['required_level','level_type'], ['recognition_type','recognition_type'],
+                              ['geographic_level','level'] ]
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   
   

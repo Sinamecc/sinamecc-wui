@@ -32,6 +32,10 @@ export class MccrRegistriesListComponent implements OnInit {
   dataSource:MatTableDataSource<MccrRegistry>
   currentMccrRegistry: MccrRegistry;
   displayedColumns = ['id', 'fsm_state', 'mitigation', 'files', 'actions'];
+
+  fieldsToSearch:string[][] = [ ['id'], ['mitigation'], 
+                              ['fsm_state'], ['files']]
+
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

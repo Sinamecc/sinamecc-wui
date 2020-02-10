@@ -31,6 +31,10 @@ export class MitigationActionsListComponent implements OnInit {
   displayedColumns = ['name', 'strategy_name', 'purpose', 'fsm_state', 'updated', 'created', 'actions'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  fieldsToSearch:string[][] = [ ['name'], ['strategy_name'], 
+                              ['purpose'], ['fsm_state'], ['created'],
+                              ['updated'] ]
+
 
   constructor(private router: Router,
     private i18nService: I18nService,

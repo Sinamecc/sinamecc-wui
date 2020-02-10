@@ -17,6 +17,7 @@ import { UpdateStatusService } from '@app/shared/update-status/update-status.ser
 import { MockUpdateStatusService } from '@app/shared/update-status/update-status.service.mock';
 import { GenericButtonComponent } from './generic-button/generic-button.component';
 import { GenericButtonSecondaryComponent } from './generic-button-secondary/generic-button-secondary.component';
+import { CustomSearchBarComponent } from './custom-search-bar/custom-search-bar.component';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { GenericButtonSecondaryComponent } from './generic-button-secondary/gene
     UploadProposalComponent,
     UpdateStatusComponent,
     GenericButtonComponent,
-    GenericButtonSecondaryComponent
+    GenericButtonSecondaryComponent,
+    CustomSearchBarComponent
   ],
   providers: [
     UploadProposalService,
@@ -50,7 +52,8 @@ import { GenericButtonSecondaryComponent } from './generic-button-secondary/gene
     UploadProposalComponent,
     UpdateStatusComponent,
     GenericButtonComponent,
-    GenericButtonSecondaryComponent
+    GenericButtonSecondaryComponent,
+    CustomSearchBarComponent
   ]
 })
 export class SharedModule { }

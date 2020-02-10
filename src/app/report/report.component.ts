@@ -20,6 +20,8 @@ export class ReportComponent implements OnInit {
   isLoading = false;
   dataSource:MatTableDataSource<Report>
   displayedColumns = ['name', 'last_active_version', 'created', 'updated', 'versions'];
+  fieldsToSearch:string[][] = [ ['name'], ['last_active_version'],
+                              ['versions'] ]
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

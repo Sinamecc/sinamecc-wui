@@ -16,6 +16,7 @@ export class AdminGroupsComponent implements OnInit {
   dataSource:MatTableDataSource<Groups>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  fieldsToSearch:string[][] = [ ['label'] ]
 
   constructor(private adminService:AdminService,public dialog: MatDialog) { }
 
