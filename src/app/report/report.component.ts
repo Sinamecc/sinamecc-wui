@@ -34,10 +34,6 @@ export class ReportComponent implements OnInit {
       this.loadReportData()
     }
 
-    getAuthenticationService(){
-      return this.authenticationService;
-    }
-
     loadReportData(){
       this.reportService.reports().subscribe((reports:Report[]) => {
         const reportList = reports;

@@ -62,7 +62,7 @@
 
 </div>
 <br>
-<div class="box-button">
+<div class="box-button" *ngIf="hasPermProvider()">
   <app-generic-button routerLink="/mccr/registries/new"  name="mccr.addMCCR"></app-generic-button>
 </div>
 <!--<a mat-fab routerLink="/report">

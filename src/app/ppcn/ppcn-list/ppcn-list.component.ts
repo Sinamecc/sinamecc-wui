@@ -60,10 +60,6 @@ export class PpcnListComponent implements OnInit {
      } );
  
    }
-
-  getAuthenticationService(){
-    return this.authenticationService;
-  }
   
   update(uuid: string) {
     this.router.navigate([`ppcn/${uuid}/edit`], { replaceUrl: true });
@@ -109,8 +105,8 @@ export class PpcnListComponent implements OnInit {
 
 
   hasPermProvider(){
-    return Boolean(this.getAuthenticationService().credentials.permissions.all || 
-                   this.getAuthenticationService().credentials.permissions.ppcn.provider)
+    return Boolean(this.authenticationService.credentials.permissions.all || 
+                   this.authenticationService.credentials.permissions.ppcn.provider)
   }
 
 }

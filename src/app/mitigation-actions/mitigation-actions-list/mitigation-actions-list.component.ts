@@ -57,10 +57,6 @@ export class MitigationActionsListComponent implements OnInit {
     this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
   }
 
-  getAuthentification(){
-    return this.authenticationService;
-  }
-
   loadMAData(){
     this.service.mitigationActions(this.i18nService.language.split('-')[0]).subscribe((mas:MitigationAction[]) => {
       const maList = mas;
@@ -124,8 +120,8 @@ export class MitigationActionsListComponent implements OnInit {
   }
 
   hasPermProvider(){
-    return Boolean(this.getAuthentification().credentials.permissions.all || 
-                   this.getAuthentification().credentials.permissions.ma.provider)
+    return Boolean(this.authenticationService.credentials.permissions.all || 
+                   this.authenticationService.credentials.permissions.ma.provider)
   }
 
 }

@@ -116,10 +116,6 @@ export class MccrRegistriesListComponent implements OnInit {
     });
   }
 
-  getAuthentification(){
-    return this.authenticationService;
-  }
-
   loadMCCRData(){
     this.service.mccrRegistries().subscribe((mccrs:MccrRegistry[]) => {
       const mccrList = mccrs;
@@ -129,8 +125,8 @@ export class MccrRegistriesListComponent implements OnInit {
   }
 
   hasPermProvider(){
-    return Boolean(this.getAuthentification().credentials.permissions.all || 
-                   this.getAuthentification().credentials.permissions.mccr.provider)
+    return Boolean(this.authenticationService.credentials.permissions.all || 
+                   this.authenticationService.credentials.permissions.mccr.provider)
   }
 
 
