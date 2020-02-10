@@ -4,10 +4,13 @@
 </mat-toolbar>
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
+
+<br>
+  <app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
+<br>
+
 <div class="container mat-elevation-z8 table-sinamecc">
 <mat-table #table [dataSource]="dataSource">
-
-
   <!-- Name Column -->
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef translate> info.name </mat-header-cell>

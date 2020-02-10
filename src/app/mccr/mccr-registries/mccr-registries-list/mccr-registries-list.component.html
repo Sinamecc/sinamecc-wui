@@ -9,6 +9,10 @@
     <p [hidden]="isLoading"></p>
   </mat-card-subtitle>
 
+<br>
+  <app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
+<br>
+
 <div class="container mat-elevation-z8 table-sinamecc">
   <mat-table #table [dataSource]="dataSource">
 

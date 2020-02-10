@@ -16,6 +16,7 @@ export class AdminPermissionsComponent implements OnInit {
   displayedColumns = ['name', 'content_type','action'];
   dataSource:MatTableDataSource<Permissions>
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  fieldsToSearch:string[][] = [ ['name'], ['content_type'] ]
   
   constructor(private adminService:AdminService,public dialog: MatDialog,) { }
 
