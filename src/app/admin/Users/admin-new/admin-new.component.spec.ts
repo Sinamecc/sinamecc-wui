@@ -14,6 +14,7 @@ import { AdminGroupListComponent } from '@app/admin/Groups/admin-group-list/admi
 import { AdminService } from '@app/admin/admin.service';
 import { AdminGroupsListEditComponent } from '@app/admin/Groups/admin-groups-list-edit/admin-groups-list-edit.component';
 import { AdminPermissionsListEditComponent } from '@app/admin/Permissions/admin-permissions-list-edit/admin-permissions-list-edit.component';
+import { SharedModule } from '@app/shared';
 
 describe('AdminNewComponent', () => {
   let component: AdminNewComponent;
@@ -30,7 +31,8 @@ describe('AdminNewComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        SharedModule
       ],
       providers: [AdminService, { provide: AuthenticationService, useClass: MockAuthenticationService }]
     })

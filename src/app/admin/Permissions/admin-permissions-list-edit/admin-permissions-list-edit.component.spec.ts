@@ -10,6 +10,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AdminService } from '@app/admin/admin.service';
 import { AuthenticationService, MockAuthenticationService } from '@app/core';
+import { SharedModule } from '@app/shared';
 
 describe('AdminPermissionsListEditComponent', () => {
   let component: AdminPermissionsListEditComponent;
@@ -26,6 +27,7 @@ describe('AdminPermissionsListEditComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule,
+        SharedModule
       ],
       declarations: [ AdminPermissionsListEditComponent ],
       providers: [AdminService, { provide: AuthenticationService, useClass: MockAuthenticationService }]

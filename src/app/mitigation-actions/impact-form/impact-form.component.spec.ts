@@ -13,6 +13,7 @@ import { MockS3Service } from '@app/core/s3.service.mock';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
 import { MockI18nService } from '@app/core/i18n.service.mock';
+import { SharedModule } from '@app/shared';
 
 describe('ImpactFormComponent', () => {
   let component: ImpactFormComponent;
@@ -29,7 +30,8 @@ describe('ImpactFormComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
+        SharedModule
       ],
       declarations: [ ImpactFormComponent ],
       providers: [ MockS3Service,

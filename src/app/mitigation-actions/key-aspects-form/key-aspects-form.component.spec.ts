@@ -12,6 +12,7 @@ import { CoreModule, S3Service } from '@app/core';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
 import { MockS3Service } from '@app/core/s3.service.mock';
+import { SharedModule } from '@app/shared';
 
 describe('KeyAspectsFormComponent', () => {
   let component: KeyAspectsFormComponent;
@@ -28,7 +29,8 @@ describe('KeyAspectsFormComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
+        SharedModule
       ],
       declarations: [ KeyAspectsFormComponent ],
       providers: [

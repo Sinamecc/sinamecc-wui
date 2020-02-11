@@ -15,6 +15,7 @@ import { AdminGroupsListEditComponent } from '@app/admin/Groups/admin-groups-lis
 import { AdminGroupListComponent } from '@app/admin/Groups/admin-group-list/admin-group-list.component';
 import { AdminPermissionListComponent } from '@app/admin/Permissions/admin-permission-list/admin-permission-list.component';
 import { AdminPermissionsListEditComponent } from '@app/admin/Permissions/admin-permissions-list-edit/admin-permissions-list-edit.component';
+import { SharedModule } from '@app/shared';
 
 describe('AdminUserDetailComponent', () => {
   let component: AdminUserDetailComponent;
@@ -31,6 +32,7 @@ describe('AdminUserDetailComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule,
+        SharedModule
       ],
       declarations: [ AdminUserDetailComponent, AdminNewComponent, AdminGroupsListEditComponent, AdminGroupListComponent, AdminPermissionListComponent, AdminPermissionsListEditComponent ],
       providers: [AdminService, { provide: AuthenticationService, useClass: MockAuthenticationService }]

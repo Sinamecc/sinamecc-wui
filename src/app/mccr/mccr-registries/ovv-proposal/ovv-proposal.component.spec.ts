@@ -13,6 +13,8 @@ import { I18nService, AuthenticationService, MockAuthenticationService, S3Servic
 import { DatePipe } from '@angular/common';
 import { MccrRegistriesService } from '../mccr-registries.service';
 import { MockS3Service } from '@app/core/s3.service.mock';
+import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
 
 describe('OvvProposalComponent', () => {
   let component: OvvProposalComponent;
@@ -29,8 +31,10 @@ describe('OvvProposalComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
+        
       ],
-      declarations: [ OvvProposalComponent, DownloadProposalComponent ],
+      declarations: [ OvvProposalComponent, DownloadProposalComponent,GenericButtonComponent,
+        GenericButtonSecondaryComponent ],
       providers: [I18nService, DatePipe, MccrRegistriesService,
         { provide: AuthenticationService, useClass: MockAuthenticationService },
         { provide: S3Service, useClass: MockS3Service }]

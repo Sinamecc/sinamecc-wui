@@ -14,6 +14,7 @@ import { PpcnService } from '../ppcn.service';
 import { MockPpcnService } from '../ppcn.service.mock';
 import { MockI18nService } from '@app/core/i18n.service.mock';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { SharedModule } from '@app/shared';
 
 describe('PpcnUpdateComponent', () => {
   let component: PpcnUpdateComponent;
@@ -30,7 +31,8 @@ describe('PpcnUpdateComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
+        SharedModule
       ],
       declarations: [ PpcnUpdateComponent ],
       providers: [

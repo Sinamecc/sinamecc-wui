@@ -20,6 +20,7 @@ import { MockI18nService } from '@app/core/i18n.service.mock';
 import { MockTranslateService } from '@app/core/translate.service.mock';
 import { MccrRegistriesUpdateComponent } from './mccr-registries-update.component';
 import { MockMccrRegistriesService } from '@app/mccr-registries/mccr-registries.service.mock';
+import { SharedModule } from '@app/shared';
 
 describe('MccrRegistriesUpdateComponent', () => {
   let component: MccrRegistriesUpdateComponent;
@@ -34,7 +35,7 @@ describe('MccrRegistriesUpdateComponent', () => {
         TranslateModule.forRoot(),
         RouterTestingModule,
         HttpClientTestingModule,
-        ReactiveFormsModule,
+        ReactiveFormsModule
       ],
       declarations: [ MccrRegistriesUpdateComponent, LoaderComponent ],
       providers: [

@@ -5,6 +5,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {By} from "@angular/platform-browser";
 import { Router } from '@angular/router';
+import { SharedModule } from '@app/shared';
+import { CoreModule, AuthenticationService, MockAuthenticationService } from '@app/core';
 
 
 describe('HomeComponent', () => {
@@ -18,9 +20,9 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule,NoopAnimationsModule],
+      imports: [RouterTestingModule,NoopAnimationsModule,SharedModule,CoreModule],
       declarations: [ HomeComponent ],
-      providers: [{provide: Router, useValue: router}]
+      providers: [{provide: Router, useValue: router},{ provide: AuthenticationService, useClass: MockAuthenticationService }]
     })
     .compileComponents();
   }));

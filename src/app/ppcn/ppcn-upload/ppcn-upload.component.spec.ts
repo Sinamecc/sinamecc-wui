@@ -7,13 +7,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { LoaderComponent, InputFileComponent } from '@app/shared';
+import { LoaderComponent, InputFileComponent, SharedModule } from '@app/shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, I18nService } from '@app/core';
 import { MockS3Service } from '@app/core/s3.service.mock';
 import { PpcnService } from '../ppcn.service';
 import { MockPpcnService } from '../ppcn.service.mock';
 import { MockI18nService } from '@app/core/i18n.service.mock';
+import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
 
 describe('PpcnUploadComponent', () => {
   let component: PpcnUploadComponent;
@@ -30,9 +32,11 @@ describe('PpcnUploadComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
       ],
-      declarations: [ PpcnUploadComponent, LoaderComponent, InputFileComponent ],
+      declarations: [ PpcnUploadComponent, LoaderComponent, InputFileComponent,
+        GenericButtonComponent,
+        GenericButtonSecondaryComponent, ],
       providers: [
         MockS3Service,
         { provide: PpcnService, useClass: MockPpcnService },

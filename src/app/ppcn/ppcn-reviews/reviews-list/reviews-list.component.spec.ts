@@ -12,6 +12,7 @@ import { PpcnService } from '@app/ppcn/ppcn.service';
 import { MockPpcnService } from '@app/ppcn/ppcn.service.mock';
 import { I18nService } from '@app/core';
 import { MockI18nService } from '@app/core/i18n.service.mock';
+import { SharedModule } from '@app/shared';
 
 describe('ReviewsListComponent', () => {
   let component: ReviewsListComponent;
@@ -25,7 +26,8 @@ describe('ReviewsListComponent', () => {
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        SharedModule
       ],
       declarations: [ ReviewsListComponent ],
       providers: [

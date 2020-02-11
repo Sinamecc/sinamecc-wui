@@ -14,6 +14,8 @@ import { InputFileComponent } from '@app/shared/input-file/input-file.component'
 import { ByteFormatPipe } from '@app/shared/input-file/byte-format.pipe';
 import { ReportService } from '../report.service';
 import { MockReportService } from '../report.service.mock';
+import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
+import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
 
 describe('ReportVersionsNewComponent', () => {
   let component: ReportVersionsNewComponent;
@@ -32,7 +34,9 @@ describe('ReportVersionsNewComponent', () => {
         ReactiveFormsModule,
         CoreModule
       ],
-      declarations: [ ReportVersionsNewComponent, LoaderComponent, InputFileComponent, ByteFormatPipe ],
+      declarations: [ ReportVersionsNewComponent, LoaderComponent, InputFileComponent, ByteFormatPipe,
+        GenericButtonComponent,
+        GenericButtonSecondaryComponent ],
       providers: [I18nService,
         { provide: AuthenticationService, useClass: MockAuthenticationService },
         { provide: ReportService, useClass: MockReportService }]

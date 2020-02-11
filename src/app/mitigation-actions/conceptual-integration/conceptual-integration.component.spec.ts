@@ -10,6 +10,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core';
 import { DownloadProposalComponent } from '@app/shared/download-proposal/download-proposal.component';
+import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
 
 describe('ConceptualIntegrationComponent', () => {
   let component: ConceptualIntegrationComponent;
@@ -28,7 +30,8 @@ describe('ConceptualIntegrationComponent', () => {
         ReactiveFormsModule,
         CoreModule
       ],
-      declarations: [ ConceptualIntegrationComponent, DownloadProposalComponent ]
+      declarations: [ ConceptualIntegrationComponent, DownloadProposalComponent,GenericButtonComponent,
+        GenericButtonSecondaryComponent ]
     })
     .compileComponents();
   }));

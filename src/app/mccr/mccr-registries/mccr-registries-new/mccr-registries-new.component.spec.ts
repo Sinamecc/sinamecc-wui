@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { LoaderComponent, InputFileComponent } from '@app/shared';
+import { LoaderComponent, InputFileComponent, SharedModule } from '@app/shared';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockTranslateService } from '@app/core/translate.service.mock';
 import { I18nService } from '@app/core/i18n.service';
@@ -17,6 +17,8 @@ import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation
 import { MockS3Service } from '@app/core/s3.service.mock';
 import { MockMccrRegistriesService } from '@app/mccr-registries/mccr-registries.service.mock';
 import { MccrRegistriesNewComponent } from './mccr-registries-new.component';
+import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
 
 describe('MccrRegistriesNewComponent', () => {
   let component: MccrRegistriesNewComponent;
@@ -43,7 +45,8 @@ describe('MccrRegistriesNewComponent', () => {
         { provide: I18nService, useClass: MockI18nService}
       ],
         // { provide: I18nService, useClass: MockI18nService}],
-      declarations: [ MccrRegistriesNewComponent, InputFileComponent, LoaderComponent ]
+      declarations: [ MccrRegistriesNewComponent, InputFileComponent, LoaderComponent,
+        GenericButtonComponent,GenericButtonSecondaryComponent]
     })
     .compileComponents();
   }));

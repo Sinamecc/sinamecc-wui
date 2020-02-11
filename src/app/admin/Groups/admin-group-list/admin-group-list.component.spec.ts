@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '@app/shared';
 
 describe('AdminGroupListComponent', () => {
   let component: AdminGroupListComponent;
@@ -16,7 +17,8 @@ describe('AdminGroupListComponent', () => {
         MaterialModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        SharedModule
       ],
       declarations: [ AdminGroupListComponent ],
       providers: []
