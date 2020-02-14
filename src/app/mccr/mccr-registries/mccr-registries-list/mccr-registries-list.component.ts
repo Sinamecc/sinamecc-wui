@@ -136,7 +136,7 @@ export class MccrRegistriesListComponent implements OnInit {
         return true;
       }else{
         //It is not a
-        if(!Boolean(this.authenticationService.credentials.permissions.ppcn.provider) ){
+        if(!Boolean(this.authenticationService.credentials.permissions.mccr.provider) ){
           return true;
         }
       }

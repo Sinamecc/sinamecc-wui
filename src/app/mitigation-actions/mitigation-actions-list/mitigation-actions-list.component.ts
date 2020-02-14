@@ -131,7 +131,7 @@ export class MitigationActionsListComponent implements OnInit {
         return true;
       }else{
         //It is not a
-        if(!Boolean(this.authenticationService.credentials.permissions.ppcn.provider) ){
+        if(!Boolean(this.authenticationService.credentials.permissions.ma.provider) ){
           return true;
         }
       }
