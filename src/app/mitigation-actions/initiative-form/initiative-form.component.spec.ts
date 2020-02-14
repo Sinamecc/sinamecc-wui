@@ -12,6 +12,7 @@ import { CoreModule } from '@app/core';
 import { MockS3Service } from '@app/core/s3.service.mock';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
+import { SharedModule } from '@app/shared';
 
 describe('InitiativeFormComponent', () => {
   let component: InitiativeFormComponent;
@@ -28,7 +29,8 @@ describe('InitiativeFormComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
+        SharedModule
       ],
       declarations: [ InitiativeFormComponent ],
       providers: [ MockS3Service,

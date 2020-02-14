@@ -15,6 +15,7 @@ import { MockS3Service } from '@app/core/s3.service.mock';
 import { PpcnService } from '../ppcn.service';
 import { MockPpcnService } from '../ppcn.service.mock';
 import { MockI18nService } from '@app/core/i18n.service.mock';
+import { SharedModule } from '@app/shared';
 
 describe('PpcnFlowComponent', () => {
   let component: PpcnFlowComponent;
@@ -31,7 +32,8 @@ describe('PpcnFlowComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
+        SharedModule
       ],
       declarations: [ PpcnFlowComponent,
                       PpcnLevelComponent,

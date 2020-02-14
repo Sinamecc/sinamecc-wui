@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ReportNewComponent } from '@app/report/report-new/report-new.component';
 import { MaterialModule } from '@app/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,8 +10,10 @@ import { I18nService, AuthenticationService, MockAuthenticationService, CoreModu
 import { ReportService } from '../report.service';
 import { MockReportService } from '../report.service.mock';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InputFileComponent, LoaderComponent } from '@app/shared';
+import { InputFileComponent, LoaderComponent, SharedModule } from '@app/shared';
 import { ByteFormatPipe } from '@app/shared/input-file/byte-format.pipe';
+import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
+import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
 
 describe('ReportNewComponent', () => {
   let component: ReportNewComponent;
@@ -31,7 +32,10 @@ describe('ReportNewComponent', () => {
         ReactiveFormsModule,
         CoreModule
       ],
-      declarations: [ ReportNewComponent, InputFileComponent, LoaderComponent, ByteFormatPipe ],
+      declarations: [ ReportNewComponent, InputFileComponent, LoaderComponent, ByteFormatPipe,
+        GenericButtonComponent,
+        GenericButtonSecondaryComponent
+       ],
       providers: [I18nService,
         { provide: AuthenticationService, useClass: MockAuthenticationService },
         { provide: ReportService, useClass: MockReportService }]

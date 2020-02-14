@@ -124,6 +124,25 @@ export class MccrRegistriesListComponent implements OnInit {
     });
   }
 
+  hasPermProvider(){
+    return Boolean(this.authenticationService.credentials.permissions.all || 
+                   this.authenticationService.credentials.permissions.mccr.provider)
+  }
+
+  canChangeState(element:MccrRegistry){
+    if(element.fsm_state !== 'mccr_end'){
+      // is admin
+      if(Boolean(this.authenticationService.credentials.permissions.all) ){
+        return true;
+      }else{
+        //It is not a
+        if(!Boolean(this.authenticationService.credentials.permissions.mccr.provider) ){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
 
 }

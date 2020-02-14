@@ -15,8 +15,8 @@
 <div fxLayout="row" class="customContainer" >
 
     <div *ngFor="let item of dataImage" class="mainCardContainer" [@fadeInOut]>
-        <div [style.background-image]="item.image" class="cardImageContainer"></div>
-        <div matRipple matRippleColor="rgb(61, 61, 61,0.5)" (click)="goToSite(item.url)" class="cardContainer"><span class="mat-h2" >{{item.name}}</span></div>
+      <div *ngIf="showModule(permissions,item.moduleName)" [style.background-image]="item.image" class="cardImageContainer"></div>
+      <div *ngIf="showModule(permissions,item.moduleName)" matRipple matRippleColor="rgb(61, 61, 61,0.5)" (click)="goToSite(item.url)" class="cardContainer"><span class="mat-h2" >{{item.name}}</span></div>
     </div>
 
 </div>

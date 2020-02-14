@@ -18,6 +18,7 @@ import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
 import { MockS3Service } from '@app/core/s3.service.mock';
 import { MockI18nService } from '@app/core/i18n.service.mock';
+import { SharedModule } from '@app/shared';
 
 describe('MitigationActionFormFlowComponent', () => {
   let component: MitigationActionFormFlowComponent;
@@ -34,7 +35,8 @@ describe('MitigationActionFormFlowComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
+        SharedModule
       ],
       declarations: [ MitigationActionFormFlowComponent,
                       ImpactFormComponent,

@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { LoaderComponent, InputFileComponent } from '@app/shared';
+import { LoaderComponent, InputFileComponent, SharedModule } from '@app/shared';
 import { RouterTestingModule } from '@angular/router/testing';
 import { I18nService } from '@app/core/i18n.service';
 import { MccrRegistriesService } from '../mccr-registries.service';
@@ -32,7 +32,7 @@ describe('MonitoringProposalNewComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         FormsModule,
-        ReactiveFormsModule,
+        ReactiveFormsModule
       ],
       declarations: [ MonitoringProposalNewComponent,
                       LoaderComponent,

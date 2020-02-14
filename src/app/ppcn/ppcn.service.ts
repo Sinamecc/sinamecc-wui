@@ -180,11 +180,6 @@ export class PpcnService {
   }
 
   reRoutePpcn(lang: string): Observable < Ppcn[] > {
-    
-    if(this.authenticationService.credentials.is_administrador_dcc){
-      return this.ppcnAll(lang)
-    }
-
     return this.ppcn(lang)
   }
 

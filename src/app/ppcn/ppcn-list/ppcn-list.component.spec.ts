@@ -12,6 +12,9 @@ import { PpcnService } from '../ppcn.service';
 import { MockPpcnService } from '../ppcn.service.mock';
 import { I18nService, AuthenticationService, MockAuthenticationService } from '@app/core';
 import { MockI18nService } from '@app/core/i18n.service.mock';
+import { CustomSearchBarComponent } from '@app/shared/custom-search-bar/custom-search-bar.component';
+import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
 
 describe('PpcnListComponent', () => {
   let component: PpcnListComponent;
@@ -25,9 +28,13 @@ describe('PpcnListComponent', () => {
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
-      declarations: [ PpcnListComponent ],
+      declarations: [ 
+        PpcnListComponent,
+        GenericButtonComponent,
+        GenericButtonSecondaryComponent,
+        CustomSearchBarComponent ],
       providers: [
         MockS3Service,
         { provide: AuthenticationService, useClass: MockAuthenticationService },

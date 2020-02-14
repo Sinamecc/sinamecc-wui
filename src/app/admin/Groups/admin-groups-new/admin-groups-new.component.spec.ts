@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { SharedModule } from '@app/shared';
 
 describe('AdminGroupsNewComponent', () => {
   let component: AdminGroupsNewComponent;
@@ -24,6 +25,7 @@ describe('AdminGroupsNewComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule,
+        SharedModule
       ],
       declarations: [ AdminGroupsNewComponent ]
     })
