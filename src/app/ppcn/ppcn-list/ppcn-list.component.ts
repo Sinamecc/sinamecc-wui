@@ -103,6 +103,21 @@ export class PpcnListComponent implements OnInit {
     });
   }
 
+  canChangeState(element:Ppcn){
+    if(!(element.fsm_state === 'PPCN_end' || element.fsm_state === 'PPCN_send_recognition_certificate') ){
+      // is admin
+      if(Boolean(this.authenticationService.credentials.permissions.all) ){
+        return true;
+      }else{
+        //It is not a
+        if(!Boolean(this.authenticationService.credentials.permissions.ppcn.provider) ){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
 
   hasPermProvider(){
     return Boolean(this.authenticationService.credentials.permissions.all || 

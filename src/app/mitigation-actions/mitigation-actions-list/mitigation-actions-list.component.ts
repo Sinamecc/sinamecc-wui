@@ -124,6 +124,21 @@ export class MitigationActionsListComponent implements OnInit {
                    this.authenticationService.credentials.permissions.ma.provider)
   }
 
+  canChangeState(element:MitigationAction){
+    if(element.fsm_state !== 'end'){
+      // is admin
+      if(Boolean(this.authenticationService.credentials.permissions.all) ){
+        return true;
+      }else{
+        //It is not a
+        if(!Boolean(this.authenticationService.credentials.permissions.ppcn.provider) ){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
 }
 
 
