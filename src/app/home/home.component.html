@@ -1,0 +1,24 @@
+<div class="mainDiv" [@fadeInOut]>
+  <div class="imageContainer">
+  </div>
+  <div class="textContainer">
+    <span class="mat-h1 customText" translate>specificLabel.sinamecc</span>
+    <br>
+    <br>
+    <span class="mat-h2 customText" translate>specificLabel.learnMore</span>
+    <br>
+    <br>
+    <a class="customButton" mat-raised-button color="primary" href="http://www.sinamecc.go.cr/" ><span translate>specificLabel.goWebSite</span></a>
+  </div>
+<div>
+
+<div fxLayout="row" class="customContainer" >
+
+    <div *ngFor="let item of dataImage" class="mainCardContainer" [@fadeInOut]>
+      <div *ngIf="showModule(permissions,item.moduleName)" [style.background-image]="item.image" class="cardImageContainer"></div>
+      <div *ngIf="showModule(permissions,item.moduleName)" matRipple matRippleColor="rgb(61, 61, 61,0.5)" (click)="goToSite(item.url)" class="cardContainer"><span class="mat-h2" >{{item.name}}</span></div>
+    </div>
+
+</div>
+
+

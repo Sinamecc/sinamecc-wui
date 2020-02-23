@@ -13,6 +13,8 @@ import { MockPpcnService } from '../ppcn.service.mock';
 import { MockS3Service } from '@app/core/s3.service.mock';
 import { I18nService } from '@app/core';
 import { MockI18nService } from '@app/core/i18n.service.mock';
+import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
 
 describe('PpcnDownloadComponent', () => {
   let component: PpcnDownloadComponent;
@@ -28,7 +30,8 @@ describe('PpcnDownloadComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ PpcnDownloadComponent, DownloadProposalComponent ],
+      declarations: [ PpcnDownloadComponent, DownloadProposalComponent,GenericButtonComponent,
+        GenericButtonSecondaryComponent ],
       providers: [
         MockS3Service,
         { provide: PpcnService, useClass: MockPpcnService },

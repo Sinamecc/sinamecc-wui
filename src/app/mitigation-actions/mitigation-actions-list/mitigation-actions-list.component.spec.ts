@@ -12,6 +12,9 @@ import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
 import { MockS3Service } from '@app/core/s3.service.mock';
 import { MockI18nService } from '@app/core/i18n.service.mock';
+import { CustomSearchBarComponent } from '@app/shared/custom-search-bar/custom-search-bar.component';
+import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
 
 describe('MitigationActionsListComponent', () => {
   let component: MitigationActionsListComponent;
@@ -25,9 +28,10 @@ describe('MitigationActionsListComponent', () => {
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
-      declarations: [ MitigationActionsListComponent ],
+      declarations: [ MitigationActionsListComponent,GenericButtonComponent,GenericButtonSecondaryComponent,
+        CustomSearchBarComponent ],
       providers: [
         I18nService, MockS3Service,
         { provide: AuthenticationService, useClass: MockAuthenticationService },

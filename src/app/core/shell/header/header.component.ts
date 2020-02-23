@@ -62,4 +62,12 @@ export class HeaderComponent implements OnInit {
     return this.titleService.getTitle();
   }
 
+  showModule(permissions:Permissions,module:string){
+    if(permissions.all){
+      return true;
+    }else{
+      return Boolean(permissions[module])
+    } 
+  }
+
 }

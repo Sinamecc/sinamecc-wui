@@ -10,6 +10,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { I18nService } from '@app/core';
+import { GenericButtonSecondaryComponent } from '../generic-button-secondary/generic-button-secondary.component';
+import { GenericButtonComponent } from '../generic-button/generic-button.component';
 
 describe('DownloadProposalComponent', () => {
   let component: DownloadProposalComponent;
@@ -27,7 +29,8 @@ describe('DownloadProposalComponent', () => {
         FormsModule,
         ReactiveFormsModule,
       ],
-      declarations: [ DownloadProposalComponent ],
+      declarations: [ DownloadProposalComponent,GenericButtonComponent,
+        GenericButtonSecondaryComponent ],
       providers: [ I18nService ]
     })
     .compileComponents();

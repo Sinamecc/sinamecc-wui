@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { SharedModule } from '@app/shared';
 
 describe('AdminEditPasswordDialogComponent', () => {
   let component: AdminEditPasswordDialogComponent;
@@ -23,7 +24,8 @@ describe('AdminEditPasswordDialogComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        SharedModule
       ],
       declarations: [ AdminEditPasswordDialogComponent ]
     })

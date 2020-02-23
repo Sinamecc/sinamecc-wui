@@ -1,13 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
-
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
-import { MatPaginator, MatTableDataSource, MatSort, MatSnackBar } from '@angular/material';
-import { DataSource } from '@angular/cdk/collections';
-import { Observable } from 'rxjs/Observable';
-import { map, catchError } from 'rxjs/operators';
+import { MatPaginator, MatTableDataSource, MatSort, MatSnackBar } from '@angular/material'
+
 
 const log = new Logger('Report');
 
@@ -48,9 +44,14 @@ export class MitigationActionsListComponent implements OnInit {
   version: string = environment.version;
   error: string;
   isLoading = false;
-  dataSource = new MitigationActionSource(this.service, this.i18nService);
-  canUpdateStatus = false;
+  dataSource:MatTableDataSource<MitigationAction>
+  canUpdateStatus: boolean = false;
   displayedColumns = ['name', 'strategy_name', 'purpose', 'fsm_state', 'updated', 'created', 'actions'];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  fieldsToSearch:string[][] = [ ['name'], ['strategy_name'], 
+                              ['purpose'], ['fsm_state'], ['created'],
+                              ['updated'] ]
 
 
   constructor(private router: Router,
@@ -63,6 +64,7 @@ export class MitigationActionsListComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.loadMAData()
   }
 
   view(uuid: string) {
@@ -73,13 +75,18 @@ export class MitigationActionsListComponent implements OnInit {
     this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
   }
 
-  getAuthentification() {
-    return this.authenticationService;
+  loadMAData(){
+    this.service.mitigationActions(this.i18nService.language.split('-')[0]).subscribe((mas:MitigationAction[]) => {
+      const maList = mas;
+      this.dataSource = new MatTableDataSource<MitigationAction>(maList);
+      this.dataSource.paginator = this.paginator
+    });
   }
+
 
   addReview(uuid: string) {
 
-    const selectedMitigationAction = this.dataSource.mitigationActions.find((ma) => ma.id === uuid);
+    const selectedMitigationAction = this.dataSource.data.find((ma) => ma.id === uuid);
     const status = selectedMitigationAction.fsm_state;
 
     const route = this.service.mapRoutesStatuses(uuid).find(x => x.status === status);
@@ -104,7 +111,7 @@ export class MitigationActionsListComponent implements OnInit {
     this.service.deleteMitigationAction(uuid).subscribe(() => {
       // here i need to refresh table
       this.isLoading = false;
-      this.dataSource = new MitigationActionSource(this.service, this.i18nService);
+      this.loadMAData();
       this.translateService.get('Sucessfully deleted element').subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
     });
 
@@ -130,4 +137,26 @@ export class MitigationActionsListComponent implements OnInit {
     });
   }
 
+  hasPermProvider(){
+    return Boolean(this.authenticationService.credentials.permissions.all || 
+                   this.authenticationService.credentials.permissions.ma.provider)
+  }
+
+  canChangeState(element:MitigationAction){
+    if(element.fsm_state !== 'end'){
+      // is admin
+      if(Boolean(this.authenticationService.credentials.permissions.all) ){
+        return true;
+      }else{
+        //It is not a
+        if(!Boolean(this.authenticationService.credentials.permissions.ma.provider) ){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
 }
+
+

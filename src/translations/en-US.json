@@ -340,7 +340,10 @@
     "registerProposal":"Register Proposal",
     "youSure":"Are you sure?",
     "addReviewMCCRRegistry":"Add a new review for this mccr registry",
-    "districtCouncilAddress":"District council address"
+    "districtCouncilAddress":"District council address",
+    "learnMore":"Learn more about SINAMECC",
+    "sinamecc":"National system of climate change metrics",
+    "goWebSite":"Go to the website"
   },
 
   "APP_NAME": "sinamecc wui"

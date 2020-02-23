@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { DataSource } from '@angular/cdk/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Groups } from '../../groups';
 import { AdminService } from '../../admin.service';
-import { MatDialogConfig, MatDialog } from '@angular/material';
+import { MatDialogConfig, MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { DataSource } from '@angular/cdk/table';
 
 
 export class GroupsDataSource extends DataSource<any> {
@@ -32,11 +32,16 @@ export class GroupsDataSource extends DataSource<any> {
   styleUrls: ['./admin-groups.component.scss']
 })
 export class AdminGroupsComponent implements OnInit {
-  displayedColumns = ['name', 'action'];
-  dataSource = new GroupsDataSource(this.adminService);
-  constructor(private adminService: AdminService, public dialog: MatDialog) { }
+  displayedColumns = ['name','action'];
+  dataSource:MatTableDataSource<Groups>
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  fieldsToSearch:string[][] = [ ['label'] ]
+
+  constructor(private adminService:AdminService,public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.loadGroups()
   }
 
   openDeleteConfirmationDialog() {
@@ -54,6 +59,31 @@ export class AdminGroupsComponent implements OnInit {
 
   }
 
+  loadGroups(){
+    this.adminService.groups().subscribe((groups:Groups[]) => {
+      const groupsList = groups;
+      this.dataSource = new MatTableDataSource<Groups>(groupsList);
+      this.dataSource.paginator = this.paginator
+    });
+  }
+
 }
+export class GroupsDataSource extends DataSource<any> {
 
+  groups: Groups[];
+  groups$: Observable<Groups[]>;
 
+  constructor(private adminService:AdminService){
+    super();
+  }
+
+  connect(): Observable<Groups[]> {
+    this.groups$ = this.adminService.groups();
+    this.groups$.subscribe((groups) => {
+      this.groups = groups;
+    });
+    return this.groups$;
+  }
+  disconnect() { }
+
+}

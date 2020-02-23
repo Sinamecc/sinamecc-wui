@@ -9,6 +9,10 @@
     <p [hidden]="isLoading"></p>
   </mat-card-subtitle>
 
+<br>
+  <app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
+<br>
+
 <div class="container mat-elevation-z8 table-sinamecc">
   <mat-table #table [dataSource]="dataSource">
 
@@ -41,24 +45,24 @@
     <mat-header-cell *matHeaderCellDef translate> general.actions </mat-header-cell>
     <mat-cell *matCellDef="let element"> 
       <!-- <button mat-icon-button color="primary" (click)="view(element.id)"><mat-icon color="white">visibility</mat-icon></button> -->
-      <button  mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)"><mat-icon color="white">delete</mat-icon></button>
+      <button *ngIf="hasPermProvider()"  mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)"><mat-icon color="white">delete</mat-icon></button>
       <!-- <button mat-icon-button color="accent" (click)="update(element.id)"><mat-icon color="white">edit</mat-icon></button> -->
-      <button mat-icon-button color="primary" *ngIf="element.fsm_state !== 'mccr_end'" (click)="addReview(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button>
+      <button mat-icon-button color="primary" *ngIf="canChangeState(element)" (click)="addReview(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button>
 
     </mat-cell>
 </ng-container>
 
-
-
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-
-    
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
   </mat-table>
+  
+  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+  </mat-paginator>
 
 </div>
 <br>
-<div class="box-button">
+<div class="box-button" *ngIf="hasPermProvider()">
   <app-generic-button routerLink="/mccr/registries/new"  name="mccr.addMCCR"></app-generic-button>
 </div>
 <!--<a mat-fab routerLink="/report">

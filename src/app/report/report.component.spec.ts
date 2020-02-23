@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ReportComponent } from '@app/report/report.component';
 import { MaterialModule } from '@app/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,6 +10,9 @@ import { I18nService } from '@app/core/i18n.service';
 import { AuthenticationService, MockAuthenticationService } from '@app/core';
 import { ReportService } from './report.service';
 import { MockReportService } from './report.service.mock';
+import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
+import { CustomSearchBarComponent } from '@app/shared/custom-search-bar/custom-search-bar.component';
 
 describe('ReportComponent', () => {
   let component: ReportComponent;
@@ -26,7 +28,7 @@ describe('ReportComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ ReportComponent ],
+      declarations: [ ReportComponent,GenericButtonComponent,GenericButtonSecondaryComponent,CustomSearchBarComponent],
       providers: [I18nService,
         { provide: AuthenticationService, useClass: MockAuthenticationService },
         { provide: ReportService, useClass: MockReportService }]

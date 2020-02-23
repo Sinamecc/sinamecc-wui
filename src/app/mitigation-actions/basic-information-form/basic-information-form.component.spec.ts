@@ -13,6 +13,7 @@ import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { MockS3Service } from '@app/core/s3.service.mock';
+import { SharedModule } from '@app/shared';
 
 describe('BasicInformationFormComponent', () => {
   let component: BasicInformationFormComponent;
@@ -29,7 +30,8 @@ describe('BasicInformationFormComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
+        SharedModule
       ],
       declarations: [ BasicInformationFormComponent ],
       providers: [ MockS3Service,

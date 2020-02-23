@@ -25,13 +25,15 @@
               </mat-select>
             </mat-form-field> -->
             <br />
-            <mat-form-field class="field-ppcn">
-              <mat-select formControlName="initiativeTypeCtrl" [placeholder]="'specificLabel.initiativeType' | translate">
-                <mat-option *ngFor="let initiativeType of processedNewFormData.initiative_types" [value]="initiativeType.id">
-                  {{ initiativeType.types }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            
+            <span translate>specificLabel.initiativeType</span><br><br>
+            <mat-radio-group formControlName="initiativeTypeCtrl">
+              <mat-radio-button *ngFor="let initiativeType of processedNewFormData.initiative_types" [value]="initiativeType.id">
+                {{ initiativeType.types }}
+               </mat-radio-button>
+            </mat-radio-group>
+
+            <br />
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.initiativeName</mat-label>
@@ -64,13 +66,12 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
-            <mat-form-field class="field-ppcn">
-              <mat-select formControlName="initiativeStatusCtrl" [placeholder]="'specificLabel.initiativeStatus' | translate">
-                <mat-option *ngFor="let status of processedNewFormData.statuses" [value]="status.id">
-                  {{ status.status }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <span translate>specificLabel.initiativeStatus</span><br><br>
+            <mat-radio-group formControlName="initiativeStatusCtrl">
+              <mat-radio-button  *ngFor="let status of processedNewFormData.statuses" [value]="status.id">
+                {{ status.status }}
+               </mat-radio-button>
+            </mat-radio-group>
             <br />
             <!-- <div class="margin-20">
               <div>step details:-</div>
@@ -92,15 +93,13 @@
               <div translate>specificLabel.initiativeFinanceInfo</div>
             </ng-template>
 
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>specificLabel.initiativeFinanceStatus</mat-label>
-              <mat-select formControlName="initiativeFinancingStatusCtrl" [placeholder]="'specificLabel.financeSourceStatus' | translate"
-                (selectionChange)="financialSourceInputShown($event)">
-                <mat-option *ngFor="let financeStatus of processedNewFormData.finance_status" [value]="financeStatus.id">
-                  {{ financeStatus.status }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <span translate>specificLabel.initiativeFinanceStatus</span><br><br>
+            <mat-radio-group formControlName="initiativeFinancingStatusCtrl">
+              <mat-radio-button *ngFor="let financeStatus of processedNewFormData.finance_status" [value]="financeStatus.id" (change)="financialSourceInputShown($event)">
+                {{ financeStatus.status }}
+               </mat-radio-button>
+            </mat-radio-group>
+            <br />
             <br />
             <mat-form-field class="field-ppcn">
             <mat-label translate>specificLabel.initiativeFinanceType</mat-label>

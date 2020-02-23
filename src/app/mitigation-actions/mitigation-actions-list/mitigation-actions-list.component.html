@@ -3,8 +3,10 @@
 </mat-toolbar>
   <mat-divider class="divider-custom"></mat-divider>
   <mat-divider class="divider-custom"></mat-divider> 
-<br>
 
+<br>
+  <app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
+<br>
 <div class="container mat-elevation-z8 table-sinamecc">
 <mat-table #table [dataSource]="dataSource">
 
@@ -48,9 +50,9 @@
     <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
     <mat-cell *matCellDef="let element" class="login-box">
       <button  mat-icon-button color="primary" (click)="view(element.id)" ><mat-icon color="white">visibility</mat-icon></button>
-      <button  mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)" > <mat-icon color="white">delete</mat-icon></button>
+      <button *ngIf="hasPermProvider()"  mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)" > <mat-icon color="white">delete</mat-icon></button>
       <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
-      <button  mat-icon-button color="primary" *ngIf="element.fsm_state !== 'end'" (click)="addReview(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button>
+      <button  mat-icon-button color="primary" *ngIf="canChangeState(element)" (click)="addReview(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button>
       <button mat-icon-button color="primary" (click)="changelog(element.id)" > <mat-icon color="white">history</mat-icon></button>
       <!-- <button mat-icon-button color="primary" (click)="uploadProposal(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button> -->
     </mat-cell>
@@ -67,7 +69,7 @@
 </mat-paginator>
 </div>
 <br>
-<div class="box-button">
+<div class="box-button" *ngIf="hasPermProvider()">
   <app-generic-button routerLink="/mitigation/actions/new" name="mitigationAction.addMA"></app-generic-button>
 </div>
 

@@ -13,6 +13,7 @@ import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
 import { MockI18nService } from '@app/core/i18n.service.mock';
 import { MockS3Service } from '@app/core/s3.service.mock';
+import { SharedModule } from '@app/shared';
 
 describe('EmissionsMitigationFormComponent', () => {
   let component: EmissionsMitigationFormComponent;
@@ -29,7 +30,8 @@ describe('EmissionsMitigationFormComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
+        SharedModule
       ],
       declarations: [ EmissionsMitigationFormComponent ],
       providers: [ MockS3Service,

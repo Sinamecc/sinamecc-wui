@@ -19,6 +19,8 @@ import { EmissionsMitigationFormComponent } from '../emissions-mitigation-form/e
 import { KeyAspectsFormComponent } from '../key-aspects-form/key-aspects-form.component';
 import { BasicInformationFormComponent } from '../basic-information-form/basic-information-form.component';
 import { InitiativeFormComponent } from '../initiative-form/initiative-form.component';
+import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
 
 describe('MitigationActionsUpdateComponent', () => {
   let component: MitigationActionsUpdateComponent;
@@ -43,7 +45,9 @@ describe('MitigationActionsUpdateComponent', () => {
                       EmissionsMitigationFormComponent,
                       KeyAspectsFormComponent,
                       BasicInformationFormComponent,
-                      InitiativeFormComponent ],
+                      InitiativeFormComponent,
+                      GenericButtonComponent,
+                      GenericButtonSecondaryComponent ],
       providers: [
         MockS3Service,
         { provide: MitigationActionsService, useClass: MockMitigationActionsService },

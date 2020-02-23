@@ -14,6 +14,9 @@ import { DownloadProposalComponent } from '@app/shared/download-proposal/downloa
 import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { MockS3Service } from '@app/core/s3.service.mock';
 import { S3Service } from '@app/core/s3.service';
+import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
+import { CustomSearchBarComponent } from '@app/shared/custom-search-bar/custom-search-bar.component';
 
 describe('OvvProposalComponent', () => {
   let component: OvvProposalComponent;
@@ -31,7 +34,10 @@ describe('OvvProposalComponent', () => {
         FormsModule,
         ReactiveFormsModule,
       ],
-      declarations: [ OvvProposalComponent, DownloadProposalComponent ],
+      declarations: [ OvvProposalComponent, DownloadProposalComponent,
+        GenericButtonComponent,
+        GenericButtonSecondaryComponent,
+        CustomSearchBarComponent ],
       providers: [I18nService, DatePipe, MccrRegistriesService,
         { provide: AuthenticationService, useClass: MockAuthenticationService },
         { provide: S3Service, useClass: MockS3Service }]

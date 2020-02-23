@@ -29,12 +29,15 @@ export class MccrRegistriesListComponent implements OnInit {
   report: number;
   error: string;
   isLoading = false;
-  dataSource = new MccrRegistriesDataSource(this.service);
+  dataSource:MatTableDataSource<MccrRegistry>
   currentMccrRegistry: MccrRegistry;
   displayedColumns = ['id', 'fsm_state', 'mitigation', 'files', 'actions'];
 
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
-  // @ViewChild(MatSort) sort: MatSort;
+  fieldsToSearch:string[][] = [ ['id'], ['mitigation'], 
+                              ['fsm_state'], ['files']]
+
+  
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private router: Router,
     private i18nService: I18nService,
@@ -45,7 +48,7 @@ export class MccrRegistriesListComponent implements OnInit {
     public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-
+    this.loadMCCRData()
   }
 
   getAuthentificationService() {
@@ -57,7 +60,7 @@ export class MccrRegistriesListComponent implements OnInit {
     this.service.deleteMccrRegistry(uuid).subscribe(() => {
        // here i need to refresh table
        this.isLoading = false;
-       this.dataSource = new MccrRegistriesDataSource(this.service);
+       this.loadMCCRData()
        this.translateService.get('Sucessfully deleted element').subscribe((res: string) => { this.snackBar.open(res, null, {
         duration: 3000
       }); });
@@ -81,7 +84,7 @@ export class MccrRegistriesListComponent implements OnInit {
 
   addReview(uuid: string) {
 
-    const selectedMccr = this.dataSource.mccrRegistries.find((mccr) => mccr.id === uuid);
+    const selectedMccr = this.dataSource.data.find((mccr) => mccr.id === uuid);
     const status = selectedMccr.fsm_state;
 
     const route = this.service.mapRoutesStatuses(uuid).find(x => x.status === status );
@@ -113,21 +116,34 @@ export class MccrRegistriesListComponent implements OnInit {
     });
   }
 
+  loadMCCRData(){
+    this.service.mccrRegistries().subscribe((mccrs:MccrRegistry[]) => {
+      const mccrList = mccrs;
+      this.dataSource = new MatTableDataSource<MccrRegistry>(mccrList);
+      this.dataSource.paginator = this.paginator
+    });
+  }
 
+  hasPermProvider(){
+    return Boolean(this.authenticationService.credentials.permissions.all || 
+                   this.authenticationService.credentials.permissions.mccr.provider)
+  }
+
+  canChangeState(element:MccrRegistry){
+    if(element.fsm_state !== 'mccr_end'){
+      // is admin
+      if(Boolean(this.authenticationService.credentials.permissions.all) ){
+        return true;
+      }else{
+        //It is not a
+        if(!Boolean(this.authenticationService.credentials.permissions.mccr.provider) ){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
 
 }
 
-export class MccrRegistriesDataSource extends DataSource<any> {
-  id: number;
-  mccrRegistries: MccrRegistry[];
-  constructor(private service: MccrRegistriesService) {
-    super();
-  }
-  connect(): Observable < MccrRegistry[] > {
-    const mccrRegistriesPromise: Observable < MccrRegistry[] > = this.service.mccrRegistries();
-    mccrRegistriesPromise.subscribe(mccrRegistries => this.mccrRegistries = mccrRegistries);
-    return mccrRegistriesPromise;
-  }
-  disconnect() {}
-}

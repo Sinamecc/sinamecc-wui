@@ -11,6 +11,9 @@ import { LoaderComponent } from '@app/shared/loader/loader.component';
 import { I18nService, AuthenticationService, MockAuthenticationService } from '@app/core';
 import { ReportService } from '../report.service';
 import { MockReportService } from '../report.service.mock';
+import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
+import { CustomSearchBarComponent } from '@app/shared/custom-search-bar/custom-search-bar.component';
 
 describe('ReportVersionsComponent', () => {
   let component: ReportVersionsComponent;
@@ -26,7 +29,10 @@ describe('ReportVersionsComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ ReportVersionsComponent, LoaderComponent ],
+      declarations: [ ReportVersionsComponent, LoaderComponent,
+        GenericButtonComponent,
+        GenericButtonSecondaryComponent,
+        CustomSearchBarComponent ],
       providers: [I18nService,
         { provide: AuthenticationService, useClass: MockAuthenticationService },
         { provide: ReportService, useClass: MockReportService }]

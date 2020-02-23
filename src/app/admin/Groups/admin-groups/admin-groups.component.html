@@ -7,6 +7,10 @@
             <mat-divider class="divider-custom"></mat-divider>
         </h3>
 
+        <br>
+            <app-custom-search-bar  [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar >
+        <br>
+        
         <mat-card-content>
 
             <mat-table  #table [dataSource]="dataSource" >
@@ -29,7 +33,9 @@
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
             </mat-table>
-
+            <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+            </mat-paginator>
+            
         </mat-card-content>
     </mat-card>
 
