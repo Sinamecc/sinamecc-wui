@@ -105,19 +105,23 @@ export class ImpactFormComponent implements OnInit {
     } else {
       context['update_new_mitigation_action'] = true;
     }
-    this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id, this.i18nService.language.split('-')[0])
+    this.service.submitMitigationActionUpdateForm(context,
+                                                  this.mitigationAction.id,
+                                                  this.i18nService.language.split('-')[0])
       .pipe(finalize(() => {
         this.form.markAsPristine();
         this.isLoading = false;
       }))
       .subscribe(response => {
-        this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+        this.translateService.get('Sucessfully submitted form')
+          .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
         this.wasSubmittedSuccessfully = true;
         setTimeout(() => {
           this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
        }, 2000);
       }, error => {
-        this.translateService.get('Error submitting form').subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
+        this.translateService.get('Error submitting form')
+          .subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
         log.debug(`New Mitigation Action Form error: ${error}`);
         this.error = error;
         this.wasSubmittedSuccessfully = false;

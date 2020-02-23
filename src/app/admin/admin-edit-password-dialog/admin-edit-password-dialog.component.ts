@@ -27,7 +27,7 @@ export class AdminEditPasswordDialogComponent implements OnInit {
   }
 
   submit() {
-    if (this.form.value.confirmPassword == this.form.value.newPassword) {
+    if (this.form.value.confirmPassword === this.form.value.newPassword) {
 
     } else {
       this.error = 'Confirm password and new password are different.';

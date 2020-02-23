@@ -39,7 +39,6 @@ export class EmissionsMitigationFormComponent implements OnInit {
     private translateService: TranslateService,
     private authenticationService: AuthenticationService,
     public snackBar: MatSnackBar) {
-      // this.formData = new FormData();
       this.service.currentMitigationAction.subscribe(message => this.mitigationAction = message);
       this.createForm();
   }
@@ -72,7 +71,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
-          ingeiComplianceCtrl: [this.mitigationAction['ingei_compliances'].map((elem: any) => elem.id), Validators.required],
+          ingeiComplianceCtrl: [
+            this.mitigationAction['ingei_compliances'].map((elem: any) => elem.id), Validators.required],
         }),
         this.formBuilder.group({
           emissionSourceCtrl: [this.mitigationAction.emissions_source, Validators.required],
@@ -88,23 +88,28 @@ export class EmissionsMitigationFormComponent implements OnInit {
   submitForm() {
     this.isLoading = true;
     const context = {
-      ingei_compliances: this.form.value.formArray[0].ingeiComplianceCtrl ? this.form.value.formArray[0].ingeiComplianceCtrl.join() : '',
+      ingei_compliances: this.form.value.formArray[0].ingeiComplianceCtrl ?
+        this.form.value.formArray[0].ingeiComplianceCtrl.join() : '',
       emissions_source: this.form.value.formArray[1].emissionSourceCtrl,
       carbon_sinks: this.form.value.formArray[1].carbonSinksCtrl,
       user: String(this.authenticationService.credentials.id),
       registration_type: this.processedNewFormData.registration_types[0].id
     };
 
-    this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id, this.i18nService.language.split('-')[0])
+    this.service.submitMitigationActionUpdateForm(context,
+                                                  this.mitigationAction.id,
+                                                  this.i18nService.language.split('-')[0])
     .pipe(finalize(() => {
       this.form.markAsPristine();
       this.isLoading = false;
     }))
     .subscribe(response => {
-      this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+      this.translateService.get('Sucessfully submitted form')
+        .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
       this.wasSubmittedSuccessfully = true;
     }, error => {
-      this.translateService.get('Error submitting form').subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
+      this.translateService.get('Error submitting form')
+        .subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
       log.debug(`New Mitigation Action Form error: ${error}`);
       this.error = error;
       this.wasSubmittedSuccessfully = false;

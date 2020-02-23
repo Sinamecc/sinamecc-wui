@@ -55,7 +55,8 @@ export class AdminPermissionsNewComponent implements OnInit {
 
   submitForm(value: string) {
 
-    this.createPermissionsForm.value.codename = `${value}_${this.createPermissionsForm.value.name.replace(new RegExp(' ', 'g'), '_')}`;
+    this.createPermissionsForm.value.codename = `${value}_${this.createPermissionsForm.value.name
+      .replace(new RegExp(' ', 'g'), '_')}`;
     this.createPermissionsForm.value.content_type = this.contentTypeMap.get(value);
 
     if (this.createPermissionsForm.value.name.length <= 80) {
@@ -70,7 +71,8 @@ export class AdminPermissionsNewComponent implements OnInit {
           this.isLoading = false;
         }))
         .subscribe(response => {
-          this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+          this.translateService.get('Sucessfully submitted form')
+            .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
           log.debug(`${response.statusCode} status code received from create permissions `);
           this.router.navigate([`/home`], { replaceUrl: true });
 

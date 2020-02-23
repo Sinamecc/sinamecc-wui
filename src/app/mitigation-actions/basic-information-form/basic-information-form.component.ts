@@ -84,13 +84,13 @@ export class BasicInformationFormComponent implements OnInit {
           contactNameCtrl: [this.mitigationAction.contact.full_name, Validators.required],
           positionCtrl: [this.mitigationAction.contact.job_title, Validators.required],
           emailFormCtrl: [this.mitigationAction.contact.email, Validators.email],
-          phoneCtrl: [this.mitigationAction.contact.phone, Validators.compose([Validators.required, Validators.minLength(8)])],
+          phoneCtrl: [this.mitigationAction.contact.phone,
+                      Validators.compose([Validators.required, Validators.minLength(8)])],
         })
       ])
     });
 
     this.isLoading = false;
-    // this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
   }
 
   submitForm() {
@@ -113,7 +113,9 @@ export class BasicInformationFormComponent implements OnInit {
       context.contact['id'] = this.mitigationAction.contact.id;
 
     }
-    this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id, this.i18nService.language.split('-')[0])
+    this.service.submitMitigationActionUpdateForm(context,
+                                                  this.mitigationAction.id,
+                                                  this.i18nService.language.split('-')[0])
     .pipe(finalize(() => {
       this.form.markAsPristine();
       this.isLoading = false;

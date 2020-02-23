@@ -17,7 +17,7 @@ const routes: Routes = [
       loadChildren: 'app/mccr/mccr-registries/mccr-registries.module#MccrRegistriesModule' },
     { path: 'mccr/poc', loadChildren: 'app/mccr/mccr-poc/mccr-poc.module#MccrPocModule' },
     { path: 'ppcn', loadChildren: 'app/ppcn/ppcn.module#PpcnModule' },
-    //{ path: 'mccr/registries', loadChildren: 'app/mccr-registries/mccr-registries.module#MccrRegistriesModule' },
+    // { path: 'mccr/registries', loadChildren: 'app/mccr-registries/mccr-registries.module#MccrRegistriesModule' },
     { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule' },
     { path: 'error', component: ErrorComponent },
   ]),

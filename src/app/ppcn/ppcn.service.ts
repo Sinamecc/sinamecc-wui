@@ -41,8 +41,8 @@ export interface Response {
 }
 
 const fsm_next_state = {
-  'PPCN_decision_step_DCC': ['PPCN_accepted_request_by_DCC', 
-                             'PPCN_rejected_request_by_DCC', 
+  'PPCN_decision_step_DCC': ['PPCN_accepted_request_by_DCC',
+                             'PPCN_rejected_request_by_DCC',
                              'PPCN_changes_requested_by_DCC'],
   'PPCN_evaluation_by_CA': ['PPCN_decision_step_CA'],
   'PPCN_decision_step_CA': ['PPCN_accepted_request_by_CA', 'PPCN_rejected_request_by_CA']
@@ -105,13 +105,13 @@ export class PpcnService {
         'Authorization': this.authenticationService.credentials.token
       })
     };
-    const formData = this.buildFormData(context, 
-                                        contactFormId, 
-                                        geographicFormId, 
-                                        requiredFormId, 
-                                        recognitionFormId, 
-                                        sectorFormId, 
-                                        subsectorFormId, 
+    const formData = this.buildFormData(context,
+                                        contactFormId,
+                                        geographicFormId,
+                                        requiredFormId,
+                                        recognitionFormId,
+                                        sectorFormId,
+                                        subsectorFormId,
                                         ovvFormId);
     return this.httpClient
       .put(routes.submitUpdatePpcn(id), formData, httpOptions)

@@ -1,22 +1,28 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { environment } from '@env/environment';
-import { Logger, I18nService, AuthenticationService } from '@app/core';
-import {MatPaginator, MatTableDataSource, MatSort, MatDialogConfig, MatDialog, MatSnackBar} from '@angular/material';
+import { I18nService, AuthenticationService } from '@app/core';
+import { MatDialogConfig, MatDialog, MatSnackBar} from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
 import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-
-
-const log = new Logger('Report');
-
-
-// import { Mccr, Report, Version } from './../report.service';
+export class MccrRegistriesDataSource extends DataSource<any> {
+  id: number;
+  mccrRegistries: MccrRegistry[];
+  constructor(private service: MccrRegistriesService) {
+    super();
+  }
+  connect(): Observable < MccrRegistry[] > {
+    const mccrRegistriesPromise: Observable < MccrRegistry[] > = this.service.mccrRegistries();
+    mccrRegistriesPromise.subscribe(mccrRegistries => this.mccrRegistries = mccrRegistries);
+    return mccrRegistriesPromise;
+  }
+  disconnect() {}
+}
 
 @Component({
   selector: 'app-mccr-registries-list',
@@ -60,8 +66,9 @@ export class MccrRegistriesListComponent implements OnInit {
     this.service.deleteMccrRegistry(uuid).subscribe(() => {
        // here i need to refresh table
        this.isLoading = false;
-       this.loadMCCRData()
-       this.translateService.get('Sucessfully deleted element').subscribe((res: string) => { this.snackBar.open(res, null, {
+       this.loadMCCRData();
+       this.translateService.get('Sucessfully deleted element')
+         .subscribe((res: string) => { this.snackBar.open(res, null, {
         duration: 3000
       }); });
      } );
@@ -74,13 +81,6 @@ export class MccrRegistriesListComponent implements OnInit {
   update(uuid: string) {
     this.router.navigate([`mccr/registries/${uuid}/edit`], { replaceUrl: true });
   }
-
-  // selectOvv(uuid: string) {
-  //   let listedMccrRegistries = this.dataSource.mccrRegistries;
-  //   let currentMccrRegistry = listedMccrRegistries.find(element => element.id === uuid);
-  //   this.service.updateCurrentMccrRegistry(currentMccrRegistry);
-  //   this.router.navigate([`mccr/registries/${uuid}/ovv`], { replaceUrl: true });
-  // }
 
   addReview(uuid: string) {
 

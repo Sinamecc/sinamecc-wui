@@ -230,7 +230,8 @@ export class PpcnUpdateComponent implements OnInit {
             contactNameCtrl: [ppcn['organization']['contact']['full_name'], Validators.required],
             positionCtrl: [ppcn['organization']['contact']['job_title'], Validators.required],
             emailFormCtrl: [ppcn['organization']['contact']['email'], Validators.email],
-            phoneCtrl: [ppcn['organization']['contact']['phone'], Validators.compose([Validators.required, Validators.minLength(8)])],
+            phoneCtrl: [ppcn['organization']['contact']['phone'],
+                        Validators.compose([Validators.required, Validators.minLength(8)])],
           }),
           this.formBuilder.group({
             requiredCtrl: [ppcn['required_level']['id'], Validators.required],

@@ -17,16 +17,30 @@ import { HarmonizationProposalNewComponent } from '@app/mitigation-actions/harmo
 const routes: Routes = [
   Route.withShell([
     { path: '', redirectTo: 'mitigation/actionst', pathMatch: 'full' },
-    { path: 'mitigation/actions', component: MitigationActionsListComponent, data: { title: extract('MitigationActions') } },
-    { path: 'mitigation/actions/new', component: MitigationActionsNewComponent, data: { title: extract('New') } },
-    { path: 'mitigation/actions/:id', component: MitigationActionComponent, data: { id: extract('id') } },
-    { path: 'mitigation/actions/:id/edit', component: MitigationActionsUpdateComponent, data: { id: extract('id') } },
-    { path: 'mitigation/actions/:id/reviews/new', component: MitigationActionReviewsNewComponent, data: { id: extract('id') } },
-    { path: 'mitigation/actions/:id/reviews', component: MitigationActionsReviewsListComponent, data: { id: extract('id') } },
-    { path: 'mitigation/actions/:id/conceptual/integration', component: ConceptualIntegrationComponent, data: { id: extract('id') } },
-    { path: 'mitigation/actions/:id/harmonization/integration', component: IngeiHarmonizationComponent, data: { id: extract('id') } },
-    { path: 'mitigation/actions/:id/conceptual/integration/new', component: ConceptualIntegrationNewComponent, data: { id: extract('id') } },
-    { path: 'mitigation/actions/:id/harmonization/proposal/new', component: HarmonizationProposalNewComponent, data: { id: extract('id') } }
+    { path: 'mitigation/actions',
+      component: MitigationActionsListComponent,
+      data: { title: extract('MitigationActions') } },
+    { path: 'mitigation/actions/new',
+      component: MitigationActionsNewComponent, data: { title: extract('New') } },
+    { path: 'mitigation/actions/:id',
+      component: MitigationActionComponent, data: { id: extract('id') } },
+    { path: 'mitigation/actions/:id/edit',
+      component: MitigationActionsUpdateComponent, data: { id: extract('id') } },
+    { path: 'mitigation/actions/:id/reviews/new',
+      component: MitigationActionReviewsNewComponent, data: { id: extract('id') } },
+    { path: 'mitigation/actions/:id/reviews',
+      component: MitigationActionsReviewsListComponent, data: { id: extract('id') } },
+    { path: 'mitigation/actions/:id/conceptual/integration',
+      component: ConceptualIntegrationComponent, data: { id: extract('id') } },
+    { path: 'mitigation/actions/:id/harmonization/integration',
+      component: IngeiHarmonizationComponent,
+      data: { id: extract('id') } },
+    { path: 'mitigation/actions/:id/conceptual/integration/new',
+      component: ConceptualIntegrationNewComponent,
+      data: { id: extract('id') } },
+    { path: 'mitigation/actions/:id/harmonization/proposal/new',
+      component: HarmonizationProposalNewComponent,
+      data: { id: extract('id') } }
   ])
 ];
 

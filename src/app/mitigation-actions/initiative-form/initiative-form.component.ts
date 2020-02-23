@@ -108,7 +108,8 @@ export class InitiativeFormComponent implements OnInit {
         }),
         this.formBuilder.group({
           initiativeFinancingStatusCtrl: [this.mitigationAction.initiative.finance.status.id, Validators.required],
-          initiativeFinancingStatusTypeCtrl: [this.mitigationAction.initiative.finance.finance_source_type.id, Validators.required],
+          initiativeFinancingStatusTypeCtrl: [this.mitigationAction.initiative.finance.finance_source_type.id,
+                                              Validators.required],
           initiatveFinancingSourceCtrl: this.mitigationAction.initiative.finance.source,
           initiativeBudgetCtrl: [this.mitigationAction.initiative.budget, Validators.required],
         }),
@@ -117,7 +118,8 @@ export class InitiativeFormComponent implements OnInit {
           initiativeContactNameCtrl: [this.mitigationAction.initiative.contact.full_name, Validators.required],
           initiativePositionCtrl: [this.mitigationAction.initiative.contact.job_title, Validators.required],
           initiativeEmailFormCtrl: [this.mitigationAction.initiative.contact.email, Validators.email],
-          initiativePhoneCtrl: [this.mitigationAction.initiative.contact.phone, Validators.compose([Validators.required, Validators.minLength(8)])],
+          initiativePhoneCtrl: [this.mitigationAction.initiative.contact.phone,
+                                Validators.compose([Validators.required, Validators.minLength(8)])],
         })
       ])
     });
@@ -158,17 +160,20 @@ export class InitiativeFormComponent implements OnInit {
       context.initiative['id'] = this.mitigationAction.initiative.id;
       context.initiative.contact['id'] = this.mitigationAction.initiative.contact.id;
       context.initiative.finance['id'] = this.mitigationAction.initiative.finance.id;
-      // context['update_existing_mitigation_action'] = true;
-      this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id, this.i18nService.language.split('-')[0])
+      this.service.submitMitigationActionUpdateForm(context,
+                                                    this.mitigationAction.id,
+                                                    this.i18nService.language.split('-')[0])
       .pipe(finalize(() => {
         this.form.markAsPristine();
         this.isLoading = false;
       }))
       .subscribe(response => {
-        this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
+        this.translateService.get('Sucessfully submitted form')
+          .subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
         this.wasSubmittedSuccessfully = true;
       }, error => {
-        this.translateService.get('Error submitting form').subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
+        this.translateService.get('Error submitting form')
+          .subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
         log.debug(`New Mitigation Action Form error: ${error}`);
         this.error = error;
         this.wasSubmittedSuccessfully = false;
@@ -181,10 +186,12 @@ export class InitiativeFormComponent implements OnInit {
         this.isLoading = false;
       }))
       .subscribe(response => {
-        this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
+        this.translateService.get('Sucessfully submitted form')
+          .subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
         this.wasSubmittedSuccessfully = true;
       }, error => {
-        this.translateService.get('Error submitting form').subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
+        this.translateService.get('Error submitting form')
+          .subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
         log.debug(`New Mitigation Action Form error: ${error}`);
         this.error = error;
         this.wasSubmittedSuccessfully = false;
@@ -198,7 +205,7 @@ export class InitiativeFormComponent implements OnInit {
     const insuredSourceTypeId = this.processedNewFormData.finance_status
       .filter(financeSource => financeSource.status === 'Insured' || financeSource.status === 'Asegurado' )
         .map(({ id }) => id);
-    this.displayFinancialSource = $event.value == insuredSourceTypeId;
+    this.displayFinancialSource = $event.value === insuredSourceTypeId;
   }
   
 }
