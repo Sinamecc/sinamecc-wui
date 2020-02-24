@@ -66,7 +66,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
 
   ngOnInit() {
     this.newFormData = this.initFormOptions().pipe(
-      tap((processedNewFormData: MitigationActionNewFormData) => { console.log('PROCESSED NEW FORM DATA', processedNewFormData); this.processedNewFormData = processedNewFormData; })
+      tap((processedNewFormData: MitigationActionNewFormData) => { this.processedNewFormData = processedNewFormData; })
     );
     this.isUpdating = this.action === 'update';
     this.isLinear = !this.isUpdating;

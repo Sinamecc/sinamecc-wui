@@ -121,10 +121,12 @@ export class BasicInformationFormComponent implements OnInit {
       this.isLoading = false;
     }))
     .subscribe(response => {
-      this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+      this.translateService.get('Sucessfully submitted form')
+        .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
       this.wasSubmittedSuccessfully = true;
     }, error => {
-      this.translateService.get('Error submitting form').subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
+      this.translateService.get('Error submitting form')
+      .subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
       log.debug(`New Mitigation Action Form error: ${error}`);
       this.error = error;
       this.wasSubmittedSuccessfully = false;

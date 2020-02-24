@@ -30,7 +30,7 @@ describe('MitigationActionsListComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
       ],
-      declarations: [ MitigationActionsListComponent,GenericButtonComponent,GenericButtonSecondaryComponent,
+      declarations: [ MitigationActionsListComponent, GenericButtonComponent, GenericButtonSecondaryComponent,
         CustomSearchBarComponent ],
       providers: [
         I18nService, MockS3Service,

@@ -220,7 +220,8 @@ export class PpcnUpdateComponent implements OnInit {
           this.formBuilder.group({
             nameCtrl: [ppcn['organization']['name'], Validators.required],
             representativeNameCtrl: [ppcn['organization']['representative_name'], Validators.required],
-            telephoneCtrl: [ppcn['organization']['phone_organization'], Validators.compose([Validators.required, Validators.minLength(8)])],
+            telephoneCtrl: [ppcn['organization']['phone_organization'], 
+                            Validators.compose([Validators.required, Validators.minLength(8)])],
             faxCtrl: [ppcn['organization']['fax'], null],
             postalCodeCtrl: [ppcn['organization']['postal_code'], null],
             addressCtrl: [ppcn['organization']['address'], Validators.required],

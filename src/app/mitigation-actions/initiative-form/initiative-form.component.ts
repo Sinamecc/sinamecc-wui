@@ -66,7 +66,7 @@ export class InitiativeFormComponent implements OnInit {
       formArray: this.formBuilder.array([
         this.formBuilder.group({
           // initiativeRegisterTypeCtrl: ['', Validators.required],
-          initiativeTypeCtrl: ['',Validators.required],
+          initiativeTypeCtrl: ['', Validators.required],
           initiativeNameCtrl: ['', Validators.required],
           entityIniativeResponsibleCtrl: ['', Validators.required],
           initiativeObjectiveCtrl: ['', Validators.required],
@@ -207,5 +207,5 @@ export class InitiativeFormComponent implements OnInit {
         .map(({ id }) => id);
     this.displayFinancialSource = $event.value === insuredSourceTypeId;
   }
-  
+
 }

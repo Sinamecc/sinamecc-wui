@@ -32,12 +32,12 @@ export class ShellComponent implements OnInit {
     return this.authenticationService.credentials;
   }
 
-  showModule(permissions:Permissions,module:string){
-    if(permissions.all){
+  showModule(permissions: Permissions, module: string) {
+    if (permissions.all) {
       return true;
-    }else{
-      return Boolean(permissions[module])
-    } 
+    } else {
+      return Boolean(permissions[module]);
+    }
   }
 
 }

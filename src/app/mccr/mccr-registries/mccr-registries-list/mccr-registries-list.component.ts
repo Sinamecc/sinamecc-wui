@@ -35,14 +35,14 @@ export class MccrRegistriesListComponent implements OnInit {
   report: number;
   error: string;
   isLoading = false;
-  dataSource:MatTableDataSource<MccrRegistry>
+  dataSource: MatTableDataSource<MccrRegistry>;
   currentMccrRegistry: MccrRegistry;
   displayedColumns = ['id', 'fsm_state', 'mitigation', 'files', 'actions'];
 
-  fieldsToSearch:string[][] = [ ['id'], ['mitigation'], 
-                              ['fsm_state'], ['files']]
+  fieldsToSearch: string[][] = [ ['id'], ['mitigation'],
+                              ['fsm_state'], ['files']];
 
-  
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private router: Router,
@@ -54,7 +54,7 @@ export class MccrRegistriesListComponent implements OnInit {
     public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.loadMCCRData()
+    this.loadMCCRData();
   }
 
   getAuthentificationService() {
@@ -116,27 +116,27 @@ export class MccrRegistriesListComponent implements OnInit {
     });
   }
 
-  loadMCCRData(){
-    this.service.mccrRegistries().subscribe((mccrs:MccrRegistry[]) => {
+  loadMCCRData() {
+    this.service.mccrRegistries().subscribe((mccrs: MccrRegistry[]) => {
       const mccrList = mccrs;
       this.dataSource = new MatTableDataSource<MccrRegistry>(mccrList);
-      this.dataSource.paginator = this.paginator
+      this.dataSource.paginator = this.paginator;
     });
   }
 
-  hasPermProvider(){
-    return Boolean(this.authenticationService.credentials.permissions.all || 
-                   this.authenticationService.credentials.permissions.mccr.provider)
+  hasPermProvider() {
+    return Boolean(this.authenticationService.credentials.permissions.all ||
+                   this.authenticationService.credentials.permissions.mccr.provider);
   }
 
-  canChangeState(element:MccrRegistry){
-    if(element.fsm_state !== 'mccr_end'){
+  canChangeState(element: MccrRegistry) {
+    if (element.fsm_state !== 'mccr_end') {
       // is admin
-      if(Boolean(this.authenticationService.credentials.permissions.all) ){
+      if (Boolean(this.authenticationService.credentials.permissions.all) ) {
         return true;
-      }else{
+      } else {
         //It is not a
-        if(!Boolean(this.authenticationService.credentials.permissions.mccr.provider) ){
+        if (!Boolean(this.authenticationService.credentials.permissions.mccr.provider) ) {
           return true;
         }
       }

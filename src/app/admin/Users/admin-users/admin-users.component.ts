@@ -33,9 +33,9 @@ export class UsersDataSource extends DataSource<any> {
 })
 export class AdminUsersComponent implements OnInit {
 
-  displayedColumns = ['username', 'email','is_active','is_provider','is_administrador_dcc','action'];
-  dataSource:MatTableDataSource<User>
-  fieldsToSearch:string[][] = [ ['username'], ['email'] ]
+  displayedColumns = ['username', 'email', 'is_active', 'is_provider', 'is_administrador_dcc', 'action'];
+  dataSource: MatTableDataSource<User>;
+  fieldsToSearch: string[][] = [ ['username'], ['email'] ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -44,7 +44,7 @@ export class AdminUsersComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.loadUsers()
+    this.loadUsers();
   }
 
   openDeleteConfirmationDialog() {
@@ -80,8 +80,8 @@ export class AdminUsersComponent implements OnInit {
     });
   }
 
-  loadUsers(){
-    this.adminService.users().subscribe((users:User[]) => {
+  loadUsers() {
+    this.adminService.users().subscribe((users: User[]) => {
       const usersList = users;
       this.dataSource = new MatTableDataSource<User>(usersList);
       this.dataSource.paginator = this.paginator;

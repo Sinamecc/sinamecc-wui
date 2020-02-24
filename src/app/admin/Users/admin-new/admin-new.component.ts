@@ -304,7 +304,8 @@ export class AdminNewComponent implements OnInit {
       this.isLoading = false;
     }))
     .subscribe(response => {
-      this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+      this.translateService.get('Sucessfully submitted form')
+        .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
       log.debug(`${response.statusCode} status code received from create user `.concat(message));
       this.router.navigate([`/home`], { replaceUrl: true });
 

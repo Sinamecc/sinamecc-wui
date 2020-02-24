@@ -188,7 +188,7 @@ export class PpcnService {
   }
 
   reRoutePpcn(lang: string): Observable < Ppcn[] > {
-    return this.ppcn(lang)
+    return this.ppcn(lang);
   }
 
   geographicLevel(lang: string): Observable<GeographicLevel[]> {

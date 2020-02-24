@@ -24,8 +24,13 @@ export class MccrPocAddDeveloperComponent implements OnInit {
   form: FormGroup;
   id = this.route.snapshot.paramMap.get('id');
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private reportService: MccrPocService,
-    private service: MccrPocService, private router: Router, private translateService: TranslateService, public snackBar: MatSnackBar) {
+  constructor(private route: ActivatedRoute,
+              private formBuilder: FormBuilder,
+              private reportService: MccrPocService,
+              private service: MccrPocService,
+              private router: Router,
+              private translateService: TranslateService,
+              public snackBar: MatSnackBar) {
     this.createForm();
   }
 
@@ -42,7 +47,8 @@ export class MccrPocAddDeveloperComponent implements OnInit {
     }))
     .subscribe(response => {
       this.router.navigate([`/mccr/poc/detail/${this.id}`], { replaceUrl: true });
-      this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+      this.translateService.get('Sucessfully submitted form')
+        .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
       log.debug(`${response.statusCode} status code received from form`);
     }, error => {
       log.debug(`Mccr Registry File error: ${error}`);

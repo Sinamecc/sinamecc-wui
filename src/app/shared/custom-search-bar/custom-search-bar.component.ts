@@ -9,37 +9,37 @@ import { MatTableDataSource } from '@angular/material';
 export class CustomSearchBarComponent implements OnInit {
 
   @Input() table: MatTableDataSource<any>;
-  initialDataSource:any[];
+  initialDataSource: any[];
 
-  @Input() fieldsToSearch:string[][];
+  @Input() fieldsToSearch: string[][];
 
   constructor() { }
 
   ngOnInit() {
   }
-  
-  applyFilter(text:string){
 
-    if(!this.initialDataSource){
+  applyFilter(text: string) {
+
+    if (!this.initialDataSource) {
       this.initialDataSource = this.table.data;
     }
 
-    this.table.data = this.initialDataSource
-    let newArray:any[] = [];
+    this.table.data = this.initialDataSource;
+    let newArray: any[] = [];
 
-    if(!text){
-      newArray = this.initialDataSource
-    }else{
-      let tempFieldToSearch = this.fieldsToSearch;
+    if (!text) {
+      newArray = this.initialDataSource;
+    } else {
+      const tempFieldToSearch = this.fieldsToSearch;
       this.table.data.forEach(function (value) {
-        for(let element of tempFieldToSearch){
-          let actualArray = value
-          for(let object of element){
-            actualArray = actualArray[object]
+        for (const element of tempFieldToSearch) {
+          let actualArray = value;
+          for (const object of element) {
+            actualArray = actualArray[object];
           }
-          let objToSearch = actualArray.toString().trim().toLowerCase();        
-          if(objToSearch.includes(text.trim().toLowerCase())){
-            newArray.push(value)
+          const objToSearch = actualArray.toString().trim().toLowerCase();
+          if (objToSearch.includes(text.trim().toLowerCase())) {
+            newArray.push(value);
             break;
           }
         }

@@ -29,7 +29,7 @@ describe('DownloadProposalComponent', () => {
         FormsModule,
         ReactiveFormsModule,
       ],
-      declarations: [ DownloadProposalComponent,GenericButtonComponent,
+      declarations: [ DownloadProposalComponent, GenericButtonComponent,
         GenericButtonSecondaryComponent ],
       providers: [ I18nService ]
     })

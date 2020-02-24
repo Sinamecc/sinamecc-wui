@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef } from '@an
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
-import { MatPaginator, MatTableDataSource, MatSort, MatSnackBar } from '@angular/material'
+import { MatPaginator, MatTableDataSource, MatSort, MatSnackBar } from '@angular/material';
 
 
 const log = new Logger('Report');
@@ -44,14 +44,14 @@ export class MitigationActionsListComponent implements OnInit {
   version: string = environment.version;
   error: string;
   isLoading = false;
-  dataSource:MatTableDataSource<MitigationAction>
-  canUpdateStatus: boolean = false;
+  dataSource: MatTableDataSource<MitigationAction>;
+  canUpdateStatus = false;
   displayedColumns = ['name', 'strategy_name', 'purpose', 'fsm_state', 'updated', 'created', 'actions'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  fieldsToSearch:string[][] = [ ['name'], ['strategy_name'], 
+  fieldsToSearch: string[][] = [ ['name'], ['strategy_name'],
                               ['purpose'], ['fsm_state'], ['created'],
-                              ['updated'] ]
+                              ['updated'] ];
 
 
   constructor(private router: Router,
@@ -64,7 +64,7 @@ export class MitigationActionsListComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.loadMAData()
+    this.loadMAData();
   }
 
   view(uuid: string) {
@@ -75,11 +75,11 @@ export class MitigationActionsListComponent implements OnInit {
     this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
   }
 
-  loadMAData(){
-    this.service.mitigationActions(this.i18nService.language.split('-')[0]).subscribe((mas:MitigationAction[]) => {
+  loadMAData() {
+    this.service.mitigationActions(this.i18nService.language.split('-')[0]).subscribe((mas: MitigationAction[]) => {
       const maList = mas;
       this.dataSource = new MatTableDataSource<MitigationAction>(maList);
-      this.dataSource.paginator = this.paginator
+      this.dataSource.paginator = this.paginator;
     });
   }
 
@@ -112,7 +112,8 @@ export class MitigationActionsListComponent implements OnInit {
       // here i need to refresh table
       this.isLoading = false;
       this.loadMAData();
-      this.translateService.get('Sucessfully deleted element').subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
+      this.translateService.get('Sucessfully deleted element')
+        .subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
     });
 
   }
@@ -137,19 +138,18 @@ export class MitigationActionsListComponent implements OnInit {
     });
   }
 
-  hasPermProvider(){
-    return Boolean(this.authenticationService.credentials.permissions.all || 
-                   this.authenticationService.credentials.permissions.ma.provider)
+  hasPermProvider() {
+    return Boolean(this.authenticationService.credentials.permissions.all ||
+                   this.authenticationService.credentials.permissions.ma.provider);
   }
 
-  canChangeState(element:MitigationAction){
-    if(element.fsm_state !== 'end'){
+  canChangeState(element: MitigationAction) {
+    if (element.fsm_state !== 'end') {
       // is admin
-      if(Boolean(this.authenticationService.credentials.permissions.all) ){
+      if (Boolean(this.authenticationService.credentials.permissions.all) ) {
         return true;
-      }else{
-        //It is not a
-        if(!Boolean(this.authenticationService.credentials.permissions.ma.provider) ){
+      } else {
+        if (!Boolean(this.authenticationService.credentials.permissions.ma.provider) ) {
           return true;
         }
       }

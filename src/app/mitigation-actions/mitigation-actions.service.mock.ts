@@ -475,8 +475,10 @@ export class MockMitigationActionsService {
   mapRoutesStatuses(uuid: string): StatusRoutesMap[] {
     return [
       { route: `mitigation/actions/${uuid}/edit`, status: 'changes_requested_by_DCC' },
-      { route: `mitigation/actions/${uuid}/harmonization/integration`, status: 'updating_INGEI_changes_proposal' },
-      { route: `mitigation/actions/${uuid}/harmonization/integration`, status: 'updating_INGEI_changes_proposal_by_request_of_DCC_IMN' },
+      { route: `mitigation/actions/${uuid}/harmonization/integration`,
+        status: 'updating_INGEI_changes_proposal' },
+      { route: `mitigation/actions/${uuid}/harmonization/integration`,
+        status: 'updating_INGEI_changes_proposal_by_request_of_DCC_IMN' },
       { route: `mitigation/actions/${uuid}/conceptual/integration`, status: 'implementing_INGEI_changes' },
       // implementing_INGEI_changes
     ];

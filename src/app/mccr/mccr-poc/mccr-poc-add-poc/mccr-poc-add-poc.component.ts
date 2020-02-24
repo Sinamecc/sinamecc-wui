@@ -22,8 +22,13 @@ export class MccrPocAddPocComponent implements OnInit {
   error: string;
   form: FormGroup;
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private reportService: MccrPocService,
-    private service: MccrPocService, private router: Router, private translateService: TranslateService, public snackBar: MatSnackBar) {
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private service: MccrPocService,
+    private router: Router,
+    private translateService: TranslateService,
+    public snackBar: MatSnackBar) {
     this.createForm();
   }
 

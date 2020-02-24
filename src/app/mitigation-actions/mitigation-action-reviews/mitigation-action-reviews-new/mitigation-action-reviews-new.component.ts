@@ -1,15 +1,12 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { finalize, tap } from 'rxjs/operators';
-
+import { tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { MitigationActionNewFormData, GeographicScale, Status, IngeiCompliance, Institution, FinanceSourceType } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { Observable } from 'rxjs/Observable';
-import { MitigationActionReviewNewFormData, ReviewStatus } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
+import { MitigationActionReviewNewFormData } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
 
 const log = new Logger('Report');
 
@@ -53,7 +50,8 @@ export class MitigationActionReviewsNewComponent implements OnInit {
       this.statusses = [];
 
 
-      this.mitigationActionObservable = this.service.getMitigationAction(this.id, this.i18nService.language.split('-')[0])
+      this.mitigationActionObservable = this.service.getMitigationAction(this.id,
+                                                                         this.i18nService.language.split('-')[0])
       .pipe(
         tap((mitigationAction: MitigationAction) => {
           this.mitigationAction = mitigationAction;

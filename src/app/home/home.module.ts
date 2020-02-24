@@ -18,7 +18,7 @@ import { MaterialModule } from '@app/material.module';
     FlexLayoutModule,
     MaterialModule,
     HomeRoutingModule
-    
+
   ],
   declarations: [HomeComponent]
 })

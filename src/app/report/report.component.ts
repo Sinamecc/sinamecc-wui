@@ -26,11 +26,11 @@ export class ReportComponent implements OnInit {
   version: string = environment.version;
   error: string;
   isLoading = false;
-  dataSource:MatTableDataSource<Report>
+  dataSource: MatTableDataSource<Report>;
   displayedColumns = ['name', 'last_active_version', 'created', 'updated', 'versions'];
-  fieldsToSearch:string[][] = [ ['name'], ['last_active_version'],
-                              ['versions'] ]
-  
+  fieldsToSearch: string[][] = [ ['name'], ['last_active_version'],
+                              ['versions'] ];
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
@@ -39,14 +39,14 @@ export class ReportComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-      this.loadReportData()
+      this.loadReportData();
     }
 
-    loadReportData(){
-      this.reportService.reports().subscribe((reports:Report[]) => {
+    loadReportData() {
+      this.reportService.reports().subscribe((reports: Report[]) => {
         const reportList = reports;
         this.dataSource = new MatTableDataSource<Report>(reportList);
-        this.dataSource.paginator = this.paginator
+        this.dataSource.paginator = this.paginator;
       });
     }
 

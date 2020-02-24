@@ -13,22 +13,22 @@ import { AdminPermissionsDetailComponent } from '../admin-permissions-detail/adm
 })
 export class AdminPermissionsComponent implements OnInit {
 
-  displayedColumns = ['name', 'content_type','action'];
-  dataSource:MatTableDataSource<Permissions>
+  displayedColumns = ['name', 'content_type', 'action'];
+  dataSource: MatTableDataSource<Permissions>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  fieldsToSearch:string[][] = [ ['name'], ['content_type'] ]
-  
-  constructor(private adminService:AdminService,public dialog: MatDialog,) { }
+  fieldsToSearch: string[][] = [ ['name'], ['content_type'] ];
+
+  constructor(private adminService: AdminService, public dialog: MatDialog, ) { }
 
   ngOnInit() {
-    this.loadPermissions()
+    this.loadPermissions();
   }
 
-  loadPermissions(){
-    this.adminService.permissions().subscribe((permissions:Permissions[]) => {
+  loadPermissions() {
+    this.adminService.permissions().subscribe((permissions: Permissions[]) => {
       const permissionsList = permissions;
       this.dataSource = new MatTableDataSource<Permissions>(permissionsList);
-      this.dataSource.paginator = this.paginator
+      this.dataSource.paginator = this.paginator;
     });
   }
 

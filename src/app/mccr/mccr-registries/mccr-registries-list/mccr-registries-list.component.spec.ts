@@ -33,8 +33,8 @@ describe('MccrRegistriesListComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
       ],
-      declarations: [ 
-        MccrRegistriesListComponent, 
+      declarations: [
+        MccrRegistriesListComponent,
         LoaderComponent,
         GenericButtonComponent,
         GenericButtonSecondaryComponent,

@@ -36,16 +36,24 @@ export class PpcnListComponent implements OnInit {
   version: string = environment.version;
   error: string;
   isLoading = false;
-  displayedColumns = ['id_ppcn', 'organization_ppcn','request_type','fsm_state', 'required_recognition', 'geographic_level', 'actions'];
-  dataSource:MatTableDataSource<Ppcn>
+  displayedColumns = ['id_ppcn',
+                      'organization_ppcn',
+                      'request_type',
+                      'fsm_state',
+                      'required_recognition',
+                      'geographic_level',
+                      'actions'];
+  dataSource: MatTableDataSource<Ppcn>;
 
-  fieldsToSearch:string[][] = [ ['id'], ['organization','name'], 
-                              ['fsm_state'], ['required_level','level_type'], ['recognition_type','recognition_type'],
-                              ['geographic_level','level'] ]
+  fieldsToSearch: string[][] = [ ['id'], ['organization', 'name'],
+                              ['fsm_state'],
+                              ['required_level', 'level_type'],
+                              ['recognition_type', 'recognition_type'],
+                              ['geographic_level', 'level'] ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  
-  
+
+
   constructor(private router: Router,
     private i18nService: I18nService,
     private service: PpcnService,
@@ -54,19 +62,19 @@ export class PpcnListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadData()
+    this.loadData();
   }
 
-  loadData(){
-    this.service.reRoutePpcn(this.i18nService.language.split('-')[0]).subscribe((ppcns:Ppcn[]) => {
+  loadData() {
+    this.service.reRoutePpcn(this.i18nService.language.split('-')[0]).subscribe((ppcns: Ppcn[]) => {
       const ppcnList = ppcns;
       this.dataSource = new MatTableDataSource<Ppcn>(ppcnList);
-      this.dataSource.paginator = this.paginator
+      this.dataSource.paginator = this.paginator;
     });
   }
 
   view(uuid: string) {
-    console.log(this.dataSource.data)
+    console.log(this.dataSource.data);
     this.router.navigate([`/ppcn/${uuid}`], { replaceUrl: true });
   }
 
@@ -79,13 +87,13 @@ export class PpcnListComponent implements OnInit {
      } );
 
    }
-  
+
   update(uuid: string) {
     this.router.navigate([`ppcn/${uuid}/edit`], { replaceUrl: true });
   }
 
   addReview(uuid: string) {
-    this.dataSource.data.find
+    this.dataSource.data.find;
     const selectedPpcn = this.dataSource.data.find((PPCN) => PPCN.id === uuid);
     const status = selectedPpcn.fsm_state;
 
@@ -122,14 +130,15 @@ export class PpcnListComponent implements OnInit {
     });
   }
 
-  canChangeState(element:Ppcn){
-    if(!(element.fsm_state === 'PPCN_end' || element.fsm_state === 'PPCN_send_recognition_certificate') ){
+  canChangeState(element: Ppcn) {
+    if (!(element.fsm_state === 'PPCN_end' ||
+          element.fsm_state === 'PPCN_send_recognition_certificate') ) {
       // is admin
-      if(Boolean(this.authenticationService.credentials.permissions.all) ){
+      if (Boolean(this.authenticationService.credentials.permissions.all) ) {
         return true;
-      }else{
+      } else {
         //It is not a
-        if(!Boolean(this.authenticationService.credentials.permissions.ppcn.provider) ){
+        if (!Boolean(this.authenticationService.credentials.permissions.ppcn.provider) ) {
           return true;
         }
       }
@@ -138,9 +147,9 @@ export class PpcnListComponent implements OnInit {
   }
 
 
-  hasPermProvider(){
-    return Boolean(this.authenticationService.credentials.permissions.all || 
-                   this.authenticationService.credentials.permissions.ppcn.provider)
+  hasPermProvider() {
+    return Boolean(this.authenticationService.credentials.permissions.all ||
+                   this.authenticationService.credentials.permissions.ppcn.provider);
   }
 
 }
