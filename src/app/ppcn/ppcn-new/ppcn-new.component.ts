@@ -91,6 +91,7 @@ export class PpcnNewComponent implements OnInit {
         this.formBuilder.group({
           nameCtrl: ['', Validators.required],
           representativeNameCtrl: ['', Validators.required],
+          legalID: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
           telephoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
           faxCtrl: '',
           postalCodeCtrl: '',

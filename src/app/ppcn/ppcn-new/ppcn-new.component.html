@@ -26,9 +26,15 @@
             </mat-form-field>
             <br />
 
+            <mat-form-field class="field-ppcn" *ngIf="levelId === 2">
+              <mat-label translate> legal ID</mat-label>
+              <input matInput formControlName="legalID" required>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+            <br />
+
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{levelId==2 ? "Telephone" : "specificLabel.majorTelephone" }} </mat-label>
-
               <input matInput formControlName="telephoneCtrl" required>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
