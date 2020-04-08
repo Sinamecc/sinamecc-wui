@@ -252,9 +252,10 @@
     "cantonDistrictName":"Nombre del Cantón o Distrito",
     "sector":"Sector",
     "subsector":"Subsector",
-    "requestLevel":"Nivel Requerido",
-    "recognitionType":"Tipo de Reconocimiento",
-    "requestType": "Tipo de Solicitud"
+    "requestLevel":"Clasificación de la organización",
+    "recognitionType":"Categoría del reconocimiento",
+    "requestType": "Tipo de Solicitud",
+    "verificationCycleStage":"Etapa del ciclo de verificación"
   },
   
   "specificLabel":{

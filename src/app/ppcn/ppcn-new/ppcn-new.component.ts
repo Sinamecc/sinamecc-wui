@@ -47,6 +47,8 @@ export class PpcnNewComponent implements OnInit {
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
+  reductionFormVar = 0;
+
   values$: any;
   
 
@@ -132,7 +134,7 @@ export class PpcnNewComponent implements OnInit {
           cantonCtrl: (this.levelId=="2"? null:['',Validators.required] ),
           distritoCtrl: (this.levelId=="2"? null:['',Validators.required] ),
           legalRepresentativeIdCtrl: (this.levelId=="2"? null:['',Validators.required] ),
-          ciuuCodeCtrl: (this.levelId=="1"? null:['',Validators.required] ),
+          ciuuCodeCtrl: (this.levelId=="1"? null:[''] ),
           ciuuListCodeCtrl: (this.levelId=="2"? null:['',Validators.required] ),
         }),
         this.formBuilder.group({
@@ -143,8 +145,22 @@ export class PpcnNewComponent implements OnInit {
         }),
         this.formBuilder.group({
           requiredCtrl:['', Validators.required],
+          amountOfEmissions:['', Validators.required],
+          amountInventoryData:['', Validators.required],
+          numberofDacilities:['', Validators.required],
           recognitionCtrl: ['',Validators.required],
-          
+        }),
+        this.formBuilder.group({
+          reductionProjectCtrl:(this.levelId=="2"? null:['',Validators.required] ),
+          reductionActivityCtrl:(this.levelId=="2"? null:['',Validators.required] ),
+          reductionDetailsCtrl:(this.levelId=="2"? null:['',Validators.required] ),
+          reducedEmissionsCtrl:(this.levelId=="2"? null:['',Validators.required] ),
+          investmentReductions:(this.levelId=="2"? null:['',Validators.required] ),
+          investmentReductionsValue:(this.levelId=="2"? null:['',Validators.required] ),
+          totalInvestmentReduction:(this.levelId=="2"? null:['',Validators.required] ),
+          totalInvestmentReductionValue:(this.levelId=="2"? null:['',Validators.required] ),
+          totalEmisionesReducidas :(this.levelId=="2"? null:['',Validators.required] ),
+
         }),
         this.formBuilder.group({
           baseYearCtrl:['', Validators.required],
@@ -172,7 +188,14 @@ export class PpcnNewComponent implements OnInit {
     });
 
   }
-
+  
+  showReductionForm(){
+    const validateList = [2,3,4,5];
+    if(validateList.indexOf(this.reductionFormVar) >= 0){
+      return true;
+    }
+    return false;
+  }
   createActivityForm() : FormGroup{
     return this.formBuilder.group({
       activityCtrl:['',Validators.required],

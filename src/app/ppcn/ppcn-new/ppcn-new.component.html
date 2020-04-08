@@ -174,7 +174,33 @@
               <span translate>geographyLabel.requestLevel</span>
             </ng-template>
             <br>
-            <span translate>geographyLabel.requestLevel</span><br><br>
+            <br />
+            <div *ngIf="levelId=='2'">
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Clasificación-Cantidad de emisiones</mat-label>
+                <input type="number" matInput formControlName="amountOfEmissions" required>
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Clasificación-Cantidad de instalaciones</mat-label>
+                <input type="number" matInput formControlName="numberofDacilities" required>
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Clasificación-Cantidad de datos del inventario</mat-label>
+                <input type="number" matInput formControlName="amountInventoryData" required>
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+
+            </div>
+            <br />
+            <span translate>geographyLabel.verificationCycleStage</span><br><br>
             <mat-radio-group formControlName="requiredCtrl" (change)="onSaving($event)">
                 <mat-radio-button *ngFor="let required_level of required_levels" [value]="required_level.id">
                   {{ required_level.level }}
@@ -184,7 +210,7 @@
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>geographyLabel.recognitionType</mat-label>
-              <mat-select formControlName="recognitionCtrl" [placeholder]="'geographyLabel.recognitionType' | translate">
+              <mat-select (change)="reductionFormVar = $event.value" formControlName="recognitionCtrl" [placeholder]="'geographyLabel.recognitionType' | translate">
                 <mat-option *ngFor="let recognition_type of recognition_types" [value]="recognition_type.id">
                   {{ recognition_type.recognition }}
                 </mat-option>
@@ -197,10 +223,91 @@
               <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
             </div>
             <br />
-
           </mat-step>
+          
+          <div *ngIf="levelId=='2' && showReductionForm()">
+            <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
 
-          <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
+              <ng-template matStepLabel>
+                <span translate>Reducciones</span>
+              </ng-template>
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Proyecto de reducción</mat-label>
+                <input matInput formControlName="reductionProjectCtrl" required>
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Actividad de reducción</mat-label>
+                <input matInput formControlName="reductionActivityCtrl" required>
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+              
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Detalle Reducciones</mat-label>
+                <input matInput formControlName="reductionDetailsCtrl" required>
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Emisiones reducidas <strong>(t CO2e)</strong></mat-label>
+                <input matInput formControlName="reducedEmissionsCtrl" required>
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+              <br />
+
+              <div fxLayout="row">
+
+                <div style="width: 150px;">
+                  <mat-button-toggle-group style="margin-right: 50px;">
+                    <mat-button-toggle value="1">CRC</mat-button-toggle>
+                    <mat-button-toggle value="2">USD</mat-button-toggle>
+                  </mat-button-toggle-group>
+                </div>
+                <mat-form-field style="width: 90%;">
+                  <mat-label translate>Inversión reducciones</mat-label>
+                  <input type="number" matInput formControlName="investmentReductionsValue" required>
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+
+              </div>
+              <br />
+              <div fxLayout="row">
+                <div style="width: 150px;">
+                  <mat-button-toggle-group name="fontStyle" style="margin-right: 50px;">
+                    <mat-button-toggle value="1">CRC</mat-button-toggle>
+                    <mat-button-toggle value="2">USD</mat-button-toggle>
+                  </mat-button-toggle-group>
+                </div>
+                <mat-form-field style="width: 90%;">
+                  <mat-label translate>Inversión Total</mat-label>
+                  <input type="number" matInput formControlName="totalInvestmentReductionValue" required>
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+
+              </div>
+              <br />
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Total de emisiones reducidas<strong>(t CO2e)</strong></mat-label>
+                <input matInput formControlName="totalEmisionesReducidas" required>
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+
+              <div class="box-button">
+                <app-generic-button-secondary (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
+                <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+              </div>
+
+            </mat-step>
+          </div>
+
+          <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
             <ng-template matStepLabel>
               <span translate>specificLabel.GEIInformation</span>
             </ng-template>
@@ -243,14 +350,14 @@
             </div>
           </mat-step>
 
-          <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
+          <mat-step formGroupName="5" [stepControl]="formArray?.get([5])">
             <ng-template matStepLabel>
               <span translate>specificLabel.GEIActivityTypes</span>
             </ng-template>
             <div formArrayName="activities">
-              <div *ngFor="let activity of formGroup.controls.formArray['controls'][4].controls['activities'].controls; let i = index">
+              <div *ngFor="let activity of formGroup.controls.formArray['controls'][5].controls['activities'].controls; let i = index">
                 <!-- row divider show for every nex row exclude if first row -->
-                <mat-divider *ngIf="formGroup.controls.formArray['controls'][4].controls['activities'].controls.length > 1 && i > 0" ></mat-divider><br>
+                <mat-divider *ngIf="formGroup.controls.formArray['controls'][5].controls['activities'].controls.length > 1 && i > 0" ></mat-divider><br>
                 <div [formGroupName]="i">
                   <mat-form-field class="field-ppcn">
                     <mat-label translate>specificLabel.activityCarriedOrganization</mat-label>
@@ -278,7 +385,7 @@
                   </mat-form-field>
                   <br />
                   <!-- row delete button, hidden if there is just one row -->
-                  <button mat-mini-fab color="warn" *ngIf="formGroup.controls.formArray['controls'][4].controls['activities'].controls.length > 1" (click)="deleteItems(i)"
+                  <button mat-mini-fab color="warn" *ngIf="formGroup.controls.formArray['controls'][5].controls['activities'].controls.length > 1" (click)="deleteItems(i)"
                     type="button">
                     <mat-icon>delete forever</mat-icon>
                   </button>
