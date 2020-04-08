@@ -18,10 +18,23 @@
             </mat-form-field>
             <br />
 
+            <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
+              <mat-label translate>Cédula Jurídica</mat-label>
+              <input matInput formControlName="legalIdCtrl" required>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+            <br />
+
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{levelId==2 ? "specificLabel.representativeName" : "specificLabel.majorName" }} </mat-label>
-
               <input matInput formControlName="representativeNameCtrl" required>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
+              <mat-label translate>Cédula Representante Legal</mat-label>
+              <input matInput formControlName="legalRepresentativeIdCtrl" required>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
@@ -33,6 +46,44 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
+            <br />
+
+            <div class="field-ppcn" *ngIf="levelId=='2'">
+              <mat-checkbox >Confidencial</mat-checkbox>
+            </div>
+            <br />
+
+            <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
+              <mat-label translate>Provincia</mat-label>
+              <mat-select formControlName="provinceCtrl" [placeholder]="'Provincia' | translate">
+                <mat-option  value="1">
+                  San josé
+                </mat-option>
+              </mat-select>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
+              <mat-label translate>Cantón</mat-label>
+              <mat-select formControlName="cantonCtrl" [placeholder]="'Cantón' | translate">
+                <mat-option  value="1">
+                  San josé
+                </mat-option>
+              </mat-select>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
+              <mat-label translate>Distrito</mat-label>
+              <mat-select formControlName="distritoCtrl" [placeholder]="'Distrito' | translate">
+                <mat-option  value="1">
+                  San josé
+                </mat-option>
+              </mat-select>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+
             <mat-form-field class="field-ppcn">
               <mat-label translate> info.fax </mat-label>
               <input matInput formControlName="faxCtrl">
@@ -43,13 +94,27 @@
               <input matInput formControlName="postalCodeCtrl">
             </mat-form-field>
             <br />
-            <div *ngIf="levelId==2; then thenBlock"></div>
-            <ng-template #thenBlock>
-              <mat-form-field class="field-ppcn">
-                <mat-label translate> general.CIUUCode </mat-label>
-                <input matInput formControlName="ciuuCodeCtrl">
-              </mat-form-field>
-            </ng-template>
+
+            <mat-form-field class="field-ppcn">
+              <mat-chip-list #chipList>
+                <mat-chip
+                  *ngFor="let code of CIUUCodeList"
+                  [selectable]="selectable"
+                  [removable]="removable"
+                  (removed)="removeCIUUCode(code)">
+                  {{code}}
+                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  [placeholder]="'general.CIUUCode' | translate"
+                  #chipListInput
+                  formControlName="ciuuListCodeCtrl"
+                  [matChipInputFor]="chipList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  (matChipInputTokenEnd)="add($event)">
+              </mat-chip-list>
+
+            </mat-form-field>
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{levelId==2 ? "Address" : "specificLabel.districtCouncilAddress" }}</mat-label>

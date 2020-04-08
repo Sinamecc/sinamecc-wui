@@ -13,6 +13,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { PpcnNewFormData, RequiredLevel, RecognitionType } from 'app/ppcn/ppcn-new-form-data';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { MatChipInputEvent } from '@angular/material';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-ppcn-new',
@@ -39,6 +41,11 @@ export class PpcnNewComponent implements OnInit {
   sectors: Sector[];
   subSectors: SubSector[];
   ovvs: Ovv[];
+
+  CIUUCodeList:string[] = [];
+  selectable = true;
+  removable = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
 
   values$: any;
   
@@ -68,6 +75,31 @@ export class PpcnNewComponent implements OnInit {
 
   }
 
+  removeCIUUCode(code: string): void {
+    const index = this.CIUUCodeList.indexOf(code);
+
+    if (index >= 0) {
+      this.CIUUCodeList.splice(index, 1);
+    }
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.CIUUCodeList.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+    //this.fruitCtrl.setValue(null);
+  }
+
   submitForm(){
     this.isLoading = true;
     
@@ -95,7 +127,13 @@ export class PpcnNewComponent implements OnInit {
           faxCtrl: '',
           postalCodeCtrl: '',
           addressCtrl: ['', Validators.required],
-          ciuuCodeCtrl: (this.levelId=="1"? null:['',Validators.required] )
+          legalIdCtrl: (this.levelId=="2"? null:['',Validators.required] ),
+          provinceCtrl: (this.levelId=="2"? null:['',Validators.required] ),
+          cantonCtrl: (this.levelId=="2"? null:['',Validators.required] ),
+          distritoCtrl: (this.levelId=="2"? null:['',Validators.required] ),
+          legalRepresentativeIdCtrl: (this.levelId=="2"? null:['',Validators.required] ),
+          ciuuCodeCtrl: (this.levelId=="1"? null:['',Validators.required] ),
+          ciuuListCodeCtrl: (this.levelId=="2"? null:['',Validators.required] ),
         }),
         this.formBuilder.group({
           contactNameCtrl: ['', Validators.required],
