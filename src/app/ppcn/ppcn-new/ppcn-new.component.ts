@@ -104,8 +104,9 @@ export class PpcnNewComponent implements OnInit {
 
   submitForm(){
     this.isLoading = true;
-    
-    this.service.submitNewPpcnForm(this.formGroup.value)
+    this.formGroup.controls.formArray['controls'][0]['ciuuListCodeCtrl'] = this.CIUUCodeList
+    console.log(this.formGroup.value)
+   /* this.service.submitNewPpcnForm(this.formGroup.value)
       .pipe(finalize(() => {
         this.formGroup.markAsPristine();
         this.isLoading = false;
@@ -117,6 +118,7 @@ export class PpcnNewComponent implements OnInit {
         log.debug(`New PPCN Form error: ${error}`);
         this.error = error;
       });
+      */
   }
 
   private createForm(){
@@ -163,6 +165,17 @@ export class PpcnNewComponent implements OnInit {
 
         }),
         this.formBuilder.group({
+          compensationScheme:(this.levelId=="2"? null:['',Validators.required] ),
+          projectLocation:(this.levelId=="2"? null:['',Validators.required] ),
+          certificateNumber:(this.levelId=="2"? null:['',Validators.required] ),
+          totalCompensation:(this.levelId=="2"? null:['',Validators.required] ),
+          compensationCost:(this.levelId=="2"? null:['',Validators.required] ),
+          compensationCostValue:(this.levelId=="2"? null:['',Validators.required] ),
+          period:(this.levelId=="2"? null:['',Validators.required] ),
+          totalEmissionsOffsets:(this.levelId=="2"? null:['',Validators.required] ),
+          totalCostCompensation:(this.levelId=="2"? null:['',Validators.required] ),
+        }),
+        this.formBuilder.group({
           baseYearCtrl:['', Validators.required],
           reportYearCtrl:['',Validators.required],
           ovvCtrl:['',Validators.required],
@@ -175,6 +188,16 @@ export class PpcnNewComponent implements OnInit {
         }),   
       ])
     });
+    
+    this.formGroup.controls.formArray['controls'][3].patchValue({
+      'investmentReductions': 'CRC',
+      'totalInvestmentReduction': 'CRC',
+    })
+
+    this.formGroup.controls.formArray['controls'][4].patchValue({
+      'totalCostCompensation': 'CRC',
+      'compensationCost': 'CRC',
+    })
 
     let subsectors = this.service.subsectors('1',this.i18nService.language.split('-')[0]);
     let initialFormData = this.initialFormData();
@@ -188,7 +211,7 @@ export class PpcnNewComponent implements OnInit {
     });
 
   }
-  
+
   showReductionForm(){
     const validateList = [2,3,4,5];
     if(validateList.indexOf(this.reductionFormVar) >= 0){
@@ -196,6 +219,15 @@ export class PpcnNewComponent implements OnInit {
     }
     return false;
   }
+
+  showCompensationsForm(){
+    const validateList = [4,5];
+    if(validateList.indexOf(this.reductionFormVar) >= 0){
+      return true;
+    }
+    return false;
+  }
+
   createActivityForm() : FormGroup{
     return this.formBuilder.group({
       activityCtrl:['',Validators.required],
@@ -203,8 +235,9 @@ export class PpcnNewComponent implements OnInit {
       subSectorCtrl: ['', Validators.required],
     })
   }
+
   addItems(): void {
-    const control = <FormArray>this.formGroup.controls.formArray['controls'][4].controls['activities'];
+    const control = <FormArray>this.formGroup.controls.formArray['controls'][6].controls['activities'];
     control.push(this.createActivityForm());
   }
 
