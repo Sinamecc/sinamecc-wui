@@ -50,7 +50,37 @@ export class PpcnNewComponent implements OnInit {
   reductionFormVar = 0;
 
   values$: any;
-  
+
+  inventaryResultTable = {
+    firstSection : {
+      tableHeaderValues : ['Gases a Reportar','Total','CO<sub>2</sub>','CH<sub>4</sub>','N<sub>2</sub>O','PFC','HFC','SF<sub>6</sub>','NF<sub>3</sub>','HCFC','CFC','Otros Gases'],
+      tableRows : [
+        ['','','','','','','','','','',''],
+        ['','','','','','','','','','',''],
+        ['','','','','','','','','','',''],
+      ]
+    },
+    secondSection :{
+      firsRow : ["En casos de reportar 'Otros Gases' indicar todos los otros gases reportados",'']
+    },
+    thirdSection:{
+      firsRow : ['Emisiones Biogénicas(toneladas CO2 equivalente)	','Total',''],
+      secondRow : ['Alcance 1',''],
+      thirdSection:['Alcance 2','']
+    },
+    fourthSection:{
+      firsRow:['Costo de realización del inventario de GEI (Incluyendo auditurias internas si aplica)','','Moneda',''],
+      secondRow:['Costo del proceso de verificación realizado por el OVV	','','Moneda','']
+    }
+
+  }
+
+  categoryTable = {
+    category:['Categoría de la organización (Según apartado 8 del PPCN 2.0)',''],
+    categoryHeader:['Cantidad de emisiones','cantidad de instalaciones de la organización',
+    'Cantidad de datos del inventario de GEI','Complejidad de las metodologías de cálculo utilizadas'],
+    categoryVaRow:['','','','']
+  }
 
   get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
 
@@ -60,6 +90,7 @@ export class PpcnNewComponent implements OnInit {
     private service: PpcnService) {
       this.createForm();
   }
+
 
   ngOnInit() {
 
@@ -128,6 +159,8 @@ export class PpcnNewComponent implements OnInit {
           nameCtrl: ['', Validators.required],
           representativeNameCtrl: ['', Validators.required],
           telephoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
+          confidentialCtrl:(this.levelId=="2"? null:['',Validators.required] ),
+          confidentialValueCtrl:(this.levelId=="2"? null:[''] ),
           faxCtrl: '',
           postalCodeCtrl: '',
           addressCtrl: ['', Validators.required],
