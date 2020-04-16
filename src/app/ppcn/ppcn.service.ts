@@ -363,10 +363,21 @@ export class PpcnService {
     formData['recognition_type'] = context.formArray[2].recognitionCtrl;
     organization['name'] = context.formArray[0].nameCtrl;
     organization['representative_name'] = context.formArray[0].representativeNameCtrl;
+
+    organization['representative_legal_identification'] = context.formArray[0].legalRepresentativeIdCtrl;
+    organization['legal_identification'] = context.formArray[0].legalIdCtrl;
+    
     organization['phone_organization'] = context.formArray[0].telephoneCtrl;
     organization['postal_code'] = context.formArray[0].postalCodeCtrl;
     organization['fax'] = context.formArray[0].faxCtrl;
-    organization['ciiu'] = context.formArray[0].ciuuCodeCtrl;
+    organization['ciiu_code_list'] = []
+    
+    for(let value of context.formArray[0].ciuuListCodeCtrl){
+      const element = {
+        "ciiu_code": value
+      }
+      organization['ciiu_code_list'].push(element)
+    }
     organization['address'] = context.formArray[0].addressCtrl;
 
     if (contactFormId) {

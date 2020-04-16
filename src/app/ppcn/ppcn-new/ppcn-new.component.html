@@ -126,7 +126,8 @@
                   formControlName="ciuuListCodeCtrl"
                   [matChipInputFor]="chipList"
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                  (matChipInputTokenEnd)="add($event)">
+                  (matChipInputTokenEnd)="add($event)"
+                  required>
               </mat-chip-list>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>

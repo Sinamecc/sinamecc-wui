@@ -135,9 +135,12 @@ export class PpcnNewComponent implements OnInit {
 
   submitForm(){
     this.isLoading = true;
-    this.formGroup.controls.formArray['controls'][0]['ciuuListCodeCtrl'] = this.CIUUCodeList
-    console.log(this.formGroup.value)
-   /* this.service.submitNewPpcnForm(this.formGroup.value)
+
+    this.formGroup.controls.formArray['controls'][0].patchValue({
+      'ciuuListCodeCtrl': this.CIUUCodeList
+    })
+
+   this.service.submitNewPpcnForm(this.formGroup.value)
       .pipe(finalize(() => {
         this.formGroup.markAsPristine();
         this.isLoading = false;
@@ -149,7 +152,6 @@ export class PpcnNewComponent implements OnInit {
         log.debug(`New PPCN Form error: ${error}`);
         this.error = error;
       });
-      */
   }
 
   private createForm(){
@@ -159,18 +161,18 @@ export class PpcnNewComponent implements OnInit {
           nameCtrl: ['', Validators.required],
           representativeNameCtrl: ['', Validators.required],
           telephoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-          confidentialCtrl:(this.levelId=="2"? null:['',Validators.required] ),
-          confidentialValueCtrl:(this.levelId=="2"? null:[''] ),
+          confidentialCtrl:(this.levelId=="1"? null:['',Validators.required] ),
+          confidentialValueCtrl:(this.levelId=="1"? null:[''] ),
           faxCtrl: '',
           postalCodeCtrl: '',
           addressCtrl: ['', Validators.required],
-          legalIdCtrl: (this.levelId=="2"? null:['',Validators.required] ),
-          provinceCtrl: (this.levelId=="2"? null:['',Validators.required] ),
-          cantonCtrl: (this.levelId=="2"? null:['',Validators.required] ),
-          distritoCtrl: (this.levelId=="2"? null:['',Validators.required] ),
-          legalRepresentativeIdCtrl: (this.levelId=="2"? null:['',Validators.required] ),
+          legalIdCtrl: (this.levelId=="1"? null:['',Validators.required] ),
+          provinceCtrl: (this.levelId=="1"? null:['',Validators.required] ),
+          cantonCtrl: (this.levelId=="1"? null:['',Validators.required] ),
+          distritoCtrl: (this.levelId=="1"? null:['',Validators.required] ),
+          legalRepresentativeIdCtrl: (this.levelId=="1"? null:['',Validators.required] ),
           ciuuCodeCtrl: (this.levelId=="1"? null:[''] ),
-          ciuuListCodeCtrl: (this.levelId=="2"? null:['',Validators.required] ),
+          ciuuListCodeCtrl: (this.levelId=="1"? null:['',Validators.required] ),
         }),
         this.formBuilder.group({
           contactNameCtrl: ['', Validators.required],
