@@ -175,7 +175,7 @@ export class PpcnUpdateComponent implements OnInit {
   }
 
   private initFormOptions(): Observable < PpcnNewFormData > {
-    let initialRequiredData = this.initialFormData().pipe(
+    const initialRequiredData = this.initialFormData().pipe(
       tap(ppcnNewFormData => {
         this.isLoading = false;
         this.required_levels = ppcnNewFormData.required_level;

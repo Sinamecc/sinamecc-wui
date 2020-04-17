@@ -4,8 +4,8 @@ import env from '@env/.env';
 export const environment = {
   production: true,
   version: env.npm_package_version,
-  serverUrl: 'http://stage.sinamecc-minae.com:8000/api',
-  mediaUrl: 'http://stage.sinamecc-minae.com',
+  serverUrl: 'http://dev-backend.sinamecc.go.cr/api',
+  carbonUrl: 'http://dev-mccr.sinamecc.go.cr/api',
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',

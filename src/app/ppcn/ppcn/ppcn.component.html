@@ -8,42 +8,42 @@
         <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
       </mat-card-subtitle>
       <div class="container " [hidden]="isLoading">
-        <h3 translate class="text-color">Organization Info</h3>
-        <strong translate>ID:</strong> {{ppcn?.organization?.id}} <br>
-        <strong translate>Name:</strong> {{ppcn?.organization?.name}} <br>
-        <strong translate>Representative Name:</strong> {{ppcn?.organization?.representative_name}} <br>
-        <strong translate>Phone:</strong> {{ppcn?.organization?.phone_organization}} <br>
-        <strong translate>Postal Code:</strong> {{ppcn?.organization?.postal_code}} <br>
-        <strong translate>Fax:</strong> {{ppcn?.organization?.fax}} <br>
-        <strong translate>Address:</strong> {{ppcn?.organization?.address}} <br>
-        <strong translate>CIIU:</strong> {{ppcn?.organization?.ciiu}} <br>
+        <h3 translate class="text-color">specificLabel.organizationInformation</h3>
+        <strong translate>ID</strong>: {{ppcn?.organization?.id}} <br>
+        <strong translate>info.name</strong>: {{ppcn?.organization?.name}} <br>
+        <strong translate>specificLabel.representativeName</strong>: {{ppcn?.organization?.representative_name}} <br>
+        <strong translate>info.phone</strong>: {{ppcn?.organization?.phone_organization}} <br>
+        <strong translate>info.postalCode</strong>: {{ppcn?.organization?.postal_code}} <br>
+        <strong translate>info.fax</strong>: {{ppcn?.organization?.fax}} <br>
+        <strong translate>info.address</strong>: {{ppcn?.organization?.address}} <br>
+        <strong translate>CIIU:</strong>: {{ppcn?.organization?.ciiu}} <br>
         <!--<mat-divider></mat-divider>-->
-        <h3 translate class="text-color">Contact</h3>
-        <strong translate>Contact Name:</strong> {{ppcn?.organization?.contact.full_name}} <br>
-        <strong translate>Contact Position:</strong> {{ppcn?.organization?.contact.job_title}} <br>
-        <strong translate>Contact Phone:</strong> {{ppcn?.organization?.contact.phone}} <br>
-        <strong translate>Contact Email:</strong> {{ppcn?.organization?.contact.email}} <br>
+        <h3 translate class="text-color">{{'info.contact' | translate }}</h3>
+        <strong translate>info.contactName</strong>: {{ppcn?.organization?.contact.full_name}} <br>
+        <strong translate>info.contactPosition</strong>: {{ppcn?.organization?.contact.job_title}} <br>
+        <strong translate>info.contactPhone</strong>: {{ppcn?.organization?.contact.phone}} <br>
+        <strong translate>info.contactEmail</strong>: {{ppcn?.organization?.contact.email}} <br>
         <!--<mat-divider></mat-divider>-->
-        <h3 translate class="text-color">Request Level</h3>
-        <strong translate>Geographic Level:</strong> {{ppcn?.geographic_level?.level}} <br>
-        <strong translate>Required Level:</strong> {{ppcn?.required_level?.level_type}} <br>
-        <strong translate>Recognition Type:</strong> {{ppcn?.recognition_type?.recognition_type}} <br>
+        <h3 translate class="text-color">geographyLabel.requestLevel</h3>
+        <strong translate>geographyLabel.geographicLevel</strong>: {{ppcn?.geographic_level?.level}} <br>
+        <strong translate>geographyLabel.requestLevel</strong>: {{ppcn?.required_level?.level_type}} <br>
+        <strong translate>geographyLabel.recognitionType</strong>: {{ppcn?.recognition_type?.recognition_type}} <br>
         <!--<mat-divider></mat-divider>-->
-        <h3 translate class="text-color">GEI Information</h3>
+        <h3 translate class="text-color">specificLabel.GEIInformation</h3>
         <strong translate>OVV:</strong> {{ppcn?.gei_organization?.ovv?.name}} <br>
         <strong translate>Emission Date:</strong> {{ppcn?.gei_organization?.emission_ovv_date}} <br>
-        <strong translate>Report Year:</strong> {{ppcn?.gei_organization?.report_year}} <br>
-        <strong translate>Base Year:</strong> {{ppcn?.gei_organization?.base_year}} <br>
+        <strong translate>specificLabel.reportYear</strong>: {{ppcn?.gei_organization?.report_year}} <br>
+        <strong translate>specificLabel.baseYear</strong>: {{ppcn?.gei_organization?.base_year}} <br>
         <div *ngFor="let activity of ppcn?.gei_organization?.gei_activity_types">
-          <strong translate>Sector:</strong> {{activity.sector?.name}} <br>
-          <strong translate>Subsector:</strong> {{activity.sub_sector?.name}} <br>
+          <strong translate>geographyLabel.sector</strong>: {{activity.sector?.name}} <br>
+          <strong translate>geographyLabel.subsector</strong>: {{activity.sub_sector?.name}} <br>
           <strong translate>Activity carried out by organization:</strong> {{activity.activity_type}} <br>
         </div>
         <strong translate>Status: </strong> {{ppcn?.fsm_state}}<br>
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">Files</h3>
         <div *ngFor="let file of ppcn?.files">
-          <strong translate>File Name</strong>: {{file.name}} <button mat-icon-button color="primary" (click)="download(file.file)">
+          <strong translate>reportData.fileName</strong>: {{file.name}} <button mat-icon-button color="primary" (click)="download(file.file)">
             <mat-icon color="white">vertical_align_bottom</mat-icon>
           </button>
         </div>

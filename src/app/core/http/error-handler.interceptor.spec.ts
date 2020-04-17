@@ -1,4 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
@@ -8,21 +10,26 @@ describe('ErrorHandlerInterceptor', () => {
   let errorHandlerInterceptor: ErrorHandlerInterceptor;
   let http: HttpClient;
   let httpMock: HttpTestingController;
+  let router: Router;
 
   function createInterceptor() {
-    errorHandlerInterceptor = new ErrorHandlerInterceptor();
+    errorHandlerInterceptor = new ErrorHandlerInterceptor(router);
     return errorHandlerInterceptor;
   }
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes([]),
+      ],
       providers: [{
         provide: HTTP_INTERCEPTORS,
         useFactory: createInterceptor,
         multi: true
       }]
     });
+    router = TestBed.get(Router)
   });
 
   beforeEach(inject([

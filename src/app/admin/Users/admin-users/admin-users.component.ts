@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DataSource } from '@angular/cdk/table';
 import { User } from '../../users';
-import { Observable } from 'rxjs';
 import { AdminService } from '../../admin.service';
-import { MatPaginator, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatPaginator, MatDialog, MatDialogConfig, MatTableDataSource } from '@angular/material';
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
 import { AdminUserDetailComponent } from '../admin-user-detail/admin-user-detail.component';
 
@@ -15,24 +13,23 @@ import { AdminUserDetailComponent } from '../admin-user-detail/admin-user-detail
 export class AdminUsersComponent implements OnInit {
 
   displayedColumns = ['username', 'email','is_active','is_provider','is_administrador_dcc','action'];
-  dataSource = new UsersDataSource(this.adminService);
+  dataSource:MatTableDataSource<User>
+  fieldsToSearch:string[][] = [ ['username'], ['email'] ]
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
- 
 
   constructor(
     private adminService:AdminService,
     public dialog: MatDialog) { }
 
   ngOnInit() {
-    
+    this.loadUsers()
   }
 
   openDeleteConfirmationDialog() {
     const data = {
       title: "Delete User",
-      question: "Are you sure?",
+      question: "general.youSure",
       
     };
     const dialogConfig = new MatDialogConfig();
@@ -58,28 +55,18 @@ export class AdminUsersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.dataSource = new UsersDataSource(this.adminService);
+      this.loadUsers()
+    });
+  }
+
+  loadUsers(){
+    this.adminService.users().subscribe((users:User[]) => {
+      const usersList = users;
+      this.dataSource = new MatTableDataSource<User>(usersList);
+      this.dataSource.paginator = this.paginator
     });
   }
 
 }
 
-export class UsersDataSource extends DataSource<any> {
 
-  users: User[];
-  users$: Observable<User[]>;
-
-  constructor(private adminService:AdminService){
-    super();
-  }
-
-  connect(): Observable<User[]> {
-    this.users$ = this.adminService.users();
-    this.users$.subscribe((ppcns) => {
-      this.users = ppcns;
-    });
-    return this.users$;
-  }
-  disconnect() { }
-
-}

@@ -1,12 +1,14 @@
-<mat-toolbar class="toolbar-title"><div translate class="section-heading">Report Versions</div></mat-toolbar>
+<mat-toolbar class="toolbar-title"><div translate class="section-heading">reportData.reportVersions </div></mat-toolbar>
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
 <div class="box-button">
   <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
   <mat-toolbar>
-   <p [hidden]="isLoading" translate>Name of report file: {{reportFileName | async}}</p>
+    <a mat-fab routerLink="/report" style="margin-right: 10px;">
+      <mat-icon aria-label="Go to Data for Report">undo</mat-icon>
+    </a>
+   <p [hidden]="isLoading" translate><span translate>reportData.reportName</span>:<span>{{reportFileName | async}}</span></p>
   </mat-toolbar>
-  <a mat-button class="mat-raised-button mat-primary" routerLink="/report/{{id}}/versions/new" translate>Add new version</a>
 </div>
 <div class="container mat-elevation-z8 table-sinamecc">
   
@@ -14,13 +16,13 @@
 
     <!-- Report File Id Column -->
     <ng-container matColumnDef="version">
-      <mat-header-cell *matHeaderCellDef translate> Name of Version </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate> reportData.versionName</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.version}} </mat-cell>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="file">
-      <mat-header-cell *matHeaderCellDef translate> File </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate>general.file</mat-header-cell>
       
       <mat-cell *matCellDef="let element"><button mat-icon-button color="primary" (click)="download(element.file)" ><mat-icon color="white">vertical_align_bottom</mat-icon></button></mat-cell>
     </ng-container>
@@ -30,8 +32,8 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
   </div>
+<br>
+
 <div class="box-button">
-<a mat-fab routerLink="/report">
-  <mat-icon aria-label="Go to Data for Report">undo</mat-icon>
-</a>
+  <app-generic-button routerLink="/report/{{id}}/versions/new" name="reportData.newVersion"></app-generic-button>
 </div>

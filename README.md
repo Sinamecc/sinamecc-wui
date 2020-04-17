@@ -42,6 +42,24 @@ reports/                     test and coverage reports
 proxy.conf.js                backend proxy configuration
 ```
 
+# Backend
+
+Please run sinamecc-backend in localhost:8000 and sinamecc-mccr in localhost:8001. The proxy
+will talk to these both apps. By default, any service will talk to sinamecc-backend. If you want
+to talk to sinamecc-mccr, you need to add the following param:
+
+```js
+    const httpOptions = {
+      headers: new HttpHeaders({
+       
+      }),
+      params: {
+        remoteUrl: '/carbonmarket'
+      }
+    };
+```
+The `remoteUrl` param with `/carbonmarket` value will indicate the proxy, the api interceptor and the server rewrite rule to go to carbonmarket url.
+
 # Main tasks
 
 Task automation is based on [NPM scripts](https://docs.npmjs.com/misc/scripts).
@@ -129,3 +147,18 @@ Development, build and quality processes are based on [angular-cli](https://gith
 - [Updating dependencies and tools](docs/updating.md)
 - [Using a backend proxy for development](docs/backend-proxy.md)
 - [Browser routing](docs/routing.md)
+
+
+### Run Unit Tests
+
+You can:
+
+`npm run test -- --sourcemaps=false`
+
+To debug, you can go localhost:9876 and see how tests are executed. You can inspect the console if there are errors
+
+
+To run them once instead of live mode and with code coverage report:
+
+`npm run test -- --sourcemaps=false --no-watch --code-coverage`
+

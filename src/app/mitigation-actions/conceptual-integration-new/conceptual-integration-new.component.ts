@@ -36,17 +36,17 @@ export class ConceptualIntegrationNewComponent implements OnInit {
     private service: MitigationActionsService,
     private i18nService: I18nService) {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.title = "Conceptual Proposal Integration";
-    this.nextRoute = "mitigation/actions";
+    this.title = 'Conceptual Proposal Integration';
+    this.nextRoute = 'mitigation/actions';
     this.formData = new FormData();
-    this.formSubmitRoute = "/v1/mitigations/step/conceptual_proposal";
+    this.formSubmitRoute = '/v1/mitigations/step/conceptual_proposal';
 
     
     
 
     this.mitigationActionObservable = this.service.getMitigationAction(this.id, this.i18nService.language.split('-')[0])
     .pipe(
-      tap((mitigationAction: MitigationAction) => { this.mitigationAction = mitigationAction })
+      tap((mitigationAction: MitigationAction) => { this.mitigationAction = mitigationAction; })
     );
   }
 

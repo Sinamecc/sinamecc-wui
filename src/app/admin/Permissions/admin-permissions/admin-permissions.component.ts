@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { DataSource } from '@angular/cdk/table';
-import { Observable } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminService } from '../../admin.service';
 import { Permissions } from '@app/core/permissions';
-import { MatDialogConfig, MatDialog } from '@angular/material';
+import { MatDialogConfig, MatDialog, MatTableDataSource, MatPaginator } from '@angular/material';
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
-import { AdminPermissionsNewComponent } from '../admin-permissions-new/admin-permissions-new.component';
 import { AdminPermissionsDetailComponent } from '../admin-permissions-detail/admin-permissions-detail.component';
-import { PermissionsDataSource } from '../../Users/tablePermissions';
+
 
 @Component({
   selector: 'app-admin-permissions',
@@ -15,11 +12,24 @@ import { PermissionsDataSource } from '../../Users/tablePermissions';
   styleUrls: ['./admin-permissions.component.scss']
 })
 export class AdminPermissionsComponent implements OnInit {
+
   displayedColumns = ['name', 'content_type','action'];
-  dataSource = new PermissionsDataSource(this.adminService);
+  dataSource:MatTableDataSource<Permissions>
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  fieldsToSearch:string[][] = [ ['name'], ['content_type'] ]
+  
   constructor(private adminService:AdminService,public dialog: MatDialog,) { }
 
   ngOnInit() {
+    this.loadPermissions()
+  }
+
+  loadPermissions(){
+    this.adminService.permissions().subscribe((permissions:Permissions[]) => {
+      const permissionsList = permissions;
+      this.dataSource = new MatTableDataSource<Permissions>(permissionsList);
+      this.dataSource.paginator = this.paginator
+    });
   }
 
   openDeleteConfirmationDialog() {

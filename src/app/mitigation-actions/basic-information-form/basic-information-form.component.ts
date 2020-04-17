@@ -5,11 +5,11 @@ import { finalize, tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { MitigationActionNewFormData, FinanceSourceType } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { MitigationAction } from '../mitigation-action';
 
 const log = new Logger('MitigationAction');
@@ -25,7 +25,7 @@ export class BasicInformationFormComponent implements OnInit {
   error: string;
   form: FormGroup;
   isLoading = false;
-  wasSubmittedSuccessfully:boolean = false;
+  wasSubmittedSuccessfully = false;
   mitigationAction: MitigationAction;
 
   @Input() newFormData: Observable<MitigationActionNewFormData>;

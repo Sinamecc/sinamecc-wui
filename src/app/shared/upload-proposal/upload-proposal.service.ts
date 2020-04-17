@@ -4,14 +4,8 @@ import { HttpClient} from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from '@app/core';
 import { map, catchError } from 'rxjs/operators';
+import { Response } from '@app/shared/response';
 
-export interface Response {
-  // Customize received credentials here
-  statusCode: number;
-  message: string;
-  id?: string;
-
-}
 
 @Injectable()
 export class UploadProposalService {

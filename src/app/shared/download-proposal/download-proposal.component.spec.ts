@@ -1,6 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { DownloadProposalComponent } from '@app/shared/download-proposal/download-proposal.component';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
+import { MaterialModule } from '@app/material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { TranslateModule } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { I18nService } from '@app/core';
+import { GenericButtonSecondaryComponent } from '../generic-button-secondary/generic-button-secondary.component';
+import { GenericButtonComponent } from '../generic-button/generic-button.component';
 
 describe('DownloadProposalComponent', () => {
   let component: DownloadProposalComponent;
@@ -8,7 +19,19 @@ describe('DownloadProposalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DownloadProposalComponent ]
+      imports: [
+        MaterialModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+        HttpClientTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+      ],
+      declarations: [ DownloadProposalComponent,GenericButtonComponent,
+        GenericButtonSecondaryComponent ],
+      providers: [ I18nService ]
     })
     .compileComponents();
   }));

@@ -8,28 +8,41 @@
   <div fxHide.lt-md>
     <a class="brand" href="./home" translate><img src="assets/{{logoName}}"></a>
     
-    <button mat-button [matMenuTriggerFor]="admin" >
+    <button  *ngIf="showModule(permissions,'admin')" mat-button [matMenuTriggerFor]="admin" >
       <span translate>ADMIN</span>
     </button>
     <mat-menu  #admin="matMenu" [overlapTrigger]="false">
-      <button mat-menu-item routerLink="/admin/users" routerLinkActive="active">Users</button>
-      <button  mat-menu-item routerLink="/admin/permissions" routerLinkActive="active">Permissions</button>
-      <button  mat-menu-item routerLink="/admin/groups" routerLinkActive="active">Groups</button>
+      <button mat-menu-item routerLink="/admin/users" routerLinkActive="active"><span translate>admin.users</span></button>
+      <button  mat-menu-item routerLink="/admin/permissions" routerLinkActive="active"><span translate>admin.permissions</span></button>
+      <button  mat-menu-item routerLink="/admin/groups" routerLinkActive="active"><span translate>admin.groups</span></button>
     </mat-menu>
 
-    <button *ngIf="permissions.report_data != undefined" mat-button routerLink="/report" routerLinkActive="active">
+    <button *ngIf="showModule(permissions,'')" mat-button routerLink="/report" routerLinkActive="active">
+      <span translate>reportData.reportsM</span>
+    </button>
+    <button *ngIf="showModule(permissions,'ma')"  mat-button routerLink="/mitigation/actions" routerLinkActive="active">
+      <span translate>mitigationAction.MAt</span>
+    </button>
 
-      <span translate>REPORTS</span>
+    <button mat-button [matMenuTriggerFor]="mccr" >
+      <span translate>MCCR</span>
     </button>
-    <button *ngIf="permissions.mitigation_action != undefined"  mat-button routerLink="/mitigation/actions" routerLinkActive="active">
-      <span translate>MITIGATION ACTIONS</span>
-    </button>
-    <button *ngIf="permissions.mccr != undefined" mat-button routerLink="/mccr/registries" routerLinkActive="active">
-      <span translate>MCCR REGISTRIES</span>
-    </button>
-    <button *ngIf="permissions.ppcn != undefined" mat-button routerLink="/ppcn/registries" routerLinkActive="active">
+    <mat-menu  #mccr="matMenu" [overlapTrigger]="false">
+      <button *ngIf="showModule(permissions,'mccr')" mat-menu-item routerLink="/mccr/registries" routerLinkActive="active">MCCR REGISTRIES</button>
+      <button mat-menu-item routerLink="/mccr/poc" routerLinkActive="active">UCC POC</button>
+    </mat-menu>
+
+    <mat-menu #appMenu="matMenu">
+        <span translate>MCCR</span>
+      <button mat-menu-item>Settings</button>
+      <button mat-menu-item>Help</button>
+    </mat-menu>
+
+    <button *ngIf="showModule(permissions,'ppcn')" mat-button routerLink="/ppcn/registries" routerLinkActive="active">
       <span translate>PPCN</span>
     </button>
+
+
   </div>
   <span fxFlex></span>
   <button mat-icon-button [matMenuTriggerFor]="languageMenu">
@@ -46,10 +59,10 @@
   <mat-menu #userMenu="matMenu">
     <mat-list>
       <mat-list-item>
-        <span translate>Logged in as</span>&nbsp;<b>{{username}}</b>
+        <span translate>credentialsSection.loggedAs</span>&nbsp;<b>{{username}}</b>
       </mat-list-item>
       <mat-divider></mat-divider>
     </mat-list>
-    <button mat-menu-item (click)="logout()" translate>Logout</button>
+    <button mat-menu-item (click)="logout()" translate>credentialsSection.logout</button>
   </mat-menu>
 </mat-toolbar>

@@ -10,8 +10,6 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Ppcn, GeographicLevel, SubSector } from '@app/ppcn/ppcn_registry'
 import { PpcnNewFormData, Ovv } from '@app/ppcn/ppcn-new-form-data';
 import { BehaviorSubject } from 'rxjs';
-import { FormArray, FormGroup } from '@angular/forms';
-import { Contact } from '@app/mitigation-actions/mitigation-action';
 import { PpcnReview } from '@app/ppcn/ppcn-review';
 import { S3File, S3Service } from '@app/core/s3.service';
 import { StatusRoutesMap } from '@app/ppcn/status-routes-map';
@@ -182,11 +180,6 @@ export class PpcnService {
   }
 
   reRoutePpcn(lang: string): Observable < Ppcn[] > {
-    
-    if(this.authenticationService.credentials.is_administrador_dcc){
-      return this.ppcnAll(lang)
-    }
-
     return this.ppcn(lang)
   }
 

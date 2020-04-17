@@ -12,10 +12,27 @@ export class MockAuthenticationService {
     email: 'test@test.com',
     groups: {},
     permissions:{
-      mitigation_action:false,
-      ppcn:false,
-      mccr:false,
-      report_data:false
+      all:{
+        reviewer: false,
+        provider: false,
+        admin: false
+       },
+       ma:{
+        reviewer:false,
+        provider:false
+      },
+      ppcn:{
+          reviewer:false,
+          provider:false
+      },
+      mccr:{
+          reviewer:false,
+          provider:false
+      },
+      report_data:{
+          reviewer:false,
+          provider:false
+      },
     },
     is_administrador_dcc:false
   };
@@ -28,10 +45,27 @@ export class MockAuthenticationService {
       email: 'test@test.com',
       groups: {},
       permissions:{
-        mitigation_action:false,
-        ppcn:false,
-        mccr:false,
-        report_data:false
+        all:{
+          reviewer: false,
+          provider: false,
+          admin: false
+         },
+         ma:{
+          reviewer:false,
+          provider:false
+        },
+        ppcn:{
+            reviewer:false,
+            provider:false
+        },
+        mccr:{
+            reviewer:false,
+            provider:false
+        },
+        report_data:{
+            reviewer:false,
+            provider:false
+        },
       },
       is_administrador_dcc:false
       

@@ -14,6 +14,11 @@ import { UploadProposalComponent } from '@app/shared/upload-proposal/upload-prop
 import { UploadProposalService } from '@app/shared/upload-proposal/upload-proposal.service';
 import { UpdateStatusComponent } from '@app/shared/update-status/update-status.component';
 import { UpdateStatusService } from '@app/shared/update-status/update-status.service';
+import { MockUpdateStatusService } from '@app/shared/update-status/update-status.service.mock';
+import { GenericButtonComponent } from './generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from './generic-button-secondary/generic-button-secondary.component';
+import { CustomSearchBarComponent } from './custom-search-bar/custom-search-bar.component';
+
 @NgModule({
   imports: [
     FlexLayoutModule,
@@ -29,11 +34,15 @@ import { UpdateStatusService } from '@app/shared/update-status/update-status.ser
     ByteFormatPipe,
     DownloadProposalComponent,
     UploadProposalComponent,
-    UpdateStatusComponent
+    UpdateStatusComponent,
+    GenericButtonComponent,
+    GenericButtonSecondaryComponent,
+    CustomSearchBarComponent
   ],
   providers: [
     UploadProposalService,
-    UpdateStatusService
+    UpdateStatusService,
+    MockUpdateStatusService
   ],
   exports: [
     LoaderComponent,
@@ -41,7 +50,10 @@ import { UpdateStatusService } from '@app/shared/update-status/update-status.ser
     ByteFormatPipe,
     DownloadProposalComponent,
     UploadProposalComponent,
-    UpdateStatusComponent
+    UpdateStatusComponent,
+    GenericButtonComponent,
+    GenericButtonSecondaryComponent,
+    CustomSearchBarComponent
   ]
 })
 export class SharedModule { }

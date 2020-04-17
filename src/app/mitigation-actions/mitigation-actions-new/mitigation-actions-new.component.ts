@@ -51,7 +51,7 @@ export class MitigationActionsNewComponent implements OnInit {
     private i18nService: I18nService,
     private service: MitigationActionsService) {
     // this.createForm();
-    this.title = 'Create new mitigation action:';
+    this.title = 'mitigationAction.CreateMA';
     this.action = 'new';
     this.isLinear = true;
   }

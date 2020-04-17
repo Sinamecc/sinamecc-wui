@@ -3,33 +3,29 @@
       <mat-card>
 
             <h3>
-                <mat-card-title class="section-heading" translate>Users</mat-card-title>
+                <mat-card-title class="section-heading" translate>admin.users</mat-card-title>
                 <mat-divider class="divider-custom"></mat-divider>
                 <mat-divider class="divider-custom"></mat-divider>
             </h3>
-
-            <div class="box-button">
-                <a mat-button class="mat-raised-button mat-primary" routerLink="new">
-                  <span translate>Create a new User</span>
-                </a>
-            </div>
-        
+        <br>
+            <app-custom-search-bar  [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar >
+        <br>
         <mat-card-content>
 
             <mat-table  #table [dataSource]="dataSource" >
 
                 <ng-container matColumnDef="username">
-                    <mat-header-cell *matHeaderCellDef translate>User Name</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef translate>{{ 'credentialsSection.username' | translate }}</mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="email">
-                    <mat-header-cell *matHeaderCellDef translate>Email</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef translate>admin.email</mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="is_active">
-                    <mat-header-cell *matHeaderCellDef translate>Active</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef translate>admin.active</mat-header-cell>
                     <mat-cell *matCellDef="let element">
                       <mat-checkbox disabled [checked]="element.is_active"></mat-checkbox>
                     </mat-cell>
@@ -37,7 +33,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="is_provider">
-                    <mat-header-cell *matHeaderCellDef translate>Provider</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef translate>admin.provider</mat-header-cell>
                     <mat-cell *matCellDef="let element">
                         <mat-checkbox disabled [checked]="element.is_provider"></mat-checkbox>
                     </mat-cell>
@@ -51,7 +47,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="action">
-                    <mat-header-cell *matHeaderCellDef translate>Action</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef translate>admin.action </mat-header-cell>
                     <mat-cell *matCellDef="let element"> 
                         <button mat-icon-button color="primary" (click)="openUserDetail(element)"><mat-icon color="white">visibility</mat-icon></button>
                         <button disabled mat-icon-button color="warn" (click)="openDeleteConfirmationDialog()"><mat-icon color="white">delete</mat-icon></button>
@@ -75,4 +71,8 @@
 
 
 
+</div>
+
+<div class="box-button">
+    <app-generic-button routerLink="new" name="admin.createUser"></app-generic-button>
 </div>

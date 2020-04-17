@@ -10,91 +10,72 @@
 
       <form [formGroup]="mainGroup">
         <!-- {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}} -->
-        <mat-horizontal-stepper formArrayName="formArray" [linear]="isLinear">
-  
-          
-            <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
-                <ng-template matStepLabel><span translate>Register Initiatives</span></ng-template>
+        <mat-horizontal-stepper formArrayName="formArray" [linear]="isLinear" #stepper>
+
+           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+                <ng-template matStepLabel><span translate>specificLabel.registerInitiatives</span></ng-template>
                 <app-initiative-form 
                 [newFormData]="newFormData" 
                 [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating"></app-initiative-form>
                 <div class="align-right">
-                  <button  mat-button matStepperNext [disabled]="!initiativeForm.wasSubmittedSuccessfully" class="mat-raised-button mat-primary">
-                    <span translate>Next</span>
-                    <mat-icon color="white">arrow_forward</mat-icon>
-                  </button>
+                  <app-generic-button [disabled]="!initiativeForm.wasSubmittedSuccessfully" (click)="stepper.next();" name="general.next"></app-generic-button>
                 </div>
-              </mat-step>
-  
+          </mat-step>
   
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
-            <ng-template matStepLabel><span translate>Basic Information</span></ng-template>
+            <ng-template matStepLabel><span translate>info.basicInfo</span></ng-template>
             <app-basic-information-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating">
             </app-basic-information-form>
-            <div class="align-right">
-                <button mat-button matStepperNext [disabled]="!basicInfoForm.wasSubmittedSuccessfully" class="mat-raised-button mat-primary">
-                  <span translate>Next</span>
-                  <mat-icon color="white">arrow_forward</mat-icon>
-                </button>
+
+            <div fxLayout="row">
+              <div>
+                <app-generic-button-secondary [disabled]="basicInfoForm.wasSubmittedSuccessfully" type="button" (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
               </div>
-            <div class="align-right">
-              <button type="button" mat-button matStepperPrevious [disabled]="basicInfoForm.wasSubmittedSuccessfully" class="mat-raised-button mat-accent">
-                <mat-icon color="white">arrow_back</mat-icon>
-                <span translate>Back</span>
-              </button>
+              <div>
+                <app-generic-button [disabled]="!basicInfoForm.wasSubmittedSuccessfully" (click)="stepper.next();" name="general.next"></app-generic-button>
+              </div>           
             </div>
   
           </mat-step>
   
-  
-  
-            <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
-                <ng-template matStepLabel><span translate>Key Aspects</span></ng-template>
+          <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
+                <ng-template matStepLabel><span translate>general.keyAspects</span></ng-template>
                 <app-key-aspects-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating">
                 </app-key-aspects-form>
-                <div class="align-right">
-                    <button mat-button matStepperNext [disabled]="!keyAspectsForm.wasSubmittedSuccessfully" class="mat-raised-button mat-primary">
-                      <span translate>Next</span>
-                      <mat-icon color="white">arrow_forward</mat-icon>
-                    </button>
+
+                <div fxLayout="row">
+                  <div>
+                    <app-generic-button-secondary [disabled]="keyAspectsForm.wasSubmittedSuccessfully" type="button" (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
                   </div>
-                <div class="align-right">
-                  <button type="button" mat-button matStepperPrevious [disabled]="keyAspectsForm.wasSubmittedSuccessfully" class="mat-raised-button mat-accent">
-                    <mat-icon color="white">arrow_back</mat-icon>
-                    <span translate>Back</span>
-                  </button>
+                  <div>
+                    <app-generic-button [disabled]="!keyAspectsForm.wasSubmittedSuccessfully"  (click)="stepper.next();" name="general.next"></app-generic-button>
+                  </div>  
                 </div>
-      
-              </mat-step>
-  
+          </mat-step>
   
           <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
-            <ng-template matStepLabel><span translate>Mitigation of Emissions</span></ng-template>
+            <ng-template matStepLabel><span translate>specificLabel.mitigationEmissions</span></ng-template>
             <app-emissions-mitigation-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating">
             </app-emissions-mitigation-form>
-            <div class="align-right">
-                <button mat-button matStepperNext [disabled]="!emissionsMitigationForm.wasSubmittedSuccessfully" class="mat-raised-button mat-primary">
-                  <span translate>Next</span>
-                  <mat-icon color="white">arrow_forward</mat-icon>
-                </button>
+
+            <div fxLayout="row">
+              <div fxLayout="row">
+                <div>
+                  <app-generic-button-secondary [disabled]="emissionsMitigationForm.wasSubmittedSuccessfully" type="button" (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
+                </div>
+                <div>
+                  <app-generic-button (click)="stepper.next();" [disabled]="!emissionsMitigationForm.wasSubmittedSuccessfully"  name="general.next"></app-generic-button>
+                </div>  
               </div>
-            <div class="align-right">
-              <button type="button" mat-button matStepperPrevious [disabled]="emissionsMitigationForm.wasSubmittedSuccessfully" class="mat-raised-button mat-accent">
-                <mat-icon color="white">arrow_back</mat-icon>
-                <span translate>Back</span>
-              </button>
             </div>
-  
+
           </mat-step>
   
           <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
-            <ng-template matStepLabel><span translate> Impact and Implementation</span></ng-template>
+            <ng-template matStepLabel><span translate>specificLabel.impactImplementation</span></ng-template>
             <app-impact-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData" [isUpdating]="isUpdating"> </app-impact-form>
             <div class="align-right">
-              <button type="button" mat-button matStepperPrevious [disabled]="impactForm.wasSubmittedSuccessfully" class="mat-raised-button mat-accent">
-                <mat-icon color="white">arrow_back</mat-icon>
-                <span translate>Back</span>
-              </button>
+              <app-generic-button (click)="stepper.next();" [disabled]="impactForm.wasSubmittedSuccessfully" name="general.next"></app-generic-button>
             </div>
   
           </mat-step>

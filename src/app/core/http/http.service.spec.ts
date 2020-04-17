@@ -6,6 +6,7 @@ import { HttpService } from '@app/core/http/http.service';
 import { HttpCacheService } from '@app/core/http/http-cache.service';
 import { ErrorHandlerInterceptor } from '@app/core/http/error-handler.interceptor';
 import { CacheInterceptor } from '@app/core/http/cache.interceptor';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HttpService', () => {
   let httpCacheService: HttpCacheService;
@@ -14,7 +15,7 @@ describe('HttpService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [
         ErrorHandlerInterceptor,
         CacheInterceptor,

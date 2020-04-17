@@ -26,7 +26,10 @@ export class AdminUserDetailComponent implements OnInit {
   constructor(private adminService:AdminService,
     @Optional() @Inject(MAT_DIALOG_DATA)
     public data: any) { 
-        this.user = data.user;     
+      if(data) {
+        this.user = data.user; 
+      }
+            
     }
 
   ngOnInit() {

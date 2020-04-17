@@ -5,8 +5,8 @@
 
         <h3>
             <mat-card-title translate class="section-heading">
-                <span *ngIf="!edit" translate>Create Permissions</span>
-                <span *ngIf="edit" translate>Edit Permissions</span>
+                <span *ngIf="!edit" translate>admin.createPerm</span>
+                <span *ngIf="edit" translate>admin.editPerm</span>
             </mat-card-title>
             <mat-divider class="divider-custom"></mat-divider>
             <mat-divider class="divider-custom"></mat-divider>
@@ -19,11 +19,11 @@
                 <div fxLayout="column">
 
                     <mat-form-field>
-                        <input type="text" #textbox  [ngModel]="name" formControlName="name" matInput [placeholder]="'Permissions Name' | translate"/>
+                        <input type="text" #textbox  [ngModel]="name" formControlName="name" matInput [placeholder]="'admin.permName' | translate"/>
                     </mat-form-field>
 
                     <mat-form-field>
-                        <mat-label><span translate>Permission Type</span></mat-label>
+                        <mat-label><span translate>admin.permissionType</span></mat-label>
                         <mat-select  #searchType name="search" >
                             <mat-option value="ma">MA</mat-option>
                             <mat-option value="report">Report</mat-option>
@@ -36,12 +36,8 @@
                 </div>
 
                 <div class="box-button">
-                    <button mat-raised-button color="primary" type="submit">
-                        <span *ngIf="!edit" translate>Create Permissions</span>
-                        <span *ngIf="edit" translate>Edit Permissions</span>
-                    </button>
-
-                    
+                    <app-generic-button *ngIf="!edit" type="submit"  name=" admin.createPerm"></app-generic-button>
+                    <app-generic-button *ngIf="edit" type="submit"  name=" admin.editPerm"></app-generic-button>
                 </div>
               
             </form>

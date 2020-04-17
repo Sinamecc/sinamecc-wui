@@ -11,8 +11,11 @@ import { environment } from '@env/environment';
 export class ApiPrefixInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    request = request.clone({ url: environment.serverUrl + request.url.split('/api').pop() });
+    let url = request.params.get('remoteUrl') ? request.params.get('remoteUrl') : environment.serverUrl;
+    request = request.clone({ url: url + request.url.split(url).pop() });
     return next.handle(request);
   }
+
+
 
 }

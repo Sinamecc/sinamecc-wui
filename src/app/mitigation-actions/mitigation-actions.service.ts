@@ -258,7 +258,8 @@ export class MitigationActionsService {
     // return an ErrorObservable with a user-facing error message
     return new ErrorObservable(
       'Something bad happened; please try again later.');
-  };
+  }
+
   public async downloadResource(filePath: string): Promise<S3File> {
     return this.s3.downloadResource(filePath);
   }
