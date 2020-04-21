@@ -366,6 +366,9 @@ export class PpcnService {
 
     organization['representative_legal_identification'] = context.formArray[0].legalRepresentativeIdCtrl;
     organization['legal_identification'] = context.formArray[0].legalIdCtrl;
+
+    organization['confidential'] = context.formArray[0].confidentialCtrl;
+    organization['confidential_fields'] = context.formArray[0].confidentialValueCtrl;
     
     organization['phone_organization'] = context.formArray[0].telephoneCtrl;
     organization['postal_code'] = context.formArray[0].postalCodeCtrl;
