@@ -351,12 +351,16 @@ export class PpcnService {
     let contact = {};
     let geiOrganization = {};
     let geiActivityTypes = {};
-
     this.currentLevelId.subscribe(levelId => formData['geographic_level'] = levelId);
     formData['user'] = String(this.authenticationService.credentials.id);
     if (geographicFormId) {
       formData['geographic_level'] = String(geographicFormId);
     }
+
+    formData['emission_quantity'] = context.formArray[2].amountOfEmissions;
+    formData['buildings_number'] = context.formArray[2].numberofDacilities;
+    formData['data_inventory_quantity'] = context.formArray[2].amountInventoryData;
+
     formData['required_level'] = context.formArray[2].requiredCtrl;
     formData['subsector'] = context.formArray[4].subSectorCtrl;
     formData['sector'] = context.formArray[4].sectorCtrl;
@@ -421,6 +425,7 @@ export class PpcnService {
         formData['gei_activity_types'].push(objectToPush);
       });
     }
+
     return formData;
   }
 
