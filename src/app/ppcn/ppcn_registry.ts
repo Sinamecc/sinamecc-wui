@@ -3,9 +3,8 @@ import { NextState } from '@app/shared/next-state';
 export interface Ppcn {
   id: string;
   geographic_level: GeographicLevel;
-  recognition_type: RecognitionType;
-  required_level: RequiredLevel;
   organization: Organization;
+  organization_classification:organizationClassification;
   contact: Contact;
   base_year: string;
   ovv: Ovv[];
@@ -24,6 +23,29 @@ export interface RequiredLevel
 export interface GeographicLevel {
   id: Number;
   level: string;
+
+}
+
+export interface organizationClassification{
+  emission_quantity:string;
+  buildings_number:string;
+  required_level:RequiredLevel;
+  data_inventory_quantity:string;
+  recognition_type:RecognitionType;
+  reduction:Reduction;
+
+}
+
+export interface Reduction{
+  proyect:string;
+  activity:string;
+  detail_reduction:string;
+  emission:string;
+  total_emission:string;
+  investment:string;
+  investment_currency:string;
+  total_investment:string;
+  total_investment_currency:string;
 
 }
 

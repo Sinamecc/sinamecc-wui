@@ -47,7 +47,6 @@ export class PpcnListComponent implements OnInit {
   }
 
   view(uuid: string) {
-    console.log(this.dataSource.data)
     this.router.navigate([`/ppcn/${uuid}`], { replaceUrl: true });
   }
 
