@@ -26,8 +26,8 @@
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">geographyLabel.requestLevel</h3>
         <strong translate>geographyLabel.geographicLevel</strong>: {{ppcn?.geographic_level?.level}} <br>
-        <strong translate>geographyLabel.requestLevel</strong>: {{ppcn?.required_level?.level_type}} <br>
-        <strong translate>geographyLabel.recognitionType</strong>: {{ppcn?.recognition_type?.recognition_type}} <br>
+        <strong translate>geographyLabel.requestLevel</strong>: {{ppcn?.organization_classification.required_level?.level_type}} <br>
+        <strong translate>geographyLabel.recognitionType</strong>: {{ppcn?.organization_classification.recognition_type?.recognition_type}} <br>
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">specificLabel.GEIInformation</h3>
         <strong translate>OVV:</strong> {{ppcn?.gei_organization?.ovv?.name}} <br>

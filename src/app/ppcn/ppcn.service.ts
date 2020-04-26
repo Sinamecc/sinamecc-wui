@@ -352,6 +352,7 @@ export class PpcnService {
     let geiOrganization = {};
     let geiActivityTypes = {};
     let reduction = {};
+    let carbonOffset = {};
     let organization_classification = {};
 
     this.currentLevelId.subscribe(levelId => formData['geographic_level'] = levelId);
@@ -377,12 +378,6 @@ export class PpcnService {
     organization['fax'] = context.formArray[0].faxCtrl;
     organization['ciiu_code_list'] = [];
 
-    //formData['emission_quantity'] = context.formArray[2].amountOfEmissions;
-    //formData['buildings_number'] = context.formArray[2].numberofDacilities;
-    //formData['data_inventory_quantity'] = context.formArray[2].amountInventoryData;
-    //formData['required_level'] = context.formArray[2].requiredCtrl;
-    //formData['recognition_type'] = context.formArray[2].recognitionCtrl;
-
     // Reduction form section //
     reduction['proyect'] = context.formArray[3].reductionProjectCtrl;
     reduction['activity']= context.formArray[3].reductionActivityCtrl;
@@ -394,12 +389,26 @@ export class PpcnService {
     reduction['total_investment']= context.formArray[3].totalInvestmentReductionValue;
     reduction['total_investment_currency']= context.formArray[3].totalInvestmentReduction;
 
+    // carbon offset form section 
+    carbonOffset['offset_scheme'] = context.formArray[4].compensationScheme;
+    carbonOffset['project_location'] = context.formArray[4].projectLocation;
+    carbonOffset['certificate_identification'] = context.formArray[4].certificateNumber;
+    carbonOffset['total_carbon_offset'] = context.formArray[4].totalCompensation;
+    carbonOffset['offset_cost'] = context.formArray[4].compensationCostValue;
+    carbonOffset['offset_cost_currency'] = context.formArray[4].compensationCost;
+    carbonOffset['period'] = context.formArray[4].period;
+    carbonOffset['total_offset_cost'] = context.formArray[4].totalEmissionsOffsets;
+    carbonOffset['total_offset_cost_currency'] = context.formArray[4].totalCostCompensation;
+
+
+
     organization_classification['required_level'] = context.formArray[2].requiredCtrl;
     organization_classification['recognition_type'] = context.formArray[2].recognitionCtrl;
     organization_classification['emission_quantity'] = context.formArray[2].amountOfEmissions;
     organization_classification['buildings_number'] = context.formArray[2].numberofDacilities;
     organization_classification['data_inventory_quantity'] = context.formArray[2].amountInventoryData;
     organization_classification['reduction'] = reduction;
+    organization_classification['carbon_offset'] = carbonOffset;
 
     formData['organization_classification'] =  organization_classification; 
 

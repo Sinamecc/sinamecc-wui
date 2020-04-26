@@ -398,13 +398,6 @@
               </mat-form-field>
               <br />
 
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>Total emisiones compensaciones <strong>(t CO2e)</strong> </mat-label>
-                <input matInput formControlName="totalEmissionsOffsets" required>
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-              <br />
-
               <br>
               <label>Costo total compensaciones</label>
               <br>
@@ -419,6 +412,12 @@
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
                   </mat-button-toggle-group>
                 </div>
+                <mat-form-field class="field-ppcn">
+                  <mat-label translate>Total emisiones compensaciones <strong>(t CO2e)</strong> </mat-label>
+                  <input matInput formControlName="totalEmissionsOffsets" required>
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+                <br />
               </div>
 
               <br>
