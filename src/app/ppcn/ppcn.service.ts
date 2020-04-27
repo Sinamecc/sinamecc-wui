@@ -361,8 +361,6 @@ export class PpcnService {
       formData['geographic_level'] = String(geographicFormId);
     }
 
-
-
     formData['subsector'] = context.formArray[4].subSectorCtrl;
     formData['sector'] = context.formArray[4].sectorCtrl;
 
@@ -399,8 +397,6 @@ export class PpcnService {
     carbonOffset['period'] = context.formArray[4].period;
     carbonOffset['total_offset_cost'] = context.formArray[4].totalEmissionsOffsets;
     carbonOffset['total_offset_cost_currency'] = context.formArray[4].totalCostCompensation;
-
-
 
     organization_classification['required_level'] = context.formArray[2].requiredCtrl;
     organization_classification['recognition_type'] = context.formArray[2].recognitionCtrl;
