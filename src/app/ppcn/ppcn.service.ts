@@ -377,7 +377,7 @@ export class PpcnService {
     organization['ciiu_code_list'] = [];
 
     // Reduction form section //
-    reduction['proyect'] = context.formArray[3].reductionProjectCtrl;
+    reduction['project'] = context.formArray[3].reductionProjectCtrl;
     reduction['activity']= context.formArray[3].reductionActivityCtrl;
     reduction['detail_reduction']= context.formArray[3].reductionDetailsCtrl;
     reduction['emission']= context.formArray[3].reducedEmissionsCtrl;

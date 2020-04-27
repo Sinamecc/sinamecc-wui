@@ -89,7 +89,7 @@
     
   },
 
-  "general":{
+  "general":{ 
     "district":"Distrito",
     "canton":"Cantón",
     "province":"Provincia",
@@ -263,6 +263,15 @@
     "activityReduction":"Actividad de reducción",
     "reductionProyect":"Proyecto de reducción",
     "reduction":"Reducción",
+    "compensations":"Compensaciones",
+    "compensationScheme":"Esquema compensación",
+    "projectLocation":"Ubicación del proyecto",
+    "certificateNumber":"Número de certificado",
+    "totalCompensation":"Total de Compensaciones",
+    "compensationCost":"Costo de compensaciones",
+    "period":"Período",
+    "totalCostCompensation":"Costo total compensaciones",
+    "totalEmissionsOffsets":"Total emisiones compensaciones",
     "geographicSite":"Sitio Geográfico",
     "geographicScale":"Escala Geográfica",
     "intMarketParticipation":"Participación en el mercado internacional",

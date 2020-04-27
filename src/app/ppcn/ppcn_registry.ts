@@ -12,7 +12,6 @@ export interface Ppcn {
   fsm_state: string;
   next_state: NextState;
   files: Files[];
-
 }
 
 export interface RequiredLevel
@@ -33,7 +32,7 @@ export interface organizationClassification{
   data_inventory_quantity:string;
   recognition_type:RecognitionType;
   reduction:Reduction;
-
+  carbon_offset:Compensation;
 }
 
 export interface Reduction{
@@ -49,6 +48,18 @@ export interface Reduction{
 
 }
 
+export interface Compensation{
+  certificate_identification:string;
+  offset_cost:string;
+  offset_cost_currency:string;
+  offset_scheme:string;
+  period:string;
+  project_location:string;
+  total_carbon_offset:string;
+  total_offset_cost:string;
+  total_offset_cost_currency:string;
+}
+
 export interface RecognitionType{
     id: Number;
     recognition_type: string;
@@ -57,6 +68,10 @@ export interface RecognitionType{
 export interface Organization {
   id: Number;
   name: string;
+  legal_identification:string;
+  representative_legal_identification:string;
+  confidential:string;
+  confidential_fields:string;
   representative_name: string;
   phone_organization: string;
   postal_code: string;

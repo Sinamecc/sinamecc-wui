@@ -332,10 +332,10 @@
             <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
 
               <ng-template matStepLabel>
-                <span translate>Compensaciones</span>
+                <span translate>geographyLabel.compensations</span>
               </ng-template>
               <br>
-              <label>Esquema compensación</label> <br>
+              <label translate>geographyLabel.compensationScheme</label> <br>
               <br>
               <mat-radio-group formControlName="compensationScheme" >
                 <mat-radio-button value="CER">
@@ -351,21 +351,21 @@
               <br>
               <br>
               <mat-form-field class="field-ppcn">
-                <mat-label translate>Ubicación del proyecto</mat-label>
+                <mat-label translate>geographyLabel.projectLocation</mat-label>
                 <input matInput formControlName="projectLocation" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>Número de Certificado</mat-label>
+                <mat-label translate>geographyLabel.certificateNumber</mat-label>
                 <input matInput formControlName="certificateNumber" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>Total de Compensaciones <strong>(t CO2e)</strong></mat-label>
+                <mat-label translate>geographyLabel.totalCompensation<strong>(t CO2e)</strong></mat-label>
                 <input matInput formControlName="totalCompensation" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
@@ -383,7 +383,7 @@
                   </mat-button-toggle-group>
                 </div>
                 <mat-form-field style="width: 90%;">
-                  <mat-label translate>Costo de compensaciones</mat-label>
+                  <mat-label translate>geographyLabel.compensationCost</mat-label>
                   <input type="number" matInput formControlName="compensationCostValue" required>
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
@@ -392,14 +392,14 @@
            
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>Periodo </mat-label>
+                <mat-label translate>geographyLabel.period </mat-label>
                 <input matInput formControlName="period" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <br>
-              <label>Costo total compensaciones</label>
+              <label translate>geographyLabel.totalCostCompensation</label>
               <br>
               <br>
               <div fxLayout="row">
@@ -413,7 +413,7 @@
                   </mat-button-toggle-group>
                 </div>
                 <mat-form-field class="field-ppcn">
-                  <mat-label translate>Total emisiones compensaciones <strong>(t CO2e)</strong> </mat-label>
+                  <mat-label translate>geographyLabel.totalEmissionsOffsets<strong>(t CO2e)</strong> </mat-label>
                   <input matInput formControlName="totalEmissionsOffsets" required>
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>

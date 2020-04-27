@@ -263,6 +263,17 @@
     "activityReduction":"Reduction Activity",
     "reductionProyect":"Reduction proyect",
     "reduction":"Reduction",
+    
+    "compensations":"Compensations",
+    "compensationScheme":"Compensation scheme",
+    "projectLocation":"Project location",
+    "certificateNumber":"Certificate number",
+    "totalCompensation":"Total Compensation",
+    "compensationCost":"Compensation cost",
+    "period":"Period",
+    "totalCostCompensation":"Total cost of compensation",
+    "totalEmissionsOffsets":"Total emissions offsets",
+
     "geographicSite":"Geographic Site",
     "geographicScale":"Geographic Scale",
     "intMarketParticipation":"International Market Participation",

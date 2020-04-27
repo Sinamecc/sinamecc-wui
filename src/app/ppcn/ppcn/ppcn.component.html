@@ -15,7 +15,7 @@
         <strong translate>specificLabel.representativeName</strong>: {{ppcn?.organization?.representative_name}} <br>
         <strong translate>general.legalRepresentativeCertificate</strong>: {{ppcn?.organization?.representative_legal_identification}} <br>
         <strong translate>info.phone</strong>: {{ppcn?.organization?.phone_organization}} <br>
-        <strong translate>general.confidential</strong>: {{ppcn?.confidential}} <span *ngIf="ppcn?.confidential_fields"><span> : </span>{{ppcn?.confidential_fields}}</span><br>
+        <strong translate>general.confidential</strong>: {{ppcn?.organization?.confidential}} <span *ngIf="ppcn?.organization?.confidential_fields"><span> : </span>{{ppcn?.organization?.confidential_fields}}</span><br>
         <strong translate>info.postalCode</strong>: {{ppcn?.organization?.postal_code}} <br>
         <strong translate>info.fax</strong>: {{ppcn?.organization?.fax}} <br>
         <strong translate>info.address</strong>: {{ppcn?.organization?.address}} <br>
@@ -44,6 +44,18 @@
           <strong translate>geographyLabel.investmentReductions</strong>: {{ppcn?.organization_classification?.reduction?.investment}} <br>
           <strong translate>geographyLabel.totalInversion</strong>: {{ppcn?.organization_classification?.reduction?.total_investment}} <br>
           <strong translate>geographyLabel.totalReducedEmissions</strong>: {{ppcn?.organization_classification?.reduction?.total_emission}} <br>
+        </div>
+
+        <div *ngIf="ppcn?.organization_classification?.carbon_offset">
+          <h3 translate class="text-color">geographyLabel.compensations</h3>
+          <strong translate>geographyLabel.compensationScheme</strong>: {{ppcn?.organization_classification?.carbon_offset?.offset_scheme}} <br>
+          <strong translate>geographyLabel.projectLocation</strong>: {{ppcn?.organization_classification?.carbon_offset?.project_location}} <br>
+          <strong translate>geographyLabel.certificateNumber</strong>: {{ppcn?.organization_classification?.carbon_offset?.certificate_identification}} <br>
+          <strong translate>geographyLabel.totalCompensation</strong>: {{ppcn?.organization_classification?.carbon_offset?.total_carbon_offset}} <br>
+          <strong translate>geographyLabel.compensationCost</strong>: {{ppcn?.organization_classification?.carbon_offset?.offset_cost}} <br>
+          <strong translate>geographyLabel.period</strong>: {{ppcn?.organization_classification?.carbon_offset?.period}} <br>
+          <strong translate>geographyLabel.totalEmissionsOffsets</strong>: {{ppcn?.organization_classification?.carbon_offset?.total_offset_cost}} <br>
+
         </div>
 
         <!--<mat-divider></mat-divider>-->
