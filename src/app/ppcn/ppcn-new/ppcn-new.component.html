@@ -170,6 +170,116 @@
               <mat-datepicker #implementationEmissionDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
             <br />
+            <div>
+
+              <br>
+              <label><strong>Resultado del inventario verificado (Toneladas CO2 equivalente)</strong></label>
+              <br>
+              <br>
+              <table class="tg mat-elevation-z2" >
+                <tr>
+                  <th [innerHTML]="header" class="tg-qv16" *ngFor="let header of inventaryResultTable.firstSection.tableHeaderValues"></th>
+                </tr>
+          
+                <tr *ngFor="let row of inventaryResultTable.firstSection.tableRows;index as i">
+                  <td class="tg-qv16" >Alcance {{i + 1}}</td>
+                  <td class="tg-qv16" *ngFor="let field of row">
+                    <input class="customImput" style="height:30px;" type="text" ([value])="field"/>
+                  </td>
+                </tr>
+          
+                <tr>
+                  <td class="tg-qv16">{{inventaryResultTable.secondSection.firsRow[0]}}</td>
+                  <td  class="tg-qv16" colspan="11">
+                    <textarea class="customImput" style="height: 80px;" type="text" ([value])="inventaryResultTable.secondSection.firsRow[1]">
+                    </textarea>
+                  </td>
+                </tr>
+          
+                <tr>
+                  <td class="tg-qv16" rowspan="2">{{inventaryResultTable.thirdSection.firsRow[0]}}</td>
+                  <td class="tg-qv16" rowspan="2">{{inventaryResultTable.thirdSection.firsRow[1]}}</td>
+                  <td class="tg-qv16"  rowspan="2" colspan="3">
+                    <input class="customImput" style="height: 70px;" type="text" ([value])="inventaryResultTable.thirdSection.firsRow[2]"/>
+                  </td>
+                  <td class="tg-qv16">{{inventaryResultTable.thirdSection.secondRow[0]}}</td>
+                  <td class="tg-qv16" colspan="6">
+                    <input class="customImput" style="height: 30px;" type="text" ([value])="inventaryResultTable.thirdSection.secondRow[1]"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tg-qv16">{{inventaryResultTable.thirdSection.thirdSection[0]}}</td>
+                  <td class="tg-qv16"  colspan="6">
+                    <input class="customImput" style="height: 30px;" type="text" ([value])="inventaryResultTable.thirdSection.thirdSection[1]"/>
+                  </td>
+                </tr>
+          
+                <tr>
+                  <td class="tg-qv16" colspan="3">{{inventaryResultTable.fourthSection.firsRow[0]}}</td>
+                  <td class="tg-qv16"  colspan="2">
+                    <input class="customImput" style="height: 50px;" type="text" ([value])="inventaryResultTable.fourthSection.firsRow[1]"/>
+                  </td>
+                  <td class="tg-qv16" colspan="3">{{inventaryResultTable.fourthSection.firsRow[2]}}</td>
+                  <td class="tg-qv16" colspan="4">
+                    <mat-form-field>
+                      <mat-select value="Colón">
+                        <mat-option value="Colón">
+                          Colón
+                        </mat-option>
+                        <mat-option value="Dólar">
+                          Dólar
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tg-qv16" colspan="3">{{inventaryResultTable.fourthSection.secondRow[0]}}</td>
+                  <td class="tg-qv16"  colspan="2">
+                    <input class="customImput" style="height: 50px;" type="text" ([value])="inventaryResultTable.fourthSection.secondRow[1]"/>
+                  </td>
+                  <td class="tg-qv16" colspan="3">{{inventaryResultTable.fourthSection.secondRow[2]}}</td>
+                  <td class="tg-qv16" colspan="4">
+          
+                    <mat-form-field>
+                      <mat-select value="Colón">
+                        <mat-option value="Colón">
+                          Colón
+                        </mat-option>
+                        <mat-option value="Dólar">
+                          Dólar
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+          
+                    
+                  </td>
+                </tr>
+          
+              </table>
+              <br>
+              <br>
+              <label><strong>Categoría de la Organización(A,B,C o D)</strong></label>
+              <br>
+              <br>
+              <table class="tg mat-elevation-z2" >
+                <tr>
+                  <th class="tg-qv16" rowspan="2">{{categoryTable.category[0]}}</th>
+                  <td class="tg-qv16"  rowspan="2">
+                    <input class="customImput" style="height: 50px;width: 90px;" type="text" ([value])="categoryTable.category[1]"/>
+                  </td>
+                  <th *ngFor="let header of categoryTable.categoryHeader" class="tg-qv16">{{header}}</th>
+                </tr>
+                <tr>
+                  <td *ngFor="let row of categoryTable.categoryVaRow"  class="tg-qv16">
+                    <input class="customImput" style="height: 50px;" type="text" ([value])="row"/>
+                  </td>
+                </tr>
+              </table>
+              <br>
+            </div>
+            <br />
+            <br />
 
             <br />
             <div class="box-button">
