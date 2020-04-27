@@ -355,6 +355,9 @@ export class PpcnService {
     let carbonOffset = {};
     let organization_classification = {};
 
+    const validateListReduction = [2,3,4,5];
+    const validateListCompensation = [4,5];
+    
     this.currentLevelId.subscribe(levelId => formData['geographic_level'] = levelId);
     formData['user'] = String(this.authenticationService.credentials.id);
     if (geographicFormId) {
@@ -403,8 +406,9 @@ export class PpcnService {
     organization_classification['emission_quantity'] = context.formArray[2].amountOfEmissions;
     organization_classification['buildings_number'] = context.formArray[2].numberofDacilities;
     organization_classification['data_inventory_quantity'] = context.formArray[2].amountInventoryData;
-    organization_classification['reduction'] = reduction;
-    organization_classification['carbon_offset'] = carbonOffset;
+
+    organization_classification['reduction'] = validateListReduction.indexOf(context.formArray[2].recognitionCtrl) >= 0 ? reduction : null;
+    organization_classification['carbon_offset'] = validateListCompensation.indexOf(context.formArray[2].recognitionCtrl) >= 0 ? carbonOffset : null;
 
     formData['organization_classification'] =  organization_classification; 
 
