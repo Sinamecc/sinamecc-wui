@@ -27,7 +27,7 @@ export class PpcnComponent implements OnInit {
     this.isLoading = true;
     this.service.getPpcn(this.id, this.i18nService.language.split('-')[0])
      .pipe(finalize(() => { this.isLoading = false; }))
-     .subscribe((response: Ppcn) => { this.ppcn = response; });
+     .subscribe((response: Ppcn) => {this.ppcn = response; });
   }
 
   async download(file:string) {

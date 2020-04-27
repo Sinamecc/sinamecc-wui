@@ -90,6 +90,12 @@
   },
 
   "general":{
+    "district":"District",
+    "canton":"Canton",
+    "province":"Province",
+    "partially":"Partially",
+    "legalRepresentativeCertificate":"Legal Representative Certificate",
+    "legalCertificate":"Legal Certificate",
     "lastUpdate": "Last update:",
     "createdAt": "Created At",
     "actions": "Actions",
@@ -139,6 +145,7 @@
   },
 
   "info":{
+    "confidential":"Confidencial",
     "contact":"Contact",
     "contactName":"Contact Name",
     "contactPosition":"Contact Position",
@@ -245,6 +252,17 @@
   },
 
   "geographyLabel":{
+    "ClassificationAmountInventoryData":"Classification - Amount of inventory data",
+    "classificationNumberFacilities":"Classification -Number of facilities",
+    "classificationAmountEmissions":"Classification - Amount of emissions",
+    "totalReducedEmissions":"Total reduced emissions",
+    "totalInversion":"Total inversion",
+    "investmentReductions":"Investment reductions",
+    "reducedEmissions":"Reduced emissions",
+    "detailReduction":"Reduction Detail",
+    "activityReduction":"Reduction Activity",
+    "reductionProyect":"Reduction proyect",
+    "reduction":"Reduction",
     "geographicSite":"Geographic Site",
     "geographicScale":"Geographic Scale",
     "intMarketParticipation":"International Market Participation",
@@ -259,6 +277,7 @@
   },
 
   "specificLabel":{
+    "confidentialParcially":"Indicate the information you do not want to share",
     "entityInstitution":"Entity or Institution",
     "quantitativeObjective":"Quantitative Objective",
     "financeSourceStatus":"Finance Source Status",

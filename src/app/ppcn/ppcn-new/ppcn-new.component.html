@@ -19,7 +19,7 @@
             <br />
 
             <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
-              <mat-label translate>Cédula Jurídica</mat-label>
+              <mat-label translate>general.legalCertificate</mat-label>
               <input matInput formControlName="legalIdCtrl" required>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
@@ -33,7 +33,7 @@
             <br />
 
             <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
-              <mat-label translate>Cédula Representante Legal</mat-label>
+              <mat-label translate>general.legalRepresentativeCertificate</mat-label>
               <input matInput formControlName="legalRepresentativeIdCtrl" required>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
@@ -48,28 +48,28 @@
             <br />
             <br />
 
-            <span translate>Confidencial</span><br><br>
+            <span translate>general.confidential</span><br><br>
             <mat-radio-group value="si" [(ngModel)]="confidential" formControlName="confidentialCtrl">
                 <mat-radio-button value="si">
-                  Si
+                  <span translate>general.yes</span>
                 </mat-radio-button>
                 <mat-radio-button value="no">
-                  No
+                  <span translate>general.no</span>
                 </mat-radio-button>
                 <mat-radio-button value="parcialmente">
-                  Parcialmente
+                  <span translate>general.partially</span>
                 </mat-radio-button>
             </mat-radio-group>
             <br>
-            <mat-form-field class="field-ppcn" *ngIf="confidential == 2">
+            <mat-form-field class="field-ppcn" *ngIf="confidential == 'parcialmente'">
               <br>
-              <mat-label translate>Indique la información que no desea compartir</mat-label>
+              <mat-label translate>specificLabel.confidentialParcially</mat-label>
               <input matInput formControlName="confidentialValueCtrl" >
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
-              <mat-label translate>Provincia</mat-label>
+              <mat-label translate>general.province</mat-label>
               <mat-select formControlName="provinceCtrl" [placeholder]="'Provincia' | translate">
                 <mat-option  value="1">
                   San josé
@@ -79,7 +79,7 @@
             </mat-form-field>
 
             <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
-              <mat-label translate>Cantón</mat-label>
+              <mat-label translate>general.canton</mat-label>
               <mat-select formControlName="cantonCtrl" [placeholder]="'Cantón' | translate">
                 <mat-option  value="1">
                   San josé
@@ -89,7 +89,7 @@
             </mat-form-field>
 
             <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
-              <mat-label translate>Distrito</mat-label>
+              <mat-label translate>general.district</mat-label>
               <mat-select formControlName="distritoCtrl" [placeholder]="'Distrito' | translate">
                 <mat-option  value="1">
                   San josé
@@ -194,21 +194,21 @@
             <div *ngIf="levelId=='2'">
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>Clasificación-Cantidad de emisiones</mat-label>
+                <mat-label translate>geographyLabel.classificationAmountEmissions</mat-label>
                 <input type="number" matInput formControlName="amountOfEmissions" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>Clasificación-Cantidad de instalaciones</mat-label>
+                <mat-label translate>geographyLabel.classificationNumberFacilities</mat-label>
                 <input type="number" matInput formControlName="numberofDacilities" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>Clasificación-Cantidad de datos del inventario</mat-label>
+                <mat-label translate>geographyLabel.ClassificationAmountInventoryData</mat-label>
                 <input type="number" matInput formControlName="amountInventoryData" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
@@ -245,32 +245,32 @@
             <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
 
               <ng-template matStepLabel>
-                <span translate>Reducciones</span>
+                <span translate>geographyLabel.reduction</span>
               </ng-template>
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>Proyecto de reducción</mat-label>
+                <mat-label translate>geographyLabel.reductionProyect</mat-label>
                 <input matInput formControlName="reductionProjectCtrl" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>Actividad de reducción</mat-label>
+                <mat-label translate>geographyLabel.activityReduction</mat-label>
                 <input matInput formControlName="reductionActivityCtrl" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
               
               <mat-form-field class="field-ppcn">
-                <mat-label translate>Detalle Reducciones</mat-label>
+                <mat-label translate>geographyLabel.detailReduction</mat-label>
                 <input matInput formControlName="reductionDetailsCtrl" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>Emisiones reducidas <strong>(t CO2e)</strong></mat-label>
+                <mat-label translate>geographyLabel.reducedEmissions<strong>(t CO2e)</strong></mat-label>
                 <input matInput formControlName="reducedEmissionsCtrl" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
@@ -288,7 +288,7 @@
                   </mat-button-toggle-group>
                 </div>
                 <mat-form-field style="width: 90%;">
-                  <mat-label translate>Inversión reducciones</mat-label>
+                  <mat-label translate>geographyLabel.investmentReductions</mat-label>
                   <input type="number" matInput formControlName="investmentReductionsValue" required>
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
@@ -305,7 +305,7 @@
                   </mat-button-toggle-group>
                 </div>
                 <mat-form-field style="width: 90%;">
-                  <mat-label translate>Inversión Total</mat-label>
+                  <mat-label translate>geographyLabel.totalInversion</mat-label>
                   <input type="number" matInput formControlName="totalInvestmentReductionValue" required>
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
@@ -314,7 +314,7 @@
               <br />
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>Total de emisiones reducidas<strong>(t CO2e)</strong></mat-label>
+                <mat-label translate>geographyLabel.totalReducedEmissions<strong>(t CO2e)</strong></mat-label>
                 <input matInput formControlName="totalEmisionesReducidas" required>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>

@@ -90,6 +90,13 @@
   },
 
   "general":{
+    "district":"Distrito",
+    "canton":"Cantón",
+    "province":"Provincia",
+    "partially":"Parcialmente",
+    "confidential":"Confidencial",
+    "legalRepresentativeCertificate":"Cédula Representante Legal",
+    "legalCertificate":"Cédula jurídica",
     "lastUpdate": "Ultima actualización",
     "createdAt": "Creado en",
     "actions": "Acciones",
@@ -245,6 +252,17 @@
   },
 
   "geographyLabel":{
+    "ClassificationAmountInventoryData":"Clasificación - Cantidad de datos del inventario",
+    "classificationNumberFacilities":"Clasificación - Cantidad de instalaciones",
+    "classificationAmountEmissions":"Clasificación - Cantidad de emisiones",
+    "totalReducedEmissions":"Total de emisiones reducidas",
+    "totalInversion":"Inversión Total",
+    "investmentReductions":"Inversión reducciones",
+    "reducedEmissions":"Emisiones reducidas",
+    "detailReduction":"Detalles de reducción",
+    "activityReduction":"Actividad de reducción",
+    "reductionProyect":"Proyecto de reducción",
+    "reduction":"Reducción",
     "geographicSite":"Sitio Geográfico",
     "geographicScale":"Escala Geográfica",
     "intMarketParticipation":"Participación en el mercado internacional",
@@ -259,6 +277,7 @@
   },
   
   "specificLabel":{
+    "confidentialParcially":"Indique la información que no desea compartir",
     "entityInstitution":"Entidad o Institución",
     "quantitativeObjective":"Objectivo Cuantificable",
     "financeSourceStatus":"Estado de la fuente de financiamiento",

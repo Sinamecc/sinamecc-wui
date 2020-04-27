@@ -11,8 +11,11 @@
         <h3 translate class="text-color">specificLabel.organizationInformation</h3>
         <strong translate>ID</strong>: {{ppcn?.organization?.id}} <br>
         <strong translate>info.name</strong>: {{ppcn?.organization?.name}} <br>
+        <strong translate>general.legalCertificate</strong>: {{ppcn?.organization?.legal_identification}} <br>
         <strong translate>specificLabel.representativeName</strong>: {{ppcn?.organization?.representative_name}} <br>
+        <strong translate>general.legalRepresentativeCertificate</strong>: {{ppcn?.organization?.representative_legal_identification}} <br>
         <strong translate>info.phone</strong>: {{ppcn?.organization?.phone_organization}} <br>
+        <strong translate>general.confidential</strong>: {{ppcn?.confidential}} <span *ngIf="ppcn?.confidential_fields"><span> : </span>{{ppcn?.confidential_fields}}</span><br>
         <strong translate>info.postalCode</strong>: {{ppcn?.organization?.postal_code}} <br>
         <strong translate>info.fax</strong>: {{ppcn?.organization?.fax}} <br>
         <strong translate>info.address</strong>: {{ppcn?.organization?.address}} <br>
@@ -28,6 +31,21 @@
         <strong translate>geographyLabel.geographicLevel</strong>: {{ppcn?.geographic_level?.level}} <br>
         <strong translate>geographyLabel.requestLevel</strong>: {{ppcn?.organization_classification.required_level?.level_type}} <br>
         <strong translate>geographyLabel.recognitionType</strong>: {{ppcn?.organization_classification.recognition_type?.recognition_type}} <br>
+        <strong translate>geographyLabel.classificationAmountEmissions</strong>: {{ppcn?.organization_classification.emission_quantity}} <br>
+        <strong translate>geographyLabel.classificationNumberFacilities</strong>: {{ppcn?.organization_classification.buildings_number}} <br>
+        <strong translate>geographyLabel.ClassificationAmountInventoryData</strong>: {{ppcn?.organization_classification.data_inventory_quantity}} <br>
+        
+        <div *ngIf="ppcn?.organization_classification?.reduction">
+          <h3 translate class="text-color">geographyLabel.reduction</h3>
+          <strong translate>geographyLabel.reductionProyect</strong>: {{ppcn?.organization_classification?.reduction?.detail_reduction}} <br>
+          <strong translate>geographyLabel.activityReduction</strong>: {{ppcn?.organization_classification?.reduction?.activity}} <br>
+          <strong translate>geographyLabel.detailReduction</strong>: {{ppcn?.organization_classification?.reduction?.detail_reduction}} <br>
+          <strong translate>geographyLabel.reducedEmissions</strong>: {{ppcn?.organization_classification?.reduction?.emission}} <br>
+          <strong translate>geographyLabel.investmentReductions</strong>: {{ppcn?.organization_classification?.reduction?.investment}} <br>
+          <strong translate>geographyLabel.totalInversion</strong>: {{ppcn?.organization_classification?.reduction?.total_investment}} <br>
+          <strong translate>geographyLabel.totalReducedEmissions</strong>: {{ppcn?.organization_classification?.reduction?.total_emission}} <br>
+        </div>
+
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">specificLabel.GEIInformation</h3>
         <strong translate>OVV:</strong> {{ppcn?.gei_organization?.ovv?.name}} <br>
