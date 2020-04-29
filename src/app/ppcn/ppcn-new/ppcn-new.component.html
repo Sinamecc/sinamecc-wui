@@ -68,37 +68,6 @@
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
-              <mat-label translate>general.province</mat-label>
-              <mat-select formControlName="provinceCtrl" [placeholder]="'Provincia' | translate">
-                <mat-option  value="1">
-                  San josé
-                </mat-option>
-              </mat-select>
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
-              <mat-label translate>general.canton</mat-label>
-              <mat-select formControlName="cantonCtrl" [placeholder]="'Cantón' | translate">
-                <mat-option  value="1">
-                  San josé
-                </mat-option>
-              </mat-select>
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
-              <mat-label translate>general.district</mat-label>
-              <mat-select formControlName="distritoCtrl" [placeholder]="'Distrito' | translate">
-                <mat-option  value="1">
-                  San josé
-                </mat-option>
-              </mat-select>
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-
-
             <mat-form-field class="field-ppcn">
               <mat-label translate> info.fax </mat-label>
               <input matInput formControlName="faxCtrl">
