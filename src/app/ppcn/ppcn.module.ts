@@ -30,7 +30,6 @@ import { ReviewsListComponent } from './ppcn-reviews/reviews-list/reviews-list.c
     TranslateModule,
     ReactiveFormsModule,
     FormsModule,
-    CoreModule,
     SharedModule,
     FlexLayoutModule,
     MaterialModule,
