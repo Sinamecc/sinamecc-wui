@@ -210,7 +210,7 @@
             <br />
           </mat-step>
           
-          <div *ngIf="levelId=='2' && showReductionForm()">
+          <div *ngIf="levelId=='2' && showRecognitionFormSection([2,3,4,5])">
             <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
 
               <ng-template matStepLabel>
@@ -297,7 +297,7 @@
             </mat-step>
           </div>
 
-          <div *ngIf="levelId=='2' && showCompensationsForm()">
+          <div *ngIf="levelId=='2' && showRecognitionFormSection([4,5])">
             <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
 
               <ng-template matStepLabel>

@@ -7,12 +7,14 @@ import { map, catchError } from 'rxjs/operators';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { Ppcn, GeographicLevel, SubSector } from '@app/ppcn/ppcn_registry'
 import { PpcnNewFormData, Ovv } from '@app/ppcn/ppcn-new-form-data';
 import { BehaviorSubject } from 'rxjs';
 import { PpcnReview } from '@app/ppcn/ppcn-review';
 import { S3File, S3Service } from '@app/core/s3.service';
 import { StatusRoutesMap } from '@app/ppcn/status-routes-map';
+import { Ppcn } from './ppcn_registry';
+import { GeographicLevel } from './interfaces/geographicLevel';
+import { SubSector } from './interfaces/subSector';
 
 const routes = {
   getGeographicLevel: (lang: string) => `/v1/ppcn/geographic/level/${lang}`,

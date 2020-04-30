@@ -8,13 +8,17 @@ import { BehaviorSubject } from 'rxjs';
 const log = new Logger('Report');
 
 import { PpcnService } from '@app/ppcn/ppcn.service';
-import { Ppcn, GeographicLevel, Sector, SubSector, Ovv } from '@app/ppcn/ppcn_registry';
+
 import { Observable } from 'rxjs/Observable';
 
 import { PpcnNewFormData, RequiredLevel, RecognitionType } from 'app/ppcn/ppcn-new-form-data';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { MatChipInputEvent } from '@angular/material';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { Ppcn } from '../ppcn_registry';
+import { Sector } from '../interfaces/sector';
+import { SubSector } from '../interfaces/subSector';
+import { Ovv } from '../interfaces/ovv';
 
 @Component({
   selector: 'app-ppcn-new',
@@ -211,20 +215,8 @@ export class PpcnNewComponent implements OnInit {
 
   }
 
-  showReductionForm(){
-    const validateList = [2,3,4,5];
-    if(validateList.indexOf(this.reductionFormVar) >= 0){
-      return true;
-    }
-    return false;
-  }
-
-  showCompensationsForm(){
-    const validateList = [4,5];
-    if(validateList.indexOf(this.reductionFormVar) >= 0){
-      return true;
-    }
-    return false;
+  showRecognitionFormSection(elementsToShow:number[]){
+    return elementsToShow.indexOf(this.reductionFormVar) >= 0
   }
 
   createActivityForm() : FormGroup{
