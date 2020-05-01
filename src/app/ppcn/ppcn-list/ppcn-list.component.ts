@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatPaginator, MatTableDataSource } from '@angular/material';
 import { Ppcn } from '@app/ppcn/ppcn_registry';
 import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
+import { DataSource } from '@angular/cdk/table';
+import { Observable } from 'rxjs/Observable';
 
 export class PpcnSource extends DataSource<any> {
 
@@ -93,7 +95,6 @@ export class PpcnListComponent implements OnInit {
   }
 
   addReview(uuid: string) {
-    this.dataSource.data.find;
     const selectedPpcn = this.dataSource.data.find((PPCN) => PPCN.id === uuid);
     const status = selectedPpcn.fsm_state;
 
@@ -137,7 +138,6 @@ export class PpcnListComponent implements OnInit {
       if (Boolean(this.authenticationService.credentials.permissions.all) ) {
         return true;
       } else {
-        //It is not a
         if (!Boolean(this.authenticationService.credentials.permissions.ppcn.provider) ) {
           return true;
         }
