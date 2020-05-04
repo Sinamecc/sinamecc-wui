@@ -16,6 +16,25 @@
                     </div>
 
                     <div fxLayout="column">
+                        <div style="margin: 0 auto;">
+                            <div>
+                                <img class="customImage" class="mat-elevation-z3" style="width: 200px;height: 200px;border-radius: 50%;" [src]="imageUrl" width="200" height="200" />
+                            </div><br>
+
+                            <span style="margin-right:5px;margin-top:10px;"
+                                >Upload a image :</span
+                            >
+                            <label for="file-upload" class="custom-file-upload ">
+                                <mat-icon>cloud_upload</mat-icon>
+                            </label>
+                            <input
+                                id="file-upload"
+                                type="file"
+                                accept="image/*"
+                                (change)="uploadImage($event)"
+                            />
+                           
+                        </div>
 
                         <mat-form-field>
                           <input type="text"  [ngModel]="name" matInput formControlName="name" [placeholder]="'info.name' | translate"/>
@@ -76,7 +95,7 @@
         </mat-card>
     
     </mat-tab>
-    <mat-tab label="{{ 'admin.permissions' | translate }}"> 
+    <mat-tab disabled label="{{ 'admin.permissions' | translate }}"> 
         <button mat-icon-button (click)="openDialogPermissions()">
             <mat-icon >visibility</mat-icon>
         </button>
@@ -92,7 +111,7 @@
         </div>
 
     </mat-tab>
-    <mat-tab label="{{ 'admin.groups' | translate }}"> 
+    <mat-tab disabled label="{{ 'admin.groups' | translate }}"> 
 
     <div *ngIf="!edit">
             <button mat-icon-button (click)="openDialogGroups()">

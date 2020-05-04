@@ -13,6 +13,7 @@ export interface Response {
   statusCode: number;
   message: string;
   id?: string;
+  body?:any;
 
 }
 
@@ -29,7 +30,8 @@ const routes = {
   submitGroups:(userName:string) =>`/v1/user/${userName}/group/`,
   users:() => `/v1/user/`,
   user:(userName:string) => `/v1/user/${userName}`,
-  editUser:(userId:string) => `/v1/user/${userId}`
+  editUser:(userId:string) => `/v1/user/${userId}`,
+  submitImage:() => `/v1/user/1/profile_picture/`
 }
 
 @Injectable()
@@ -277,6 +279,32 @@ export class AdminService {
 
   }
 
+  createUserImage(context:any){
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.authenticationService.credentials.token
+      })
+    };
+
+    let formData: FormData = new FormData();
+    formData.append('user',context.user);
+    formData.append('image',context.image);
+
+    return this.httpClient
+        .post(routes.submitImage(), formData, httpOptions)
+        .pipe(
+          map((body: any) => {
+            const response = {
+              statusCode: 200,
+              message: 'Image submitted correctly',
+            };
+            return response;
+          })
+        );
+
+  }
+
   submitUser(context: any): Observable <Response> {
 
     const httpOptions = {
@@ -303,7 +331,8 @@ export class AdminService {
           map((body: any) => {
             const response = {
               statusCode: 200,
-              message: 'Form submitted correctly'
+              message: 'Form submitted correctly',
+              body:body
             };
             return response;
           })

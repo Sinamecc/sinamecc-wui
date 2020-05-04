@@ -6,6 +6,7 @@ import { MatSidenav } from '@angular/material';
 import { AuthenticationService, Credentials} from '@app/core/authentication/authentication.service';
 import { I18nService } from '@app/core/i18n.service';
 import { Permissions } from '@app/core/permissions';
+import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +24,8 @@ export class HeaderComponent implements OnInit {
                 this.logoName = "logo-white-nav.png";
                }
 
-  ngOnInit() { }
+  ngOnInit() { 
+  }
 
   setLanguage(language: string) {
     this.i18nService.language = language;
