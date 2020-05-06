@@ -57,11 +57,11 @@
     <mat-icon>person</mat-icon>
   </button>
   <mat-menu #userMenu="matMenu">
-    <div style="">
+    <div>
       <div fxLayout="row" style="padding: 10px;">
         <div style="text-align: center;">
         <div class="mat-elevation-z2" style="width: 100px;height: 100px;border-radius: 50%;">
-          <img [src]="credential.userPhoto" width="100" height="100" style="border-radius: 50%;">
+          <img [src]="userImage" width="100" height="100" style="border-radius: 50%;">
         </div><br>
         <label  class="mat-h5"><strong>{{credential.username}}</strong></label>
         </div>
@@ -71,9 +71,6 @@
         </div>
       </div>
       <div style="text-align: center; background-color: rgb(243, 243, 243);">
-        <button mat-icon-button>
-          <mat-icon>visibility</mat-icon>
-        </button>
         <button mat-icon-button (click)="logout()" translate>
           <mat-icon>exit_to_app</mat-icon>
         </button>

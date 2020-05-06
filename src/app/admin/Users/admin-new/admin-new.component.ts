@@ -80,14 +80,13 @@ export class AdminNewComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.getPermissions();
-    this.getGroups();
+    //this.getPermissions(); end points actually doesnt work
+    //this.getGroups();
     this.setData();
     
   }
 
   setData(){
-    //falta staff,
     if(this.edit){
       this.name = this.editData.first_name;
       this.lastName = this.editData.last_name;

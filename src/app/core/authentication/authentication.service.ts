@@ -6,7 +6,6 @@ import { HttpHeaders } from '@angular/common/http';
 import { map, catchError, flatMap } from 'rxjs/operators';
 import { viewClassName, createAotCompiler } from '@angular/compiler';
 import { Permissions } from '../permissions';
-import { DomSanitizer } from '@angular/platform-browser';
 
 
 export interface Credentials {
@@ -48,7 +47,7 @@ export class AuthenticationService {
   
   private _credentials: Credentials | null;
   
-  constructor(private httpClient: HttpClient,private sanitizer: DomSanitizer) {
+  constructor(private httpClient: HttpClient) {
     const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
@@ -86,8 +85,7 @@ export class AuthenticationService {
             })
           };
           return this.httpClient.get(routes.userData(context.username), innerHttpOptions).pipe(map((req:any) => {
-            const userPhoto = this.getCurrentPhoto(req.profile_picture)
-            console.log(userPhoto == true)
+          
             const data = {
               fullName: req.first_name + ' ' + req.last_name, 
               username: req.username,
@@ -97,11 +95,8 @@ export class AuthenticationService {
               groups: req.groups,
               permissions:req.available_apps,
               is_administrador_dcc: req.is_administrador_dcc,
-              userPhoto: "assets/default_user_image.png",
+              userPhoto: req.profile_picture,
             };
-            if(userPhoto){
-              this.getUserPhoto(userPhoto.image).subscribe((image: any) =>{ this._credentials.userPhoto = this.sanitizer.bypassSecurityTrustUrl(this.createImageFromBlob(image)); });
-            }
             this.setCredentials(data, context.remember);
             return data;
           }));
@@ -109,9 +104,6 @@ export class AuthenticationService {
       );
   }
 
-  getCurrentPhoto(photoList:any[]){
-    return photoList.find(photo => photo.current == true);
-  }
 
   getUserPhoto(photoUrl:string){
     return this.httpClient.get(photoUrl, {responseType: "blob"}).pipe(
@@ -120,11 +112,6 @@ export class AuthenticationService {
       })
     );
   }
-
-  createImageFromBlob(image: Blob) {
-    return URL.createObjectURL(image)
- }
-
 
   /**
    * Logs out the user and clear credentials.

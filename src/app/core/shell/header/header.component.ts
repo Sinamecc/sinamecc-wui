@@ -1,4 +1,4 @@
-import { Title } from '@angular/platform-browser';
+import { Title, DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material';
@@ -6,7 +6,6 @@ import { MatSidenav } from '@angular/material';
 import { AuthenticationService, Credentials} from '@app/core/authentication/authentication.service';
 import { I18nService } from '@app/core/i18n.service';
 import { Permissions } from '@app/core/permissions';
-import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-header',
@@ -14,17 +13,21 @@ import { of } from 'rxjs/observable/of';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  logoName : string
+  logoName : string;
+  userImage:string | SafeUrl = 'assets/default_user_image.png';
+
   @Input() sidenav: MatSidenav;
 
   constructor(private router: Router,
               private titleService: Title,
               private authenticationService: AuthenticationService,
-              private i18nService: I18nService) {
+              private i18nService: I18nService,
+              private sanitizer: DomSanitizer) {
                 this.logoName = "logo-white-nav.png";
                }
 
   ngOnInit() { 
+    this.getUserPhoto();
   }
 
   setLanguage(language: string) {
@@ -71,5 +74,27 @@ export class HeaderComponent implements OnInit {
       return Boolean(permissions[module])
     } 
   }
+
+  getCurrentPhoto(photoList:any[]){
+    for(let photo of photoList){
+      if(photo.current){
+        return photo;
+      }
+    }
+    return undefined
+  }
+
+  getUserPhoto(){
+    const userPhoto = this.getCurrentPhoto(this.credential.userPhoto)
+    if(userPhoto){
+      this.authenticationService.getUserPhoto(userPhoto.image).subscribe((image: any) =>{ 
+        this.userImage = this.sanitizer.bypassSecurityTrustUrl(this.createImageFromBlob(image)); 
+      });
+    }
+  }
+
+  createImageFromBlob(image: Blob) {
+    return URL.createObjectURL(image)
+ }
 
 }
