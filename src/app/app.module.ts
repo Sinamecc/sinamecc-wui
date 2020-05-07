@@ -36,10 +36,9 @@ import { HomeModule } from './home/home.module';
     MaterialModule,
     CoreModule,
     SharedModule,
-   /* HomeModule,*/
+    HomeModule,
     ReportModule,
     AdminModule,
-    HomeModule,
     MitigationActionsModule,
     MccrRegistriesModule,
     MccrPocModule,
