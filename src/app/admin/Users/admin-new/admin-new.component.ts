@@ -56,6 +56,8 @@ export class AdminNewComponent implements OnInit {
   staff:boolean;
   provider:boolean;
   dcc:boolean;
+  imageUrl:ArrayBuffer | string = "assets/default_user_image.png";
+  imageFile:File;
 
   checkList = [
     {state: false,name:"staff"},
@@ -78,14 +80,13 @@ export class AdminNewComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.getPermissions();
-    this.getGroups();
+    //this.getPermissions(); end points actually doesnt work
+    //this.getGroups();
     this.setData();
     
   }
 
   setData(){
-    //falta staff,
     if(this.edit){
       this.name = this.editData.first_name;
       this.lastName = this.editData.last_name;
@@ -183,8 +184,15 @@ export class AdminNewComponent implements OnInit {
       
       this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
       log.debug(`${response.statusCode} status code received from form`);
-      this.submitUserDetail('permissions',this.perm.listOfPermissions)
-      this.submitUserDetail('groups',this.group.listOfGroups)
+
+      if(this.imageFile){
+        this.submitUserImage(response.body.id)
+      }else{
+        this.router.navigate([`/home`], { replaceUrl: true });
+      }
+      // disabled for fix issues
+      //this.submitUserDetail('permissions',this.perm.listOfPermissions)
+      //this.submitUserDetail('groups',this.group.listOfGroups)
 
     }, error => {
       log.debug(`Create user error: ${error}`);
@@ -229,6 +237,29 @@ export class AdminNewComponent implements OnInit {
     }else{
       this.submitForm();
     }
+  }
+
+  submitUserImage(id:string){
+    this.isLoading = true;
+    let context = {
+      user:id,
+      image:this.imageFile
+    }
+    this.service.createUserImage(context)
+    .pipe(finalize(() => {
+      this.createUserForm.markAsPristine();
+      this.isLoading = false;
+    }))
+    .subscribe(response => {
+      this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+      log.debug(`${response.statusCode} status code received from form`);
+      console.log(response);
+      this.router.navigate([`/home`], { replaceUrl: true });
+
+    }, error => {
+      log.debug(`Create user image error: ${error.error}`);
+      this.error = error.error;
+    });
   }
 
   submitDeleteGroup(list:any[]){
@@ -350,6 +381,17 @@ export class AdminNewComponent implements OnInit {
         value.state = event.checked
       }
     }
+  }
+
+  uploadImage(event: any) {
+    let files = event.target.files;
+    let reader = new FileReader();
+
+    reader.readAsDataURL(files[0]);
+    reader.onload = _event => {
+      this.imageUrl = reader.result;
+      this.imageFile = event.target.files[0];
+    };
   }
 }
 
