@@ -12,7 +12,11 @@
     "usernameRequired": "Usuario es requerido",
     "credentialsError": "Usuario o contraseña incorrecta.",
     "changePass":"Cambiar contraseña",
-    "editUser":"Editar usuario"
+    "editUser":"Editar usuario",
+    "forgottenPassword":"¿Has olvidado tu contraseña?",
+    "forgotPassword":"¿Olvidaste tu contraseña?",
+    "recoveyPassword":"Ingrese su dirección de correo electrónico y le enviaremos un enlace para restablecer su contraseña",
+    "sendLink":"Enviar enlace"
   },
 
   "mitigationAction":{

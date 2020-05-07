@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   error: string;
   loginForm: FormGroup;
   isLoading = false;
+  forgotPassword = false;
 
   constructor(private router: Router,
               private formBuilder: FormBuilder,

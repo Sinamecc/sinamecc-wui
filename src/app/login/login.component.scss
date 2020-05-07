@@ -37,3 +37,50 @@
 .mat-card {
   color: #ffffff;
 }
+
+.custom-option-link{
+  color:white;
+  text-decoration: none;
+  
+}
+
+.custom-option-link:hover{
+  cursor: pointer;
+}
+
+.custom-input{
+  border-radius: 7px;
+  background: transparent; background: #ededed url("../../../node_modules/material-design-icons/communication/1x_web/ic_email_black_18dp.png") no-repeat 9px center;; 
+  border: solid 1px #ccc;
+  padding: 9px 10px 9px 32px; 
+  width: 350px;
+}
+
+.custom-input:focus {
+	background-color: #fff;
+	border-color: rgb(102, 155, 204);
+	-webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
+	-moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
+	box-shadow: 0 0 5px rgba(109,207,246,.5);
+}
+
+.custom-input:focus{
+  outline: none;
+}
+
+.custom-input {
+outline: none;
+}
+
+.recovery-password-section{
+  text-align: center;
+}
+
+.recovery-button{
+  width: 350px;
+}
+
+#recovery-label{
+  color: rgb(216, 216, 216); 
+  text-transform: none;
+}
