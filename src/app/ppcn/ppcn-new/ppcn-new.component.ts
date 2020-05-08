@@ -55,13 +55,13 @@ export class PpcnNewComponent implements OnInit {
       firsRow : ["En casos de reportar 'Otros Gases' indicar todos los otros gases reportados",'']
     },
     thirdSection:{
-      firsRow : ['Emisiones Biogénicas(toneladas CO2 equivalente)	','Total',''],
+      firsRow : ['Emisiones Biogénicas(toneladas CO2 equivalente)	','Total','0'],
       secondRow : ['Alcance 1',''],
       thirdSection:['Alcance 2','']
     },
     fourthSection:{
-      firsRow:['Costo de realización del inventario de GEI (Incluyendo auditurias internas si aplica)','','Moneda','Colón'],
-      secondRow:['Costo del proceso de verificación realizado por el OVV	','','Moneda','Colón']
+      firsRow:['Costo de realización del inventario de GEI (Incluyendo auditurias internas si aplica)','0','Moneda','Colón'],
+      secondRow:['Costo del proceso de verificación realizado por el OVV	','0','Moneda','Colón']
     }
   }
 
