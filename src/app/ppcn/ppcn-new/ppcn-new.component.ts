@@ -39,7 +39,6 @@ export class PpcnNewComponent implements OnInit {
   sectors: Sector[];
   subSectors: SubSector[];
   ovvs: Ovv[];
-
   values$: any;
   
 
@@ -47,9 +46,9 @@ export class PpcnNewComponent implements OnInit {
     firstSection : {
       tableHeaderValues : ['Gases a Reportar','Total','CO<sub>2</sub>','CH<sub>4</sub>','N<sub>2</sub>O','PFC','HFC','SF<sub>6</sub>','NF<sub>3</sub>','HCFC','CFC','Otros Gases'],
       tableRows : [
-        ['','','','','','','','','','',''],
-        ['','','','','','','','','','',''],
-        ['','','','','','','','','','',''],
+        [{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'}],
+        [{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'}],
+        [{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'}],
       ]
     },
     secondSection :{
@@ -61,10 +60,9 @@ export class PpcnNewComponent implements OnInit {
       thirdSection:['Alcance 2','']
     },
     fourthSection:{
-      firsRow:['Costo de realización del inventario de GEI (Incluyendo auditurias internas si aplica)','','Moneda',''],
-      secondRow:['Costo del proceso de verificación realizado por el OVV	','','Moneda','']
+      firsRow:['Costo de realización del inventario de GEI (Incluyendo auditurias internas si aplica)','','Moneda','Colón'],
+      secondRow:['Costo del proceso de verificación realizado por el OVV	','','Moneda','Colón']
     }
-
   }
 
   categoryTable = {
@@ -101,7 +99,8 @@ export class PpcnNewComponent implements OnInit {
 
   submitForm(){
     this.isLoading = true;
-    
+    this.buildTableSection();
+    /*
     this.service.submitNewPpcnForm(this.formGroup.value)
       .pipe(finalize(() => {
         this.formGroup.markAsPristine();
@@ -114,6 +113,7 @@ export class PpcnNewComponent implements OnInit {
         log.debug(`New PPCN Form error: ${error}`);
         this.error = error;
       });
+      */
   }
 
   private createForm(){
@@ -193,5 +193,55 @@ export class PpcnNewComponent implements OnInit {
     return this.service.newPpcnFormData(this.levelId, this.i18nService.language.split('-')[0])
     .pipe(finalize(() => { this.isLoading = false; }));
   }
+
+  buildTableSection(){
+    let gasReport = {};
+    let biogenic_emission = {};
+    let gas_scopes = {};
+
+    gasReport['other_gases'] = this.inventaryResultTable.secondSection.firsRow[1];
+
+    biogenic_emission['total'] = this.inventaryResultTable.thirdSection.firsRow[2];
+    biogenic_emission['scope_1'] = this.inventaryResultTable.thirdSection.secondRow[1];
+    biogenic_emission['scope_2'] = this.inventaryResultTable.thirdSection.thirdSection[1];
+
+    gasReport['biogenic_emission'] = biogenic_emission
+
+    gasReport['cost_ghg_inventory'] = this.inventaryResultTable.fourthSection.firsRow[1];
+    gasReport['cost_ghg_inventory_currency'] = this.inventaryResultTable.fourthSection.firsRow[3];
+    gasReport['cost_ovv_process'] = this.inventaryResultTable.fourthSection.secondRow[1];
+    gasReport['cost_ovv_process_currency'] = this.inventaryResultTable.fourthSection.secondRow[3];
+
+    gasReport['gas_scopes'] = this.buildScopeMatrixTable();
+
+    console.log(this.inventaryResultTable);
+    console.log(gasReport);
+  }
+
+  buildScopeMatrixTable(){
+    let gasScopes = []
+    let i = 0
+    for(let row of this.inventaryResultTable.firstSection.tableRows){
+      let j = 0
+      let scope = {}
+      let quantifiedGases = []
+      scope['name'] = `scope_${i+1}`
+      for(let column of row){
+        let gas = {
+          name:this.inventaryResultTable.firstSection.tableHeaderValues[j].replace('<sub>','').replace('</sub>',''),
+          value:column.value,
+        }
+        j += 1;
+        quantifiedGases.push(gas);
+      }
+      scope['quantified_gases'] = quantifiedGases;
+      gasScopes.push(scope);
+      i +=1 ;
+    }
+
+    return gasScopes;
+  }
+
+
 
 }

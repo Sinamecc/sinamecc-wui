@@ -169,6 +169,7 @@
               <mat-datepicker-toggle matSuffix [for]="implementationEmissionDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationEmissionDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
+
             <br />
             <div>
 
@@ -183,15 +184,15 @@
           
                 <tr *ngFor="let row of inventaryResultTable.firstSection.tableRows;index as i">
                   <td class="tg-qv16" >Alcance {{i + 1}}</td>
-                  <td class="tg-qv16" *ngFor="let field of row">
-                    <input class="customImput" style="height:30px;" type="text" ([value])="field"/>
+                  <td class="tg-qv16" *ngFor="let field of row; index as j">
+                    <input type="number" matInput class="customImput" style="height:30px;" [(value)]="field.value" (change)="inventaryResultTable.firstSection.tableRows[i][j].value = $event.target.value"/>
                   </td>
                 </tr>
           
                 <tr>
                   <td class="tg-qv16">{{inventaryResultTable.secondSection.firsRow[0]}}</td>
                   <td  class="tg-qv16" colspan="11">
-                    <textarea class="customImput" style="height: 80px;" type="text" ([value])="inventaryResultTable.secondSection.firsRow[1]">
+                    <textarea class="customImput" style="height: 80px;" type="text" (change)="inventaryResultTable.secondSection.firsRow[1] = $event.target.value" [(value)]="inventaryResultTable.secondSection.firsRow[1]">
                     </textarea>
                   </td>
                 </tr>
@@ -200,29 +201,29 @@
                   <td class="tg-qv16" rowspan="2">{{inventaryResultTable.thirdSection.firsRow[0]}}</td>
                   <td class="tg-qv16" rowspan="2">{{inventaryResultTable.thirdSection.firsRow[1]}}</td>
                   <td class="tg-qv16"  rowspan="2" colspan="3">
-                    <input class="customImput" style="height: 70px;" type="text" ([value])="inventaryResultTable.thirdSection.firsRow[2]"/>
+                    <input type="number" class="customImput" style="height: 70px;"  (change)="inventaryResultTable.thirdSection.firsRow[2] = $event.target.value" [(value)]="inventaryResultTable.thirdSection.firsRow[2]"/>
                   </td>
                   <td class="tg-qv16">{{inventaryResultTable.thirdSection.secondRow[0]}}</td>
                   <td class="tg-qv16" colspan="6">
-                    <input class="customImput" style="height: 30px;" type="text" ([value])="inventaryResultTable.thirdSection.secondRow[1]"/>
+                    <input class="customImput" style="height: 30px;" type="text" (change)="inventaryResultTable.thirdSection.secondRow[1] = $event.target.value" [(value)]="inventaryResultTable.thirdSection.secondRow[1]"/>
                   </td>
                 </tr>
                 <tr>
                   <td class="tg-qv16">{{inventaryResultTable.thirdSection.thirdSection[0]}}</td>
                   <td class="tg-qv16"  colspan="6">
-                    <input class="customImput" style="height: 30px;" type="text" ([value])="inventaryResultTable.thirdSection.thirdSection[1]"/>
+                    <input  class="customImput" style="height: 30px;" (change)="inventaryResultTable.thirdSection.thirdSection[1] = $event.target.value" [(value)]="inventaryResultTable.thirdSection.thirdSection[1]"/>
                   </td>
                 </tr>
           
                 <tr>
                   <td class="tg-qv16" colspan="3">{{inventaryResultTable.fourthSection.firsRow[0]}}</td>
                   <td class="tg-qv16"  colspan="2">
-                    <input class="customImput" style="height: 50px;" type="text" ([value])="inventaryResultTable.fourthSection.firsRow[1]"/>
+                    <input type="number" class="customImput" style="height: 50px;"  (change)="inventaryResultTable.fourthSection.firsRow[1] = $event.target.value" [(value)]="inventaryResultTable.fourthSection.firsRow[1]"/>
                   </td>
                   <td class="tg-qv16" colspan="3">{{inventaryResultTable.fourthSection.firsRow[2]}}</td>
                   <td class="tg-qv16" colspan="4">
                     <mat-form-field>
-                      <mat-select value="Colón">
+                      <mat-select [(value)]="inventaryResultTable.fourthSection.firsRow[3]">
                         <mat-option value="Colón">
                           Colón
                         </mat-option>
@@ -236,13 +237,13 @@
                 <tr>
                   <td class="tg-qv16" colspan="3">{{inventaryResultTable.fourthSection.secondRow[0]}}</td>
                   <td class="tg-qv16"  colspan="2">
-                    <input class="customImput" style="height: 50px;" type="text" ([value])="inventaryResultTable.fourthSection.secondRow[1]"/>
+                    <input class="customImput" style="height: 50px;" type="number" (change)="inventaryResultTable.fourthSection.secondRow[1] = $event.target.value"  [(value)]="inventaryResultTable.fourthSection.secondRow[1]"/>
                   </td>
                   <td class="tg-qv16" colspan="3">{{inventaryResultTable.fourthSection.secondRow[2]}}</td>
                   <td class="tg-qv16" colspan="4">
           
                     <mat-form-field>
-                      <mat-select value="Colón">
+                      <mat-select [(value)]="inventaryResultTable.fourthSection.secondRow[3]">
                         <mat-option value="Colón">
                           Colón
                         </mat-option>
@@ -281,7 +282,6 @@
             <br />
             <br />
 
-            <br />
             <div class="box-button">
               <app-generic-button-secondary (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
               <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
