@@ -10,7 +10,7 @@
 
       <form [formGroup]="mainGroup">
         <!-- {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}} -->
-        <mat-horizontal-stepper *ngIf="processedNewFormData | async" formArrayName="formArray" [linear]="isLinear" #stepper>
+        <mat-horizontal-stepper formArrayName="formArray" [linear]="isLinear" #stepper>
 
            <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
                 <ng-template matStepLabel><span translate>specificLabel.registerInitiatives</span></ng-template>
