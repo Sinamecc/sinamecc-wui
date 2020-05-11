@@ -267,13 +267,13 @@
                 <tr>
                   <th class="tg-qv16" rowspan="2">{{categoryTable.category[0]}}</th>
                   <td class="tg-qv16"  rowspan="2">
-                    <input class="customImput" style="height: 50px;width: 90px;" type="text" ([value])="categoryTable.category[1]"/>
+                    <input class="customImput" style="height: 50px;width: 90px;" type="text" (change)="categoryTable.category[1] = $event.target.value" [(value)]="categoryTable.category[1]"/>
                   </td>
                   <th *ngFor="let header of categoryTable.categoryHeader" class="tg-qv16">{{header}}</th>
                 </tr>
                 <tr>
-                  <td *ngFor="let row of categoryTable.categoryVaRow"  class="tg-qv16">
-                    <input class="customImput" style="height: 50px;" type="text" ([value])="row"/>
+                  <td *ngFor="let row of categoryTable.categoryRow ; index as i"  class="tg-qv16">
+                    <input class="customImput" style="height: 50px;" [type]="row.type" (change)="categoryTable.categoryRow[i].value = $event.target.value" [(value)]="categoryTable.categoryRow[i].value"/>
                   </td>
                 </tr>
               </table>

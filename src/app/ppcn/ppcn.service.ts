@@ -337,7 +337,7 @@ export class PpcnService {
     ];
   }
 
-  private buildFormData(context: any,
+  private buildFormData(data: any,
     contactFormId: number = null,
     geographicFormId: number = null,
     requiredFormId: number = null,
@@ -346,6 +346,7 @@ export class PpcnService {
     subsectorFormId: number = null,
     geiOrganizationId: number = null,
   ) {
+    let context = data.context
     let formData = {};
     let organization = {};
     let contact = {};
@@ -392,6 +393,9 @@ export class PpcnService {
       geiOrganization['emission_ovv_date'] = this.datePipe.transform(context.formArray[3].implementationEmissionDateCtrl, 'yyyy-MM-dd');
       geiOrganization['base_year'] = context.formArray[3].baseYearCtrl;
       geiOrganization['report_year'] = context.formArray[3].reportYearCtrl;
+
+      geiOrganization['gas_report'] = data.gasReportTable;
+      geiOrganization['organization_category'] = data.categoryTable;
 
       formData['gei_organization'] = geiOrganization;
     }

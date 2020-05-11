@@ -69,7 +69,7 @@ export class PpcnNewComponent implements OnInit {
     category:['Categoría de la organización (Según apartado 8 del PPCN 2.0)',''],
     categoryHeader:['Cantidad de emisiones','cantidad de instalaciones de la organización',
     'Cantidad de datos del inventario de GEI','Complejidad de las metodologías de cálculo utilizadas'],
-    categoryVaRow:['','','','']
+    categoryRow:[{value:'0',type:'number'},{value:'0',type:'number'},{value:'0',type:'number'},{value:'',type:'text'}]
   }
 
   get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
@@ -99,9 +99,14 @@ export class PpcnNewComponent implements OnInit {
 
   submitForm(){
     this.isLoading = true;
-    this.buildTableSection();
-    /*
-    this.service.submitNewPpcnForm(this.formGroup.value)
+
+    let context = {
+      context:this.formGroup.value,
+      gasReportTable: this.buildTableSection(),
+      categoryTable:this.buildCategoryTableSection()
+    }
+    
+    this.service.submitNewPpcnForm(context)
       .pipe(finalize(() => {
         this.formGroup.markAsPristine();
         this.isLoading = false;
@@ -113,7 +118,7 @@ export class PpcnNewComponent implements OnInit {
         log.debug(`New PPCN Form error: ${error}`);
         this.error = error;
       });
-      */
+      
   }
 
   private createForm(){
@@ -197,7 +202,6 @@ export class PpcnNewComponent implements OnInit {
   buildTableSection(){
     let gasReport = {};
     let biogenic_emission = {};
-    let gas_scopes = {};
 
     gasReport['other_gases'] = this.inventaryResultTable.secondSection.firsRow[1];
 
@@ -214,8 +218,19 @@ export class PpcnNewComponent implements OnInit {
 
     gasReport['gas_scopes'] = this.buildScopeMatrixTable();
 
-    console.log(this.inventaryResultTable);
-    console.log(gasReport);
+    return gasReport;
+  }
+
+  buildCategoryTableSection(){
+    let organitationCategory = {};
+    organitationCategory['organization_category'] = this.categoryTable.category[1];
+    organitationCategory['emission_quantity'] = this.categoryTable.categoryRow[0].value;
+    organitationCategory['buildings_number'] = this.categoryTable.categoryRow[1].value;
+    organitationCategory['data_inventory_quantity'] = this.categoryTable.categoryRow[2].value;
+    organitationCategory['methodologies_complexity'] = this.categoryTable.categoryRow[3].value;
+
+    console.log(organitationCategory);
+    return organitationCategory;
   }
 
   buildScopeMatrixTable(){
