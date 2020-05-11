@@ -434,24 +434,25 @@ export class PpcnService {
     organization['contact'] = contact;
     formData['organization'] = organization;
 
-    if (context.formArray[3].ovvCtrl == '' || context.formArray[3].ovvCtrl == null) {
-      formData['base_year'] = this.datePipe.transform(context.formArray[3].reportYearCtrl, 'yyyy-MM-dd');
+    if (context.formArray[5].ovvCtrl == '' || context.formArray[5].ovvCtrl == null) {
+      formData['base_year'] = this.datePipe.transform(context.formArray[5].reportYearCtrl, 'yyyy-MM-dd');
     }
     else {
       if (geiOrganizationId) {
         geiOrganization['id'] = String(geiOrganizationId);
       }
+      console.log(context.formArray[5])
       // geiOrganization['activity_type'] = context.formArray[4].activityCtrl;
-      geiOrganization['ovv'] = context.formArray[3].ovvCtrl;
-      geiOrganization['emission_ovv_date'] = this.datePipe.transform(context.formArray[3].implementationEmissionDateCtrl, 'yyyy-MM-dd');
-      geiOrganization['base_year'] = context.formArray[3].baseYearCtrl;
-      geiOrganization['report_year'] = context.formArray[3].reportYearCtrl;
+      geiOrganization['ovv'] = context.formArray[5].ovvCtrl;
+      geiOrganization['emission_ovv_date'] = this.datePipe.transform(context.formArray[5].implementationEmissionDateCtrl, 'yyyy-MM-dd');
+      geiOrganization['base_year'] = context.formArray[5].baseYearCtrl;
+      geiOrganization['report_year'] = context.formArray[5].reportYearCtrl;
 
       formData['gei_organization'] = geiOrganization;
     }
     formData['gei_activity_types'] = [];
-    if (context.formArray[4].activities) {
-      context.formArray[4].activities.forEach((activity: any) => {
+    if (context.formArray[6].activities) {
+      context.formArray[6].activities.forEach((activity: any) => {
 
         const objectToPush = {
           'activity_type': activity.activityCtrl,

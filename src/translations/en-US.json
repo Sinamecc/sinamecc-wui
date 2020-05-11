@@ -90,6 +90,7 @@
   },
 
   "general":{
+    "confidential":"Confidential",
     "district":"District",
     "canton":"Canton",
     "province":"Province",

@@ -201,8 +201,8 @@ export class PpcnUpdateComponent implements OnInit {
         this.levelId = String(ppcn['geographic_level']['id']);
         this.contactFormId = +ppcn['organization']['contact']['id'];
         this.geographicFormId = +ppcn['geographic_level']['id'];
-        this.requiredFormId = +ppcn['required_level']['id'];
-        this.recognitionFormId = +ppcn['recognition_type']['id'];
+        this.requiredFormId = +ppcn['organization_classification']['required_level']['id'];
+        this.recognitionFormId = +ppcn['organization_classification']['recognition_type']['id'];
         if(ppcn['gei_organization'] != null){
           this.geiOrganizationFormId = +ppcn['gei_organization']['id'];
           this.ovv_id = String(ppcn['gei_organization']['ovv']['id']);
@@ -233,8 +233,8 @@ export class PpcnUpdateComponent implements OnInit {
             phoneCtrl: [ppcn['organization']['contact']['phone'], Validators.compose([Validators.required, Validators.minLength(8)])],
           }),
           this.formBuilder.group({
-            requiredCtrl: [ppcn['required_level']['id'], Validators.required],
-            recognitionCtrl: [ppcn['recognition_type']['id'], Validators.required],
+            requiredCtrl: [ppcn['organization_classification']['required_level']['id'], Validators.required],
+            recognitionCtrl: [ppcn['organization_classification']['recognition_type']['id'], Validators.required],
           }),
           this.formBuilder.group({
             baseYearCtrl:[ppcn['gei_organization']['base_year'], Validators.required],
