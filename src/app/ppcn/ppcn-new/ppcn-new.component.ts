@@ -44,7 +44,7 @@ export class PpcnNewComponent implements OnInit {
 
   inventaryResultTable = {
     firstSection : {
-      tableHeaderValues : ['Gases a Reportar','Total','CO<sub>2</sub>','CH<sub>4</sub>','N<sub>2</sub>O','PFC','HFC','SF<sub>6</sub>','NF<sub>3</sub>','HCFC','CFC','Otros Gases'],
+      tableHeaderValues : ['ppcn.gasesReport','general.total','CO<sub>2</sub>','CH<sub>4</sub>','N<sub>2</sub>O','PFC','HFC','SF<sub>6</sub>','NF<sub>3</sub>','HCFC','CFC','ppcn.otherGases'],
       tableRows : [
         [{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'}],
         [{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'}],
@@ -52,23 +52,23 @@ export class PpcnNewComponent implements OnInit {
       ]
     },
     secondSection :{
-      firsRow : ["En casos de reportar 'Otros Gases' indicar todos los otros gases reportados",'']
+      firsRow : ["ppcn.reportOtherGases",'']
     },
     thirdSection:{
-      firsRow : ['Emisiones Biogénicas(toneladas CO2 equivalente)	','Total','0'],
-      secondRow : ['Alcance 1',''],
-      thirdSection:['Alcance 2','']
+      firsRow : ['ppcn.biogenicEmissions','Total','0'],
+      secondRow : ['general.scope',''],
+      thirdSection:['general.scope','']
     },
     fourthSection:{
-      firsRow:['Costo de realización del inventario de GEI (Incluyendo auditurias internas si aplica)','0','Moneda','Colón'],
-      secondRow:['Costo del proceso de verificación realizado por el OVV	','0','Moneda','Colón']
+      firsRow:['ppcn.costGHG','0','general.currency','colon'],
+      secondRow:['ppcn.verificationOVV','0','general.currency','colon']
     }
   }
 
   categoryTable = {
-    category:['Categoría de la organización (Según apartado 8 del PPCN 2.0)',''],
-    categoryHeader:['Cantidad de emisiones','cantidad de instalaciones de la organización',
-    'Cantidad de datos del inventario de GEI','Complejidad de las metodologías de cálculo utilizadas'],
+    category:['ppcn.organitationCategoryPpcn',''],
+    categoryHeader:['ppcn.amountEmissions','ppcn.numberFacilities',
+    'ppcn.amountGHG','ppcn.complexityMethodologies'],
     categoryRow:[{value:'0',type:'number'},{value:'0',type:'number'},{value:'0',type:'number'},{value:'',type:'text'}]
   }
 
