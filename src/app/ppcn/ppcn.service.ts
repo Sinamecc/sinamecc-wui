@@ -7,12 +7,14 @@ import { map, catchError } from 'rxjs/operators';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { Ppcn, GeographicLevel, SubSector } from '@app/ppcn/ppcn_registry'
 import { PpcnNewFormData, Ovv } from '@app/ppcn/ppcn-new-form-data';
 import { BehaviorSubject } from 'rxjs';
 import { PpcnReview } from '@app/ppcn/ppcn-review';
 import { S3File, S3Service } from '@app/core/s3.service';
 import { StatusRoutesMap } from '@app/ppcn/status-routes-map';
+import { Ppcn } from './ppcn_registry';
+import { GeographicLevel } from './interfaces/geographicLevel';
+import { SubSector } from './interfaces/subSector';
 
 const routes = {
   getGeographicLevel: (lang: string) => `/v1/ppcn/geographic/level/${lang}`,
@@ -351,22 +353,74 @@ export class PpcnService {
     let contact = {};
     let geiOrganization = {};
     let geiActivityTypes = {};
+    let reduction = {};
+    let carbonOffset = {};
+    let organization_classification = {};
 
+    const validateListReduction = [2,3,4,5];
+    const validateListCompensation = [4,5];
+    
     this.currentLevelId.subscribe(levelId => formData['geographic_level'] = levelId);
     formData['user'] = String(this.authenticationService.credentials.id);
     if (geographicFormId) {
       formData['geographic_level'] = String(geographicFormId);
     }
-    formData['required_level'] = context.formArray[2].requiredCtrl;
+
     formData['subsector'] = context.formArray[4].subSectorCtrl;
     formData['sector'] = context.formArray[4].sectorCtrl;
-    formData['recognition_type'] = context.formArray[2].recognitionCtrl;
+
     organization['name'] = context.formArray[0].nameCtrl;
     organization['representative_name'] = context.formArray[0].representativeNameCtrl;
+    organization['representative_legal_identification'] = context.formArray[0].legalRepresentativeIdCtrl;
+    organization['legal_identification'] = context.formArray[0].legalIdCtrl;
+    organization['confidential'] = context.formArray[0].confidentialCtrl;
+    organization['confidential_fields'] = context.formArray[0].confidentialValueCtrl;
+    
     organization['phone_organization'] = context.formArray[0].telephoneCtrl;
     organization['postal_code'] = context.formArray[0].postalCodeCtrl;
     organization['fax'] = context.formArray[0].faxCtrl;
-    organization['ciiu'] = context.formArray[0].ciuuCodeCtrl;
+    organization['ciiu_code_list'] = [];
+
+    // Reduction form section //
+    reduction['project'] = context.formArray[3].reductionProjectCtrl;
+    reduction['activity']= context.formArray[3].reductionActivityCtrl;
+    reduction['detail_reduction']= context.formArray[3].reductionDetailsCtrl;
+    reduction['emission']= context.formArray[3].reducedEmissionsCtrl;
+    reduction['total_emission']= context.formArray[3].totalEmisionesReducidas;
+    reduction['investment']= context.formArray[3].investmentReductionsValue;
+    reduction['investment_currency']= context.formArray[3].investmentReductions;
+    reduction['total_investment']= context.formArray[3].totalInvestmentReductionValue;
+    reduction['total_investment_currency']= context.formArray[3].totalInvestmentReduction;
+
+    // carbon offset form section 
+    carbonOffset['offset_scheme'] = context.formArray[4].compensationScheme;
+    carbonOffset['project_location'] = context.formArray[4].projectLocation;
+    carbonOffset['certificate_identification'] = context.formArray[4].certificateNumber;
+    carbonOffset['total_carbon_offset'] = context.formArray[4].totalCompensation;
+    carbonOffset['offset_cost'] = context.formArray[4].compensationCostValue;
+    carbonOffset['offset_cost_currency'] = context.formArray[4].compensationCost;
+    carbonOffset['period'] = context.formArray[4].period;
+    carbonOffset['total_offset_cost'] = context.formArray[4].totalEmissionsOffsets;
+    carbonOffset['total_offset_cost_currency'] = context.formArray[4].totalCostCompensation;
+
+    organization_classification['required_level'] = context.formArray[2].requiredCtrl;
+    organization_classification['recognition_type'] = context.formArray[2].recognitionCtrl;
+    organization_classification['emission_quantity'] = context.formArray[2].amountOfEmissions;
+    organization_classification['buildings_number'] = context.formArray[2].numberofDacilities;
+    organization_classification['data_inventory_quantity'] = context.formArray[2].amountInventoryData;
+
+    organization_classification['reduction'] = validateListReduction.indexOf(context.formArray[2].recognitionCtrl) >= 0 ? reduction : null;
+    organization_classification['carbon_offset'] = validateListCompensation.indexOf(context.formArray[2].recognitionCtrl) >= 0 ? carbonOffset : null;
+
+    formData['organization_classification'] =  organization_classification; 
+
+    
+    for(let value of context.formArray[0].ciuuListCodeCtrl){
+      const element = {
+        "ciiu_code": value
+      }
+      organization['ciiu_code_list'].push(element)
+    }
     organization['address'] = context.formArray[0].addressCtrl;
 
     if (contactFormId) {
@@ -380,24 +434,25 @@ export class PpcnService {
     organization['contact'] = contact;
     formData['organization'] = organization;
 
-    if (context.formArray[3].ovvCtrl == '' || context.formArray[3].ovvCtrl == null) {
-      formData['base_year'] = this.datePipe.transform(context.formArray[3].reportYearCtrl, 'yyyy-MM-dd');
+    if (context.formArray[5].ovvCtrl == '' || context.formArray[5].ovvCtrl == null) {
+      formData['base_year'] = this.datePipe.transform(context.formArray[5].reportYearCtrl, 'yyyy-MM-dd');
     }
     else {
       if (geiOrganizationId) {
         geiOrganization['id'] = String(geiOrganizationId);
       }
+      console.log(context.formArray[5])
       // geiOrganization['activity_type'] = context.formArray[4].activityCtrl;
-      geiOrganization['ovv'] = context.formArray[3].ovvCtrl;
-      geiOrganization['emission_ovv_date'] = this.datePipe.transform(context.formArray[3].implementationEmissionDateCtrl, 'yyyy-MM-dd');
-      geiOrganization['base_year'] = context.formArray[3].baseYearCtrl;
-      geiOrganization['report_year'] = context.formArray[3].reportYearCtrl;
+      geiOrganization['ovv'] = context.formArray[5].ovvCtrl;
+      geiOrganization['emission_ovv_date'] = this.datePipe.transform(context.formArray[5].implementationEmissionDateCtrl, 'yyyy-MM-dd');
+      geiOrganization['base_year'] = context.formArray[5].baseYearCtrl;
+      geiOrganization['report_year'] = context.formArray[5].reportYearCtrl;
 
       formData['gei_organization'] = geiOrganization;
     }
     formData['gei_activity_types'] = [];
-    if (context.formArray[4].activities) {
-      context.formArray[4].activities.forEach((activity: any) => {
+    if (context.formArray[6].activities) {
+      context.formArray[6].activities.forEach((activity: any) => {
 
         const objectToPush = {
           'activity_type': activity.activityCtrl,
