@@ -74,8 +74,8 @@ export class PpcnNewComponent implements OnInit {
       thirdSection:['general.scope','']
     },
     fourthSection:{
-      firsRow:['ppcn.costGHG','0','general.currency','colon'],
-      secondRow:['ppcn.verificationOVV','0','general.currency','colon']
+      firsRow:['ppcn.costGHG','0','general.currency','CRC'],
+      secondRow:['ppcn.verificationOVV','0','general.currency','CRC']
     }
   }
 

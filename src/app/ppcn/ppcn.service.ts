@@ -442,8 +442,7 @@ export class PpcnService {
       if (geiOrganizationId) {
         geiOrganization['id'] = String(geiOrganizationId);
       }
-      console.log(context.formArray[5])
-      // geiOrganization['activity_type'] = context.formArray[4].activityCtrl;
+      geiOrganization['activity_type'] = context.formArray[5].activityCtrl;
       geiOrganization['ovv'] = context.formArray[5].ovvCtrl;
       geiOrganization['emission_ovv_date'] = this.datePipe.transform(context.formArray[5].implementationEmissionDateCtrl, 'yyyy-MM-dd');
       geiOrganization['base_year'] = context.formArray[5].baseYearCtrl;
@@ -451,21 +450,19 @@ export class PpcnService {
 
       geiOrganization['gas_report'] = data.gasReportTable;
       geiOrganization['organization_category'] = data.categoryTable;
-
-      formData['gei_organization'] = geiOrganization;
     }
-    formData['gei_activity_types'] = [];
+    geiOrganization['gei_activity_types'] = [];
     if (context.formArray[6].activities) {
       context.formArray[6].activities.forEach((activity: any) => {
-
         const objectToPush = {
           'activity_type': activity.activityCtrl,
           'sub_sector': activity.subSectorCtrl,
           'sector': activity.sectorCtrl
         }
-        formData['gei_activity_types'].push(objectToPush);
+        geiOrganization['gei_activity_types'].push(objectToPush);
       });
     }
+    formData['gei_organization'] = geiOrganization;
     return formData;
   }
 
