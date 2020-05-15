@@ -12,7 +12,6 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{levelId==2 ? "specificLabel.organizationName" : "geographyLabel.cantonDistrictName" }}</mat-label>
-
               <input matInput formControlName="nameCtrl" required>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
@@ -32,7 +31,7 @@
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
+            <mat-form-field class="field-ppcn">
               <mat-label translate>general.legalRepresentativeCertificate</mat-label>
               <input matInput formControlName="legalRepresentativeIdCtrl" required>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -40,12 +39,19 @@
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>{{levelId==2 ? "Telephone" : "specificLabel.majorTelephone" }} </mat-label>
+              <mat-label translate>{{levelId==2 ? "Telephone" : "specificLabel.majorTelephone"}} </mat-label>
 
               <input matInput formControlName="telephoneCtrl" required>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
+            <br />
+
+            <mat-form-field class="field-ppcn" *ngIf="levelId=='1'">
+              <mat-label translate>ppcn.mayorEmail</mat-label>
+              <input type="email" matInput formControlName="emailCtrl" required>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
             <br />
 
             <span translate>general.confidential</span><br><br>
@@ -65,6 +71,30 @@
               <br>
               <mat-label translate>specificLabel.confidentialParcially</mat-label>
               <input matInput formControlName="confidentialValueCtrl" >
+            </mat-form-field>
+            <br />
+
+            <mat-form-field class="field-ppcn" *ngIf="levelId=='1'">
+              <br>
+              <mat-label translate>ppcn.nameContactPerson</mat-label>
+              <input matInput formControlName="nameContactPersonCtrl" required>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field class="field-ppcn" *ngIf="levelId=='1'">
+              <br>
+              <mat-label translate>ppcn.tittleContacPerson</mat-label>
+              <input matInput formControlName="titleContacPersonCtrl" required>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field class="field-ppcn" *ngIf="levelId=='1'">
+              <br>
+              <mat-label translate>ppcn.emailContacPerson</mat-label>
+              <input type="email" matInput formControlName="emailContacPersonCtrl" required>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
@@ -102,7 +132,7 @@
             </mat-form-field>
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>{{levelId==2 ? "Address" : "specificLabel.districtCouncilAddress" }}</mat-label>
+              <mat-label translate>{{levelId==2 ? "Address" : "specificLabel.districtCouncilAddress"}}</mat-label>
 
               <input matInput formControlName="addressCtrl" required>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -210,7 +240,7 @@
             <br />
           </mat-step>
           
-          <div *ngIf="levelId=='2' && showRecognitionFormSection([2,3,4,5])">
+          <div *ngIf="showRecognitionFormSection([2,3,4,5])">
             <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
 
               <ng-template matStepLabel>
@@ -297,7 +327,7 @@
             </mat-step>
           </div>
 
-          <div *ngIf="levelId=='2' && showRecognitionFormSection([4,5])">
+          <div *ngIf="showRecognitionFormSection([4,5])">
             <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
 
               <ng-template matStepLabel>

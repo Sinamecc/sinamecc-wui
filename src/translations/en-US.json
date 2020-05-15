@@ -86,7 +86,11 @@
     "addPPCN":"Add new PPCN",
     "uploadFilesPPCNRegistry":"Upload Files to PPCN Registry",
     "deletePPCN":"Delete PPCN?",
-    "changelogPPCNRegistry":"CHANGELOG FOR PPCN REGISTRY"
+    "changelogPPCNRegistry":"CHANGELOG FOR PPCN REGISTRY",
+    "emailContacPerson":"Email of the contact person",
+    "tittleContacPerson":"Title of the contact person",
+    "nameContactPerson":"Name of the contact person",
+    "mayorEmail":"Mayor or Mayor's Email"
   },
 
   "general":{

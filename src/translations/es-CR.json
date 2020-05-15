@@ -85,8 +85,11 @@
     "addPPCN":"Agregar nuevo PPCN",
     "uploadFilesPPCNRegistry":"Subir archivos al registro PPCN",
     "deletePPCN":"¿Eliminar PPCN?",
-    "changelogPPCNRegistry":"CAMBIO DE REGISTRO PPCN"
-    
+    "changelogPPCNRegistry":"CAMBIO DE REGISTRO PPCN",
+    "emailContacPerson":"Correo electrónico de la persona de contacto",
+    "tittleContacPerson":"Cargo de la persona de contacto",
+    "nameContactPerson":"Nombre de la persona de contacto",
+    "mayorEmail":"Correo electrónico del alcalde o intendente"
   },
 
   "general":{ 
