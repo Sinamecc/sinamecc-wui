@@ -3,7 +3,6 @@
     <form (ngSubmit)="submitForm()" *ngIf="!isLoading" [formGroup]="formGroup">
       <div fxLayout="column">
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
-
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
               <span *ngIf="levelId == 1" translate>info.basicInfo </span>
@@ -11,71 +10,75 @@
             </ng-template>
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>{{levelId==2 ? "specificLabel.organizationName" : "geographyLabel.cantonDistrictName" }}</mat-label>
+              <mat-label translate>{{
+                levelId == 2 ? "specificLabel.organizationName" : "geographyLabel.cantonDistrictName"
+              }}</mat-label>
 
-              <input matInput formControlName="nameCtrl" required>
+              <input matInput formControlName="nameCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
+            <mat-form-field class="field-ppcn" *ngIf="levelId == '2'">
               <mat-label translate>general.legalCertificate</mat-label>
-              <input matInput formControlName="legalIdCtrl" required>
+              <input matInput formControlName="legalIdCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>{{levelId==2 ? "specificLabel.representativeName" : "specificLabel.majorName" }} </mat-label>
-              <input matInput formControlName="representativeNameCtrl" required>
+              <mat-label translate
+                >{{ levelId == 2 ? "specificLabel.representativeName" : "specificLabel.majorName" }}
+              </mat-label>
+              <input matInput formControlName="representativeNameCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
+            <mat-form-field class="field-ppcn" *ngIf="levelId == '2'">
               <mat-label translate>general.legalRepresentativeCertificate</mat-label>
-              <input matInput formControlName="legalRepresentativeIdCtrl" required>
+              <input matInput formControlName="legalRepresentativeIdCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>{{levelId==2 ? "Telephone" : "specificLabel.majorTelephone" }} </mat-label>
+              <mat-label translate>{{ levelId == 2 ? "Telephone" : "specificLabel.majorTelephone" }} </mat-label>
 
-              <input matInput formControlName="telephoneCtrl" required>
+              <input matInput formControlName="telephoneCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
             <br />
 
-            <span translate>general.confidential</span><br><br>
+            <span translate>general.confidential</span><br /><br />
             <mat-radio-group value="si" [(ngModel)]="confidential" formControlName="confidentialCtrl">
-                <mat-radio-button value="si">
-                  <span translate>general.yes</span>
-                </mat-radio-button>
-                <mat-radio-button value="no">
-                  <span translate>general.no</span>
-                </mat-radio-button>
-                <mat-radio-button value="parcialmente">
-                  <span translate>general.partially</span>
-                </mat-radio-button>
+              <mat-radio-button value="si">
+                <span translate>general.yes</span>
+              </mat-radio-button>
+              <mat-radio-button value="no">
+                <span translate>general.no</span>
+              </mat-radio-button>
+              <mat-radio-button value="parcialmente">
+                <span translate>general.partially</span>
+              </mat-radio-button>
             </mat-radio-group>
-            <br>
+            <br />
             <mat-form-field class="field-ppcn" *ngIf="confidential == 'parcialmente'">
-              <br>
+              <br />
               <mat-label translate>specificLabel.confidentialParcially</mat-label>
-              <input matInput formControlName="confidentialValueCtrl" >
+              <input matInput formControlName="confidentialValueCtrl" />
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
               <mat-label translate> info.fax </mat-label>
-              <input matInput formControlName="faxCtrl">
+              <input matInput formControlName="faxCtrl" />
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate> info.postalCode </mat-label>
-              <input matInput formControlName="postalCodeCtrl">
+              <input matInput formControlName="postalCodeCtrl" />
             </mat-form-field>
             <br />
 
@@ -85,8 +88,9 @@
                   *ngFor="let code of CIUUCodeList"
                   [selectable]="selectable"
                   [removable]="removable"
-                  (removed)="removeCIUUCode(code)">
-                  {{code}}
+                  (removed)="removeCIUUCode(code)"
+                >
+                  {{ code }}
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
                 <input
@@ -96,61 +100,62 @@
                   [matChipInputFor]="chipList"
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   (matChipInputTokenEnd)="add($event)"
-                  required>
+                  required
+                />
               </mat-chip-list>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>{{levelId==2 ? "Address" : "specificLabel.districtCouncilAddress" }}</mat-label>
+              <mat-label translate>{{ levelId == 2 ? "Address" : "specificLabel.districtCouncilAddress" }}</mat-label>
 
-              <input matInput formControlName="addressCtrl" required>
+              <input matInput formControlName="addressCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <div class="box-button">
-              <app-generic-button (click)="stepper.next();" name="general.next">
-              </app-generic-button>
-
+              <app-generic-button (click)="stepper.next()" name="general.next"> </app-generic-button>
             </div>
           </mat-step>
 
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
             <ng-template matStepLabel>
-              <div translate> info.contactInfo </div>
+              <div translate>info.contactInfo</div>
             </ng-template>
             <mat-form-field class="field-ppcn">
               <mat-label translate>info.name</mat-label>
-              <input matInput formControlName="contactNameCtrl">
+              <input matInput formControlName="contactNameCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate> general.position </mat-label>
-              <input matInput formControlName="positionCtrl">
+              <input matInput formControlName="positionCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
               <mat-label translate> info.emailAddress </mat-label>
-              <input matInput formControlName="emailFormCtrl">
+              <input matInput formControlName="emailFormCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
               <mat-label translate> info.phone </mat-label>
-              <input matInput formControlName="phoneCtrl" type="tel">
+              <input matInput formControlName="phoneCtrl" type="tel" />
               <mat-error translate> errorLabel.inputOrLengthIncorrect</mat-error>
             </mat-form-field>
             <br />
 
-
             <div class="box-button">
-              <app-generic-button-secondary (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+              <app-generic-button-secondary
+                (click)="stepper.previous()"
+                name="general.back"
+              ></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
 
@@ -158,44 +163,46 @@
             <ng-template matStepLabel>
               <span translate>geographyLabel.requestLevel</span>
             </ng-template>
-            <br>
             <br />
-            <div *ngIf="levelId=='2'">
-
+            <br />
+            <div *ngIf="levelId == '2'">
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.classificationAmountEmissions</mat-label>
-                <input type="number" matInput formControlName="amountOfEmissions" required>
+                <input type="number" matInput formControlName="amountOfEmissions" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.classificationNumberFacilities</mat-label>
-                <input type="number" matInput formControlName="numberofDacilities" required>
+                <input type="number" matInput formControlName="numberofDacilities" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.ClassificationAmountInventoryData</mat-label>
-                <input type="number" matInput formControlName="amountInventoryData" required>
+                <input type="number" matInput formControlName="amountInventoryData" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
-
             </div>
             <br />
-            <span translate>geographyLabel.verificationCycleStage</span><br><br>
+            <span translate>geographyLabel.verificationCycleStage</span><br /><br />
             <mat-radio-group formControlName="requiredCtrl">
-                <mat-radio-button *ngFor="let required_level of required_levels" [value]="required_level.id">
-                  {{ required_level.level }}
-                </mat-radio-button>
+              <mat-radio-button *ngFor="let required_level of required_levels" [value]="required_level.id">
+                {{ required_level.level }}
+              </mat-radio-button>
             </mat-radio-group>
             <br />
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>geographyLabel.recognitionType</mat-label>
-              <mat-select (change)="reductionFormVar = $event.value" formControlName="recognitionCtrl" [placeholder]="'geographyLabel.recognitionType' | translate">
+              <mat-select
+                (change)="reductionFormVar = $event.value"
+                formControlName="recognitionCtrl"
+                [placeholder]="'geographyLabel.recognitionType' | translate"
+              >
                 <mat-option *ngFor="let recognition_type of recognition_types" [value]="recognition_type.id">
                   {{ recognition_type.recognition }}
                 </mat-option>
@@ -204,109 +211,122 @@
             </mat-form-field>
             <br />
             <div class="box-button">
-              <app-generic-button-secondary (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+              <app-generic-button-secondary
+                (click)="stepper.previous()"
+                name="general.back"
+              ></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
             <br />
           </mat-step>
-          
-          <div *ngIf="levelId=='2' && showRecognitionFormSection([2,3,4,5])">
-            <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
 
+          <div *ngIf="levelId == '2' && showRecognitionFormSection([2, 3, 4, 5])">
+            <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
               <ng-template matStepLabel>
                 <span translate>geographyLabel.reduction</span>
               </ng-template>
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.reductionProyect</mat-label>
-                <input matInput formControlName="reductionProjectCtrl" required>
+                <input matInput formControlName="reductionProjectCtrl" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.activityReduction</mat-label>
-                <input matInput formControlName="reductionActivityCtrl" required>
+                <input matInput formControlName="reductionActivityCtrl" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
-              
+
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.detailReduction</mat-label>
-                <input matInput formControlName="reductionDetailsCtrl" required>
+                <input matInput formControlName="reductionDetailsCtrl" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.reducedEmissions<strong>(t CO2e)</strong></mat-label>
-                <input matInput formControlName="reducedEmissionsCtrl" required>
+                <input matInput formControlName="reducedEmissionsCtrl" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
               <br />
 
               <div fxLayout="row">
-
                 <div style="width: 150px;">
-                  <mat-button-toggle-group 
-                  (change)="this.formGroup.controls.formArray['controls'][3].patchValue({investmentReductions: $event.value})"
-                  style="margin-right: 50px;" value="CRC">
+                  <mat-button-toggle-group
+                    (change)="
+                      this.formGroup.controls.formArray['controls'][3].patchValue({
+                        investmentReductions: $event.value
+                      })
+                    "
+                    style="margin-right: 50px;"
+                    value="CRC"
+                  >
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
                   </mat-button-toggle-group>
                 </div>
                 <mat-form-field style="width: 90%;">
                   <mat-label translate>geographyLabel.investmentReductions</mat-label>
-                  <input type="number" matInput formControlName="investmentReductionsValue" required>
+                  <input type="number" matInput formControlName="investmentReductionsValue" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-
               </div>
               <br />
               <div fxLayout="row">
                 <div style="width: 150px;">
-                  <mat-button-toggle-group name="fontStyle" style="margin-right: 50px;"
-                  (change)="this.formGroup.controls.formArray['controls'][3].patchValue({totalInvestmentReduction: $event.value})"
-                  value="CRC">
+                  <mat-button-toggle-group
+                    name="fontStyle"
+                    style="margin-right: 50px;"
+                    (change)="
+                      this.formGroup.controls.formArray['controls'][3].patchValue({
+                        totalInvestmentReduction: $event.value
+                      })
+                    "
+                    value="CRC"
+                  >
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
                   </mat-button-toggle-group>
                 </div>
                 <mat-form-field style="width: 90%;">
                   <mat-label translate>geographyLabel.totalInversion</mat-label>
-                  <input type="number" matInput formControlName="totalInvestmentReductionValue" required>
+                  <input type="number" matInput formControlName="totalInvestmentReductionValue" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-
               </div>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.totalReducedEmissions<strong>(t CO2e)</strong></mat-label>
-                <input matInput formControlName="totalEmisionesReducidas" required>
+                <input matInput formControlName="totalEmisionesReducidas" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
               <div class="box-button">
-                <app-generic-button-secondary (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
-                <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+                <app-generic-button-secondary
+                  (click)="stepper.previous()"
+                  name="general.back"
+                ></app-generic-button-secondary>
+                <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
               </div>
-              <br>
-
+              <br />
             </mat-step>
           </div>
 
-          <div *ngIf="levelId=='2' && showRecognitionFormSection([4,5])">
+          <div *ngIf="levelId == '2' && showRecognitionFormSection([4, 5])">
             <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
-
               <ng-template matStepLabel>
                 <span translate>geographyLabel.compensations</span>
               </ng-template>
-              <br>
-              <label translate>geographyLabel.compensationScheme</label> <br>
-              <br>
-              <mat-radio-group formControlName="compensationScheme" >
+              <br />
+              <label translate>geographyLabel.compensationScheme</label> <br />
+              <br />
+              <mat-radio-group formControlName="compensationScheme">
                 <mat-radio-button value="CER">
                   CER
                 </mat-radio-button>
@@ -317,87 +337,97 @@
                   UCC
                 </mat-radio-button>
               </mat-radio-group>
-              <br>
-              <br>
+              <br />
+              <br />
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.projectLocation</mat-label>
-                <input matInput formControlName="projectLocation" required>
+                <input matInput formControlName="projectLocation" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.certificateNumber</mat-label>
-                <input matInput formControlName="certificateNumber" required>
+                <input matInput formControlName="certificateNumber" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.totalCompensation<strong>(t CO2e)</strong></mat-label>
-                <input matInput formControlName="totalCompensation" required>
+                <input matInput formControlName="totalCompensation" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
               <br />
-            
+
               <div fxLayout="row">
-                <br>
+                <br />
                 <div style="width: 150px;">
-                  <mat-button-toggle-group style="margin-right: 50px;"
-                   value="CRC"
-                   (change)="this.formGroup.controls.formArray['controls'][4].patchValue({compensationCost: $event.value})">
+                  <mat-button-toggle-group
+                    style="margin-right: 50px;"
+                    value="CRC"
+                    (change)="
+                      this.formGroup.controls.formArray['controls'][4].patchValue({ compensationCost: $event.value })
+                    "
+                  >
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
                   </mat-button-toggle-group>
                 </div>
                 <mat-form-field style="width: 90%;">
                   <mat-label translate>geographyLabel.compensationCost</mat-label>
-                  <input type="number" matInput formControlName="compensationCostValue" required>
+                  <input type="number" matInput formControlName="compensationCostValue" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-
               </div>
-           
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.period </mat-label>
-                <input matInput formControlName="period" required>
+                <input matInput formControlName="period" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
-              <br>
+              <br />
               <label translate>geographyLabel.totalCostCompensation</label>
-              <br>
-              <br>
+              <br />
+              <br />
               <div fxLayout="row">
-                <br>
+                <br />
                 <div style="width: 150px;">
-                  <mat-button-toggle-group style="margin-right: 50px;"
-                  value="CRC"
-                  (change)="this.formGroup.controls.formArray['controls'][4].patchValue({totalCostCompensation: $event.value})">
+                  <mat-button-toggle-group
+                    style="margin-right: 50px;"
+                    value="CRC"
+                    (change)="
+                      this.formGroup.controls.formArray['controls'][4].patchValue({
+                        totalCostCompensation: $event.value
+                      })
+                    "
+                  >
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
                   </mat-button-toggle-group>
                 </div>
                 <mat-form-field class="field-ppcn">
                   <mat-label translate>geographyLabel.totalEmissionsOffsets<strong>(t CO2e)</strong> </mat-label>
-                  <input matInput formControlName="totalEmissionsOffsets" required>
+                  <input matInput formControlName="totalEmissionsOffsets" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
                 <br />
               </div>
 
-              <br>
+              <br />
 
               <div class="box-button">
-                <app-generic-button-secondary (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
-                <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+                <app-generic-button-secondary
+                  (click)="stepper.previous()"
+                  name="general.back"
+                ></app-generic-button-secondary>
+                <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
               </div>
 
-              <br>
-              
+              <br />
             </mat-step>
           </div>
 
@@ -416,77 +446,142 @@
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.baseYear</mat-label>:
-              <input matInput type="number" [placeholder]="'specificLabel.chooseYear' | translate" formControlName="baseYearCtrl"
-                min="1990">
+              <input
+                matInput
+                type="number"
+                [placeholder]="'specificLabel.chooseYear' | translate"
+                formControlName="baseYearCtrl"
+                min="1990"
+              />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.reportYear</mat-label>:
-              <input matInput type="number" [placeholder]="'specificLabel.chooseYear' | translate" formControlName="reportYearCtrl"
-                min="1990">
+              <input
+                matInput
+                type="number"
+                [placeholder]="'specificLabel.chooseYear' | translate"
+                formControlName="reportYearCtrl"
+                min="1990"
+              />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.emissionDateDeclarationVerification</mat-label>
-              <input matInput [matDatepicker]="implementationEmissionDatePicker" [placeholder]="'Choose a date' | translate"
-                formControlName="implementationEmissionDateCtrl">
+              <input
+                matInput
+                [matDatepicker]="implementationEmissionDatePicker"
+                [placeholder]="'Choose a date' | translate"
+                formControlName="implementationEmissionDateCtrl"
+              />
               <mat-datepicker-toggle matSuffix [for]="implementationEmissionDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationEmissionDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
 
             <br />
             <div>
-
-              <br>
+              <br />
               <label><strong translate>ppcn.resultsVerifiedInventory</strong></label>
-              <br>
-              <br>
-              <table class="tg mat-elevation-z2" >
+              <br />
+              <br />
+              <table class="tg mat-elevation-z2">
                 <tr>
-                  <th [innerHTML]="header | translate" class="tg-qv16" *ngFor="let header of inventaryResultTable.firstSection.tableHeaderValues"></th>
+                  <th
+                    [innerHTML]="header | translate"
+                    class="tg-qv16"
+                    *ngFor="let header of inventaryResultTable.firstSection.tableHeaderValues"
+                  ></th>
                 </tr>
-          
-                <tr *ngFor="let row of inventaryResultTable.firstSection.tableRows;index as i">
-                  <td class="tg-qv16" ><span translate>general.scope</span> {{i + 1}}</td>
+
+                <tr *ngFor="let row of inventaryResultTable.firstSection.tableRows; index as i">
+                  <td class="tg-qv16"><span translate>general.scope</span> {{ i + 1 }}</td>
                   <td class="tg-qv16" *ngFor="let field of row; index as j">
-                    <input type="number" matInput class="customImput" style="height:30px;" [(value)]="field.value" (change)="inventaryResultTable.firstSection.tableRows[i][j].value = $event.target.value"/>
+                    <input
+                      type="number"
+                      matInput
+                      class="customImput"
+                      style="height: 30px;"
+                      [(value)]="field.value"
+                      (change)="inventaryResultTable.firstSection.tableRows[i][j].value = $event.target.value"
+                    />
                   </td>
                 </tr>
-          
+
                 <tr>
-                  <td class="tg-qv16"><span translate>{{inventaryResultTable.secondSection.firsRow[0]}}</span></td>
-                  <td  class="tg-qv16" colspan="11">
-                    <textarea class="customImput" style="height: 80px;" type="text" (change)="inventaryResultTable.secondSection.firsRow[1] = $event.target.value" [(value)]="inventaryResultTable.secondSection.firsRow[1]">
+                  <td class="tg-qv16">
+                    <span translate>{{ inventaryResultTable.secondSection.firsRow[0] }}</span>
+                  </td>
+                  <td class="tg-qv16" colspan="11">
+                    <textarea
+                      class="customImput"
+                      style="height: 80px;"
+                      type="text"
+                      (change)="inventaryResultTable.secondSection.firsRow[1] = $event.target.value"
+                      [(value)]="inventaryResultTable.secondSection.firsRow[1]"
+                    >
                     </textarea>
                   </td>
                 </tr>
-          
+
                 <tr>
-                  <td class="tg-qv16" rowspan="2"><span translate>{{inventaryResultTable.thirdSection.firsRow[0]}}</span></td>
-                  <td class="tg-qv16" rowspan="2">{{inventaryResultTable.thirdSection.firsRow[1]}}</td>
-                  <td class="tg-qv16"  rowspan="2" colspan="3">
-                    <input type="number" class="customImput" style="height: 70px;"  (change)="inventaryResultTable.thirdSection.firsRow[2] = $event.target.value" [(value)]="inventaryResultTable.thirdSection.firsRow[2]"/>
+                  <td class="tg-qv16" rowspan="2">
+                    <span translate>{{ inventaryResultTable.thirdSection.firsRow[0] }}</span>
                   </td>
-                  <td class="tg-qv16"><span translate>{{inventaryResultTable.thirdSection.secondRow[0]}}</span></td>
+                  <td class="tg-qv16" rowspan="2">{{ inventaryResultTable.thirdSection.firsRow[1] }}</td>
+                  <td class="tg-qv16" rowspan="2" colspan="3">
+                    <input
+                      type="number"
+                      class="customImput"
+                      style="height: 70px;"
+                      (change)="inventaryResultTable.thirdSection.firsRow[2] = $event.target.value"
+                      [(value)]="inventaryResultTable.thirdSection.firsRow[2]"
+                    />
+                  </td>
+                  <td class="tg-qv16">
+                    <span translate>{{ inventaryResultTable.thirdSection.secondRow[0] }}</span>
+                  </td>
                   <td class="tg-qv16" colspan="6">
-                    <input class="customImput" style="height: 30px;" type="text" (change)="inventaryResultTable.thirdSection.secondRow[1] = $event.target.value" [(value)]="inventaryResultTable.thirdSection.secondRow[1]"/>
+                    <input
+                      class="customImput"
+                      style="height: 30px;"
+                      type="text"
+                      (change)="inventaryResultTable.thirdSection.secondRow[1] = $event.target.value"
+                      [(value)]="inventaryResultTable.thirdSection.secondRow[1]"
+                    />
                   </td>
                 </tr>
                 <tr>
-                  <td class="tg-qv16"><span translate>{{inventaryResultTable.thirdSection.thirdSection[0]}}</span></td>
-                  <td class="tg-qv16"  colspan="6">
-                    <input  class="customImput" style="height: 30px;" (change)="inventaryResultTable.thirdSection.thirdSection[1] = $event.target.value" [(value)]="inventaryResultTable.thirdSection.thirdSection[1]"/>
+                  <td class="tg-qv16">
+                    <span translate>{{ inventaryResultTable.thirdSection.thirdSection[0] }}</span>
+                  </td>
+                  <td class="tg-qv16" colspan="6">
+                    <input
+                      class="customImput"
+                      style="height: 30px;"
+                      (change)="inventaryResultTable.thirdSection.thirdSection[1] = $event.target.value"
+                      [(value)]="inventaryResultTable.thirdSection.thirdSection[1]"
+                    />
                   </td>
                 </tr>
-          
+
                 <tr>
-                  <td class="tg-qv16" colspan="3"><span translate>{{inventaryResultTable.fourthSection.firsRow[0]}}</span></td>
-                  <td class="tg-qv16"  colspan="2">
-                    <input type="number" class="customImput" style="height: 50px;"  (change)="inventaryResultTable.fourthSection.firsRow[1] = $event.target.value" [(value)]="inventaryResultTable.fourthSection.firsRow[1]"/>
+                  <td class="tg-qv16" colspan="3">
+                    <span translate>{{ inventaryResultTable.fourthSection.firsRow[0] }}</span>
                   </td>
-                  <td class="tg-qv16" colspan="3"><span translate>{{inventaryResultTable.fourthSection.firsRow[2]}}</span></td>
+                  <td class="tg-qv16" colspan="2">
+                    <input
+                      type="number"
+                      class="customImput"
+                      style="height: 50px;"
+                      (change)="inventaryResultTable.fourthSection.firsRow[1] = $event.target.value"
+                      [(value)]="inventaryResultTable.fourthSection.firsRow[1]"
+                    />
+                  </td>
+                  <td class="tg-qv16" colspan="3">
+                    <span translate>{{ inventaryResultTable.fourthSection.firsRow[2] }}</span>
+                  </td>
                   <td class="tg-qv16" colspan="4">
                     <mat-form-field>
                       <mat-select [(value)]="inventaryResultTable.fourthSection.firsRow[3]">
@@ -501,13 +596,22 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="tg-qv16" colspan="3"><span translate>{{inventaryResultTable.fourthSection.secondRow[0]}}</span></td>
-                  <td class="tg-qv16"  colspan="2">
-                    <input class="customImput" style="height: 50px;" type="number" (change)="inventaryResultTable.fourthSection.secondRow[1] = $event.target.value"  [(value)]="inventaryResultTable.fourthSection.secondRow[1]"/>
+                  <td class="tg-qv16" colspan="3">
+                    <span translate>{{ inventaryResultTable.fourthSection.secondRow[0] }}</span>
                   </td>
-                  <td class="tg-qv16" colspan="3"><span translate>{{inventaryResultTable.fourthSection.secondRow[2]}}</span></td>
+                  <td class="tg-qv16" colspan="2">
+                    <input
+                      class="customImput"
+                      style="height: 50px;"
+                      type="number"
+                      (change)="inventaryResultTable.fourthSection.secondRow[1] = $event.target.value"
+                      [(value)]="inventaryResultTable.fourthSection.secondRow[1]"
+                    />
+                  </td>
+                  <td class="tg-qv16" colspan="3">
+                    <span translate>{{ inventaryResultTable.fourthSection.secondRow[2] }}</span>
+                  </td>
                   <td class="tg-qv16" colspan="4">
-          
                     <mat-form-field>
                       <mat-select [(value)]="inventaryResultTable.fourthSection.secondRow[3]">
                         <mat-option value="CRC">
@@ -518,39 +622,55 @@
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
-          
-                    
                   </td>
                 </tr>
-          
               </table>
-              <br>
-              <br>
+              <br />
+              <br />
               <label><strong translate>ppcn.organitationCategory</strong></label>
-              <br>
-              <br>
-              <table class="tg mat-elevation-z2" >
+              <br />
+              <br />
+              <table class="tg mat-elevation-z2">
                 <tr>
-                  <th class="tg-qv16" rowspan="2"><span translate>{{categoryTable.category[0]}}</span></th>
-                  <td class="tg-qv16"  rowspan="2">
-                    <input class="customImput" style="height: 50px;width: 90px;" type="text" (change)="categoryTable.category[1] = $event.target.value" [(value)]="categoryTable.category[1]"/>
+                  <th class="tg-qv16" rowspan="2">
+                    <span translate>{{ categoryTable.category[0] }}</span>
+                  </th>
+                  <td class="tg-qv16" rowspan="2">
+                    <input
+                      class="customImput"
+                      style="height: 50px; width: 90px;"
+                      type="text"
+                      (change)="categoryTable.category[1] = $event.target.value"
+                      [(value)]="categoryTable.category[1]"
+                    />
                   </td>
-                  <th *ngFor="let header of categoryTable.categoryHeader" class="tg-qv16"><span translate>{{header}}</span></th>
+                  <th *ngFor="let header of categoryTable.categoryHeader" class="tg-qv16">
+                    <span translate>{{ header }}</span>
+                  </th>
                 </tr>
                 <tr>
-                  <td *ngFor="let row of categoryTable.categoryRow ; index as i"  class="tg-qv16">
-                    <input class="customImput" style="height: 50px;" [type]="row.type" (change)="categoryTable.categoryRow[i].value = $event.target.value" [(value)]="categoryTable.categoryRow[i].value"/>
+                  <td *ngFor="let row of categoryTable.categoryRow; index as i" class="tg-qv16">
+                    <input
+                      class="customImput"
+                      style="height: 50px;"
+                      [type]="row.type"
+                      (change)="categoryTable.categoryRow[i].value = $event.target.value"
+                      [(value)]="categoryTable.categoryRow[i].value"
+                    />
                   </td>
                 </tr>
               </table>
-              <br>
+              <br />
             </div>
             <br />
             <br />
 
             <div class="box-button">
-              <app-generic-button-secondary (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+              <app-generic-button-secondary
+                (click)="stepper.previous()"
+                name="general.back"
+              ></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
 
@@ -559,18 +679,32 @@
               <span translate>specificLabel.GEIActivityTypes</span>
             </ng-template>
             <div formArrayName="activities">
-              <div *ngFor="let activity of formGroup.controls.formArray['controls'][6].controls['activities'].controls; let i = index">
+              <div
+                *ngFor="
+                  let activity of formGroup.controls.formArray['controls'][6].controls['activities'].controls;
+                  let i = index
+                "
+              >
                 <!-- row divider show for every nex row exclude if first row -->
-                <mat-divider *ngIf="formGroup.controls.formArray['controls'][6].controls['activities'].controls.length > 1 && i > 0" ></mat-divider><br>
+                <mat-divider
+                  *ngIf="
+                    formGroup.controls.formArray['controls'][6].controls['activities'].controls.length > 1 && i > 0
+                  "
+                ></mat-divider
+                ><br />
                 <div [formGroupName]="i">
                   <mat-form-field class="field-ppcn">
                     <mat-label translate>specificLabel.activityCarriedOrganization</mat-label>
-                    <input matInput formControlName="activityCtrl">
+                    <input matInput formControlName="activityCtrl" />
                   </mat-form-field>
                   <br />
                   <mat-form-field class="field-ppcn">
                     <mat-label translate>geographyLabel.sector</mat-label>
-                    <mat-select formControlName="sectorCtrl" [placeholder]="'geographyLabel.sector' | translate" (selectionChange)="onSectorChange($event)">
+                    <mat-select
+                      formControlName="sectorCtrl"
+                      [placeholder]="'geographyLabel.sector' | translate"
+                      (selectionChange)="onSectorChange($event)"
+                    >
                       <mat-option *ngFor="let sector of sectors" [value]="sector.id">
                         {{ sector.name }}
                       </mat-option>
@@ -589,23 +723,36 @@
                   </mat-form-field>
                   <br />
                   <!-- row delete button, hidden if there is just one row -->
-                  <button mat-mini-fab color="warn" *ngIf="formGroup.controls.formArray['controls'][6].controls['activities'].controls.length > 1" (click)="deleteItems(i)"
-                    type="button">
+                  <button
+                    mat-mini-fab
+                    color="warn"
+                    *ngIf="formGroup.controls.formArray['controls'][6].controls['activities'].controls.length > 1"
+                    (click)="deleteItems(i)"
+                    type="button"
+                  >
                     <mat-icon>delete forever</mat-icon>
                   </button>
                 </div>
               </div>
             </div>
             <!-- <mat-divider></mat-divider> -->
-            <button mat-raised-button (click)="addItems()" type="button" *ngIf="activityFormGroup?.controls.length <= 10">
+            <button
+              mat-raised-button
+              (click)="addItems()"
+              type="button"
+              *ngIf="activityFormGroup?.controls.length <= 10"
+            >
               <mat-icon>add box</mat-icon>
               <span translate>specificLabel.addActivity</span>
             </button>
-            <br/>
-            <br/>
+            <br />
+            <br />
             <div class="box-button">
-              <app-generic-button-secondary (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+              <app-generic-button-secondary
+                (click)="stepper.previous()"
+                name="general.back"
+              ></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
             <br />
           </mat-step>
@@ -617,10 +764,9 @@
 
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-               <app-generic-button type="submit" mat-raised-button name="general.done"></app-generic-button>
+              <app-generic-button type="submit" mat-raised-button name="general.done"></app-generic-button>
             </div>
           </mat-step>
-
         </mat-vertical-stepper>
       </div>
     </form>
