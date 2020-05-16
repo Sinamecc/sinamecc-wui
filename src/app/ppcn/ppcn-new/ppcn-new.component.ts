@@ -14,7 +14,6 @@ import { AbstractControl, FormGroup, FormBuilder, Validators, FormArray } from "
 import { finalize, tap } from "rxjs/operators";
 import { environment } from "@env/environment";
 import { Logger, I18nService, AuthenticationService } from "@app/core";
-import { BehaviorSubject } from "rxjs";
 const log = new Logger("Report");
 
 import { PpcnService } from "@app/ppcn/ppcn.service";
@@ -121,11 +120,10 @@ export class PpcnNewComponent implements OnInit {
       categoryTable: this.table.buildCategoryTableSection(),
     };
 
-    console.log(context);
     this.formGroup.controls.formArray["controls"][0].patchValue({
       ciuuListCodeCtrl: this.CIUUCodeList,
     });
-    /*
+
     this.service
       .submitNewPpcnForm(context)
       .pipe(
@@ -143,7 +141,6 @@ export class PpcnNewComponent implements OnInit {
           this.error = error;
         }
       );
-      */
   }
 
   private createForm() {
