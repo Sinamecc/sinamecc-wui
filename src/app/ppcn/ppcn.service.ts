@@ -357,18 +357,18 @@ export class PpcnService {
     subsectorFormId: number = null,
     geiOrganizationId: number = null,
   ) {
-    let formData = {};
-    let organization = {};
-    let contact = {};
-    let geiOrganization = {};
-    let geiActivityTypes = {};
-    let reduction = {};
-    let carbonOffset = {};
-    let organization_classification = {};
+    const formData = {};
+    const organization = {};
+    const contact = {};
+    const geiOrganization = {};
+    const geiActivityTypes = {};
+    const reduction = {};
+    const carbonOffset = {};
+    const organization_classification = {};
 
-    const validateListReduction = [2,3,4,5];
-    const validateListCompensation = [4,5];
-    
+    const validateListReduction = [2, 3, 4, 5];
+    const validateListCompensation = [4, 5];
+
     this.currentLevelId.subscribe(levelId => formData['geographic_level'] = levelId);
     formData['user'] = String(this.authenticationService.credentials.id);
     if (geographicFormId) {
@@ -384,7 +384,7 @@ export class PpcnService {
     organization['legal_identification'] = context.formArray[0].legalIdCtrl;
     organization['confidential'] = context.formArray[0].confidentialCtrl;
     organization['confidential_fields'] = context.formArray[0].confidentialValueCtrl;
-    
+
     organization['phone_organization'] = context.formArray[0].telephoneCtrl;
     organization['postal_code'] = context.formArray[0].postalCodeCtrl;
     organization['fax'] = context.formArray[0].faxCtrl;
@@ -392,16 +392,16 @@ export class PpcnService {
 
     // Reduction form section //
     reduction['project'] = context.formArray[3].reductionProjectCtrl;
-    reduction['activity']= context.formArray[3].reductionActivityCtrl;
-    reduction['detail_reduction']= context.formArray[3].reductionDetailsCtrl;
-    reduction['emission']= context.formArray[3].reducedEmissionsCtrl;
-    reduction['total_emission']= context.formArray[3].totalEmisionesReducidas;
-    reduction['investment']= context.formArray[3].investmentReductionsValue;
-    reduction['investment_currency']= context.formArray[3].investmentReductions;
-    reduction['total_investment']= context.formArray[3].totalInvestmentReductionValue;
-    reduction['total_investment_currency']= context.formArray[3].totalInvestmentReduction;
+    reduction['activity'] = context.formArray[3].reductionActivityCtrl;
+    reduction['detail_reduction'] = context.formArray[3].reductionDetailsCtrl;
+    reduction['emission'] = context.formArray[3].reducedEmissionsCtrl;
+    reduction['total_emission'] = context.formArray[3].totalEmisionesReducidas;
+    reduction['investment'] = context.formArray[3].investmentReductionsValue;
+    reduction['investment_currency'] = context.formArray[3].investmentReductions;
+    reduction['total_investment'] = context.formArray[3].totalInvestmentReductionValue;
+    reduction['total_investment_currency'] = context.formArray[3].totalInvestmentReduction;
 
-    // carbon offset form section 
+    // carbon offset form section
     carbonOffset['offset_scheme'] = context.formArray[4].compensationScheme;
     carbonOffset['project_location'] = context.formArray[4].projectLocation;
     carbonOffset['certificate_identification'] = context.formArray[4].certificateNumber;
@@ -421,14 +421,14 @@ export class PpcnService {
     organization_classification['reduction'] = validateListReduction.indexOf(context.formArray[2].recognitionCtrl) >= 0 ? reduction : null;
     organization_classification['carbon_offset'] = validateListCompensation.indexOf(context.formArray[2].recognitionCtrl) >= 0 ? carbonOffset : null;
 
-    formData['organization_classification'] =  organization_classification; 
+    formData['organization_classification'] =  organization_classification;
 
-    
-    for(let value of context.formArray[0].ciuuListCodeCtrl){
+
+    for (const value of context.formArray[0].ciuuListCodeCtrl) {
       const element = {
-        "ciiu_code": value
-      }
-      organization['ciiu_code_list'].push(element)
+        'ciiu_code': value
+      };
+      organization['ciiu_code_list'].push(element);
     }
     organization['address'] = context.formArray[0].addressCtrl;
 
@@ -445,12 +445,11 @@ export class PpcnService {
 
     if (context.formArray[5].ovvCtrl == '' || context.formArray[5].ovvCtrl == null) {
       formData['base_year'] = this.datePipe.transform(context.formArray[5].reportYearCtrl, 'yyyy-MM-dd');
-    }
-    else {
+    } else {
       if (geiOrganizationId) {
         geiOrganization['id'] = String(geiOrganizationId);
       }
-      console.log(context.formArray[5])
+      console.log(context.formArray[5]);
       // geiOrganization['activity_type'] = context.formArray[4].activityCtrl;
       geiOrganization['ovv'] = context.formArray[5].ovvCtrl;
       geiOrganization['emission_ovv_date'] = this.datePipe.transform(context.formArray[5].implementationEmissionDateCtrl, 'yyyy-MM-dd');

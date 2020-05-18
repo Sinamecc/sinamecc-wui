@@ -1,4 +1,4 @@
-export interface Ovv{
+export interface Ovv {
     id: Number;
     email: string;
     phone: string;

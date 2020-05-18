@@ -12,7 +12,7 @@ export interface Response {
   statusCode: number;
   message: string;
   id?: string;
-  body?:any;
+  body?: any;
 
 }
 
@@ -22,16 +22,16 @@ export interface Response {
 // }
 
 const routes = {
-  permissions:() => `/v1/user/permission/`,
-  groups:() => `/v1/user/group/`,
-  submitUser:() =>  `/v1/user/`,
-  submitPermissions:(userName:string) => `/v1/user/${userName}/permission/`,
-  submitGroups:(userName:string) =>`/v1/user/${userName}/group/`,
-  users:() => `/v1/user/`,
-  user:(userName:string) => `/v1/user/${userName}`,
-  editUser:(userId:string) => `/v1/user/${userId}`,
-  submitImage:() => `/v1/user/1/profile_picture/`
-}
+  permissions: () => `/v1/user/permission/`,
+  groups: () => `/v1/user/group/`,
+  submitUser: () =>  `/v1/user/`,
+  submitPermissions: (userName: string) => `/v1/user/${userName}/permission/`,
+  submitGroups: (userName: string) => `/v1/user/${userName}/group/`,
+  users: () => `/v1/user/`,
+  user: (userName: string) => `/v1/user/${userName}`,
+  editUser: (userId: string) => `/v1/user/${userId}`,
+  submitImage: () => `/v1/user/1/profile_picture/`
+};
 
 @Injectable()
 export class AdminService {
@@ -278,7 +278,7 @@ export class AdminService {
 
   }
 
-  createUserImage(context:any){
+  createUserImage(context: any) {
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -286,9 +286,9 @@ export class AdminService {
       })
     };
 
-    let formData: FormData = new FormData();
-    formData.append('user',context.user);
-    formData.append('image',context.image);
+    const formData: FormData = new FormData();
+    formData.append('user', context.user);
+    formData.append('image', context.image);
 
     return this.httpClient
         .post(routes.submitImage(), formData, httpOptions)
@@ -331,7 +331,7 @@ export class AdminService {
             const response = {
               statusCode: 200,
               message: 'Form submitted correctly',
-              body:body
+              body: body
             };
             return response;
           })

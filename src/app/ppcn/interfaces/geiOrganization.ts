@@ -1,5 +1,5 @@
-import { GeiActivityType } from "./geiActivityType";
-import { Ovv } from "./ovv";
+import { GeiActivityType } from './geiActivityType';
+import { Ovv } from './ovv';
 
 export interface GeiOrganization {
     id: Number;
@@ -9,5 +9,5 @@ export interface GeiOrganization {
     report_year: string;
     base_year: string;
     gei_activity_types: GeiActivityType[];
-  
+
   }

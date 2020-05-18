@@ -13,8 +13,8 @@ import { Permissions } from '@app/core/permissions';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  logoName : string;
-  userImage:string | SafeUrl = 'assets/default_user_image.png';
+  logoName: string;
+  userImage: string | SafeUrl = 'assets/default_user_image.png';
 
   @Input() sidenav: MatSidenav;
 
@@ -23,10 +23,10 @@ export class HeaderComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private i18nService: I18nService,
               private sanitizer: DomSanitizer) {
-                this.logoName = "logo-white-nav.png";
+                this.logoName = 'logo-white-nav.png';
                }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.getUserPhoto();
   }
 
@@ -75,26 +75,26 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  getCurrentPhoto(photoList:any[]){
-    for(let photo of photoList){
-      if(photo.current){
+  getCurrentPhoto(photoList: any[]) {
+    for (const photo of photoList) {
+      if (photo.current) {
         return photo;
       }
     }
-    return undefined
+    return undefined;
   }
 
-  getUserPhoto(){
-    const userPhoto = this.getCurrentPhoto(this.credential.userPhoto)
-    if(userPhoto){
-      this.authenticationService.getUserPhoto(userPhoto.image).subscribe((image: any) =>{ 
-        this.userImage = this.sanitizer.bypassSecurityTrustUrl(this.createImageFromBlob(image)); 
+  getUserPhoto() {
+    const userPhoto = this.getCurrentPhoto(this.credential.userPhoto);
+    if (userPhoto) {
+      this.authenticationService.getUserPhoto(userPhoto.image).subscribe((image: any) => {
+        this.userImage = this.sanitizer.bypassSecurityTrustUrl(this.createImageFromBlob(image));
       });
     }
   }
 
   createImageFromBlob(image: Blob) {
-    return URL.createObjectURL(image)
+    return URL.createObjectURL(image);
  }
 
 }

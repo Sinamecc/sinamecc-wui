@@ -203,7 +203,7 @@ export class PpcnUpdateComponent implements OnInit {
         this.geographicFormId = +ppcn['geographic_level']['id'];
         this.requiredFormId = +ppcn['organization_classification']['required_level']['id'];
         this.recognitionFormId = +ppcn['organization_classification']['recognition_type']['id'];
-        if(ppcn['gei_organization'] != null){
+        if (ppcn['gei_organization'] != null) {
           this.geiOrganizationFormId = +ppcn['gei_organization']['id'];
           this.ovv_id = String(ppcn['gei_organization']['ovv']['id']);
           this.emission_OVV = ppcn['gei_organization']['emission_OVV'];
@@ -220,7 +220,7 @@ export class PpcnUpdateComponent implements OnInit {
           this.formBuilder.group({
             nameCtrl: [ppcn['organization']['name'], Validators.required],
             representativeNameCtrl: [ppcn['organization']['representative_name'], Validators.required],
-            telephoneCtrl: [ppcn['organization']['phone_organization'], 
+            telephoneCtrl: [ppcn['organization']['phone_organization'],
                             Validators.compose([Validators.required, Validators.minLength(8)])],
             faxCtrl: [ppcn['organization']['fax'], null],
             postalCodeCtrl: [ppcn['organization']['postal_code'], null],

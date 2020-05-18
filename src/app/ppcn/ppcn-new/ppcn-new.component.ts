@@ -45,7 +45,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
   subSectors: SubSector[];
   ovvs: Ovv[];
 
-  CIUUCodeList:string[] = [];
+  CIUUCodeList: string[] = [];
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -101,12 +101,12 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
   }
 
-  submitForm(){
+  submitForm() {
     this.isLoading = true;
 
     this.formGroup.controls.formArray['controls'][0].patchValue({
       'ciuuListCodeCtrl': this.CIUUCodeList
-    })
+    });
 
    this.service.submitNewPpcnForm(this.formGroup.value)
       .pipe(finalize(() => {
@@ -129,15 +129,15 @@ export class PpcnNewComponent implements OnInit, DoCheck {
           nameCtrl: ['', Validators.required],
           representativeNameCtrl: ['', Validators.required],
           telephoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-          confidentialCtrl:(this.levelId=="1"? null:['',Validators.required] ),
-          confidentialValueCtrl:(this.levelId=="1"? null:[''] ),
+          confidentialCtrl: (this.levelId == '1' ? null : ['', Validators.required] ),
+          confidentialValueCtrl: (this.levelId == '1' ? null : [''] ),
           faxCtrl: '',
           postalCodeCtrl: '',
           addressCtrl: ['', Validators.required],
-          legalIdCtrl: (this.levelId=="1"? null:['',Validators.required] ),
-          legalRepresentativeIdCtrl: (this.levelId=="1"? null:['',Validators.required] ),
-          ciuuCodeCtrl: (this.levelId=="1"? null:[''] ),
-          ciuuListCodeCtrl: (this.levelId=="1"? null:['',Validators.required] ),
+          legalIdCtrl: (this.levelId == '1' ? null : ['', Validators.required] ),
+          legalRepresentativeIdCtrl: (this.levelId == '1' ? null : ['', Validators.required] ),
+          ciuuCodeCtrl: (this.levelId == '1' ? null : [''] ),
+          ciuuListCodeCtrl: (this.levelId == '1' ? null : ['', Validators.required] ),
         }),
         this.formBuilder.group({
           contactNameCtrl: ['', Validators.required],
@@ -146,34 +146,34 @@ export class PpcnNewComponent implements OnInit, DoCheck {
           phoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
         }),
         this.formBuilder.group({
-          requiredCtrl:['', Validators.required],
-          amountOfEmissions:['', Validators.required],
-          amountInventoryData:['', Validators.required],
-          numberofDacilities:['', Validators.required],
-          recognitionCtrl: ['',Validators.required],
+          requiredCtrl: ['', Validators.required],
+          amountOfEmissions: ['', Validators.required],
+          amountInventoryData: ['', Validators.required],
+          numberofDacilities: ['', Validators.required],
+          recognitionCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
-          reductionProjectCtrl:(this.levelId=="2"? null:['',Validators.required] ),
-          reductionActivityCtrl:(this.levelId=="2"? null:['',Validators.required] ),
-          reductionDetailsCtrl:(this.levelId=="2"? null:['',Validators.required] ),
-          reducedEmissionsCtrl:(this.levelId=="2"? null:['',Validators.required] ),
-          investmentReductions:(this.levelId=="2"? null:['',Validators.required] ),
-          investmentReductionsValue:(this.levelId=="2"? null:['',Validators.required] ),
-          totalInvestmentReduction:(this.levelId=="2"? null:['',Validators.required] ),
-          totalInvestmentReductionValue:(this.levelId=="2"? null:['',Validators.required] ),
-          totalEmisionesReducidas :(this.levelId=="2"? null:['',Validators.required] ),
+          reductionProjectCtrl: (this.levelId == '2' ? null : ['', Validators.required] ),
+          reductionActivityCtrl: (this.levelId == '2' ? null : ['', Validators.required] ),
+          reductionDetailsCtrl: (this.levelId == '2' ? null : ['', Validators.required] ),
+          reducedEmissionsCtrl: (this.levelId == '2' ? null : ['', Validators.required] ),
+          investmentReductions: (this.levelId == '2' ? null : ['', Validators.required] ),
+          investmentReductionsValue: (this.levelId == '2' ? null : ['', Validators.required] ),
+          totalInvestmentReduction: (this.levelId == '2' ? null : ['', Validators.required] ),
+          totalInvestmentReductionValue: (this.levelId == '2' ? null : ['', Validators.required] ),
+          totalEmisionesReducidas : (this.levelId == '2' ? null : ['', Validators.required] ),
 
         }),
         this.formBuilder.group({
-          compensationScheme:(this.levelId=="2"? null:['',Validators.required] ),
-          projectLocation:(this.levelId=="2"? null:['',Validators.required] ),
-          certificateNumber:(this.levelId=="2"? null:['',Validators.required] ),
-          totalCompensation:(this.levelId=="2"? null:['',Validators.required] ),
-          compensationCost:(this.levelId=="2"? null:['',Validators.required] ),
-          compensationCostValue:(this.levelId=="2"? null:['',Validators.required] ),
-          period:(this.levelId=="2"? null:['',Validators.required] ),
-          totalEmissionsOffsets:(this.levelId=="2"? null:['',Validators.required] ),
-          totalCostCompensation:(this.levelId=="2"? null:['',Validators.required] ),
+          compensationScheme: (this.levelId == '2' ? null : ['', Validators.required] ),
+          projectLocation: (this.levelId == '2' ? null : ['', Validators.required] ),
+          certificateNumber: (this.levelId == '2' ? null : ['', Validators.required] ),
+          totalCompensation: (this.levelId == '2' ? null : ['', Validators.required] ),
+          compensationCost: (this.levelId == '2' ? null : ['', Validators.required] ),
+          compensationCostValue: (this.levelId == '2' ? null : ['', Validators.required] ),
+          period: (this.levelId == '2' ? null : ['', Validators.required] ),
+          totalEmissionsOffsets: (this.levelId == '2' ? null : ['', Validators.required] ),
+          totalCostCompensation: (this.levelId == '2' ? null : ['', Validators.required] ),
         }),
         this.formBuilder.group({
           baseYearCtrl: ['', Validators.required],
@@ -188,16 +188,16 @@ export class PpcnNewComponent implements OnInit, DoCheck {
         }),
       ])
     });
-    
+
     this.formGroup.controls.formArray['controls'][3].patchValue({
       'investmentReductions': 'CRC',
       'totalInvestmentReduction': 'CRC',
-    })
+    });
 
     this.formGroup.controls.formArray['controls'][4].patchValue({
       'totalCostCompensation': 'CRC',
       'compensationCost': 'CRC',
-    })
+    });
 
     const subsectors = this.service.subsectors('1', this.i18nService.language.split('-')[0]);
     const initialFormData = this.initialFormData();
@@ -212,11 +212,11 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
   }
 
-  showRecognitionFormSection(elementsToShow:number[]){
-    return elementsToShow.indexOf(this.reductionFormVar) >= 0
+  showRecognitionFormSection(elementsToShow: number[]) {
+    return elementsToShow.indexOf(this.reductionFormVar) >= 0;
   }
 
-  createActivityForm() : FormGroup{
+  createActivityForm(): FormGroup {
     return this.formBuilder.group({
       activityCtrl: ['', Validators.required],
       sectorCtrl: ['', Validators.required],
