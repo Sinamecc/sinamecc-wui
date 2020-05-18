@@ -1,15 +1,14 @@
 @import "src/theme/theme-variables";
 
-  .container {
-    display: flex;
-    flex-direction: column;
-    min-width: 300px;
+.container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
 
-  }
+}
   
-  .mat-table {
-    overflow: auto;
-    max-height: 500px;
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
     
-  }
-  
+}
