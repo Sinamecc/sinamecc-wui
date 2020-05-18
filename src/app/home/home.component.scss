@@ -1,59 +1,59 @@
-.mainDiv{
+.mainDiv {
   width: 100%;
-  height: 40%; 
+  height: 40%;
   position: relative;
 }
 
-.imageContainer{
-  border-top:solid #2196f3 ;
+.imageContainer {
+  border-top: solid #2196f3;
   background-image: url("assets/slider_2.jpeg");
   background-repeat: no-repeat;
-  background-size: 100% ;
+  background-size: 100%;
   width: 100%;
   background-position: 0% 25%;
-  width: 100%;
-  height: 100%; 
+  height: 100%;
   filter: brightness(70%);
 }
 
-.textContainer{
+.textContainer {
   width: 100%;
   position: absolute;
   top: 30%;
 }
 
-.customText{
+.customText {
   color: white;
-  margin-left: 10% ;
+  margin-left: 10%;
 }
 
-.customButton{
-  margin-left: 10% ;
+.customButton {
+  margin-left: 10%;
   border-radius: 20px;
 }
 
-.mainCardContainer{
+.mainCardContainer {
   width: 20%;
   height: 300px;
   margin-left: 10px;
 }
 
-.cardImageContainer{
+.cardImageContainer {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 100%;
   height: 80%;
-  background-color:white ;
+  background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-.cardContainer{
+.cardContainer {
   position: relative;
   width: 75%;
   height: 20%;
   border: solid black;
   background-color: black;
-  bottom: 30px;;
+  bottom: 30px;
+  ;
   margin-left: 12%;
   border-radius: 30%;
   color: white;
@@ -63,14 +63,13 @@
   transition: transform 0.2s;
 }
 
-.cardContainer:hover{
+.cardContainer:hover {
   cursor: pointer;
   transform: scale(1.1);
 }
 
-.customContainer{
-  border-top:10px solid yellowgreen ;
+.customContainer {
+  border-top: 10px solid yellowgreen;
   padding: 25px;
-  background-color:rgb(241, 241, 241) ;
+  background-color: rgb(241, 241, 241);
 }
-

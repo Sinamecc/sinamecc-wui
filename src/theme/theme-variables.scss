@@ -15,16 +15,16 @@
 // rgb(139,196,68)
 $app-primary: mat-palette($mat-blue, 500);
 
-$app-accent:  mat-palette($mat-orange, 500, A200, A700);
+$app-accent: mat-palette($mat-orange, 500, a200, a700);
 
 // The warn palette is optional (defaults to red).
-$app-warn:    mat-palette($mat-red);
+$app-warn: mat-palette($mat-red);
 // Create the theme object (a Sass map containing all of the palettes).
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 
 .login-box {
   $alternate-primary: mat-palette($mat-light-blue);
-  $alternate-accent:  mat-palette($mat-yellow, 400);
+  $alternate-accent: mat-palette($mat-yellow, 400);
 
   $login-box: mat-light-theme($alternate-primary, $alternate-accent);
 
@@ -32,7 +32,8 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 }
 
 // Toolbar
-mat-toolbar[_ngcontent-c6], .mat-toolbar.mat-primary {
+mat-toolbar[_ngcontent-c6],
+.mat-toolbar.mat-primary {
   background: #000;
   color: #fff;
   font-weight: 800;
@@ -40,11 +41,17 @@ mat-toolbar[_ngcontent-c6], .mat-toolbar.mat-primary {
   font: 18px/28px "Open Sans", sans-serif;
 }
 
-.mat-button, .mat-raised-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button, .mat-fab, .mat-mini-fab {
+.mat-button,
+.mat-raised-button,
+.mat-icon-button,
+.mat-stroked-button,
+.mat-flat-button,
+.mat-fab,
+.mat-mini-fab {
   font-weight: 600;
 }
 
-.text-color{
+.text-color {
   color: #000;
   border-bottom: 3px solid #ccc;
   position: relative;
@@ -52,7 +59,7 @@ mat-toolbar[_ngcontent-c6], .mat-toolbar.mat-primary {
   width: 50%;
 }
 
-.text-color:after{
+.text-color::after {
   bottom: -3px;
   content: "";
   height: 3px;
@@ -63,12 +70,13 @@ mat-toolbar[_ngcontent-c6], .mat-toolbar.mat-primary {
   font-size: 18pt;
 }
 
-@media only screen and (max-width: 700px){
-  .text-color{
+@media only screen and (max-width: 700px) {
+  .text-color {
     width: 100%;
   }
 
-  .mat-elevation-z8, .container{
+  .mat-elevation-z8,
+  .container {
     text-align: left !important;
     padding: 0.1rem;
     font-size: 15px;
@@ -77,7 +85,8 @@ mat-toolbar[_ngcontent-c6], .mat-toolbar.mat-primary {
   }
 }
 
-.mat-elevation-z8, .container{
+.mat-elevation-z8,
+.container {
   text-align: left !important;
   padding: 1rem;
   font-size: 15px;
@@ -85,9 +94,9 @@ mat-toolbar[_ngcontent-c6], .mat-toolbar.mat-primary {
   margin: 0 auto;
 }
 
-.divider-custom{
+.divider-custom {
   border-color: #2aa7d9 !important;
-  background:  #2aa7d9 !important;
+  background: #2aa7d9 !important;
   max-width: 150px;
   min-width: 100px;
   margin: 5px auto 0 auto !important;
@@ -101,7 +110,8 @@ mat-toolbar[_ngcontent-c6], .mat-toolbar.mat-primary {
   font-size: 15pt;
 }
 
-.mat-toolbar-row, .mat-toolbar-single-row{
+.mat-toolbar-row,
+.mat-toolbar-single-row {
   width: auto !important;
   background: transparent;
 }
@@ -111,22 +121,22 @@ mat-toolbar[_ngcontent-c6], .mat-toolbar.mat-primary {
   text-align: center;
 }
 
-.mat-row{
+.mat-row {
   text-align: center;
-  
-} 
 
-.mat-table>.mat-header-row>.mat-header-cell{
+}
+
+.mat-table >.mat-header-row>.mat-header-cell {
   color: #2aa7d9;
   font-weight: bold;
 }
 
-.section-heading{
+.section-heading {
   margin: 0 auto;
   text-align: center;
 }
 
-.box-button{
+.box-button {
   width: 90%;
   margin-top: 5px;
   margin-left: auto;
@@ -135,25 +145,25 @@ mat-toolbar[_ngcontent-c6], .mat-toolbar.mat-primary {
   text-align: right;
 }
 
-.mat-card-title{
+.mat-card-title {
   text-align: center;
 }
 
-.table-sinamecc{
+.table-sinamecc {
   width: 90%;
   margin: 0 auto 0 auto;
 }
 
-.brand{
+.brand {
   float: left;
 }
 
-.mat-card>:first-child {
+.mat-card >:first-child {
   margin-top: 0;
   text-align: center;
 }
 
-.text_upload{
+.text_upload {
   position: relative;
   float: left;
   margin-right: 10px;
@@ -164,11 +174,11 @@ mat-toolbar[_ngcontent-c6], .mat-toolbar.mat-primary {
   width: 100%;
 }
 
-.center{
+.center {
   text-align: center;
 }
 
-.align-right{
+.align-right {
   text-align: right;
 }
 
@@ -180,10 +190,13 @@ mat-toolbar[_ngcontent-c6], .mat-toolbar.mat-primary {
   background-color: #3f51b5 !important;
 }
 
-.mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
-  color:#fff !important;
+.mat-raised-button.mat-accent,
+.mat-fab.mat-accent,
+.mat-mini-fab.mat-accent {
+  color: #fff !important;
 }
 
-.login-label .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, .login-label .mat-form-field-empty.mat-form-field-label{
+.login-label .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
+.login-label .mat-form-field-empty.mat-form-field-label {
   font-weight: 800 !important;
 }

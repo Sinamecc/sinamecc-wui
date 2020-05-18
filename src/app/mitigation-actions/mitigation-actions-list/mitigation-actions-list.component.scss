@@ -26,12 +26,16 @@
   color: #1565c0;
 }
 
-.submitted>mat-cell:nth-child(4), .rejected>mat-cell:nth-child(4), .in-review>mat-cell:nth-child(4), .approved>mat-cell:nth-child(4),.on-change>mat-cell:nth-child(4){
+.submitted>mat-cell:nth-child(4),
+.rejected>mat-cell:nth-child(4),
+.in-review>mat-cell:nth-child(4),
+.approved>mat-cell:nth-child(4),
+.on-change>mat-cell:nth-child(4) {
   font-weight: bold;
-  text-transform: uppercase;  
+  text-transform: uppercase;
 }
 
-.toolbar-title{
-  margin: 0 auto !important;
+.toolbar-title {
+  margin: 0 auto;
   background: transparent;
 }

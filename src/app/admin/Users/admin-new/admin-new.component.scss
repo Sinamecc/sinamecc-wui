@@ -4,10 +4,13 @@
   color: mat-color($app-warn);
 }
 
+/* stylelint-disable */
 input[type="file"] {
   display: none;
 }
-  
+
+/* stylelint-enable */
+
 .custom-file-upload {
   border: 1px solid #ccc;
   display: inline-block;
@@ -16,17 +19,17 @@ input[type="file"] {
   border-radius: 10px;
 }
 
-.custom-image{
+.custom-image {
   width: 200px;
   height: 200px;
   border-radius: 50%;
 }
 
-.custom-container-image-section{
+.custom-container-image-section {
   margin: 0 auto;
 }
 
-.custom-upload-file{
-  margin-right:5px;
-  margin-top:10px;
+.custom-upload-file {
+  margin-right: 5px;
+  margin-top: 10px;
 }

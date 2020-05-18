@@ -65,7 +65,7 @@ body {
   margin-left: auto;
 }
 
-.section-heading-inline:before {
+.section-heading-inline::before {
   color: #77c720;
   content: "=========";
   display: block;
@@ -80,7 +80,7 @@ body {
   width: 120px;
 }
 
-mat-toolbar>div{
+mat-toolbar>div {
   text-align: right;
   width: 100%;
   text-transform: uppercase;
