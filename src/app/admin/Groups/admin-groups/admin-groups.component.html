@@ -7,13 +7,13 @@
             <mat-divider class="divider-custom"></mat-divider>
         </h3>
 
-        <br>
-            <app-custom-search-bar  [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar >
-        <br>
-        
+        <br />
+        <app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
+        <br />
+
         <mat-card-content>
 
-            <mat-table  #table [dataSource]="dataSource" >
+            <mat-table #table [dataSource]="dataSource">
 
                 <ng-container matColumnDef="name">
                     <mat-header-cell *matHeaderCellDef translate>admin.groupName</mat-header-cell>
@@ -23,19 +23,23 @@
                 <ng-container matColumnDef="action">
                     <mat-header-cell *matHeaderCellDef translate>admin.action </mat-header-cell>
                     <mat-header-cell *matHeaderCellDef translate>admin.action </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> 
-                        <button disabled mat-icon-button color="primary" ><mat-icon color="white">visibility</mat-icon></button>
-                        <button disabled mat-icon-button color="warn" (click)="openDeleteConfirmationDialog()"><mat-icon color="white">delete</mat-icon></button>
+                    <mat-cell *matCellDef="let element">
+                        <button disabled mat-icon-button color="primary">
+                            <mat-icon color="white">visibility</mat-icon>
+                        </button>
+                        <button disabled mat-icon-button color="warn" (click)="openDeleteConfirmationDialog()">
+                            <mat-icon color="white">delete</mat-icon>
+                        </button>
                     </mat-cell>
                 </ng-container>
-      
+
                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
             </mat-table>
             <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
             </mat-paginator>
-            
+
         </mat-card-content>
     </mat-card>
 

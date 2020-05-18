@@ -24,7 +24,7 @@
 - HTML is **not** XML: empty tags cannot be self-closing and will result in improper results
   * `<div/>` will be interpreted as a simple `<div>` without closing tag!
   * The only tags that allows self-closing are the one that does not require a closing tag in first place:
-    these are the void elements that do not not accept content `<br>`, `<hr>`, `<img>`, `<input>`, `<meta>`, `<link>`
+    these are the void elements that do not not accept content `<br />`, `<hr>`, `<img>`, `<input>`, `<meta>`, `<link>`
     (and others).
     
 ## Templates
