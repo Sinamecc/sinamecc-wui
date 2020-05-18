@@ -90,6 +90,13 @@
   },
 
   "general":{
+    "confidential":"Confidential",
+    "district":"District",
+    "canton":"Canton",
+    "province":"Province",
+    "partially":"Partially",
+    "legalRepresentativeCertificate":"Legal Representative Certificate",
+    "legalCertificate":"Legal Certificate",
     "lastUpdate": "Last update:",
     "createdAt": "Created At",
     "actions": "Actions",
@@ -103,7 +110,7 @@
     "program":"Program",
     "next":"Next",
     "back":"Back",
-    "position":"Position",
+    "position":"Title of the contact person",
     "objectives":"Objectives",
     "type":"Type",
     "unit":"Unit",
@@ -139,6 +146,7 @@
   },
 
   "info":{
+    "confidential":"Confidencial",
     "contact":"Contact",
     "contactName":"Contact Name",
     "contactPosition":"Contact Position",
@@ -245,6 +253,28 @@
   },
 
   "geographyLabel":{
+    "ClassificationAmountInventoryData":"Classification - Amount of inventory data",
+    "classificationNumberFacilities":"Classification -Number of facilities",
+    "classificationAmountEmissions":"Classification - Amount of emissions",
+    "totalReducedEmissions":"Total reduced emissions",
+    "totalInversion":"Total inversion",
+    "investmentReductions":"Investment reductions",
+    "reducedEmissions":"Reduced emissions",
+    "detailReduction":"Reduction Detail",
+    "activityReduction":"Reduction Activity",
+    "reductionProyect":"Reduction proyect",
+    "reduction":"Reduction",
+    
+    "compensations":"Compensations",
+    "compensationScheme":"Compensation scheme",
+    "projectLocation":"Project location",
+    "certificateNumber":"Certificate number",
+    "totalCompensation":"Total Compensation",
+    "compensationCost":"Compensation cost",
+    "period":"Period",
+    "totalCostCompensation":"Total cost of compensation",
+    "totalEmissionsOffsets":"Total emissions offsets",
+
     "geographicSite":"Geographic Site",
     "geographicScale":"Geographic Scale",
     "intMarketParticipation":"International Market Participation",
@@ -252,12 +282,14 @@
     "cantonDistrictName":"Canton or District Name",
     "sector":"Sector",
     "subsector":"Subsector",
-    "requestLevel":"Request Level",
-    "recognitionType":"Recognition Type",
-    "requestType": "Request Type"
+    "requestLevel":"Organization Classification",
+    "recognitionType":"Recognition Category",
+    "requestType": "Request Type",
+    "verificationCycleStage":"Verification cycle stage"
   },
 
   "specificLabel":{
+    "confidentialParcially":"Indicate the information you do not want to share",
     "entityInstitution":"Entity or Institution",
     "quantitativeObjective":"Quantitative Objective",
     "financeSourceStatus":"Finance Source Status",
@@ -294,7 +326,7 @@
     "majorName":"Major Name",
     "majorTelephone":"Major Telephone",
     "disctrictCouncilAddress":"Disctrict council address",
-    "GEIInformation":"GEI Information",
+    "GEIInformation":"GEI Inventory Data",
     "baseYearReport:":"Base year for report",
     "organizationInformation":"Organization Info",
     "recognitionRequest":"Recognition Request",

@@ -57,12 +57,25 @@
     <mat-icon>person</mat-icon>
   </button>
   <mat-menu #userMenu="matMenu">
-    <mat-list>
-      <mat-list-item>
-        <span translate>credentialsSection.loggedAs</span>&nbsp;<b>{{username}}</b>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-    </mat-list>
-    <button mat-menu-item (click)="logout()" translate>credentialsSection.logout</button>
+    <div>
+      <div fxLayout="row" class="user-section-container">
+        <div class="image-container">
+          <div>
+            <img [src]="userImage" class="mat-elevation-z2 custom-image">
+          </div><br>
+          <label  class="mat-h5"><strong>{{credential.username}}</strong></label>
+        </div>
+        <div class="custom-text-section">
+          <label class="mat-h5"><strong>{{credential.fullName}}</strong></label><br>
+          <label class="mat-h5">{{credential.email}}</label>
+        </div>
+      </div>
+      <div class="image-options-section">
+        <button mat-icon-button (click)="logout()" translate>
+          <mat-icon>exit_to_app</mat-icon>
+        </button>
+      </div>
+    </div>
   </mat-menu>
+
 </mat-toolbar>

@@ -21,10 +21,10 @@ export class HomeComponent implements OnInit {
 
   dataImage = [
     {
-      image: 'url(assets/ma_image.jpg)',
-      name: 'MA',
-      url: '/mitigation/actions',
-      moduleName: 'ma'
+      image:'url(assets/ppcn_image.jpg)',
+      name:'PPCN',
+      url:"/ppcn/registries",
+      moduleName:'ppcn'
     },
     {
       image: 'url(assets/report_image.jpg)',
@@ -33,24 +33,24 @@ export class HomeComponent implements OnInit {
       moduleName: ''
     },
     {
-      image: 'url(assets/mccr_image.jpg)',
-      name: 'MCCR',
-      url: '/mccr/registries',
-      moduleName: 'mccr'
+      image:'url(assets/ma_image.jpg)',
+      name:'AM',
+      url:'/mitigation/actions',
+      moduleName:'ma'
     },
     {
-      image: 'url(assets/admin_image.jpg)',
-      name: 'ADMIN',
-      url: '/admin/users',
-      moduleName: 'admin'
+      image:'url(assets/mccr_image.jpg)',
+      name:'MCCR',
+      url:"/mccr/registries",
+      moduleName:'mccr'
     },
     {
-      image: 'url(assets/ppcn_image.jpg)',
-      name: 'PPCN',
-      url: '/ppcn/registries',
-      moduleName: 'ppcn'
-    },
-  ];
+      image:'url(assets/admin_image.jpg)',
+      name:'ADMIN',
+      url:"/admin/users",
+      moduleName:'admin'
+    }
+  ]
 
   constructor(private router: Router, private authenticationService: AuthenticationService, ) { }
 

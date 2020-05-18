@@ -89,7 +89,14 @@
     
   },
 
-  "general":{
+  "general":{ 
+    "district":"Distrito",
+    "canton":"Cantón",
+    "province":"Provincia",
+    "partially":"Parcialmente",
+    "confidential":"Confidencial",
+    "legalRepresentativeCertificate":"Cédula Representante Legal",
+    "legalCertificate":"Cédula jurídica",
     "lastUpdate": "Ultima actualización",
     "createdAt": "Creado en",
     "actions": "Acciones",
@@ -103,7 +110,7 @@
     "program":"Programa",
     "next":"Siguiente",
     "back":"Atrás",
-    "position":"Posición",
+    "position":"Cargo de la persona de contacto",
     "objectives":"Objetivos",
     "type":"Tipo",
     "unit":"Unidad",
@@ -245,6 +252,26 @@
   },
 
   "geographyLabel":{
+    "ClassificationAmountInventoryData":"Clasificación - Cantidad de datos del inventario",
+    "classificationNumberFacilities":"Clasificación - Cantidad de instalaciones",
+    "classificationAmountEmissions":"Clasificación - Cantidad de emisiones",
+    "totalReducedEmissions":"Total de emisiones reducidas",
+    "totalInversion":"Inversión Total",
+    "investmentReductions":"Inversión reducciones",
+    "reducedEmissions":"Emisiones reducidas",
+    "detailReduction":"Detalles de reducción",
+    "activityReduction":"Actividad de reducción",
+    "reductionProyect":"Proyecto de reducción",
+    "reduction":"Reducción",
+    "compensations":"Compensaciones",
+    "compensationScheme":"Esquema compensación",
+    "projectLocation":"Ubicación del proyecto",
+    "certificateNumber":"Número de certificado",
+    "totalCompensation":"Total de Compensaciones",
+    "compensationCost":"Costo de compensaciones",
+    "period":"Período",
+    "totalCostCompensation":"Costo total compensaciones",
+    "totalEmissionsOffsets":"Total emisiones compensaciones",
     "geographicSite":"Sitio Geográfico",
     "geographicScale":"Escala Geográfica",
     "intMarketParticipation":"Participación en el mercado internacional",
@@ -252,12 +279,14 @@
     "cantonDistrictName":"Nombre del Cantón o Distrito",
     "sector":"Sector",
     "subsector":"Subsector",
-    "requestLevel":"Nivel Requerido",
-    "recognitionType":"Tipo de Reconocimiento",
-    "requestType": "Tipo de Solicitud"
+    "requestLevel":"Clasificación de la organización",
+    "recognitionType":"Categoría del reconocimiento",
+    "requestType": "Tipo de Solicitud",
+    "verificationCycleStage":"Etapa del ciclo de verificación"
   },
   
   "specificLabel":{
+    "confidentialParcially":"Indique la información que no desea compartir",
     "entityInstitution":"Entidad o Institución",
     "quantitativeObjective":"Objectivo Cuantificable",
     "financeSourceStatus":"Estado de la fuente de financiamiento",
@@ -294,7 +323,7 @@
     "majorName":"Nombre del Alcalde",
     "majorTelephone":"Teléfono del Alcalde",
     "disctrictCouncilAddress":"Dirección del Distrito",
-    "GEIInformation":"Información GEI",
+    "GEIInformation":"Datos del Inventario GEI",
     "baseYearReport:":"Año base para reporte:",
     "organizationInformation":"Información de la Organización",
     "OrganizationDistrictCanton":"Organization, Distrito o Cantón",

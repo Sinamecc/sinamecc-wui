@@ -127,8 +127,7 @@ export class InitiativeFormComponent implements OnInit {
     this.isLoading = false;
     // this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
   }
-
-
+  
   submitForm() {
     this.isLoading = true;
     const context = {

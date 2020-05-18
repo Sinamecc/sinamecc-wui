@@ -13,10 +13,12 @@ export interface Credentials {
   id: number;
   email: string;
   username: string;
+  fullName:string;
   token: string;
   groups: object;
-  permissions: Permissions;
-  is_administrador_dcc: boolean;
+  permissions:Permissions;
+  is_administrador_dcc:boolean;
+  userPhoto:any;
 
 }
 
@@ -82,22 +84,33 @@ export class AuthenticationService {
               'Authorization': 'JWT ' + body.token
             })
           };
-          return this.httpClient.get(routes.userData(context.username), innerHttpOptions).pipe(map((req: any) => {
+          return this.httpClient.get(routes.userData(context.username), innerHttpOptions).pipe(map((req:any) => {
+          
             const data = {
+              fullName: req.first_name + ' ' + req.last_name, 
               username: req.username,
               token: 'JWT ' + body.token,
               id: req.id,
               email: req.email,
               groups: req.groups,
-              permissions: req.available_apps,
-              is_administrador_dcc: req.is_administrador_dcc
-
+              permissions:req.available_apps,
+              is_administrador_dcc: req.is_administrador_dcc,
+              userPhoto: req.profile_picture,
             };
             this.setCredentials(data, context.remember);
             return data;
           }));
         })
       );
+  }
+
+
+  getUserPhoto(photoUrl:string){
+    return this.httpClient.get(photoUrl, {responseType: "blob"}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
   }
 
   /**

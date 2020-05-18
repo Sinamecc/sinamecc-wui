@@ -7,11 +7,17 @@ import { Logger, I18nService } from '@app/core';
 const log = new Logger('Report');
 
 import { PpcnService } from '@app/ppcn/ppcn.service';
-import { Ppcn, GeographicLevel, Sector, SubSector, Ovv } from '@app/ppcn/ppcn_registry';
+
 import { Observable } from 'rxjs/Observable';
 
 import { PpcnNewFormData, RequiredLevel, RecognitionType } from 'app/ppcn/ppcn-new-form-data';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { MatChipInputEvent } from '@angular/material';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { Ppcn } from '../ppcn_registry';
+import { Sector } from '../interfaces/sector';
+import { SubSector } from '../interfaces/subSector';
+import { Ovv } from '../interfaces/ovv';
 
 @Component({
   selector: 'app-ppcn-new',
@@ -39,6 +45,13 @@ export class PpcnNewComponent implements OnInit, DoCheck {
   subSectors: SubSector[];
   ovvs: Ovv[];
 
+  CIUUCodeList:string[] = [];
+  selectable = true;
+  removable = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  reductionFormVar = 0;
+
   values$: any;
 
 
@@ -50,6 +63,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
     private service: PpcnService) {
       this.createForm();
   }
+
 
   ngOnInit() {
 
@@ -65,10 +79,36 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
   }
 
-  submitForm() {
+  removeCIUUCode(code: string): void {
+    const index = this.CIUUCodeList.indexOf(code);
+
+    if (index >= 0) {
+      this.CIUUCodeList.splice(index, 1);
+    }
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    if ((value || '').trim()) {
+      this.CIUUCodeList.push(value.trim());
+    }
+
+    if (input) {
+      input.value = '';
+    }
+
+  }
+
+  submitForm(){
     this.isLoading = true;
 
-    this.service.submitNewPpcnForm(this.formGroup.value)
+    this.formGroup.controls.formArray['controls'][0].patchValue({
+      'ciuuListCodeCtrl': this.CIUUCodeList
+    })
+
+   this.service.submitNewPpcnForm(this.formGroup.value)
       .pipe(finalize(() => {
         this.formGroup.markAsPristine();
         this.isLoading = false;
@@ -89,10 +129,15 @@ export class PpcnNewComponent implements OnInit, DoCheck {
           nameCtrl: ['', Validators.required],
           representativeNameCtrl: ['', Validators.required],
           telephoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
+          confidentialCtrl:(this.levelId=="1"? null:['',Validators.required] ),
+          confidentialValueCtrl:(this.levelId=="1"? null:[''] ),
           faxCtrl: '',
           postalCodeCtrl: '',
           addressCtrl: ['', Validators.required],
-          ciuuCodeCtrl: (this.levelId === '1' ? null : ['', Validators.required] )
+          legalIdCtrl: (this.levelId=="1"? null:['',Validators.required] ),
+          legalRepresentativeIdCtrl: (this.levelId=="1"? null:['',Validators.required] ),
+          ciuuCodeCtrl: (this.levelId=="1"? null:[''] ),
+          ciuuListCodeCtrl: (this.levelId=="1"? null:['',Validators.required] ),
         }),
         this.formBuilder.group({
           contactNameCtrl: ['', Validators.required],
@@ -101,9 +146,34 @@ export class PpcnNewComponent implements OnInit, DoCheck {
           phoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
         }),
         this.formBuilder.group({
-          requiredCtrl: ['', Validators.required],
-          recognitionCtrl: ['', Validators.required],
+          requiredCtrl:['', Validators.required],
+          amountOfEmissions:['', Validators.required],
+          amountInventoryData:['', Validators.required],
+          numberofDacilities:['', Validators.required],
+          recognitionCtrl: ['',Validators.required],
+        }),
+        this.formBuilder.group({
+          reductionProjectCtrl:(this.levelId=="2"? null:['',Validators.required] ),
+          reductionActivityCtrl:(this.levelId=="2"? null:['',Validators.required] ),
+          reductionDetailsCtrl:(this.levelId=="2"? null:['',Validators.required] ),
+          reducedEmissionsCtrl:(this.levelId=="2"? null:['',Validators.required] ),
+          investmentReductions:(this.levelId=="2"? null:['',Validators.required] ),
+          investmentReductionsValue:(this.levelId=="2"? null:['',Validators.required] ),
+          totalInvestmentReduction:(this.levelId=="2"? null:['',Validators.required] ),
+          totalInvestmentReductionValue:(this.levelId=="2"? null:['',Validators.required] ),
+          totalEmisionesReducidas :(this.levelId=="2"? null:['',Validators.required] ),
 
+        }),
+        this.formBuilder.group({
+          compensationScheme:(this.levelId=="2"? null:['',Validators.required] ),
+          projectLocation:(this.levelId=="2"? null:['',Validators.required] ),
+          certificateNumber:(this.levelId=="2"? null:['',Validators.required] ),
+          totalCompensation:(this.levelId=="2"? null:['',Validators.required] ),
+          compensationCost:(this.levelId=="2"? null:['',Validators.required] ),
+          compensationCostValue:(this.levelId=="2"? null:['',Validators.required] ),
+          period:(this.levelId=="2"? null:['',Validators.required] ),
+          totalEmissionsOffsets:(this.levelId=="2"? null:['',Validators.required] ),
+          totalCostCompensation:(this.levelId=="2"? null:['',Validators.required] ),
         }),
         this.formBuilder.group({
           baseYearCtrl: ['', Validators.required],
@@ -118,6 +188,16 @@ export class PpcnNewComponent implements OnInit, DoCheck {
         }),
       ])
     });
+    
+    this.formGroup.controls.formArray['controls'][3].patchValue({
+      'investmentReductions': 'CRC',
+      'totalInvestmentReduction': 'CRC',
+    })
+
+    this.formGroup.controls.formArray['controls'][4].patchValue({
+      'totalCostCompensation': 'CRC',
+      'compensationCost': 'CRC',
+    })
 
     const subsectors = this.service.subsectors('1', this.i18nService.language.split('-')[0]);
     const initialFormData = this.initialFormData();
@@ -132,15 +212,20 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
   }
 
-  createActivityForm(): FormGroup {
+  showRecognitionFormSection(elementsToShow:number[]){
+    return elementsToShow.indexOf(this.reductionFormVar) >= 0
+  }
+
+  createActivityForm() : FormGroup{
     return this.formBuilder.group({
       activityCtrl: ['', Validators.required],
       sectorCtrl: ['', Validators.required],
       subSectorCtrl: ['', Validators.required],
     });
   }
+
   addItems(): void {
-    const control = <FormArray>this.formGroup.controls.formArray['controls'][4].controls['activities'];
+    const control = <FormArray>this.formGroup.controls.formArray['controls'][6].controls['activities'];
     control.push(this.createActivityForm());
   }
 

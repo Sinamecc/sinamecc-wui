@@ -196,22 +196,22 @@ export class PpcnUpdateComponent implements OnInit {
 
 
   private initFormData(): Observable < Ppcn > {
-    const ppcn = this.loadFormData().pipe(
-      tap(resolvedPpcn => {
-        this.levelId = String(resolvedPpcn['geographic_level']['id']);
-        this.contactFormId = +resolvedPpcn['organization']['contact']['id'];
-        this.geographicFormId = +resolvedPpcn['geographic_level']['id'];
-        this.requiredFormId = +resolvedPpcn['required_level']['id'];
-        this.recognitionFormId = +resolvedPpcn['recognition_type']['id'];
-        if (resolvedPpcn['gei_organization'] != null) {
-          this.geiOrganizationFormId = +resolvedPpcn['gei_organization']['id'];
-          this.ovv_id = String(resolvedPpcn['gei_organization']['ovv']['id']);
-          this.emission_OVV = resolvedPpcn['gei_organization']['emission_OVV'];
-          this.report_date_start = resolvedPpcn['gei_organization']['report_date_start'];
-          this.report_date_end = resolvedPpcn['gei_organization']['report_date_end'];
-          this.sectorFormId = +resolvedPpcn['gei_organization']['gei_activity_types']['0']['sector']['id'];
-          this.subsectorFormId = resolvedPpcn['gei_organization']['gei_activity_types']['0']['sub_sector']['id'];
-          this.activity_type = resolvedPpcn['gei_organization']['gei_activity_types']['0']['activity_type'];
+    const ppcn$ = this.loadFormData().pipe(
+      tap(ppcn => {
+        this.levelId = String(ppcn['geographic_level']['id']);
+        this.contactFormId = +ppcn['organization']['contact']['id'];
+        this.geographicFormId = +ppcn['geographic_level']['id'];
+        this.requiredFormId = +ppcn['organization_classification']['required_level']['id'];
+        this.recognitionFormId = +ppcn['organization_classification']['recognition_type']['id'];
+        if(ppcn['gei_organization'] != null){
+          this.geiOrganizationFormId = +ppcn['gei_organization']['id'];
+          this.ovv_id = String(ppcn['gei_organization']['ovv']['id']);
+          this.emission_OVV = ppcn['gei_organization']['emission_OVV'];
+          this.report_date_start = ppcn['gei_organization']['report_date_start'];
+          this.report_date_end = ppcn['gei_organization']['report_date_end'];
+          this.sectorFormId = +ppcn['gei_organization']['gei_activity_types']['0']['sector']['id'];
+          this.subsectorFormId = ppcn['gei_organization']['gei_activity_types']['0']['sub_sector']['id'];
+          this.activity_type = ppcn['gei_organization']['gei_activity_types']['0']['activity_type'];
 
         }
 
@@ -235,8 +235,8 @@ export class PpcnUpdateComponent implements OnInit {
                         Validators.compose([Validators.required, Validators.minLength(8)])],
           }),
           this.formBuilder.group({
-            requiredCtrl: [ppcn['required_level']['id'], Validators.required],
-            recognitionCtrl: [ppcn['recognition_type']['id'], Validators.required],
+            requiredCtrl: [ppcn['organization_classification']['required_level']['id'], Validators.required],
+            recognitionCtrl: [ppcn['organization_classification']['recognition_type']['id'], Validators.required],
           }),
           this.formBuilder.group({
             baseYearCtrl: [ppcn['gei_organization']['base_year'], Validators.required],
@@ -250,7 +250,7 @@ export class PpcnUpdateComponent implements OnInit {
         ]);
         this.formGroup.setControl('formArray', ppcnArray);
       }));
-    return ppcn;
+    return ppcn$;
   }
 
 
