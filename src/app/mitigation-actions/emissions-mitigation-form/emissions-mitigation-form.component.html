@@ -6,7 +6,6 @@
       </div>
       <br />
       <div fxLayout="column">
-
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
@@ -14,59 +13,69 @@
             </ng-template>
 
             <h3>
-              <span translate>info.code</span>:<span>{{mitigationAction?.id}}</span>
+              <span translate>info.code</span>:<span>{{ mitigationAction?.id }}</span>
             </h3>
 
             <mat-form-field class="field-ppcn">
-              <mat-select [placeholder]="'specificLabel.emissionSectorGasAbsorption' | translate" formControlName="ingeiComplianceCtrl" multiple>
-                <mat-option *ngFor="let ingei of processedNewFormData.ingei_compliances" [value]="ingei.id">{{ingei.name}}</mat-option>
+              <mat-select
+                [placeholder]="'specificLabel.emissionSectorGasAbsorption' | translate"
+                formControlName="ingeiComplianceCtrl"
+                multiple
+              >
+                <mat-option *ngFor="let ingei of processedNewFormData?.ingei_compliances" [value]="ingei.id">{{
+                  ingei.name
+                }}</mat-option>
               </mat-select>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
             <div class="box-button">
-              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
 
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
-
             <ng-template matStepLabel>
               <div translate>general.other</div>
             </ng-template>
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.emissionsSources</mat-label>
-              <input matInput formControlName="emissionSourceCtrl">
+              <input matInput formControlName="emissionSourceCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.carbonSinks</mat-label>
-              <input matInput formControlName="carbonSinksCtrl">
+              <input matInput formControlName="carbonSinksCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
-            
+
             <div class="box-button">
-              <app-generic-button-secondary type="button" (click)="stepper.previous();" name="general.back"></app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+              <app-generic-button-secondary
+                type="button"
+                (click)="stepper.previous()"
+                name="general.back"
+              ></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
-
-          
 
           <mat-step>
             <ng-template matStepLabel> <span translate> specificLabel.confirmInformation </span></ng-template>
-            
+
             <div *ngIf="form.valid; else elseBlock" translate>specificLabel.everythingCorrect</div>
-            
+
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <app-generic-button type="submit" [disabled]="wasSubmittedSuccessfully" name="general.done"></app-generic-button>
+              <app-generic-button
+                type="submit"
+                [disabled]="wasSubmittedSuccessfully"
+                name="general.done"
+              ></app-generic-button>
             </div>
           </mat-step>
         </mat-vertical-stepper>
-
       </div>
     </form>
   </mat-card-content>
