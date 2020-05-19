@@ -14,14 +14,14 @@
               <mat-label translate>
                 {{levelId==2 ? "specificLabel.organizationName" : "geographyLabel.cantonDistrictName" }}</mat-label>
 
-              <input matInput formControlName="nameCtrl" required>
+              <input matInput formControlName="nameCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
               <mat-label translate>general.legalCertificate</mat-label>
-              <input matInput formControlName="legalIdCtrl" required>
+              <input matInput formControlName="legalIdCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
@@ -29,14 +29,14 @@
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{levelId==2 ? "specificLabel.representativeName" : "specificLabel.majorName" }}
               </mat-label>
-              <input matInput formControlName="representativeNameCtrl" required>
+              <input matInput formControlName="representativeNameCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
               <mat-label translate>general.legalRepresentativeCertificate</mat-label>
-              <input matInput formControlName="legalRepresentativeIdCtrl" required>
+              <input matInput formControlName="legalRepresentativeIdCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
@@ -44,7 +44,7 @@
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{levelId==2 ? "Telephone" : "specificLabel.majorTelephone" }} </mat-label>
 
-              <input matInput formControlName="telephoneCtrl" required>
+              <input matInput formControlName="telephoneCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
@@ -66,18 +66,18 @@
             <mat-form-field class="field-ppcn" *ngIf="confidential == 'parcialmente'">
               <br />
               <mat-label translate>specificLabel.confidentialParcially</mat-label>
-              <input matInput formControlName="confidentialValueCtrl">
+              <input matInput formControlName="confidentialValueCtrl" />
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
               <mat-label translate> info.fax </mat-label>
-              <input matInput formControlName="faxCtrl">
+              <input matInput formControlName="faxCtrl" />
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate> info.postalCode </mat-label>
-              <input matInput formControlName="postalCodeCtrl">
+              <input matInput formControlName="postalCodeCtrl" />
             </mat-form-field>
             <br />
 
@@ -90,7 +90,7 @@
                 </mat-chip>
                 <input [placeholder]="'general.CIUUCode' | translate" #chipListInput formControlName="ciuuListCodeCtrl"
                   [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                  (matChipInputTokenEnd)="add($event)" required>
+                  (matChipInputTokenEnd)="add($event)" required />
               </mat-chip-list>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
@@ -98,7 +98,7 @@
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{levelId==2 ? "Address" : "specificLabel.districtCouncilAddress" }}</mat-label>
 
-              <input matInput formControlName="addressCtrl" required>
+              <input matInput formControlName="addressCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
@@ -116,27 +116,27 @@
             </ng-template>
             <mat-form-field class="field-ppcn">
               <mat-label translate>info.name</mat-label>
-              <input matInput formControlName="contactNameCtrl">
+              <input matInput formControlName="contactNameCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate> general.position </mat-label>
-              <input matInput formControlName="positionCtrl">
+              <input matInput formControlName="positionCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
               <mat-label translate> info.emailAddress </mat-label>
-              <input matInput formControlName="emailFormCtrl">
+              <input matInput formControlName="emailFormCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
               <mat-label translate> info.phone </mat-label>
-              <input matInput formControlName="phoneCtrl" type="tel">
+              <input matInput formControlName="phoneCtrl" type="tel" />
               <mat-error translate> errorLabel.inputOrLengthIncorrect</mat-error>
             </mat-form-field>
             <br />
@@ -159,21 +159,21 @@
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.classificationAmountEmissions</mat-label>
-                <input type="number" matInput formControlName="amountOfEmissions" required>
+                <input type="number" matInput formControlName="amountOfEmissions" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.classificationNumberFacilities</mat-label>
-                <input type="number" matInput formControlName="numberofDacilities" required>
+                <input type="number" matInput formControlName="numberofDacilities" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.ClassificationAmountInventoryData</mat-label>
-                <input type="number" matInput formControlName="amountInventoryData" required>
+                <input type="number" matInput formControlName="amountInventoryData" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
@@ -216,28 +216,28 @@
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.reductionProyect</mat-label>
-                <input matInput formControlName="reductionProjectCtrl" required>
+                <input matInput formControlName="reductionProjectCtrl" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.activityReduction</mat-label>
-                <input matInput formControlName="reductionActivityCtrl" required>
+                <input matInput formControlName="reductionActivityCtrl" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.detailReduction</mat-label>
-                <input matInput formControlName="reductionDetailsCtrl" required>
+                <input matInput formControlName="reductionDetailsCtrl" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.reducedEmissions<strong>(t CO2e)</strong></mat-label>
-                <input matInput formControlName="reducedEmissionsCtrl" required>
+                <input matInput formControlName="reducedEmissionsCtrl" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
@@ -245,34 +245,34 @@
 
               <div fxLayout="row">
 
-                <div style="width: 150px;">
+                <div class="ppcn-container">
                   <mat-button-toggle-group
                     (change)="this.formGroup.controls.formArray['controls'][3].patchValue({investmentReductions: $event.value})"
-                    style="margin-right: 50px;" value="CRC">
+                    class="m-r-10" value="CRC">
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
                   </mat-button-toggle-group>
                 </div>
-                <mat-form-field style="width: 90%;">
+                <mat-form-field clas="ppcn-form-field">
                   <mat-label translate>geographyLabel.investmentReductions</mat-label>
-                  <input type="number" matInput formControlName="investmentReductionsValue" required>
+                  <input type="number" matInput formControlName="investmentReductionsValue" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
 
               </div>
               <br />
               <div fxLayout="row">
-                <div style="width: 150px;">
-                  <mat-button-toggle-group name="fontStyle" style="margin-right: 50px;"
+                <div class="ppcn-container">
+                  <mat-button-toggle-group name="fontStyle" class="m-r-10"
                     (change)="this.formGroup.controls.formArray['controls'][3].patchValue({totalInvestmentReduction: $event.value})"
                     value="CRC">
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
                   </mat-button-toggle-group>
                 </div>
-                <mat-form-field style="width: 90%;">
+                <mat-form-field class="field-ppcn">
                   <mat-label translate>geographyLabel.totalInversion</mat-label>
-                  <input type="number" matInput formControlName="totalInvestmentReductionValue" required>
+                  <input type="number" matInput formControlName="totalInvestmentReductionValue" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
 
@@ -281,7 +281,7 @@
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.totalReducedEmissions<strong>(t CO2e)</strong></mat-label>
-                <input matInput formControlName="totalEmisionesReducidas" required>
+                <input matInput formControlName="totalEmisionesReducidas" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
@@ -319,21 +319,21 @@
               <br />
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.projectLocation</mat-label>
-                <input matInput formControlName="projectLocation" required>
+                <input matInput formControlName="projectLocation" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.certificateNumber</mat-label>
-                <input matInput formControlName="certificateNumber" required>
+                <input matInput formControlName="certificateNumber" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.totalCompensation<strong>(t CO2e)</strong></mat-label>
-                <input matInput formControlName="totalCompensation" required>
+                <input matInput formControlName="totalCompensation" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
@@ -341,16 +341,16 @@
 
               <div fxLayout="row">
                 <br />
-                <div style="width: 150px;">
-                  <mat-button-toggle-group style="margin-right: 50px;" value="CRC"
+                <div class="ppcn-container">
+                  <mat-button-toggle-group class="m-r-10" value="CRC"
                     (change)="this.formGroup.controls.formArray['controls'][4].patchValue({compensationCost: $event.value})">
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
                   </mat-button-toggle-group>
                 </div>
-                <mat-form-field style="width: 90%;">
+                <mat-form-field class="field-ppcn">
                   <mat-label translate>geographyLabel.compensationCost</mat-label>
-                  <input type="number" matInput formControlName="compensationCostValue" required>
+                  <input type="number" matInput formControlName="compensationCostValue" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
 
@@ -359,7 +359,7 @@
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.period </mat-label>
-                <input matInput formControlName="period" required>
+                <input matInput formControlName="period" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
@@ -370,8 +370,8 @@
               <br />
               <div fxLayout="row">
                 <br />
-                <div style="width: 150px;">
-                  <mat-button-toggle-group style="margin-right: 50px;" value="CRC"
+                <div class="ppcn-container">
+                  <mat-button-toggle-group class="m-r-10" value="CRC"
                     (change)="this.formGroup.controls.formArray['controls'][4].patchValue({totalCostCompensation: $event.value})">
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
@@ -379,7 +379,7 @@
                 </div>
                 <mat-form-field class="field-ppcn">
                   <mat-label translate>geographyLabel.totalEmissionsOffsets<strong>(t CO2e)</strong> </mat-label>
-                  <input matInput formControlName="totalEmissionsOffsets" required>
+                  <input matInput formControlName="totalEmissionsOffsets" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
                 <br />
@@ -414,7 +414,7 @@
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.baseYear</mat-label>:
               <input matInput type="number" [placeholder]="'specificLabel.chooseYear' | translate"
-                formControlName="baseYearCtrl" min="1990">
+                formControlName="baseYearCtrl" min="1990" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
@@ -422,13 +422,13 @@
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.reportYear</mat-label>:
               <input matInput type="number" [placeholder]="'specificLabel.chooseYear' | translate"
-                formControlName="reportYearCtrl" min="1990">
+                formControlName="reportYearCtrl" min="1990" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.emissionDateDeclarationVerification</mat-label>
               <input matInput [matDatepicker]="implementationEmissionDatePicker"
-                [placeholder]="'Choose a date' | translate" formControlName="implementationEmissionDateCtrl">
+                [placeholder]="'Choose a date' | translate" formControlName="implementationEmissionDateCtrl" />
               <mat-datepicker-toggle matSuffix [for]="implementationEmissionDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationEmissionDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
@@ -455,7 +455,7 @@
                 <div [formGroupName]="i">
                   <mat-form-field class="field-ppcn">
                     <mat-label translate>specificLabel.activityCarriedOrganization</mat-label>
-                    <input matInput formControlName="activityCtrl">
+                    <input matInput formControlName="activityCtrl" />
                   </mat-form-field>
                   <br />
                   <mat-form-field class="field-ppcn">

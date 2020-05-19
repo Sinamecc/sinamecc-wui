@@ -1,12 +1,10 @@
 <div class="container">
     <mat-card>
-
         <h3>
             <mat-card-title translate class="section-heading">mccrPoc.addBAC</mat-card-title>
             <mat-divider class="divider-custom"></mat-divider>
             <mat-divider class="divider-custom"></mat-divider>
         </h3>
-
         <mat-card-content>
             <form (ngSubmit)="submitForm()" [formGroup]="form" novalidate>
                 <div class="report-error" [hidden]="!error || isLoading" translate>
@@ -16,7 +14,7 @@
                 <div fxLayout="column">
 
                     <mat-form-field>
-                        <input formControlName="user_id" matInput placeholder="{{ 'admin.IDuser' | translate }}">
+                        <input formControlName="user_id" matInput placeholder="{{ 'admin.IDuser' | translate }}" />
                         <mat-error *ngIf="form.controls.user_id.invalid || form.controls.user_id.untouched">
                             <span translate>errorLabel.IDUserRequired</span>
                         </mat-error>

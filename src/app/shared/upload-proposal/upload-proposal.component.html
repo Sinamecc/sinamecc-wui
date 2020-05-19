@@ -12,33 +12,36 @@
         <div class="report-error" [hidden]="!error || isLoading" translate>
           <span translate>errorLabel.errorSubmittingForm</span>
         </div>
-        <br/>
+        <br />
         <div fxLayout="column">
           <mat-form-field>
-              <textarea matInput formControlName="commentCtrl" [placeholder]="'specificLabel.someCorrectiveComment' | translate" matTextareaAutosize
-                matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
+            <textarea matInput formControlName="commentCtrl"
+              [placeholder]="'specificLabel.someCorrectiveComment' | translate" matTextareaAutosize
+              matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+          </mat-form-field>
 
-            <mat-form-field>
-
-              <mat-label translate>Code</mat-label>
-              <input matInput formControlName="entityCtrl" required readonly>
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-          <br/>
           <mat-form-field>
-              <app-input-file formControlName="fileCtrl" [placeholder]="'errorLabel.requiredInput' | translate" valuePlaceholder="No file selected" required></app-input-file>
-              <mat-icon matSuffix>folder</mat-icon>
-              <mat-error *ngIf="form.get('fileCtrl').hasError('required')" translate>
-                {{ 'reportData.selectFile' | translate }}
-              </mat-error>
-              <mat-error *ngIf="form.get('fileCtrl').hasError('maxContentSize')">
-                  <span translate>The total size must not exceed {{formDoc.get('fileCtrl')?.getError('maxContentSize').maxSize | byteFormat}}
+
+            <mat-label translate>Code</mat-label>
+            <input matInput formControlName="entityCtrl" required readonly />
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+          </mat-form-field>
+          <br />
+          <mat-form-field>
+            <app-input-file formControlName="fileCtrl" [placeholder]="'errorLabel.requiredInput' | translate"
+              valuePlaceholder="No file selected" required></app-input-file>
+            <mat-icon matSuffix>folder</mat-icon>
+            <mat-error *ngIf="form.get('fileCtrl').hasError('required')" translate>
+              {{ 'reportData.selectFile' | translate }}
+            </mat-error>
+            <mat-error *ngIf="form.get('fileCtrl').hasError('maxContentSize')">
+              <span translate>The total size must not exceed
+                {{formDoc.get('fileCtrl')?.getError('maxContentSize').maxSize | byteFormat}}
                 ({{form.get('fileCtrl')?.getError('maxContentSize').actualSize | byteFormat}}).</span>
-              </mat-error>
-            </mat-form-field>
-          <br/>
+            </mat-error>
+          </mat-form-field>
+          <br />
           <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
             <span translate>specificLabel.registerProposal</span>

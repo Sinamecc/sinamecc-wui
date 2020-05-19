@@ -8,20 +8,16 @@
                     <mat-divider class="divider-custom"></mat-divider>
                 </h3>
                 <mat-card-content>
-
                     <form (ngSubmit)="submit()" [formGroup]="createUserForm" novalidate>
-
                         <div class="report-error" [hidden]="!error || isLoading" translate>
                             <span translate>errorLabel.errorSubmittingForm</span>
                         </div>
-
                         <div fxLayout="column">
                             <div class="custom-container-image-section">
                                 <div>
-                                    <img class="customImage" class="mat-elevation-z3 custom-image" [src]="imageUrl" />
+                                    <img class="mat-elevation-z3 custom-image" [src]="imageUrl" />
                                 </div>
                                 <br />
-
                                 <span class="custom-upload-file">Upload a image :</span>
                                 <label for="file-upload" class="custom-file-upload ">
                                     <mat-icon>cloud_upload</mat-icon>

@@ -37,7 +37,7 @@
             <mat-form-field class="field-ppcn">
               <mat-label translate>mitigationAction.StartMA</mat-label>
               <input matInput [matDatepicker]="implementationInitialDatePicker"
-                [placeholder]="'info.chooseDate' | translate" formControlName="implementationInitialDateCtrl">
+                [placeholder]="'info.chooseDate' | translate" formControlName="implementationInitialDateCtrl" />
               <mat-datepicker-toggle matSuffix [for]="implementationInitialDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationInitialDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
@@ -46,7 +46,7 @@
             <mat-form-field class="field-ppcn">
               <mat-label translate>mitigationAction.lastMA</mat-label>
               <input matInput [matDatepicker]="implementationEndDatePicker"
-                [placeholder]="'info.chooseDate' | translate" formControlName="implementationEndDateCtrl">
+                [placeholder]="'info.chooseDate' | translate" formControlName="implementationEndDateCtrl" />
               <mat-datepicker-toggle matSuffix [for]="implementationEndDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationEndDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
@@ -88,7 +88,7 @@
             </ng-template>
             <mat-form-field class="field-ppcn">
               <mat-label translate>geographyLabel.geographicSite</mat-label>
-              <input matInput formControlName="locationNameCtrl">
+              <input matInput formControlName="locationNameCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
@@ -125,7 +125,7 @@
             <div *ngIf="displayFinancialSource">
               <mat-form-field class="field-ppcn">
                 <mat-label translate>specificLabel.caseInsuredListSources</mat-label>
-                <input matInput formControlName="financingSourceCtrl">
+                <input matInput formControlName="financingSourceCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
             </div>

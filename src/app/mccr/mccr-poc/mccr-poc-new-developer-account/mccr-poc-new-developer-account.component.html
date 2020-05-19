@@ -16,14 +16,12 @@
                 <div fxLayout="column">
 
                     <mat-form-field>
-                        <input formControlName="user_id" matInput placeholder="{{ 'admin.IDuser' | translate }}">
+                        <input formControlName="user_id" matInput placeholder="{{ 'admin.IDuser' | translate }}" />
                         <mat-error *ngIf="form.controls.user_id.invalid || form.controls.user_id.untouched">
                             <span translate>errorLabel.IDUserRequired</span>
                         </mat-error>
                     </mat-form-field>
-
                 </div>
-
                 <button disabled="{{createDisable}}" mat-button class="mat-raised-button mat-primary options"
                     type="submit">
                     <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
@@ -33,12 +31,6 @@
                 <h2 *ngIf="createDisable" class="mat-h2"><span
                         translate>mccrPoc.accountNumber</span>:<span>{{account_number}} </span></h2>
             </form>
-
-
         </mat-card-content>
-
     </mat-card>
-
-
-
 </div>

@@ -3,10 +3,10 @@
     <button class="menu-button" mat-icon-button (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <a class="brand" href="./home" translate><img src="assets/{{logoName}}"></a>
+    <a class="brand" href="./home" translate><img src="assets/{{logoName}}" /></a>
   </div>
   <div fxHide.lt-md>
-    <a class="brand" href="./home" translate><img src="assets/{{logoName}}"></a>
+    <a class="brand" href="./home" translate><img src="assets/{{logoName}}" /></a>
 
     <button *ngIf="showModule(permissions,'admin')" mat-button [matMenuTriggerFor]="admin">
       <span translate>ADMIN</span>
@@ -65,7 +65,7 @@
       <div fxLayout="row" class="user-section-container">
         <div class="image-container">
           <div>
-            <img [src]="userImage" class="mat-elevation-z2 custom-image">
+            <img [src]="userImage" class="mat-elevation-z2 custom-image" />
           </div><br />
           <label class="mat-h5"><strong>{{credential.username}}</strong></label>
         </div>

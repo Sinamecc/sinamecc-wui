@@ -1,11 +1,14 @@
 <br />
 <div class="search">
-  <mat-form-field class="seach_field">
-    <input #idUcc matInput class="input_search" placeholder="{{ 'mccrPoc.searchUCC' | translate }}"
-      (keyup.enter)="search(idUcc.value)" translate>
+  <mat-form-field class="seach-field">
+    <input #idUcc matInput placeholder="{{ 'mccrPoc.searchUCC' | translate }}" (keyup.enter)="search(idUcc.value)"
+      translate />
   </mat-form-field>
-  <a mat-button class="mat-raised-button mat-primary search_button" (click)="search(idUcc.value)"> <span translate>
-      {{ 'general.search' | translate }}</span></a>
+  <a mat-button class="mat-raised-button mat-primary" (click)="search(idUcc.value)">
+    <span translate>
+      {{ 'general.search' | translate }}
+    </span>
+  </a>
   <button translate matTooltip="{{ 'mccrPoc.addDAC' | translate }}" (click)="openDialogDeveloper()" mat-icon-button
     color="blue">
     <mat-icon color="white">person_add</mat-icon>
@@ -14,7 +17,8 @@
     color="black">
     <mat-icon color="white">work</mat-icon>
   </button>
-  <button translate matTooltip="{{ 'mccrPoc.addUCC' | translate }}" (click)=(addUCC()) mat-icon-button color="black">
+
+  <button translate matTooltip="{{ 'mccrPoc.addUCC' | translate }}" (click)="addUCC()" mat-icon-button color="black">
     <mat-icon color="white">add</mat-icon>
   </button>
 

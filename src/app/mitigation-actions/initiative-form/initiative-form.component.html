@@ -16,14 +16,6 @@
             <h3 *ngIf="isUpdating">
               <span translate>info.code</span>:<span>{{mitigationAction?.id}}</span>
             </h3>
-
-            <!-- <mat-form-field class="field-ppcn">
-              <mat-select formControlName="initiativeRegisterTypeCtrl" [placeholder]="'Registered Type' | translate">
-                <mat-option *ngFor="let registerType of processedNewFormData.registration_types" [value]="registerType.id">
-                  {{ registerType.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field> -->
             <br />
 
             <span translate>specificLabel.initiativeType</span><br /><br />
@@ -38,13 +30,13 @@
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.initiativeName</mat-label>
-              <input matInput formControlName="initiativeNameCtrl">
+              <input matInput formControlName="initiativeNameCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.entityResponsibleName</mat-label>
-              <input matInput formControlName="entityIniativeResponsibleCtrl">
+              <input matInput formControlName="entityIniativeResponsibleCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
@@ -120,7 +112,7 @@
             <div *ngIf="displayFinancialSource">
               <mat-form-field class="field-ppcn">
                 <mat-label translate>specificLabel.cooperationPublicBudgetListSources</mat-label>
-                <input matInput formControlName="initiatveFinancingSourceCtrl">
+                <input matInput formControlName="initiatveFinancingSourceCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
             </div>
@@ -128,7 +120,7 @@
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.budgetUSD</mat-label>
-              <input type="number" matInput formControlName="initiativeBudgetCtrl">
+              <input type="number" matInput formControlName="initiativeBudgetCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
@@ -148,27 +140,27 @@
             </ng-template>
             <mat-form-field class="field-ppcn">
               <mat-label translate>info.contactName</mat-label>
-              <input matInput formControlName="initiativeContactNameCtrl">
+              <input matInput formControlName="initiativeContactNameCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>general.position</mat-label>
-              <input matInput formControlName="initiativePositionCtrl">
+              <input matInput formControlName="initiativePositionCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>info.emailAddress</mat-label>
-              <input matInput formControlName="initiativeEmailFormCtrl">
+              <input matInput formControlName="initiativeEmailFormCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>info.phone</mat-label>
-              <input matInput formControlName="initiativePhoneCtrl" type="tel">
+              <input matInput formControlName="initiativePhoneCtrl" type="tel" />
               <mat-error translate> errorLabel.inputOrLengthIncorrect</mat-error>
             </mat-form-field>
             <br />
