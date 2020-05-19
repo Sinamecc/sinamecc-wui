@@ -19,14 +19,10 @@
 
             <span translate>specificLabel.initiativeType</span><br /><br />
             <mat-radio-group formControlName="initiativeTypeCtrl">
-              <<<<<<< HEAD <mat-radio-button *ngFor="let initiativeType of processedNewFormData.initiative_types"
+              <mat-radio-button *ngFor="let initiativeType of processedNewFormData?.initiative_types"
                 [value]="initiativeType.id">
-                =======
-                <mat-radio-button *ngFor="let initiativeType of processedNewFormData?.initiative_types"
-                  [value]="initiativeType.id">
-                  >>>>>>> master
-                  {{ initiativeType.types }}
-                </mat-radio-button>
+                {{ initiativeType.types }}
+              </mat-radio-button>
             </mat-radio-group>
 
             <br />
@@ -44,28 +40,18 @@
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
-              <<<<<<< HEAD <textarea matInput formControlName="initiativeObjectiveCtrl"
+              <textarea matInput formControlName="initiativeObjectiveCtrl"
                 [placeholder]="'specificLabel.initiativeObjective' | translate" matTextareaAutosize
                 matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
-                =======
-                <textarea matInput formControlName="initiativeObjectiveCtrl"
-                  [placeholder]="'specificLabel.initiativeObjective' | translate" matTextareaAutosize
-                  matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
-                >>>>>>> master
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
-              <<<<<<< HEAD <textarea matInput formControlName="initiativeDescriptionCtrl"
+              <textarea matInput formControlName="initiativeDescriptionCtrl"
                 [placeholder]="'specificLabel.initiativeDescription' | translate" matTextareaAutosize
                 matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
-                =======
-                <textarea matInput formControlName="initiativeDescriptionCtrl"
-                  [placeholder]="'specificLabel.initiativeDescription' | translate" matTextareaAutosize
-                  matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
-                >>>>>>> master
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">

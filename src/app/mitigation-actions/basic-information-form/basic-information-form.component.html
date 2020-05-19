@@ -76,15 +76,9 @@
             <br />
 
             <div class="box-button">
-              <<<<<<< HEAD <app-generic-button-secondary type="button" (click)="stepper.previous();"
-                name="general.back">
-                </app-generic-button-secondary>
-                <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
-                =======
-                <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
-                </app-generic-button-secondary>
-                <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
-                >>>>>>> master
+              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
+              </app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
 
@@ -95,12 +89,8 @@
 
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <<<<<<< HEAD <app-generic-button type="submit" [disabled]="wasSubmittedSuccessfully" name="general.done">
-                </app-generic-button>
-                =======
-                <app-generic-button type="submit" [disabled]="wasSubmittedSuccessfully" name="general.done">
-                </app-generic-button>
-                >>>>>>> master
+              <app-generic-button type="submit" [disabled]="wasSubmittedSuccessfully" name="general.done">
+              </app-generic-button>
             </div>
           </mat-step>
         </mat-vertical-stepper>
