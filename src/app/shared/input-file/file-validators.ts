@@ -20,6 +20,6 @@ export class FileValidators {
                     maxSize: bytes
                 }
             };
-        }
+        };
     }
 }

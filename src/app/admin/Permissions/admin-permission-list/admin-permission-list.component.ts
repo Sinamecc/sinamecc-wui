@@ -2,9 +2,6 @@ import { Component, OnInit, Inject, Optional, Input, ViewChild } from '@angular/
 import { MatDialog, MAT_DIALOG_DATA, MatTableDataSource, MatSnackBar, MatDialogRef, MatSort, MatPaginator } from '@angular/material';
 import { Permissions } from '../../permissions';
 import { PermissionsData } from '../../permissionsData';
-import { I18nService } from '@app/core';
-import { AdminService } from '../../admin.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-admin-permission-list',
@@ -12,14 +9,14 @@ import { Observable } from 'rxjs';
   styleUrls: ['./admin-permission-list.component.scss']
 })
 export class AdminPermissionListComponent implements OnInit {
-  displayedColumns = ['name', 'type','action'];
-  dataSource:MatTableDataSource<Permissions>
+  displayedColumns = ['name', 'type', 'action'];
+  dataSource: MatTableDataSource<Permissions>;
   listOfPermissions: Permissions [] = [];
-  componentType:string;
-  removePermissionsList:Permissions [] = [];
-  removeTempPermissionsList:Permissions [] = [];
+  componentType: string;
+  removePermissionsList: Permissions [] = [];
+  removeTempPermissionsList: Permissions [] = [];
 
-  @Input('dataTable') dataTable: Permissions [];
+  @Input() dataTable: Permissions [];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -28,13 +25,13 @@ export class AdminPermissionListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  
+
   constructor(public dialog: MatDialog,
     private snackBar: MatSnackBar,
     @Optional() @Inject(MAT_DIALOG_DATA)
     public data: PermissionsData) {
-      this.componentType = "add"; 
-      if(data != null){
+      this.componentType = 'add';
+      if (data != null) {
         this.componentType = data.componentType;
         this.dataTable = data.array;
         this.dataSource = new MatTableDataSource<Permissions>(this.dataTable);
@@ -42,74 +39,74 @@ export class AdminPermissionListComponent implements OnInit {
     }
 
   ngOnInit() {
-    if(!this.data){
+    if (!this.data) {
       this.dataSource = new MatTableDataSource<Permissions>(this.dataTable);
     }
-    for(let perm of this.dataTable){
+    for (const perm of this.dataTable) {
       this.removeTempPermissionsList.push(perm);
     }
   }
 
-  addPermissions(perm:Permissions){
-    this.listOfPermissions.push(perm)
+  addPermissions(perm: Permissions) {
+    this.listOfPermissions.push(perm);
     this.dataTable.splice( this.dataTable.indexOf(perm), 1 );
     this.dataSource = new MatTableDataSource<Permissions>(this.dataTable);
-    this.snackBar.open(perm.name+" anadido correctamente ",'add' ,{
+    this.snackBar.open(perm.name + ' anadido correctamente ', 'add' , {
       duration: 2000,
     });
   }
 
-  removePermissions(perm:Permissions){
+  removePermissions(perm: Permissions) {
     this.removeTempPermissionsList.splice( this.removeTempPermissionsList.indexOf(perm), 1 );
     this.dataSource = new MatTableDataSource<Permissions>(this.removeTempPermissionsList);
     this.removePermissionsList.push(perm);
-    this.snackBar.open(perm.name+" Eliminado correctamente de lista de permisos",'remove' ,{
+    this.snackBar.open(perm.name + ' Eliminado correctamente de lista de permisos', 'remove' , {
       duration: 2000,
     });
   }
 
-  close(){
+  close() {
     this.dataSource = new MatTableDataSource<Permissions>(this.removeTempPermissionsList);
     this.dataTable = this.removeTempPermissionsList;
     this.removeTempPermissionsList = [];
   }
 
-  searchByNae(name:string){
-    let listOfPerm: Permissions [] = []
-    if(name != ""){
-      for(let perm of this.dataTable){
-          if(perm.name == name ){
+  searchByNae(name: string) {
+    const listOfPerm: Permissions [] = [];
+    if (name !== '') {
+      for (const perm of this.dataTable) {
+          if (perm.name === name ) {
             listOfPerm.push(perm);
           }
       }
       return listOfPerm;
-    }else{
+    } else {
       return this.dataTable;
     }
   }
 
-  searchByType(type:string="all"){
-    let listOfPerm: Permissions [] = []
-    if(type != "0"){
+  searchByType(type: string= 'all') {
+    const listOfPerm: Permissions [] = [];
+    if (type !== '0') {
 
-      for(let perm of this.dataTable){
-        if(perm.content_type == type ){
+      for (const perm of this.dataTable) {
+        if (perm.content_type === type ) {
           listOfPerm.push(perm);
         }
       }
     return listOfPerm;
 
-    }else{
+    } else {
       return this.dataTable;
     }
   }
-  search(name:string="", type:string="all"){
-    if(name == ""&& type == "all"){
+  search(name: string= '', type: string= 'all') {
+    if (name === '' && type === 'all') {
       this.dataSource = new MatTableDataSource<Permissions>(this.dataTable);
-    }else{
-      let listByName = this.searchByNae(name);
-      let listByType = this.searchByType(type);
-      let intersectionList = listByName.filter(value => listByType.includes(value));
+    } else {
+      const listByName = this.searchByNae(name);
+      const listByType = this.searchByType(type);
+      const intersectionList = listByName.filter(value => listByType.includes(value));
       this.dataSource = new MatTableDataSource<Permissions>(intersectionList);
     }
   }

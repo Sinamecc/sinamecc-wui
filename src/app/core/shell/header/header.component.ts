@@ -13,8 +13,8 @@ import { Permissions } from '@app/core/permissions';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  logoName : string;
-  userImage:string | SafeUrl = 'assets/default_user_image.png';
+  logoName: string;
+  userImage: string | SafeUrl = 'assets/default_user_image.png';
 
   @Input() sidenav: MatSidenav;
 
@@ -23,10 +23,10 @@ export class HeaderComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private i18nService: I18nService,
               private sanitizer: DomSanitizer) {
-                this.logoName = "logo-white-nav.png";
+                this.logoName = 'logo-white-nav.png';
                }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.getUserPhoto();
   }
 
@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit {
     this.i18nService.language = language;
   }
 
-  logout() { 
+  logout() {
     this.authenticationService.logout()
       .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
@@ -47,11 +47,11 @@ export class HeaderComponent implements OnInit {
     return this.i18nService.supportedLanguages;
   }
 
-  get permissions(): Permissions{
+  get permissions(): Permissions {
     return this.authenticationService.credentials.permissions;
   }
 
-  get credential():Credentials{
+  get credential(): Credentials {
     return this.authenticationService.credentials;
   }
 
@@ -67,34 +67,34 @@ export class HeaderComponent implements OnInit {
     return this.titleService.getTitle();
   }
 
-  showModule(permissions:Permissions,module:string){
-    if(permissions.all){
+  showModule(permissions: Permissions, module: string) {
+    if (permissions.all) {
       return true;
-    }else{
-      return Boolean(permissions[module])
-    } 
+    } else {
+      return Boolean(permissions[module]);
+    }
   }
 
-  getCurrentPhoto(photoList:any[]){
-    for(let photo of photoList){
-      if(photo.current){
+  getCurrentPhoto(photoList: any[]) {
+    for (const photo of photoList) {
+      if (photo.current) {
         return photo;
       }
     }
-    return undefined
+    return undefined;
   }
 
-  getUserPhoto(){
-    const userPhoto = this.getCurrentPhoto(this.credential.userPhoto)
-    if(userPhoto){
-      this.authenticationService.getUserPhoto(userPhoto.image).subscribe((image: any) =>{ 
-        this.userImage = this.sanitizer.bypassSecurityTrustUrl(this.createImageFromBlob(image)); 
+  getUserPhoto() {
+    const userPhoto = this.getCurrentPhoto(this.credential.userPhoto);
+    if (userPhoto) {
+      this.authenticationService.getUserPhoto(userPhoto.image).subscribe((image: any) => {
+        this.userImage = this.sanitizer.bypassSecurityTrustUrl(this.createImageFromBlob(image));
       });
     }
   }
 
   createImageFromBlob(image: Blob) {
-    return URL.createObjectURL(image)
+    return URL.createObjectURL(image);
  }
 
 }

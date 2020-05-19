@@ -24,7 +24,7 @@ import { AdminUserDetailComponent } from './Users/admin-user-detail/admin-user-d
 import { AdminPermissionsListEditComponent } from './Permissions/admin-permissions-list-edit/admin-permissions-list-edit.component';
 import { AdminGroupsListEditComponent } from './Groups/admin-groups-list-edit/admin-groups-list-edit.component';
 import { AdminEditPasswordDialogComponent } from './admin-edit-password-dialog/admin-edit-password-dialog.component';
-import { AdminPermissionsDetailComponent } from './Permissions/admin-permissions-detail/admin-permissions-detail.component'
+import { AdminPermissionsDetailComponent } from './Permissions/admin-permissions-detail/admin-permissions-detail.component';
 
 @NgModule({
   imports: [
@@ -36,11 +36,26 @@ import { AdminPermissionsDetailComponent } from './Permissions/admin-permissions
     SharedModule,
     FlexLayoutModule,
     MaterialModule,
-    AdminRoutingModule,MatPaginatorModule
+    AdminRoutingModule, MatPaginatorModule
   ],
-  declarations: [AdminNewComponent, AdminPermissionListComponent, AdminGroupListComponent, AdminUsersComponent, AdminPermissionsComponent, AdminPermissionsNewComponent, AdminGroupsComponent, 
-    AdminGroupsNewComponent, AdminUserDetailComponent, AdminPermissionsListEditComponent, AdminGroupsListEditComponent, AdminEditPasswordDialogComponent, AdminPermissionsDetailComponent],
-  entryComponents: [AdminPermissionListComponent,AdminGroupListComponent,AdminUserDetailComponent,AdminEditPasswordDialogComponent,AdminPermissionsDetailComponent],
+  declarations: [AdminNewComponent,
+                AdminPermissionListComponent,
+                AdminGroupListComponent,
+                AdminUsersComponent,
+                AdminPermissionsComponent,
+                AdminPermissionsNewComponent,
+                AdminGroupsComponent,
+                AdminGroupsNewComponent,
+                AdminUserDetailComponent,
+                AdminPermissionsListEditComponent,
+                AdminGroupsListEditComponent,
+                AdminEditPasswordDialogComponent,
+                AdminPermissionsDetailComponent],
+  entryComponents: [AdminPermissionListComponent,
+                    AdminGroupListComponent,
+                    AdminUserDetailComponent,
+                    AdminEditPasswordDialogComponent,
+                    AdminPermissionsDetailComponent],
   providers: [
     AdminService,
     DatePipe

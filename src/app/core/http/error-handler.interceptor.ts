@@ -23,18 +23,18 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   // Customize the default error handler here if needed
   private errorHandler(response: HttpEvent<any>): Observable<HttpEvent<any>> {
-    
+
     if (response instanceof HttpErrorResponse) {
-       if(response.status === 401) {
-        //this.authenticationService.logout();
+       if (response.status === 401) {
+        // this.authenticationService.logout();
         this.router.navigate(['/login'], { replaceUrl: true });
        }
-       if(response.status === 404) {
-        //this.authenticationService.logout();
+       if (response.status === 404) {
+        // this.authenticationService.logout();
         this.router.navigate(['/error'], { replaceUrl: true });
        }
     }
-    
+
     if (!environment.production) {
       // Do something with the error
       log.error('Request error', response);

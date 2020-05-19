@@ -2,16 +2,16 @@
   <div translate class="section-heading"><span translate>mccr.MCCRRegistries</span></div>
 </mat-toolbar>
 <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
-  <mat-divider class="divider-custom"></mat-divider>
-  <mat-divider class="divider-custom"></mat-divider> 
-  <mat-card-subtitle>
-    <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
-    <p [hidden]="isLoading"></p>
-  </mat-card-subtitle>
+<mat-divider class="divider-custom"></mat-divider>
+<mat-divider class="divider-custom"></mat-divider>
+<mat-card-subtitle>
+  <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
+  <p [hidden]="isLoading"></p>
+</mat-card-subtitle>
 
-<br>
-  <app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
-<br>
+<br />
+<app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
+<br />
 
 <div class="container mat-elevation-z8 table-sinamecc">
   <mat-table #table [dataSource]="dataSource">
@@ -40,30 +40,35 @@
       <mat-cell *matCellDef="let element"> {{element.files}} </mat-cell>
     </ng-container>
 
-  <!-- Actions Column -->
-  <ng-container matColumnDef="actions">
-    <mat-header-cell *matHeaderCellDef translate> general.actions </mat-header-cell>
-    <mat-cell *matCellDef="let element"> 
-      <!-- <button mat-icon-button color="primary" (click)="view(element.id)"><mat-icon color="white">visibility</mat-icon></button> -->
-      <button *ngIf="hasPermProvider()"  mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)"><mat-icon color="white">delete</mat-icon></button>
-      <!-- <button mat-icon-button color="accent" (click)="update(element.id)"><mat-icon color="white">edit</mat-icon></button> -->
-      <button mat-icon-button color="primary" *ngIf="canChangeState(element)" (click)="addReview(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button>
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef translate> general.actions </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <!-- <button mat-icon-button color="primary" (click)="view(element.id)"><mat-icon color="white">visibility</mat-icon></button> -->
+        <button *ngIf="hasPermProvider()" mat-icon-button color="warn"
+          (click)="openDeleteConfirmationDialog(element.id)">
+          <mat-icon color="white">delete</mat-icon>
+        </button>
+        <!-- <button mat-icon-button color="accent" (click)="update(element.id)"><mat-icon color="white">edit</mat-icon></button> -->
+        <button mat-icon-button color="primary" *ngIf="canChangeState(element)" (click)="addReview(element.id)">
+          <mat-icon color="white">navigate_next</mat-icon>
+        </button>
 
-    </mat-cell>
-</ng-container>
+      </mat-cell>
+    </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
   </mat-table>
-  
+
   <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
   </mat-paginator>
 
 </div>
-<br>
+<br />
 <div class="box-button" *ngIf="hasPermProvider()">
-  <app-generic-button routerLink="/mccr/registries/new"  name="mccr.addMCCR"></app-generic-button>
+  <app-generic-button routerLink="/mccr/registries/new" name="mccr.addMCCR"></app-generic-button>
 </div>
 <!--<a mat-fab routerLink="/report">
   <mat-icon aria-label="Go to Data for Report">undo</mat-icon>

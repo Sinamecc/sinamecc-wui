@@ -50,7 +50,7 @@ describe('AdminUserDetailComponent', () => {
       userName: 'randy',
       email: 'ravf.226@gmail.com'
 
-    }
+    };
     fixture.detectChanges();
   });
 

@@ -15,22 +15,12 @@
             <h3 *ngIf="isUpdating">
               <span translate>info.code</span>:<span>{{ mitigationAction?.id }}</span>
             </h3>
-
-            <!-- <mat-form-field class="field-ppcn">
-              <mat-select formControlName="initiativeRegisterTypeCtrl" [placeholder]="'Registered Type' | translate">
-                <mat-option *ngFor="let registerType of processedNewFormData.registration_types" [value]="registerType.id">
-                  {{ registerType.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field> -->
             <br />
 
             <span translate>specificLabel.initiativeType</span><br /><br />
             <mat-radio-group formControlName="initiativeTypeCtrl">
-              <mat-radio-button
-                *ngFor="let initiativeType of processedNewFormData?.initiative_types"
-                [value]="initiativeType.id"
-              >
+              <mat-radio-button *ngFor="let initiativeType of processedNewFormData?.initiative_types"
+                [value]="initiativeType.id">
                 {{ initiativeType.types }}
               </mat-radio-button>
             </mat-radio-group>
@@ -50,39 +40,24 @@
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
-              <textarea
-                matInput
-                formControlName="initiativeObjectiveCtrl"
-                [placeholder]="'specificLabel.initiativeObjective' | translate"
-                matTextareaAutosize
-                matAutosizeMinRows="2"
-                matAutosizeMaxRows="20"
-              ></textarea>
+              <textarea matInput formControlName="initiativeObjectiveCtrl"
+                [placeholder]="'specificLabel.initiativeObjective' | translate" matTextareaAutosize
+                matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
-              <textarea
-                matInput
-                formControlName="initiativeDescriptionCtrl"
-                [placeholder]="'specificLabel.initiativeDescription' | translate"
-                matTextareaAutosize
-                matAutosizeMinRows="2"
-                matAutosizeMaxRows="20"
-              ></textarea>
+              <textarea matInput formControlName="initiativeDescriptionCtrl"
+                [placeholder]="'specificLabel.initiativeDescription' | translate" matTextareaAutosize
+                matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
-              <textarea
-                matInput
-                formControlName="initiativeGoalCtrl"
-                [placeholder]="'specificLabel.initiativeGoal' | translate"
-                matTextareaAutosize
-                matAutosizeMinRows="2"
-                matAutosizeMaxRows="20"
-              ></textarea>
+              <textarea matInput formControlName="initiativeGoalCtrl"
+                [placeholder]="'specificLabel.initiativeGoal' | translate" matTextareaAutosize matAutosizeMinRows="2"
+                matAutosizeMaxRows="20"></textarea>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
@@ -95,10 +70,10 @@
             <br />
             <!-- <div class="margin-20">
               <div>step details:-</div>
-              <pre>Is formArray?.get([0]) valid?: <br>{{formArray?.get([0]).valid | json}}</pre>
-              <pre>formArray?.get([0]) value: <br>{{formArray?.get([0]).value | json}}</pre>
-              <pre>formArray?.get([0]) : <br>{{formArray?.get([0]) | json }}</pre>
-              <pre>first step valid? : <br>{{formArray?.get([0]).valid | json}}</pre>
+              <pre>Is formArray?.get([0]) valid?: <br />{{formArray?.get([0]).valid | json}}</pre>
+              <pre>formArray?.get([0]) value: <br />{{formArray?.get([0]).value | json}}</pre>
+              <pre>formArray?.get([0]) : <br />{{formArray?.get([0]) | json }}</pre>
+              <pre>first step valid? : <br />{{formArray?.get([0]).valid | json}}</pre>
   
             </div> -->
             <div class="box-button">
@@ -113,11 +88,8 @@
 
             <span translate>specificLabel.initiativeFinanceStatus</span><br /><br />
             <mat-radio-group formControlName="initiativeFinancingStatusCtrl">
-              <mat-radio-button
-                *ngFor="let financeStatus of processedNewFormData?.finance_status"
-                [value]="financeStatus.id"
-                (change)="financialSourceInputShown($event)"
-              >
+              <mat-radio-button *ngFor="let financeStatus of processedNewFormData?.finance_status"
+                [value]="financeStatus.id" (change)="financialSourceInputShown($event)">
                 {{ financeStatus.status }}
               </mat-radio-button>
             </mat-radio-group>
@@ -125,14 +97,10 @@
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.initiativeFinanceType</mat-label>
-              <mat-select
-                formControlName="initiativeFinancingStatusTypeCtrl"
-                [placeholder]="'Finance Source Type' | translate"
-              >
-                <mat-option
-                  *ngFor="let financeStatus of processedNewFormData?.finance_source_types"
-                  [value]="financeStatus.id"
-                >
+              <mat-select formControlName="initiativeFinancingStatusTypeCtrl"
+                [placeholder]="'Finance Source Type' | translate">
+                <mat-option *ngFor="let financeStatus of processedNewFormData?.finance_source_types"
+                  [value]="financeStatus.id">
                   {{ financeStatus.name }}
                 </mat-option>
               </mat-select>
@@ -155,11 +123,8 @@
             <br />
 
             <div class="box-button">
-              <app-generic-button-secondary
-                type="button"
-                (click)="stepper.previous()"
-                name="general.back"
-              ></app-generic-button-secondary>
+              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
+              </app-generic-button-secondary>
               <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
@@ -195,11 +160,8 @@
             </mat-form-field>
             <br />
             <div class="box-button">
-              <app-generic-button-secondary
-                type="button"
-                (click)="stepper.previous()"
-                name="general.back"
-              ></app-generic-button-secondary>
+              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
+              </app-generic-button-secondary>
               <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
@@ -211,21 +173,18 @@
 
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <app-generic-button
-                type="submit"
-                [disabled]="wasSubmittedSuccessfully"
-                name="general.done"
-              ></app-generic-button>
+              <app-generic-button type="submit" [disabled]="wasSubmittedSuccessfully" name="general.done">
+              </app-generic-button>
             </div>
           </mat-step>
         </mat-vertical-stepper>
 
         <!-- <div class="margin-20">
             <div>form details:-</div>
-            <pre>Is myForm valid?: <br>{{form.valid | json}}</pre>
-            <pre>form value: <br>{{form.value | json}}</pre>
-            <pre>formArray?.get([0]) : <br>{{formArray?.get([0]) | json }}</pre>
-            <pre>first step valid? : <br>{{formArray?.get([0]).valid | json}}</pre>
+            <pre>Is myForm valid?: <br />{{form.valid | json}}</pre>
+            <pre>form value: <br />{{form.value | json}}</pre>
+            <pre>formArray?.get([0]) : <br />{{formArray?.get([0]) | json }}</pre>
+            <pre>first step valid? : <br />{{formArray?.get([0]).valid | json}}</pre>
 
           </div> -->
       </div>

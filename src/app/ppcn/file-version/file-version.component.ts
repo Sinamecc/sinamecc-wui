@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '@env/environment';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Ppcn } from '../ppcn_registry';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PpcnService } from '../ppcn.service';
@@ -29,14 +29,14 @@ export class FileVersionComponent implements OnInit {
     private service: PpcnService,
     private i18nService: I18nService) {
       this.id = this.route.snapshot.paramMap.get('id');
-      this.title = "File Version PPCN Registry";
+      this.title = 'File Version PPCN Registry';
       this.nextRoute = `ppcn/registries`;
       this.formData = new FormData();
-      this.formSubmitRoute = "/v1/ppcn/step/label/";
+      this.formSubmitRoute = '/v1/ppcn/step/label/';
 
       this.ppcnObservable = this.service.getPpcn(this.id, this.i18nService.language.split('-')[0])
       .pipe(
-        tap((ppcn: Ppcn) => { this.ppcn = ppcn })
+        tap((ppcn: Ppcn) => { this.ppcn = ppcn; })
       );
      }
 
@@ -49,9 +49,9 @@ export class FileVersionComponent implements OnInit {
     this.formData.append('entry_name', 'entry_name');
     this.formData.append('step_status', 'Accepted');
     //formData.append('file', context.commentCtrl);
-    let fileList = context.fileCtrl.files;
+    const fileList = context.fileCtrl.files;
     if (fileList.length > 0) {
-      let file: File = fileList[0];
+      const file: File = fileList[0];
       this.formData.append('file', file, file.name);
     }
   }

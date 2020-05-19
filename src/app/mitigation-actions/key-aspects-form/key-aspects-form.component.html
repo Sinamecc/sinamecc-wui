@@ -17,14 +17,9 @@
             </h3>
 
             <mat-form-field class="field-ppcn">
-              <textarea
-                matInput
-                formControlName="actionObjectiveCtrl"
-                [placeholder]="'mitigationAction.ObjectiveMA' | translate"
-                matTextareaAutosize
-                matAutosizeMinRows="2"
-                matAutosizeMaxRows="20"
-              ></textarea>
+              <textarea matInput formControlName="actionObjectiveCtrl"
+                [placeholder]="'mitigationAction.ObjectiveMA' | translate" matTextareaAutosize matAutosizeMinRows="2"
+                matAutosizeMaxRows="20"></textarea>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
@@ -40,12 +35,8 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>mitigationAction.StartMA</mat-label>
-              <input
-                matInput
-                [matDatepicker]="implementationInitialDatePicker"
-                [placeholder]="'info.chooseDate' | translate"
-                formControlName="implementationInitialDateCtrl"
-              />
+              <input matInput [matDatepicker]="implementationInitialDatePicker"
+                [placeholder]="'info.chooseDate' | translate" formControlName="implementationInitialDateCtrl" />
               <mat-datepicker-toggle matSuffix [for]="implementationInitialDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationInitialDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
@@ -53,12 +44,8 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>mitigationAction.lastMA</mat-label>
-              <input
-                matInput
-                [matDatepicker]="implementationEndDatePicker"
-                [placeholder]="'info.chooseDate' | translate"
-                formControlName="implementationEndDateCtrl"
-              />
+              <input matInput [matDatepicker]="implementationEndDatePicker"
+                [placeholder]="'info.chooseDate' | translate" formControlName="implementationEndDateCtrl" />
               <mat-datepicker-toggle matSuffix [for]="implementationEndDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationEndDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
@@ -75,21 +62,16 @@
 
             <span translate>geographyLabel.geographicScale</span><br /><br />
             <mat-radio-group formControlName="geographicScaleCtrl">
-              <mat-radio-button
-                *ngFor="let geographicScale of processedNewFormData?.geographic_scales"
-                [value]="geographicScale.id"
-              >
+              <mat-radio-button *ngFor="let geographicScale of processedNewFormData?.geographic_scales"
+                [value]="geographicScale.id">
                 {{ geographicScale.name }}
               </mat-radio-button>
             </mat-radio-group>
 
             <br />
             <div class="box-button">
-              <app-generic-button-secondary
-                type="button"
-                (click)="stepper.previous()"
-                name="general.back"
-              ></app-generic-button-secondary>
+              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
+              </app-generic-button-secondary>
               <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
@@ -111,11 +93,8 @@
               <mat-radio-button value="0"><span translate>general.no </span></mat-radio-button>
             </mat-radio-group>
             <div class="box-button">
-              <app-generic-button-secondary
-                type="button"
-                (click)="stepper.previous()"
-                name="general.back"
-              ></app-generic-button-secondary>
+              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
+              </app-generic-button-secondary>
               <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
@@ -127,10 +106,8 @@
 
             <span translate>specificLabel.financeSourceStatus</span><br /><br />
             <mat-radio-group formControlName="financingStatusCtrl" (change)="financialSourceInputShown($event)">
-              <mat-radio-button
-                *ngFor="let financeStatus of processedNewFormData?.finance_status"
-                [value]="financeStatus.id"
-              >
+              <mat-radio-button *ngFor="let financeStatus of processedNewFormData?.finance_status"
+                [value]="financeStatus.id">
                 {{ financeStatus.status }}
               </mat-radio-button>
             </mat-radio-group>
@@ -149,17 +126,13 @@
 
             <mat-label translate>specificLabel.gasInventory</mat-label>
             <mat-radio-group matInput formControlName="gasInventoryCtrl">
-              <mat-radio-button value="1" translate class="mat-primary"
-                ><span translate>general.energy</span></mat-radio-button
-              >
+              <mat-radio-button value="1" translate class="mat-primary"><span translate>general.energy</span>
+              </mat-radio-button>
             </mat-radio-group>
             <br />
             <div class="box-button">
-              <app-generic-button-secondary
-                type="button"
-                (click)="stepper.previous()"
-                name="general.back"
-              ></app-generic-button-secondary>
+              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
+              </app-generic-button-secondary>
               <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
@@ -171,19 +144,16 @@
 
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <app-generic-button
-                type="submit"
-                [disabled]="wasSubmittedSuccessfully"
-                name="general.done"
-              ></app-generic-button>
+              <app-generic-button type="submit" [disabled]="wasSubmittedSuccessfully" name="general.done">
+              </app-generic-button>
             </div>
           </mat-step>
           <!-- <div class="margin-20">
               <div>form details:-</div>
-              <pre>Is myForm valid?: <br>{{form.valid | json}}</pre>
-              <pre>form value: <br>{{form.value | json}}</pre>
-              <pre>formArray?.get([0]) : <br>{{formArray?.get([0]) | json }}</pre>
-              <pre>first step valid? : <br>{{formArray?.get([0]).valid | json}}</pre>
+              <pre>Is myForm valid?: <br />{{form.valid | json}}</pre>
+              <pre>form value: <br />{{form.value | json}}</pre>
+              <pre>formArray?.get([0]) : <br />{{formArray?.get([0]) | json }}</pre>
+              <pre>first step valid? : <br />{{formArray?.get([0]).valid | json}}</pre>
   
             </div> -->
         </mat-vertical-stepper>

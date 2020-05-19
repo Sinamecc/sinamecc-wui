@@ -31,9 +31,9 @@ describe('OvvProposalComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        
+
       ],
-      declarations: [ OvvProposalComponent, DownloadProposalComponent,GenericButtonComponent,
+      declarations: [ OvvProposalComponent, DownloadProposalComponent, GenericButtonComponent,
         GenericButtonSecondaryComponent ],
       providers: [I18nService, DatePipe, MccrRegistriesService,
         { provide: AuthenticationService, useClass: MockAuthenticationService },

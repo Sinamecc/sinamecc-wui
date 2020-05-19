@@ -36,10 +36,10 @@ export class MonitoringProposalVerificationNewComponent implements OnInit {
     private service: MccrRegistriesService,
     private i18nService: I18nService) {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.title = "Informe de Verificacion del Reporte de Monitoreo";
-    this.nextRoute = "mccr/registries";
+    this.title = 'Informe de Verificacion del Reporte de Monitoreo';
+    this.nextRoute = 'mccr/registries';
     this.formData = new FormData();
-    this.formSubmitRoute = "/v1/mccr/step/conceptual_proposal";
+    this.formSubmitRoute = '/v1/mccr/step/conceptual_proposal';
 
 
     this.mccrRegistryObservable = this.service.getMccrRegistry(this.id)
@@ -57,9 +57,9 @@ export class MonitoringProposalVerificationNewComponent implements OnInit {
     this.formData.append('name', 'ovv_evaluation_monitoring');
     this.formData.append('entry_name', context.commentCtrl);
     this.formData.append('step_status', 'approved');
-    let fileList = context.fileCtrl.files;
+    const fileList = context.fileCtrl.files;
     if (fileList.length > 0) {
-      let file: File = fileList[0];
+      const file: File = fileList[0];
       this.formData.append('file', file, file.name);
     }
   }

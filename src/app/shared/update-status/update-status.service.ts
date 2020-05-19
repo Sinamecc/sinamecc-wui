@@ -18,7 +18,7 @@ export class UpdateStatusService {
   constructor(private authenticationService: AuthenticationService,
     private httpClient: HttpClient) { }
 
-  updateStatus(context: any, entity: any, routeToUpload:string, formData: FormData): Observable <Response> {
+  updateStatus(context: any, entity: any, routeToUpload: string, formData: FormData): Observable <Response> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
@@ -28,7 +28,7 @@ export class UpdateStatusService {
     return this.httpClient
     .patch(routeToUpload, formData, httpOptions)
     .pipe(
-      map((body:any) => {
+      map((body: any) => {
         const response = {
           statusCode: 200,
           message: 'Form submitted correctly'
@@ -36,7 +36,7 @@ export class UpdateStatusService {
         return response;
       }
     )
-    )
+    );
   }
 
 }

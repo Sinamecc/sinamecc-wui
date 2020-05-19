@@ -1,71 +1,75 @@
-<mat-card >
+<mat-card>
     <h3>
         <mat-card-title class="section-heading" translate>admin.permissions</mat-card-title>
         <mat-divider class="divider-custom"></mat-divider>
         <mat-divider class="divider-custom"></mat-divider>
     </h3>
     <mat-card-content>
-      <div class="container mat-elevation-z8 table-sinamecc">
+        <div class="container mat-elevation-z8 table-sinamecc">
 
-          <div>
-              <mat-form-field>
-                <mat-label><span translate>admin.permissionType</span></mat-label>
-                <mat-select #searchType name="search" >
-                    <mat-option value="0">All</mat-option>
-                    <mat-option value="1">MA</mat-option>
-                    <mat-option value="4" >{{ 'reportData.report' | translate }}</mat-option>
-                    <mat-option value="3">MCCR</mat-option>
-                    <mat-option value="2">PPCN</mat-option>
-                </mat-select>
-                
-              </mat-form-field>
+            <div>
+                <mat-form-field>
+                    <mat-label><span translate>admin.permissionType</span></mat-label>
+                    <mat-select #searchType name="search">
+                        <mat-option value="0">All</mat-option>
+                        <mat-option value="1">MA</mat-option>
+                        <mat-option value="4">{{ 'reportData.report' | translate }}</mat-option>
+                        <mat-option value="3">MCCR</mat-option>
+                        <mat-option value="2">PPCN</mat-option>
+                    </mat-select>
 
-              <mat-form-field >
-                  <input #searchPerm matInput placeholder="{{ 'admin.searchPermission' | translate }}">
-              </mat-form-field>
-              <button mat-icon-button (click)="search(searchPerm.value,searchType.value)">
-                  <mat-icon >search</mat-icon>
-              </button>
-          
-          </div>
+                </mat-form-field>
 
-          <br>
-          <div *ngIf="!data || dataTable != undefined">
+                <mat-form-field>
+                    <input #searchPerm matInput placeholder="{{ 'admin.searchPermission' | translate }}" />
+                </mat-form-field>
+                <button mat-icon-button (click)="search(searchPerm.value,searchType.value)">
+                    <mat-icon>search</mat-icon>
+                </button>
 
-                <mat-table  #table [dataSource]="dataSource" >
-                        <ng-container matColumnDef="name">
-                            <mat-header-cell *matHeaderCellDef translate>admin.permName</mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-                        </ng-container>
-        
-                        <ng-container matColumnDef="type">
-                            <mat-header-cell *matHeaderCellDef translate> general.type </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.content_type}} </mat-cell>
-                        </ng-container>
-        
-                        <ng-container matColumnDef="action">
-                            <mat-header-cell *matHeaderCellDef translate> admin.action  </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> 
-                                <button *ngIf="componentType == 'delete' " (click)="removePermissions(element)" mat-icon-button color="warn" ><mat-icon color="white">delete</mat-icon></button>
-                                <button *ngIf="componentType == 'add' " mat-icon-button color="primary" (click)="addPermissions(element)"><mat-icon color="white">add</mat-icon></button>
-                            </mat-cell>
-                        </ng-container>
-        
-                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        
-                    </mat-table>
-                    <mat-paginator 
-                        [pageSize]="5"
-                        [pageSizeOptions]="[5, 10, 20]"
-                        [showFirstLastButtons]="true">
-                    </mat-paginator>
+            </div>
 
-                    <button (onHide)="close()" [mat-dialog-close]="removePermissionsList" *ngIf="componentType == 'delete' " (click)="close()" mat-icon-button color="primary"  >Back</button>
+            <br />
+            <div *ngIf="!data || dataTable != undefined">
 
-          </div>
-           
+                <mat-table #table [dataSource]="dataSource">
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef translate>admin.permName</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                    </ng-container>
 
-      </div>
+                    <ng-container matColumnDef="type">
+                        <mat-header-cell *matHeaderCellDef translate> general.type </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.content_type}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef translate> admin.action </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <button *ngIf="componentType == 'delete' " (click)="removePermissions(element)"
+                                mat-icon-button color="warn">
+                                <mat-icon color="white">delete</mat-icon>
+                            </button>
+                            <button *ngIf="componentType == 'add' " mat-icon-button color="primary"
+                                (click)="addPermissions(element)">
+                                <mat-icon color="white">add</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+                </mat-table>
+                <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+                </mat-paginator>
+
+                <button (onHide)="close()" [mat-dialog-close]="removePermissionsList" *ngIf="componentType == 'delete' "
+                    (click)="close()" mat-icon-button color="primary">Back</button>
+
+            </div>
+
+
+        </div>
     </mat-card-content>
 </mat-card>

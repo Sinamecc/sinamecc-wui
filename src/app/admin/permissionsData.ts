@@ -1,6 +1,6 @@
-import { Permissions } from "./permissions";
+import { Permissions } from './permissions';
 
-export interface PermissionsData{
+export interface PermissionsData {
     array: Permissions [];
-    componentType : string;
+    componentType: string;
 }
