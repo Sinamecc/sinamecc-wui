@@ -6,7 +6,6 @@
       </div>
       <br />
       <div fxLayout="column">
-
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
@@ -14,7 +13,7 @@
             </ng-template>
 
             <h3>
-              <span translate>info.code</span>:<span>{{mitigationAction?.id}}</span>
+              <span translate>info.code</span>:<span>{{ mitigationAction?.id }}</span>
             </h3>
 
             <mat-form-field class="field-ppcn">
@@ -27,7 +26,7 @@
 
             <span translate>mitigationAction.MAstatus</span><br /><br />
             <mat-radio-group formControlName="actionStatusCtrl">
-              <mat-radio-button *ngFor="let status of processedNewFormData.statuses" [value]="status.id">
+              <mat-radio-button *ngFor="let status of processedNewFormData?.statuses" [value]="status.id">
                 {{ status.status }}
               </mat-radio-button>
             </mat-radio-group>
@@ -51,38 +50,33 @@
               <mat-datepicker #implementationEndDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
 
-
             <div class="box-button">
-              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
-
-
           </mat-step>
 
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
-
             <ng-template matStepLabel>
               <div translate>geographyLabel.geographicScale</div>
             </ng-template>
 
             <span translate>geographyLabel.geographicScale</span><br /><br />
             <mat-radio-group formControlName="geographicScaleCtrl">
-              <mat-radio-button *ngFor="let geographicScale of processedNewFormData.geographic_scales"
+              <mat-radio-button *ngFor="let geographicScale of processedNewFormData?.geographic_scales"
                 [value]="geographicScale.id">
-                {{geographicScale.name}}
+                {{ geographicScale.name }}
               </mat-radio-button>
             </mat-radio-group>
 
             <br />
             <div class="box-button">
-              <app-generic-button-secondary type="button" (click)="stepper.previous();" name="general.back">
+              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
               </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
 
           <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
-
             <ng-template matStepLabel>
               <div translate>info.location</div>
             </ng-template>
@@ -99,21 +93,20 @@
               <mat-radio-button value="0"><span translate>general.no </span></mat-radio-button>
             </mat-radio-group>
             <div class="box-button">
-              <app-generic-button-secondary type="button" (click)="stepper.previous();" name="general.back">
+              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
               </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
 
           <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
-
             <ng-template matStepLabel>
               <div translate>specificLabel.financing</div>
             </ng-template>
 
             <span translate>specificLabel.financeSourceStatus</span><br /><br />
             <mat-radio-group formControlName="financingStatusCtrl" (change)="financialSourceInputShown($event)">
-              <mat-radio-button *ngFor="let financeStatus of processedNewFormData.finance_status"
+              <mat-radio-button *ngFor="let financeStatus of processedNewFormData?.finance_status"
                 [value]="financeStatus.id">
                 {{ financeStatus.status }}
               </mat-radio-button>
@@ -138,12 +131,11 @@
             </mat-radio-group>
             <br />
             <div class="box-button">
-              <app-generic-button-secondary type="button" (click)="stepper.previous();" name="general.back">
+              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
               </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
-
 
           <mat-step>
             <ng-template matStepLabel> <span translate> specificLabel.confirmInformation </span></ng-template>
@@ -165,9 +157,6 @@
   
             </div> -->
         </mat-vertical-stepper>
-
-
-
       </div>
     </form>
   </mat-card-content>
