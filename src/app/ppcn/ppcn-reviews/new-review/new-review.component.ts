@@ -40,7 +40,7 @@ export class NewReviewComponent implements OnInit {
     private route: ActivatedRoute,
     private i18nService: I18nService,
     private authenticationService: AuthenticationService,
-    private service: PpcnService) { 
+    private service: PpcnService) {
       this.id = this.route.snapshot.paramMap.get('id');
       this.title = 'Add a new review for this PPCN Registry';
       this.nextRoute = `ppcn/registries`;
@@ -50,7 +50,7 @@ export class NewReviewComponent implements OnInit {
 
       this.ppcnObservable = this.service.getPpcn(this.id, this.i18nService.language.split('-')[0])
       .pipe(
-        tap((ppcn: Ppcn) => { 
+        tap((ppcn: Ppcn) => {
           this.ppcn = ppcn;
           if (ppcn.next_state ) {
             this.statusses  = ppcn.next_state.states;

@@ -7,10 +7,10 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class GenericButtonComponent implements OnInit {
 
-  @Input() name: string = 'SINAMECC Button';
-  @Input() disabled: boolean = false;
-  @Input() type: string = 'button';
-  
+  @Input() name = 'SINAMECC Button';
+  @Input() disabled = false;
+  @Input() type = 'button';
+
   constructor() { }
 
   ngOnInit() {

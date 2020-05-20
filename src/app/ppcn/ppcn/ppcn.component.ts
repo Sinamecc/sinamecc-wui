@@ -19,7 +19,7 @@ export class PpcnComponent implements OnInit {
   constructor(private router: Router,
     private i18nService: I18nService,
     private service: PpcnService,
-    private route: ActivatedRoute) { 
+    private route: ActivatedRoute) {
       this.id = this.route.snapshot.paramMap.get('id');
     }
 
@@ -30,11 +30,11 @@ export class PpcnComponent implements OnInit {
      .subscribe((response: Ppcn) => { this.ppcn = response; });
   }
 
-  async download(file:string) {
+  async download(file: string) {
     this.isLoading = true;
     const blob = await this.service.downloadResource(file);
-    var url = window.URL.createObjectURL(blob.data);
-    var a = document.createElement('a');
+    const url = window.URL.createObjectURL(blob.data);
+    const a = document.createElement('a');
     document.body.appendChild(a);
     a.setAttribute('style', 'display: none');
     a.href = url;

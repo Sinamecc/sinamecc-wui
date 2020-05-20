@@ -47,10 +47,10 @@ export class MockPpcnService {
         this.oneOrganization = {
             id: 1,
             name: 'MINAE',
-            legal_identification:'some legal id',
-            representative_legal_identification:'123456789',
-            confidential:'Si',
-            confidential_fields:'',
+            legal_identification: 'some legal id',
+            representative_legal_identification: '123456789',
+            confidential: 'Si',
+            confidential_fields: '',
             representative_name: 'Some rep',
             phone_organization: '22334455',
             postal_code: '10311',
@@ -71,20 +71,20 @@ export class MockPpcnService {
                     id: 1,
                     level: 'regional'
                 },
-                organization_classification:{
-                    emission_quantity:'1000',
-                    buildings_number:'1000',
-                    required_level:{
+                organization_classification: {
+                    emission_quantity: '1000',
+                    buildings_number: '1000',
+                    required_level: {
                         id: 1,
                         level_type: 'Some level'
                     },
-                    data_inventory_quantity:'1000',
-                    recognition_type:{
+                    data_inventory_quantity: '1000',
+                    recognition_type: {
                         id: 1,
                         recognition_type: 'Some recognition'
                     },
-                    reduction:null,
-                    carbon_offset:null,
+                    reduction: null,
+                    carbon_offset: null,
                 },
                 organization: this.oneOrganization,
                 contact: {
@@ -138,28 +138,28 @@ export class MockPpcnService {
                     id: 2,
                     level: 'national'
                 },
-                organization_classification:{
-                    emission_quantity:'1000',
-                    buildings_number:'1000',
-                    required_level:{
+                organization_classification: {
+                    emission_quantity: '1000',
+                    buildings_number: '1000',
+                    required_level: {
                         id: 1,
                         level_type: 'Some level'
                     },
-                    data_inventory_quantity:'1000',
-                    recognition_type:{
+                    data_inventory_quantity: '1000',
+                    recognition_type: {
                         id: 1,
                         recognition_type: 'Some recognition'
                     },
-                    reduction:null,
-                    carbon_offset:null,
+                    reduction: null,
+                    carbon_offset: null,
                 },
                 organization: {
                     id: 1,
                     name: 'ICE',
-                    legal_identification:'some legal id',
-                    representative_legal_identification:'987654321',
-                    confidential:'No',
-                    confidential_fields:'',
+                    legal_identification: 'some legal id',
+                    representative_legal_identification: '987654321',
+                    confidential: 'No',
+                    confidential_fields: '',
                     representative_name: 'Some rep',
                     phone_organization: '22337755',
                     postal_code: '10312',

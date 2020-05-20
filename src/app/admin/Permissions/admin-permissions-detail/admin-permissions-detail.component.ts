@@ -8,12 +8,12 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 })
 export class AdminPermissionsDetailComponent implements OnInit {
 
-  permission:any
+  permission: any;
 
   constructor(@Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
-    if(data) {
+    if (data) {
       this.permission = data.perm;
-    } 
+    }
    }
 
   ngOnInit() {

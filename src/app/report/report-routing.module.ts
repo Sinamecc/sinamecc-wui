@@ -8,7 +8,7 @@ import { ReportNewComponent } from '@app/report/report-new/report-new.component'
 import { ReportVersionsNewComponent } from '@app/report/report-versions-new/report-versions-new.component';
 
 const routes: Routes = [
-  { path: '',component: ReportComponent, data: { title: extract('Report') } },
+  { path: '', component: ReportComponent, data: { title: extract('Report') } },
   { path: ':id/versions', component: ReportVersionsComponent, data: { id: extract('id') } },
   { path: 'new', component: ReportNewComponent, data: { title: extract('New') } },
   { path: ':id/versions/new', component: ReportVersionsNewComponent, data: { title: extract('New') } },

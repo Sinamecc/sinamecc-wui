@@ -1,12 +1,11 @@
 @import "src/theme/theme-variables";
 
 .options {
-
-    position: relative;
-    left: 40%;
+  position: relative;
+  left: 40%;
 
 }
 
 .report-error {
-    color: mat-color($app-warn);
+  color: mat-color($app-warn);
 }

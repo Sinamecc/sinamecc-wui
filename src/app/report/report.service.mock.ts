@@ -15,7 +15,7 @@ export class MockReportService {
             id: '001'
         });
     }
-    
+
     submitReportVersion(context: ReportContext, id: number): Observable<Response> {
         return of({
             statusCode: 200,

@@ -24,13 +24,13 @@ import { GeographicLevel } from '../ppcn-new-form-data';
 
 export class PpcnLevelComponent implements OnInit {
 
-  @Output() emitEvent:EventEmitter<number> = new EventEmitter<number>();
-  
+  @Output() emitEvent: EventEmitter<number> = new EventEmitter<number>();
+
   version: string = environment.version;
   error: string;
   form: FormGroup;
   formData: FormData;
-  levelId = "1";
+  levelId = '1';
   geographicLevel: Observable<GeographicLevel[]>;
   processedGeographicLevel: GeographicLevel[] = [];
   isLoading = false;
@@ -63,9 +63,9 @@ export class PpcnLevelComponent implements OnInit {
     .pipe(finalize(() => { this.isLoading = false; }));
   }
 
-  onSaving(context:any){
+  onSaving(context: any) {
     this.service.updateCurrentGeographicalLevel(context.value);
-    
+
   }
 
 }

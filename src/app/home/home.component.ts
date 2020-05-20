@@ -1,4 +1,5 @@
-import { Component, OnInit, transition, animate, state, style, trigger } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { transition, animate, state, style, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
 import { Permissions } from '../core/permissions';
 import { AuthenticationService } from '../core/authentication/authentication.service';
@@ -17,59 +18,59 @@ import { AuthenticationService } from '../core/authentication/authentication.ser
   ]
 })
 export class HomeComponent implements OnInit {
-  
-  dataImage= [
-    {
-      image:'url(assets/ppcn_image.jpg)',
-      name:'PPCN',
-      url:"/ppcn/registries",
-      moduleName:'ppcn'
-    },
-    {
-      image:'url(assets/report_image.jpg)',
-      name:'Report',
-      url:"/report",
-      moduleName:''
-    },
-    {
-      image:'url(assets/ma_image.jpg)',
-      name:'AM',
-      url:'/mitigation/actions',
-      moduleName:'ma'
-    },
-    {
-      image:'url(assets/mccr_image.jpg)',
-      name:'MCCR',
-      url:"/mccr/registries",
-      moduleName:'mccr'
-    },
-    {
-      image:'url(assets/admin_image.jpg)',
-      name:'ADMIN',
-      url:"/admin/users",
-      moduleName:'admin'
-    }
-  ]
 
-  constructor(private router: Router, private authenticationService: AuthenticationService,) { }
+  dataImage = [
+    {
+      image: 'url(assets/ppcn_image.jpg)',
+      name: 'PPCN',
+      url: '/ppcn/registries',
+      moduleName: 'ppcn'
+    },
+    {
+      image: 'url(assets/report_image.jpg)',
+      name: 'Report',
+      url: '/report',
+      moduleName: ''
+    },
+    {
+      image: 'url(assets/ma_image.jpg)',
+      name: 'AM',
+      url: '/mitigation/actions',
+      moduleName: 'ma'
+    },
+    {
+      image: 'url(assets/mccr_image.jpg)',
+      name: 'MCCR',
+      url: '/mccr/registries',
+      moduleName: 'mccr'
+    },
+    {
+      image: 'url(assets/admin_image.jpg)',
+      name: 'ADMIN',
+      url: '/admin/users',
+      moduleName: 'admin'
+    }
+  ];
+
+  constructor(private router: Router, private authenticationService: AuthenticationService, ) { }
 
   ngOnInit() {
   }
 
-  goToSite(url:string){
+  goToSite(url: string) {
     this.router.navigate([url], { replaceUrl: true });
   }
 
-  get permissions(): Permissions{
+  get permissions(): Permissions {
     return this.authenticationService.credentials.permissions;
   }
 
-  showModule(permissions:Permissions,module:string){
-    if(permissions.all){
+  showModule(permissions: Permissions, module: string) {
+    if (permissions.all) {
       return true;
-    }else{
-      return Boolean(permissions[module])
-    } 
+    } else {
+      return Boolean(permissions[module]);
+    }
   }
 
 }

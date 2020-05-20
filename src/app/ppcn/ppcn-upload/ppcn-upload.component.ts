@@ -6,7 +6,7 @@ import { I18nService, Logger } from '@app/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
 import { Ppcn } from '@app/ppcn/ppcn_registry';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 import { tap, finalize } from 'rxjs/operators';
 const log = new Logger('Report');
@@ -17,7 +17,7 @@ const log = new Logger('Report');
   styleUrls: ['./ppcn-upload.component.scss']
 })
 export class PpcnUploadComponent implements OnInit {
-  
+
   version: string = environment.version;
   error: string;
   form: FormGroup;
@@ -30,15 +30,15 @@ export class PpcnUploadComponent implements OnInit {
     private formBuilder: FormBuilder,
     private i18nService: I18nService,
     private translateService: TranslateService,
-    private ppcnService : PpcnService,
-    public snackBar: MatSnackBar) { 
+    private ppcnService: PpcnService,
+    public snackBar: MatSnackBar) {
       this.createForm();
     }
 
   ngOnInit() {
   }
 
-  submitForm(){
+  submitForm() {
     this.isLoading = true;
     this.ppcnService.submitPpcnNewFile(this.form.value)
       .pipe(finalize(() => {
@@ -47,7 +47,8 @@ export class PpcnUploadComponent implements OnInit {
       }))
       .subscribe(response => {
         this.router.navigate(['/ppcn/registries'], { replaceUrl: true });
-        this.translateService.get('Sucessfully submitted file').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+        this.translateService.get('Sucessfully submitted file')
+          .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
         log.debug(`${response.statusCode} status code received from form`);
 
       }, error => {
@@ -60,10 +61,10 @@ export class PpcnUploadComponent implements OnInit {
   private createForm() {
     this.form = this.formBuilder.group({
       ppcnCtrl: ['', Validators.required],
-      files: this.formBuilder.array([ 
+      files: this.formBuilder.array([
         this.createItem(), this.createItem(), this.createItem()
       ])
-      
+
     });
     this.ppcns = this.initialFormData().pipe(
       tap((ppcns: Ppcn[]) => { this.processedPpcns = ppcns; })
@@ -84,7 +85,7 @@ export class PpcnUploadComponent implements OnInit {
     const control = <FormArray>this.form.controls['files'];
     control.removeAt(i);
   }
-  
+
   private initialFormData(): Observable<Ppcn[]> {
     return this.ppcnService.ppcn(this.i18nService.language.split('-')[0])
     .pipe(finalize(() => { this.isLoading = false; }));

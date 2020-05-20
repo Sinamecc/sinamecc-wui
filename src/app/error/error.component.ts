@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 })
 export class ErrorComponent implements OnInit {
 
-  constructor(private router: Router,) { }
+  constructor(private router: Router, ) { }
 
   ngOnInit() {
   }
 
-  goHome(){
+  goHome() {
     this.router.navigate([`/home`], { replaceUrl: true });
   }
 

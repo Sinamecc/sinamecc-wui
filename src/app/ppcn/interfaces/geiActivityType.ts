@@ -1,7 +1,7 @@
-import { SubSector } from "./subSector";
-import { Sector } from "./sector";
+import { SubSector } from './subSector';
+import { Sector } from './sector';
 
-export interface GeiActivityType{
+export interface GeiActivityType {
     id: Number;
     sector: Sector;
     sub_sector: SubSector;

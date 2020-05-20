@@ -58,12 +58,13 @@ export class UpdateStatusComponent implements OnInit {
         this.form.markAsPristine();
         this.isLoading = false;
       }))
-      .subscribe((response:any) => {
+      .subscribe((response: any) => {
         this.router.navigate([this.nextRoute], { replaceUrl: true });
-        this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+        this.translateService.get('Sucessfully submitted form')
+          .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
         log.debug(`${response.statusCode} status code received from form`);
 
-      }, (error:any) => {
+      }, (error: any) => {
         log.debug(`Upload Proposal error: ${error}`);
         this.error = error;
       });
@@ -81,4 +82,4 @@ export function determineId(id: any): string {
      return '' + id[0];
   }
   return '' + id;
-} 
+}

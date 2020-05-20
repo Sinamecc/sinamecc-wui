@@ -3,9 +3,9 @@
 </mat-toolbar>
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
-<br>
+<br />
 <app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
-<br>
+<br />
 <div class="container mat-elevation-z8 table-sinamecc">
   <mat-table #table [dataSource]="dataSource">
 
@@ -30,13 +30,15 @@
     <!-- Status Column -->
     <ng-container matColumnDef="request_type">
       <mat-header-cell *matHeaderCellDef translate> geographyLabel.requestType </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.organization_classification.required_level.level_type }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.organization_classification.required_level.level_type }}
+      </mat-cell>
     </ng-container>
-    
+
     <!-- Status Column -->
     <ng-container matColumnDef="required_recognition">
       <mat-header-cell *matHeaderCellDef translate> specificLabel.requiredRecognition </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.organization_classification.recognition_type.recognition_type }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.organization_classification.recognition_type.recognition_type }}
+      </mat-cell>
     </ng-container>
     <!-- Updated Column -->
     <ng-container matColumnDef="geographic_level">
@@ -48,10 +50,19 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
       <mat-cell *matCellDef="let element" class="login-box">
-        <button mat-icon-button color="primary" (click)="view(element.id)"><mat-icon color="white">visibility</mat-icon></button>
-        <button *ngIf="hasPermProvider()" mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)"><mat-icon color="white">delete</mat-icon></button>
-        <button mat-icon-button color="primary" *ngIf="canChangeState(element)" (click)="addReview(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button>
-        <button  mat-icon-button color="primary" (click)="changelog(element.id)" > <mat-icon color="white">history</mat-icon></button>
+        <button mat-icon-button color="primary" (click)="view(element.id)">
+          <mat-icon color="white">visibility</mat-icon>
+        </button>
+        <button *ngIf="hasPermProvider()" mat-icon-button color="warn"
+          (click)="openDeleteConfirmationDialog(element.id)">
+          <mat-icon color="white">delete</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" *ngIf="canChangeState(element)" (click)="addReview(element.id)">
+          <mat-icon color="white">navigate_next</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="changelog(element.id)">
+          <mat-icon color="white">history</mat-icon>
+        </button>
       </mat-cell>
     </ng-container>
 
@@ -62,7 +73,7 @@
   <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
   </mat-paginator>
 </div>
-<br>
-<div class="box-button"  *ngIf="hasPermProvider()">
+<br />
+<div class="box-button" *ngIf="hasPermProvider()">
   <app-generic-button routerLink="/ppcn/registries/new" name="ppcn.addPPCN"></app-generic-button>
 </div>

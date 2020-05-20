@@ -30,7 +30,7 @@ describe('PpcnListComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
       ],
-      declarations: [ 
+      declarations: [
         PpcnListComponent,
         GenericButtonComponent,
         GenericButtonSecondaryComponent,

@@ -29,7 +29,7 @@ describe('ComponentDialogComponent', () => {
         MatDialogModule
       ],
       declarations: [ ComponentDialogComponent ],
-      providers : [ 
+      providers : [
         { provide: MatDialogRef, useValue: {}},
         { provide: MAT_DIALOG_DATA, useValue: {} }
         , MatDialog ]
