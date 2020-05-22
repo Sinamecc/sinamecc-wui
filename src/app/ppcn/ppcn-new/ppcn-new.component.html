@@ -202,9 +202,6 @@
             <br />
           </mat-step>
 
-          <div *ngIf="levelId=='2' && showRecognitionFormSection([2,3,4,5])">
-            <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
-
           <div *ngIf="levelId == '2' && showRecognitionFormSection([2, 3, 4, 5])">
             <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
               <ng-template matStepLabel>
@@ -512,6 +509,7 @@
               <app-generic-button type="submit" mat-raised-button name="general.done"></app-generic-button>
             </div>
           </mat-step>
+
         </mat-vertical-stepper>
       </div>
     </form>

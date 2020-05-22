@@ -18,7 +18,7 @@
         <input
           type="number"
           matInput
-          class="customImput custom-height-matrix-first-section"
+          class="custom-imput custom-height-matrix-first-section"
           [(value)]="field.value"
           (change)="changeMatrixValues(i, j, $event.target.value)"
         />
@@ -31,7 +31,7 @@
       </td>
       <td class="tg-qv16" colspan="11">
         <textarea
-          class="customImput custom-height-matrix-second-section"
+          class="custom-imput custom-height-matrix-second-section"
           type="text"
           (change)="changeTableValue('secondSection', 'firsRow', 1, $event.target.value)"
           [value]="getTableValue('secondSection', 'firsRow', 1)"
@@ -48,7 +48,7 @@
       <td class="tg-qv16" rowspan="2" colspan="3">
         <input
           type="number"
-          class="customImput custom-height-matrix-second-section"
+          class="custom-imput custom-height-matrix-second-section"
           (change)="changeTableValue('thirdSection', 'firsRow', 2, $event.target.value)"
           [value]="getTableValue('thirdSection', 'firsRow', 2)"
         />
@@ -58,7 +58,7 @@
       </td>
       <td class="tg-qv16" colspan="6">
         <input
-          class="customImput custom-height-matrix-first-section"
+          class="custom-imput custom-height-matrix-first-section"
           type="text"
           (change)="changeTableValue('thirdSection', 'secondRow', 1, $event.target.value)"
           [value]="getTableValue('thirdSection', 'secondRow', 1)"
@@ -71,7 +71,7 @@
       </td>
       <td class="tg-qv16" colspan="6">
         <input
-          class="customImput custom-height-matrix-first-section"
+          class="custom-imput custom-height-matrix-first-section"
           (change)="changeTableValue('thirdSection', 'thirdSection', 1, $event.target.value)"
           [value]="getTableValue('thirdSection', 'thirdSection', 1)"
         />
@@ -85,7 +85,7 @@
       <td class="tg-qv16" colspan="2">
         <input
           type="number"
-          class="customImput custom-height-matrix-third-section"
+          class="custom-imput custom-height-matrix-third-section"
           (change)="changeTableValue('fourthSection', 'firsRow', 1, $event.target.value)"
           [value]="getTableValue('fourthSection', 'firsRow', 1)"
         />
@@ -112,7 +112,7 @@
       </td>
       <td class="tg-qv16" colspan="2">
         <input
-          class="customImput custom-height-matrix-third-section"
+          class="custom-imput custom-height-matrix-third-section"
           type="number"
           (change)="changeTableValue('fourthSection', 'secondRow', 1, $event.target.value)"
           [value]="getTableValue('fourthSection', 'secondRow', 1)"
@@ -147,7 +147,7 @@
       </th>
       <td class="tg-qv16" rowspan="2">
         <input
-          class="customImput custom-height-matrix-fourth-section"
+          class="custom-imput custom-height-matrix-fourth-section"
           type="text"
           (change)="changeCategoryTableValue('category', '1', $event.target.value)"
           [value]="getCategoryTableValue('category', '1')"
@@ -160,7 +160,7 @@
     <tr>
       <td *ngFor="let row of categoryTable.categoryRow; index as i" class="tg-qv16">
         <input
-          class="customImput custom-height-matrix-third-section"
+          class="custom-imput custom-height-matrix-third-section"
           [type]="row.type"
           (change)="changeCategoryTableValue('categoryRow', i, $event.target.value, true)"
           [value]="getCategoryTableValue('categoryRow', i).value"
