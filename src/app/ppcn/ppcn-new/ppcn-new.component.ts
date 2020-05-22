@@ -5,7 +5,8 @@ import {
 	FormGroup,
 	FormBuilder,
 	Validators,
-	FormArray
+	FormArray,
+	ValidationErrors
 } from "@angular/forms";
 import { finalize, tap } from "rxjs/operators";
 import { environment } from "@env/environment";
@@ -177,24 +178,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					recognitionCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
-					reductionProjectCtrl:
-						this.levelId === "2" ? null : ["", Validators.required],
-					reductionActivityCtrl:
-						this.levelId === "2" ? null : ["", Validators.required],
-					reductionDetailsCtrl:
-						this.levelId === "2" ? null : ["", Validators.required],
-					reducedEmissionsCtrl:
-						this.levelId === "2" ? null : ["", Validators.required],
-					investmentReductions:
-						this.levelId === "2" ? null : ["", Validators.required],
-					investmentReductionsValue:
-						this.levelId === "2" ? null : ["", Validators.required],
-					totalInvestmentReduction:
-						this.levelId === "2" ? null : ["", Validators.required],
-					totalInvestmentReductionValue:
-						this.levelId === "2" ? null : ["", Validators.required],
-					totalEmisionesReducidas:
-						this.levelId === "2" ? null : ["", Validators.required]
+					reductions: this.formBuilder.array([this.createReductionForm()])
 				}),
 				this.formBuilder.group({
 					compensationScheme:
@@ -229,15 +213,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 			])
 		});
 
-		this.formGroup.controls.formArray["controls"][3].patchValue({
-			investmentReductions: "CRC",
-			totalInvestmentReduction: "CRC"
-		});
-
-		this.formGroup.controls.formArray["controls"][4].patchValue({
-			totalCostCompensation: "CRC",
-			compensationCost: "CRC"
-		});
+		console.log(
+			this.formGroup.controls.formArray["controls"][3].value.reductions[0]
+		);
 
 		const subsectors = this.service.subsectors(
 			"1",
@@ -260,6 +238,20 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		return elementsToShow.indexOf(this.reductionFormVar) >= 0;
 	}
 
+	createReductionForm(): FormGroup {
+		return this.formBuilder.group({
+			reductionProjectCtrl: ["", Validators.required],
+			reductionActivityCtrl: ["", Validators.required],
+			reductionDetailsCtrl: ["", Validators.required],
+			reducedEmissionsCtrl: ["", Validators.required],
+			investmentReductions: ["CRC", Validators.required],
+			investmentReductionsValue: ["", Validators.required],
+			totalInvestmentReduction: ["CRC", Validators.required],
+			totalInvestmentReductionValue: ["", Validators.required],
+			totalEmisionesReducidas: ["", Validators.required]
+		});
+	}
+
 	createActivityForm(): FormGroup {
 		return this.formBuilder.group({
 			activityCtrl: ["", Validators.required],
@@ -275,9 +267,16 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		control.push(this.createActivityForm());
 	}
 
+	addReductionItem() {
+		const control = <FormArray>(
+			this.formGroup.controls.formArray["controls"][3].controls["reductions"]
+		);
+		control.push(this.createReductionForm());
+	}
+
 	deleteItems(i: number): void {
 		const control = <FormArray>(
-			this.formGroup.controls.formArray["controls"][4].controls["activities"]
+			this.formGroup.controls.formArray["controls"][6].controls["activities"]
 		);
 		control.removeAt(i);
 	}
