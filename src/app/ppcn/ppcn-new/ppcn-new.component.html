@@ -3,7 +3,6 @@
     <form (ngSubmit)="submitForm()" *ngIf="!isLoading" [formGroup]="formGroup">
       <div fxLayout="column">
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
-
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
               <span *ngIf="levelId == 1" translate>info.basicInfo </span>
@@ -19,7 +18,7 @@
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
+            <mat-form-field class="field-ppcn" *ngIf="levelId == '2'">
               <mat-label translate>general.legalCertificate</mat-label>
               <input matInput formControlName="legalIdCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -34,7 +33,7 @@
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn" *ngIf="levelId=='2'">
+            <mat-form-field class="field-ppcn" *ngIf="levelId == '2'">
               <mat-label translate>general.legalRepresentativeCertificate</mat-label>
               <input matInput formControlName="legalRepresentativeIdCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -42,7 +41,7 @@
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>{{levelId==2 ? "Telephone" : "specificLabel.majorTelephone" }} </mat-label>
+              <mat-label translate>{{ levelId == 2 ? "Telephone" : "specificLabel.majorTelephone" }} </mat-label>
 
               <input matInput formControlName="telephoneCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -96,7 +95,7 @@
             </mat-form-field>
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>{{levelId==2 ? "Address" : "specificLabel.districtCouncilAddress" }}</mat-label>
+              <mat-label translate>{{ levelId == 2 ? "Address" : "specificLabel.districtCouncilAddress" }}</mat-label>
 
               <input matInput formControlName="addressCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -104,15 +103,13 @@
             <br />
 
             <div class="box-button">
-              <app-generic-button (click)="stepper.next();" name="general.next">
-              </app-generic-button>
-
+              <app-generic-button (click)="stepper.next()" name="general.next"> </app-generic-button>
             </div>
           </mat-step>
 
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
             <ng-template matStepLabel>
-              <div translate> info.contactInfo </div>
+              <div translate>info.contactInfo</div>
             </ng-template>
             <mat-form-field class="field-ppcn">
               <mat-label translate>info.name</mat-label>
@@ -141,7 +138,6 @@
             </mat-form-field>
             <br />
 
-
             <div class="box-button">
               <app-generic-button-secondary (click)="stepper.previous();" name="general.back">
               </app-generic-button-secondary>
@@ -155,8 +151,8 @@
             </ng-template>
             <br />
             <br />
-            <div *ngIf="levelId=='2'">
-
+            <br />
+            <div *ngIf="levelId == '2'">
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.classificationAmountEmissions</mat-label>
                 <input type="number" matInput formControlName="amountOfEmissions" required />
@@ -177,7 +173,6 @@
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
-
             </div>
             <br />
             <span translate>geographyLabel.verificationCycleStage</span><br /><br />
@@ -207,9 +202,8 @@
             <br />
           </mat-step>
 
-          <div *ngIf="levelId=='2' && showRecognitionFormSection([2,3,4,5])">
+          <div *ngIf="levelId == '2' && showRecognitionFormSection([2, 3, 4, 5])">
             <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
-
               <ng-template matStepLabel>
                 <span translate>geographyLabel.reduction</span>
               </ng-template>
@@ -258,7 +252,6 @@
                   <input type="number" matInput formControlName="investmentReductionsValue" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-
               </div>
               <br />
               <div fxLayout="row">
@@ -275,7 +268,6 @@
                   <input type="number" matInput formControlName="totalInvestmentReductionValue" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-
               </div>
               <br />
 
@@ -295,9 +287,8 @@
             </mat-step>
           </div>
 
-          <div *ngIf="levelId=='2' && showRecognitionFormSection([4,5])">
+          <div *ngIf="levelId == '2' && showRecognitionFormSection([4, 5])">
             <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
-
               <ng-template matStepLabel>
                 <span translate>geographyLabel.compensations</span>
               </ng-template>
@@ -353,9 +344,7 @@
                   <input type="number" matInput formControlName="compensationCostValue" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-
               </div>
-
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.period </mat-label>
@@ -432,6 +421,12 @@
               <mat-datepicker-toggle matSuffix [for]="implementationEmissionDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationEmissionDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
+
+            <br />
+
+            <app-gas-report-table #table></app-gas-report-table>
+
+            <br />
             <br />
 
             <div class="box-button">
