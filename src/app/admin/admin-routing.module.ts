@@ -16,32 +16,32 @@ const routes: Routes = [
 		{
 			path: "admin/users/new",
 			component: AdminNewComponent,
-			data: { title: extract("admin.users") }
+			data: { title: extract("admin.createUser") }
 		},
 		{
 			path: "admin/users",
 			component: AdminUsersComponent,
-			data: { title: extract("Admin Users") }
+			data: { title: extract("admin.users") }
 		},
 		{
 			path: "admin/permissions",
 			component: AdminPermissionsComponent,
-			data: { title: extract("Admin permissions") }
+			data: { title: extract("admin.permissions") }
 		},
 		{
 			path: "admin/permissions/new",
 			component: AdminPermissionsNewComponent,
-			data: { title: extract("Admin Users new") }
+			data: { title: extract("admin.createPerm") }
 		},
 		{
 			path: "admin/groups",
 			component: AdminGroupsComponent,
-			data: { title: extract("Admin groups") }
+			data: { title: extract("admin.groups") }
 		},
 		{
 			path: "admin/groups/new",
 			component: AdminGroupsNewComponent,
-			data: { title: extract("Admin groups new") }
+			data: { title: extract("admin.createGroup") }
 		}
 	])
 ];

@@ -13,7 +13,7 @@
   </div>
   <div>
 
-    <div fxLayout="row" fxLayout="row" fxLayout.xs="column"  class="custom-container">
+    <div fxLayout="row" fxLayout.xs="column"  class="custom-container">
       <div *ngFor="let item of dataImage"  fxFlex="20%" fxFlex.sm="calc(50%-25px)" class="main-card-container" [@fadeInOut] >
         <div *ngIf="showModule(permissions,item.moduleName)" [style.background-image]="item.image"
           class="card-image-container"></div>
