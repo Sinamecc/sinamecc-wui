@@ -26,6 +26,7 @@ import { MatDialog, MatDialogConfig } from "@angular/material";
 import { ComponentDialogComponent } from "@app/core/component-dialog/component-dialog.component";
 
 import { TranslateService } from "@ngx-translate/core";
+import { Title } from "@angular/platform-browser";
 
 export class MitigationActionSource extends DataSource<any> {
 	mitigationActions: MitigationAction[];

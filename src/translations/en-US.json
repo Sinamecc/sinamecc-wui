@@ -16,6 +16,7 @@
   },
 
   "mitigationAction":{
+    "newMa":"New mitigation action",
     "editMA": "Edit a mitigation action:",
     "MA": "Mitigation Action",
     "MAs": "Mitigation Actions",
@@ -80,6 +81,7 @@
   },
 
   "ppcn":{
+    "ppcnList":"PPCN List",
     "complexityMethodologies":"Complexity of the calculation methodologies used",
     "amountGHG":"Amount of GHG inventory data",
     "numberFacilities":"Number of facilities of the organization",

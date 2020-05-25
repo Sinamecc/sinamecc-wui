@@ -13,9 +13,8 @@
   </div>
   <div>
 
-    <div fxLayout="row" class="custom-container">
-
-      <div *ngFor="let item of dataImage" class="main-card-container" [@fadeInOut]>
+    <div fxLayout="row" fxLayout="row" fxLayout.xs="column"  class="custom-container">
+      <div *ngFor="let item of dataImage"  fxFlex="20%" fxFlex.sm="calc(50%-25px)" class="main-card-container" [@fadeInOut] >
         <div *ngIf="showModule(permissions,item.moduleName)" [style.background-image]="item.image"
           class="card-image-container"></div>
         <div *ngIf="showModule(permissions,item.moduleName)" matRipple matRippleColor="rgb(61, 61, 61,0.5)"
