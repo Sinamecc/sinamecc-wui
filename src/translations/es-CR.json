@@ -16,6 +16,7 @@
   },
 
   "mitigationAction":{
+    "newMa":"Nueva acción de mitigación",
     "editMA": "Editar una acción de mitigación:",
     "MA":  "Accion de Mitigación",
     "MAs": "Acciones de Mitigación",
@@ -79,6 +80,7 @@
   },
 
   "ppcn":{
+    "ppcnList":"Lista de PPCN",
     "complexityMethodologies":"Complejidad de las metodologías de cálculo utilizadas",
     "amountGHG":"Cantidad de datos del inventario de GEI",
     "numberFacilities":"Cantidad de instalaciones de la organización",

@@ -76,6 +76,7 @@ export class AdminUsersComponent implements OnInit {
 	openUserDetail(user: string) {
 		const dialogRef = this.dialog.open(AdminUserDetailComponent, {
 			width: "70%",
+			height: "90%",
 			data: {
 				user: user
 			}
