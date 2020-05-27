@@ -116,6 +116,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 			ciuuListCodeCtrl: this.CIUUCodeList
 		});
 
+		console.log(this.formGroup.controls.formArray["controls"]);
+		/*
+
 		this.service
 			.submitNewPpcnForm(this.formGroup.value)
 			.pipe(
@@ -135,7 +138,8 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					log.debug(`New PPCN Form error: ${error}`);
 					this.error = error;
 				}
-			);
+      );
+      */
 	}
 
 	private createForm() {
@@ -181,23 +185,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					reductions: this.formBuilder.array([this.createReductionForm()])
 				}),
 				this.formBuilder.group({
-					compensationScheme:
-						this.levelId === "2" ? null : ["", Validators.required],
-					projectLocation:
-						this.levelId === "2" ? null : ["", Validators.required],
-					certificateNumber:
-						this.levelId === "2" ? null : ["", Validators.required],
-					totalCompensation:
-						this.levelId === "2" ? null : ["", Validators.required],
-					compensationCost:
-						this.levelId === "2" ? null : ["", Validators.required],
-					compensationCostValue:
-						this.levelId === "2" ? null : ["", Validators.required],
-					period: this.levelId === "2" ? null : ["", Validators.required],
-					totalEmissionsOffsets:
-						this.levelId === "2" ? null : ["", Validators.required],
-					totalCostCompensation:
-						this.levelId === "2" ? null : ["", Validators.required]
+					compensations: this.formBuilder.array([this.createcompensationForm()])
 				}),
 				this.formBuilder.group({
 					baseYearCtrl: ["", Validators.required],
@@ -214,9 +202,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		});
 
 		console.log(
-			this.formGroup.controls.formArray["controls"][3].value.reductions[0]
+			this.formGroup.controls.formArray["controls"][4].controls["compensations"]
+				.controls
 		);
-
 		const subsectors = this.service.subsectors(
 			"1",
 			this.i18nService.language.split("-")[0]
@@ -238,6 +226,29 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		return elementsToShow.indexOf(this.reductionFormVar) >= 0;
 	}
 
+	changeReductionCurrencyValues(value: number, index: number, field: string) {
+		this.formGroup.controls.formArray["controls"][3].value.reductions[index][
+			field
+		] = value;
+		console.log(
+			this.formGroup.controls.formArray["controls"][3].value.reductions
+		);
+	}
+
+	changeCompensationCurrencyValues(
+		value: number,
+		index: number,
+		field: string
+	) {
+		this.formGroup.controls.formArray["controls"][4].value.compensations[index][
+			field
+		] = value;
+		console.log(value, index, field);
+		console.log(
+			this.formGroup.controls.formArray["controls"][4].value.compensations
+		);
+	}
+
 	createReductionForm(): FormGroup {
 		return this.formBuilder.group({
 			reductionProjectCtrl: ["", Validators.required],
@@ -249,6 +260,20 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 			totalInvestmentReduction: ["CRC", Validators.required],
 			totalInvestmentReductionValue: ["", Validators.required],
 			totalEmisionesReducidas: ["", Validators.required]
+		});
+	}
+
+	createcompensationForm(): FormGroup {
+		return this.formBuilder.group({
+			compensationScheme: ["", Validators.required],
+			projectLocation: ["", Validators.required],
+			certificateNumber: ["", Validators.required],
+			totalCompensation: ["", Validators.required],
+			compensationCost: ["CRC", Validators.required],
+			compensationCostValue: ["", Validators.required],
+			period: ["", Validators.required],
+			totalEmissionsOffsets: ["", Validators.required],
+			totalCostCompensation: ["CRC", Validators.required]
 		});
 	}
 
@@ -274,11 +299,32 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		control.push(this.createReductionForm());
 	}
 
+	addCompensationItem() {
+		const control = <FormArray>(
+			this.formGroup.controls.formArray["controls"][4].controls["compensations"]
+		);
+		control.push(this.createcompensationForm());
+	}
+
 	deleteItems(i: number): void {
 		const control = <FormArray>(
 			this.formGroup.controls.formArray["controls"][6].controls["activities"]
 		);
 		control.removeAt(i);
+	}
+
+	deleteReductionItem(index: number) {
+		const control = <FormArray>(
+			this.formGroup.controls.formArray["controls"][3].controls["reductions"]
+		);
+		control.removeAt(index);
+	}
+
+	deleteCompensationItem(index: number) {
+		const control = <FormArray>(
+			this.formGroup.controls.formArray["controls"][4].controls["compensations"]
+		);
+		control.removeAt(index);
 	}
 
 	onSectorChange(newValue: any) {

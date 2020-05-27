@@ -207,7 +207,7 @@
             <br />
           </mat-step>
 
-          <div *ngIf="levelId=='2' && showRecognitionFormSection([2,3,4,5])">
+          <div *ngIf="showRecognitionFormSection([2,3,4,5])">
             <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
 
               <div formArrayName="reductions">
@@ -255,7 +255,7 @@
                     <div fxLayout="row">
                       <div class="ppcn-container">
                         <mat-button-toggle-group name="fontStyle"
-                          (change)="formGroup.controls.formArray['controls'][3].value.reductions[0].investmentReductions = $event.value"
+                          (change)="changeReductionCurrencyValues($event.value,i,'investmentReductions')"
                           class="m-r-10" value="CRC">
                           <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                           <mat-button-toggle value="USD">USD</mat-button-toggle>
@@ -273,7 +273,7 @@
                     <div fxLayout="row">
                       <div class="ppcn-container">
                         <mat-button-toggle-group name="fontStyle" class="m-r-10"
-                          (change)="formGroup.controls.formArray['controls'][3].value.reductions[0].totalInvestmentReduction = $event.value"
+                          (change)="changeReductionCurrencyValues($event.value,i,'totalInvestmentReduction')"
                           value="CRC">
                           <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                           <mat-button-toggle value="USD">USD</mat-button-toggle>
@@ -294,14 +294,28 @@
                       <mat-error translate>errorLabel.fieldRequired</mat-error>
                     </mat-form-field>
                   </div>
+                  <br>
+                  <br>
+                  <div class="custom-remove-button">
+                    <button mat-mini-fab color="warn"
+                      *ngIf="formGroup.controls.formArray['controls'][3].controls['reductions'].controls.length > 1"
+                      (click)="deleteReductionItem(i)" type="button">
+                      <mat-icon>delete forever</mat-icon>
+                    </button>
+                    <br>
+                    <br>
+                  </div>  
+
                 </div>
               </div>
+              <br>
               <br>
               <app-generic-button mat-raised-button (click)="addReductionItem()" name="specificLabel.addActivity" type="button"
               *ngIf="activityFormGroup?.controls.length <= 10">
               </app-generic-button>
               <br>
 
+              <br>
               <div class="box-button">
                 <app-generic-button-secondary (click)="stepper.previous();" name="general.back">
                 </app-generic-button-secondary>
@@ -312,97 +326,123 @@
             </mat-step>
           </div>
 
-          <div *ngIf="levelId=='2' && showRecognitionFormSection([4,5])">
+          <div *ngIf="showRecognitionFormSection([4,5])">
             <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
-
-              <ng-template matStepLabel>
-                <span translate>geographyLabel.compensations</span>
-              </ng-template>
-              <br />
-              <label translate>geographyLabel.compensationScheme</label> <br />
-              <br />
-              <mat-radio-group formControlName="compensationScheme">
-                <mat-radio-button value="CER">
-                  CER
-                </mat-radio-button>
-                <mat-radio-button value="VER">
-                  VER
-                </mat-radio-button>
-                <mat-radio-button value="UCC">
-                  UCC
-                </mat-radio-button>
-              </mat-radio-group>
-              <br />
-              <br />
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>geographyLabel.projectLocation</mat-label>
-                <input matInput formControlName="projectLocation" required />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-              <br />
-
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>geographyLabel.certificateNumber</mat-label>
-                <input matInput formControlName="certificateNumber" required />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-              <br />
-
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>geographyLabel.totalCompensation<strong>(t CO2e)</strong></mat-label>
-                <input matInput formControlName="totalCompensation" required />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-              <br />
-              <br />
-
-              <div fxLayout="row">
+              <div formArrayName="compensations">
+                <div *ngFor="let compensation of formGroup.controls.formArray['controls'][4].controls['compensations'].controls; let i = index">
+                  <mat-divider
+                  *ngIf="formGroup.controls.formArray['controls'][4].controls['compensations'].controls.length > 1 && i > 0">
+                  </mat-divider
+                  ><br />
+                <ng-template matStepLabel>
+                  <span translate>geographyLabel.compensations</span>
+                </ng-template>
                 <br />
-                <div class="ppcn-container">
-                  <mat-button-toggle-group class="m-r-10" value="CRC"
-                    (change)="this.formGroup.controls.formArray['controls'][4].patchValue({compensationCost: $event.value})">
-                    <mat-button-toggle value="CRC">CRC</mat-button-toggle>
-                    <mat-button-toggle value="USD">USD</mat-button-toggle>
-                  </mat-button-toggle-group>
-                </div>
-                <mat-form-field class="field-ppcn">
-                  <mat-label translate>geographyLabel.compensationCost</mat-label>
-                  <input type="number" matInput formControlName="compensationCostValue" required />
-                  <mat-error translate>errorLabel.fieldRequired</mat-error>
-                </mat-form-field>
-
-              </div>
-
-
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>geographyLabel.period </mat-label>
-                <input matInput formControlName="period" required />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-              <br />
-
-              <br />
-              <label translate>geographyLabel.totalCostCompensation</label>
-              <br />
-              <br />
-              <div fxLayout="row">
+                <div [formGroupName]="i">
+                <label translate>geographyLabel.compensationScheme</label> <br />
                 <br />
-                <div class="ppcn-container">
-                  <mat-button-toggle-group class="m-r-10" value="CRC"
-                    (change)="this.formGroup.controls.formArray['controls'][4].patchValue({totalCostCompensation: $event.value})">
-                    <mat-button-toggle value="CRC">CRC</mat-button-toggle>
-                    <mat-button-toggle value="USD">USD</mat-button-toggle>
-                  </mat-button-toggle-group>
-                </div>
+                <mat-radio-group formControlName="compensationScheme">
+                  <mat-radio-button value="CER">
+                    CER
+                  </mat-radio-button>
+                  <mat-radio-button value="VER">
+                    VER
+                  </mat-radio-button>
+                  <mat-radio-button value="UCC">
+                    UCC
+                  </mat-radio-button>
+                </mat-radio-group>
+                <br />
+                <br />
                 <mat-form-field class="field-ppcn">
-                  <mat-label translate>geographyLabel.totalEmissionsOffsets<strong>(t CO2e)</strong> </mat-label>
-                  <input matInput formControlName="totalEmissionsOffsets" required />
+                  <mat-label translate>geographyLabel.projectLocation</mat-label>
+                  <input matInput formControlName="projectLocation" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
                 <br />
-              </div>
 
+                <mat-form-field class="field-ppcn">
+                  <mat-label translate>geographyLabel.certificateNumber</mat-label>
+                  <input matInput formControlName="certificateNumber" required />
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+                <br />
+
+                <mat-form-field class="field-ppcn">
+                  <mat-label translate>geographyLabel.totalCompensation<strong>(t CO2e)</strong></mat-label>
+                  <input matInput formControlName="totalCompensation" required />
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+                <br />
+                <br />
+
+                <div fxLayout="row">
+                  <br />
+                  <div class="ppcn-container">
+                    <mat-button-toggle-group class="m-r-10" value="CRC"
+                      (change)="changeCompensationCurrencyValues($event.value,i,'compensationCost')">
+                      <mat-button-toggle value="CRC">CRC</mat-button-toggle>
+                      <mat-button-toggle value="USD">USD</mat-button-toggle>
+                    </mat-button-toggle-group>
+                  </div>
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate>geographyLabel.compensationCost</mat-label>
+                    <input type="number" matInput formControlName="compensationCostValue" required />
+                    <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
+
+                </div>
+
+
+                <mat-form-field class="field-ppcn">
+                  <mat-label translate>geographyLabel.period </mat-label>
+                  <input matInput formControlName="period" required />
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+                <br />
+
+                <br />
+                <label translate>geographyLabel.totalCostCompensation</label>
+                <br />
+                <br />
+                <div fxLayout="row">
+                  <br />
+                  <div class="ppcn-container">
+                    <mat-button-toggle-group class="m-r-10" value="CRC"
+                      (change)="changeCompensationCurrencyValues($event.value,i,'totalCostCompensation')">
+                      <mat-button-toggle value="CRC">CRC</mat-button-toggle>
+                      <mat-button-toggle value="USD">USD</mat-button-toggle>
+                    </mat-button-toggle-group>
+                  </div>
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate>geographyLabel.totalEmissionsOffsets<strong>(t CO2e)</strong> </mat-label>
+                    <input matInput formControlName="totalEmissionsOffsets" required />
+                    <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
+                  <br />
+                </div>
+              
+                </div>
+                <br>
+                  <br>
+                  <div class="custom-remove-button">
+                    <button mat-mini-fab color="warn"
+                      *ngIf="formGroup.controls.formArray['controls'][4].controls['compensations'].controls.length > 1"
+                      (click)="deleteCompensationItem(i)" type="button">
+                      <mat-icon>delete forever</mat-icon>
+                    </button>
+                    <br>
+                    <br>
+                  </div>
+
+                </div>
+              </div>
               <br />
+
+              <app-generic-button mat-raised-button (click)="addCompensationItem()" name="specificLabel.addActivity" type="button"
+              *ngIf="activityFormGroup?.controls.length <= 10">
+              </app-generic-button>
+              <br>
 
               <div class="box-button">
                 <app-generic-button-secondary (click)="stepper.previous();" name="general.back">
