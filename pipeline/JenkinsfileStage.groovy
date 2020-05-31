@@ -6,7 +6,7 @@ pipeline {
         stage ("Building docker image") {
             steps {
                     echo "Step: Building docker image"
-                    sh 'docker build --build-arg env=prod -t sinamecc_frontend:stage .'
+                    sh 'docker build --build-arg env=stage -t sinamecc_frontend:stage .'
             }   
         }
 
