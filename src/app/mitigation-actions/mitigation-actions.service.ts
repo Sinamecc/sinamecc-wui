@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
@@ -11,7 +10,7 @@ import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-
 import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { MitigationActionReviewNewFormData } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { StatusRoutesMap } from '@app/shared/status-routes-map';
 import { S3File, S3Service } from '@app/core/s3.service';
 
@@ -58,7 +57,7 @@ export class MitigationActionsService {
 
 
   updateCurrentMitigationAction(newMitigationAction: MitigationAction) {
-    this.mitigationActionSource.next(newMitigationAction)
+    this.mitigationActionSource.next(newMitigationAction);
   }
 
 
@@ -232,13 +231,15 @@ export class MitigationActionsService {
       );
   }
 
- 
+
 
   mapRoutesStatuses(uuid: string): StatusRoutesMap[] {
     return [
       { route: `mitigation/actions/${uuid}/edit`, status: 'changes_requested_by_DCC' },
-      { route: `mitigation/actions/${uuid}/harmonization/integration`, status: 'updating_INGEI_changes_proposal' },
-      { route: `mitigation/actions/${uuid}/harmonization/integration`, status: 'updating_INGEI_changes_proposal_by_request_of_DCC_IMN' },
+      { route: `mitigation/actions/${uuid}/harmonization/integration`,
+        status: 'updating_INGEI_changes_proposal' },
+      { route: `mitigation/actions/${uuid}/harmonization/integration`,
+        status: 'updating_INGEI_changes_proposal_by_request_of_DCC_IMN' },
       { route: `mitigation/actions/${uuid}/conceptual/integration`, status: 'implementing_INGEI_changes' },
       // implementing_INGEI_changes
     ];

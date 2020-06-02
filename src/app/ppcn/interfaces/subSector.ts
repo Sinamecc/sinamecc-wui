@@ -1,6 +1,6 @@
-import { Sector } from "./sector";
+import { Sector } from './sector';
 
-export interface SubSector{
+export interface SubSector {
     id: Number;
     name: string;
     sector: Sector;

@@ -46,7 +46,7 @@ describe('MccrRegistriesNewComponent', () => {
       ],
         // { provide: I18nService, useClass: MockI18nService}],
       declarations: [ MccrRegistriesNewComponent, InputFileComponent, LoaderComponent,
-        GenericButtonComponent,GenericButtonSecondaryComponent]
+        GenericButtonComponent, GenericButtonSecondaryComponent]
     })
     .compileComponents();
   }));

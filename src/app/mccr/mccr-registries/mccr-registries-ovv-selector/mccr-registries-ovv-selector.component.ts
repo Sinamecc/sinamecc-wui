@@ -9,7 +9,7 @@ import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
 import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
-import { Logger, I18nService, AuthenticationService } from '@app/core'; 
+import { Logger, I18nService, AuthenticationService } from '@app/core';
 
 const log = new Logger('Report');
 
@@ -56,7 +56,8 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
       .subscribe(response => {
         // :id/versions
         this.router.navigate([`mccr/registries`], { replaceUrl: true });
-        this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+        this.translateService.get('Sucessfully submitted form')
+          .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
         log.debug(`${response.statusCode} status code received from form`);
 
       }, error => {

@@ -1,7 +1,7 @@
-import { Groups } from "./groups";
+import { Groups } from './groups';
 
 
-export interface GroupsData{
+export interface GroupsData {
     array: Groups [];
-    componentType : string;
+    componentType: string;
 }

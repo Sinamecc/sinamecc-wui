@@ -16,7 +16,7 @@ export class ShellComponent implements OnInit {
 
   constructor(
     private media: ObservableMedia,
-    private authenticationService: AuthenticationService,) { }
+    private authenticationService: AuthenticationService, ) { }
 
   ngOnInit() {
     this.media.asObservable()
@@ -24,20 +24,20 @@ export class ShellComponent implements OnInit {
       .subscribe(() => this.sidenav.close());
   }
 
-  get permissions(): Permissions{
+  get permissions(): Permissions {
     return this.authenticationService.credentials.permissions;
   }
 
-  get credential():Credentials{
+  get credential(): Credentials {
     return this.authenticationService.credentials;
   }
 
-  showModule(permissions:Permissions,module:string){
-    if(permissions.all){
+  showModule(permissions: Permissions, module: string) {
+    if (permissions.all) {
       return true;
-    }else{
-      return Boolean(permissions[module])
-    } 
+    } else {
+      return Boolean(permissions[module]);
+    }
   }
 
 }

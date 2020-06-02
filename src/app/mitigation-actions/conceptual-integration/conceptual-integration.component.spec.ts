@@ -30,7 +30,7 @@ describe('ConceptualIntegrationComponent', () => {
         ReactiveFormsModule,
         CoreModule
       ],
-      declarations: [ ConceptualIntegrationComponent, DownloadProposalComponent,GenericButtonComponent,
+      declarations: [ ConceptualIntegrationComponent, DownloadProposalComponent, GenericButtonComponent,
         GenericButtonSecondaryComponent ]
     })
     .compileComponents();

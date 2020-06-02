@@ -12,7 +12,7 @@ export interface Ppcn {
   id: string;
   geographic_level: GeographicLevel;
   organization: Organization;
-  organization_classification:OrganizationClassification;
+  organization_classification: OrganizationClassification;
   contact: Contact;
   base_year: string;
   ovv: Ovv[];

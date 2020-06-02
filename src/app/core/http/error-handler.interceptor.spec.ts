@@ -29,7 +29,7 @@ describe('ErrorHandlerInterceptor', () => {
         multi: true
       }]
     });
-    router = TestBed.get(Router)
+    router = TestBed.get(Router);
   });
 
   beforeEach(inject([

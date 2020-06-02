@@ -1,36 +1,41 @@
 @import "src/theme/theme-variables";
 
 .container {
-    text-align: center;
-    padding: 1rem;
-  }
+  text-align: center;
+  padding: 1rem;
+}
 
-  .mat-icon {
-    vertical-align: middle;
-  }
+.mat-icon {
+  vertical-align: middle;
+}
 
 
 .rejected>mat-cell:nth-child(4) {
-  color: #F44336;
+  color: #f44336;
 }
 
 .in-review>mat-cell:nth-child(4) {
-  color: #FF9800;
+  color: #ff9800;
 }
 
 .approved>mat-cell:nth-child(4) {
-  color: #2E7D32;
+  color: #2e7d32;
 }
 
 .on-change>mat-cell:nth-child(4) {
-  color: #1565C0;
-}
-.submitted>mat-cell:nth-child(4), .rejected>mat-cell:nth-child(4), .in-review>mat-cell:nth-child(4), .approved>mat-cell:nth-child(4),.on-change>mat-cell:nth-child(4){
- font-weight: bold;
- text-transform: uppercase;  
+  color: #1565c0;
 }
 
-.toolbar-title{
-  margin: 0px auto !important;
+.submitted>mat-cell:nth-child(4),
+.rejected>mat-cell:nth-child(4),
+.in-review>mat-cell:nth-child(4),
+.approved>mat-cell:nth-child(4),
+.on-change>mat-cell:nth-child(4) {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.toolbar-title {
+  margin: 0 auto;
   background: transparent;
 }

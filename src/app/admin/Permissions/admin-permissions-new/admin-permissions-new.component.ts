@@ -16,53 +16,54 @@ const log = new Logger('CreatePermission');
   styleUrls: ['./admin-permissions-new.component.scss']
 })
 export class AdminPermissionsNewComponent implements OnInit {
-  
+
   createPermissionsForm: FormGroup;
   isLoading = false;
   error: string;
 
-  contentTypeMap:Map<string,number>;
+  contentTypeMap: Map<string, number>;
 
   @Input() edit: boolean;
   @Input() editData: Permissions;
-  
-  name:string;
+
+  name: string;
 
   constructor(private formBuilder: FormBuilder,
     private service: AdminService,
     private translateService: TranslateService,
     private router: Router,
     public snackBar: MatSnackBar
-    ) { 
+    ) {
     this.createForm();
-    this.contentTypeMap= new Map<string,number>();
-    this.contentTypeMap.set('mccr',1);
-    this.contentTypeMap.set('ma',2);
-    this.contentTypeMap.set('ppcn',3);
-    this.contentTypeMap.set('report',4,);
-    this.name = "";
+    this.contentTypeMap = new Map<string, number>();
+    this.contentTypeMap.set('mccr', 1);
+    this.contentTypeMap.set('ma', 2);
+    this.contentTypeMap.set('ppcn', 3);
+    this.contentTypeMap.set('report', 4, );
+    this.name = '';
   }
 
   ngOnInit() {
     this.setData();
   }
 
-  setData(){
-    if(this.edit){
+  setData() {
+    if (this.edit) {
       this.name = this.editData.name;
     }
   }
 
-  submitForm(value:string){
-    
-    this.createPermissionsForm.value.codename = `${value}_${this.createPermissionsForm.value.name.replace(new RegExp(' ', 'g'), '_')}`;
-    this.createPermissionsForm.value.content_type = this.contentTypeMap.get(value)
-   
-    if(this.createPermissionsForm.value.name.length <= 80){
-      if(this.edit){
-        
-      }else{
-        
+  submitForm(value: string) {
+
+    this.createPermissionsForm.value.codename = `${value}_${this.createPermissionsForm.value.name
+      .replace(new RegExp(' ', 'g'), '_')}`;
+    this.createPermissionsForm.value.content_type = this.contentTypeMap.get(value);
+
+    if (this.createPermissionsForm.value.name.length <= 80) {
+      if (this.edit) {
+
+      } else {
+
         this.isLoading = true;
         this.service.submitCreatePermissions(this.createPermissionsForm.value)
         .pipe(finalize(() => {
@@ -70,7 +71,8 @@ export class AdminPermissionsNewComponent implements OnInit {
           this.isLoading = false;
         }))
         .subscribe(response => {
-          this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+          this.translateService.get('Sucessfully submitted form')
+            .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
           log.debug(`${response.statusCode} status code received from create permissions `);
           this.router.navigate([`/home`], { replaceUrl: true });
 
@@ -80,11 +82,11 @@ export class AdminPermissionsNewComponent implements OnInit {
         });
 
       }
-      
-    } 
+
+    }
   }
 
-  private createForm(){
+  private createForm() {
     this.createPermissionsForm = this.formBuilder.group({
       name: ['', Validators.required],
       codename: ['', Validators.required],

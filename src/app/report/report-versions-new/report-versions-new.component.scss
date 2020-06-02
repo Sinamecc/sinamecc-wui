@@ -2,15 +2,15 @@
 
 
 .container {
-    text-align: center;
-    padding: 1rem;
-  }
+  text-align: center;
+  padding: 1rem;
+}
   
-  .mat-icon {
-    vertical-align: middle;
-  }
+.mat-icon {
+  vertical-align: middle;
+}
   
 
-  .report-error {
-    color: mat-color($app-warn);
-  }
+.report-error {
+  color: mat-color($app-warn);
+}

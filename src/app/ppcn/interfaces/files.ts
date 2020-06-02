@@ -1,4 +1,4 @@
-export interface Files{
+export interface Files {
     name: string;
     file: string;
 }

@@ -7,7 +7,7 @@ import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { MitigationAction } from '../mitigation-action';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
@@ -49,14 +49,14 @@ export class KeyAspectsFormComponent implements OnInit {
   form: FormGroup;
   displayFinancialSource:  boolean;
   isLoading = false;
-  wasSubmittedSuccessfully:boolean = false;
+  wasSubmittedSuccessfully = false;
 
   mitigationAction: MitigationAction;
 
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
-  
+
   get formArray(): AbstractControl | null { return this.form.get('formArray'); }
 
   constructor(private formBuilder: FormBuilder,
@@ -86,7 +86,7 @@ ngOnInit() {
         this.formBuilder.group({
           actionObjectiveCtrl: ['', Validators.required],
           actionStatusCtrl: ['', Validators.required],
-          implementationInitialDateCtrl:['', Validators.required],
+          implementationInitialDateCtrl: ['', Validators.required],
           implementationEndDateCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
@@ -112,7 +112,7 @@ ngOnInit() {
         this.formBuilder.group({
           actionObjectiveCtrl: [this.mitigationAction.purpose, Validators.required],
           actionStatusCtrl: [this.mitigationAction.status.id, Validators.required],
-          implementationInitialDateCtrl:[this.mitigationAction.start_date, Validators.required],
+          implementationInitialDateCtrl: [this.mitigationAction.start_date, Validators.required],
           implementationEndDateCtrl: [this.mitigationAction.end_date, Validators.required],
         }),
         this.formBuilder.group({
@@ -138,14 +138,14 @@ ngOnInit() {
     this.isLoading = true;
     let startDate = '';
     let endDate = '';
-    if(this.isUpdating) {
+    if (this.isUpdating) {
       startDate = this.form.value.formArray[0].implementationInitialDateCtrl;
       endDate = this.form.value.formArray[0].implementationEndDateCtrl;
     } else {
-      startDate = this.form.value.formArray[0].implementationInitialDateCtrl.format("YYYY-MM-DD");
-      endDate = this.form.value.formArray[0].implementationEndDateCtrl.format("YYYY-MM-DD");
+      startDate = this.form.value.formArray[0].implementationInitialDateCtrl.format('YYYY-MM-DD');
+      endDate = this.form.value.formArray[0].implementationEndDateCtrl.format('YYYY-MM-DD');
     }
-    let context = {
+    const context = {
       purpose: this.form.value.formArray[0].actionObjectiveCtrl,
       status: this.form.value.formArray[0].actionStatusCtrl,
       start_date: startDate,
@@ -155,7 +155,7 @@ ngOnInit() {
         source: this.form.value.formArray[3].financingSourceCtrl },
       gas_inventory: this.form.value.formArray[3].gasInventoryCtrl,
       geographic_scale: this.form.value.formArray[1].geographicScaleCtrl,
-      location:{
+      location: {
         geographical_site: this.form.value.formArray[2].locationNameCtrl,
         is_gis_annexed: this.form.value.formArray[2].gisAnnexedCtrl,
       },
@@ -163,21 +163,25 @@ ngOnInit() {
       registration_type: this.processedNewFormData.registration_types[0].id
     };
 
-    if(this.isUpdating) {
+    if (this.isUpdating) {
       context.finance['id'] = this.mitigationAction.finance.id;
       context.location['id'] = this.mitigationAction.location.id;
       // context['update_existing_mitigation_action'] = true;
-    } 
-    this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id, this.i18nService.language.split('-')[0])
+    }
+    this.service.submitMitigationActionUpdateForm(context,
+                                                  this.mitigationAction.id,
+                                                  this.i18nService.language.split('-')[0])
     .pipe(finalize(() => {
       this.form.markAsPristine();
       this.isLoading = false;
     }))
     .subscribe(response => {
-      this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
-      this.wasSubmittedSuccessfully = true;        
+      this.translateService.get('Sucessfully submitted form')
+        .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+      this.wasSubmittedSuccessfully = true;
     }, error => {
-      this.translateService.get('Error submitting form').subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
+      this.translateService.get('Error submitting form')
+        .subscribe((res: string) => { this.snackBar.open(res, null, { duration: 3000 }); });
       log.debug(`New Mitigation Action Form error: ${error}`);
       this.error = error;
       this.wasSubmittedSuccessfully = false;
@@ -185,10 +189,12 @@ ngOnInit() {
 
   }
 
-  financialSourceInputShown($event:any) {
+  financialSourceInputShown($event: any) {
     // todo: when we traslate in the backend we need to traslate this hardcoded value here
-    const insuredSourceTypeId = this.processedNewFormData.finance_status.filter(financeSource => financeSource.status == 'Asegurado' || financeSource.status == 'Insured').map(({ id }) => id);
-    this.displayFinancialSource = $event.value == insuredSourceTypeId;
+    const insuredSourceTypeId = this.processedNewFormData.finance_status
+      .filter(financeSource => financeSource.status === 'Asegurado' || financeSource.status === 'Insured')
+        .map(({ id }) => id);
+    this.displayFinancialSource = $event.value === insuredSourceTypeId;
   }
 
 

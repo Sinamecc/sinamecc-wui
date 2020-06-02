@@ -13,7 +13,8 @@
     "editUser": "Edit User"
   },
 
-  "mitigationAction": {
+  "mitigationAction":{
+    "newMa":"New mitigation action",
     "editMA": "Edit a mitigation action:",
     "MA": "Mitigation Action",
     "MAs": "Mitigation Actions",
@@ -76,32 +77,47 @@
     "MCCRRegistry": "MCCR Registry"
   },
 
-  "ppcn": {
-    "totalRemovals": "Total removals",
-    "removalProjectDetail": "Removal Project Detail",
-    "costInventoryRemovals": "Cost of carrying out inventory of removals",
-    "removals": "Removals",
-    "createPPCN": "Create a new PPCN Registry:",
-    "PPCNForm": "PPCN Form",
-    "dataPPCN": "Data for PPCN",
-    "addPPCN": "Add new PPCN",
-    "uploadFilesPPCNRegistry": "Upload Files to PPCN Registry",
-    "deletePPCN": "Delete PPCN?",
-    "changelogPPCNRegistry": "CHANGELOG FOR PPCN REGISTRY",
+  "ppcn":{
     "emailContacPerson": "Email of the contact person",
     "tittleContacPerson": "Title of the contact person",
     "nameContactPerson": "Name of the contact person",
-    "mayorEmail": "Mayor or Mayor's Email"
+    "mayorEmail": "Mayor or Mayor's Email",
+    "ppcnList":"PPCN List",
+    "complexityMethodologies":"Complexity of the calculation methodologies used",
+    "amountGHG":"Amount of GHG inventory data",
+    "numberFacilities":"Number of facilities of the organization",
+    "amountEmissions":"Amount of emissions",
+    "organitationCategoryPpcn":"Organization category (According to section 8 of the PPCN 2.0)",
+    "organitationCategory":"Organization Category (A, B, C or D)",
+    "resultsVerifiedInventory":"Results of verified inventory (Tons CO2 equivalent)",
+    "verificationOVV":"Cost of the verification process carried out by the OVV",
+    "costGHG":"Cost of carrying out the GHG inventory (Including internal audits if applicable)",
+    "biogenicEmissions":"Biogenic emissions (tons CO2 equivalent)",
+    "reportOtherGases":"In cases of reporting 'Other Gases' indicate all other gases reported",
+    "otherGases":"Other Gases",
+    "gasesReport":"Gases to Report",
+    "createPPCN":"Create a new PPCN Registry:",
+    "PPCNForm":"PPCN Form",
+    "dataPPCN":"Data for PPCN",
+    "addPPCN":"Add new PPCN",
+    "uploadFilesPPCNRegistry":"Upload Files to PPCN Registry",
+    "deletePPCN":"Delete PPCN?",
+    "changelogPPCNRegistry":"CHANGELOG FOR PPCN REGISTRY"
   },
 
-  "general": {
-    "confidential": "Confidential",
-    "district": "District",
-    "canton": "Canton",
-    "province": "Province",
-    "partially": "Partially",
-    "legalRepresentativeCertificate": "Legal Representative Certificate",
-    "legalCertificate": "Legal Certificate",
+  "general":{
+    "dolar":"Dollar",
+    "colon":"Colon",
+    "currency":"Currency",
+    "scope":"Scope",
+    "total":"Total",
+    "confidential":"Confidential",
+    "district":"District",
+    "canton":"Canton",
+    "province":"Province",
+    "partially":"Partially",
+    "legalRepresentativeCertificate":"Legal Representative Certificate",
+    "legalCertificate":"Legal Certificate",
     "lastUpdate": "Last update:",
     "createdAt": "Created At",
     "actions": "Actions",

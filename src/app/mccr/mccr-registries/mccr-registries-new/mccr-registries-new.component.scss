@@ -2,23 +2,27 @@
 
 
 .container {
-    text-align: center;
-    padding: 1rem;
-  }
-  
-  .mat-icon {
-    vertical-align: middle;
-  }
-  
-  .new-mitigation-action-form-error {
-    color: mat-color($app-warn);
-  }
+  text-align: center;
+  padding: 1rem;
+}
 
-  mat-form-field.mat-form-field {
-    font-size: 16px;
-    display: block;
-  }
+.mat-icon {
+  vertical-align: middle;
+}
 
-  .input-full-width {
-      width:100%;
-  }
+.new-mitigation-action-form-error {
+  color: mat-color($app-warn);
+}
+
+.mat-form-field {
+  font-size: 16px;
+  display: block;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+.white-button {
+  color: white;
+}

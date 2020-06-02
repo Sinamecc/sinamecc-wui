@@ -15,7 +15,7 @@ export class UploadProposalService {
 
   }
 
-  uploadProposal(context: any, entity: any, routeToUpload:string, formData: FormData): Observable <Response> {
+  uploadProposal(context: any, entity: any, routeToUpload: string, formData: FormData): Observable <Response> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.authenticationService.credentials.token
@@ -25,7 +25,7 @@ export class UploadProposalService {
     return this.httpClient
     .post(routeToUpload, formData, httpOptions)
     .pipe(
-      map((body:any) => {
+      map((body: any) => {
         const response = {
           statusCode: 200,
           message: 'Form submitted correctly'
@@ -33,13 +33,13 @@ export class UploadProposalService {
         return response;
       }
     )
-    )
+    );
   }
 
 
 
 
-  
+
 
 
 

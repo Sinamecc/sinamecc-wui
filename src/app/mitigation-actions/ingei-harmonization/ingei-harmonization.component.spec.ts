@@ -27,7 +27,7 @@ describe('IngeiHarmonizationComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ IngeiHarmonizationComponent, DownloadProposalComponent,GenericButtonComponent,
+      declarations: [ IngeiHarmonizationComponent, DownloadProposalComponent, GenericButtonComponent,
         GenericButtonSecondaryComponent ],
       providers: [ { provide: I18nService, useClass: MockI18nService } ]
     })

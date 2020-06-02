@@ -32,8 +32,8 @@ import { MccrPocNewBuyerAccountComponent } from './mccr-poc-new-buyer-account/mc
     FormsModule
 
   ],
-  entryComponents: [MccrPocNewDeveloperAccountComponent,MccrPocNewBuyerAccountComponent],
-  declarations: [MccrPocListComponent, MccrSearchPocComponent, MccrPocAddBuyerComponent, MccrPocAddDeveloperComponent, MccrPocAddPocComponent,MccrPocNewDeveloperAccountComponent,MccrPocNewBuyerAccountComponent],
+  entryComponents: [MccrPocNewDeveloperAccountComponent, MccrPocNewBuyerAccountComponent],
+  declarations: [MccrPocListComponent, MccrSearchPocComponent, MccrPocAddBuyerComponent, MccrPocAddDeveloperComponent, MccrPocAddPocComponent, MccrPocNewDeveloperAccountComponent, MccrPocNewBuyerAccountComponent],
   providers: [
     MccrPocService
   ]
