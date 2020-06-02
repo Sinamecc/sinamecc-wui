@@ -21,8 +21,6 @@ import {
 import { finalize, tap } from "rxjs/operators";
 import { environment } from "@env/environment";
 import { Logger, I18nService, AuthenticationService } from "@app/core";
-import { BehaviorSubject } from "rxjs";
-const log = new Logger("Report");
 import { PpcnService } from "@app/ppcn/ppcn.service";
 import { Observable } from "rxjs/Observable";
 import {
@@ -39,6 +37,7 @@ import { SubSector } from "../interfaces/subSector";
 import { Ovv } from "../interfaces/ovv";
 import { GasReportTableComponent } from "../gas-report-table/gas-report-table.component";
 
+const log = new Logger("Report");
 @Component({
 	selector: "app-ppcn-new",
 	templateUrl: "./ppcn-new.component.html",
@@ -125,18 +124,15 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		this.formGroup.controls.formArray["controls"][0].patchValue({
 			ciuuListCodeCtrl: this.CIUUCodeList
 		});
-		console.log(this.formGroup.controls.formArray["controls"]);
 
-		let context = {
+		const context = {
 			context: this.formGroup.value,
 			gasReportTable: this.table.buildTableSection(),
 			categoryTable: this.table.buildCategoryTableSection()
 		};
 
-		console.log(context);
-
 		this.service
-			.submitNewPpcnForm(this.formGroup.value)
+			.submitNewPpcnForm(context)
 			.pipe(
 				finalize(() => {
 					this.formGroup.markAsPristine();
@@ -189,11 +185,11 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 				this.formBuilder.group({
 					requiredCtrl: ["", Validators.required],
 					amountOfEmissions:
-						this.levelId == "2" ? ["", Validators.required] : null,
+						this.levelId === "2" ? ["", Validators.required] : null,
 					amountInventoryData:
-						this.levelId == "2" ? ["", Validators.required] : null,
+						this.levelId === "2" ? ["", Validators.required] : null,
 					numberofDacilities:
-						this.levelId == "2" ? ["", Validators.required] : null,
+						this.levelId === "2" ? ["", Validators.required] : null,
 					recognitionCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({

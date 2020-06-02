@@ -249,14 +249,14 @@
               <br />
 
               <div fxLayout="row">
-                <div style="width: 150px;">
+                <div class="div-custom-style">
                   <mat-button-toggle-group
                     (change)="
                       this.formGroup.controls.formArray['controls'][3].patchValue({
                         investmentReductions: $event.value
                       })
                     "
-                    style="margin-right: 50px;"
+                    class="custom-margin"
                     value="CRC"
                   >
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
@@ -349,9 +349,9 @@
 
               <div fxLayout="row">
                 <br />
-                <div style="width: 150px;">
+                <div class="div-custom-style">
                   <mat-button-toggle-group
-                    style="margin-right: 50px;"
+                    class="custom-margin"
                     value="CRC"
                     (change)="
                       this.formGroup.controls.formArray['controls'][4].patchValue({ compensationCost: $event.value })
@@ -381,9 +381,9 @@
               <br />
               <div fxLayout="row">
                 <br />
-                <div style="width: 150px;">
+                <div class="div-custom-style">
                   <mat-button-toggle-group
-                    style="margin-right: 50px;"
+                    class="custom-margin"
                     value="CRC"
                     (change)="
                       this.formGroup.controls.formArray['controls'][4].patchValue({
