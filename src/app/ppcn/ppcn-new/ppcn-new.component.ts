@@ -115,7 +115,8 @@ export class PpcnNewComponent implements OnInit {
     this.formGroup.controls.formArray["controls"][0].patchValue({
       ciuuListCodeCtrl: this.CIUUCodeList,
     });
-
+    console.log(this.formGroup.controls.formArray["controls"]);
+    /*
     this.service
       .submitNewPpcnForm(this.formGroup.value)
       .pipe(
@@ -133,6 +134,7 @@ export class PpcnNewComponent implements OnInit {
           this.error = error;
         }
       );
+      */
   }
 
   private createForm() {
@@ -150,9 +152,6 @@ export class PpcnNewComponent implements OnInit {
           legalIdCtrl: this.levelId == "1" ? null : ["", Validators.required],
           legalRepresentativeIdCtrl: ["", Validators.required],
           emailCtrl: this.levelId == "2" ? null : ["", Validators.email],
-          nameContactPersonCtrl: this.levelId == "2" ? null : ["", Validators.required],
-          titleContacPersonCtrl: this.levelId == "2" ? null : ["", Validators.required],
-          emailContacPersonCtrl: this.levelId == "2" ? null : ["", Validators.email],
           ciuuCodeCtrl: this.levelId == "1" ? null : [""],
           ciuuListCodeCtrl: this.levelId == "1" ? null : ["", Validators.required],
         }),
