@@ -123,6 +123,8 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		this.formGroup.controls.formArray["controls"][0].patchValue({
 			ciuuListCodeCtrl: this.CIUUCodeList
 		});
+		console.log(this.formGroup.controls.formArray["controls"]);
+		/*
 
 		this.service
 			.submitNewPpcnForm(this.formGroup.value)
@@ -143,7 +145,8 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					log.debug(`New PPCN Form error: ${error}`);
 					this.error = error;
 				}
-			);
+      );
+      */
 	}
 
 	private createForm() {
@@ -157,16 +160,14 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 						Validators.compose([Validators.required, Validators.minLength(8)])
 					],
 					confidentialCtrl: ["", Validators.required],
-					confidentialValueCtrl: this.levelId === "1" ? null : [""],
+					confidentialValueCtrl: [""],
 					faxCtrl: "",
 					postalCodeCtrl: "",
 					addressCtrl: ["", Validators.required],
-					legalIdCtrl: this.levelId === "1" ? null : ["", Validators.required],
-					legalRepresentativeIdCtrl:
-						this.levelId === "1" ? null : ["", Validators.required],
-					ciuuCodeCtrl: this.levelId === "1" ? null : [""],
-					ciuuListCodeCtrl:
-						this.levelId === "1" ? null : ["", Validators.required]
+					legalIdCtrl: ["", Validators.required],
+					emailCtrl: ["", Validators.email],
+					legalRepresentativeIdCtrl: ["", Validators.required],
+					ciuuListCodeCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
 					contactNameCtrl: ["", Validators.required],
@@ -179,9 +180,12 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 				}),
 				this.formBuilder.group({
 					requiredCtrl: ["", Validators.required],
-					amountOfEmissions: ["", Validators.required],
-					amountInventoryData: ["", Validators.required],
-					numberofDacilities: ["", Validators.required],
+					amountOfEmissions:
+						this.levelId == "2" ? ["", Validators.required] : [""],
+					amountInventoryData:
+						this.levelId == "2" ? ["", Validators.required] : [""],
+					numberofDacilities:
+						this.levelId == "2" ? ["", Validators.required] : [""],
 					recognitionCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({

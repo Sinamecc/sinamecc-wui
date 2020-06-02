@@ -78,6 +78,10 @@
   },
 
   "ppcn":{
+    "totalRemovals": "Total removals",
+    "removalProjectDetail": "Removal Project Detail",
+    "costInventoryRemovals": "Cost of carrying out inventory of removals",
+    "removals": "Removals",
     "emailContacPerson": "Email of the contact person",
     "tittleContacPerson": "Title of the contact person",
     "nameContactPerson": "Name of the contact person",

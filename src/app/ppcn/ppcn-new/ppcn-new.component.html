@@ -18,7 +18,7 @@
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn" *ngIf="levelId == '2'">
+            <mat-form-field class="field-ppcn">
               <mat-label translate>general.legalCertificate</mat-label>
               <input matInput formControlName="legalIdCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -42,14 +42,13 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{ levelId == 2 ? "Telephone" : "specificLabel.majorTelephone" }} </mat-label>
-
               <input matInput formControlName="telephoneCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
             <br />
 
-            <mat-form-field class="field-ppcn" *ngIf="levelId == '1'">
+            <mat-form-field class="field-ppcn">
               <mat-label translate>ppcn.mayorEmail</mat-label>
               <input type="email" matInput formControlName="emailCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -103,7 +102,6 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{ levelId == 2 ? "Address" : "specificLabel.districtCouncilAddress" }}</mat-label>
-
               <input matInput formControlName="addressCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
@@ -156,10 +154,11 @@
             <ng-template matStepLabel>
               <span translate>geographyLabel.requestLevel</span>
             </ng-template>
-            <br />
-            <br />
-            <br />
+
             <div *ngIf="levelId == '2'">
+              <br />
+              <br />
+              <br />
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.classificationAmountEmissions</mat-label>
                 <input type="number" matInput formControlName="amountOfEmissions" required />
