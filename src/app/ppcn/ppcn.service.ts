@@ -350,6 +350,7 @@ export class PpcnService {
 		const reduction = {};
 		const carbonOffset = {};
 		const organization_classification = {};
+		const gasRemoval = {};
 
 		const validateListReduction = [2, 3, 4, 5];
 		const validateListCompensation = [4, 5];
@@ -378,7 +379,17 @@ export class PpcnService {
 		organization["phone_organization"] = context.formArray[0].telephoneCtrl;
 		organization["postal_code"] = context.formArray[0].postalCodeCtrl;
 		organization["fax"] = context.formArray[0].faxCtrl;
+		organization["email"] = context.formArray[0].emailCtrl;
 		organization["ciiu_code_list"] = [];
+
+		// gas removal section
+
+		gasRemoval["removal_cost"] = context.formArray[6].costRemovalInventoryCtrl;
+		gasRemoval["removal_cost_currency"] =
+			context.formArray[6].costRemovalInventoryValueCtrl;
+		gasRemoval["total"] = context.formArray[6].totalremovalsCtrl;
+		gasRemoval["removal_descriptions"] =
+			context.formArray[6].removalProjectDetailCtrl;
 
 		// Reduction form section //
 		reduction["project"] = context.formArray[3].reductionProjectCtrl;
@@ -432,6 +443,7 @@ export class PpcnService {
 				: null;
 
 		formData["organization_classification"] = organization_classification;
+		formData["gas_removal"] = gasRemoval;
 
 		for (const value of context.formArray[0].ciuuListCodeCtrl) {
 			const element = {

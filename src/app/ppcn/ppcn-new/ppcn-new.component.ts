@@ -37,6 +37,7 @@ import { Ppcn } from "../ppcn_registry";
 import { Sector } from "../interfaces/sector";
 import { SubSector } from "../interfaces/subSector";
 import { Ovv } from "../interfaces/ovv";
+import { GasReportTableComponent } from "../gas-report-table/gas-report-table.component";
 
 @Component({
 	selector: "app-ppcn-new",
@@ -71,6 +72,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 	reductionFormVar = 0;
 
 	values$: any;
+	@ViewChild("table") table: GasReportTableComponent;
 
 	get formArray(): AbstractControl | null {
 		return this.formGroup.get("formArray");
@@ -124,7 +126,14 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 			ciuuListCodeCtrl: this.CIUUCodeList
 		});
 		console.log(this.formGroup.controls.formArray["controls"]);
-		/*
+
+		let context = {
+			context: this.formGroup.value,
+			gasReportTable: this.table.buildTableSection(),
+			categoryTable: this.table.buildCategoryTableSection()
+		};
+
+		console.log(context);
 
 		this.service
 			.submitNewPpcnForm(this.formGroup.value)
@@ -145,8 +154,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					log.debug(`New PPCN Form error: ${error}`);
 					this.error = error;
 				}
-      );
-      */
+			);
 	}
 
 	private createForm() {
@@ -181,11 +189,11 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 				this.formBuilder.group({
 					requiredCtrl: ["", Validators.required],
 					amountOfEmissions:
-						this.levelId == "2" ? ["", Validators.required] : [""],
+						this.levelId == "2" ? ["", Validators.required] : null,
 					amountInventoryData:
-						this.levelId == "2" ? ["", Validators.required] : [""],
+						this.levelId == "2" ? ["", Validators.required] : null,
 					numberofDacilities:
-						this.levelId == "2" ? ["", Validators.required] : [""],
+						this.levelId == "2" ? ["", Validators.required] : null,
 					recognitionCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
@@ -214,12 +222,11 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					baseYearCtrl: ["", Validators.required],
 					reportYearCtrl: ["", Validators.required],
 					ovvCtrl: ["", Validators.required],
-					implementationEmissionDateCtrl: null,
-					implementationInitialDateCtrl: null,
-					implementationEndDateCtrl: null
+					implementationEmissionDateCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
 					costRemovalInventoryCtrl: ["", Validators.required],
+					costRemovalInventoryValueCtrl: ["CRC", Validators.required],
 					removalProjectDetailCtrl: ["", Validators.required],
 					totalremovalsCtrl: ["", Validators.required]
 				}),

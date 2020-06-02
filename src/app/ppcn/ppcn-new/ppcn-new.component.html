@@ -488,12 +488,23 @@
             </ng-template>
 
             <br />
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>ppcn.costInventoryRemovals</mat-label>:
-              <input matInput type="number" formControlName="costRemovalInventoryCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
+            <div fxLayout="row">
+              <div class="ppcn-container">
 
+                <mat-button-toggle-group name="fontStyle" class="m-r-10"
+                    (change)="this.formGroup.controls.formArray['controls'][6].patchValue({costRemovalInventoryValueCtrl: $event.value})"
+                    value="CRC">
+                    <mat-button-toggle value="CRC">CRC</mat-button-toggle>
+                    <mat-button-toggle value="USD">USD</mat-button-toggle>
+                  </mat-button-toggle-group>
+              </div>
+              <mat-form-field class="field-ppcn">
+                  <mat-label translate>ppcn.costInventoryRemovals</mat-label>:
+                  <input matInput type="number" formControlName="costRemovalInventoryCtrl" />
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+            </div>
+            
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>ppcn.removalProjectDetail</mat-label>:
