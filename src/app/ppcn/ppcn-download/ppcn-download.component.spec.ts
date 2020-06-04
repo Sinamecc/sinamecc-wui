@@ -30,7 +30,7 @@ describe('PpcnDownloadComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ PpcnDownloadComponent, DownloadProposalComponent,GenericButtonComponent,
+      declarations: [ PpcnDownloadComponent, DownloadProposalComponent, GenericButtonComponent,
         GenericButtonSecondaryComponent ],
       providers: [
         MockS3Service,

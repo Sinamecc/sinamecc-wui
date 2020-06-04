@@ -3,13 +3,13 @@
     <div class="form-error" [hidden]="!error || isLoading" translate>
       <span translate>errorLabel.errorSubmittingForm</span>
     </div>
-    <br/>
+    <br />
     <div fxLayout="column">
-      <span translate>geographyLabel.geographicLevel</span><br><br>
+      <span translate>geographyLabel.geographicLevel</span><br /><br />
       <mat-radio-group formControlName="geographicCtrl" (change)="onSaving($event)">
-          <mat-radio-button  *ngFor="let geographicLevel of processedGeographicLevel" [value]="geographicLevel.id">
-            {{ geographicLevel.level }}
-          </mat-radio-button>
+        <mat-radio-button *ngFor="let geographicLevel of processedGeographicLevel" [value]="geographicLevel.id">
+          {{ geographicLevel.level }}
+        </mat-radio-button>
       </mat-radio-group>
     </div>
   </form>

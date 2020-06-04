@@ -1,4 +1,4 @@
-export interface NextState{
+export interface NextState {
     states: string[];
     required_comments: boolean;
   }

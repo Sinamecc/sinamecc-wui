@@ -16,6 +16,7 @@
   },
 
   "mitigationAction":{
+    "newMa":"Nueva acción de mitigación",
     "editMA": "Editar una acción de mitigación:",
     "MA":  "Accion de Mitigación",
     "MAs": "Acciones de Mitigación",
@@ -79,6 +80,20 @@
   },
 
   "ppcn":{
+    "ppcnList":"Lista de PPCN",
+    "complexityMethodologies":"Complejidad de las metodologías de cálculo utilizadas",
+    "amountGHG":"Cantidad de datos del inventario de GEI",
+    "numberFacilities":"Cantidad de instalaciones de la organización",
+    "amountEmissions":"Cantidad de emisiones",
+    "organitationCategoryPpcn":"Categoría de la organización (Según apartado 8 del PPCN 2.0)",
+    "organitationCategory":"Categoría de la Organización(A,B,C o D)",
+    "resultsVerifiedInventory":"Resultado del inventario verificado (Toneladas CO2 equivalente)",
+    "verificationOVV":"Costo del proceso de verificación realizado por el OVV",
+    "costGHG":"Costo de realización del inventario de GEI (Incluyendo auditurias internas si aplica)",
+    "biogenicEmissions":"Emisiones Biogénicas(toneladas CO2 equivalente)",
+    "reportOtherGases":"En casos de reportar 'Otros Gases' indicar todos los otros gases reportados",
+    "otherGases":"Otros Gases",
+    "gasesReport":"Gases a Reportar",
     "createPPCN":"Crear nuevo Registro PPCN:",
     "PPCNForm":"Formulario PPCN",
     "dataPPCN":"Información para PPCN",
@@ -89,7 +104,12 @@
     
   },
 
-  "general":{ 
+  "general":{
+    "dolar":"Dólar",
+    "colon":"Colón",
+    "currency":"Moneda",
+    "scope":"Alcance",
+    "total":"Total",
     "district":"Distrito",
     "canton":"Cantón",
     "province":"Provincia",

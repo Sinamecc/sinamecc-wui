@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-import { DatePipe } from '@angular/common';
-import { Logger, I18nService, AuthenticationService } from '@app/core';
-import { S3File, S3Service } from '@app/core/s3.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MccrPoc } from '@app/mccr/mccr-poc/mccr-poc';
 import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators';
@@ -20,7 +17,7 @@ const routes = {
   submitNewDeveloperAccount: () => '/v1/account/developer',
   submitNewBuyerAccount: () => '/v1/account/buyer',
 
-}
+};
 
 export interface Response {
   // Customize received credentials here
@@ -98,7 +95,7 @@ export class MccrPocService {
       }
     };
 
-    let formData: FormData = new FormData();
+    const formData: FormData = new FormData();
     formData.append('user_id', context.userId);
     formData.append('ucc_base_code', context.uccBaseCode);
     formData.append('developer_account_number', context.developerAccountNUmber);
@@ -128,7 +125,7 @@ export class MccrPocService {
       }
     };
 
-    let formData: FormData = new FormData();
+    const formData: FormData = new FormData();
     formData.append('user_id', context.user_id);
 
     return this.httpClient
@@ -157,7 +154,7 @@ export class MccrPocService {
       }
     };
 
-    let formData: FormData = new FormData();
+    const formData: FormData = new FormData();
     formData.append('user_id', context.user_id);
 
     return this.httpClient
@@ -186,7 +183,7 @@ export class MccrPocService {
       }
     };
 
-    let formData: FormData = new FormData();
+    const formData: FormData = new FormData();
 
     formData.append('user_id', context.userId);
     formData.append('ucc_batch_base', context.uccBatchCode);
@@ -217,7 +214,7 @@ export class MccrPocService {
       }
     };
 
-    let formData: FormData = new FormData();
+    const formData: FormData = new FormData();
     formData.append('user_id', context.userId);
     formData.append('ucc_base_code', context.uccBaseCode);
     formData.append('developer_account_number', context.developerAccountNUmber);

@@ -13,8 +13,8 @@ import { PpcnUploadComponent } from '@app/ppcn/ppcn-upload/ppcn-upload.component
   styleUrls: ['./ppcn-flow.component.scss']
 })
 export class PpcnFlowComponent implements OnInit {
-  @ViewChild('PpcnLevelComponent') geographicLvl:PpcnLevelComponent;
-  @ViewChild('PpcnNewComponent') ppcnForm:PpcnNewComponent;
+  @ViewChild('PpcnLevelComponent') geographicLvl: PpcnLevelComponent;
+  @ViewChild('PpcnNewComponent') ppcnForm: PpcnNewComponent;
   @ViewChild('DownloadProposalComponent') downloadProposal: DownloadProposalComponent;
   @ViewChild('PpcnUploadComponent') uploadFiles:  PpcnUploadComponent;
 
@@ -28,19 +28,19 @@ export class PpcnFlowComponent implements OnInit {
   levelId = '1';
 
   constructor(private _formBuilder: FormBuilder,
-    private service: PpcnService,) {
+    private service: PpcnService, ) {
     this.formData = new FormData();
     this.createForm();
   }
 
   ngOnInit() {
-    this.service.currentLevelId.subscribe((levelId:string) => this.levelId = levelId);
+    this.service.currentLevelId.subscribe((levelId: string) => this.levelId = levelId);
   }
 
-  createForm(){
+  createForm() {
     this.mainGroup = this._formBuilder.group({
-      formArray: this._formBuilder.array([this.frmGeographic,this.frmPpcn])
-    })
+      formArray: this._formBuilder.array([this.frmGeographic, this.frmPpcn])
+    });
   }
 
   get frmGeographic() {
@@ -51,11 +51,11 @@ export class PpcnFlowComponent implements OnInit {
     return this.ppcnForm ? this.ppcnForm.formGroup : null;
   }
 
-  get frmDownload(){
+  get frmDownload() {
     return this.downloadProposal ? this.downloadProposal.fileName : null;
   }
 
-  get frmUpload(){
+  get frmUpload() {
     return this.uploadFiles ? this.uploadFiles.form : null;
   }
 

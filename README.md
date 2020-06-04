@@ -162,3 +162,6 @@ To run them once instead of live mode and with code coverage report:
 
 `npm run test -- --sourcemaps=false --no-watch --code-coverage`
 
+### Linter
+
+Before merging a PR, linter must not complain. A git commit hook and a github action will enforce this rule.

@@ -7,72 +7,72 @@ import { Credentials, LoginContext } from '@app/core/authentication/authenticati
 export class MockAuthenticationService {
   credentials: Credentials | null = {
     username: 'test',
-    fullName: "test test", 
+    fullName: 'test test',
     token: '123',
     id: 24,
-    userPhoto: "",
+    userPhoto: '',
     email: 'test@test.com',
     groups: {},
-    permissions:{
-      all:{
+    permissions: {
+      all: {
         reviewer: false,
         provider: false,
         admin: false
        },
-       ma:{
-        reviewer:false,
-        provider:false
+       ma: {
+        reviewer: false,
+        provider: false
       },
-      ppcn:{
-          reviewer:false,
-          provider:false
+      ppcn: {
+          reviewer: false,
+          provider: false
       },
-      mccr:{
-          reviewer:false,
-          provider:false
+      mccr: {
+          reviewer: false,
+          provider: false
       },
-      report_data:{
-          reviewer:false,
-          provider:false
+      report_data: {
+          reviewer: false,
+          provider: false
       },
     },
-    is_administrador_dcc:false
+    is_administrador_dcc: false
   };
 
   login(context: LoginContext): Observable<Credentials> {
     return of({
-      fullName: "test test", 
+      fullName: 'test test',
       username: context.username,
       token: '123456',
       id: 24,
       email: 'test@test.com',
-      userPhoto: "",
+      userPhoto: '',
       groups: {},
-      permissions:{
-        all:{
+      permissions: {
+        all: {
           reviewer: false,
           provider: false,
           admin: false
          },
-         ma:{
-          reviewer:false,
-          provider:false
+         ma: {
+          reviewer: false,
+          provider: false
         },
-        ppcn:{
-            reviewer:false,
-            provider:false
+        ppcn: {
+            reviewer: false,
+            provider: false
         },
-        mccr:{
-            reviewer:false,
-            provider:false
+        mccr: {
+            reviewer: false,
+            provider: false
         },
-        report_data:{
-            reviewer:false,
-            provider:false
+        report_data: {
+            reviewer: false,
+            provider: false
         },
       },
-      is_administrador_dcc:false
-      
+      is_administrador_dcc: false
+
     });
   }
 

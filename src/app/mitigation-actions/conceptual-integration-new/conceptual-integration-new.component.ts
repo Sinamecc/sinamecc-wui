@@ -41,8 +41,8 @@ export class ConceptualIntegrationNewComponent implements OnInit {
     this.formData = new FormData();
     this.formSubmitRoute = '/v1/mitigations/step/conceptual_proposal';
 
-    
-    
+
+
 
     this.mitigationActionObservable = this.service.getMitigationAction(this.id, this.i18nService.language.split('-')[0])
     .pipe(
@@ -58,9 +58,9 @@ export class ConceptualIntegrationNewComponent implements OnInit {
     this.formData.append('name', 'conceptual_proposal');
     this.formData.append('entry_name', context.commentCtrl);
     this.formData.append('step_status', 'approved');
-    let fileList = context.fileCtrl.files;
+    const fileList = context.fileCtrl.files;
     if (fileList.length > 0) {
-      let file: File = fileList[0];
+      const file: File = fileList[0];
       this.formData.append('file', file, file.name);
     }
   }

@@ -22,15 +22,20 @@ export class MccrPocAddPocComponent implements OnInit {
   error: string;
   form: FormGroup;
 
-  constructor(private route: ActivatedRoute,private formBuilder: FormBuilder,private reportService: MccrPocService,
-    private service: MccrPocService,private router: Router,private translateService: TranslateService,public snackBar: MatSnackBar) { 
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private service: MccrPocService,
+    private router: Router,
+    private translateService: TranslateService,
+    public snackBar: MatSnackBar) {
     this.createForm();
   }
 
   ngOnInit() {
   }
 
-  submitForm(){
+  submitForm() {
     this.isLoading = true;
     this.service.submitNewUcc(this.form.value)
     .pipe(finalize(() => {
@@ -39,7 +44,8 @@ export class MccrPocAddPocComponent implements OnInit {
     }))
     .subscribe(response => {
       this.router.navigate([`/mccr/poc/detail/${this.form.value.uccBatchCode}`], { replaceUrl: true });
-      this.translateService.get('Sucessfully submitted form').subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
+      this.translateService.get('Sucessfully submitted form')
+        .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
       log.debug(`${response.statusCode} status code received from form`);
 
     }, error => {
@@ -48,11 +54,11 @@ export class MccrPocAddPocComponent implements OnInit {
     });
   }
 
-  back(){
+  back() {
     this.router.navigate([`/mccr/poc`], { replaceUrl: true });
   }
 
-  createForm(){
+  createForm() {
     this.form = this.formBuilder.group({
       uccBatchCode: ['', Validators.required],
       uccBatchSize: ['', Validators.required],

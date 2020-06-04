@@ -30,7 +30,7 @@ describe('PpcnComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ PpcnComponent, LoaderComponent,GenericButtonComponent,GenericButtonSecondaryComponent,
+      declarations: [ PpcnComponent, LoaderComponent, GenericButtonComponent, GenericButtonSecondaryComponent,
         CustomSearchBarComponent ],
       providers: [
         MockS3Service,

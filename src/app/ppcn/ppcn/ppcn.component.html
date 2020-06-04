@@ -9,71 +9,94 @@
       </mat-card-subtitle>
       <div class="container " [hidden]="isLoading">
         <h3 translate class="text-color">specificLabel.organizationInformation</h3>
-        <strong translate>ID</strong>: {{ppcn?.organization?.id}} <br>
-        <strong translate>info.name</strong>: {{ppcn?.organization?.name}} <br>
-        <strong translate>general.legalCertificate</strong>: {{ppcn?.organization?.legal_identification}} <br>
-        <strong translate>specificLabel.representativeName</strong>: {{ppcn?.organization?.representative_name}} <br>
-        <strong translate>general.legalRepresentativeCertificate</strong>: {{ppcn?.organization?.representative_legal_identification}} <br>
-        <strong translate>info.phone</strong>: {{ppcn?.organization?.phone_organization}} <br>
-        <strong translate>general.confidential</strong>: {{ppcn?.organization?.confidential}} <span *ngIf="ppcn?.organization?.confidential_fields"><span> : </span>{{ppcn?.organization?.confidential_fields}}</span><br>
-        <strong translate>info.postalCode</strong>: {{ppcn?.organization?.postal_code}} <br>
-        <strong translate>info.fax</strong>: {{ppcn?.organization?.fax}} <br>
-        <strong translate>info.address</strong>: {{ppcn?.organization?.address}} <br>
-        <strong translate>CIIU:</strong>: {{ppcn?.organization?.ciiu}} <br>
+        <strong translate>ID</strong>: {{ppcn?.organization?.id}} <br />
+        <strong translate>info.name</strong>: {{ppcn?.organization?.name}} <br />
+        <strong translate>general.legalCertificate</strong>: {{ppcn?.organization?.legal_identification}} <br />
+        <strong translate>specificLabel.representativeName</strong>: {{ppcn?.organization?.representative_name}} <br />
+        <strong translate>general.legalRepresentativeCertificate</strong>:
+        {{ppcn?.organization?.representative_legal_identification}} <br />
+        <strong translate>info.phone</strong>: {{ppcn?.organization?.phone_organization}} <br />
+        <strong translate>general.confidential</strong>: {{ppcn?.organization?.confidential}} <span
+          *ngIf="ppcn?.organization?.confidential_fields"><span> :
+          </span>{{ppcn?.organization?.confidential_fields}}</span><br />
+        <strong translate>info.postalCode</strong>: {{ppcn?.organization?.postal_code}} <br />
+        <strong translate>info.fax</strong>: {{ppcn?.organization?.fax}} <br />
+        <strong translate>info.address</strong>: {{ppcn?.organization?.address}} <br />
+        <strong translate>CIIU:</strong>: {{ppcn?.organization?.ciiu}} <br />
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">{{'info.contact' | translate }}</h3>
-        <strong translate>info.contactName</strong>: {{ppcn?.organization?.contact.full_name}} <br>
-        <strong translate>info.contactPosition</strong>: {{ppcn?.organization?.contact.job_title}} <br>
-        <strong translate>info.contactPhone</strong>: {{ppcn?.organization?.contact.phone}} <br>
-        <strong translate>info.contactEmail</strong>: {{ppcn?.organization?.contact.email}} <br>
+        <strong translate>info.contactName</strong>: {{ppcn?.organization?.contact.full_name}} <br />
+        <strong translate>info.contactPosition</strong>: {{ppcn?.organization?.contact.job_title}} <br />
+        <strong translate>info.contactPhone</strong>: {{ppcn?.organization?.contact.phone}} <br />
+        <strong translate>info.contactEmail</strong>: {{ppcn?.organization?.contact.email}} <br />
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">geographyLabel.requestLevel</h3>
-        <strong translate>geographyLabel.geographicLevel</strong>: {{ppcn?.geographic_level?.level}} <br>
-        <strong translate>geographyLabel.requestLevel</strong>: {{ppcn?.organization_classification.required_level?.level_type}} <br>
-        <strong translate>geographyLabel.recognitionType</strong>: {{ppcn?.organization_classification.recognition_type?.recognition_type}} <br>
-        <strong translate>geographyLabel.classificationAmountEmissions</strong>: {{ppcn?.organization_classification.emission_quantity}} <br>
-        <strong translate>geographyLabel.classificationNumberFacilities</strong>: {{ppcn?.organization_classification.buildings_number}} <br>
-        <strong translate>geographyLabel.ClassificationAmountInventoryData</strong>: {{ppcn?.organization_classification.data_inventory_quantity}} <br>
-        
+        <strong translate>geographyLabel.geographicLevel</strong>: {{ppcn?.geographic_level?.level}} <br />
+        <strong translate>geographyLabel.requestLevel</strong>:
+        {{ppcn?.organization_classification.required_level?.level_type}} <br />
+        <strong translate>geographyLabel.recognitionType</strong>:
+        {{ppcn?.organization_classification.recognition_type?.recognition_type}} <br />
+        <strong translate>geographyLabel.classificationAmountEmissions</strong>:
+        {{ppcn?.organization_classification.emission_quantity}} <br />
+        <strong translate>geographyLabel.classificationNumberFacilities</strong>:
+        {{ppcn?.organization_classification.buildings_number}} <br />
+        <strong translate>geographyLabel.ClassificationAmountInventoryData</strong>:
+        {{ppcn?.organization_classification.data_inventory_quantity}} <br />
+
         <div *ngIf="ppcn?.organization_classification?.reduction">
           <h3 translate class="text-color">geographyLabel.reduction</h3>
-          <strong translate>geographyLabel.reductionProyect</strong>: {{ppcn?.organization_classification?.reduction?.detail_reduction}} <br>
-          <strong translate>geographyLabel.activityReduction</strong>: {{ppcn?.organization_classification?.reduction?.activity}} <br>
-          <strong translate>geographyLabel.detailReduction</strong>: {{ppcn?.organization_classification?.reduction?.detail_reduction}} <br>
-          <strong translate>geographyLabel.reducedEmissions</strong>: {{ppcn?.organization_classification?.reduction?.emission}} <br>
-          <strong translate>geographyLabel.investmentReductions</strong>: {{ppcn?.organization_classification?.reduction?.investment}} <br>
-          <strong translate>geographyLabel.totalInversion</strong>: {{ppcn?.organization_classification?.reduction?.total_investment}} <br>
-          <strong translate>geographyLabel.totalReducedEmissions</strong>: {{ppcn?.organization_classification?.reduction?.total_emission}} <br>
+          <strong translate>geographyLabel.reductionProyect</strong>:
+          {{ppcn?.organization_classification?.reduction?.detail_reduction}} <br />
+          <strong translate>geographyLabel.activityReduction</strong>:
+          {{ppcn?.organization_classification?.reduction?.activity}} <br />
+          <strong translate>geographyLabel.detailReduction</strong>:
+          {{ppcn?.organization_classification?.reduction?.detail_reduction}} <br />
+          <strong translate>geographyLabel.reducedEmissions</strong>:
+          {{ppcn?.organization_classification?.reduction?.emission}} <br />
+          <strong translate>geographyLabel.investmentReductions</strong>:
+          {{ppcn?.organization_classification?.reduction?.investment}} <br />
+          <strong translate>geographyLabel.totalInversion</strong>:
+          {{ppcn?.organization_classification?.reduction?.total_investment}} <br />
+          <strong translate>geographyLabel.totalReducedEmissions</strong>:
+          {{ppcn?.organization_classification?.reduction?.total_emission}} <br />
         </div>
 
         <div *ngIf="ppcn?.organization_classification?.carbon_offset">
           <h3 translate class="text-color">geographyLabel.compensations</h3>
-          <strong translate>geographyLabel.compensationScheme</strong>: {{ppcn?.organization_classification?.carbon_offset?.offset_scheme}} <br>
-          <strong translate>geographyLabel.projectLocation</strong>: {{ppcn?.organization_classification?.carbon_offset?.project_location}} <br>
-          <strong translate>geographyLabel.certificateNumber</strong>: {{ppcn?.organization_classification?.carbon_offset?.certificate_identification}} <br>
-          <strong translate>geographyLabel.totalCompensation</strong>: {{ppcn?.organization_classification?.carbon_offset?.total_carbon_offset}} <br>
-          <strong translate>geographyLabel.compensationCost</strong>: {{ppcn?.organization_classification?.carbon_offset?.offset_cost}} <br>
-          <strong translate>geographyLabel.period</strong>: {{ppcn?.organization_classification?.carbon_offset?.period}} <br>
-          <strong translate>geographyLabel.totalEmissionsOffsets</strong>: {{ppcn?.organization_classification?.carbon_offset?.total_offset_cost}} <br>
+          <strong translate>geographyLabel.compensationScheme</strong>:
+          {{ppcn?.organization_classification?.carbon_offset?.offset_scheme}} <br />
+          <strong translate>geographyLabel.projectLocation</strong>:
+          {{ppcn?.organization_classification?.carbon_offset?.project_location}} <br />
+          <strong translate>geographyLabel.certificateNumber</strong>:
+          {{ppcn?.organization_classification?.carbon_offset?.certificate_identification}} <br />
+          <strong translate>geographyLabel.totalCompensation</strong>:
+          {{ppcn?.organization_classification?.carbon_offset?.total_carbon_offset}} <br />
+          <strong translate>geographyLabel.compensationCost</strong>:
+          {{ppcn?.organization_classification?.carbon_offset?.offset_cost}} <br />
+          <strong translate>geographyLabel.period</strong>: {{ppcn?.organization_classification?.carbon_offset?.period}}
+          <br />
+          <strong translate>geographyLabel.totalEmissionsOffsets</strong>:
+          {{ppcn?.organization_classification?.carbon_offset?.total_offset_cost}} <br />
 
         </div>
 
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">specificLabel.GEIInformation</h3>
-        <strong translate>OVV:</strong> {{ppcn?.gei_organization?.ovv?.name}} <br>
-        <strong translate>Emission Date:</strong> {{ppcn?.gei_organization?.emission_ovv_date}} <br>
-        <strong translate>specificLabel.reportYear</strong>: {{ppcn?.gei_organization?.report_year}} <br>
-        <strong translate>specificLabel.baseYear</strong>: {{ppcn?.gei_organization?.base_year}} <br>
+        <strong translate>OVV:</strong> {{ppcn?.gei_organization?.ovv?.name}} <br />
+        <strong translate>Emission Date:</strong> {{ppcn?.gei_organization?.emission_ovv_date}} <br />
+        <strong translate>specificLabel.reportYear</strong>: {{ppcn?.gei_organization?.report_year}} <br />
+        <strong translate>specificLabel.baseYear</strong>: {{ppcn?.gei_organization?.base_year}} <br />
         <div *ngFor="let activity of ppcn?.gei_organization?.gei_activity_types">
-          <strong translate>geographyLabel.sector</strong>: {{activity.sector?.name}} <br>
-          <strong translate>geographyLabel.subsector</strong>: {{activity.sub_sector?.name}} <br>
-          <strong translate>Activity carried out by organization:</strong> {{activity.activity_type}} <br>
+          <strong translate>geographyLabel.sector</strong>: {{activity.sector?.name}} <br />
+          <strong translate>geographyLabel.subsector</strong>: {{activity.sub_sector?.name}} <br />
+          <strong translate>Activity carried out by organization:</strong> {{activity.activity_type}} <br />
         </div>
-        <strong translate>Status: </strong> {{ppcn?.fsm_state}}<br>
+        <strong translate>Status: </strong> {{ppcn?.fsm_state}}<br />
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">Files</h3>
         <div *ngFor="let file of ppcn?.files">
-          <strong translate>reportData.fileName</strong>: {{file.name}} <button mat-icon-button color="primary" (click)="download(file.file)">
+          <strong translate>reportData.fileName</strong>: {{file.name}} <button mat-icon-button color="primary"
+            (click)="download(file.file)">
             <mat-icon color="white">vertical_align_bottom</mat-icon>
           </button>
         </div>

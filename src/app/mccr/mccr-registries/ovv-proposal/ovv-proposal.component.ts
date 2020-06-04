@@ -19,15 +19,15 @@ export class OvvProposalComponent implements OnInit {
   fileName: string;
   nextRoute: string;
 
-  constructor(private route: ActivatedRoute) { 
+  constructor(private route: ActivatedRoute) {
       this.id = this.route.snapshot.paramMap.get('id');
-      this.title = "Formulario detalle solicitud MCCR";
-      this.fileName = "conceptual_proposal.xlsx";
+      this.title = 'Formulario detalle solicitud MCCR';
+      this.fileName = 'conceptual_proposal.xlsx';
       this.nextRoute = `mccr/registries/${this.id}/ovv/proposal/new`;
     }
 
     ngOnInit() {
-    
+
     }
 
 }
