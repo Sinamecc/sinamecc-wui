@@ -1,12 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
-import { of } from "rxjs/observable/of";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { HttpHeaders } from "@angular/common/http";
 import { map, catchError } from "rxjs/operators";
 import { Logger, I18nService, AuthenticationService } from "@app/core";
 import { DatePipe } from "@angular/common";
-import { ErrorObservable } from "rxjs/observable/ErrorObservable";
 import { PpcnNewFormData, Ovv } from "@app/ppcn/ppcn-new-form-data";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { PpcnReview } from "@app/ppcn/ppcn-review";
@@ -333,7 +331,7 @@ export class PpcnService {
 	}
 
 	private buildFormData(
-		context: any,
+		data: any,
 		contactFormId: number = null,
 		geographicFormId: number = null,
 		requiredFormId: number = null,
@@ -342,6 +340,7 @@ export class PpcnService {
 		subsectorFormId: number = null,
 		geiOrganizationId: number = null
 	) {
+		const context = data.context;
 		const formData = {};
 		const organization = {};
 		const contact = {};
@@ -350,6 +349,7 @@ export class PpcnService {
 		const reduction = {};
 		const carbonOffset = {};
 		const organization_classification = {};
+		const gasRemoval = {};
 
 		const validateListReduction = [2, 3, 4, 5];
 		const validateListCompensation = [4, 5];
@@ -378,7 +378,17 @@ export class PpcnService {
 		organization["phone_organization"] = context.formArray[0].telephoneCtrl;
 		organization["postal_code"] = context.formArray[0].postalCodeCtrl;
 		organization["fax"] = context.formArray[0].faxCtrl;
+		organization["email"] = context.formArray[0].emailCtrl;
 		organization["ciiu_code_list"] = [];
+
+		// gas removal section
+
+		gasRemoval["removal_cost"] = context.formArray[6].costRemovalInventoryCtrl;
+		gasRemoval["removal_cost_currency"] =
+			context.formArray[6].costRemovalInventoryValueCtrl;
+		gasRemoval["total"] = context.formArray[6].totalremovalsCtrl;
+		gasRemoval["removal_descriptions"] =
+			context.formArray[6].removalProjectDetailCtrl;
 
 		// Reduction form section //
 		reduction["project"] = context.formArray[3].reductionProjectCtrl;
@@ -432,6 +442,7 @@ export class PpcnService {
 				: null;
 
 		formData["organization_classification"] = organization_classification;
+		formData["gas_removal"] = gasRemoval;
 
 		for (const value of context.formArray[0].ciuuListCodeCtrl) {
 			const element = {
@@ -461,8 +472,7 @@ export class PpcnService {
 			if (geiOrganizationId) {
 				geiOrganization["id"] = String(geiOrganizationId);
 			}
-			console.log(context.formArray[5]);
-			// geiOrganization['activity_type'] = context.formArray[4].activityCtrl;
+			//geiOrganization["activity_type"] = context.formArray[5].activityCtrl;
 			geiOrganization["ovv"] = context.formArray[5].ovvCtrl;
 			geiOrganization["emission_ovv_date"] = this.datePipe.transform(
 				context.formArray[5].implementationEmissionDateCtrl,
@@ -471,19 +481,21 @@ export class PpcnService {
 			geiOrganization["base_year"] = context.formArray[5].baseYearCtrl;
 			geiOrganization["report_year"] = context.formArray[5].reportYearCtrl;
 
-			formData["gei_organization"] = geiOrganization;
+			geiOrganization["organization_category"] = data.categoryTable;
+			geiOrganization["gas_report"] = data.gasReportTable;
 		}
-		formData["gei_activity_types"] = [];
-		if (context.formArray[6].activities) {
-			context.formArray[6].activities.forEach((activity: any) => {
+		geiOrganization["gei_activity_types"] = [];
+		if (context.formArray[7].activities) {
+			context.formArray[7].activities.forEach((activity: any) => {
 				const objectToPush = {
 					activity_type: activity.activityCtrl,
 					sub_sector: activity.subSectorCtrl,
 					sector: activity.sectorCtrl
 				};
-				formData["gei_activity_types"].push(objectToPush);
+				geiOrganization["gei_activity_types"].push(objectToPush);
 			});
 		}
+		formData["gei_organization"] = geiOrganization;
 		return formData;
 	}
 

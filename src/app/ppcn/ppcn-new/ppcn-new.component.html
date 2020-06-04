@@ -10,15 +10,15 @@
             </ng-template>
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>
-                {{levelId==2 ? "specificLabel.organizationName" : "geographyLabel.cantonDistrictName" }}</mat-label>
-
+              <mat-label translate>{{
+                levelId == 2 ? "specificLabel.organizationName" : "geographyLabel.cantonDistrictName"
+              }}</mat-label>
               <input matInput formControlName="nameCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn" *ngIf="levelId == '2'">
+            <mat-form-field class="field-ppcn">
               <mat-label translate>general.legalCertificate</mat-label>
               <input matInput formControlName="legalIdCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -33,7 +33,7 @@
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn" *ngIf="levelId == '2'">
+            <mat-form-field class="field-ppcn">
               <mat-label translate>general.legalRepresentativeCertificate</mat-label>
               <input matInput formControlName="legalRepresentativeIdCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -42,11 +42,17 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{ levelId == 2 ? "Telephone" : "specificLabel.majorTelephone" }} </mat-label>
-
               <input matInput formControlName="telephoneCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
+            <br />
+
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>ppcn.mayorEmail</mat-label>
+              <input type="email" matInput formControlName="emailCtrl" required />
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
             <br />
 
             <span translate>general.confidential</span><br /><br />
@@ -66,8 +72,8 @@
               <br />
               <mat-label translate>specificLabel.confidentialParcially</mat-label>
               <input matInput formControlName="confidentialValueCtrl" />
+              <br />
             </mat-form-field>
-            <br />
 
             <mat-form-field class="field-ppcn">
               <mat-label translate> info.fax </mat-label>
@@ -96,7 +102,6 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{ levelId == 2 ? "Address" : "specificLabel.districtCouncilAddress" }}</mat-label>
-
               <input matInput formControlName="addressCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
@@ -149,10 +154,11 @@
             <ng-template matStepLabel>
               <span translate>geographyLabel.requestLevel</span>
             </ng-template>
-            <br />
-            <br />
-            <br />
+
             <div *ngIf="levelId == '2'">
+              <br />
+              <br />
+              <br />
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.classificationAmountEmissions</mat-label>
                 <input type="number" matInput formControlName="amountOfEmissions" required />
@@ -185,8 +191,11 @@
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>geographyLabel.recognitionType</mat-label>
-              <mat-select (change)="reductionFormVar = $event.value" formControlName="recognitionCtrl"
-                [placeholder]="'geographyLabel.recognitionType' | translate">
+              <mat-select
+                (change)="reductionFormVar = $event.value"
+                formControlName="recognitionCtrl"
+                [placeholder]="'geographyLabel.recognitionType' | translate"
+              >
                 <mat-option *ngFor="let recognition_type of recognition_types" [value]="recognition_type.id">
                   {{ recognition_type.recognition }}
                 </mat-option>
@@ -195,14 +204,16 @@
             </mat-form-field>
             <br />
             <div class="box-button">
-              <app-generic-button-secondary (click)="stepper.previous();" name="general.back">
-              </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+              <app-generic-button-secondary
+                (click)="stepper.previous()"
+                name="general.back"
+              ></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
             <br />
           </mat-step>
 
-          <div *ngIf="levelId == '2' && showRecognitionFormSection([2, 3, 4, 5])">
+          <div *ngIf="showRecognitionFormSection([2, 3, 4, 5])">
             <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
               <ng-template matStepLabel>
                 <span translate>geographyLabel.reduction</span>
@@ -238,11 +249,16 @@
               <br />
 
               <div fxLayout="row">
-
-                <div class="ppcn-container">
+                <div class="div-custom-style">
                   <mat-button-toggle-group
-                    (change)="this.formGroup.controls.formArray['controls'][3].patchValue({investmentReductions: $event.value})"
-                    class="m-r-10" value="CRC">
+                    (change)="
+                      this.formGroup.controls.formArray['controls'][3].patchValue({
+                        investmentReductions: $event.value
+                      })
+                    "
+                    class="custom-margin"
+                    value="CRC"
+                  >
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
                   </mat-button-toggle-group>
@@ -278,16 +294,17 @@
               </mat-form-field>
 
               <div class="box-button">
-                <app-generic-button-secondary (click)="stepper.previous();" name="general.back">
-                </app-generic-button-secondary>
-                <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+                <app-generic-button-secondary
+                  (click)="stepper.previous()"
+                  name="general.back"
+                ></app-generic-button-secondary>
+                <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
               </div>
               <br />
-
             </mat-step>
           </div>
 
-          <div *ngIf="levelId == '2' && showRecognitionFormSection([4, 5])">
+          <div *ngIf="showRecognitionFormSection([4, 5])">
             <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
               <ng-template matStepLabel>
                 <span translate>geographyLabel.compensations</span>
@@ -332,9 +349,14 @@
 
               <div fxLayout="row">
                 <br />
-                <div class="ppcn-container">
-                  <mat-button-toggle-group class="m-r-10" value="CRC"
-                    (change)="this.formGroup.controls.formArray['controls'][4].patchValue({compensationCost: $event.value})">
+                <div class="div-custom-style">
+                  <mat-button-toggle-group
+                    class="custom-margin"
+                    value="CRC"
+                    (change)="
+                      this.formGroup.controls.formArray['controls'][4].patchValue({ compensationCost: $event.value })
+                    "
+                  >
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
                   </mat-button-toggle-group>
@@ -359,9 +381,16 @@
               <br />
               <div fxLayout="row">
                 <br />
-                <div class="ppcn-container">
-                  <mat-button-toggle-group class="m-r-10" value="CRC"
-                    (change)="this.formGroup.controls.formArray['controls'][4].patchValue({totalCostCompensation: $event.value})">
+                <div class="div-custom-style">
+                  <mat-button-toggle-group
+                    class="custom-margin"
+                    value="CRC"
+                    (change)="
+                      this.formGroup.controls.formArray['controls'][4].patchValue({
+                        totalCostCompensation: $event.value
+                      })
+                    "
+                  >
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
                   </mat-button-toggle-group>
@@ -377,13 +406,14 @@
               <br />
 
               <div class="box-button">
-                <app-generic-button-secondary (click)="stepper.previous();" name="general.back">
-                </app-generic-button-secondary>
-                <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+                <app-generic-button-secondary
+                  (click)="stepper.previous()"
+                  name="general.back"
+                ></app-generic-button-secondary>
+                <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
               </div>
 
               <br />
-
             </mat-step>
           </div>
 
@@ -402,22 +432,36 @@
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.baseYear</mat-label>:
-              <input matInput type="number" [placeholder]="'specificLabel.chooseYear' | translate"
-                formControlName="baseYearCtrl" min="1990" />
+              <input
+                matInput
+                type="number"
+                [placeholder]="'specificLabel.chooseYear' | translate"
+                formControlName="baseYearCtrl"
+                min="1990"
+              />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.reportYear</mat-label>:
-              <input matInput type="number" [placeholder]="'specificLabel.chooseYear' | translate"
-                formControlName="reportYearCtrl" min="1990" />
+              <input
+                matInput
+                type="number"
+                [placeholder]="'specificLabel.chooseYear' | translate"
+                formControlName="reportYearCtrl"
+                min="1990"
+              />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <mat-form-field class="field-ppcn">
               <mat-label translate>specificLabel.emissionDateDeclarationVerification</mat-label>
-              <input matInput [matDatepicker]="implementationEmissionDatePicker"
-                [placeholder]="'Choose a date' | translate" formControlName="implementationEmissionDateCtrl" />
+              <input
+                matInput
+                [matDatepicker]="implementationEmissionDatePicker"
+                [placeholder]="'Choose a date' | translate"
+                formControlName="implementationEmissionDateCtrl"
+              />
               <mat-datepicker-toggle matSuffix [for]="implementationEmissionDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationEmissionDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
@@ -430,23 +474,79 @@
             <br />
 
             <div class="box-button">
-              <app-generic-button-secondary (click)="stepper.previous();" name="general.back">
-              </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+              <app-generic-button-secondary
+                (click)="stepper.previous()"
+                name="general.back"
+              ></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
 
           <mat-step formGroupName="6" [stepControl]="formArray?.get([6])">
             <ng-template matStepLabel>
+              <span translate>ppcn.removals</span>
+            </ng-template>
+
+            <br />
+            <div fxLayout="row">
+              <div class="ppcn-container">
+
+                <mat-button-toggle-group name="fontStyle" class="m-r-10"
+                    (change)="this.formGroup.controls.formArray['controls'][6].patchValue({costRemovalInventoryValueCtrl: $event.value})"
+                    value="CRC">
+                    <mat-button-toggle value="CRC">CRC</mat-button-toggle>
+                    <mat-button-toggle value="USD">USD</mat-button-toggle>
+                  </mat-button-toggle-group>
+              </div>
+              <mat-form-field class="field-ppcn">
+                  <mat-label translate>ppcn.costInventoryRemovals</mat-label>:
+                  <input matInput type="number" formControlName="costRemovalInventoryCtrl" />
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+            </div>
+            
+            <br />
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>ppcn.removalProjectDetail</mat-label>:
+              <input matInput formControlName="removalProjectDetailCtrl" />
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+            <br />
+            <mat-form-field class="field-ppcn">
+              <mat-label><span translate>ppcn.totalRemovals</span><strong>(t CO2e)</strong></mat-label
+              >:
+              <input matInput type="number" formControlName="totalremovalsCtrl" />
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+            <div class="box-button">
+              <app-generic-button-secondary
+                (click)="stepper.previous()"
+                name="general.back"
+              ></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+            </div>
+          </mat-step>
+
+          <mat-step formGroupName="7" [stepControl]="formArray?.get([7])">
+            <ng-template matStepLabel>
               <span translate>specificLabel.GEIActivityTypes</span>
             </ng-template>
             <div formArrayName="activities">
               <div
-                *ngFor="let activity of formGroup.controls.formArray['controls'][6].controls['activities'].controls; let i = index">
+                *ngFor="
+                  let activity of formGroup.controls.formArray['controls'][7].controls['activities'].controls;
+                  let i = index
+                "
+              >
                 <!-- row divider show for every nex row exclude if first row -->
                 <mat-divider
-                  *ngIf="formGroup.controls.formArray['controls'][6].controls['activities'].controls.length > 1 && i > 0">
-                </mat-divider><br />
+                  *ngIf="
+                    formGroup.controls.formArray['controls'][7].controls['activities'].controls.length > 1 && i > 0
+                  "
+                ></mat-divider
+                ><br />
                 <div [formGroupName]="i">
                   <mat-form-field class="field-ppcn">
                     <mat-label translate>specificLabel.activityCarriedOrganization</mat-label>
@@ -455,8 +555,11 @@
                   <br />
                   <mat-form-field class="field-ppcn">
                     <mat-label translate>geographyLabel.sector</mat-label>
-                    <mat-select formControlName="sectorCtrl" [placeholder]="'geographyLabel.sector' | translate"
-                      (selectionChange)="onSectorChange($event)">
+                    <mat-select
+                      formControlName="sectorCtrl"
+                      [placeholder]="'geographyLabel.sector' | translate"
+                      (selectionChange)="onSectorChange($event)"
+                    >
                       <mat-option *ngFor="let sector of sectors" [value]="sector.id">
                         {{ sector.name }}
                       </mat-option>
@@ -475,26 +578,36 @@
                   </mat-form-field>
                   <br />
                   <!-- row delete button, hidden if there is just one row -->
-                  <button mat-mini-fab color="warn"
-                    *ngIf="formGroup.controls.formArray['controls'][6].controls['activities'].controls.length > 1"
-                    (click)="deleteItems(i)" type="button">
+                  <button
+                    mat-mini-fab
+                    color="warn"
+                    *ngIf="formGroup.controls.formArray['controls'][7].controls['activities'].controls.length > 1"
+                    (click)="deleteItems(i)"
+                    type="button"
+                  >
                     <mat-icon>delete forever</mat-icon>
                   </button>
                 </div>
               </div>
             </div>
             <!-- <mat-divider></mat-divider> -->
-            <button mat-raised-button (click)="addItems()" type="button"
-              *ngIf="activityFormGroup?.controls.length <= 10">
+            <button
+              mat-raised-button
+              (click)="addItems()"
+              type="button"
+              *ngIf="activityFormGroup?.controls.length <= 10"
+            >
               <mat-icon>add box</mat-icon>
               <span translate>specificLabel.addActivity</span>
             </button>
             <br />
             <br />
             <div class="box-button">
-              <app-generic-button-secondary (click)="stepper.previous();" name="general.back">
-              </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+              <app-generic-button-secondary
+                (click)="stepper.previous()"
+                name="general.back"
+              ></app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
             <br />
           </mat-step>
@@ -509,7 +622,6 @@
               <app-generic-button type="submit" mat-raised-button name="general.done"></app-generic-button>
             </div>
           </mat-step>
-
         </mat-vertical-stepper>
       </div>
     </form>
