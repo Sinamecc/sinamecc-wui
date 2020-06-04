@@ -1,4 +1,15 @@
-import { Component, OnInit, Input, DoCheck } from "@angular/core";
+import {
+	Component,
+	OnInit,
+	ElementRef,
+	ViewChild,
+	Input,
+	DoCheck,
+	AfterViewInit,
+	OnChanges,
+	SimpleChanges,
+	SimpleChange
+} from "@angular/core";
 import { Router } from "@angular/router";
 import {
 	AbstractControl,
@@ -9,13 +20,9 @@ import {
 } from "@angular/forms";
 import { finalize, tap } from "rxjs/operators";
 import { environment } from "@env/environment";
-import { Logger, I18nService } from "@app/core";
-const log = new Logger("Report");
-
+import { Logger, I18nService, AuthenticationService } from "@app/core";
 import { PpcnService } from "@app/ppcn/ppcn.service";
-
 import { Observable } from "rxjs/Observable";
-
 import {
 	PpcnNewFormData,
 	RequiredLevel,
@@ -28,7 +35,9 @@ import { Ppcn } from "../ppcn_registry";
 import { Sector } from "../interfaces/sector";
 import { SubSector } from "../interfaces/subSector";
 import { Ovv } from "../interfaces/ovv";
+import { GasReportTableComponent } from "../gas-report-table/gas-report-table.component";
 
+const log = new Logger("Report");
 @Component({
 	selector: "app-ppcn-new",
 	templateUrl: "./ppcn-new.component.html",
@@ -62,6 +71,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 	reductionFormVar = 0;
 
 	values$: any;
+	@ViewChild("table") table: GasReportTableComponent;
 
 	get formArray(): AbstractControl | null {
 		return this.formGroup.get("formArray");
@@ -115,8 +125,14 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 			ciuuListCodeCtrl: this.CIUUCodeList
 		});
 
+		const context = {
+			context: this.formGroup.value,
+			gasReportTable: this.table.buildTableSection(),
+			categoryTable: this.table.buildCategoryTableSection()
+		};
+
 		this.service
-			.submitNewPpcnForm(this.formGroup.value)
+			.submitNewPpcnForm(context)
 			.pipe(
 				finalize(() => {
 					this.formGroup.markAsPristine();
@@ -147,18 +163,15 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 						"",
 						Validators.compose([Validators.required, Validators.minLength(8)])
 					],
-					confidentialCtrl:
-						this.levelId === "1" ? null : ["", Validators.required],
-					confidentialValueCtrl: this.levelId === "1" ? null : [""],
+					confidentialCtrl: ["", Validators.required],
+					confidentialValueCtrl: [""],
 					faxCtrl: "",
 					postalCodeCtrl: "",
 					addressCtrl: ["", Validators.required],
-					legalIdCtrl: this.levelId === "1" ? null : ["", Validators.required],
-					legalRepresentativeIdCtrl:
-						this.levelId === "1" ? null : ["", Validators.required],
-					ciuuCodeCtrl: this.levelId === "1" ? null : [""],
-					ciuuListCodeCtrl:
-						this.levelId === "1" ? null : ["", Validators.required]
+					legalIdCtrl: ["", Validators.required],
+					emailCtrl: ["", Validators.email],
+					legalRepresentativeIdCtrl: ["", Validators.required],
+					ciuuListCodeCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
 					contactNameCtrl: ["", Validators.required],
@@ -171,57 +184,47 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 				}),
 				this.formBuilder.group({
 					requiredCtrl: ["", Validators.required],
-					amountOfEmissions: ["", Validators.required],
-					amountInventoryData: ["", Validators.required],
-					numberofDacilities: ["", Validators.required],
+					amountOfEmissions:
+						this.levelId === "2" ? ["", Validators.required] : null,
+					amountInventoryData:
+						this.levelId === "2" ? ["", Validators.required] : null,
+					numberofDacilities:
+						this.levelId === "2" ? ["", Validators.required] : null,
 					recognitionCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
-					reductionProjectCtrl:
-						this.levelId === "2" ? null : ["", Validators.required],
-					reductionActivityCtrl:
-						this.levelId === "2" ? null : ["", Validators.required],
-					reductionDetailsCtrl:
-						this.levelId === "2" ? null : ["", Validators.required],
-					reducedEmissionsCtrl:
-						this.levelId === "2" ? null : ["", Validators.required],
-					investmentReductions:
-						this.levelId === "2" ? null : ["", Validators.required],
-					investmentReductionsValue:
-						this.levelId === "2" ? null : ["", Validators.required],
-					totalInvestmentReduction:
-						this.levelId === "2" ? null : ["", Validators.required],
-					totalInvestmentReductionValue:
-						this.levelId === "2" ? null : ["", Validators.required],
-					totalEmisionesReducidas:
-						this.levelId === "2" ? null : ["", Validators.required]
+					reductionProjectCtrl: ["", Validators.required],
+					reductionActivityCtrl: ["", Validators.required],
+					reductionDetailsCtrl: ["", Validators.required],
+					reducedEmissionsCtrl: ["", Validators.required],
+					investmentReductions: ["", Validators.required],
+					investmentReductionsValue: ["", Validators.required],
+					totalInvestmentReduction: ["", Validators.required],
+					totalInvestmentReductionValue: ["", Validators.required],
+					totalEmisionesReducidas: ["", Validators.required]
 				}),
 				this.formBuilder.group({
-					compensationScheme:
-						this.levelId === "2" ? null : ["", Validators.required],
-					projectLocation:
-						this.levelId === "2" ? null : ["", Validators.required],
-					certificateNumber:
-						this.levelId === "2" ? null : ["", Validators.required],
-					totalCompensation:
-						this.levelId === "2" ? null : ["", Validators.required],
-					compensationCost:
-						this.levelId === "2" ? null : ["", Validators.required],
-					compensationCostValue:
-						this.levelId === "2" ? null : ["", Validators.required],
-					period: this.levelId === "2" ? null : ["", Validators.required],
-					totalEmissionsOffsets:
-						this.levelId === "2" ? null : ["", Validators.required],
-					totalCostCompensation:
-						this.levelId === "2" ? null : ["", Validators.required]
+					compensationScheme: ["", Validators.required],
+					projectLocation: ["", Validators.required],
+					certificateNumber: ["", Validators.required],
+					totalCompensation: ["", Validators.required],
+					compensationCost: ["", Validators.required],
+					compensationCostValue: ["", Validators.required],
+					period: ["", Validators.required],
+					totalEmissionsOffsets: ["", Validators.required],
+					totalCostCompensation: ["", Validators.required]
 				}),
 				this.formBuilder.group({
 					baseYearCtrl: ["", Validators.required],
 					reportYearCtrl: ["", Validators.required],
 					ovvCtrl: ["", Validators.required],
-					implementationEmissionDateCtrl: null,
-					implementationInitialDateCtrl: null,
-					implementationEndDateCtrl: null
+					implementationEmissionDateCtrl: ["", Validators.required]
+				}),
+				this.formBuilder.group({
+					costRemovalInventoryCtrl: ["", Validators.required],
+					costRemovalInventoryValueCtrl: ["CRC", Validators.required],
+					removalProjectDetailCtrl: ["", Validators.required],
+					totalremovalsCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
 					activities: this.formBuilder.array([this.createActivityForm()])
