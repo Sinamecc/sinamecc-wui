@@ -8,13 +8,13 @@ import { Logger, I18nService, AuthenticationService } from '@app/core';
 const log = new Logger('Report');
 
 import { PpcnService } from '@app/ppcn/ppcn.service';
-import { GeographicLevel } from '@app/ppcn/ppcn_registry';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
 import { PpcnFlowComponent } from 'app/ppcn/ppcn-flow/ppcn-flow.component';
 import { PpcnNewComponent } from '@app/ppcn/ppcn-new/ppcn-new.component';
+import { GeographicLevel } from '../ppcn-new-form-data';
 
 @Component({
   selector: 'app-ppcn-level',

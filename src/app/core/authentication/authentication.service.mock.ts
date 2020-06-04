@@ -7,8 +7,10 @@ import { Credentials, LoginContext } from '@app/core/authentication/authenticati
 export class MockAuthenticationService {
   credentials: Credentials | null = {
     username: 'test',
+    fullName: "test test", 
     token: '123',
     id: 24,
+    userPhoto: "",
     email: 'test@test.com',
     groups: {},
     permissions:{
@@ -39,10 +41,12 @@ export class MockAuthenticationService {
 
   login(context: LoginContext): Observable<Credentials> {
     return of({
+      fullName: "test test", 
       username: context.username,
       token: '123456',
       id: 24,
       email: 'test@test.com',
+      userPhoto: "",
       groups: {},
       permissions:{
         all:{

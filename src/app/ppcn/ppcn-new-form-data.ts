@@ -1,4 +1,3 @@
-import { SubSector, Sector } from "@app/ppcn/ppcn_registry";
 
 export interface PpcnNewFormData {
     id: string;

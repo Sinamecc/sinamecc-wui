@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { Route } from '@app/core';
-import { ReportComponent } from '@app/report/report.component'
 import { ErrorComponent } from './error/error.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   Route.withShell([
-    { path: '', redirectTo: '/home',  pathMatch: 'full' },
+    { path: '', redirectTo: 'home',  pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
     { path: 'about', loadChildren: 'app/about/about.module#AboutModule' },
     { path: 'report', loadChildren: 'app/report/report.module#ReportModule' },
