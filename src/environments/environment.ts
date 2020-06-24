@@ -4,14 +4,14 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
-  version: '(dev)',
-  serverUrl: '/api',
-  carbonUrl: '/carbonmarket',
-  defaultLanguage: 'en-US',
-  supportedLanguages: [
-    'en-US',
-    // 'fr-FR',
-    'es-CR'
-  ]
+	production: false,
+	version: "(local)",
+	serverUrl: "/api",
+	carbonUrl: "/carbonmarket",
+	defaultLanguage: "en-US",
+	supportedLanguages: [
+		"en-US",
+		// 'fr-FR',
+		"es-CR"
+	]
 };
