@@ -13,7 +13,7 @@
     "editUser": "Editar usuario"
   },
 
-  "mitigationAction":{
+  "mitigationAction":{ 
     "newMa":"Nueva acción de mitigación",
     "editMA": "Editar una acción de mitigación:",
     "MA": "Accion de Mitigación",
@@ -272,7 +272,9 @@
     "createGroups": "Crear Grupos",
     "createGroup": "Crear Grupo",
     "users": "Usuarios",
-    "IDuser": "ID Usuario"
+    "IDuser": "ID Usuario",
+    "successfullyAdded":"Añadido correctamente",
+    "properlyRemoved":"Eliminado correctamente"
   },
 
   "geographyLabel": {
