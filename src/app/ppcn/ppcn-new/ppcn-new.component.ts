@@ -163,7 +163,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 						"",
 						Validators.compose([Validators.required, Validators.minLength(8)])
 					],
-					confidentialCtrl: ["", Validators.required],
+					confidentialCtrl: ["si", Validators.required],
 					confidentialValueCtrl: [""],
 					faxCtrl: "",
 					postalCodeCtrl: "",
@@ -183,7 +183,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					]
 				}),
 				this.formBuilder.group({
-					requiredCtrl: ["", Validators.required],
+					requiredCtrl: [1, Validators.required],
 					amountOfEmissions:
 						this.levelId === "2" ? ["", Validators.required] : null,
 					amountInventoryData:
@@ -204,7 +204,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					totalEmisionesReducidas: ["", Validators.required]
 				}),
 				this.formBuilder.group({
-					compensationScheme: ["", Validators.required],
+					compensationScheme: ["CER", Validators.required],
 					projectLocation: ["", Validators.required],
 					certificateNumber: ["", Validators.required],
 					totalCompensation: ["", Validators.required],

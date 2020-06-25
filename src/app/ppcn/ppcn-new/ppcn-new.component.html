@@ -46,7 +46,6 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
-            <br />
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>ppcn.mayorEmail</mat-label>
@@ -56,7 +55,7 @@
             <br />
 
             <span translate>general.confidential</span><br /><br />
-            <mat-radio-group value="si" [(ngModel)]="confidential" formControlName="confidentialCtrl">
+            <mat-radio-group [(ngModel)]="confidential" formControlName="confidentialCtrl">
               <mat-radio-button value="si">
                 <span translate>general.yes</span>
               </mat-radio-button>
@@ -249,21 +248,20 @@
               <br />
 
               <div fxLayout="row">
-                <div class="div-custom-style">
-                  <mat-button-toggle-group
+                <div class="ppcn-container">
+                  <mat-button-toggle-group name="fontStyle" class="m-r-10"
                     (change)="
                       this.formGroup.controls.formArray['controls'][3].patchValue({
                         investmentReductions: $event.value
                       })
                     "
-                    class="custom-margin"
                     value="CRC"
                   >
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
                   </mat-button-toggle-group>
                 </div>
-                <mat-form-field clas="ppcn-form-field">
+                <mat-form-field [style.width.%]="100" clas="field-ppcn">
                   <mat-label translate>geographyLabel.investmentReductions</mat-label>
                   <input type="number" matInput formControlName="investmentReductionsValue" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -289,7 +287,7 @@
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.totalReducedEmissions<strong>(t CO2e)</strong></mat-label>
-                <input matInput formControlName="totalEmisionesReducidas" required />
+                <input type="number"q matInput formControlName="totalEmisionesReducidas" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
@@ -341,7 +339,7 @@
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.totalCompensation<strong>(t CO2e)</strong></mat-label>
-                <input matInput formControlName="totalCompensation" required />
+                <input type="number" matInput formControlName="totalCompensation" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
@@ -397,7 +395,7 @@
                 </div>
                 <mat-form-field class="field-ppcn">
                   <mat-label translate>geographyLabel.totalEmissionsOffsets<strong>(t CO2e)</strong> </mat-label>
-                  <input matInput formControlName="totalEmissionsOffsets" required />
+                  <input type="number" matInput formControlName="totalEmissionsOffsets" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
                 <br />
@@ -499,7 +497,7 @@
                   </mat-button-toggle-group>
               </div>
               <mat-form-field class="field-ppcn">
-                  <mat-label translate>ppcn.costInventoryRemovals</mat-label>:
+                  <mat-label translate>ppcn.costInventoryRemovals</mat-label>
                   <input matInput type="number" formControlName="costRemovalInventoryCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
@@ -507,7 +505,7 @@
             
             <br />
             <mat-form-field class="field-ppcn">
-              <mat-label translate>ppcn.removalProjectDetail</mat-label>:
+              <mat-label translate>ppcn.removalProjectDetail</mat-label>
               <input matInput formControlName="removalProjectDetailCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
@@ -515,7 +513,7 @@
             <br />
             <mat-form-field class="field-ppcn">
               <mat-label><span translate>ppcn.totalRemovals</span><strong>(t CO2e)</strong></mat-label
-              >:
+              >
               <input matInput type="number" formControlName="totalremovalsCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
