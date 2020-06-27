@@ -13,8 +13,8 @@
     "editUser": "Editar usuario"
   },
 
-  "mitigationAction":{ 
-    "newMa":"Nueva acción de mitigación",
+  "mitigationAction": {
+    "newMa": "Nueva acción de mitigación",
     "editMA": "Editar una acción de mitigación:",
     "MA": "Accion de Mitigación",
     "MAs": "Acciones de Mitigación",
@@ -77,52 +77,52 @@
     "MCCRRegistry": "Registro MCCR"
   },
 
-  "ppcn":{
-    "emailContacPerson":"Email of the contact person",
-    "tittleContacPerson":"Title of the contact person",
-    "nameContactPerson":"Name of the contact person",
-    "mayorEmail":"Mayor or Mayor's Email",
+  "ppcn": {
+    "emailContacPerson": "Email of the contact person",
+    "tittleContacPerson": "Title of the contact person",
+    "nameContactPerson": "Name of the contact person",
+    "mayorEmail": "Mayor or Mayor's Email",
     "totalRemovals": "Total remociones",
     "removalProjectDetail": "Detalle de Proyecto Remoción",
     "costInventoryRemovals": "Costo de realizar inventario de remociones",
     "removals": "Remociones",
-    "ppcnList":"Lista de PPCN",
-    "complexityMethodologies":"Complejidad de las metodologías de cálculo utilizadas",
-    "amountGHG":"Cantidad de datos del inventario de GEI",
-    "numberFacilities":"Cantidad de instalaciones de la organización",
-    "amountEmissions":"Cantidad de emisiones",
-    "organitationCategoryPpcn":"Categoría de la organización (Según apartado 8 del PPCN 2.0)",
-    "organitationCategory":"Categoría de la Organización(A,B,C o D)",
-    "resultsVerifiedInventory":"Resultado del inventario verificado (Toneladas CO2 equivalente)",
-    "verificationOVV":"Costo del proceso de verificación realizado por el OVV",
-    "costGHG":"Costo de realización del inventario de GEI (Incluyendo auditurias internas si aplica)",
-    "biogenicEmissions":"Emisiones Biogénicas(toneladas CO2 equivalente)",
-    "reportOtherGases":"En casos de reportar 'Otros Gases' indicar todos los otros gases reportados",
-    "otherGases":"Otros Gases",
-    "gasesReport":"Gases a Reportar",
-    "createPPCN":"Crear nuevo Registro PPCN:",
-    "PPCNForm":"Formulario PPCN",
-    "dataPPCN":"Información para PPCN",
-    "addPPCN":"Agregar nuevo PPCN",
-    "uploadFilesPPCNRegistry":"Subir archivos al registro PPCN",
-    "deletePPCN":"¿Eliminar PPCN?",
-    "changelogPPCNRegistry":"CAMBIO DE REGISTRO PPCN"
-    
+    "ppcnList": "Lista de PPCN",
+    "complexityMethodologies": "Complejidad de las metodologías de cálculo utilizadas",
+    "amountGHG": "Cantidad de datos del inventario de GEI",
+    "numberFacilities": "Cantidad de instalaciones de la organización",
+    "amountEmissions": "Cantidad de emisiones",
+    "organitationCategoryPpcn": "Categoría de la organización (Según apartado 8 del PPCN 2.0)",
+    "organitationCategory": "Categoría de la Organización(A,B,C o D)",
+    "resultsVerifiedInventory": "Resultado del inventario verificado (Toneladas CO2 equivalente)",
+    "verificationOVV": "Costo del proceso de verificación realizado por el OVV",
+    "costGHG": "Costo de realización del inventario de GEI (Incluyendo auditurias internas si aplica)",
+    "biogenicEmissions": "Emisiones Biogénicas(toneladas CO2 equivalente)",
+    "reportOtherGases": "En casos de reportar 'Otros Gases' indicar todos los otros gases reportados",
+    "otherGases": "Otros Gases",
+    "gasesReport": "Gases a Reportar",
+    "createPPCN": "Crear nuevo Registro PPCN:",
+    "PPCNForm": "Formulario PPCN",
+    "dataPPCN": "Información para PPCN",
+    "addPPCN": "Agregar nuevo PPCN",
+    "uploadFilesPPCNRegistry": "Subir archivos al registro PPCN",
+    "deletePPCN": "¿Eliminar PPCN?",
+    "changelogPPCNRegistry": "CAMBIO DE REGISTRO PPCN"
+
   },
 
-  "general":{
-    "dolar":"Dólar",
-    "colon":"Colón",
-    "currency":"Moneda",
-    "scope":"Alcance",
-    "total":"Total",
-    "district":"Distrito",
-    "canton":"Cantón",
-    "province":"Provincia",
-    "partially":"Parcialmente",
-    "confidential":"Confidencial",
-    "legalRepresentativeCertificate":"Cédula Representante Legal",
-    "legalCertificate":"Cédula jurídica",
+  "general": {
+    "dolar": "Dólar",
+    "colon": "Colón",
+    "currency": "Moneda",
+    "scope": "Alcance",
+    "total": "Total",
+    "district": "Distrito",
+    "canton": "Cantón",
+    "province": "Provincia",
+    "partially": "Parcialmente",
+    "confidential": "Confidencial",
+    "legalRepresentativeCertificate": "Cédula Representante Legal",
+    "legalCertificate": "Cédula jurídica",
     "lastUpdate": "Ultima actualización",
     "createdAt": "Creado en",
     "actions": "Acciones",
@@ -230,6 +230,7 @@
     "requiredInput": "Archivo requerido",
     "errorSubmittingForm": "Error subiendo el formulario.",
     "fieldRequired": "Este campo es requerido",
+    "firstNameRequired": "Nombre es requerido",
     "lastNameRequired": "Apellido requerido",
     "userNameRequired": "Nombre de usuario requerido",
     "emailRequired": "Correo electrónico requerido",
@@ -246,7 +247,8 @@
     "batchSizeRequired": "Se requiere el tamaño de lote UCC",
     "inputInvalid": "La entrada no es válida",
     "nameRequired": "El nombre es requerido",
-    "institutionRequired": "Se requiere campo institucional"
+    "institutionRequired": "Se requiere campo institucional",
+    "errorFormLoading": "Error cargando la información del formulario"
   },
 
   "admin": {
@@ -273,8 +275,10 @@
     "createGroup": "Crear Grupo",
     "users": "Usuarios",
     "IDuser": "ID Usuario",
-    "successfullyAdded":"Añadido correctamente",
-    "properlyRemoved":"Eliminado correctamente"
+    "availableRoles": "Roles disponibles",
+    "assignedRoles": "Roles Asignados",
+    "successfullyAdded": "Añadido correctamente",
+    "properlyRemoved": "Eliminado correctamente"
   },
 
   "geographyLabel": {

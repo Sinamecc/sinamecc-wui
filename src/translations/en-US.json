@@ -13,8 +13,8 @@
     "editUser": "Edit User"
   },
 
-  "mitigationAction":{ 
-    "newMa":"New mitigation action",
+  "mitigationAction": {
+    "newMa": "New mitigation action",
     "editMA": "Edit a mitigation action:",
     "MA": "Mitigation Action",
     "MAs": "Mitigation Actions",
@@ -77,7 +77,7 @@
     "MCCRRegistry": "MCCR Registry"
   },
 
-  "ppcn":{
+  "ppcn": {
     "totalRemovals": "Total removals",
     "removalProjectDetail": "Removal Project Detail",
     "costInventoryRemovals": "Cost of carrying out inventory of removals",
@@ -86,42 +86,42 @@
     "tittleContacPerson": "Title of the contact person",
     "nameContactPerson": "Name of the contact person",
     "mayorEmail": "Mayor or Mayor's Email",
-    "ppcnList":"PPCN List",
-    "complexityMethodologies":"Complexity of the calculation methodologies used",
-    "amountGHG":"Amount of GHG inventory data",
-    "numberFacilities":"Number of facilities of the organization",
-    "amountEmissions":"Amount of emissions",
-    "organitationCategoryPpcn":"Organization category (According to section 8 of the PPCN 2.0)",
-    "organitationCategory":"Organization Category (A, B, C or D)",
-    "resultsVerifiedInventory":"Results of verified inventory (Tons CO2 equivalent)",
-    "verificationOVV":"Cost of the verification process carried out by the OVV",
-    "costGHG":"Cost of carrying out the GHG inventory (Including internal audits if applicable)",
-    "biogenicEmissions":"Biogenic emissions (tons CO2 equivalent)",
-    "reportOtherGases":"In cases of reporting 'Other Gases' indicate all other gases reported",
-    "otherGases":"Other Gases",
-    "gasesReport":"Gases to Report",
-    "createPPCN":"Create a new PPCN Registry:",
-    "PPCNForm":"PPCN Form",
-    "dataPPCN":"Data for PPCN",
-    "addPPCN":"Add new PPCN",
-    "uploadFilesPPCNRegistry":"Upload Files to PPCN Registry",
-    "deletePPCN":"Delete PPCN?",
-    "changelogPPCNRegistry":"CHANGELOG FOR PPCN REGISTRY"
+    "ppcnList": "PPCN List",
+    "complexityMethodologies": "Complexity of the calculation methodologies used",
+    "amountGHG": "Amount of GHG inventory data",
+    "numberFacilities": "Number of facilities of the organization",
+    "amountEmissions": "Amount of emissions",
+    "organitationCategoryPpcn": "Organization category (According to section 8 of the PPCN 2.0)",
+    "organitationCategory": "Organization Category (A, B, C or D)",
+    "resultsVerifiedInventory": "Results of verified inventory (Tons CO2 equivalent)",
+    "verificationOVV": "Cost of the verification process carried out by the OVV",
+    "costGHG": "Cost of carrying out the GHG inventory (Including internal audits if applicable)",
+    "biogenicEmissions": "Biogenic emissions (tons CO2 equivalent)",
+    "reportOtherGases": "In cases of reporting 'Other Gases' indicate all other gases reported",
+    "otherGases": "Other Gases",
+    "gasesReport": "Gases to Report",
+    "createPPCN": "Create a new PPCN Registry:",
+    "PPCNForm": "PPCN Form",
+    "dataPPCN": "Data for PPCN",
+    "addPPCN": "Add new PPCN",
+    "uploadFilesPPCNRegistry": "Upload Files to PPCN Registry",
+    "deletePPCN": "Delete PPCN?",
+    "changelogPPCNRegistry": "CHANGELOG FOR PPCN REGISTRY"
   },
 
-  "general":{
-    "dolar":"Dollar",
-    "colon":"Colon",
-    "currency":"Currency",
-    "scope":"Scope",
-    "total":"Total",
-    "confidential":"Confidential",
-    "district":"District",
-    "canton":"Canton",
-    "province":"Province",
-    "partially":"Partially",
-    "legalRepresentativeCertificate":"Legal Representative Certificate",
-    "legalCertificate":"Legal Certificate",
+  "general": {
+    "dolar": "Dollar",
+    "colon": "Colon",
+    "currency": "Currency",
+    "scope": "Scope",
+    "total": "Total",
+    "confidential": "Confidential",
+    "district": "District",
+    "canton": "Canton",
+    "province": "Province",
+    "partially": "Partially",
+    "legalRepresentativeCertificate": "Legal Representative Certificate",
+    "legalCertificate": "Legal Certificate",
     "lastUpdate": "Last update:",
     "createdAt": "Created At",
     "actions": "Actions",
@@ -231,6 +231,7 @@
     "errorSubmittingForm": "Error submitting the form",
     "fieldRequired": "This field is required",
     "lastNameRequired": "Last Name is required",
+    "firstNameRequired": "First Name is required",
     "userNameRequired": "User Name is required",
     "emailRequired": "Email is required",
     "noAccess": "had its name changed, is temporally unavailable or you do not have access",
@@ -246,7 +247,8 @@
     "batchSizeRequired": "UCC Batch Size is required",
     "inputInvalid": "The input is invalid",
     "nameRequired": "Name is required",
-    "institutionRequired": "Institution field is required"
+    "institutionRequired": "Institution field is required",
+    "errorFormLoading": "Error loading form information"
   },
 
   "admin": {
@@ -273,8 +275,10 @@
     "createGroup": "Create Group",
     "users": "Users",
     "IDuser": "ID user",
-    "successfullyAdded":"successfully added",
-    "properlyRemoved":"Properly removed"
+    "availableRoles": "Available Roles",
+    "assignedRoles": "Assigned Roles",
+    "successfullyAdded": "successfully added",
+    "properlyRemoved": "Properly removed"
   },
 
   "geographyLabel": {
@@ -337,6 +341,7 @@
     "CRCompensationUnit": "Costa Rica Compensation Unit",
     "ingeiCompliance": "Ingei Compliance",
     "sucessfullySubmittedForm": "Sucessfully submitted form",
+    "sucessfullySubmittedImage": "Sucessfully submitted image",
     "sucessfullyDeletedElement": "Sucessfully deleted element",
     "validationVerificationBody": "Validation Verification Body",
     "conceptualProposalIntegration": "Conceptual Proposal Integration",
