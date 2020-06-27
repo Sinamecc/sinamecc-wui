@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, Input, Optional } from "@angular/core";
 import {
 	MatDialog,
-	MatDialogConfig,
 	MatTableDataSource,
 	MatSnackBar,
 	MatDialogRef
@@ -13,15 +12,23 @@ import { Logger } from "@app/core";
 import { AdminService } from "../../admin.service";
 import { Observable } from "rxjs/Observable";
 import { Groups } from "../../groups";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { finalize } from "rxjs/operators";
+import {
+	FormGroup,
+	FormBuilder,
+	Validators,
+	FormControl
+} from "@angular/forms";
+import { finalize, map } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { User } from "../../users";
 import { AdminEditPasswordDialogComponent } from "../../admin-edit-password-dialog/admin-edit-password-dialog.component";
 import { AdminPermissionsListEditComponent } from "../../Permissions/admin-permissions-list-edit/admin-permissions-list-edit.component";
 import { AdminGroupsListEditComponent } from "../../Groups/admin-groups-list-edit/admin-groups-list-edit.component";
-
+import { Role } from "@app/admin/roles";
+import { pickBy, identity } from "lodash";
+import { of } from "rxjs/observable/of";
+import { Response } from "./../../admin.service";
 const log = new Logger("CreateUser");
 
 @Component({
@@ -32,8 +39,10 @@ const log = new Logger("CreateUser");
 export class AdminNewComponent implements OnInit {
 	permList$: Observable<Permissions[]>;
 	groupsList$: Observable<Groups[]>;
-
+	roles: Role[];
+	roles$: Observable<Role[]>;
 	createUserForm: FormGroup;
+	roleAssignForm: FormGroup;
 	isLoading = false;
 	error: string;
 
@@ -60,13 +69,6 @@ export class AdminNewComponent implements OnInit {
 	imageUrl: ArrayBuffer | string = "assets/default_user_image.png";
 	imageFile: File;
 
-	checkList = [
-		{ state: false, name: "staff" },
-		{ state: false, name: "active" },
-		{ state: false, name: "provider" },
-		{ state: false, name: "dccUser" }
-	];
-
 	constructor(
 		public dialog: MatDialog,
 		@Optional() public dialogRef: MatDialogRef<AdminNewComponent>,
@@ -74,9 +76,9 @@ export class AdminNewComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private translateService: TranslateService,
-		public snackBar: MatSnackBar
+		public snackBar: MatSnackBar,
+		private adminService: AdminService
 	) {
-		this.createForm();
 		this.name = "";
 		this.lastName = "";
 		this.userName = "";
@@ -87,7 +89,22 @@ export class AdminNewComponent implements OnInit {
 	ngOnInit() {
 		//this.getPermissions(); end points actually doesnt work
 		//this.getGroups();
-		this.setData();
+		this.roles$ = this.loadRoles();
+		this.roles$.subscribe(
+			(roles: Role[]) => {
+				const rolesList = roles;
+				this.roles = rolesList;
+				this.createForm(rolesList);
+				this.setData();
+			},
+			err => {
+				this.translateService
+					.get("Error loading form information")
+					.subscribe((res: string) => {
+						this.snackBar.open(res, null, { duration: 3000 });
+					});
+			}
+		);
 	}
 
 	setData() {
@@ -96,19 +113,18 @@ export class AdminNewComponent implements OnInit {
 			this.lastName = this.editData.last_name;
 			this.userName = this.editData.username;
 			this.email = this.editData.email;
-
-			this.checkList[0].state = this.editData.is_staff;
-			this.checkList[1].state = this.editData.is_active;
-			this.checkList[2].state = this.editData.is_provider;
-			this.checkList[3].state = this.editData.is_administrador_dcc;
-
-			this.staff = this.editData.is_staff;
-			this.active = this.editData.is_active;
-			this.provider = this.editData.is_provider;
-			this.dcc = this.editData.is_administrador_dcc;
+			// this.staff = this.editData.is_staff;
+			// this.active = this.editData.is_active;
+			// this.provider = this.editData.is_provider;
+			// this.dcc = this.editData.is_administrador_dcc;
 
 			this.createFormEdit();
 		}
+		// });
+	}
+
+	loadRoles() {
+		return this.adminService.roles();
 	}
 
 	openDialogPermissions(): void {
@@ -179,22 +195,27 @@ export class AdminNewComponent implements OnInit {
 	}
 
 	submitForm() {
-		this.createUserForm.value.staff = this.checkList[0].state;
-		this.createUserForm.value.active = this.checkList[1].state;
-		this.createUserForm.value.provider = this.checkList[2].state;
-		this.createUserForm.value.dccUser = this.checkList[3].state;
 		this.isLoading = true;
+		const roles = { ...this.createUserForm.value.roles };
+		const filteredRoles = Object.keys(pickBy(roles, identity));
+		delete this.createUserForm.value.roles;
 
 		this.service
 			.submitUser(this.createUserForm.value)
 			.pipe(
+				map((body: any) => {
+					const userId = body.body.id;
+					this.submitRoles(userId, filteredRoles);
+					return body;
+				}),
 				finalize(() => {
+					// we insert the roles
 					this.createUserForm.markAsPristine();
 					this.isLoading = false;
 				})
 			)
 			.subscribe(
-				response => {
+				(response: Response) => {
 					this.translateService
 						.get("Sucessfully submitted form")
 						.subscribe((res: string) => {
@@ -205,7 +226,7 @@ export class AdminNewComponent implements OnInit {
 					if (this.imageFile) {
 						this.submitUserImage(response.body.id);
 					} else {
-						this.router.navigate([`/home`], { replaceUrl: true });
+						this.router.navigate([`/admin/users`], { replaceUrl: true });
 					}
 					// disabled for fix issues
 					// this.submitUserDetail('permissions',this.perm.listOfPermissions)
@@ -219,10 +240,10 @@ export class AdminNewComponent implements OnInit {
 	}
 
 	editForm() {
-		this.createUserForm.value.staff = this.checkList[0].state;
-		this.createUserForm.value.active = this.checkList[1].state;
-		this.createUserForm.value.provider = this.checkList[2].state;
-		this.createUserForm.value.dccUser = this.checkList[3].state;
+		// this.createUserForm.value.staff = this.checkList[0].state;
+		// this.createUserForm.value.active = this.checkList[1].state;
+		// this.createUserForm.value.provider = this.checkList[2].state;
+		// this.createUserForm.value.dccUser = this.checkList[3].state;
 		this.isLoading = true;
 
 		this.service
@@ -266,6 +287,20 @@ export class AdminNewComponent implements OnInit {
 		}
 	}
 
+	submitRoles(id: string, selectedRoles: Array<string>) {
+		const context = {
+			userId: id,
+			roles: selectedRoles
+		};
+		return this.service.assignRoles(context).subscribe(
+			res => () => {},
+			err => {
+				log.debug(`Create user error: ${err}`);
+				this.error = err;
+			}
+		);
+	}
+
 	submitUserImage(id: string) {
 		this.isLoading = true;
 		const context = {
@@ -283,7 +318,7 @@ export class AdminNewComponent implements OnInit {
 			.subscribe(
 				response => {
 					this.translateService
-						.get("Sucessfully submitted form")
+						.get("sucessfullySubmittedImage")
 						.subscribe((res: string) => {
 							this.snackBar.open(res, null, { duration: 3000 });
 						});
@@ -376,13 +411,13 @@ export class AdminNewComponent implements OnInit {
 			tempList.push(perm.id);
 		}
 
-		if (type === "permissions") {
-			this.createUserForm.value.permissions = tempList;
-			message = "permissions";
-		} else {
-			this.createUserForm.value.groups = tempList;
-			message = "groups";
-		}
+		// if (type === "permissions") {
+		// 	this.createUserForm.value.permissions = tempList;
+		// 	message = "permissions";
+		// } else {
+		// 	this.createUserForm.value.groups = tempList;
+		// 	message = "groups";
+		// }
 
 		this.isLoading = true;
 		this.service
@@ -414,19 +449,20 @@ export class AdminNewComponent implements OnInit {
 			);
 	}
 
-	private createForm() {
+	private createForm(roles: Array<Role>) {
+		const rolesFormObj = {};
+		roles.map(role => {
+			rolesFormObj[role.role] = new FormControl("");
+		});
 		this.createUserForm = this.formBuilder.group({
 			name: ["", Validators.required],
 			lastName: ["", Validators.required],
 			userName: ["", Validators.required],
 			email: ["", Validators.required],
 			password: ["", Validators.required],
-			staff: ["", Validators.required],
-			active: ["", Validators.required],
-			provider: ["", Validators.required],
-			dccUser: ["", Validators.required],
-			permissions: ["", Validators.required],
-			groups: ["", Validators.required]
+			// permissions: ["", Validators.required],
+			// groups: ["", Validators.required]
+			roles: new FormGroup(rolesFormObj)
 		});
 	}
 
@@ -436,22 +472,10 @@ export class AdminNewComponent implements OnInit {
 			lastName: ["", Validators.required],
 			userName: ["", Validators.required],
 			email: ["", Validators.required],
-			password: [""],
-			staff: ["", Validators.required],
-			active: ["", Validators.required],
-			provider: ["", Validators.required],
-			dccUser: ["", Validators.required],
-			permissions: ["", Validators.required],
-			groups: ["", Validators.required]
+			password: [""]
+			// permissions: ["", Validators.required],
+			// groups: ["", Validators.required]
 		});
-	}
-
-	checkCheckBoxvalue(event: { checked: any }, name: string) {
-		for (const value of this.checkList) {
-			if (value.name === name) {
-				value.state = event.checked;
-			}
-		}
 	}
 
 	uploadImage(event: any) {
