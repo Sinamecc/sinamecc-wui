@@ -276,7 +276,9 @@
     "users": "Usuarios",
     "IDuser": "ID Usuario",
     "availableRoles": "Roles disponibles",
-    "assignedRoles": "Roles Asignados"
+    "assignedRoles": "Roles Asignados",
+    "successfullyAdded": "Añadido correctamente",
+    "properlyRemoved": "Eliminado correctamente"
   },
 
   "geographyLabel": {
