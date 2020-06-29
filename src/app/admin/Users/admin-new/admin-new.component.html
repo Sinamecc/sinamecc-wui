@@ -22,8 +22,11 @@
                                 <input id="file-upload" type="file" accept="image/*" (change)="uploadImage($event)" />
 
                             </div>
-                            <div class="report-error" [hidden]="!error || isLoading" translate>
+                            <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
                                 <span translate>errorLabel.errorSubmittingForm</span>
+                                <br>
+                                <app-error-reporting #errorComponent></app-error-reporting>
+
                             </div>
                             <mat-form-field>
                                 <input type="text" [ngModel]="name" matInput formControlName="name"
@@ -88,9 +91,7 @@
                                 name="credentialsSection.changePass"></app-generic-button>
                             <app-generic-button type="submit" name="credentialsSection.editUser"></app-generic-button>
                         </div>
-                        <div class="report-error" [hidden]="!error || isLoading" translate>
-                            <span translate>errorLabel.errorSubmittingForm</span>
-                        </div>
+
                     </form>
 
                 </mat-card-content>

@@ -248,7 +248,14 @@
     "inputInvalid": "The input is invalid",
     "nameRequired": "Name is required",
     "institutionRequired": "Institution field is required",
-    "errorFormLoading": "Error loading form information"
+    "errorFormLoading": "Error loading form information",
+    "error400":"Something went wrong with your request",
+    "error504":"We have problem connecting to the server",
+    "error-404":"Resource not found",
+    "error500":"Internal Server Error",
+    "generalError":"Sorry something went wrong, please contact your system administrator",
+    "error401":"You do not have the necessary permissions, please contact the system administrator"
+
   },
 
   "admin": {
