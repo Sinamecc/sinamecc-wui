@@ -31,7 +31,7 @@ export class ErrorReportingComponent implements OnInit {
 		for (const error of errorList) {
 			const code = this.getCode(error.code);
 			if (code) {
-				if (code.code == 400) {
+				if (code.code === 400) {
 					this.errorToShow = this.errorToShow.concat(error.errors);
 				} else {
 					this.errorToShow.push(code.description);
@@ -44,6 +44,6 @@ export class ErrorReportingComponent implements OnInit {
 	}
 
 	getCode(code: number) {
-		return this.errorParse.find(error => error.code == code);
+		return this.errorParse.find(error => error.code === code);
 	}
 }

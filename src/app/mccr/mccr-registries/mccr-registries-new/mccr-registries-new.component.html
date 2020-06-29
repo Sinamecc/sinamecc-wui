@@ -14,7 +14,7 @@
       <form (ngSubmit)="submitForm()" *ngIf="mitigationActions | async" [formGroup]="form" novalidate>
         <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
           <span translate>errorLabel.errorSubmittingForm</span>
-          <br>
+          <br />
           <app-error-reporting #errorComponent></app-error-reporting>
         </div>
         <br />

@@ -267,9 +267,9 @@ export class KeyAspectsFormComponent implements OnInit {
 	buildErrors(error: any) {
 		const codeToSend = {};
 		codeToSend["code"] = error.status;
-		if (error.status == 400) {
-			let errorList = [];
-			for (let element of Object.values(error.error[0])) {
+		if (error.status === 400) {
+			const errorList = [];
+			for (const element of Object.values(error.error[0])) {
 				errorList.push(element);
 			}
 

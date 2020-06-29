@@ -1,7 +1,7 @@
-<br>
+<br />
 <div>
-  <button mat-icon-button (click)="showErrors = false" [style.float]="'right'">
-    <mat-icon>close</mat-icon>
+  <button mat-icon-button (click)="showErrors = false" class="custom-button">
+    <mat-icon >close</mat-icon>
   </button>
 </div>
 <div class="mat-elevation-z2 error-container">
@@ -9,4 +9,4 @@
 		<mat-list-item *ngFor="let error of errorToShow" role="listitem"><mat-icon class="custom-icon">error</mat-icon><span translate>{{error}}</span></mat-list-item>
 	</mat-list>
 </div>
-<br>
+<br />
