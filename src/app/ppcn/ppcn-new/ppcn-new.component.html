@@ -1,5 +1,11 @@
 <div class="container">
   <mat-card-content>
+    <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
+      <span translate>errorLabel.errorSubmittingForm</span>
+      <br>
+      <app-error-reporting #errorComponent></app-error-reporting>
+
+  </div>
     <form (ngSubmit)="submitForm()" *ngIf="!isLoading" [formGroup]="formGroup">
       <div fxLayout="column">
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>

@@ -36,6 +36,7 @@ import { Sector } from "../interfaces/sector";
 import { SubSector } from "../interfaces/subSector";
 import { Ovv } from "../interfaces/ovv";
 import { GasReportTableComponent } from "../gas-report-table/gas-report-table.component";
+import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
 
 const log = new Logger("Report");
 @Component({
@@ -72,6 +73,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
 	values$: any;
 	@ViewChild("table") table: GasReportTableComponent;
+	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
 
 	get formArray(): AbstractControl | null {
 		return this.formGroup.get("formArray");
@@ -148,9 +150,25 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 				},
 				error => {
 					log.debug(`New PPCN Form error: ${error}`);
+					const errors = this.buildErrors(error);
+					this.errorComponent.parseErrors(errors);
 					this.error = error;
 				}
 			);
+	}
+
+	buildErrors(error: any) {
+		const codeToSend = {};
+		codeToSend["code"] = error.status;
+		if (error.status == 400) {
+			let errorList = [];
+			for (let element of Object.values(error.error[0])) {
+				errorList.push(element);
+			}
+
+			codeToSend["errors"] = errorList;
+		}
+		return [codeToSend];
 	}
 
 	private createForm() {

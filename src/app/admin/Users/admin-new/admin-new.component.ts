@@ -238,7 +238,6 @@ export class AdminNewComponent implements OnInit {
 				error => {
 					log.debug(`Create user error: ${error}`);
 					const errors = this.buildErrors(error);
-					console.log(errors);
 					this.errorComponent.parseErrors(errors);
 					this.error = error;
 				}
@@ -247,7 +246,6 @@ export class AdminNewComponent implements OnInit {
 
 	buildErrors(error: any) {
 		const codeToSend = {};
-		console.log(error);
 		codeToSend["code"] = error.status;
 		if (error.status == 400) {
 			let errorList = [];

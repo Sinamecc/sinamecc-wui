@@ -15,6 +15,7 @@ import { MitigationActionsService } from "@app/mitigation-actions/mitigation-act
 import { Subscription } from "rxjs/Subscription";
 import { TranslateService } from "@ngx-translate/core";
 import { MatSnackBar } from "@angular/material";
+import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
 
 @Component({
 	selector: "app-mccr-registries-new",
@@ -29,6 +30,7 @@ export class MccrRegistriesNewComponent implements OnInit {
 	processedMitigationActions: MitigationAction[] = [];
 	isLoading = false;
 	files: FormArray;
+	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
 
 	constructor(
 		private router: Router,
@@ -66,9 +68,25 @@ export class MccrRegistriesNewComponent implements OnInit {
 				},
 				error => {
 					log.debug(`Mccr Registry File error: ${error}`);
+					const errors = this.buildErrors(error);
+					this.errorComponent.parseErrors(errors);
 					this.error = error;
 				}
 			);
+	}
+
+	buildErrors(error: any) {
+		const codeToSend = {};
+		codeToSend["code"] = error.status;
+		if (error.status == 400) {
+			let errorList = [];
+			for (let element of Object.values(error.error[0])) {
+				errorList.push(element);
+			}
+
+			codeToSend["errors"] = errorList;
+		}
+		return [codeToSend];
 	}
 
 	private createForm() {
