@@ -278,7 +278,8 @@
     "availableRoles": "Roles disponibles",
     "assignedRoles": "Roles Asignados",
     "successfullyAdded": "Añadido correctamente",
-    "properlyRemoved": "Eliminado correctamente"
+    "properlyRemoved": "Eliminado correctamente",
+    "deleteUser":"Eliminar Usuario"
   },
 
   "geographyLabel": {

@@ -39,7 +39,7 @@ export class UsersDataSource extends DataSource<any> {
 export class AdminUsersComponent implements OnInit {
 	displayedColumns = ["username", "email", "roles", "action"];
 	dataSource: MatTableDataSource<User>;
-	fieldsToSearch: string[][] = [["username"], ["email"]];
+	fieldsToSearch: string[][] = [["username"], ["email"], ["roles"]];
 	roles: Role[];
 	roles$: Observable<Role[]>;
 
@@ -53,7 +53,7 @@ export class AdminUsersComponent implements OnInit {
 
 	openDeleteConfirmationDialog() {
 		const data = {
-			title: "Delete User",
+			title: "admin.deleteUser",
 			question: "general.youSure"
 		};
 		const dialogConfig = new MatDialogConfig();

@@ -92,10 +92,11 @@ export class AdminNewComponent implements OnInit {
 		this.roles$ = this.loadRoles();
 		this.roles$.subscribe(
 			(roles: Role[]) => {
+				console.log(roles);
 				const rolesList = roles;
 				this.roles = rolesList;
 				this.createForm(rolesList);
-				this.setData();
+				this.setData(rolesList);
 			},
 			err => {
 				this.translateService
@@ -107,8 +108,9 @@ export class AdminNewComponent implements OnInit {
 		);
 	}
 
-	setData() {
+	setData(roles: Array<Role>) {
 		if (this.edit) {
+			console.log(this.editData);
 			this.name = this.editData.first_name;
 			this.lastName = this.editData.last_name;
 			this.userName = this.editData.username;
@@ -118,7 +120,7 @@ export class AdminNewComponent implements OnInit {
 			// this.provider = this.editData.is_provider;
 			// this.dcc = this.editData.is_administrador_dcc;
 
-			this.createFormEdit();
+			this.createFormEdit(roles);
 		}
 		// });
 	}
@@ -263,13 +265,13 @@ export class AdminNewComponent implements OnInit {
 						});
 					log.debug(`${response.statusCode} status code received from form`);
 
-					this.submitUserDetail(
-						"permissions",
-						this.permEdit.newListOfUserpermission
-					);
-					this.submitDeletePermission(this.permEdit.getRemovePerm());
-					this.submitUserDetail("groups", this.groupEdit.newListOfUserGroups);
-					this.submitDeleteGroup(this.groupEdit.getRemoveGroups());
+					/*this.submitUserDetail(
+					//	"permissions",
+					//	this.permEdit.newListOfUserpermission
+					);*/
+					//this.submitDeletePermission(this.permEdit.getRemovePerm());
+					//this.submitUserDetail("groups", this.groupEdit.newListOfUserGroups);
+					//this.submitDeleteGroup(this.groupEdit.getRemoveGroups());
 					this.dialogRef.close();
 				},
 				error => {
@@ -466,15 +468,20 @@ export class AdminNewComponent implements OnInit {
 		});
 	}
 
-	private createFormEdit() {
+	private createFormEdit(roles: Array<Role>) {
+		const rolesFormObj = {};
+		roles.map(role => {
+			rolesFormObj[role.role] = new FormControl("");
+		});
 		this.createUserForm = this.formBuilder.group({
 			name: ["", Validators.required],
 			lastName: ["", Validators.required],
 			userName: ["", Validators.required],
 			email: ["", Validators.required],
-			password: [""]
+			password: [""],
 			// permissions: ["", Validators.required],
-			// groups: ["", Validators.required]
+			// groups: ["", Validators.required],
+			roles: new FormGroup(rolesFormObj)
 		});
 	}
 
