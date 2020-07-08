@@ -1,0 +1,64 @@
+@import "src/theme/theme-variables";
+
+:host {
+  display: flex;
+  flex: 1;
+  // background-color: #f5f5f5;
+  background-image: url("../../../assets/background-login.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center; 
+  color: white;
+  text-transform: uppercase;
+  font-family: "Open Sans" !important, sans-serif;
+  font-weight: 800;
+}
+
+.inline-loader {
+  display: inline-block;
+}
+
+.version {
+  margin: 0;
+}
+
+.login-box.mat-card{
+  background-color: rgba(#fff, 0.4);
+}
+
+.login-container,
+.mat-form-field {
+  width: 100%;
+}
+
+.login-error {
+  color: mat-color($app-warn);
+}
+
+.mat-card {
+  color: #fff;
+}
+
+.custom-input{
+    text-align: left; 
+    border-radius: 7px;
+    border: solid 1px #ccc;
+    padding: 9px 10px 9px ; 
+    width: 350px;
+  }
+  
+  .custom-input:focus {
+      background-color: #fff;
+      border-color: rgb(102, 155, 204);
+      -webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
+      -moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
+      box-shadow: 0 0 5px rgba(109,207,246,.5);
+  }
+  
+  .custom-input:focus{
+    outline: none;
+  }
+  
+  .custom-input {
+  outline: none;
+  }

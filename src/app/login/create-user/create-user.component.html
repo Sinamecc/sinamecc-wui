@@ -1,0 +1,63 @@
+<div fxFill fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1.5rem" class="mat-typography">
+
+  <div class="login-box">
+    <img class="logo" src="assets/logo-white.png" alt="angular logo"/>
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2rem">
+      <h4 class="version">v{{version}}</h4>
+      <div class="language-selector">
+        <button mat-raised-button color="primary" [matMenuTriggerFor]="languageMenu">
+          {{currentLanguage}}
+        </button>
+        <mat-menu #languageMenu="matMenu">
+          <button mat-menu-item *ngFor="let language of languages" (click)="setLanguage(language)">
+            {{language}}
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+
+  <div class="login-container" fxLayout="row" fxLayoutAlign="center">
+    <mat-card fxFlex="90%" fxFlex.sm="66%" fxFlex.md="50%" fxFlex.gt-md="33%"  class="login-box">
+
+      <label>Nombre</label><br />
+      <input type="text" class="custom-input">
+      <br /> <br />
+      <label>Apellidos</label><br />
+      <input type="text" class="custom-input">
+      <br /> <br />
+      <label>Usuario</label><br />
+      <input type="text" class="custom-input">
+      <br /> <br />
+      <label>Correo Electronico</label><br />
+      <input type="text" class="custom-input">
+      <br /> <br />
+      <label>Contraseña</label><br />
+      <input type="password" class="custom-input">
+      <br /> <br />
+      <label>Confirme la contraseña</label><br />
+      <input type="password" class="custom-input">
+      <br /> <br />
+
+      <div style="color: black;">
+        <mat-checkbox color="primary">
+          Reviewer PPCN
+        </mat-checkbox>
+        <br />
+
+        <mat-checkbox color="primary">
+          Information Provider PPCN
+      </mat-checkbox>
+     </div>
+
+     <div style="float: right;">
+      <button mat-raised-button color="primary" >
+        <span translate>Registrarse</span>
+      </button>
+     </div>
+    </mat-card>
+    
+  </div>
+
+
+</div>
