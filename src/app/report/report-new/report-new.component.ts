@@ -68,25 +68,9 @@ export class ReportNewComponent implements OnInit {
 				},
 				error => {
 					log.debug(`Report File error: ${error}`);
-					this.error = error;
-					const errors = this.buildErrors(error);
-					this.errorComponent.parseErrors(errors);
+					this.errorComponent.parseErrors(error);
 				}
 			);
-	}
-
-	buildErrors(error: any) {
-		const codeToSend = {};
-		codeToSend["code"] = error.status;
-		if (error.status === 400) {
-			const errorList = [];
-			for (const element of Object.values(error.error[0])) {
-				errorList.push(element);
-			}
-
-			codeToSend["errors"] = errorList;
-		}
-		return [codeToSend];
 	}
 
 	private createForm() {

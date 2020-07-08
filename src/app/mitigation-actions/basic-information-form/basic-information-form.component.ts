@@ -178,24 +178,10 @@ export class BasicInformationFormComponent implements OnInit {
 							this.snackBar.open(res, null, { duration: 3000 });
 						});
 					log.debug(`New Mitigation Action Form error: ${error}`);
-					const errors = this.buildErrors(error);
-					this.errorComponent.parseErrors(errors);
+					this.errorComponent.parseErrors(error);
 					this.error = error;
 					this.wasSubmittedSuccessfully = false;
 				}
 			);
-	}
-	buildErrors(error: any) {
-		const codeToSend = {};
-		codeToSend["code"] = error.status;
-		if (error.status === 400) {
-			const errorList = [];
-			for (const element of Object.values(error.error[0])) {
-				errorList.push(element);
-			}
-
-			codeToSend["errors"] = errorList;
-		}
-		return [codeToSend];
 	}
 }

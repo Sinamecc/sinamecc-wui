@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
+import { ErrorDetail } from "../error";
 
 @Component({
 	selector: "app-error-reporting",
@@ -25,11 +26,31 @@ export class ErrorReportingComponent implements OnInit {
 
 	ngOnInit() {}
 
-	parseErrors(errorList: any[]) {
+	buildErrors(error: object) {
+		const codeToSend: ErrorDetail = {
+			code: "",
+			errors: []
+		};
+		codeToSend["code"] = error["status"];
+		if (error["status"] === 400) {
+			const errorList = [];
+			for (const element of Object.values(error["error"][0])) {
+				errorList.push(element[0]);
+			}
+
+			codeToSend.errors = errorList;
+		}
+		console.log(codeToSend);
+		return [codeToSend];
+	}
+
+	parseErrors(errorDetails: object) {
+		const errorList: ErrorDetail[] = this.buildErrors(errorDetails);
+
 		this.showErrors = true;
 		this.errorToShow = [];
 		for (const error of errorList) {
-			const code = this.getCode(error.code);
+			const code = this.getCode(Number(error.code));
 			if (code) {
 				if (code.code === 400) {
 					this.errorToShow = this.errorToShow.concat(error.errors);
@@ -38,7 +59,6 @@ export class ErrorReportingComponent implements OnInit {
 				}
 			} else {
 				this.errorToShow.push(this.generalError);
-				break;
 			}
 		}
 	}

@@ -174,24 +174,9 @@ export class ImpactFormComponent implements OnInit {
 						});
 					log.debug(`New Mitigation Action Form error: ${error}`);
 					this.error = error;
-					const errors = this.buildErrors(error);
-					this.errorComponent.parseErrors(errors);
+					this.errorComponent.parseErrors(error);
 					this.wasSubmittedSuccessfully = false;
 				}
 			);
-	}
-
-	buildErrors(error: any) {
-		const codeToSend = {};
-		codeToSend["code"] = error.status;
-		if (error.status === 400) {
-			const errorList = [];
-			for (const element of Object.values(error.error[0])) {
-				errorList.push(element);
-			}
-
-			codeToSend["errors"] = errorList;
-		}
-		return [codeToSend];
 	}
 }
