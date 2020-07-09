@@ -33,6 +33,7 @@ import { MitigationAction } from "../mitigation-action";
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 
 import * as _moment from "moment";
+import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
 
 const moment = _moment;
 
@@ -79,6 +80,8 @@ export class KeyAspectsFormComponent implements OnInit {
 	@Input() newFormData: Observable<MitigationActionNewFormData>;
 	@Input() processedNewFormData: MitigationActionNewFormData;
 	@Input() isUpdating: boolean;
+
+	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
 
 	get formArray(): AbstractControl | null {
 		return this.form.get("formArray");
@@ -253,6 +256,7 @@ export class KeyAspectsFormComponent implements OnInit {
 							this.snackBar.open(res, null, { duration: 3000 });
 						});
 					log.debug(`New Mitigation Action Form error: ${error}`);
+					this.errorComponent.parseErrors(error);
 					this.error = error;
 					this.wasSubmittedSuccessfully = false;
 				}

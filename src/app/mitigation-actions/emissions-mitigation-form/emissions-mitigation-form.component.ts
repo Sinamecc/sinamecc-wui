@@ -27,6 +27,7 @@ import {
 	IngeiCompliance
 } from "@app/mitigation-actions/mitigation-action-new-form-data";
 import { MitigationAction } from "../mitigation-action";
+import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
 
 const log = new Logger("MitigationAction");
 @Component({
@@ -45,6 +46,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
 	wasSubmittedSuccessfully = false;
 
 	mitigationAction: MitigationAction;
+	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
 
 	get formArray(): AbstractControl | null {
 		return this.form.get("formArray");
@@ -155,6 +157,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
 							this.snackBar.open(res, null, { duration: 3000 });
 						});
 					log.debug(`New Mitigation Action Form error: ${error}`);
+					this.errorComponent.parseErrors(error);
 					this.error = error;
 					this.wasSubmittedSuccessfully = false;
 				}
