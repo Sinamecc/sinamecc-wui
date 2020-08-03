@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { User } from "../../users";
+import { Role } from "../../roles";
 import { AdminService } from "../../admin.service";
 import {
 	MatPaginator,
@@ -36,16 +37,11 @@ export class UsersDataSource extends DataSource<any> {
 	styleUrls: ["./admin-users.component.scss"]
 })
 export class AdminUsersComponent implements OnInit {
-	displayedColumns = [
-		"username",
-		"email",
-		"is_active",
-		"is_provider",
-		"is_administrador_dcc",
-		"action"
-	];
+	displayedColumns = ["username", "email", "roles", "action"];
 	dataSource: MatTableDataSource<User>;
 	fieldsToSearch: string[][] = [["username"], ["email"]];
+	roles: Role[];
+	roles$: Observable<Role[]>;
 
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -76,6 +72,7 @@ export class AdminUsersComponent implements OnInit {
 	openUserDetail(user: string) {
 		const dialogRef = this.dialog.open(AdminUserDetailComponent, {
 			width: "70%",
+			height: "90%",
 			data: {
 				user: user
 			}
@@ -89,6 +86,11 @@ export class AdminUsersComponent implements OnInit {
 	loadUsers() {
 		this.adminService.users().subscribe((users: User[]) => {
 			const usersList = users;
+			usersList.forEach((user: User) => {
+				user["joinedRoles"] = user.roles
+					.map((role: any) => role.role_name)
+					.join(", ");
+			});
 			this.dataSource = new MatTableDataSource<User>(usersList);
 			this.dataSource.paginator = this.paginator;
 		});

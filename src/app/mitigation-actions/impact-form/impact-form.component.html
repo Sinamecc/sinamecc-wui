@@ -1,8 +1,10 @@
 <div class="container">
   <mat-card-content>
     <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
-      <div class="form-error" [hidden]="!error || isLoading" translate>
+      <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
         <span translate>errorLabel.errorSubmittingForm</span>
+        <br />
+        <app-error-reporting #errorComponent></app-error-reporting>
       </div>
       <br />
       <div fxLayout="column">
@@ -25,7 +27,7 @@
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>specificLabel.impactInEmissions</mat-label>?
+              <mat-label translate>specificLabel.impactInEmissions</mat-label>
               <input matInput formControlName="emissionImpactCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>

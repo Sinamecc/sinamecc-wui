@@ -1,28 +1,28 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { DatePipe } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MaterialModule } from '@app/material.module';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { TranslateModule } from "@ngx-translate/core";
+import { DatePipe } from "@angular/common";
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { MaterialModule } from "@app/material.module";
 
-import { CoreModule } from '@app/core';
-import { SharedModule } from '@app/shared';
+import { CoreModule } from "@app/core";
+import { SharedModule } from "@app/shared";
 
-import { PpcnService } from '@app/ppcn/ppcn.service';
-import { PpcnLevelComponent } from '@app/ppcn/ppcn-level/ppcn-level.component';
-import { PpcnRoutingModule } from '@app/ppcn/ppcn-routing.module';
-import { PpcnFlowComponent } from './ppcn-flow/ppcn-flow.component';
-import { PpcnNewComponent } from './ppcn-new/ppcn-new.component';
-import { PpcnDownloadComponent } from './ppcn-download/ppcn-download.component';
-import { PpcnUploadComponent } from './ppcn-upload/ppcn-upload.component';
-import { PpcnComponent } from './ppcn/ppcn.component';
-import { PpcnListComponent } from './ppcn-list/ppcn-list.component';
-import { PpcnUpdateComponent } from './ppcn-update/ppcn-update.component';
-import { FileVersionComponent } from './file-version/file-version.component';
-import { NewReviewComponent } from './ppcn-reviews/new-review/new-review.component';
-import { ReviewsListComponent } from './ppcn-reviews/reviews-list/reviews-list.component';
-
+import { PpcnService } from "@app/ppcn/ppcn.service";
+import { PpcnLevelComponent } from "@app/ppcn/ppcn-level/ppcn-level.component";
+import { PpcnRoutingModule } from "@app/ppcn/ppcn-routing.module";
+import { PpcnFlowComponent } from "./ppcn-flow/ppcn-flow.component";
+import { PpcnNewComponent } from "./ppcn-new/ppcn-new.component";
+import { PpcnDownloadComponent } from "./ppcn-download/ppcn-download.component";
+import { PpcnUploadComponent } from "./ppcn-upload/ppcn-upload.component";
+import { PpcnComponent } from "./ppcn/ppcn.component";
+import { PpcnListComponent } from "./ppcn-list/ppcn-list.component";
+import { PpcnUpdateComponent } from "./ppcn-update/ppcn-update.component";
+import { FileVersionComponent } from "./file-version/file-version.component";
+import { NewReviewComponent } from "./ppcn-reviews/new-review/new-review.component";
+import { ReviewsListComponent } from "./ppcn-reviews/reviews-list/reviews-list.component";
+import { GasReportTableComponent } from "./gas-report-table/gas-report-table.component";
 
 @NgModule({
   imports: [
@@ -33,7 +33,7 @@ import { ReviewsListComponent } from './ppcn-reviews/reviews-list/reviews-list.c
     SharedModule,
     FlexLayoutModule,
     MaterialModule,
-    PpcnRoutingModule
+    PpcnRoutingModule,
   ],
   declarations: [
     PpcnLevelComponent,
@@ -46,11 +46,9 @@ import { ReviewsListComponent } from './ppcn-reviews/reviews-list/reviews-list.c
     PpcnUpdateComponent,
     FileVersionComponent,
     NewReviewComponent,
-    ReviewsListComponent
+    ReviewsListComponent,
+    GasReportTableComponent,
   ],
-  providers: [
-    PpcnService,
-    DatePipe
-  ]
+  providers: [PpcnService, DatePipe],
 })
-export class PpcnModule { }
+export class PpcnModule {}

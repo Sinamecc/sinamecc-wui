@@ -25,26 +25,10 @@
                     <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="is_active">
-                    <mat-header-cell *matHeaderCellDef translate>admin.active</mat-header-cell>
+                <ng-container matColumnDef="roles">
+                    <mat-header-cell *matHeaderCellDef translate>admin.assignedRoles</mat-header-cell>
                     <mat-cell *matCellDef="let element">
-                        <mat-checkbox disabled [checked]="element.is_active"></mat-checkbox>
-                    </mat-cell>
-
-                </ng-container>
-
-                <ng-container matColumnDef="is_provider">
-                    <mat-header-cell *matHeaderCellDef translate>admin.provider</mat-header-cell>
-                    <mat-cell *matCellDef="let element">
-                        <mat-checkbox disabled [checked]="element.is_provider"></mat-checkbox>
-                    </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="is_administrador_dcc">
-                    <mat-header-cell *matHeaderCellDef translate>DCC Administrator</mat-header-cell>
-                    <mat-cell *matCellDef="let element">
-                        <mat-checkbox disabled [checked]="element.is_administrador_dcc"></mat-checkbox>
-                    </mat-cell>
+                        {{element.joinedRoles}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="action">

@@ -1,4 +1,15 @@
-import { Component, OnInit, Input, DoCheck } from "@angular/core";
+import {
+	Component,
+	OnInit,
+	ElementRef,
+	ViewChild,
+	Input,
+	DoCheck,
+	AfterViewInit,
+	OnChanges,
+	SimpleChanges,
+	SimpleChange
+} from "@angular/core";
 import { Router } from "@angular/router";
 import {
 	AbstractControl,
@@ -10,13 +21,9 @@ import {
 } from "@angular/forms";
 import { finalize, tap } from "rxjs/operators";
 import { environment } from "@env/environment";
-import { Logger, I18nService } from "@app/core";
-const log = new Logger("Report");
-
+import { Logger, I18nService, AuthenticationService } from "@app/core";
 import { PpcnService } from "@app/ppcn/ppcn.service";
-
 import { Observable } from "rxjs/Observable";
-
 import {
 	PpcnNewFormData,
 	RequiredLevel,
@@ -29,7 +36,10 @@ import { Ppcn } from "../ppcn_registry";
 import { Sector } from "../interfaces/sector";
 import { SubSector } from "../interfaces/subSector";
 import { Ovv } from "../interfaces/ovv";
+import { GasReportTableComponent } from "../gas-report-table/gas-report-table.component";
+import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
 
+const log = new Logger("Report");
 @Component({
 	selector: "app-ppcn-new",
 	templateUrl: "./ppcn-new.component.html",
@@ -63,6 +73,8 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 	reductionFormVar = 0;
 
 	values$: any;
+	@ViewChild("table") table: GasReportTableComponent;
+	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
 
 	get formArray(): AbstractControl | null {
 		return this.formGroup.get("formArray");
@@ -118,9 +130,14 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
 		console.log(this.formGroup.controls.formArray["controls"]);
 		/*
+		const context = {
+			context: this.formGroup.value,
+			gasReportTable: this.table.buildTableSection(),
+			categoryTable: this.table.buildCategoryTableSection()
+		};
 
 		this.service
-			.submitNewPpcnForm(this.formGroup.value)
+			.submitNewPpcnForm(context)
 			.pipe(
 				finalize(() => {
 					this.formGroup.markAsPristine();
@@ -136,6 +153,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 				},
 				error => {
 					log.debug(`New PPCN Form error: ${error}`);
+					this.errorComponent.parseErrors(error);
 					this.error = error;
 				}
       );
@@ -152,18 +170,15 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 						"",
 						Validators.compose([Validators.required, Validators.minLength(8)])
 					],
-					confidentialCtrl:
-						this.levelId === "1" ? null : ["", Validators.required],
-					confidentialValueCtrl: this.levelId === "1" ? null : [""],
+					confidentialCtrl: ["", Validators.required],
+					confidentialValueCtrl: [""],
 					faxCtrl: "",
 					postalCodeCtrl: "",
 					addressCtrl: ["", Validators.required],
-					legalIdCtrl: this.levelId === "1" ? null : ["", Validators.required],
-					legalRepresentativeIdCtrl:
-						this.levelId === "1" ? null : ["", Validators.required],
-					ciuuCodeCtrl: this.levelId === "1" ? null : [""],
-					ciuuListCodeCtrl:
-						this.levelId === "1" ? null : ["", Validators.required]
+					legalIdCtrl: ["", Validators.required],
+					emailCtrl: ["", Validators.email],
+					legalRepresentativeIdCtrl: ["", Validators.required],
+					ciuuListCodeCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
 					contactNameCtrl: ["", Validators.required],
@@ -176,9 +191,12 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 				}),
 				this.formBuilder.group({
 					requiredCtrl: ["", Validators.required],
-					amountOfEmissions: ["", Validators.required],
-					amountInventoryData: ["", Validators.required],
-					numberofDacilities: ["", Validators.required],
+					amountOfEmissions:
+						this.levelId === "2" ? ["", Validators.required] : null,
+					amountInventoryData:
+						this.levelId === "2" ? ["", Validators.required] : null,
+					numberofDacilities:
+						this.levelId === "2" ? ["", Validators.required] : null,
 					recognitionCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
@@ -191,9 +209,13 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					baseYearCtrl: ["", Validators.required],
 					reportYearCtrl: ["", Validators.required],
 					ovvCtrl: ["", Validators.required],
-					implementationEmissionDateCtrl: null,
-					implementationInitialDateCtrl: null,
-					implementationEndDateCtrl: null
+					implementationEmissionDateCtrl: ["", Validators.required]
+				}),
+				this.formBuilder.group({
+					costRemovalInventoryCtrl: ["", Validators.required],
+					costRemovalInventoryValueCtrl: ["CRC", Validators.required],
+					removalProjectDetailCtrl: ["", Validators.required],
+					totalremovalsCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
 					activities: this.formBuilder.array([this.createActivityForm()])

@@ -8,10 +8,7 @@
                     <mat-divider class="divider-custom"></mat-divider>
                 </h3>
                 <mat-card-content>
-                    <form (ngSubmit)="submit()" [formGroup]="createUserForm" novalidate>
-                        <div class="report-error" [hidden]="!error || isLoading" translate>
-                            <span translate>errorLabel.errorSubmittingForm</span>
-                        </div>
+                    <form (ngSubmit)="submit()" [formGroup]="createUserForm" novalidate *ngIf="roles$ | async">
                         <div fxLayout="column">
                             <div class="custom-container-image-section">
                                 <div>
@@ -25,13 +22,17 @@
                                 <input id="file-upload" type="file" accept="image/*" (change)="uploadImage($event)" />
 
                             </div>
-
+                            <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
+                                <span translate>errorLabel.errorSubmittingForm</span>
+                                <br />
+                                <app-error-reporting #errorComponent></app-error-reporting>
+                            </div>
                             <mat-form-field>
                                 <input type="text" [ngModel]="name" matInput formControlName="name"
                                     [placeholder]="'info.name' | translate" />
                                 <mat-error
                                     *ngIf="createUserForm.controls.name.invalid || createUserForm.controls.name.untouched">
-                                    <span translate>Name is required</span>
+                                    <span translate>errorLabel.firstNameRequired</span>
                                 </mat-error>
 
                             </mat-form-field>
@@ -72,19 +73,12 @@
                                 </mat-error>
                             </mat-form-field>
                             <br />
-
-                            <mat-checkbox [ngModel]="staff" [ngModelOptions]="{standalone: true}"
-                                (change)="checkCheckBoxvalue($event,'staff')"><span translate>Staff</span>
-                            </mat-checkbox>
-                            <mat-checkbox [ngModel]="active" [ngModelOptions]="{standalone: true}"
-                                (change)="checkCheckBoxvalue($event,'active')"><span translate>admin.userActive</span>
-                            </mat-checkbox>
-                            <mat-checkbox [ngModel]="provider" [ngModelOptions]="{standalone: true}"
-                                (change)="checkCheckBoxvalue($event,'provider')"><span translate>admin.provider</span>
-                            </mat-checkbox>
-                            <mat-checkbox [ngModel]="dcc" [ngModelOptions]="{standalone: true}"
-                                (change)="checkCheckBoxvalue($event,'dccUser')"><span translate>admin.DCCUser</span>
-                            </mat-checkbox>
+                            <div formGroupName="roles">
+                                <h3><span translate>admin.availableRoles</span></h3>
+                                <div *ngFor="let role of roles; let i = index">
+                                    <mat-checkbox formControlName="{{role.role}}">{{role.role_name}}</mat-checkbox>
+                                </div>
+                            </div>
 
                         </div>
                         <div *ngIf="!edit" class="box-button">
@@ -104,7 +98,7 @@
             </mat-card>
 
         </mat-tab>
-        <mat-tab disabled label="{{ 'admin.permissions' | translate }}">
+        <!-- <mat-tab disabled label="{{ 'admin.permissions' | translate }}">
             <button mat-icon-button (click)="openDialogPermissions()">
                 <mat-icon>visibility</mat-icon>
             </button>
@@ -118,8 +112,8 @@
                     [userPermissions]="this.editData.permission_app"></app-admin-permissions-list-edit>
             </div>
 
-        </mat-tab>
-        <mat-tab disabled label="{{ 'admin.groups' | translate }}">
+        </mat-tab> -->
+        <!-- <mat-tab disabled label="{{ 'admin.groups' | translate }}">
 
             <div *ngIf="!edit">
                 <button mat-icon-button (click)="openDialogGroups()">
@@ -136,6 +130,6 @@
 
             </div>
 
-        </mat-tab>
+        </mat-tab> -->
     </mat-tab-group>
 </div>
