@@ -322,6 +322,7 @@
   },
 
   "specificLabel": {
+    "addRemoval":"Agregar nuevas remociones",
     "addReductions":"Agregar nuevas reducciones",
     "addCompensations":"Agregar nuevas compensaciones",
     "confidentialParcially": "Indique la información que no desea compartir",

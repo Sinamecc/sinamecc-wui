@@ -325,6 +325,7 @@
   },
 
   "specificLabel": {
+    "addRemoval":"Add new removals",
     "addReductions":"Add new reductions",
     "addCompensations":"Add new compensations",
     "confidentialParcially": "Indicate the information you do not want to share",

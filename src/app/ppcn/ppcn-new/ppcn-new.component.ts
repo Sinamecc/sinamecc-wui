@@ -137,7 +137,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		};
 
 		console.log(context);
-
+		/*
 		this.service
 			.submitNewPpcnForm(context)
 			.pipe(
@@ -159,6 +159,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					this.error = error;
 				}
 			);
+		*/
 	}
 
 	private createForm() {
@@ -213,10 +214,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					implementationEmissionDateCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
-					costRemovalInventoryCtrl: ["", Validators.required],
-					costRemovalInventoryValueCtrl: ["CRC", Validators.required],
-					removalProjectDetailCtrl: ["", Validators.required],
-					totalremovalsCtrl: ["", Validators.required]
+					removals: this.formBuilder.array([this.createRemovalForm()])
 				}),
 				this.formBuilder.group({
 					activities: this.formBuilder.array([this.createActivityForm()])
@@ -297,9 +295,18 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		});
 	}
 
+	createRemovalForm(): FormGroup {
+		return this.formBuilder.group({
+			costRemovalInventoryCtrl: ["", Validators.required],
+			costRemovalInventoryValueCtrl: ["CRC", Validators.required],
+			removalProjectDetailCtrl: ["", Validators.required],
+			totalremovalsCtrl: ["", Validators.required]
+		});
+	}
+
 	addItems(): void {
 		const control = <FormArray>(
-			this.formGroup.controls.formArray["controls"][6].controls["activities"]
+			this.formGroup.controls.formArray["controls"][7].controls["activities"]
 		);
 		control.push(this.createActivityForm());
 	}
@@ -318,9 +325,28 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		control.push(this.createcompensationForm());
 	}
 
+	addRemovalItem() {
+		console.log(123);
+		console.log(
+			this.formGroup.controls.formArray["controls"][6].controls["removals"]
+		);
+		const control = <FormArray>(
+			this.formGroup.controls.formArray["controls"][6].controls["removals"]
+		);
+		console.log(control);
+		control.push(this.createRemovalForm());
+	}
+
+	deleteRemovalItem(i: number) {
+		const control = <FormArray>(
+			this.formGroup.controls.formArray["controls"][6].controls["removals"]
+		);
+		control.removeAt(i);
+	}
+
 	deleteItems(i: number): void {
 		const control = <FormArray>(
-			this.formGroup.controls.formArray["controls"][6].controls["activities"]
+			this.formGroup.controls.formArray["controls"][7].controls["activities"]
 		);
 		control.removeAt(i);
 	}

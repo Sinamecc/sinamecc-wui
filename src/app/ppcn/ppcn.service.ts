@@ -478,7 +478,6 @@ export class PpcnService {
 				? carbonOffsets
 				: null;
 
-		console.log(organization_classification);
 		formData["organization_classification"] = organization_classification;
 		formData["gas_removal"] = gasRemoval;
 
