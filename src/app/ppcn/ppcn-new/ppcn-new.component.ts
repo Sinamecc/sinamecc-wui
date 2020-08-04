@@ -129,12 +129,14 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		});
 
 		console.log(this.formGroup.controls.formArray["controls"]);
-		/*
+
 		const context = {
 			context: this.formGroup.value,
 			gasReportTable: this.table.buildTableSection(),
 			categoryTable: this.table.buildCategoryTableSection()
 		};
+
+		console.log(context);
 
 		this.service
 			.submitNewPpcnForm(context)
@@ -156,8 +158,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					this.errorComponent.parseErrors(error);
 					this.error = error;
 				}
-      );
-      */
+			);
 	}
 
 	private createForm() {
