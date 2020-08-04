@@ -322,6 +322,8 @@
   },
 
   "specificLabel": {
+    "addReductions":"Agregar nuevas reducciones",
+    "addCompensations":"Agregar nuevas compensaciones",
     "confidentialParcially": "Indique la información que no desea compartir",
     "entityInstitution": "Entidad o Institución",
     "quantitativeObjective": "Objectivo Cuantificable",

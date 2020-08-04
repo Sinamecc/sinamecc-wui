@@ -223,10 +223,6 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 			])
 		});
 
-		console.log(
-			this.formGroup.controls.formArray["controls"][4].controls["compensations"]
-				.controls
-		);
 		const subsectors = this.service.subsectors(
 			"1",
 			this.i18nService.language.split("-")[0]
@@ -252,9 +248,6 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		this.formGroup.controls.formArray["controls"][3].value.reductions[index][
 			field
 		] = value;
-		console.log(
-			this.formGroup.controls.formArray["controls"][3].value.reductions
-		);
 	}
 
 	changeCompensationCurrencyValues(
@@ -265,10 +258,6 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		this.formGroup.controls.formArray["controls"][4].value.compensations[index][
 			field
 		] = value;
-		console.log(value, index, field);
-		console.log(
-			this.formGroup.controls.formArray["controls"][4].value.compensations
-		);
 	}
 
 	createReductionForm(): FormGroup {

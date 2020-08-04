@@ -306,28 +306,28 @@
                       <mat-error translate>errorLabel.fieldRequired</mat-error>
                     </mat-form-field>
                   </div>
-                  <br>
-                  <br>
+                  <br />
+                  <br />
                   <div class="custom-remove-button">
                     <button mat-mini-fab color="warn"
                       *ngIf="formGroup.controls.formArray['controls'][3].controls['reductions'].controls.length > 1"
                       (click)="deleteReductionItem(i)" type="button">
                       <mat-icon>delete forever</mat-icon>
                     </button>
-                    <br>
-                    <br>
+                    <br />
+                    <br />
                   </div>  
 
                 </div>
               </div>
-              <br>
-              <br>
-              <app-generic-button mat-raised-button (click)="addReductionItem()" name="specificLabel.addActivity" type="button"
+              <br />
+              <br />
+              <app-generic-button mat-raised-button (click)="addReductionItem()" name="specificLabel.addReductions" type="button"
               *ngIf="activityFormGroup?.controls.length <= 10">
               </app-generic-button>
-              <br>
+              <br />
 
-              <br>
+              <br />
               <div class="box-button">
                 <app-generic-button-secondary
                   (click)="stepper.previous()"
@@ -436,26 +436,26 @@
                 </div>
               
                 </div>
-                <br>
-                  <br>
+                <br />
+                  <br />
                   <div class="custom-remove-button">
                     <button mat-mini-fab color="warn"
                       *ngIf="formGroup.controls.formArray['controls'][4].controls['compensations'].controls.length > 1"
                       (click)="deleteCompensationItem(i)" type="button">
                       <mat-icon>delete forever</mat-icon>
                     </button>
-                    <br>
-                    <br>
+                    <br />
+                    <br />
                   </div>
 
                 </div>
               </div>
               <br />
 
-              <app-generic-button mat-raised-button (click)="addCompensationItem()" name="specificLabel.addActivity" type="button"
+              <app-generic-button mat-raised-button (click)="addCompensationItem()" name="specificLabel.addCompensations" type="button"
               *ngIf="activityFormGroup?.controls.length <= 10">
               </app-generic-button>
-              <br>
+              <br />
 
               <div class="box-button">
                 <app-generic-button-secondary
