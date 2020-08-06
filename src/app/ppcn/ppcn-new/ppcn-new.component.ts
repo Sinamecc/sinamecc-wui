@@ -128,16 +128,12 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 			ciuuListCodeCtrl: this.CIUUCodeList
 		});
 
-		console.log(this.formGroup.controls.formArray["controls"]);
-
 		const context = {
 			context: this.formGroup.value,
 			gasReportTable: this.table.buildTableSection(),
 			categoryTable: this.table.buildCategoryTableSection()
 		};
 
-		console.log(context);
-		/*
 		this.service
 			.submitNewPpcnForm(context)
 			.pipe(
@@ -159,7 +155,6 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					this.error = error;
 				}
 			);
-		*/
 	}
 
 	private createForm() {
@@ -326,14 +321,10 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 	}
 
 	addRemovalItem() {
-		console.log(123);
-		console.log(
-			this.formGroup.controls.formArray["controls"][6].controls["removals"]
-		);
 		const control = <FormArray>(
 			this.formGroup.controls.formArray["controls"][6].controls["removals"]
 		);
-		console.log(control);
+
 		control.push(this.createRemovalForm());
 	}
 

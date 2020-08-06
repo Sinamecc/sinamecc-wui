@@ -349,7 +349,7 @@ export class PpcnService {
 		const reductions: any[] = [];
 		const carbonOffsets: any[] = [];
 		const organization_classification = {};
-		const gasRemoval = {};
+		const gasRemovals: any[] = [];
 
 		const validateListReduction = [2, 3, 4, 5];
 		const validateListCompensation = [4, 5];
@@ -382,13 +382,15 @@ export class PpcnService {
 		organization["ciiu_code_list"] = [];
 
 		// gas removal section
-
-		gasRemoval["removal_cost"] = context.formArray[6].costRemovalInventoryCtrl;
-		gasRemoval["removal_cost_currency"] =
-			context.formArray[6].costRemovalInventoryValueCtrl;
-		gasRemoval["total"] = context.formArray[6].totalremovalsCtrl;
-		gasRemoval["removal_descriptions"] =
-			context.formArray[6].removalProjectDetailCtrl;
+		context.formArray[6].removals.forEach((removal: any) => {
+			const newRemoval = {
+				removal_cost: removal.costRemovalInventoryCtrl,
+				removal_cost_currency: removal.costRemovalInventoryValueCtrl,
+				total: removal.totalremovalsCtrl,
+				removal_descriptions: removal.removalProjectDetailCtrl
+			};
+			gasRemovals.push(newRemoval);
+		});
 
 		// Reduction form section //
 
@@ -407,21 +409,6 @@ export class PpcnService {
 			reductions.push(newReduction);
 		});
 
-		/*
-		reduction["project"] = context.formArray[3].reductionProjectCtrl;
-		reduction["activity"] = context.formArray[3].reductionActivityCtrl;
-		reduction["detail_reduction"] = context.formArray[3].reductionDetailsCtrl;
-		reduction["emission"] = context.formArray[3].reducedEmissionsCtrl;
-		reduction["total_emission"] = context.formArray[3].totalEmisionesReducidas;
-		reduction["investment"] = context.formArray[3].investmentReductionsValue;
-		reduction["investment_currency"] =
-			context.formArray[3].investmentReductions;
-		reduction["total_investment"] =
-			context.formArray[3].totalInvestmentReductionValue;
-		reduction["total_investment_currency"] =
-			context.formArray[3].totalInvestmentReduction;
-		*/
-
 		// carbon offset form section
 
 		context.formArray[4].compensations.forEach((carbonOffset: any) => {
@@ -438,24 +425,6 @@ export class PpcnService {
 			};
 			carbonOffsets.push(newCarbonOffset);
 		});
-
-		/*
-		carbonOffset["offset_scheme"] = context.formArray[4].compensationScheme;
-		carbonOffset["project_location"] = context.formArray[4].projectLocation;
-		carbonOffset["certificate_identification"] =
-			context.formArray[4].certificateNumber;
-		carbonOffset["total_carbon_offset"] =
-			context.formArray[4].totalCompensation;
-		carbonOffset["offset_cost"] = context.formArray[4].compensationCostValue;
-		carbonOffset["offset_cost_currency"] =
-			context.formArray[4].compensationCost;
-		carbonOffset["period"] = context.formArray[4].period;
-		carbonOffset["total_offset_cost"] =
-			context.formArray[4].totalEmissionsOffsets;
-		carbonOffset["total_offset_cost_currency"] =
-			context.formArray[4].totalCostCompensation;
-
-		*/
 
 		organization_classification["required_level"] =
 			context.formArray[2].requiredCtrl;
@@ -479,7 +448,7 @@ export class PpcnService {
 				: null;
 
 		formData["organization_classification"] = organization_classification;
-		formData["gas_removal"] = gasRemoval;
+		formData["gas_removal"] = gasRemovals;
 
 		for (const value of context.formArray[0].ciuuListCodeCtrl) {
 			const element = {
