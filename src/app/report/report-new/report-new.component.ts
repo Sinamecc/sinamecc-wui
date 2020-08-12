@@ -11,6 +11,7 @@ const log = new Logger("Report");
 import { ReportService } from "@app/report/report.service";
 import { MatSnackBar } from "@angular/material";
 import { TranslateService } from "@ngx-translate/core";
+import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
 
 @Component({
 	selector: "app-report-new",
@@ -25,6 +26,7 @@ export class ReportNewComponent implements OnInit {
 	reportForm: FormGroup;
 	isLoading = false;
 	methodological = false;
+	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
 
 	constructor(
 		private router: Router,
@@ -66,7 +68,7 @@ export class ReportNewComponent implements OnInit {
 				},
 				error => {
 					log.debug(`Report File error: ${error}`);
-					this.error = error;
+					this.errorComponent.parseErrors(error);
 				}
 			);
 	}

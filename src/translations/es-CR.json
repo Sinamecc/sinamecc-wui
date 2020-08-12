@@ -248,7 +248,13 @@
     "inputInvalid": "La entrada no es válida",
     "nameRequired": "El nombre es requerido",
     "institutionRequired": "Se requiere campo institucional",
-    "errorFormLoading": "Error cargando la información del formulario"
+    "errorFormLoading": "Error cargando la información del formulario",
+    "error400":"Algo salió mal con la solicitud",
+    "error504":"Tenemos problemas para conectarnos al servidor",
+    "error-404":"Recurso no encontrado",
+    "error500":"Error interno del servidor",
+    "generalError":"Lo sentimos, algo salió mal, comuníquese con el administrador del sistema",
+    "error401":"No tiene los permisos necesarios, Contacte con el administrador del sistema."
   },
 
   "admin": {

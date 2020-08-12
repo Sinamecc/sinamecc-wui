@@ -29,6 +29,7 @@ import { Role } from "@app/admin/roles";
 import { pickBy, identity } from "lodash";
 import { of } from "rxjs/observable/of";
 import { Response } from "./../../admin.service";
+import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
 const log = new Logger("CreateUser");
 
 @Component({
@@ -68,6 +69,8 @@ export class AdminNewComponent implements OnInit {
 	dcc: boolean;
 	imageUrl: ArrayBuffer | string = "assets/default_user_image.png";
 	imageFile: File;
+
+	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
 
 	constructor(
 		public dialog: MatDialog,
@@ -234,6 +237,7 @@ export class AdminNewComponent implements OnInit {
 				},
 				error => {
 					log.debug(`Create user error: ${error}`);
+					this.errorComponent.parseErrors(error);
 					this.error = error;
 				}
 			);
@@ -405,7 +409,7 @@ export class AdminNewComponent implements OnInit {
 	submitUserDetail(type: string, list: any[]) {
 		const tempList: string[] = [];
 		const addList = list;
-		let message: string;
+		const message = "";
 
 		for (const perm of addList) {
 			tempList.push(perm.id);

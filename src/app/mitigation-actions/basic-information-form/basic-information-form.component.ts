@@ -23,6 +23,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { MatSnackBar } from "@angular/material";
 import { Observable } from "rxjs/Observable";
 import { MitigationAction } from "../mitigation-action";
+import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
 
 const log = new Logger("MitigationAction");
 
@@ -42,6 +43,7 @@ export class BasicInformationFormComponent implements OnInit {
 	@Input() newFormData: Observable<MitigationActionNewFormData>;
 	@Input() processedNewFormData: MitigationActionNewFormData;
 	@Input() isUpdating: boolean;
+	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
 
 	get formArray(): AbstractControl | null {
 		return this.form.get("formArray");
@@ -176,6 +178,7 @@ export class BasicInformationFormComponent implements OnInit {
 							this.snackBar.open(res, null, { duration: 3000 });
 						});
 					log.debug(`New Mitigation Action Form error: ${error}`);
+					this.errorComponent.parseErrors(error);
 					this.error = error;
 					this.wasSubmittedSuccessfully = false;
 				}

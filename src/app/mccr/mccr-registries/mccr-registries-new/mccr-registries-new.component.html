@@ -12,8 +12,10 @@
     </h3>
     <mat-card-content>
       <form (ngSubmit)="submitForm()" *ngIf="mitigationActions | async" [formGroup]="form" novalidate>
-        <div class="form-error" [hidden]="!error || isLoading" translate>
+        <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
           <span translate>errorLabel.errorSubmittingForm</span>
+          <br />
+          <app-error-reporting #errorComponent></app-error-reporting>
         </div>
         <br />
         <div fxLayout="column">

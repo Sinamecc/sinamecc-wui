@@ -24,6 +24,7 @@ import { MatSnackBar } from "@angular/material";
 import { Observable } from "rxjs/Observable";
 import { MitigationActionNewFormData } from "@app/mitigation-actions/mitigation-action-new-form-data";
 import { MitigationAction } from "../mitigation-action";
+import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
 
 const log = new Logger("MitigationAction");
 
@@ -46,6 +47,8 @@ export class ImpactFormComponent implements OnInit {
 	@Input() isUpdating: boolean;
 
 	@Input() mitigationActionToUpdate?: any;
+
+	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
 
 	get formArray(): AbstractControl | null {
 		return this.form.get("formArray");
@@ -171,6 +174,7 @@ export class ImpactFormComponent implements OnInit {
 						});
 					log.debug(`New Mitigation Action Form error: ${error}`);
 					this.error = error;
+					this.errorComponent.parseErrors(error);
 					this.wasSubmittedSuccessfully = false;
 				}
 			);

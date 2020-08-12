@@ -27,6 +27,7 @@ import {
 	InitiativeType
 } from "@app/mitigation-actions/mitigation-action-new-form-data";
 import { MitigationAction } from "../mitigation-action";
+import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
 
 const log = new Logger("MitigationAction");
 
@@ -51,6 +52,7 @@ export class InitiativeFormComponent implements OnInit {
 	// @Input() action: string;
 	@Input() processedNewFormData: MitigationActionNewFormData;
 	@Input() isUpdating: boolean;
+	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
 
 	get formArray(): AbstractControl | null {
 		return this.form.get("formArray");
@@ -254,6 +256,8 @@ export class InitiativeFormComponent implements OnInit {
 								this.snackBar.open(res, null, { duration: 3000 });
 							});
 						log.debug(`New Mitigation Action Form error: ${error}`);
+
+						this.errorComponent.parseErrors(error);
 						this.error = error;
 						this.wasSubmittedSuccessfully = false;
 					}
@@ -283,6 +287,7 @@ export class InitiativeFormComponent implements OnInit {
 								this.snackBar.open(res, null, { duration: 3000 });
 							});
 						log.debug(`New Mitigation Action Form error: ${error}`);
+						this.errorComponent.parseErrors(error);
 						this.error = error;
 						this.wasSubmittedSuccessfully = false;
 					}

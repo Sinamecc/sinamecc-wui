@@ -15,6 +15,7 @@ import { MitigationActionsService } from "@app/mitigation-actions/mitigation-act
 import { Subscription } from "rxjs/Subscription";
 import { TranslateService } from "@ngx-translate/core";
 import { MatSnackBar } from "@angular/material";
+import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
 
 @Component({
 	selector: "app-mccr-registries-new",
@@ -29,6 +30,7 @@ export class MccrRegistriesNewComponent implements OnInit {
 	processedMitigationActions: MitigationAction[] = [];
 	isLoading = false;
 	files: FormArray;
+	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
 
 	constructor(
 		private router: Router,
@@ -66,6 +68,7 @@ export class MccrRegistriesNewComponent implements OnInit {
 				},
 				error => {
 					log.debug(`Mccr Registry File error: ${error}`);
+					this.errorComponent.parseErrors(error);
 					this.error = error;
 				}
 			);
