@@ -16,26 +16,26 @@ import { AdminService } from '@app/admin/admin.service';
 })
 export class AdminUserDetailComponent implements OnInit {
 
-  userDetail:User
-  user:any
-  isLoading:boolean
-  displayedColumns = ['name', 'content_type','action'];
+  userDetail: User;
+  user: any;
+  isLoading: boolean;
+  displayedColumns = ['name', 'content_type', 'action'];
   dataSource = new PermissionsDataSource(this.adminService);
 
 
-  constructor(private adminService:AdminService,
+  constructor(private adminService: AdminService,
     @Optional() @Inject(MAT_DIALOG_DATA)
-    public data: any) { 
-      if(data) {
-        this.user = data.user; 
+    public data: any) {
+      if (data) {
+        this.user = data.user;
       }
-            
+
     }
 
   ngOnInit() {
   }
 
-  getUser(username:string){
+  getUser(username: string) {
 
     this.adminService.user(username)
      .pipe(finalize(() => { this.isLoading = false; }))

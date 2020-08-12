@@ -8,14 +8,15 @@
       <mat-card-title translate>{{title}}</mat-card-title>
     </h3>
     <mat-card-content>
-      <strong translate>info.code</strong>: {{code}} <br>
-      <span translate>specificLabel.downloadformulary&nbsp;&nbsp;&nbsp;<a href="assets/{{fileName}}" download>{{fileName}}</a></span>
-      <br/>
-      <br/>
+      <strong translate>info.code</strong>: {{code}} <br />
+      <span translate>specificLabel.downloadformulary&nbsp;&nbsp;&nbsp;<a href="assets/{{fileName}}"
+          download>{{fileName}}</a></span>
+      <br />
+      <br />
       <strong translate>Note:</strong><span translate>errorLabel.mustDownloadFile</span>
-      <br/>
-      <div class="button-row" >
-        <br>
+      <br />
+      <div class="button-row">
+        <br />
         <app-generic-button (click)="next();" name="general.next"></app-generic-button>
       </div>
     </mat-card-content>

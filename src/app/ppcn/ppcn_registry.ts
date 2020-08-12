@@ -1,11 +1,18 @@
 import { NextState } from '@app/shared/next-state';
 
+import { GeographicLevel } from './interfaces/geographicLevel';
+import { OrganizationClassification } from './interfaces/organizationClassification';
+import { Organization } from './interfaces/organization';
+import { Contact } from './interfaces/contact';
+import { GeiOrganization } from './interfaces/geiOrganization';
+import { Ovv } from './ppcn-new-form-data';
+import { Files } from './interfaces/files';
+
 export interface Ppcn {
   id: string;
   geographic_level: GeographicLevel;
-  recognition_type: RecognitionType;
-  required_level: RequiredLevel;
   organization: Organization;
+  organization_classification: OrganizationClassification;
   contact: Contact;
   base_year: string;
   ovv: Ovv[];
@@ -13,92 +20,12 @@ export interface Ppcn {
   fsm_state: string;
   next_state: NextState;
   files: Files[];
-
 }
 
-export interface RequiredLevel
-{
-  id: Number;
-  level_type: string;
-}
-export interface GeographicLevel {
-  id: Number;
-  level: string;
 
-}
 
-export interface RecognitionType{
-    id: Number;
-    recognition_type: string;
-}
 
-export interface Organization {
-  id: Number;
-  name: string;
-  representative_name: string;
-  phone_organization: string;
-  postal_code: string;
-  fax: string;
-  ciiu: string;
-  address: string;
-  contact: Contact;
-}
 
-export interface Sector{
-  id: Number;
-  sector: string;
-}
-
-export interface SubSector{
-  id: Number;
-  name: string;
-  sector: Sector;
-
-}
-
-export interface Contact {
-  full_name: string;
-  email: string;
-  job_title: string;
-  phone: string;
-
-  }
-
-export interface ReviewStatus {
-  status: string;
-
-}
-
-export interface Files{
-  name: string;
-  file: string;
-  
-}
-
-export interface Ovv{
-  id: Number;
-  email: string;
-  phone: string;
-  name: string;
-}
-
-export interface GeiOrganization {
-  id: Number;
-  activity_type: string;
-  ovv: Ovv;
-  emission_ovv_date: string;
-  report_year: string;
-  base_year: string;
-  gei_activity_types: GeiActivityType[];
-
-}
-
-export interface GeiActivityType{
-  id: Number;
-  sector: Sector;
-  sub_sector: SubSector;
-  activity_type: string;
-}
 
 
 

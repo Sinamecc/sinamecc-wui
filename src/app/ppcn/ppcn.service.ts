@@ -1,417 +1,505 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
-import { Logger, I18nService, AuthenticationService } from '@app/core';
-import { DatePipe } from '@angular/common';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { Ppcn, GeographicLevel, SubSector } from '@app/ppcn/ppcn_registry'
-import { PpcnNewFormData, Ovv } from '@app/ppcn/ppcn-new-form-data';
-import { BehaviorSubject } from 'rxjs';
-import { PpcnReview } from '@app/ppcn/ppcn-review';
-import { S3File, S3Service } from '@app/core/s3.service';
-import { StatusRoutesMap } from '@app/ppcn/status-routes-map';
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs/Observable";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpHeaders } from "@angular/common/http";
+import { map, catchError } from "rxjs/operators";
+import { Logger, I18nService, AuthenticationService } from "@app/core";
+import { DatePipe } from "@angular/common";
+import { PpcnNewFormData, Ovv } from "@app/ppcn/ppcn-new-form-data";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { PpcnReview } from "@app/ppcn/ppcn-review";
+import { S3File, S3Service } from "@app/core/s3.service";
+import { StatusRoutesMap } from "@app/ppcn/status-routes-map";
+import { Ppcn } from "./ppcn_registry";
+import { GeographicLevel } from "./interfaces/geographicLevel";
+import { SubSector } from "./interfaces/subSector";
 
 const routes = {
-  getGeographicLevel: (lang: string) => `/v1/ppcn/geographic/level/${lang}`,
-  getRequiredLevel: () => `/v1/ppcn/required/level`,
-  seededFormData: (levelId: string, lang: string) => `/v1/ppcn/form/${levelId}/${lang}`,
-  ppcns: (lang: string) => `/v1/ppcn/${lang}`,
-  ppcnsAll: (lang:string) => `/v1/ppcn/all/${lang}`,
-  submitNewPpcn: () => `/v1/ppcn/`,
-  submitUpdatePpcn: (ppcnId: string) => `/v1/ppcn/${ppcnId}`,
-  subsectors: (subsector: string, lang: string) => `/v1/ppcn/${subsector}/subsector/${lang}/`,
-  deletePpcn: (uuid: string) => `/v1/ppcn/${uuid}`,
-  getPpcn: (uuid: string, lang: string) => `/v1/ppcn/${uuid}/${lang}`,
-  submitNewFilePPCN: () => `/v1/ppcn/file/`,
-  ppcnReviews: (id: string) => `/v1/ppcn/changelog/${id}`,
-  getAllOvv: () => `/v1/ppcn/ovv/`,
-  ppcnAvailableStatuses: () => `/v1/workflow/status`,
-
-}
+	getGeographicLevel: (lang: string) => `/v1/ppcn/geographic/level/${lang}`,
+	getRequiredLevel: () => `/v1/ppcn/required/level`,
+	seededFormData: (levelId: string, lang: string) =>
+		`/v1/ppcn/form/${levelId}/${lang}`,
+	ppcns: (lang: string) => `/v1/ppcn/${lang}`,
+	ppcnsAll: (lang: string) => `/v1/ppcn/all/${lang}`,
+	submitNewPpcn: () => `/v1/ppcn/`,
+	submitUpdatePpcn: (ppcnId: string) => `/v1/ppcn/${ppcnId}`,
+	subsectors: (subsector: string, lang: string) =>
+		`/v1/ppcn/${subsector}/subsector/${lang}/`,
+	deletePpcn: (uuid: string) => `/v1/ppcn/${uuid}`,
+	getPpcn: (uuid: string, lang: string) => `/v1/ppcn/${uuid}/${lang}`,
+	submitNewFilePPCN: () => `/v1/ppcn/file/`,
+	ppcnReviews: (id: string) => `/v1/ppcn/changelog/${id}`,
+	getAllOvv: () => `/v1/ppcn/ovv/`,
+	ppcnAvailableStatuses: () => `/v1/workflow/status`
+};
 
 export interface Response {
-  // Customize received credentials here
-  statusCode: number;
-  message: string;
-  id?: string;
-  geographic?: string;
-
+	// Customize received credentials here
+	statusCode: number;
+	message: string;
+	id?: string;
+	geographic?: string;
 }
 
 const fsm_next_state = {
-  "PPCN_decision_step_DCC": ['PPCN_accepted_request_by_DCC', 'PPCN_rejected_request_by_DCC', 'PPCN_changes_requested_by_DCC'],
-  "PPCN_evaluation_by_CA": ["PPCN_decision_step_CA"],
-  "PPCN_decision_step_CA": ["PPCN_accepted_request_by_CA", "PPCN_rejected_request_by_CA"]
-}
+	PPCN_decision_step_DCC: [
+		"PPCN_accepted_request_by_DCC",
+		"PPCN_rejected_request_by_DCC",
+		"PPCN_changes_requested_by_DCC"
+	],
+	PPCN_evaluation_by_CA: ["PPCN_decision_step_CA"],
+	PPCN_decision_step_CA: [
+		"PPCN_accepted_request_by_CA",
+		"PPCN_rejected_request_by_CA"
+	]
+};
 
 export interface ReportContext {
-  comment: string;
-  file: string | any;
+	comment: string;
+	file: string | any;
 }
 
 @Injectable()
 export class PpcnService {
+	private pccnLevelId = new BehaviorSubject("");
+	currentLevelId = this.pccnLevelId.asObservable();
 
-  private pccnLevelId = new BehaviorSubject('');
-  currentLevelId = this.pccnLevelId.asObservable();
+	constructor(
+		private authenticationService: AuthenticationService,
+		private httpClient: HttpClient,
+		private datePipe: DatePipe,
+		private s3: S3Service
+	) {}
 
+	submitNewPpcnForm(context: any): Observable<Response> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		const formData = this.buildFormData(context);
+		return this.httpClient
+			.post(routes.submitNewPpcn(), formData, httpOptions)
+			.pipe(
+				map((body: any) => {
+					const response = {
+						statusCode: 200,
+						id: body.id,
+						geographic: body.geographicLevel,
+						message: "Form submitted correctly"
+					};
+					return response;
+				})
+			);
+	}
 
-  constructor(private authenticationService: AuthenticationService,
-    private httpClient: HttpClient,
-    private datePipe: DatePipe,
-    private s3: S3Service) {
+	submitUpdatePpcnForm(
+		context: any,
+		id: string,
+		contactFormId: number,
+		geographicFormId: number,
+		requiredFormId: number,
+		recognitionFormId: number,
+		sectorFormId: number,
+		subsectorFormId: number,
+		ovvFormId: number
+	): Observable<Response> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		const formData = this.buildFormData(
+			context,
+			contactFormId,
+			geographicFormId,
+			requiredFormId,
+			recognitionFormId,
+			sectorFormId,
+			subsectorFormId,
+			ovvFormId
+		);
+		return this.httpClient
+			.put(routes.submitUpdatePpcn(id), formData, httpOptions)
+			.pipe(
+				map((body: any) => {
+					const response = {
+						statusCode: 200,
+						id: body.id,
+						geographic: "",
+						message: "Form updated correctly"
+					};
+					return response;
+				})
+			);
+	}
 
-  }
+	deletePpcn(uuid: string): Observable<{} | Object> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		const url = routes.deletePpcn(uuid);
+		// routes.deleteMitigationAction(uuid)
+		return this.httpClient.delete(url, httpOptions).pipe(
+			map((body: any) => {
+				const response = {
+					statusCode: 200,
+					message: "PPCN deleted correctly"
+				};
+				return response;
+			})
+		);
+	}
 
-  submitNewPpcnForm(context: any): Observable<Response> {
+	updateCurrentGeographicalLevel(newGeographicalLevelId: string) {
+		this.pccnLevelId.next(newGeographicalLevelId);
+	}
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': this.authenticationService.credentials.token
-      })
-    };
-    let formData = this.buildFormData(context);
-    return this.httpClient
-      .post(routes.submitNewPpcn(), formData, httpOptions)
-      .pipe(
-        map((body: any) => {
-          const response = {
-            statusCode: 200,
-            id: body.id,
-            geographic: body.geographicLevel,
-            message: 'Form submitted correctly'
-          };
-          return response;
-        })
-      );
+	ppcn(lang: string): Observable<Ppcn[]> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		return this.httpClient.get(routes.ppcns(lang), httpOptions).pipe(
+			map((body: any) => {
+				return body;
+			})
+		);
+	}
 
-  }
+	ppcnAll(lang: string): Observable<Ppcn[]> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		return this.httpClient.get(routes.ppcnsAll(lang), httpOptions).pipe(
+			map((body: any) => {
+				return body;
+			})
+		);
+	}
 
-  submitUpdatePpcnForm(context: any,
-    id: string,
-    contactFormId: number,
-    geographicFormId: number,
-    requiredFormId: number,
-    recognitionFormId: number,
-    sectorFormId: number,
-    subsectorFormId: number,
-    ovvFormId: number): Observable<Response> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': this.authenticationService.credentials.token
-      })
-    };
-    let formData = this.buildFormData(context, contactFormId, geographicFormId, requiredFormId, recognitionFormId, sectorFormId, subsectorFormId, ovvFormId);
-    return this.httpClient
-      .put(routes.submitUpdatePpcn(id), formData, httpOptions)
-      .pipe(
-        map((body: any) => {
-          const response = {
-            statusCode: 200,
-            id: body.id,
-            geographic: "",
-            message: 'Form updated correctly'
-          };
-          return response;
-        })
-      );
+	reRoutePpcn(lang: string): Observable<Ppcn[]> {
+		return this.ppcn(lang);
+	}
 
-  }
+	geographicLevel(lang: string): Observable<GeographicLevel[]> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		return this.httpClient
+			.get(routes.getGeographicLevel(lang), httpOptions)
+			.pipe(
+				map((body: any) => {
+					return body;
+				})
+			);
+	}
 
-  deletePpcn(uuid: string): Observable<{} | Object> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': this.authenticationService.credentials.token
-      })
-    };
-    const url = routes.deletePpcn(uuid);
-    // routes.deleteMitigationAction(uuid)
-    return this.httpClient
-      .delete(url, httpOptions)
-      .pipe(
-        map((body: any) => {
-          const response = {
-            statusCode: 200,
-            message: 'PPCN deleted correctly'
-          };
-          return response;
-        })
-      );
+	ovvFormData(): Observable<Ovv> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		return this.httpClient.get(routes.getAllOvv(), httpOptions).pipe(
+			map((body: any) => {
+				return body;
+			})
+		);
+	}
 
-  }
+	newPpcnFormData(levelId: string, lang: string): Observable<PpcnNewFormData> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		return this.httpClient
+			.get(routes.seededFormData(levelId, lang), httpOptions)
+			.pipe(
+				map((body: any) => {
+					return body;
+				})
+			);
+	}
 
-  updateCurrentGeographicalLevel(newGeographicalLevelId: string) {
-    this.pccnLevelId.next(newGeographicalLevelId);
-  }
+	subsectors(sector: string, lang: string): Observable<SubSector[]> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		return this.httpClient
+			.get(routes.subsectors(sector, lang), httpOptions)
+			.pipe(
+				map((body: any) => {
+					return body;
+				})
+			);
+	}
 
-  ppcn(lang: string): Observable<Ppcn[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': this.authenticationService.credentials.token
-      })
-    };
-    return this.httpClient
-      .get(routes.ppcns(lang), httpOptions)
-      .pipe(
-        map((body: any) => {
-          return body;
-        })
-      );
-  }
+	getPpcn(uuid: string, lang: string): Observable<Ppcn> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		return this.httpClient.get(routes.getPpcn(uuid, lang), httpOptions).pipe(
+			map((body: any) => {
+				return body;
+			})
+		);
+	}
 
-  ppcnAll(lang: string): Observable < Ppcn[] > {
+	submitPpcnNewFile(context: any): Observable<Response> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': this.authenticationService.credentials.token
-      })
-    };
-    return this.httpClient
-      .get(routes.ppcnsAll(lang), httpOptions) 
-      .pipe(
-        map((body: any) => {
-          return body;
-        })
-      );
+		const fileList = context.files;
 
-  }
+		const formData: FormData = new FormData();
+		formData.append("ppcn_form", context.ppcnCtrl);
 
-  reRoutePpcn(lang: string): Observable < Ppcn[] > {
-    return this.ppcn(lang)
-  }
+		if (fileList.length > 0) {
+			for (const file of fileList) {
+				const fileToUpload = file.file.files[0];
+				formData.append("files[]", fileToUpload, fileToUpload.name);
+			}
+			return this.httpClient
+				.post(routes.submitNewFilePPCN(), formData, httpOptions)
+				.pipe(
+					map((body: any) => {
+						const response = {
+							statusCode: 200,
+							message: "Files submitted correctly"
+						};
+						return response;
+					})
+				);
+		} else {
+			// raise exception
+		}
+	}
 
-  geographicLevel(lang: string): Observable<GeographicLevel[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': this.authenticationService.credentials.token
-      })
-    };
-    return this.httpClient
-      .get(routes.getGeographicLevel(lang), httpOptions)
-      .pipe(
-        map((body: any) => {
-          return body;
-        })
-      );
-  }
+	ppcnReviews(id: string): Observable<PpcnReview[]> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		return this.httpClient.get(routes.ppcnReviews(id), httpOptions).pipe(
+			map((body: any) => {
+				return body;
+			})
+		);
+	}
 
-  ovvFormData(): Observable<Ovv> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': this.authenticationService.credentials.token
-      })
-    };
-    return this.httpClient
-      .get(routes.getAllOvv(), httpOptions)
-      .pipe(
-        map((body: any) => {
-          return body;
-        })
-      );
+	getPpcnReviewStatuses(): Observable<PpcnNewFormData> {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		return this.httpClient
+			.get(routes.ppcnAvailableStatuses(), httpOptions)
+			.pipe(
+				map((body: any) => {
+					return body;
+				})
+			);
+	}
 
-  }
+	commonStatusses(ppcn: Ppcn): string[] {
+		return fsm_next_state[ppcn.fsm_state];
+	}
 
-  newPpcnFormData(levelId: string, lang: string): Observable<PpcnNewFormData> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': this.authenticationService.credentials.token
-      })
-    };
-    return this.httpClient
-      .get(routes.seededFormData(levelId, lang), httpOptions)
-      .pipe(
-        map((body: any) => {
-          return body;
-        })
-      );
+	mapRoutesStatuses(uuid: string): StatusRoutesMap[] {
+		return [
+			{ route: `ppcn/${uuid}/edit`, status: "PPCN_changes_requested_by_DCC" }
+			// implementing_INGEI_changes
+		];
+	}
 
-  }
+	private buildFormData(
+		data: any,
+		contactFormId: number = null,
+		geographicFormId: number = null,
+		requiredFormId: number = null,
+		recognitionFormId: number = null,
+		sectorFormId: number = null,
+		subsectorFormId: number = null,
+		geiOrganizationId: number = null
+	) {
+		const context = data.context;
+		const formData = {};
+		const organization = {};
+		const contact = {};
+		const geiOrganization = {};
+		const geiActivityTypes = {};
+		const reduction = {};
+		const carbonOffset = {};
+		const organization_classification = {};
+		const gasRemoval = {};
 
-  subsectors(sector: string, lang: string): Observable<SubSector[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': this.authenticationService.credentials.token
-      })
-    };
-    return this.httpClient
-      .get(routes.subsectors(sector, lang), httpOptions)
-      .pipe(
-        map((body: any) => {
-          return body;
-        })
-      )
+		const validateListReduction = [2, 3, 4, 5];
+		const validateListCompensation = [4, 5];
 
-  }
+		this.currentLevelId.subscribe(
+			levelId => (formData["geographic_level"] = levelId)
+		);
+		formData["user"] = String(this.authenticationService.credentials.id);
+		if (geographicFormId) {
+			formData["geographic_level"] = String(geographicFormId);
+		}
 
-  getPpcn(uuid: string, lang: string): Observable<Ppcn> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': this.authenticationService.credentials.token
-      })
-    };
-    return this.httpClient
-      .get(routes.getPpcn(uuid, lang), httpOptions)
-      .pipe(
-        map((body: any) => {
-          return body;
-        })
-      );
+		formData["subsector"] = context.formArray[4].subSectorCtrl;
+		formData["sector"] = context.formArray[4].sectorCtrl;
 
-  }
+		organization["name"] = context.formArray[0].nameCtrl;
+		organization["representative_name"] =
+			context.formArray[0].representativeNameCtrl;
+		organization["representative_legal_identification"] =
+			context.formArray[0].legalRepresentativeIdCtrl;
+		organization["legal_identification"] = context.formArray[0].legalIdCtrl;
+		organization["confidential"] = context.formArray[0].confidentialCtrl;
+		organization["confidential_fields"] =
+			context.formArray[0].confidentialValueCtrl;
 
-  submitPpcnNewFile(context: any): Observable<Response> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': this.authenticationService.credentials.token
-      })
-    };
+		organization["phone_organization"] = context.formArray[0].telephoneCtrl;
+		organization["postal_code"] = context.formArray[0].postalCodeCtrl;
+		organization["fax"] = context.formArray[0].faxCtrl;
+		organization["email"] = context.formArray[0].emailCtrl;
+		organization["ciiu_code_list"] = [];
 
-    let fileList = context.files;
+		// gas removal section
 
-    let formData: FormData = new FormData();
-    formData.append('ppcn_form', context.ppcnCtrl);
+		gasRemoval["removal_cost"] = context.formArray[6].costRemovalInventoryCtrl;
+		gasRemoval["removal_cost_currency"] =
+			context.formArray[6].costRemovalInventoryValueCtrl;
+		gasRemoval["total"] = context.formArray[6].totalremovalsCtrl;
+		gasRemoval["removal_descriptions"] =
+			context.formArray[6].removalProjectDetailCtrl;
 
-    if (fileList.length > 0) {
-      for (let file of fileList) {
-        let fileToUpload = file.file.files[0];
-        formData.append('files[]', fileToUpload, fileToUpload.name);
-      }
-      return this.httpClient
-        .post(routes.submitNewFilePPCN(), formData, httpOptions)
-        .pipe(
-          map((body: any) => {
-            const response = {
-              statusCode: 200,
-              message: 'Files submitted correctly'
-            };
-            return response;
-          })
-        );
-    } else {
-      // raise exception
-    }
+		// Reduction form section //
+		reduction["project"] = context.formArray[3].reductionProjectCtrl;
+		reduction["activity"] = context.formArray[3].reductionActivityCtrl;
+		reduction["detail_reduction"] = context.formArray[3].reductionDetailsCtrl;
+		reduction["emission"] = context.formArray[3].reducedEmissionsCtrl;
+		reduction["total_emission"] = context.formArray[3].totalEmisionesReducidas;
+		reduction["investment"] = context.formArray[3].investmentReductionsValue;
+		reduction["investment_currency"] =
+			context.formArray[3].investmentReductions;
+		reduction["total_investment"] =
+			context.formArray[3].totalInvestmentReductionValue;
+		reduction["total_investment_currency"] =
+			context.formArray[3].totalInvestmentReduction;
 
-  }
+		// carbon offset form section
+		carbonOffset["offset_scheme"] = context.formArray[4].compensationScheme;
+		carbonOffset["project_location"] = context.formArray[4].projectLocation;
+		carbonOffset["certificate_identification"] =
+			context.formArray[4].certificateNumber;
+		carbonOffset["total_carbon_offset"] =
+			context.formArray[4].totalCompensation;
+		carbonOffset["offset_cost"] = context.formArray[4].compensationCostValue;
+		carbonOffset["offset_cost_currency"] =
+			context.formArray[4].compensationCost;
+		carbonOffset["period"] = context.formArray[4].period;
+		carbonOffset["total_offset_cost"] =
+			context.formArray[4].totalEmissionsOffsets;
+		carbonOffset["total_offset_cost_currency"] =
+			context.formArray[4].totalCostCompensation;
 
-  ppcnReviews(id: string): Observable<PpcnReview[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': this.authenticationService.credentials.token
-      })
-    };
-    return this.httpClient
-      .get(routes.ppcnReviews(id), httpOptions)
-      .pipe(
-        map((body: any) => {
-          return body;
-        })
-      );
-  }
+		organization_classification["required_level"] =
+			context.formArray[2].requiredCtrl;
+		organization_classification["recognition_type"] =
+			context.formArray[2].recognitionCtrl;
+		organization_classification["emission_quantity"] =
+			context.formArray[2].amountOfEmissions;
+		organization_classification["buildings_number"] =
+			context.formArray[2].numberofDacilities;
+		organization_classification["data_inventory_quantity"] =
+			context.formArray[2].amountInventoryData;
 
-  getPpcnReviewStatuses(): Observable<PpcnNewFormData> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': this.authenticationService.credentials.token
-      })
-    };
-    return this.httpClient
-      .get(routes.ppcnAvailableStatuses(), httpOptions)
-      .pipe(
-        map((body: any) => {
-          return body;
-        })
-      );
-  }
+		organization_classification["reduction"] =
+			validateListReduction.indexOf(context.formArray[2].recognitionCtrl) >= 0
+				? reduction
+				: null;
+		organization_classification["carbon_offset"] =
+			validateListCompensation.indexOf(context.formArray[2].recognitionCtrl) >=
+			0
+				? carbonOffset
+				: null;
 
-  commonStatusses(ppcn: Ppcn): string[] {
-    return fsm_next_state[ppcn.fsm_state];
-  }
+		formData["organization_classification"] = organization_classification;
+		formData["gas_removal"] = gasRemoval;
 
-  mapRoutesStatuses(uuid: string): StatusRoutesMap[] {
-    return [
-      { route: `ppcn/${uuid}/edit`, status: 'PPCN_changes_requested_by_DCC' },
-      // implementing_INGEI_changes
-    ];
-  }
+		for (const value of context.formArray[0].ciuuListCodeCtrl) {
+			const element = {
+				ciiu_code: value
+			};
+			organization["ciiu_code_list"].push(element);
+		}
+		organization["address"] = context.formArray[0].addressCtrl;
 
-  private buildFormData(context: any,
-    contactFormId: number = null,
-    geographicFormId: number = null,
-    requiredFormId: number = null,
-    recognitionFormId: number = null,
-    sectorFormId: number = null,
-    subsectorFormId: number = null,
-    geiOrganizationId: number = null,
-  ) {
-    let formData = {};
-    let organization = {};
-    let contact = {};
-    let geiOrganization = {};
-    let geiActivityTypes = {};
+		if (contactFormId) {
+			contact["id"] = String(contactFormId);
+		}
+		contact["full_name"] = context.formArray[1].contactNameCtrl;
+		contact["job_title"] = context.formArray[1].positionCtrl;
+		contact["email"] = context.formArray[1].emailFormCtrl;
+		contact["phone"] = context.formArray[1].phoneCtrl;
 
-    this.currentLevelId.subscribe(levelId => formData['geographic_level'] = levelId);
-    formData['user'] = String(this.authenticationService.credentials.id);
-    if (geographicFormId) {
-      formData['geographic_level'] = String(geographicFormId);
-    }
-    formData['required_level'] = context.formArray[2].requiredCtrl;
-    formData['subsector'] = context.formArray[4].subSectorCtrl;
-    formData['sector'] = context.formArray[4].sectorCtrl;
-    formData['recognition_type'] = context.formArray[2].recognitionCtrl;
-    organization['name'] = context.formArray[0].nameCtrl;
-    organization['representative_name'] = context.formArray[0].representativeNameCtrl;
-    organization['phone_organization'] = context.formArray[0].telephoneCtrl;
-    organization['postal_code'] = context.formArray[0].postalCodeCtrl;
-    organization['fax'] = context.formArray[0].faxCtrl;
-    organization['ciiu'] = context.formArray[0].ciuuCodeCtrl;
-    organization['address'] = context.formArray[0].addressCtrl;
+		organization["contact"] = contact;
+		formData["organization"] = organization;
 
-    if (contactFormId) {
-      contact['id'] = String(contactFormId);
-    }
-    contact['full_name'] = context.formArray[1].contactNameCtrl;
-    contact['job_title'] = context.formArray[1].positionCtrl;
-    contact['email'] = context.formArray[1].emailFormCtrl;
-    contact['phone'] = context.formArray[1].phoneCtrl;
+		if (!context.formArray[5].ovvCtrl) {
+			formData["base_year"] = this.datePipe.transform(
+				context.formArray[5].reportYearCtrl,
+				"yyyy-MM-dd"
+			);
+		} else {
+			if (geiOrganizationId) {
+				geiOrganization["id"] = String(geiOrganizationId);
+			}
+			//geiOrganization["activity_type"] = context.formArray[5].activityCtrl;
+			geiOrganization["ovv"] = context.formArray[5].ovvCtrl;
+			geiOrganization["emission_ovv_date"] = this.datePipe.transform(
+				context.formArray[5].implementationEmissionDateCtrl,
+				"yyyy-MM-dd"
+			);
+			geiOrganization["base_year"] = context.formArray[5].baseYearCtrl;
+			geiOrganization["report_year"] = context.formArray[5].reportYearCtrl;
 
-    organization['contact'] = contact;
-    formData['organization'] = organization;
+			geiOrganization["organization_category"] = data.categoryTable;
+			geiOrganization["gas_report"] = data.gasReportTable;
+		}
+		geiOrganization["gei_activity_types"] = [];
+		if (context.formArray[7].activities) {
+			context.formArray[7].activities.forEach((activity: any) => {
+				const objectToPush = {
+					activity_type: activity.activityCtrl,
+					sub_sector: activity.subSectorCtrl,
+					sector: activity.sectorCtrl
+				};
+				geiOrganization["gei_activity_types"].push(objectToPush);
+			});
+		}
+		formData["gei_organization"] = geiOrganization;
+		return formData;
+	}
 
-    if (context.formArray[3].ovvCtrl == '' || context.formArray[3].ovvCtrl == null) {
-      formData['base_year'] = this.datePipe.transform(context.formArray[3].reportYearCtrl, 'yyyy-MM-dd');
-    }
-    else {
-      if (geiOrganizationId) {
-        geiOrganization['id'] = String(geiOrganizationId);
-      }
-      // geiOrganization['activity_type'] = context.formArray[4].activityCtrl;
-      geiOrganization['ovv'] = context.formArray[3].ovvCtrl;
-      geiOrganization['emission_ovv_date'] = this.datePipe.transform(context.formArray[3].implementationEmissionDateCtrl, 'yyyy-MM-dd');
-      geiOrganization['base_year'] = context.formArray[3].baseYearCtrl;
-      geiOrganization['report_year'] = context.formArray[3].reportYearCtrl;
-
-      formData['gei_organization'] = geiOrganization;
-    }
-    formData['gei_activity_types'] = [];
-    if (context.formArray[4].activities) {
-      context.formArray[4].activities.forEach((activity: any) => {
-
-        const objectToPush = {
-          'activity_type': activity.activityCtrl,
-          'sub_sector': activity.subSectorCtrl,
-          'sector': activity.sectorCtrl
-        }
-        formData['gei_activity_types'].push(objectToPush);
-      });
-    }
-    return formData;
-  }
-
-  public async downloadResource(filePath: string): Promise<S3File> {
-    return this.s3.downloadResource(filePath);
-  }
-
+	public async downloadResource(filePath: string): Promise<S3File> {
+		return this.s3.downloadResource(filePath);
+	}
 }

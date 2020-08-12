@@ -28,7 +28,7 @@ describe('ReportComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ ReportComponent,GenericButtonComponent,GenericButtonSecondaryComponent,CustomSearchBarComponent],
+      declarations: [ ReportComponent, GenericButtonComponent, GenericButtonSecondaryComponent, CustomSearchBarComponent],
       providers: [I18nService,
         { provide: AuthenticationService, useClass: MockAuthenticationService },
         { provide: ReportService, useClass: MockReportService }]

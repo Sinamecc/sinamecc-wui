@@ -18,7 +18,7 @@ import { MitigationActionsUpdateComponent } from '@app/mitigation-actions/mitiga
 import { MitigationActionReviewsNewComponent } from '@app/mitigation-actions/mitigation-action-reviews/mitigation-action-reviews-new/mitigation-action-reviews-new.component';
 import { MitigationActionsReviewsListComponent } from '@app/mitigation-actions/mitigation-action-reviews/mitigation-actions-reviews-list/mitigation-actions-reviews-list.component';
 import { ConceptualIntegrationComponent } from '@app/mitigation-actions/conceptual-integration/conceptual-integration.component';
-import { IngeiHarmonizationComponent } from '@app/mitigation-actions/ingei-harmonization/ingei-harmonization.component'
+import { IngeiHarmonizationComponent } from '@app/mitigation-actions/ingei-harmonization/ingei-harmonization.component';
 import { ConceptualIntegrationNewComponent } from '@app/mitigation-actions/conceptual-integration-new/conceptual-integration-new.component';
 import { HarmonizationProposalNewComponent } from '@app/mitigation-actions/harmonization-proposal-new/harmonization-proposal-new.component';
 import { MitigationActionFormFlowComponent } from './mitigation-action-form-flow/mitigation-action-form-flow.component';
@@ -26,7 +26,7 @@ import { InitiativeFormComponent } from './initiative-form/initiative-form.compo
 import { BasicInformationFormComponent } from './basic-information-form/basic-information-form.component';
 import { KeyAspectsFormComponent } from './key-aspects-form/key-aspects-form.component';
 import { EmissionsMitigationFormComponent } from './emissions-mitigation-form/emissions-mitigation-form.component';
-import { ImpactFormComponent } from './impact-form/impact-form.component'
+import { ImpactFormComponent } from './impact-form/impact-form.component';
 @NgModule({
   imports: [
     CommonModule,

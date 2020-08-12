@@ -167,5 +167,5 @@ export class MockMccrRegistriesService {
     // return an ErrorObservable with a user-facing error message
     return new ErrorObservable(
       'Something bad happened; please try again later.');
-  };
+  }
 }

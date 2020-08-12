@@ -1,135 +1,135 @@
 <div class="container">
-  <mat-tab-group mat-align-tabs="center">
-    <mat-tab label="{{ 'admin.user' | translate }}"> 
-        <mat-card>
-            <h3>
-                <mat-card-title class="section-heading" translate>admin.createUser</mat-card-title>
-                <mat-divider class="divider-custom"></mat-divider>
-                <mat-divider class="divider-custom"></mat-divider>
-            </h3>
-            <mat-card-content>
+    <mat-tab-group mat-align-tabs="center">
+        <mat-tab label="{{ 'admin.user' | translate }}">
+            <mat-card>
+                <h3>
+                    <mat-card-title class="section-heading" translate>admin.createUser</mat-card-title>
+                    <mat-divider class="divider-custom"></mat-divider>
+                    <mat-divider class="divider-custom"></mat-divider>
+                </h3>
+                <mat-card-content>
+                    <form (ngSubmit)="submit()" [formGroup]="createUserForm" novalidate *ngIf="roles$ | async">
+                        <div fxLayout="column">
+                            <div class="custom-container-image-section">
+                                <div>
+                                    <img class="mat-elevation-z3 custom-image" [src]="imageUrl" />
+                                </div>
+                                <br />
+                                <span class="custom-upload-file">Upload a image :</span>
+                                <label for="file-upload" class="custom-file-upload ">
+                                    <mat-icon>cloud_upload</mat-icon>
+                                </label>
+                                <input id="file-upload" type="file" accept="image/*" (change)="uploadImage($event)" />
 
-                <form (ngSubmit)="submit()" [formGroup]="createUserForm" novalidate>
-
-                    <div class="report-error" [hidden]="!error || isLoading" translate>
-                        <span translate>errorLabel.errorSubmittingForm</span>
-                    </div>
-
-                    <div fxLayout="column">
-                        <div class="custom-container-image-section">
-                            <div>
-                                <img class="customImage" class="mat-elevation-z3 custom-image" [src]="imageUrl" />
                             </div>
-                            <br>
+                            <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
+                                <span translate>errorLabel.errorSubmittingForm</span>
+                                <br />
+                                <app-error-reporting #errorComponent></app-error-reporting>
+                            </div>
+                            <mat-form-field>
+                                <input type="text" [ngModel]="name" matInput formControlName="name"
+                                    [placeholder]="'info.name' | translate" />
+                                <mat-error
+                                    *ngIf="createUserForm.controls.name.invalid || createUserForm.controls.name.untouched">
+                                    <span translate>errorLabel.firstNameRequired</span>
+                                </mat-error>
 
-                            <span class="custom-upload-file"
-                                >Upload a image :</span
-                            >
-                            <label for="file-upload" class="custom-file-upload ">
-                                <mat-icon>cloud_upload</mat-icon>
-                            </label>
-                            <input
-                                id="file-upload"
-                                type="file"
-                                accept="image/*"
-                                (change)="uploadImage($event)"
-                            />
-                           
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input type="text" [ngModel]="lastName" matInput formControlName="lastName"
+                                    [placeholder]="'admin.lastName' | translate" />
+                                <mat-error
+                                    *ngIf="createUserForm.controls.lastName.invalid || createUserForm.controls.lastName.untouched">
+                                    <span translate>errorLabel.lastNameRequired</span>
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input type="text" [ngModel]="userName" matInput formControlName="userName"
+                                    [placeholder]="'credentialsSection.username' | translate" />
+                                <mat-error
+                                    *ngIf="createUserForm.controls.userName.invalid || createUserForm.controls.userName.untouched">
+                                    <span translate>errorLabel.userNameRequired</span>
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input type="email" [ngModel]="email" matInput formControlName="email"
+                                    [placeholder]="'admin.email' | translate" />
+                                <mat-error
+                                    *ngIf="createUserForm.controls.email.invalid || createUserForm.controls.email.untouched">
+                                    <span translate>errorLabel.emailRequired</span>
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field *ngIf="!edit">
+                                <input type="password" [ngModel]="password" matInput formControlName="password"
+                                    [placeholder]="'credentialsSection.password' | translate" />
+                                <mat-error
+                                    *ngIf="createUserForm.controls.password.invalid || createUserForm.controls.password.untouched">
+                                    <span translate>credentialsSection.passwordRequired</span>
+                                </mat-error>
+                            </mat-form-field>
+                            <br />
+                            <div formGroupName="roles">
+                                <h3><span translate>admin.availableRoles</span></h3>
+                                <div *ngFor="let role of roles; let i = index">
+                                    <mat-checkbox formControlName="{{role.role}}">{{role.role_name}}</mat-checkbox>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div *ngIf="!edit" class="box-button">
+                            <app-generic-button type="submit" name="admin.createUser"></app-generic-button>
                         </div>
 
-                        <mat-form-field>
-                          <input type="text"  [ngModel]="name" matInput formControlName="name" [placeholder]="'info.name' | translate"/>
-                          <mat-error *ngIf="createUserForm.controls.name.invalid || createUserForm.controls.name.untouched">
-                                <span translate>Name is required</span>
-                          </mat-error>
+                        <div *ngIf="edit" class="box-button">
+                            <app-generic-button (click)="openChangePasswordDialog()" disabled="true" type="button"
+                                name="credentialsSection.changePass"></app-generic-button>
+                            <app-generic-button type="submit" name="credentialsSection.editUser"></app-generic-button>
+                        </div>
 
-                        </mat-form-field>
+                    </form>
 
-                        <mat-form-field>
-                            <input type="text" [ngModel]="lastName" matInput formControlName="lastName"  [placeholder]="'admin.lastName' | translate"/>
-                            <mat-error *ngIf="createUserForm.controls.lastName.invalid || createUserForm.controls.lastName.untouched">
-                                    <span translate>errorLabel.lastNameRequired</span>
-                            </mat-error>
-                        </mat-form-field>
+                </mat-card-content>
 
-                        <mat-form-field>
-                            <input type="text" [ngModel]="userName" matInput formControlName="userName" [placeholder]="'credentialsSection.username' | translate"/>
-                            <mat-error *ngIf="createUserForm.controls.userName.invalid || createUserForm.controls.userName.untouched">
-                                    <span translate>errorLabel.userNameRequired</span>
-                            </mat-error>
-                        </mat-form-field>
+            </mat-card>
 
-                        <mat-form-field>
-                            <input type="email" [ngModel]="email" matInput  formControlName="email"  [placeholder]="'admin.email' | translate"/>
-                            <mat-error *ngIf="createUserForm.controls.email.invalid || createUserForm.controls.email.untouched">
-                                    <span translate>errorLabel.emailRequired</span>
-                            </mat-error>
-                        </mat-form-field>
-
-                        <mat-form-field *ngIf="!edit">
-                            <input type="password" [ngModel]="password" matInput formControlName="password" [placeholder]="'credentialsSection.password' | translate"/>
-                            <mat-error *ngIf="createUserForm.controls.password.invalid || createUserForm.controls.password.untouched">
-                                    <span translate>credentialsSection.passwordRequired</span>
-                            </mat-error>
-                        </mat-form-field>
-                        <br>
-                      
-                        <mat-checkbox [ngModel]="staff" [ngModelOptions]="{standalone: true}" (change)="checkCheckBoxvalue($event,'staff')"><span translate>Staff</span></mat-checkbox>
-                        <mat-checkbox [ngModel]="active" [ngModelOptions]="{standalone: true}" (change)="checkCheckBoxvalue($event,'active')"><span translate>admin.userActive</span></mat-checkbox>
-                        <mat-checkbox [ngModel]="provider" [ngModelOptions]="{standalone: true}" (change)="checkCheckBoxvalue($event,'provider')"><span translate>admin.provider</span></mat-checkbox>
-                        <mat-checkbox [ngModel]="dcc" [ngModelOptions]="{standalone: true}" (change)="checkCheckBoxvalue($event,'dccUser')"><span translate>admin.DCCUser</span></mat-checkbox>
-
-                    </div>
-                    <div *ngIf="!edit" class="box-button">
-                        <app-generic-button type="submit" name="admin.createUser"></app-generic-button>
-                    </div>  
-                    
-                    <div *ngIf="edit"  class="box-button">
-                        <app-generic-button  (click)="openChangePasswordDialog()" disabled="true" type="button" name="credentialsSection.changePass"></app-generic-button>
-                        <app-generic-button type="submit" name="credentialsSection.editUser"></app-generic-button>
-                    </div>
-
-                </form>
-
-            </mat-card-content>
-            
-        </mat-card>
-    
-    </mat-tab>
-    <mat-tab disabled label="{{ 'admin.permissions' | translate }}"> 
-        <button mat-icon-button (click)="openDialogPermissions()">
-            <mat-icon >visibility</mat-icon>
-        </button>
-
-        <div *ngIf="!edit">
-            <app-admin-permission-list  *ngIf="this.permList$ | async; let perm " #table [dataTable] = "perm">
-            </app-admin-permission-list>
-        </div>
-        <div *ngIf="edit">
-            <app-admin-permissions-list-edit *ngIf="this.permList$ | async; let perm " #tableEdit [dataTable] = "perm"
-            [userPermissions]="this.editData.permission_app"
-            ></app-admin-permissions-list-edit>
-        </div>
-
-    </mat-tab>
-    <mat-tab disabled label="{{ 'admin.groups' | translate }}"> 
-
-    <div *ngIf="!edit">
-            <button mat-icon-button (click)="openDialogGroups()">
-                    <mat-icon >visibility</mat-icon>
+        </mat-tab>
+        <!-- <mat-tab disabled label="{{ 'admin.permissions' | translate }}">
+            <button mat-icon-button (click)="openDialogPermissions()">
+                <mat-icon>visibility</mat-icon>
             </button>
-            <app-admin-group-list *ngIf="this.groupsList$ | async; let group" #tableGroup [dataTable] = "group">
-            </app-admin-group-list>
 
-    </div>
-    <div *ngIf="edit">
+            <div *ngIf="!edit">
+                <app-admin-permission-list *ngIf="this.permList$ | async; let perm " #table [dataTable]="perm">
+                </app-admin-permission-list>
+            </div>
+            <div *ngIf="edit">
+                <app-admin-permissions-list-edit *ngIf="this.permList$ | async; let perm " #tableEdit [dataTable]="perm"
+                    [userPermissions]="this.editData.permission_app"></app-admin-permissions-list-edit>
+            </div>
 
-        <app-admin-groups-list-edit *ngIf="this.groupsList$ | async; let group" #tableGroupEdit [dataTable] = "group"
-        [userGroups]="this.editData.groups"
-        ></app-admin-groups-list-edit>
+        </mat-tab> -->
+        <!-- <mat-tab disabled label="{{ 'admin.groups' | translate }}">
 
-    </div>
-    
-    </mat-tab>
-  </mat-tab-group>
+            <div *ngIf="!edit">
+                <button mat-icon-button (click)="openDialogGroups()">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+                <app-admin-group-list *ngIf="this.groupsList$ | async; let group" #tableGroup [dataTable]="group">
+                </app-admin-group-list>
+
+            </div>
+            <div *ngIf="edit">
+
+                <app-admin-groups-list-edit *ngIf="this.groupsList$ | async; let group" #tableGroupEdit
+                    [dataTable]="group" [userGroups]="this.editData.groups"></app-admin-groups-list-edit>
+
+            </div>
+
+        </mat-tab> -->
+    </mat-tab-group>
 </div>

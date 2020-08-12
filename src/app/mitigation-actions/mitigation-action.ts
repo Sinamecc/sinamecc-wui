@@ -1,4 +1,4 @@
-import { GeographicScale } from "./mitigation-action-new-form-data";
+import { GeographicScale } from './mitigation-action-new-form-data';
 import { NextState } from '@app/shared/next-state';
 
 export interface MitigationAction {
@@ -21,7 +21,7 @@ export interface MitigationAction {
   emissions_source: string;
   carbon_sinks: string;
   impact: string;
-  impact_plan:string;
+  impact_plan: string;
   calculation_methodology: string;
   is_international: boolean;
   international_participation: string;
@@ -97,7 +97,7 @@ export interface FinanceSourceType {
   name: string;
 }
 
-export interface ReviewStatus { 
+export interface ReviewStatus {
   status: string;
 }
 

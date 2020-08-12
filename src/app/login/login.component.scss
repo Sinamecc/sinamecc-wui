@@ -4,13 +4,13 @@
   display: flex;
   flex: 1;
   // background-color: #f5f5f5;
-  background-image: url('../../assets/background-login.jpg');
+  background-image: url("../../assets/background-login.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center; 
   color: white;
   text-transform: uppercase;
-  font-family: 'Open Sans' !important, sans-serif;
+  font-family: "Open Sans" !important, sans-serif;
   font-weight: 800;
 }
 
@@ -23,7 +23,7 @@
 }
 
 .login-box.mat-card{
-  background-color: rgba(#ffffff, 0.4);
+  background-color: rgba(#fff, 0.4);
 }
 
 .login-container,
@@ -34,8 +34,9 @@
 .login-error {
   color: mat-color($app-warn);
 }
+
 .mat-card {
-  color: #ffffff;
+  color: #fff;
 }
 
 .custom-option-link{

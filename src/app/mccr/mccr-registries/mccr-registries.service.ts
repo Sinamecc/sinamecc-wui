@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
@@ -11,7 +10,7 @@ import { DatePipe } from '@angular/common';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { Ovv } from '@app/mccr/mccr-registries/mccr-registries-ovv-selector/ovv';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { S3Service, S3File } from '@app/core/s3.service';
 import { StatusRoutesMap } from '@app/shared/status-routes-map';
 
@@ -53,7 +52,7 @@ export class MccrRegistriesService {
 
 
   updateCurrentMccrRegistry(newMccrRegistry: MccrRegistry) {
-    this.mccrRegistrySource.next(newMccrRegistry)
+    this.mccrRegistrySource.next(newMccrRegistry);
   }
 
   submitMccrRegistryNewForm(context: any): Observable<Response> {
@@ -63,15 +62,15 @@ export class MccrRegistriesService {
       })
     };
 
-    let fileList = context.files;
-    let formData: FormData = new FormData();
+    const fileList = context.files;
+    const formData: FormData = new FormData();
     formData.append('mitigation', context.mitigationActionCtrl);
     formData.append('user', String(this.authenticationService.credentials.id));
     formData.append('user_type', String(1));
     formData.append('status', 'created');
     if (fileList.length > 0) {
-      for (let file of fileList) {
-        let fileToUpload = file.file.files[0];
+      for (const file of fileList) {
+        const fileToUpload = file.file.files[0];
         formData.append('files[]', fileToUpload, fileToUpload.name);
       }
       return this.httpClient
@@ -260,5 +259,5 @@ export class MccrRegistriesService {
     // return an ErrorObservable with a user-facing error message
     return new ErrorObservable(
       'Something bad happened; please try again later.');
-  };
+  }
 }

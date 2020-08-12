@@ -5,108 +5,117 @@
       <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
     </h1>-->
     <h3>
-      <mat-card-title  translate class="section-heading">reportData.createReport</mat-card-title>
+      <mat-card-title translate class="section-heading">reportData.createReport</mat-card-title>
       <mat-divider class="divider-custom"></mat-divider>
       <mat-divider class="divider-custom"></mat-divider>
     </h3>
     <mat-card-content>
       <form (ngSubmit)="submitForm()" [formGroup]="reportForm" novalidate>
-        <div class="report-error" [hidden]="!error || isLoading" translate>
+        <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
           <span translate>errorLabel.errorSubmittingForm</span>
+          <br />
+          <app-error-reporting #errorComponent></app-error-reporting>
         </div>
-        <br/>
+        <br />
         <div fxLayout="column">
-          <mat-icon  [matTooltip]="'general.file' | translate">folder </mat-icon>
+          <mat-icon [matTooltip]="'general.file' | translate">folder </mat-icon>
           <mat-form-field>
-            <input type="text" matInput formControlName="name" [placeholder]="'info.name' | translate"/>
+            <input type="text" matInput formControlName="name" [placeholder]="'info.name' | translate" />
             <mat-error *ngIf="reportForm.controls.name.valid || reportForm.controls.name.untouched">
               <span translate>errorLabel.nameRequired</span>
             </mat-error>
           </mat-form-field>
-            <br/>
+          <br />
           <mat-form-field>
-            <p translate class="text_upload" ><span translate>reportData.uploadFile</span></p>: 
-            <app-input-file id="#FileInput" #FileInput class="mat-raised-button mat-primary" formControlName="file" (change)="FileInput" [valuePlaceholder]="'reportData.selectFile' | translate" required>
-              <mat-icon >vertical_align_top</mat-icon>
+            <p translate class="text-upload"><span translate>reportData.uploadFile</span></p>:
+            <app-input-file #FileInput class="mat-raised-button mat-primary" formControlName="file" (change)="FileInput"
+              [valuePlaceholder]="'reportData.selectFile' | translate" required>
+              <mat-icon>vertical_align_top</mat-icon>
               reportData.selectFile
             </app-input-file>
-              <mat-error *ngIf="reportForm.get('file').hasError('required')" translate>
-                reportData.selectFile
-              </mat-error>
-              <mat-error *ngIf="reportForm.get('file').hasError('maxContentSize')">
-                    <span translate>The total size must not exceed {{formDoc.get('file')?.getError('maxContentSize').maxSize | byteFormat}}
-                  ({{reportForm.get('file')?.getError('maxContentSize').actualSize | byteFormat}}).</span>
-              
-                </mat-error>
-              </mat-form-field>
-            <br/>
+            <mat-error *ngIf="reportForm.get('file').hasError('required')" translate>
+              reportData.selectFile
+            </mat-error>
+            <mat-error *ngIf="reportForm.get('file').hasError('maxContentSize')">
+              <span translate>The total size must not exceed
+                {{formDoc.get('file')?.getError('maxContentSize').maxSize | byteFormat}}
+                ({{reportForm.get('file')?.getError('maxContentSize').actualSize | byteFormat}}).</span>
 
-            <mat-icon  [matTooltip]="'Institution'|translate">home</mat-icon>
-            <mat-form-field>
-            <input type="text" matInput formControlName="institution" [placeholder]="'reportData.institution'| translate"/>
+            </mat-error>
+          </mat-form-field>
+          <br />
+
+          <mat-icon [matTooltip]="'Institution'|translate">home</mat-icon>
+          <mat-form-field>
+            <input type="text" matInput formControlName="institution"
+              [placeholder]="'reportData.institution'| translate" />
             <mat-error *ngIf="reportForm.controls.institution.valid || reportForm.controls.institution.untouched">
-                errorLabel.institutionRequired
-              </mat-error>
-            <br/>
-            </mat-form-field>
+              errorLabel.institutionRequired
+            </mat-error>
+            <br />
+          </mat-form-field>
 
-            <mat-form-field>
-                <input type="text" matInput formControlName="department" [placeholder]="'reportData.department'| translate"/>
-                <br/>
-            </mat-form-field>
+          <mat-form-field>
+            <input type="text" matInput formControlName="department"
+              [placeholder]="'reportData.department'| translate" />
+            <br />
+          </mat-form-field>
 
-            <mat-icon  [matTooltip]="'reportData.attendant'|translate">person</mat-icon>
-            <br/>
+          <mat-icon [matTooltip]="'reportData.attendant'|translate">person</mat-icon>
+          <br />
 
-            <mat-form-field>
-                <input type="text" matInput formControlName="personName" [placeholder]="'info.name'| translate"/>
-                <br/>
-            </mat-form-field>
+          <mat-form-field>
+            <input type="text" matInput formControlName="personName" [placeholder]="'info.name'| translate" />
+            <br />
+          </mat-form-field>
 
-            <mat-form-field>
-                <input type="text" matInput formControlName="personLastName" [placeholder]="'admin.lastName'| translate"/>
-                <br/>
-            </mat-form-field>
+          <mat-form-field>
+            <input type="text" matInput formControlName="personLastName" [placeholder]="'admin.lastName'| translate" />
+            <br />
+          </mat-form-field>
 
-            <mat-form-field>
-                <input type="email" matInput formControlName="personEmail" [placeholder]="'admin.email'| translate"/>
-                <br/>
-            </mat-form-field>
+          <mat-form-field>
+            <input type="email" matInput formControlName="personEmail" [placeholder]="'admin.email'| translate" />
+            <br />
+          </mat-form-field>
 
-            <mat-form-field>
-                <input matInput type="text" formControlName="sent" onfocus="value=''" [placeholder]="'reportData.sentInstitutions'| translate"  [value]="value">
-            </mat-form-field>
+          <mat-form-field>
+            <input matInput type="text" formControlName="sent" [placeholder]="'reportData.sentInstitutions'| translate"
+              [value]="value" />
+          </mat-form-field>
 
-            <mat-form-field>
-                <mat-label><span translate>reportData.updatePeriod</span></mat-label>
+          <mat-form-field>
+            <mat-label><span translate>reportData.updatePeriod</span></mat-label>
 
-                <mat-select #perdiod formControlName="updatePeriod" value="'daily'">
-                    <mat-option value="daily" ><span translate>general.daily</span></mat-option>
-                    <mat-option value="weekly" ><span translate>general.weekly</span></mat-option>
-                    <mat-option value="monthly" ><span translate>general.monthly</span></mat-option>
-                    <mat-option value="yearly" ><span translate>general.yearly</span></mat-option>
-                    <mat-option value="other" ><span translate>general.other</span></mat-option>
-                </mat-select>
+            <mat-select #perdiod formControlName="updatePeriod" value="'daily'">
+              <mat-option value="daily"><span translate>general.daily</span></mat-option>
+              <mat-option value="weekly"><span translate>general.weekly</span></mat-option>
+              <mat-option value="monthly"><span translate>general.monthly</span></mat-option>
+              <mat-option value="yearly"><span translate>general.yearly</span></mat-option>
+              <mat-option value="other"><span translate>general.other</span></mat-option>
+            </mat-select>
 
-            </mat-form-field>
+          </mat-form-field>
 
-            <mat-form-field *ngIf="perdiod.value == 'other'">
-                    <input type="input" matInput [placeholder]="'other' | translate"/>
-            </mat-form-field>
+          <mat-form-field *ngIf="perdiod.value == 'other'">
+            <input type="input" matInput [placeholder]="'other' | translate" />
+          </mat-form-field>
 
-            <mat-checkbox (change)="checkCheckBoxvalue($event.checked)" ><span translate>reportData.methodologicalFile</span></mat-checkbox>
-              
+          <mat-checkbox (change)="checkCheckBoxvalue($event.checked)"><span
+              translate>reportData.methodologicalFile</span></mat-checkbox>
+
         </div>
         <div class="box-button">
 
-          <app-generic-button type="submit" [disabled]="reportForm.invalid || isLoading" routerLink="/report/new" name="reportData.submitReport">
+          <app-generic-button type="submit" [disabled]="reportForm.invalid || isLoading" routerLink="/report/new"
+            name="reportData.submitReport">
           </app-generic-button>
           <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
 
-          
+
         </div>
 
-    </form>
+      </form>
 
 
     </mat-card-content>

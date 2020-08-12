@@ -1,21 +1,22 @@
 <div class="container">
-  
-      <mat-card>
 
-            <h3>
-                <mat-card-title class="section-heading" translate>admin.users</mat-card-title>
-                <mat-divider class="divider-custom"></mat-divider>
-                <mat-divider class="divider-custom"></mat-divider>
-            </h3>
-        <br>
-            <app-custom-search-bar  [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar >
-        <br>
+    <mat-card>
+
+        <h3>
+            <mat-card-title class="section-heading" translate>admin.users</mat-card-title>
+            <mat-divider class="divider-custom"></mat-divider>
+            <mat-divider class="divider-custom"></mat-divider>
+        </h3>
+        <br />
+        <app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
+        <br />
         <mat-card-content>
 
-            <mat-table  #table [dataSource]="dataSource" >
+            <mat-table #table [dataSource]="dataSource">
 
                 <ng-container matColumnDef="username">
-                    <mat-header-cell *matHeaderCellDef translate>{{ 'credentialsSection.username' | translate }}</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef translate>{{ 'credentialsSection.username' | translate }}
+                    </mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
                 </ng-container>
 
@@ -24,33 +25,21 @@
                     <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="is_active">
-                    <mat-header-cell *matHeaderCellDef translate>admin.active</mat-header-cell>
+                <ng-container matColumnDef="roles">
+                    <mat-header-cell *matHeaderCellDef translate>admin.assignedRoles</mat-header-cell>
                     <mat-cell *matCellDef="let element">
-                      <mat-checkbox disabled [checked]="element.is_active"></mat-checkbox>
-                    </mat-cell>
-                    
-                </ng-container>
-
-                <ng-container matColumnDef="is_provider">
-                    <mat-header-cell *matHeaderCellDef translate>admin.provider</mat-header-cell>
-                    <mat-cell *matCellDef="let element">
-                        <mat-checkbox disabled [checked]="element.is_provider"></mat-checkbox>
-                    </mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="is_administrador_dcc">
-                    <mat-header-cell *matHeaderCellDef translate>DCC Administrator</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> 
-                        <mat-checkbox disabled [checked]="element.is_administrador_dcc"></mat-checkbox>  
-                    </mat-cell>
+                        {{element.joinedRoles}} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="action">
                     <mat-header-cell *matHeaderCellDef translate>admin.action </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> 
-                        <button mat-icon-button color="primary" (click)="openUserDetail(element)"><mat-icon color="white">visibility</mat-icon></button>
-                        <button disabled mat-icon-button color="warn" (click)="openDeleteConfirmationDialog()"><mat-icon color="white">delete</mat-icon></button>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-icon-button color="primary" (click)="openUserDetail(element)">
+                            <mat-icon color="white">visibility</mat-icon>
+                        </button>
+                        <button disabled mat-icon-button color="warn" (click)="openDeleteConfirmationDialog()">
+                            <mat-icon color="white">delete</mat-icon>
+                        </button>
                     </mat-cell>
                 </ng-container>
 
@@ -59,15 +48,12 @@
 
             </mat-table>
 
-            <mat-paginator 
-                        [pageSize]="5"
-                        [pageSizeOptions]="[5, 10, 20]"
-                        [showFirstLastButtons]="true">
+            <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
             </mat-paginator>
 
         </mat-card-content>
 
-      </mat-card>
+    </mat-card>
 
 
 

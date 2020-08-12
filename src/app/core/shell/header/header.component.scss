@@ -6,40 +6,39 @@
   left: 0;
   right: 0;
   // z-index: 1;
-  color: white;
+  color: mat-color($app-primary, "default-contrast");
 }
 
 .brand {
-  color: mat-color($app-primary, "default-contrast");
   text-decoration: none;
   padding-right: 1rem;
-  color: white;
+  ;
 }
 
 .menu-button {
   margin-right: 1rem;
 }
 
-.user-section-container{
+.user-section-container {
   padding: 10px;
 }
 
-.custom-image{
+.custom-image {
   width: 100px;
   height: 100px;
   border-radius: 50%;
 }
 
-.custom-text-section{
+.custom-text-section {
   margin-left: 5px;
   margin-top: 15px;
 }
 
-.image-options-section{
+.image-options-section {
   text-align: center;
   background-color: rgb(243, 243, 243);
 }
 
-.image-container{
+.image-container {
   text-align: center;
 }

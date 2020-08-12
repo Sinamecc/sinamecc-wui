@@ -1,166 +1,311 @@
-import { Component, OnInit, ElementRef, ViewChild, Input, AfterViewInit, OnChanges, SimpleChanges, SimpleChange} from '@angular/core';
-import { Router } from '@angular/router';
-import { AbstractControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { finalize, tap } from 'rxjs/operators';
-import { environment } from '@env/environment';
-import { Logger, I18nService, AuthenticationService } from '@app/core';
-import { BehaviorSubject } from 'rxjs';
-const log = new Logger('Report');
+import {
+	Component,
+	OnInit,
+	ElementRef,
+	ViewChild,
+	Input,
+	DoCheck,
+	AfterViewInit,
+	OnChanges,
+	SimpleChanges,
+	SimpleChange
+} from "@angular/core";
+import { Router } from "@angular/router";
+import {
+	AbstractControl,
+	FormGroup,
+	FormBuilder,
+	Validators,
+	FormArray
+} from "@angular/forms";
+import { finalize, tap } from "rxjs/operators";
+import { environment } from "@env/environment";
+import { Logger, I18nService, AuthenticationService } from "@app/core";
+import { PpcnService } from "@app/ppcn/ppcn.service";
+import { Observable } from "rxjs/Observable";
+import {
+	PpcnNewFormData,
+	RequiredLevel,
+	RecognitionType
+} from "app/ppcn/ppcn-new-form-data";
+import { forkJoin } from "rxjs/observable/forkJoin";
+import { MatChipInputEvent } from "@angular/material";
+import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { Ppcn } from "../ppcn_registry";
+import { Sector } from "../interfaces/sector";
+import { SubSector } from "../interfaces/subSector";
+import { Ovv } from "../interfaces/ovv";
+import { GasReportTableComponent } from "../gas-report-table/gas-report-table.component";
+import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
 
-import { PpcnService } from '@app/ppcn/ppcn.service';
-import { Ppcn, GeographicLevel, Sector, SubSector, Ovv } from '@app/ppcn/ppcn_registry';
-import { Observable } from 'rxjs/Observable';
-
-import { PpcnNewFormData, RequiredLevel, RecognitionType } from 'app/ppcn/ppcn-new-form-data';
-import { forkJoin } from 'rxjs/observable/forkJoin';
-
+const log = new Logger("Report");
 @Component({
-  selector: 'app-ppcn-new',
-  templateUrl: './ppcn-new.component.html',
-  styleUrls: ['./ppcn-new.component.scss',]
+	selector: "app-ppcn-new",
+	templateUrl: "./ppcn-new.component.html",
+	styleUrls: ["./ppcn-new.component.scss"]
 })
-export class PpcnNewComponent implements OnInit {
-  
-  @Input() dataShared:boolean = false;
-  
-  version: string = environment.version;
-  error: string;
-  formGroup: FormGroup;
-  ppcn: Observable<Ppcn[]>;
-  processedPpcn: Ppcn[] = [];
-  initialRequiredData: Observable<PpcnNewFormData>;
-  isLoading = false;
-  levelId = "1";
-  levelIdTmp: string = this.levelId;
-  activitiesList:FormArray;
+export class PpcnNewComponent implements OnInit, DoCheck {
+	@Input() dataShared = false;
 
-  required_levels: RequiredLevel[];
-  recognition_types: RecognitionType[];
-  sectors: Sector[];
-  subSectors: SubSector[];
-  ovvs: Ovv[];
+	version: string = environment.version;
+	error: string;
+	formGroup: FormGroup;
+	ppcn: Observable<Ppcn[]>;
+	processedPpcn: Ppcn[] = [];
+	initialRequiredData: Observable<PpcnNewFormData>;
+	isLoading = false;
+	levelId = "1";
+	levelIdTmp: string = this.levelId;
+	activitiesList: FormArray;
 
-  values$: any;
-  
+	required_levels: RequiredLevel[];
+	recognition_types: RecognitionType[];
+	sectors: Sector[];
+	subSectors: SubSector[];
+	ovvs: Ovv[];
 
-  get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
+	CIUUCodeList: string[] = [];
+	selectable = true;
+	removable = true;
+	separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  constructor(private router: Router,
-    private formBuilder: FormBuilder,
-    private i18nService: I18nService,
-    private service: PpcnService) {
-      this.createForm();
-  }
+	reductionFormVar = 0;
 
-  ngOnInit() {
+	values$: any;
+	@ViewChild("table") table: GasReportTableComponent;
+	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
 
-    this.service.currentLevelId.subscribe(levelId => this.levelId = levelId);
-  }
+	get formArray(): AbstractControl | null {
+		return this.formGroup.get("formArray");
+	}
 
-  ngDoCheck()
-  {
+	constructor(
+		private router: Router,
+		private formBuilder: FormBuilder,
+		private i18nService: I18nService,
+		private service: PpcnService
+	) {
+		this.createForm();
+	}
 
-      if (this.levelId != this.levelIdTmp && this.levelId !== '')
-      {
-        this.createForm();
-        this.levelIdTmp = this.levelId;
-      }
+	ngOnInit() {
+		this.service.currentLevelId.subscribe(levelId => (this.levelId = levelId));
+	}
 
-  }
+	ngDoCheck() {
+		if (this.levelId !== this.levelIdTmp && this.levelId !== "") {
+			this.createForm();
+			this.levelIdTmp = this.levelId;
+		}
+	}
 
-  submitForm(){
-    this.isLoading = true;
-    
-    this.service.submitNewPpcnForm(this.formGroup.value)
-      .pipe(finalize(() => {
-        this.formGroup.markAsPristine();
-        this.isLoading = false;
-      }))
-      .subscribe(response => {
-        this.router.navigate([`/ppcn/${response.id}/download/${response.geographic}`], { replaceUrl: true });
-        
-      }, error => {
-        log.debug(`New PPCN Form error: ${error}`);
-        this.error = error;
-      });
-  }
+	removeCIUUCode(code: string): void {
+		const index = this.CIUUCodeList.indexOf(code);
 
-  private createForm(){
-    this.formGroup = this.formBuilder.group({
-      formArray: this.formBuilder.array([
-        this.formBuilder.group({
-          nameCtrl: ['', Validators.required],
-          representativeNameCtrl: ['', Validators.required],
-          telephoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-          faxCtrl: '',
-          postalCodeCtrl: '',
-          addressCtrl: ['', Validators.required],
-          ciuuCodeCtrl: (this.levelId=="1"? null:['',Validators.required] )
-        }),
-        this.formBuilder.group({
-          contactNameCtrl: ['', Validators.required],
-          positionCtrl: ['', Validators.required],
-          emailFormCtrl: ['', Validators.email],
-          phoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-        }),
-        this.formBuilder.group({
-          requiredCtrl:['', Validators.required],
-          recognitionCtrl: ['',Validators.required],
-          
-        }),
-        this.formBuilder.group({
-          baseYearCtrl:['', Validators.required],
-          reportYearCtrl:['',Validators.required],
-          ovvCtrl:['',Validators.required],
-          implementationEmissionDateCtrl:null,
-          implementationInitialDateCtrl: null,
-          implementationEndDateCtrl: null,
-        }),
-        this.formBuilder.group({
-          activities: this.formBuilder.array([ this.createActivityForm() ]),
-        }),   
-      ])
-    });
+		if (index >= 0) {
+			this.CIUUCodeList.splice(index, 1);
+		}
+	}
 
-    let subsectors = this.service.subsectors('1',this.i18nService.language.split('-')[0]);
-    let initialFormData = this.initialFormData();
-    this.values$ = forkJoin([subsectors, initialFormData]).subscribe(results => {
-      this.isLoading = false;
-      this.subSectors = results[0];
-      this.sectors = results[1].sector;
-      this.required_levels = results[1].required_level;
-      this.recognition_types = results[1].recognition_type;
-      this.ovvs = results[1].ovv;
-    });
+	add(event: MatChipInputEvent): void {
+		const input = event.input;
+		const value = event.value;
 
-  }
+		if ((value || "").trim()) {
+			this.CIUUCodeList.push(value.trim());
+		}
 
-  createActivityForm() : FormGroup{
-    return this.formBuilder.group({
-      activityCtrl:['',Validators.required],
-      sectorCtrl: ['', Validators.required],
-      subSectorCtrl: ['', Validators.required],
-    })
-  }
-  addItems(): void {
-    const control = <FormArray>this.formGroup.controls.formArray['controls'][4].controls['activities'];
-    control.push(this.createActivityForm());
-  }
+		if (input) {
+			input.value = "";
+		}
+	}
 
-  deleteItems(i:number):void{
-    const control = <FormArray>this.formGroup.controls.formArray['controls'][4].controls['activities'];
-    control.removeAt(i);
-  }
+	submitForm() {
+		this.isLoading = true;
 
-  onSectorChange(newValue:any) {
-    this.service.subsectors(String(newValue.value), this.i18nService.language.split('-')[0])
-    .subscribe((subsectors: SubSector[]) => { this.subSectors = subsectors; });
+		this.formGroup.controls.formArray["controls"][0].patchValue({
+			ciuuListCodeCtrl: this.CIUUCodeList
+		});
 
-  }
+		const context = {
+			context: this.formGroup.value,
+			gasReportTable: this.table.buildTableSection(),
+			categoryTable: this.table.buildCategoryTableSection()
+		};
 
-  private initialFormData():Observable<PpcnNewFormData> {
-    return this.service.newPpcnFormData(this.levelId, this.i18nService.language.split('-')[0])
-    .pipe(finalize(() => { this.isLoading = false; }));
-  }
+		this.service
+			.submitNewPpcnForm(context)
+			.pipe(
+				finalize(() => {
+					this.formGroup.markAsPristine();
+					this.isLoading = false;
+				})
+			)
+			.subscribe(
+				response => {
+					this.router.navigate(
+						[`/ppcn/${response.id}/download/${response.geographic}`],
+						{ replaceUrl: true }
+					);
+				},
+				error => {
+					log.debug(`New PPCN Form error: ${error}`);
+					this.errorComponent.parseErrors(error);
+					this.error = error;
+				}
+			);
+	}
 
+	private createForm() {
+		this.formGroup = this.formBuilder.group({
+			formArray: this.formBuilder.array([
+				this.formBuilder.group({
+					nameCtrl: ["", Validators.required],
+					representativeNameCtrl: ["", Validators.required],
+					telephoneCtrl: [
+						"",
+						Validators.compose([Validators.required, Validators.minLength(8)])
+					],
+					confidentialCtrl: ["", Validators.required],
+					confidentialValueCtrl: [""],
+					faxCtrl: "",
+					postalCodeCtrl: "",
+					addressCtrl: ["", Validators.required],
+					legalIdCtrl: ["", Validators.required],
+					emailCtrl: ["", Validators.email],
+					legalRepresentativeIdCtrl: ["", Validators.required],
+					ciuuListCodeCtrl: ["", Validators.required]
+				}),
+				this.formBuilder.group({
+					contactNameCtrl: ["", Validators.required],
+					positionCtrl: ["", Validators.required],
+					emailFormCtrl: ["", Validators.email],
+					phoneCtrl: [
+						"",
+						Validators.compose([Validators.required, Validators.minLength(8)])
+					]
+				}),
+				this.formBuilder.group({
+					requiredCtrl: ["", Validators.required],
+					amountOfEmissions:
+						this.levelId === "2" ? ["", Validators.required] : null,
+					amountInventoryData:
+						this.levelId === "2" ? ["", Validators.required] : null,
+					numberofDacilities:
+						this.levelId === "2" ? ["", Validators.required] : null,
+					recognitionCtrl: ["", Validators.required]
+				}),
+				this.formBuilder.group({
+					reductionProjectCtrl: ["", Validators.required],
+					reductionActivityCtrl: ["", Validators.required],
+					reductionDetailsCtrl: ["", Validators.required],
+					reducedEmissionsCtrl: ["", Validators.required],
+					investmentReductions: ["", Validators.required],
+					investmentReductionsValue: ["", Validators.required],
+					totalInvestmentReduction: ["", Validators.required],
+					totalInvestmentReductionValue: ["", Validators.required],
+					totalEmisionesReducidas: ["", Validators.required]
+				}),
+				this.formBuilder.group({
+					compensationScheme: ["", Validators.required],
+					projectLocation: ["", Validators.required],
+					certificateNumber: ["", Validators.required],
+					totalCompensation: ["", Validators.required],
+					compensationCost: ["", Validators.required],
+					compensationCostValue: ["", Validators.required],
+					period: ["", Validators.required],
+					totalEmissionsOffsets: ["", Validators.required],
+					totalCostCompensation: ["", Validators.required]
+				}),
+				this.formBuilder.group({
+					baseYearCtrl: ["", Validators.required],
+					reportYearCtrl: ["", Validators.required],
+					ovvCtrl: ["", Validators.required],
+					implementationEmissionDateCtrl: ["", Validators.required]
+				}),
+				this.formBuilder.group({
+					costRemovalInventoryCtrl: ["", Validators.required],
+					costRemovalInventoryValueCtrl: ["CRC", Validators.required],
+					removalProjectDetailCtrl: ["", Validators.required],
+					totalremovalsCtrl: ["", Validators.required]
+				}),
+				this.formBuilder.group({
+					activities: this.formBuilder.array([this.createActivityForm()])
+				})
+			])
+		});
+
+		this.formGroup.controls.formArray["controls"][3].patchValue({
+			investmentReductions: "CRC",
+			totalInvestmentReduction: "CRC"
+		});
+
+		this.formGroup.controls.formArray["controls"][4].patchValue({
+			totalCostCompensation: "CRC",
+			compensationCost: "CRC"
+		});
+
+		const subsectors = this.service.subsectors(
+			"1",
+			this.i18nService.language.split("-")[0]
+		);
+		const initialFormData = this.initialFormData();
+		this.values$ = forkJoin([subsectors, initialFormData]).subscribe(
+			results => {
+				this.isLoading = false;
+				this.subSectors = results[0];
+				this.sectors = results[1].sector;
+				this.required_levels = results[1].required_level;
+				this.recognition_types = results[1].recognition_type;
+				this.ovvs = results[1].ovv;
+			}
+		);
+	}
+
+	showRecognitionFormSection(elementsToShow: number[]) {
+		return elementsToShow.indexOf(this.reductionFormVar) >= 0;
+	}
+
+	createActivityForm(): FormGroup {
+		return this.formBuilder.group({
+			activityCtrl: ["", Validators.required],
+			sectorCtrl: ["", Validators.required],
+			subSectorCtrl: ["", Validators.required]
+		});
+	}
+
+	addItems(): void {
+		const control = <FormArray>(
+			this.formGroup.controls.formArray["controls"][6].controls["activities"]
+		);
+		control.push(this.createActivityForm());
+	}
+
+	deleteItems(i: number): void {
+		const control = <FormArray>(
+			this.formGroup.controls.formArray["controls"][4].controls["activities"]
+		);
+		control.removeAt(i);
+	}
+
+	onSectorChange(newValue: any) {
+		this.service
+			.subsectors(
+				String(newValue.value),
+				this.i18nService.language.split("-")[0]
+			)
+			.subscribe((subsectors: SubSector[]) => {
+				this.subSectors = subsectors;
+			});
+	}
+
+	private initialFormData(): Observable<PpcnNewFormData> {
+		return this.service
+			.newPpcnFormData(this.levelId, this.i18nService.language.split("-")[0])
+			.pipe(
+				finalize(() => {
+					this.isLoading = false;
+				})
+			);
+	}
 }

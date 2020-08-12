@@ -1,13 +1,16 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { Ppcn, GeographicLevel, SubSector, Organization } from '@app/ppcn/ppcn_registry';
+import { Ppcn } from '@app/ppcn/ppcn_registry';
 import { PpcnNewFormData, Ovv, GeiOrganization } from '@app/ppcn/ppcn-new-form-data';
 import { PpcnReview } from '@app/ppcn/ppcn-review';
 import { S3File } from '@app/core/s3.service';
 import { StatusRoutesMap } from '@app/ppcn/status-routes-map';
 import { MockS3Service } from '@app/core/s3.service.mock';
 import * as _moment from 'moment';
+import { Organization } from './interfaces/organization';
+import { SubSector } from './interfaces/subSector';
+import { GeographicLevel } from './interfaces/geographicLevel';
 const moment = _moment;
 
 export interface Response {
@@ -44,6 +47,10 @@ export class MockPpcnService {
         this.oneOrganization = {
             id: 1,
             name: 'MINAE',
+            legal_identification: 'some legal id',
+            representative_legal_identification: '123456789',
+            confidential: 'Si',
+            confidential_fields: '',
             representative_name: 'Some rep',
             phone_organization: '22334455',
             postal_code: '10311',
@@ -64,13 +71,20 @@ export class MockPpcnService {
                     id: 1,
                     level: 'regional'
                 },
-                recognition_type: {
-                    id: 1,
-                    recognition_type: 'Some recognition'
-                },
-                required_level: {
-                    id: 1,
-                    level_type: 'Some level'
+                organization_classification: {
+                    emission_quantity: '1000',
+                    buildings_number: '1000',
+                    required_level: {
+                        id: 1,
+                        level_type: 'Some level'
+                    },
+                    data_inventory_quantity: '1000',
+                    recognition_type: {
+                        id: 1,
+                        recognition_type: 'Some recognition'
+                    },
+                    reduction: null,
+                    carbon_offset: null,
                 },
                 organization: this.oneOrganization,
                 contact: {
@@ -124,17 +138,28 @@ export class MockPpcnService {
                     id: 2,
                     level: 'national'
                 },
-                recognition_type: {
-                    id: 1,
-                    recognition_type: 'Some recognition'
-                },
-                required_level: {
-                    id: 1,
-                    level_type: 'Some level'
+                organization_classification: {
+                    emission_quantity: '1000',
+                    buildings_number: '1000',
+                    required_level: {
+                        id: 1,
+                        level_type: 'Some level'
+                    },
+                    data_inventory_quantity: '1000',
+                    recognition_type: {
+                        id: 1,
+                        recognition_type: 'Some recognition'
+                    },
+                    reduction: null,
+                    carbon_offset: null,
                 },
                 organization: {
                     id: 1,
                     name: 'ICE',
+                    legal_identification: 'some legal id',
+                    representative_legal_identification: '987654321',
+                    confidential: 'No',
+                    confidential_fields: '',
                     representative_name: 'Some rep',
                     phone_organization: '22337755',
                     postal_code: '10312',

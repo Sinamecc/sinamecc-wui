@@ -20,14 +20,14 @@ export class IngeiHarmonizationComponent implements OnInit {
   nextRoute: string;
 
   constructor(private router: Router,
-    private route: ActivatedRoute) { 
+    private route: ActivatedRoute) {
       this.id = this.route.snapshot.paramMap.get('id');
-      this.title = "harmonization_ingei_proposal";
-      this.fileName = "harmonization_proposal.xlsx";
+      this.title = 'harmonization_ingei_proposal';
+      this.fileName = 'harmonization_proposal.xlsx';
       this.nextRoute = `mitigation/actions/${this.id}/harmonization/proposal/new`;
     }
 
-    ngOnInit() {    
+    ngOnInit() {
     }
 
 }
