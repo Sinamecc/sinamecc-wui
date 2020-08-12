@@ -26,7 +26,7 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>general.legalCertificate</mat-label>
-              <input matInput formControlName="legalIdCtrl" required />
+              <input type="number" matInput formControlName="legalIdCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
@@ -41,19 +41,19 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>general.legalRepresentativeCertificate</mat-label>
-              <input matInput formControlName="legalRepresentativeIdCtrl" required />
+              <input type="number" matInput formControlName="legalRepresentativeIdCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>{{ levelId == 2 ? "Telephone" : "specificLabel.majorTelephone" }} </mat-label>
+              <mat-label translate>{{ levelId == 2 ? "info.telephone" : "specificLabel.majorTelephone" }} </mat-label>
               <input matInput formControlName="telephoneCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn">
+            <mat-form-field class="field-ppcn" *ngIf="levelId == 1">
               <mat-label translate>ppcn.mayorEmail</mat-label>
               <input type="email" matInput formControlName="emailCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -106,7 +106,7 @@
             </mat-form-field>
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>{{ levelId == 2 ? "Address" : "specificLabel.districtCouncilAddress" }}</mat-label>
+              <mat-label translate>{{ levelId == 2 ? "general.exactDirection" : "specificLabel.districtCouncilAddress" }}</mat-label>
               <input matInput formControlName="addressCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
@@ -166,7 +166,7 @@
               <br />
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.classificationAmountEmissions</mat-label>
-                <input type="number" matInput formControlName="amountOfEmissions" required />
+                <input type="number" min="0" oninput="this.value = Math.abs(this.value)" matInput formControlName="amountOfEmissions" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
@@ -181,6 +181,13 @@
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.ClassificationAmountInventoryData</mat-label>
                 <input type="number" matInput formControlName="amountInventoryData" required />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>geographyLabel.complexityMethodologies</mat-label>
+                <input matInput formControlName="complexityMethodologies" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
@@ -441,7 +448,7 @@
                 type="number"
                 [placeholder]="'specificLabel.chooseYear' | translate"
                 formControlName="baseYearCtrl"
-                min="1990"
+                min="2007"
               />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
@@ -468,6 +475,14 @@
               />
               <mat-datepicker-toggle matSuffix [for]="implementationEmissionDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #implementationEmissionDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+
+            <br />
+
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>general.scope</mat-label>
+              <textarea matInput formControlName="scope"></textarea>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
             <br />
@@ -553,11 +568,6 @@
                 ><br />
                 <div [formGroupName]="i">
                   <mat-form-field class="field-ppcn">
-                    <mat-label translate>specificLabel.activityCarriedOrganization</mat-label>
-                    <input matInput formControlName="activityCtrl" />
-                  </mat-form-field>
-                  <br />
-                  <mat-form-field class="field-ppcn">
                     <mat-label translate>geographyLabel.sector</mat-label>
                     <mat-select
                       formControlName="sectorCtrl"
@@ -579,6 +589,11 @@
                       </mat-option>
                     </mat-select>
                     <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
+                  <br />
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate>specificLabel.activityCarriedOrganization</mat-label>
+                    <input matInput formControlName="activityCtrl" />
                   </mat-form-field>
                   <br />
                   <!-- row delete button, hidden if there is just one row -->

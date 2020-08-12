@@ -172,7 +172,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					postalCodeCtrl: "",
 					addressCtrl: ["", Validators.required],
 					legalIdCtrl: ["", Validators.required],
-					emailCtrl: ["", Validators.email],
+					emailCtrl: this.levelId === "1" ? ["", Validators.required] : null,
 					legalRepresentativeIdCtrl: ["", Validators.required],
 					ciuuListCodeCtrl: ["", Validators.required]
 				}),
@@ -192,6 +192,8 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					amountInventoryData:
 						this.levelId === "2" ? ["", Validators.required] : null,
 					numberofDacilities:
+						this.levelId === "2" ? ["", Validators.required] : null,
+					complexityMethodologies:
 						this.levelId === "2" ? ["", Validators.required] : null,
 					recognitionCtrl: ["", Validators.required]
 				}),
@@ -221,7 +223,8 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					baseYearCtrl: ["", Validators.required],
 					reportYearCtrl: ["", Validators.required],
 					ovvCtrl: ["", Validators.required],
-					implementationEmissionDateCtrl: ["", Validators.required]
+					implementationEmissionDateCtrl: ["", Validators.required],
+					scope: ["", Validators.required]
 				}),
 				this.formBuilder.group({
 					costRemovalInventoryCtrl: ["", Validators.required],
