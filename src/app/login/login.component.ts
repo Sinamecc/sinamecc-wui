@@ -1,69 +1,91 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { finalize } from "rxjs/operators";
 
-import { environment } from '@env/environment';
-import { Logger, I18nService, AuthenticationService } from '@app/core';
+import { environment } from "@env/environment";
+import { Logger, I18nService, AuthenticationService } from "@app/core";
 
-const log = new Logger('Login');
+const log = new Logger("Login");
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+	selector: "app-login",
+	templateUrl: "./login.component.html",
+	styleUrls: ["./login.component.scss"]
 })
 export class LoginComponent implements OnInit {
+	version: string = environment.version;
+	error: string;
+	loginForm: FormGroup;
+	isLoading = false;
+	forgotPassword = false;
+	emailValue: string;
+	candSendEmail = false;
+	sendEmail = false;
 
-  version: string = environment.version;
-  error: string;
-  loginForm: FormGroup;
-  isLoading = false;
-  forgotPassword = false;
+	constructor(
+		private router: Router,
+		private formBuilder: FormBuilder,
+		private i18nService: I18nService,
+		private authenticationService: AuthenticationService
+	) {
+		this.createForm();
+	}
 
-  constructor(private router: Router,
-              private formBuilder: FormBuilder,
-              private i18nService: I18nService,
-              private authenticationService: AuthenticationService) {
-    this.createForm();
-  }
+	ngOnInit() {}
 
-  ngOnInit() { }
+	login() {
+		this.isLoading = true;
+		this.authenticationService
+			.login(this.loginForm.value)
+			.pipe(
+				finalize(() => {
+					this.loginForm.markAsPristine();
+					this.isLoading = false;
+				})
+			)
+			.subscribe(
+				credentials => {
+					log.debug(`${credentials.username} successfully logged in`);
+					this.router.navigate(["/home"], { replaceUrl: true });
+				},
+				error => {
+					log.debug(`Login error: ${error}`);
+					this.error = error;
+				}
+			);
+	}
 
-  login() {
-    this.isLoading = true;
-    this.authenticationService.login(this.loginForm.value)
-      .pipe(finalize(() => {
-        this.loginForm.markAsPristine();
-        this.isLoading = false;
-      }))
-      .subscribe(credentials => {
-        log.debug(`${credentials.username} successfully logged in`);
-        this.router.navigate(['/home'], { replaceUrl: true });
-      }, error => {
-        log.debug(`Login error: ${error}`);
-        this.error = error;
-      });
-  }
+	setLanguage(language: string) {
+		this.i18nService.language = language;
+	}
 
-  setLanguage(language: string) {
-    this.i18nService.language = language;
-  }
+	sendEmailRestarPassword(email: string) {
+		this.authenticationService
+			.sendEmailRestarPassword(email)
+			.subscribe(response => {
+				this.sendEmail = true;
+			});
+	}
 
-  get currentLanguage(): string {
-    return this.i18nService.language;
-  }
+	validateEmail(email: string) {
+		const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(String(email).toLowerCase());
+	}
 
-  get languages(): string[] {
-    return this.i18nService.supportedLanguages;
-  }
+	get currentLanguage(): string {
+		return this.i18nService.language;
+	}
 
-  private createForm() {
-    this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      remember: true
-    });
-  }
+	get languages(): string[] {
+		return this.i18nService.supportedLanguages;
+	}
 
+	private createForm() {
+		this.loginForm = this.formBuilder.group({
+			username: ["", Validators.required],
+			password: ["", Validators.required],
+			remember: true
+		});
+	}
 }

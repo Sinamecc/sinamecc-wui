@@ -28,7 +28,10 @@ export interface LoginContext {
 
 const routes = {
 	login: () => `/v1/token/`,
-	userData: (username: string) => `/v1/user/${username}`
+	userData: (username: string) => `/v1/user/${username}`,
+	emailResetPassword: () => `/v1/user/change_password/`,
+	changePassword: (token: string, code: string) =>
+		`/v1/user/change_password/${code}/${token}`
 };
 
 const credentialsKey = "credentials";
@@ -123,6 +126,28 @@ export class AuthenticationService {
 	 */
 	isAuthenticated(): boolean {
 		return !!this.credentials;
+	}
+
+	sendEmailRestarPassword(email: string) {
+		const body = {
+			email: email
+		};
+		return this.httpClient.post(routes.emailResetPassword(), body).pipe(
+			map((response: any) => {
+				return response;
+			})
+		);
+	}
+
+	restorePassword(context: any) {
+		const body = {
+			password: context.password
+		};
+		console.log(context);
+		return this.httpClient.put(
+			routes.changePassword(context.token, context.code),
+			body
+		);
 	}
 
 	/**

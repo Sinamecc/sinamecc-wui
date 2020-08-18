@@ -55,22 +55,14 @@
   border: solid 1px #ccc;
   padding: 9px 10px 9px 32px; 
   width: 350px;
+  outline: none;
 }
 
 .custom-input:focus {
 	background-color: #fff;
 	border-color: rgb(102, 155, 204);
-	-webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
-	-moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
-	box-shadow: 0 0 5px rgba(109,207,246,.5);
-}
-
-.custom-input:focus{
+  box-shadow: 0 0 5px rgba(109,207,246,.5);
   outline: none;
-}
-
-.custom-input {
-outline: none;
 }
 
 .recovery-password-section{
@@ -81,7 +73,7 @@ outline: none;
   width: 350px;
 }
 
-#recovery-label{
+.recovery-label{
   color: rgb(216, 216, 216); 
   text-transform: none;
 }

@@ -1,5 +1,9 @@
 {
   "credentialsSection": {
+    "changePassword":"Cambiar contraseña",
+    "changeText":"Elija una nueva contraseña para terminar el proceso e iniciar sesión",
+    "newPassword":"Nueva contraseña",
+    "confirmPassword":"Confirmar contraseña",
     "passwordRequired": "Contraseña requerida",
     "remember": "Recuerdame",
     "loggedAs": "Inicio de sesión como",
@@ -231,6 +235,7 @@
   },
 
   "errorLabel": {
+    "errorProcessing":"Error procesando la solicitud, intentelo de nuevo más tarde",
     "requiredInput": "Archivo requerido",
     "errorSubmittingForm": "Error subiendo el formulario.",
     "fieldRequired": "Este campo es requerido",
@@ -326,6 +331,8 @@
   },
 
   "specificLabel": {
+    "restartTextSuccess":"Se restablece la contraseña exitosamente",
+    "resetPasswordText":"Se envío un mensaje al correo electrónico indicado para restablecer la contraseña",
     "confidentialParcially": "Indique la información que no desea compartir",
     "entityInstitution": "Entidad o Institución",
     "quantitativeObjective": "Objectivo Cuantificable",
