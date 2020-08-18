@@ -143,7 +143,6 @@ export class AuthenticationService {
 		const body = {
 			password: context.password
 		};
-		console.log(context);
 		return this.httpClient.put(
 			routes.changePassword(context.token, context.code),
 			body
