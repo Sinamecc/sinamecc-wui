@@ -15,7 +15,7 @@
       </div>
     </div>
   </div>
-  <div class="login-container" fxLayout="row" fxLayoutAlign="center">
+  <div *ngIf="!forgotPassword" class="login-container" fxLayout="row" fxLayoutAlign="center">
     <mat-card fxFlex="90%" fxFlex.sm="66%" fxFlex.md="50%" fxFlex.gt-md="33%" class="login-box">
       <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
         <div class="login-error" [hidden]="!error || isLoading" translate>
@@ -46,7 +46,35 @@
           </button>
         </div>
       </form>
+      <br />
+      <div >
+        <a class="mat-h5 custom-option-link" (click)="forgotPassword = !forgotPassword" ><span translate>credentialsSection.forgottenPassword</span></a>
+      </div>
+      
     </mat-card>
   </div>
+
+  <div *ngIf="forgotPassword" class="login-container" fxLayout="row" fxLayoutAlign="center">
+    <mat-card fxFlex="90%" fxFlex.sm="66%" fxFlex.md="50%" fxFlex.gt-md="33%" class="login-box recovery-password-section">
+      <label color="primary" translate class="mat-h2">credentialsSection.forgotPassword</label>
+      <br />
+      <br />
+      <label translate class="mat-h4 recovery-label">credentialsSection.recoveyPassword</label>
+      <br />
+      <br />
+      <input #emailValue
+      (change)="candSendEmail = validateEmail($event.target.value)"
+       class="custom-input" [placeholder]="'info.emailAddress' | translate" type="email" />
+      <br />
+      <br />
+      <button *ngIf="!sendEmail" [disabled]="!candSendEmail" (click)="sendEmailRestarPassword(emailValue.value)" class="recovery-button" mat-raised-button color="primary" type="submit" >
+        <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
+        <span translate>credentialsSection.sendLink</span>
+      </button>
+
+      <label *ngIf="sendEmail" translate class="mat-h3">specificLabel.resetPasswordText</label>
+    </mat-card>
+  </div>
+
 </div>
 
