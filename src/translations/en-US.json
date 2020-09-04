@@ -336,6 +336,9 @@
   },
 
   "specificLabel": {
+    "addRemoval":"Add new removals",
+    "addReductions":"Add new reductions",
+    "addCompensations":"Add new compensations",
     "restartTextSuccess":"Password is reset successfully",
     "resetPasswordText":"A message was sent to the indicated email to reset the password",
     "confidentialParcially": "Indicate the information you do not want to share",

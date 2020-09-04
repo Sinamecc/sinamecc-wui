@@ -331,6 +331,9 @@
   },
 
   "specificLabel": {
+    "addRemoval":"Agregar nuevas remociones",
+    "addReductions":"Agregar nuevas reducciones",
+    "addCompensations":"Agregar nuevas compensaciones",
     "restartTextSuccess":"Se restablece la contraseña exitosamente",
     "resetPasswordText":"Se envío un mensaje al correo electrónico indicado para restablecer la contraseña",
     "confidentialParcially": "Indique la información que no desea compartir",
