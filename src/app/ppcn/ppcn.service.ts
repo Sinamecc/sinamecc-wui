@@ -346,10 +346,10 @@ export class PpcnService {
 		const contact = {};
 		const geiOrganization = {};
 		const geiActivityTypes = {};
-		const reductions: any[] = [];
-		const carbonOffsets: any[] = [];
+		const reductions: Object[] = [];
+		const carbonOffsets: Object[] = [];
 		const organization_classification = {};
-		const gasRemovals: any[] = [];
+		const gasRemovals: Object[] = [];
 
 		const validateListReduction = [2, 3, 4, 5];
 		const validateListCompensation = [4, 5];
@@ -382,46 +382,46 @@ export class PpcnService {
 		organization["ciiu_code_list"] = [];
 
 		// gas removal section
-		context.formArray[6].removals.forEach((removal: any) => {
+		context.formArray[6].removals.forEach((removal: Object) => {
 			const newRemoval = {
-				removal_cost: removal.costRemovalInventoryCtrl,
-				removal_cost_currency: removal.costRemovalInventoryValueCtrl,
-				total: removal.totalremovalsCtrl,
-				removal_descriptions: removal.removalProjectDetailCtrl
+				removal_cost: removal["costRemovalInventoryCtrl"],
+				removal_cost_currency: removal["costRemovalInventoryValueCtrl"],
+				total: removal["totalremovalsCtrl"],
+				removal_descriptions: removal["removalProjectDetailCtrl"]
 			};
 			gasRemovals.push(newRemoval);
 		});
 
 		// Reduction form section //
 
-		context.formArray[3].reductions.forEach((reduction: any) => {
+		context.formArray[3].reductions.forEach((reduction: Object) => {
 			const newReduction = {
-				project: reduction.reductionProjectCtrl,
-				activity: reduction.reductionActivityCtrl,
-				detail_reduction: reduction.reductionDetailsCtrl,
-				emission: reduction.reducedEmissionsCtrl,
-				total_emission: reduction.totalEmisionesReducidas,
-				investment: reduction.investmentReductionsValue,
-				investment_currency: reduction.investmentReductions,
-				total_investment: reduction.totalInvestmentReductionValue,
-				total_investment_currency: reduction.totalInvestmentReduction
+				project: reduction["reductionProjectCtrl"],
+				activity: reduction["reductionActivityCtrl"],
+				detail_reduction: reduction["reductionDetailsCtrl"],
+				emission: reduction["reducedEmissionsCtrl"],
+				total_emission: reduction["totalEmisionesReducidas"],
+				investment: reduction["investmentReductionsValue"],
+				investment_currency: reduction["investmentReductions"],
+				total_investment: reduction["totalInvestmentReductionValue"],
+				total_investment_currency: reduction["totalInvestmentReduction"]
 			};
 			reductions.push(newReduction);
 		});
 
 		// carbon offset form section
 
-		context.formArray[4].compensations.forEach((carbonOffset: any) => {
+		context.formArray[4].compensations.forEach((carbonOffset: Object) => {
 			const newCarbonOffset = {
-				offset_scheme: carbonOffset.compensationScheme,
-				project_location: carbonOffset.projectLocation,
-				certificate_identification: carbonOffset.certificateNumber,
-				total_carbon_offset: carbonOffset.totalCompensation,
-				offset_cost: carbonOffset.compensationCostValue,
-				offset_cost_currency: carbonOffset.compensationCost,
-				period: carbonOffset.period,
-				total_offset_cost: carbonOffset.totalEmissionsOffsets,
-				total_offset_cost_currency: carbonOffset.totalCostCompensation
+				offset_scheme: carbonOffset["compensationScheme"],
+				project_location: carbonOffset["projectLocation"],
+				certificate_identification: carbonOffset["certificateNumber"],
+				total_carbon_offset: carbonOffset["totalCompensation"],
+				offset_cost: carbonOffset["compensationCostValue"],
+				offset_cost_currency: carbonOffset["compensationCost"],
+				period: carbonOffset["period"],
+				total_offset_cost: carbonOffset["totalEmissionsOffsets"],
+				total_offset_cost_currency: carbonOffset["totalCostCompensation"]
 			};
 			carbonOffsets.push(newCarbonOffset);
 		});

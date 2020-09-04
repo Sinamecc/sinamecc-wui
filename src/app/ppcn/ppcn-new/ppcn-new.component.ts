@@ -72,6 +72,8 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
 	reductionFormVar = 0;
 
+	compensationSchemeValues = ["CER", "VER", "UCC"];
+
 	values$: any;
 	@ViewChild("table") table: GasReportTableComponent;
 	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;

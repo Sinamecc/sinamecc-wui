@@ -355,15 +355,10 @@
                 <label translate>geographyLabel.compensationScheme</label> <br />
                 <br />
                 <mat-radio-group formControlName="compensationScheme">
-                  <mat-radio-button value="CER">
-                    CER
+                  <mat-radio-button *ngFor="let value of compensationSchemeValues" [value]="value">
+                    {{value}}
                   </mat-radio-button>
-                  <mat-radio-button value="VER">
-                    VER
-                  </mat-radio-button>
-                  <mat-radio-button value="UCC">
-                    UCC
-                  </mat-radio-button>
+
                 </mat-radio-group>
                 <br />
                 <br />
