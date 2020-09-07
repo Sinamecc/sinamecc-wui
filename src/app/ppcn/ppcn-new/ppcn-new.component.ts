@@ -169,13 +169,13 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 						"",
 						Validators.compose([Validators.required, Validators.minLength(8)])
 					],
-					confidentialCtrl: ["", Validators.required],
+					confidentialCtrl: ["si", Validators.required],
 					confidentialValueCtrl: [""],
 					faxCtrl: "",
 					postalCodeCtrl: "",
 					addressCtrl: ["", Validators.required],
 					legalIdCtrl: ["", Validators.required],
-					emailCtrl: ["", Validators.email],
+					emailCtrl: this.levelId === "1" ? ["", Validators.required] : null,
 					legalRepresentativeIdCtrl: ["", Validators.required],
 					ciuuListCodeCtrl: ["", Validators.required]
 				}),
@@ -189,12 +189,14 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					]
 				}),
 				this.formBuilder.group({
-					requiredCtrl: ["", Validators.required],
+					requiredCtrl: [1, Validators.required],
 					amountOfEmissions:
 						this.levelId === "2" ? ["", Validators.required] : null,
 					amountInventoryData:
 						this.levelId === "2" ? ["", Validators.required] : null,
 					numberofDacilities:
+						this.levelId === "2" ? ["", Validators.required] : null,
+					complexityMethodologies:
 						this.levelId === "2" ? ["", Validators.required] : null,
 					recognitionCtrl: ["", Validators.required]
 				}),
@@ -208,7 +210,8 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					baseYearCtrl: ["", Validators.required],
 					reportYearCtrl: ["", Validators.required],
 					ovvCtrl: ["", Validators.required],
-					implementationEmissionDateCtrl: ["", Validators.required]
+					implementationEmissionDateCtrl: ["", Validators.required],
+					scope: ["", Validators.required]
 				}),
 				this.formBuilder.group({
 					removals: this.formBuilder.array([this.createRemovalForm()])

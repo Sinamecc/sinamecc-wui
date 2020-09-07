@@ -85,11 +85,11 @@
     "MCCRRegistry": "Registro MCCR"
   },
 
-  "ppcn": {
-    "emailContacPerson": "Email of the contact person",
-    "tittleContacPerson": "Title of the contact person",
-    "nameContactPerson": "Name of the contact person",
-    "mayorEmail": "Mayor or Mayor's Email",
+  "ppcn":{
+    "emailContacPerson":"Email of the contact person",
+    "tittleContacPerson":"Title of the contact person",
+    "nameContactPerson":"Name of the contact person",
+    "mayorEmail":"Correo electrónico del alcalde",
     "totalRemovals": "Total remociones",
     "removalProjectDetail": "Detalle de Proyecto Remoción",
     "costInventoryRemovals": "Costo de realizar inventario de remociones",
@@ -101,7 +101,7 @@
     "amountEmissions": "Cantidad de emisiones",
     "organitationCategoryPpcn": "Categoría de la organización (Según apartado 8 del PPCN 2.0)",
     "organitationCategory": "Categoría de la Organización(A,B,C o D)",
-    "resultsVerifiedInventory": "Resultado del inventario verificado (Toneladas CO2 equivalente)",
+    "resultsVerifiedInventory": "Resultado del inventario verificado (TCO2e)",
     "verificationOVV": "Costo del proceso de verificación realizado por el OVV",
     "costGHG": "Costo de realización del inventario de GEI (Incluyendo auditurias internas si aplica)",
     "biogenicEmissions": "Emisiones Biogénicas(toneladas CO2 equivalente)",
@@ -119,6 +119,7 @@
   },
 
   "general": {
+    "exactDirection":"Dirección exacta",
     "dolar": "Dólar",
     "colon": "Colón",
     "currency": "Moneda",
@@ -128,7 +129,7 @@
     "canton": "Cantón",
     "province": "Provincia",
     "partially": "Parcialmente",
-    "confidential": "Confidencial",
+    "confidential": "Información confidencial",
     "legalRepresentativeCertificate": "Cédula Representante Legal",
     "legalCertificate": "Cédula jurídica",
     "lastUpdate": "Ultima actualización",
@@ -158,7 +159,7 @@
     "currentStatus": "Estado Actual",
     "date": "Fecha",
     "download": "Descargar",
-    "CIUUCode": "Código CIUU",
+    "CIUUCode": "Códigos CIUU",
     "CIUU:": "CIUU:",
     "keyAspects": "Aspectos Claves",
     "search": "Buscar",
@@ -297,9 +298,10 @@
   },
 
   "geographyLabel": {
-    "ClassificationAmountInventoryData": "Clasificación - Cantidad de datos del inventario",
-    "classificationNumberFacilities": "Clasificación - Cantidad de instalaciones",
-    "classificationAmountEmissions": "Clasificación - Cantidad de emisiones",
+    "complexityMethodologies":"Complejidad de las metodologías",
+    "ClassificationAmountInventoryData": "Cantidad de datos del inventario",
+    "classificationNumberFacilities": "Cantidad de instalaciones",
+    "classificationAmountEmissions": "Cantidad de emisiones",
     "totalReducedEmissions": "Total de emisiones reducidas",
     "totalInversion": "Inversión Total",
     "investmentReductions": "Inversión reducciones",
@@ -369,7 +371,7 @@
     "selectOVVTitle": "Seleccionar Organismo Validador Verificador",
     "organizationInfo": "Información Básica de la Organización",
     "organizationName": "Nombre de la Organización",
-    "representativeName": "Nombre del Representante",
+    "representativeName": "Nombre del Representante legal",
     "majorName": "Nombre del Alcalde",
     "majorTelephone": "Teléfono del Alcalde",
     "disctrictCouncilAddress": "Dirección del Distrito",
@@ -399,7 +401,7 @@
     "emissionSectorGasAbsorption": "Sectores de Emisión y Absorción de gases",
     "sourcesConsultedCalculationMethodology": "Fuentes consultadas para la metodología de cálculo",
     "GEIActivityTypes": "Tipos de actividad de GEI",
-    "selectOVV": "Seleccione OVV:",
+    "selectOVV": "Seleccione INTECO:",
     "baseYear": "Año base:",
     "reportYear": "Año del informe:",
     "chooseYear": "Elige un año",
