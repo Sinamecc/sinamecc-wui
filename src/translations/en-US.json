@@ -1,5 +1,10 @@
 {
   "credentialsSection": {
+    "changePassword":"Change password",
+    "changeText":"Choose a new password to finish the process and log in",
+    "newPassword":"New Password",
+    "confirmPassword":"Confirm password",
+
     "passwordRequired": "Password is required",
     "remember": "Remember me",
     "loggedAs": "Logged in as",
@@ -9,8 +14,13 @@
     "username": "Username",
     "usernameRequired": "Username is required",
     "credentialsError": "Username or password incorrect.",
-    "changePass": "Change password",
-    "editUser": "Edit User"
+    "changePass":"Change password",
+    "editUser":"Edit User",
+    "forgottenPassword":"have you forgotten your password?",
+    "forgotPassword":"Forgot you password?",
+    "recoveyPassword":"Enter you email address and we'll send you a link to reset you password",
+    "sendLink":"Send Link"
+
   },
 
   "mitigationAction": {
@@ -228,6 +238,7 @@
   },
 
   "errorLabel": {
+    "errorProcessing":"Error processing the request, please try again later",
     "requiredInput": "Required input",
     "errorSubmittingForm": "Error submitting the form",
     "fieldRequired": "This field is required",
@@ -327,6 +338,11 @@
   },
 
   "specificLabel": {
+    "addRemoval":"Add new removals",
+    "addReductions":"Add new reductions",
+    "addCompensations":"Add new compensations",
+    "restartTextSuccess":"Password is reset successfully",
+    "resetPasswordText":"A message was sent to the indicated email to reset the password",
     "confidentialParcially": "Indicate the information you do not want to share",
     "entityInstitution": "Entity or Institution",
     "quantitativeObjective": "Quantitative Objective",
