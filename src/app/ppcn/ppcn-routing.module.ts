@@ -75,6 +75,11 @@ const routes: Routes = [
 			path: "ppcn/:id/reviews",
 			component: ReviewsListComponent,
 			data: { id: extract("id") }
+		},
+		{
+			path: "ppcn/registries/edit/:id",
+			component: PpcnFlowComponent,
+			data: { title: extract("ppcn.createPPCN") }
 		}
 	])
 ];

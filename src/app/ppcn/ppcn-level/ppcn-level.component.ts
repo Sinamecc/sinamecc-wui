@@ -4,7 +4,8 @@ import {
 	ElementRef,
 	ViewChild,
 	EventEmitter,
-	Output
+	Output,
+	Input
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
@@ -40,6 +41,8 @@ export class PpcnLevelComponent implements OnInit {
 	processedGeographicLevel: GeographicLevel[] = [];
 	isLoading = false;
 
+	@Input() level: string = "-1";
+
 	constructor(
 		private router: Router,
 		private formBuilder: FormBuilder,
@@ -54,6 +57,7 @@ export class PpcnLevelComponent implements OnInit {
 
 	ngOnInit() {
 		this.service.currentLevelId.subscribe(levelId => (this.levelId = levelId));
+		console.log(this.level);
 	}
 
 	private createForm() {

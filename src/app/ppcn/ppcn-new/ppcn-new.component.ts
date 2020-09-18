@@ -74,6 +74,10 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
 	compensationSchemeValues = ["CER", "VER", "UCC"];
 
+	@Input() editForm = false;
+	@Input() idPpcnEdit: string;
+	ppcnEdit: any;
+
 	values$: any;
 	@ViewChild("table") table: GasReportTableComponent;
 	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
@@ -93,6 +97,18 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
 	ngOnInit() {
 		this.service.currentLevelId.subscribe(levelId => (this.levelId = levelId));
+		if (this.editForm) {
+			this.getEditPpcn(this.idPpcnEdit);
+		}
+	}
+
+	getEditPpcn(id: string) {
+		this.service
+			.getPpcn(id, this.i18nService.language.split("-")[0])
+			.subscribe((response: Ppcn) => {
+				console.log(response);
+				this.ppcnEdit = response;
+			});
 	}
 
 	ngDoCheck() {
@@ -159,14 +175,30 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 			);
 	}
 
+	filterValue(value: string) {
+		return value == null ? "" : value;
+	}
+
 	private createForm() {
 		this.formGroup = this.formBuilder.group({
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
-					nameCtrl: ["", Validators.required],
-					representativeNameCtrl: ["", Validators.required],
+					nameCtrl: [
+						this.editForm
+							? this.filterValue(this.ppcnEdit.organization.name)
+							: "",
+						Validators.required
+					],
+					representativeNameCtrl: [
+						this.editForm
+							? this.filterValue(this.ppcnEdit.organization.representative_name)
+							: "",
+						Validators.required
+					],
 					telephoneCtrl: [
-						"",
+						this.editForm
+							? this.filterValue(this.ppcnEdit.organization.phone_organization)
+							: "",
 						Validators.compose([Validators.required, Validators.minLength(8)])
 					],
 					confidentialCtrl: ["si", Validators.required],
@@ -174,7 +206,12 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					faxCtrl: "",
 					postalCodeCtrl: "",
 					addressCtrl: ["", Validators.required],
-					legalIdCtrl: ["", Validators.required],
+					legalIdCtrl: [
+						this.editForm
+							? this.ppcnEdit.organization.legal_identification
+							: "",
+						Validators.required
+					],
 					emailCtrl: this.levelId === "1" ? ["", Validators.required] : null,
 					legalRepresentativeIdCtrl: ["", Validators.required],
 					ciuuListCodeCtrl: ["", Validators.required]
