@@ -1,0 +1,18 @@
+<div  (click)="$event.stopPropagation()">
+  <mat-form-field appearance="fill">
+    <mat-label>Fields</mat-label>
+    <mat-select multiple #fieldsOrganizationInformation>
+      <mat-option [value]='field'  *ngFor="let field of fieldsModule">{{field | translate}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br />
+  <mat-form-field>
+    <mat-label>Comment</mat-label>
+    <textarea #commentOrganizationInformation matInput placeholder="You comment here"></textarea>
+  </mat-form-field>
+</div>
+<br />
+<div fxLayout="row" fxLayoutAlign="center none">
+  <button mat-button color="primary">Cancelar</button>
+  <button mat-raised-button (click)="createComment(fieldsOrganizationInformation.value,commentOrganizationInformation.value)" color="primary">Comentar</button>
+</div>

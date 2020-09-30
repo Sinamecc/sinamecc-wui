@@ -23,6 +23,7 @@ import { FileVersionComponent } from "./file-version/file-version.component";
 import { NewReviewComponent } from "./ppcn-reviews/new-review/new-review.component";
 import { ReviewsListComponent } from "./ppcn-reviews/reviews-list/reviews-list.component";
 import { GasReportTableComponent } from "./gas-report-table/gas-report-table.component";
+import { GenericDialogBoxComponent } from './generic-dialog-box/generic-dialog-box.component';
 
 @NgModule({
   imports: [
@@ -48,6 +49,7 @@ import { GasReportTableComponent } from "./gas-report-table/gas-report-table.com
     NewReviewComponent,
     ReviewsListComponent,
     GasReportTableComponent,
+    GenericDialogBoxComponent,
   ],
   providers: [PpcnService, DatePipe],
 })

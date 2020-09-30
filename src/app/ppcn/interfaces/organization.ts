@@ -11,7 +11,7 @@ export interface Organization {
     phone_organization: string;
     postal_code: string;
     fax: string;
-    ciiu: string;
+    ciiu_code: object[];
     address: string;
     contact: Contact;
 }

@@ -7,6 +7,7 @@ import { Contact } from './interfaces/contact';
 import { GeiOrganization } from './interfaces/geiOrganization';
 import { Ovv } from './ppcn-new-form-data';
 import { Files } from './interfaces/files';
+import { GasRemoval } from './interfaces/gasRemoval';
 
 export interface Ppcn {
   id: string;
@@ -20,6 +21,7 @@ export interface Ppcn {
   fsm_state: string;
   next_state: NextState;
   files: Files[];
+  gas_removal:GasRemoval[];
 }
 
 
