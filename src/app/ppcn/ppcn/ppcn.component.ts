@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 import { Ppcn } from '@app/ppcn/ppcn_registry';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -17,12 +17,11 @@ export class PpcnComponent implements OnInit {
   ppcn: Ppcn;
   isLoading: boolean;
   id: string;
+
+  @Input() edit = false;
   userImage: string | SafeUrl = 'assets/default_user_image.png';
   usernameComment:string = '';
   actualDate = new Date();
-
-  
-
 
   modulesToComment = [
     {
@@ -82,7 +81,7 @@ export class PpcnComponent implements OnInit {
     this.isLoading = true;
     this.service.getPpcn(this.id, this.i18nService.language.split('-')[0])
      .pipe(finalize(() => { this.isLoading = false; }))
-     .subscribe((response: Ppcn) => { this.ppcn = response; console.log(response) });
+     .subscribe((response: Ppcn) => { this.ppcn = response;});
      this.getUserPhoto();
 
      

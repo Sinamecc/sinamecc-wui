@@ -10,7 +10,7 @@
       <div fxLayout="row" fxLayoutAlign="start start">
       <div style="width: 50%;text-align: left"  [hidden]="isLoading">
         <h3 translate class="text-color">specificLabel.organizationInformation 
-          <button class="comment-button"  mat-icon-button [matMenuTriggerFor]="menu">
+          <button *ngIf="edit" class="comment-button"  mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>mode_comment</mat-icon>
           </button>
           <mat-menu #menu="matMenu"  style="padding: 3%;width: 10%;height: 5%;">
@@ -39,7 +39,7 @@
 
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">{{'info.contact' | translate }}
-          <button class="comment-button" mat-icon-button [matMenuTriggerFor]="secondMenu">
+          <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="secondMenu">
             <mat-icon>mode_comment</mat-icon>
           </button>
           <mat-menu #secondMenu="matMenu"  style="padding: 3%;width: 10%;height: 5%;">
@@ -53,7 +53,7 @@
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">geographyLabel.requestLevel
 
-          <button class="comment-button" mat-icon-button [matMenuTriggerFor]="thirdMenu">
+          <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="thirdMenu">
             <mat-icon>mode_comment</mat-icon>
           </button>
           <mat-menu #thirdMenu="matMenu"  style="padding: 3%;width: 10%;height: 5%;">
@@ -76,7 +76,7 @@
         <div *ngIf="ppcn?.organization_classification?.reduction">
           <h3 translate class="text-color">geographyLabel.reduction
 
-            <button class="comment-button" mat-icon-button [matMenuTriggerFor]="fourMenu">
+            <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="fourMenu">
               <mat-icon>mode_comment</mat-icon>
             </button>
             <mat-menu #fourMenu="matMenu"  style="padding: 3%;width: 10%;height: 5%;">
@@ -113,7 +113,7 @@
         <div *ngIf="ppcn?.organization_classification?.carbon_offset">
           <h3 translate class="text-color">geographyLabel.compensations
 
-            <button class="comment-button" mat-icon-button [matMenuTriggerFor]="fiveMenu">
+            <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="fiveMenu">
               <mat-icon>mode_comment</mat-icon>
             </button>
             <mat-menu #fiveMenu="matMenu"  style="padding: 3%;width: 10%;height: 5%;">
@@ -149,7 +149,7 @@
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">specificLabel.GEIInformation
 
-          <button class="comment-button" mat-icon-button [matMenuTriggerFor]="sixMenu">
+          <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="sixMenu">
             <mat-icon>mode_comment</mat-icon>
           </button>
           <mat-menu #sixMenu="matMenu"  style="padding: 3%;width: 10%;height: 5%;">
@@ -170,7 +170,7 @@
         <div>
           <h3 translate class="text-color">ppcn.removals
 
-            <button class="comment-button" mat-icon-button [matMenuTriggerFor]="sevenMenu">
+            <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="sevenMenu">
               <mat-icon>mode_comment</mat-icon>
             </button>
             <mat-menu #sevenMenu="matMenu"  style="padding: 3%;width: 10%;height: 5%;">
@@ -206,7 +206,7 @@
       </div>
       <br />
       <br />
-      <div class="comment-container">
+      <div class="comment-container" *ngIf="edit">
         <div fxLayout="row" class="comment-box-header">
           <div class="image-container">
             <img [src]="userImage" class="mat-elevation-z2 custom-image"/>

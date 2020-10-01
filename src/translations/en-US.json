@@ -338,6 +338,7 @@
   },
 
   "specificLabel": {
+    "commentForm":"Comment form",
     "addRemoval":"Add new removals",
     "addReductions":"Add new reductions",
     "addCompensations":"Add new compensations",

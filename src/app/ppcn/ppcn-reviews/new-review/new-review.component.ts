@@ -32,9 +32,10 @@ export class NewReviewComponent implements OnInit {
   formSubmitRoute: string;
   statusses: string[];
   shouldDisplayComment: boolean;
+  module = 'ppcn'
 
   processedPpcnsStatusses: PpcnReviewNewFormData;
-  formValues: any;
+  formValues: any; 
 
   constructor(private router: Router,
     private route: ActivatedRoute,

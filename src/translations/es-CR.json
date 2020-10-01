@@ -333,6 +333,7 @@
   },
 
   "specificLabel": {
+    "commentForm":"Comentar formulario",
     "addRemoval":"Agregar nuevas remociones",
     "addReductions":"Agregar nuevas reducciones",
     "addCompensations":"Agregar nuevas compensaciones",

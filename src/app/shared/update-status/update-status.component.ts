@@ -5,7 +5,7 @@ import {
 	OnChanges,
 	SimpleChanges,
 	Output,
-	EventEmitter
+	EventEmitter, ViewChild, ViewContainerRef, AfterContentInit, ComponentFactory, ComponentFactoryResolver
 } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
@@ -17,6 +17,7 @@ import { finalize, tap } from "rxjs/operators";
 const log = new Logger("UploadProposal");
 
 import { UpdateStatusService } from "@app/shared/update-status/update-status.service";
+import { PpcnComponent } from "@app/ppcn/ppcn/ppcn.component";
 
 @Component({
 	selector: "app-update-status",
@@ -32,10 +33,15 @@ export class UpdateStatusComponent implements OnInit {
 	@Input() formData: FormData;
 	@Input() shouldDisplayComment: boolean;
 	@Output() formSubmitted = new EventEmitter<any>();
+	@Input() module: string;
+	
+	@ViewChild('commentContainer',{read:ViewContainerRef}) container:any;
+	moduleRef:any;
 
 	error: string;
 	form: FormGroup;
 	isLoading = false;
+	comment = false;
 
 	constructor(
 		private router: Router,
@@ -43,11 +49,25 @@ export class UpdateStatusComponent implements OnInit {
 		public snackBar: MatSnackBar,
 		private formBuilder: FormBuilder,
 		private translateService: TranslateService,
-		private service: UpdateStatusService
+		private service: UpdateStatusService,
+		private resolver: ComponentFactoryResolver
+
 	) {}
 
 	ngOnInit() {
 		this.createForm();
+	}
+
+	loadComponent(){
+		if(this.module === 'ppcn'){
+			this.loadPPCNCommentComponent();
+		}
+	}
+
+	loadPPCNCommentComponent(){
+		const siglePostFactory = this.resolver.resolveComponentFactory(PpcnComponent);
+		this.moduleRef = this.container.createComponent(siglePostFactory) ;
+		this.moduleRef.instance.edit = true;
 	}
 
 	private createForm() {
