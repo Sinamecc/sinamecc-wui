@@ -119,6 +119,7 @@
   },
 
   "general": {
+    "level":"Nivel ",
     "exactDirection":"Dirección exacta",
     "dolar": "Dólar",
     "colon": "Colón",

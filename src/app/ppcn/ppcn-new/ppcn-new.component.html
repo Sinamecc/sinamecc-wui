@@ -48,7 +48,7 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{ levelId == 2 ? "info.telephone" : "specificLabel.majorTelephone" }} </mat-label>
-              <input matInput formControlName="telephoneCtrl" required />
+              <input type="number" matInput formControlName="telephoneCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
@@ -185,11 +185,21 @@
               </mat-form-field>
               <br />
 
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>geographyLabel.complexityMethodologies</mat-label>
-                <input matInput formControlName="complexityMethodologies" required />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
+              <span translate>geographyLabel.complexityMethodologies</span><br /><br />
+            <mat-radio-group  formControlName="complexityMethodologies">
+              <mat-radio-button value="Nivel 1">
+                <span translate>general.level</span>1
+              </mat-radio-button>
+              <mat-radio-button value="Nivel 2">
+                <span translate>general.level</span>2
+              </mat-radio-button>
+              <mat-radio-button value="Nivel 3">
+                <span translate>general.level</span>3
+              </mat-radio-button>
+            </mat-radio-group>
+            <br />
+
+
               <br />
             </div>
             <br />
@@ -416,7 +426,7 @@
 
                 <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.period </mat-label>
-                  <input matInput formControlName="period" required />
+                  <input min="2007" type="number" matInput formControlName="period" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
 
@@ -508,7 +518,7 @@
                 type="number"
                 [placeholder]="'specificLabel.chooseYear' | translate"
                 formControlName="reportYearCtrl"
-                min="1990"
+                min="2007"
               />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>

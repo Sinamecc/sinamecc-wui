@@ -197,7 +197,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					numberofDacilities:
 						this.levelId === "2" ? ["", Validators.required] : null,
 					complexityMethodologies:
-						this.levelId === "2" ? ["", Validators.required] : null,
+						this.levelId === "2" ? ["Nivel 1", Validators.required] : null,
 					recognitionCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
@@ -297,10 +297,10 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
 	createRemovalForm(): FormGroup {
 		return this.formBuilder.group({
-			costRemovalInventoryCtrl: ["", Validators.required],
-			costRemovalInventoryValueCtrl: ["CRC", Validators.required],
-			removalProjectDetailCtrl: ["", Validators.required],
-			totalremovalsCtrl: ["", Validators.required]
+			costRemovalInventoryCtrl: [""],
+			costRemovalInventoryValueCtrl: ["CRC"],
+			removalProjectDetailCtrl: [""],
+			totalremovalsCtrl: [""]
 		});
 	}
 

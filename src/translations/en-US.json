@@ -120,6 +120,7 @@
   },
 
   "general": {
+    "level":"Level ",
     "exactDirection":"Exact direction",
     "dolar": "Dollar",
     "colon": "Colon",
