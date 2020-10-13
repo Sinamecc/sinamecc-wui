@@ -28,21 +28,21 @@
               <!-- group name in this case row index -->
               <div [formGroupName]="i">
                 <div>
-                  <mat-form-field style="width: 100%;">
+                  <mat-form-field [style.width.%]="100">
                     <div>
-                      <mat-card fxLayout="row" fxLayoutAlign="start center" style="height: 130px;overflow-y: auto;">
+                      <mat-card fxLayout="row" fxLayoutAlign="start center" class="document-card">
                         <div>
-                          <mat-icon  style="font-size: 50px;">picture_as_pdf</mat-icon>
+                          <mat-icon  [style.font-size.px]="50">picture_as_pdf</mat-icon>
                         </div>
-                        <div style="margin-left: 35px;width: 60%;" fxLayout="column"  fxLayoutAlign="start start" >
-                          <mat-card-title>{{fileDetail[i].name}}</mat-card-title>
-                          <mat-card-subtitle>{{fileDetail[i].description}}</mat-card-subtitle>
+                        <div class="description-section" fxLayout="column"  fxLayoutAlign="start start" >
+                          <mat-card-title translate>{{fileDetail[i].name}}</mat-card-title>
+                          <mat-card-subtitle translate>{{fileDetail[i].description}}</mat-card-subtitle>
                         </div>
                         <span fxFlex></span>
                         <div fxLayoutAlign=" end" >
                           <app-input-file class="mat-raised-button mat-primary" formControlName="file"
                             [placeholder]="'errorLabel.requiredInput' | translate" valuePlaceholder="No file selected"
-                            required>
+                            required accept="application/pdf">
                           </app-input-file>
                         </div>
                       </mat-card>
