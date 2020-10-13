@@ -126,9 +126,6 @@ export class PpcnUploadComponent implements OnInit {
 		this.ppcns = this.initialFormData().pipe(
 			tap((ppcns: Ppcn[]) => {
 				this.processedPpcns = ppcns;
-				console.log(
-					this.processedPpcns[2].organization_classification.recognition_type
-				);
 
 				this.ppcn = this.processedPpcns.find(
 					ppcnToFind => parseInt(ppcnToFind.id, 10) === this.id
