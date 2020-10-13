@@ -92,7 +92,7 @@ export class PpcnUploadComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.id = parseInt(this.route.snapshot.paramMap.get("id"), 10);
+		this.id = Number(this.route.snapshot.paramMap.get("id"));
 	}
 
 	submitForm() {
@@ -128,7 +128,7 @@ export class PpcnUploadComponent implements OnInit {
 				this.processedPpcns = ppcns;
 
 				this.ppcn = this.processedPpcns.find(
-					ppcnToFind => parseInt(ppcnToFind.id, 10) === this.id
+					ppcnToFind => Number(ppcnToFind.id) === this.id
 				);
 
 				const idRecognition = this.ppcn.organization_classification
