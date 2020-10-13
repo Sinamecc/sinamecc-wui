@@ -156,7 +156,7 @@ export class PpcnUploadComponent implements OnInit {
 	}
 
 	loadDocumentsByRecognitionType(id: Number) {
-		const carbonoNeutral = [
+		const neutralCarbonDocuments = [
 			{
 				name: "ppcnDocument.purchaseCertificate",
 				description: "ppcnDocument.purchaseCertificateDescription"
@@ -166,7 +166,7 @@ export class PpcnUploadComponent implements OnInit {
 				description: "ppcnDocument.formalConclusionVVDescription"
 			}
 		];
-		const carbonoNeuPlus = [
+		const neutralCarbonPlus = [
 			{
 				name: "ppcnDocument.FONAFIFOPurchaseCertificate",
 				description: "ppcnDocument.FONAFIFOPurchaseCertificateDescription"
@@ -187,15 +187,15 @@ export class PpcnUploadComponent implements OnInit {
 		};
 
 		if (id === 5) {
-			this.fileDetail = this.fileDetail.concat(carbonoNeuPlus);
-			for (const element of carbonoNeuPlus) {
+			this.fileDetail = this.fileDetail.concat(neutralCarbonPlus);
+			for (const element of neutralCarbonPlus) {
 				this.addFile();
 			}
 		}
 
 		if (id === 4) {
-			this.fileDetail = this.fileDetail.concat(carbonoNeutral);
-			for (const element of carbonoNeutral) {
+			this.fileDetail = this.fileDetail.concat(neutralCarbonDocuments);
+			for (const element of neutralCarbonDocuments) {
 				this.addFile();
 			}
 		}
