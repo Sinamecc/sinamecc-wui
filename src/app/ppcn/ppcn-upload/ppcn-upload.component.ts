@@ -131,6 +131,8 @@ export class PpcnUploadComponent implements OnInit {
 					ppcnToFind => Number(ppcnToFind.id) === this.id
 				);
 
+				console.log(this.ppcn);
+
 				const idRecognition = this.ppcn.organization_classification
 					.recognition_type;
 				this.form = this.formBuilder.group({
@@ -156,9 +158,9 @@ export class PpcnUploadComponent implements OnInit {
 	}
 
 	loadDocumentsByRecognitionType(id: Number) {
-		const idNeutralCarbonDocuments = 4;
-		const idNeutralCarbonPlus = 5;
-		const idCarbonoReductionPlus = 3;
+		const idNeutralCarbonDocuments = 9;
+		const idNeutralCarbonPlus = 10;
+		const idCarbonoReductionPlus = 8;
 		const neutralCarbonDocuments = [
 			{
 				name: "ppcnDocument.purchaseCertificate",
