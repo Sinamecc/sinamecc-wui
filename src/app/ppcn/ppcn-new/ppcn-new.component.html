@@ -24,12 +24,13 @@
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn">
+            <mat-form-field class="field-ppcn" *ngIf="levelId == 2">
               <mat-label translate>general.legalCertificate</mat-label>
               <input type="number" matInput formControlName="legalIdCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
+              <br />
             </mat-form-field>
-            <br />
+            
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{levelId==2 ? "specificLabel.representativeName" : "specificLabel.majorName" }}
@@ -48,7 +49,7 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{ levelId == 2 ? "info.telephone" : "specificLabel.majorTelephone" }} </mat-label>
-              <input matInput formControlName="telephoneCtrl" required />
+              <input type="number" matInput formControlName="telephoneCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
@@ -80,18 +81,19 @@
               <br />
             </mat-form-field>
 
-            <mat-form-field class="field-ppcn">
+            <mat-form-field class="field-ppcn"  *ngIf="levelId == 2">
               <mat-label translate> info.fax </mat-label>
               <input matInput formControlName="faxCtrl" />
+              <br />
             </mat-form-field>
-            <br />
+            
             <mat-form-field class="field-ppcn">
               <mat-label translate> info.postalCode </mat-label>
               <input matInput formControlName="postalCodeCtrl" />
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn">
+            <mat-form-field class="field-ppcn"  *ngIf="levelId == 2">
               <mat-chip-list #chipList>
                 <mat-chip *ngFor="let code of CIUUCodeList" [selectable]="selectable" [removable]="removable"
                   (removed)="removeCIUUCode(code)">
@@ -185,11 +187,21 @@
               </mat-form-field>
               <br />
 
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>geographyLabel.complexityMethodologies</mat-label>
-                <input matInput formControlName="complexityMethodologies" required />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
+              <span translate>geographyLabel.complexityMethodologies</span><br /><br />
+            <mat-radio-group  formControlName="complexityMethodologies">
+              <mat-radio-button value="1">
+                <span translate>general.level</span>1
+              </mat-radio-button>
+              <mat-radio-button value="2">
+                <span translate>general.level</span>2
+              </mat-radio-button>
+              <mat-radio-button value="3">
+                <span translate>general.level</span>3
+              </mat-radio-button>
+            </mat-radio-group>
+            <br />
+
+
               <br />
             </div>
             <br />
@@ -225,7 +237,7 @@
             <br />
           </mat-step>
 
-          <div *ngIf="showRecognitionFormSection([2,3,4,5])">
+          <div *ngIf="showRecognitionFormSection([7,8,9,10])">
             <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
 
               <div formArrayName="reductions">
@@ -264,7 +276,7 @@
 
                     <mat-form-field class="field-ppcn">
                       <mat-label translate>geographyLabel.reducedEmissions<strong>(t CO2e)</strong></mat-label>
-                      <input matInput formControlName="reducedEmissionsCtrl" required />
+                      <input type="number" matInput formControlName="reducedEmissionsCtrl" required />
                       <mat-error translate>errorLabel.fieldRequired</mat-error>
                     </mat-form-field>
                     <br />
@@ -308,7 +320,7 @@
 
                     <mat-form-field class="field-ppcn">
                       <mat-label translate>geographyLabel.totalReducedEmissions<strong>(t CO2e)</strong></mat-label>
-                      <input matInput formControlName="totalEmisionesReducidas" required />
+                      <input type="number" matInput formControlName="totalEmisionesReducidas" required />
                       <mat-error translate>errorLabel.fieldRequired</mat-error>
                     </mat-form-field>
                   </div>
@@ -344,7 +356,7 @@
             </mat-step>
           </div>
 
-          <div *ngIf="showRecognitionFormSection([4,5])">
+          <div *ngIf="showRecognitionFormSection([9,10])">
             <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
               <div formArrayName="compensations">
                 <div *ngFor="let compensation of formGroup.controls.formArray['controls'][4].controls['compensations'].controls; let i = index">
@@ -416,7 +428,7 @@
 
                 <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.period </mat-label>
-                  <input matInput formControlName="period" required />
+                  <input min="2007" type="number" matInput formControlName="period" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
 
@@ -435,7 +447,7 @@
                   </div>
                   <mat-form-field class="field-ppcn">
                     <mat-label translate>geographyLabel.totalEmissionsOffsets<strong>(t CO2e)</strong> </mat-label>
-                    <input matInput formControlName="totalEmissionsOffsets" required />
+                    <input type="number" matInput formControlName="totalEmissionsOffsets" required />
                     <mat-error translate>errorLabel.fieldRequired</mat-error>
                   </mat-form-field>
                   <br />
@@ -479,7 +491,7 @@
             <ng-template matStepLabel>
               <span translate>specificLabel.GEIInformation</span>
             </ng-template>
-            <mat-form-field class="field-ppcn">
+            <mat-form-field class="field-ppcn" *ngIf="levelId == 2">
               <mat-label translate>specificLabel.selectOVV</mat-label>:
               <mat-select formControlName="ovvCtrl" [placeholder]="'OVV Selector' | translate">
                 <mat-option *ngFor="let ovv of ovvs" [value]="ovv.id">
@@ -508,11 +520,11 @@
                 type="number"
                 [placeholder]="'specificLabel.chooseYear' | translate"
                 formControlName="reportYearCtrl"
-                min="1990"
+                min="2007"
               />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
-            <mat-form-field class="field-ppcn">
+            <mat-form-field class="field-ppcn" *ngIf="levelId == 2">
               <mat-label translate>specificLabel.emissionDateDeclarationVerification</mat-label>
               <input
                 matInput
@@ -534,7 +546,7 @@
 
             <br />
 
-            <app-gas-report-table #table></app-gas-report-table>
+            <app-gas-report-table *ngIf="levelId == 2" #table></app-gas-report-table>
 
             <br />
             <br />
@@ -631,7 +643,7 @@
             </div>
           </mat-step>
 
-          <mat-step formGroupName="7" [stepControl]="formArray?.get([7])">
+          <mat-step formGroupName="7" [stepControl]="formArray?.get([7])"  *ngIf="levelId == 2">
             <ng-template matStepLabel>
               <span translate>specificLabel.GEIActivityTypes</span>
             </ng-template>
