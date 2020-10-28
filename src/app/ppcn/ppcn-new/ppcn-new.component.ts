@@ -92,7 +92,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 	}
 
 	ngOnInit() {
-		this.service.currentLevelId.subscribe(levelId => (this.levelId = levelId));
+		this.service.currentLevelId.subscribe(
+			levelId => (this.levelId = levelId.toString())
+		);
 	}
 
 	ngDoCheck() {
