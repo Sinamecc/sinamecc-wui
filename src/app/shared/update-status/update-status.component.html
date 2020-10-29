@@ -42,7 +42,7 @@
 
           <br />
 
-          <button (click)="loadComponent()" type="button" *ngIf="module == 'ppcn'" mat-raised-button color="primary">
+          <button (click)="loadComponent()" type="button" *ngIf="module == 'ppcn' && !moduleRef" mat-raised-button color="primary">
             <span translate>specificLabel.commentForm</span>
           </button>
           <br />

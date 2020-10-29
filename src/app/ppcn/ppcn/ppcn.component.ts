@@ -127,7 +127,10 @@ export class PpcnComponent implements OnInit {
 			.subscribe((response: Ppcn) => {
 				this.ppcn = response;
 			});
-		this.loadComments(this.id);
+		if (!this.edit) {
+			this.loadComments(this.id);
+		}
+
 		this.getUserPhoto();
 	}
 
