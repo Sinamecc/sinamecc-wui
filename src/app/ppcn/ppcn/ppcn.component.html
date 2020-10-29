@@ -8,12 +8,12 @@
         <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
       </mat-card-subtitle>
       <div fxLayout="row" fxLayoutAlign="start start">
-      <div style="width: 50%;text-align: left"  [hidden]="isLoading">
+      <div class="info-container"  [hidden]="isLoading">
         <h3 translate class="text-color">specificLabel.organizationInformation 
           <button *ngIf="edit" class="comment-button"  mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>mode_comment</mat-icon>
           </button>
-          <mat-menu #menu="matMenu"  style="padding: 3%;width: 10%;height: 5%;">
+          <mat-menu #menu="matMenu"  class="comment-menu">
             <app-generic-dialog-box  [moduleName]="'specificLabel.organizationInformation'" [fieldsModule]="modulesToComment[0].fields" [comments]="comments"></app-generic-dialog-box>
           </mat-menu>
         </h3> 
@@ -42,7 +42,7 @@
           <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="secondMenu">
             <mat-icon>mode_comment</mat-icon>
           </button>
-          <mat-menu #secondMenu="matMenu"  style="padding: 3%;width: 10%;height: 5%;">
+          <mat-menu #secondMenu="matMenu"  class="comment-menu">
             <app-generic-dialog-box  [moduleName]="'info.contact'" [fieldsModule]="modulesToComment[1].fields" [comments]="comments"></app-generic-dialog-box>
           </mat-menu>
         </h3>
@@ -56,7 +56,7 @@
           <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="thirdMenu">
             <mat-icon>mode_comment</mat-icon>
           </button>
-          <mat-menu #thirdMenu="matMenu"  style="padding: 3%;width: 10%;height: 5%;">
+          <mat-menu #thirdMenu="matMenu"  class="comment-menu">
             <app-generic-dialog-box  [moduleName]="'geographyLabel.requestLevel'" [fieldsModule]="modulesToComment[2].fields" [comments]="comments"></app-generic-dialog-box>
           </mat-menu>
 
@@ -79,7 +79,7 @@
             <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="fourMenu">
               <mat-icon>mode_comment</mat-icon>
             </button>
-            <mat-menu #fourMenu="matMenu"  style="padding: 3%;width: 10%;height: 5%;">
+            <mat-menu #fourMenu="matMenu"  class="comment-menu">
               <app-generic-dialog-box  [moduleName]="'geographyLabel.reduction'" [fieldsModule]="modulesToComment[3].fields" [comments]="comments"></app-generic-dialog-box>
             </mat-menu>
           </h3>
@@ -116,7 +116,7 @@
             <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="fiveMenu">
               <mat-icon>mode_comment</mat-icon>
             </button>
-            <mat-menu #fiveMenu="matMenu"  style="padding: 3%;width: 10%;height: 5%;">
+            <mat-menu #fiveMenu="matMenu"  class="comment-menu">
               <app-generic-dialog-box  [moduleName]="'geographyLabel.compensations'" [fieldsModule]="modulesToComment[4].fields" [comments]="comments"></app-generic-dialog-box>
             </mat-menu>
 
@@ -152,7 +152,7 @@
           <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="sixMenu">
             <mat-icon>mode_comment</mat-icon>
           </button>
-          <mat-menu #sixMenu="matMenu"  style="padding: 3%;width: 10%;height: 5%;">
+          <mat-menu #sixMenu="matMenu"  class="comment-menu">
             <app-generic-dialog-box  [moduleName]="'specificLabel.GEIInformation'" [fieldsModule]="modulesToComment[5].fields" [comments]="comments"></app-generic-dialog-box>
           </mat-menu>
 
@@ -173,7 +173,7 @@
             <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="sevenMenu">
               <mat-icon>mode_comment</mat-icon>
             </button>
-            <mat-menu #sevenMenu="matMenu"  style="padding: 3%;width: 10%;height: 5%;">
+            <mat-menu #sevenMenu="matMenu"  class="comment-menu">
               <app-generic-dialog-box  [moduleName]="'specificLabel.GEIInformation'" [fieldsModule]="modulesToComment[6].fields" [comments]="comments"></app-generic-dialog-box>
             </mat-menu>
 
@@ -206,33 +206,23 @@
       </div>
       <br />
       <br />
-      <div class="comment-container" *ngIf="edit">
+      <div class="comment-container" *ngIf="edit || showComments">
         <div fxLayout="row" class="comment-box-header">
           <div class="image-container">
             <img [src]="userImage" class="mat-elevation-z2 custom-image"/>
           </div>
-          <div style="margin-left: 15px;"  fxLayout="row" fxLayoutAlign="start center">
-            <strong style="color: rgb(22, 78, 143);font-style: italic;"><label>{{usernameComment}}</label></strong>, <label>{{actualDate | date:'yyyy-MM-dd'}}</label>
+          <div [style.margin-lef.px]="15"  fxLayout="row" fxLayoutAlign="start center">
+            <strong class="header-text"><label>{{usernameComment}}</label></strong> , <label>{{actualDate | date:'yyyy-MM-dd'}}</label>
           </div>
         </div>
-        <div style="text-align: left; padding: 5%;">
-          <div *ngFor="let module of comments" style="border: solid rgb(11, 79, 105);
-          border-radius: 10px;
-          padding: 15px 10px 10px;
-          width: 95%;
-          margin-bottom: 25px;">
-            <div style="position:absolute;
-            margin-top:-35px;
-            margin-left:10px;
-            color:white;
-            background:rgb(11, 79, 105);
-            border-radius:10px;
-            padding:2px 10px;
+        <div class="main-comment-container">
+          <div *ngFor="let module of comments" class="border-comment-container">
+            <div class="sub-comment-container
             ">
               <label  class="mat-h2"><strong>{{module.module | translate}}</strong></label>
             </div>
             <br />
-            <div class="mat-elevation-z2" *ngFor="let comment of module.comments"  style="border: solid;padding: 20px;background-color: rgba(202, 226, 248, 0.5);border: none;margin-bottom: 25px;overflow-y: auto;">
+            <div class="mat-elevation-z2 sub-comment" *ngFor="let comment of module.comments"  >
               <div>
                 <label><strong>Fields :</strong></label> 
                 <label *ngFor="let field of comment.fields"> {{field | translate}} ,</label>

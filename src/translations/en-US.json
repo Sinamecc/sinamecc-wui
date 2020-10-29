@@ -120,6 +120,9 @@
   },
 
   "general": {
+    "comment":"Comment",
+    "commentary":"Commentary",
+    "fields":"Fields",
     "exactDirection":"Exact direction",
     "dolar": "Dollar",
     "colon": "Colon",

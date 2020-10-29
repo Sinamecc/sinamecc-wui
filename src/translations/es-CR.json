@@ -119,6 +119,9 @@
   },
 
   "general": {
+    "comment":"Comentar",
+    "commentary":"Comentario",
+    "fields":"Campos",
     "exactDirection":"Dirección exacta",
     "dolar": "Dólar",
     "colon": "Colón",

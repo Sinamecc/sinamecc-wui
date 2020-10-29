@@ -5,7 +5,12 @@ import {
 	OnChanges,
 	SimpleChanges,
 	Output,
-	EventEmitter, ViewChild, ViewContainerRef, AfterContentInit, ComponentFactory, ComponentFactoryResolver
+	EventEmitter,
+	ViewChild,
+	ViewContainerRef,
+	AfterContentInit,
+	ComponentFactory,
+	ComponentFactoryResolver
 } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
@@ -34,9 +39,9 @@ export class UpdateStatusComponent implements OnInit {
 	@Input() shouldDisplayComment: boolean;
 	@Output() formSubmitted = new EventEmitter<any>();
 	@Input() module: string;
-	
-	@ViewChild('commentContainer',{read:ViewContainerRef}) container:any;
-	moduleRef:any;
+
+	@ViewChild("commentContainer", { read: ViewContainerRef }) container: any;
+	moduleRef: any;
 
 	error: string;
 	form: FormGroup;
@@ -51,22 +56,23 @@ export class UpdateStatusComponent implements OnInit {
 		private translateService: TranslateService,
 		private service: UpdateStatusService,
 		private resolver: ComponentFactoryResolver
-
 	) {}
 
 	ngOnInit() {
 		this.createForm();
 	}
 
-	loadComponent(){
-		if(this.module === 'ppcn'){
+	loadComponent() {
+		if (this.module === "ppcn") {
 			this.loadPPCNCommentComponent();
 		}
 	}
 
-	loadPPCNCommentComponent(){
-		const siglePostFactory = this.resolver.resolveComponentFactory(PpcnComponent);
-		this.moduleRef = this.container.createComponent(siglePostFactory) ;
+	loadPPCNCommentComponent() {
+		const siglePostFactory = this.resolver.resolveComponentFactory(
+			PpcnComponent
+		);
+		this.moduleRef = this.container.createComponent(siglePostFactory);
 		this.moduleRef.instance.edit = true;
 	}
 
@@ -79,14 +85,18 @@ export class UpdateStatusComponent implements OnInit {
 
 	submitForm() {
 		this.isLoading = true;
-		this.formSubmitted.emit(this.form.value);
+		const context = {
+			context: this.form.value,
+			comments: this.moduleRef
+				? this.moduleRef.instance.buildFormatComments(
+						this.moduleRef.instance.comments
+				  )
+				: []
+		};
+		this.formSubmitted.emit(context);
+
 		this.service
-			.updateStatus(
-				this.form.value,
-				this.entity,
-				this.formSubmitRoute,
-				this.formData
-			)
+			.updateStatus(context, this.entity, this.formSubmitRoute, this.formData)
 			.pipe(
 				finalize(() => {
 					this.form.markAsPristine();
