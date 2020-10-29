@@ -132,8 +132,10 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
 		const context = {
 			context: this.formGroup.value,
-			gasReportTable: this.table.buildTableSection(),
-			categoryTable: this.table.buildCategoryTableSection()
+			gasReportTable:
+				this.levelId === "2" ? this.table.buildTableSection() : null,
+			categoryTable:
+				this.levelId === "2" ? this.table.buildCategoryTableSection() : null
 		};
 
 		this.service
@@ -171,13 +173,14 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					],
 					confidentialCtrl: ["si", Validators.required],
 					confidentialValueCtrl: [""],
-					faxCtrl: "",
+					faxCtrl: this.levelId === "2" ? "" : null,
 					postalCodeCtrl: "",
 					addressCtrl: ["", Validators.required],
-					legalIdCtrl: ["", Validators.required],
+					legalIdCtrl: this.levelId === "2" ? ["", Validators.required] : null,
 					emailCtrl: this.levelId === "1" ? ["", Validators.required] : null,
 					legalRepresentativeIdCtrl: ["", Validators.required],
-					ciuuListCodeCtrl: ["", Validators.required]
+					ciuuListCodeCtrl:
+						this.levelId === "2" ? ["", Validators.required] : null
 				}),
 				this.formBuilder.group({
 					contactNameCtrl: ["", Validators.required],
@@ -197,7 +200,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					numberofDacilities:
 						this.levelId === "2" ? ["", Validators.required] : null,
 					complexityMethodologies:
-						this.levelId === "2" ? ["", Validators.required] : null,
+						this.levelId === "2" ? ["Nivel 1", Validators.required] : null,
 					recognitionCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
@@ -209,8 +212,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 				this.formBuilder.group({
 					baseYearCtrl: ["", Validators.required],
 					reportYearCtrl: ["", Validators.required],
-					ovvCtrl: ["", Validators.required],
-					implementationEmissionDateCtrl: ["", Validators.required],
+					ovvCtrl: this.levelId === "2" ? ["", Validators.required] : null,
+					implementationEmissionDateCtrl:
+						this.levelId === "2" ? ["", Validators.required] : null,
 					scope: ["", Validators.required]
 				}),
 				this.formBuilder.group({
@@ -289,18 +293,18 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
 	createActivityForm(): FormGroup {
 		return this.formBuilder.group({
-			activityCtrl: ["", Validators.required],
-			sectorCtrl: ["", Validators.required],
-			subSectorCtrl: ["", Validators.required]
+			activityCtrl: this.levelId === "2" ? ["", Validators.required] : null,
+			sectorCtrl: this.levelId === "2" ? ["", Validators.required] : null,
+			subSectorCtrl: this.levelId === "2" ? ["", Validators.required] : null
 		});
 	}
 
 	createRemovalForm(): FormGroup {
 		return this.formBuilder.group({
-			costRemovalInventoryCtrl: ["", Validators.required],
-			costRemovalInventoryValueCtrl: ["CRC", Validators.required],
-			removalProjectDetailCtrl: ["", Validators.required],
-			totalremovalsCtrl: ["", Validators.required]
+			costRemovalInventoryCtrl: [""],
+			costRemovalInventoryValueCtrl: ["CRC"],
+			removalProjectDetailCtrl: [""],
+			totalremovalsCtrl: [""]
 		});
 	}
 
