@@ -11,29 +11,29 @@
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
-              <span *ngIf="levelId == 1" translate>info.basicInfo </span>
-              <span *ngIf="levelId == 2" translate>specificLabel.organizationInfo </span>
+              <span *ngIf="levelId == '1'" translate>info.basicInfo </span>
+              <span *ngIf="levelId == '2'" translate>specificLabel.organizationInfo </span>
             </ng-template>
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>{{
-                levelId == 2 ? "specificLabel.organizationName" : "geographyLabel.cantonDistrictName"
+                levelId == '2' ? "specificLabel.organizationName" : "geographyLabel.cantonDistrictName"
               }}</mat-label>
               <input matInput formControlName="nameCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn" *ngIf="levelId == 2">
+            <mat-form-field class="field-ppcn" *ngIf="levelId == '2'">
               <mat-label translate>general.legalCertificate</mat-label>
-              <input type="number" matInput formControlName="legalIdCtrl" required />
+              <input type="number" matInput formControlName="legalIdCtrl"  />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
               <br />
             </mat-form-field>
             
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>{{levelId==2 ? "specificLabel.representativeName" : "specificLabel.majorName" }}
+              <mat-label translate>{{levelId=='2' ? "specificLabel.representativeName" : "specificLabel.majorName" }}
               </mat-label>
               <input matInput formControlName="representativeNameCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -48,15 +48,15 @@
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>{{ levelId == 2 ? "info.telephone" : "specificLabel.majorTelephone" }} </mat-label>
+              <mat-label translate>{{ levelId == '2' ? "info.telephone" : "specificLabel.majorTelephone" }} </mat-label>
               <input type="number" matInput formControlName="telephoneCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn" *ngIf="levelId == 1">
+            <mat-form-field class="field-ppcn" *ngIf="levelId == '1'">
               <mat-label translate>ppcn.mayorEmail</mat-label>
-              <input type="email" matInput formControlName="emailCtrl" required />
+              <input type="email" matInput formControlName="emailCtrl"/>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
@@ -81,7 +81,7 @@
               <br />
             </mat-form-field>
 
-            <mat-form-field class="field-ppcn"  *ngIf="levelId == 2">
+            <mat-form-field class="field-ppcn"  *ngIf="levelId == '2'">
               <mat-label translate> info.fax </mat-label>
               <input matInput formControlName="faxCtrl" />
               <br />
@@ -93,7 +93,7 @@
             </mat-form-field>
             <br />
 
-            <mat-form-field class="field-ppcn"  *ngIf="levelId == 2">
+            <mat-form-field class="field-ppcn"  *ngIf="levelId == '2'">
               <mat-chip-list #chipList>
                 <mat-chip *ngFor="let code of CIUUCodeList" [selectable]="selectable" [removable]="removable"
                   (removed)="removeCIUUCode(code)">
@@ -102,13 +102,13 @@
                 </mat-chip>
                 <input [placeholder]="'general.CIUUCode' | translate" #chipListInput formControlName="ciuuListCodeCtrl"
                   [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                  (matChipInputTokenEnd)="add($event)" required />
+                  (matChipInputTokenEnd)="add($event)"  />
               </mat-chip-list>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>{{ levelId == 2 ? "general.exactDirection" : "specificLabel.districtCouncilAddress" }}</mat-label>
+              <mat-label translate>{{ levelId == '2' ? "general.exactDirection" : "specificLabel.districtCouncilAddress" }}</mat-label>
               <input matInput formControlName="addressCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
@@ -168,21 +168,21 @@
               <br />
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.classificationAmountEmissions</mat-label>
-                <input type="number" min="0" oninput="this.value = Math.abs(this.value)" matInput formControlName="amountOfEmissions" required />
+                <input type="number" min="0" oninput="this.value = Math.abs(this.value)" matInput formControlName="amountOfEmissions"  />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.classificationNumberFacilities</mat-label>
-                <input type="number" matInput formControlName="numberofDacilities" required />
+                <input type="number" matInput formControlName="numberofDacilities"  />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>geographyLabel.ClassificationAmountInventoryData</mat-label>
-                <input type="number" matInput formControlName="amountInventoryData" required />
+                <input type="number" matInput formControlName="amountInventoryData"  />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <br />
@@ -491,7 +491,7 @@
             <ng-template matStepLabel>
               <span translate>specificLabel.GEIInformation</span>
             </ng-template>
-            <mat-form-field class="field-ppcn" *ngIf="levelId == 2">
+            <mat-form-field class="field-ppcn" *ngIf="levelId == '2'">
               <mat-label translate>specificLabel.selectOVV</mat-label>:
               <mat-select formControlName="ovvCtrl" [placeholder]="'OVV Selector' | translate">
                 <mat-option *ngFor="let ovv of ovvs" [value]="ovv.id">
@@ -524,7 +524,7 @@
               />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
-            <mat-form-field class="field-ppcn" *ngIf="levelId == 2">
+            <mat-form-field class="field-ppcn" *ngIf="levelId == '2'">
               <mat-label translate>specificLabel.emissionDateDeclarationVerification</mat-label>
               <input
                 matInput
@@ -546,7 +546,7 @@
 
             <br />
 
-            <app-gas-report-table *ngIf="levelId == 2" #table></app-gas-report-table>
+            <app-gas-report-table *ngIf="levelId == '2'" #table></app-gas-report-table>
 
             <br />
             <br />
@@ -643,7 +643,7 @@
             </div>
           </mat-step>
 
-          <mat-step formGroupName="7" [stepControl]="formArray?.get([7])"  *ngIf="levelId == 2">
+          <mat-step formGroupName="7" [stepControl]="formArray?.get([7])"  *ngIf="levelId == '2'">
             <ng-template matStepLabel>
               <span translate>specificLabel.GEIActivityTypes</span>
             </ng-template>
