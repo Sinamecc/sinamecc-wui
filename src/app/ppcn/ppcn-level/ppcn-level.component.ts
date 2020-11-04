@@ -57,7 +57,6 @@ export class PpcnLevelComponent implements OnInit {
 
 	ngOnInit() {
 		this.service.currentLevelId.subscribe(levelId => (this.levelId = levelId));
-		console.log(this.level);
 	}
 
 	private createForm() {
@@ -82,6 +81,7 @@ export class PpcnLevelComponent implements OnInit {
 	}
 
 	onSaving(context: any) {
+		console.log(context.value);
 		this.service.updateCurrentGeographicalLevel(context.value);
 	}
 }

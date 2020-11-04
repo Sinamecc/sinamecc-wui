@@ -67,8 +67,6 @@ export class PpcnFlowComponent implements OnInit {
 		this.editForm = this.router.url.includes("edit") ? true : false;
 		if (this.editForm) {
 			this.idPpcnEdit = this.router.url.split("/").splice(-1)[0];
-			console.log(this.idPpcnEdit);
-
 			this.getEditPpcn(this.idPpcnEdit);
 		}
 	}

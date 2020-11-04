@@ -96,7 +96,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 	}
 
 	ngOnInit() {
-		this.service.currentLevelId.subscribe(levelId => (this.levelId = levelId));
+		this.service.currentLevelId.subscribe(
+			levelId => (this.levelId = levelId.toString())
+		);
 		if (this.editForm) {
 			this.getEditPpcn(this.idPpcnEdit);
 		}
@@ -182,6 +184,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 	}
 
 	private createForm() {
+		console.log(this.editForm);
 		this.formGroup = this.formBuilder.group({
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
@@ -205,35 +208,130 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					],
 					confidentialCtrl: ["si", Validators.required],
 					confidentialValueCtrl: [""],
-					faxCtrl: this.levelId === "2" ? "" : null,
-					postalCodeCtrl: "",
-					addressCtrl: ["", Validators.required],
-					legalIdCtrl: this.levelId === "2" ? ["", Validators.required] : null,
+					faxCtrl:
+						this.levelId === "2"
+							? [
+									this.editForm
+										? this.filterValue(this.ppcnEdit.organization.fax)
+										: "",
+									Validators.required
+							  ]
+							: null,
+					postalCodeCtrl: this.editForm
+						? this.filterValue(this.ppcnEdit.organization.postal_code)
+						: "",
+					addressCtrl: [
+						this.editForm
+							? this.filterValue(this.ppcnEdit.organization.address)
+							: "",
+						Validators.required
+					],
+					legalIdCtrl:
+						this.levelId === "2"
+							? [
+									this.editForm
+										? this.filterValue(
+												this.ppcnEdit.organization.legal_identification
+										  )
+										: "",
+									Validators.required
+							  ]
+							: null,
+
 					emailCtrl: this.levelId === "1" ? ["", Validators.required] : null,
-					legalRepresentativeIdCtrl: ["", Validators.required],
+					legalRepresentativeIdCtrl: [
+						this.editForm
+							? this.filterValue(
+									this.ppcnEdit.organization.representative_legal_identification
+							  )
+							: "",
+						Validators.required
+					],
 					ciuuListCodeCtrl:
 						this.levelId === "2" ? ["", Validators.required] : null
 				}),
 				this.formBuilder.group({
-					contactNameCtrl: ["", Validators.required],
-					positionCtrl: ["", Validators.required],
-					emailFormCtrl: ["", Validators.email],
+					contactNameCtrl: [
+						this.editForm
+							? this.filterValue(this.ppcnEdit.organization.contact.full_name)
+							: "",
+						Validators.required
+					],
+					positionCtrl: [
+						this.editForm
+							? this.filterValue(this.ppcnEdit.organization.contact.job_title)
+							: "",
+						Validators.required
+					],
+					emailFormCtrl: [
+						this.editForm
+							? this.filterValue(this.ppcnEdit.organization.contact.email)
+							: "",
+						Validators.email
+					],
 					phoneCtrl: [
-						"",
+						this.editForm
+							? this.filterValue(this.ppcnEdit.organization.contact.phone)
+							: "",
 						Validators.compose([Validators.required, Validators.minLength(8)])
 					]
 				}),
 				this.formBuilder.group({
-					requiredCtrl: [1, Validators.required],
+					requiredCtrl: [
+						this.editForm
+							? this.filterValue(
+									this.ppcnEdit.organization_classification.required_level.id
+							  )
+							: "",
+						Validators.required
+					],
+
 					amountOfEmissions:
-						this.levelId === "2" ? ["", Validators.required] : null,
+						this.levelId === "2"
+							? [
+									this.editForm
+										? this.filterValue(
+												this.ppcnEdit.organization_classification
+													.emission_quantity
+										  )
+										: "",
+									Validators.required
+							  ]
+							: null,
 					amountInventoryData:
-						this.levelId === "2" ? ["", Validators.required] : null,
+						this.levelId === "2"
+							? [
+									this.editForm
+										? this.filterValue(
+												this.ppcnEdit.organization_classification
+													.data_inventory_quantity
+										  )
+										: "",
+									Validators.required
+							  ]
+							: null,
 					numberofDacilities:
-						this.levelId === "2" ? ["", Validators.required] : null,
+						this.levelId === "2"
+							? [
+									this.editForm
+										? this.filterValue(
+												this.ppcnEdit.organization_classification
+													.buildings_number
+										  )
+										: "",
+									Validators.required
+							  ]
+							: null,
 					complexityMethodologies:
-						this.levelId === "2" ? ["Nivel 1", Validators.required] : null,
-					recognitionCtrl: ["", Validators.required]
+						this.levelId === "2" ? ["1", Validators.required] : null,
+					recognitionCtrl: [
+						this.editForm
+							? this.filterValue(
+									this.ppcnEdit.organization_classification.recognition_type.id
+							  )
+							: "",
+						Validators.required
+					]
 				}),
 				this.formBuilder.group({
 					reductions: this.formBuilder.array([this.createReductionForm()])
@@ -242,11 +340,38 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					compensations: this.formBuilder.array([this.createcompensationForm()])
 				}),
 				this.formBuilder.group({
-					baseYearCtrl: ["", Validators.required],
-					reportYearCtrl: ["", Validators.required],
-					ovvCtrl: this.levelId === "2" ? ["", Validators.required] : null,
+					baseYearCtrl: [
+						this.editForm
+							? this.filterValue(this.ppcnEdit.gei_organization.base_year)
+							: "",
+						Validators.required
+					],
+					reportYearCtrl: [
+						this.editForm
+							? this.filterValue(this.ppcnEdit.gei_organization.report_year)
+							: "",
+						Validators.required
+					],
+					ovvCtrl:
+						this.levelId === "2"
+							? [
+									this.editForm
+										? this.filterValue(this.ppcnEdit.gei_organization.ovv.id)
+										: "",
+									Validators.required
+							  ]
+							: null,
 					implementationEmissionDateCtrl:
-						this.levelId === "2" ? ["", Validators.required] : null,
+						this.levelId === "2"
+							? [
+									this.editForm
+										? this.filterValue(
+												this.ppcnEdit.gei_organization.emission_ovv_date
+										  )
+										: "",
+									Validators.required
+							  ]
+							: null,
 					scope: ["", Validators.required]
 				}),
 				this.formBuilder.group({
