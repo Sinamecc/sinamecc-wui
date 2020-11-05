@@ -1,14 +1,14 @@
 <div (click)="$event.stopPropagation()">
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" [style.width.%]="100">
     <mat-label translate>general.fields</mat-label>
     <mat-select multiple #fieldsOrganizationInformation>
       <mat-option *ngFor="let field of fieldsModule" [value]="field">{{field | translate}}</mat-option>
     </mat-select>
   </mat-form-field>
   <br />
-  <mat-form-field>
+  <mat-form-field [style.width.%]="100">
     <mat-label translate>general.commentary</mat-label>
-    <textarea #commentOrganizationInformation matInput placeholder="You comment here"></textarea>
+    <textarea [style.height.px]="190" #commentOrganizationInformation matInput placeholder="You comment here"></textarea>
   </mat-form-field>
 </div>
 <br />
