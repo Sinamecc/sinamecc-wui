@@ -56,12 +56,14 @@ export class PpcnLevelComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.service.currentLevelId.subscribe(levelId => (this.levelId = levelId));
+		this.service.currentLevelId.subscribe(levelId => {
+			this.levelId = levelId;
+		});
 	}
 
 	private createForm() {
 		this.form = this.formBuilder.group({
-			geographicCtrl: ["", Validators.required]
+			geographicCtrl: [1, Validators.required]
 		});
 		this.geographicLevel = this.initialFormData().pipe(
 			tap((geographicLevel: GeographicLevel[]) => {
@@ -81,7 +83,6 @@ export class PpcnLevelComponent implements OnInit {
 	}
 
 	onSaving(context: any) {
-		console.log(context.value);
 		this.service.updateCurrentGeographicalLevel(context.value);
 	}
 }

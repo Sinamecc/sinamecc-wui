@@ -31,6 +31,7 @@ export class PpcnFlowComponent implements OnInit {
 	@ViewChild("DownloadProposalComponent")
 	downloadProposal: DownloadProposalComponent;
 	@ViewChild("PpcnUploadComponent") uploadFiles: PpcnUploadComponent;
+	@ViewChild("stepper") stepper: any;
 
 	mainGroup: FormGroup;
 
@@ -47,7 +48,7 @@ export class PpcnFlowComponent implements OnInit {
 
 	editForm: boolean;
 	idPpcnEdit: string;
-	ppcnEdit: any;
+	ppcnEdit: Ppcn;
 
 	constructor(
 		private _formBuilder: FormBuilder,
@@ -60,9 +61,9 @@ export class PpcnFlowComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.service.currentLevelId.subscribe(
-			(levelId: string) => (this.levelId = levelId)
-		);
+		this.service.currentLevelId.subscribe((levelId: string) => {
+			this.levelId = levelId.toString();
+		});
 
 		this.editForm = this.router.url.includes("edit") ? true : false;
 		if (this.editForm) {
@@ -77,6 +78,8 @@ export class PpcnFlowComponent implements OnInit {
 			.subscribe((response: Ppcn) => {
 				this.editLevel = response.geographic_level.id.toString();
 				this.ppcnEdit = response;
+				this.levelId = this.ppcnEdit.geographic_level.id.toString();
+				this.stepper.next();
 			});
 	}
 

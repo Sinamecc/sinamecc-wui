@@ -107,17 +107,22 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 	getEditPpcn(id: string) {
 		this.service
 			.getPpcn(id, this.i18nService.language.split("-")[0])
-			.subscribe((response: Ppcn) => {
+			.subscribe((response: any) => {
 				console.log(response);
 				this.ppcnEdit = response;
+				this.addCIUUCodes(this.ppcnEdit.organization.ciiu_code);
+				this.levelId = this.ppcnEdit.geographic_level.id.toString();
+				this.createForm();
 			});
 	}
 
 	ngDoCheck() {
-		if (this.levelId !== this.levelIdTmp && this.levelId !== "") {
-			this.createForm();
-			this.levelIdTmp = this.levelId;
-		}
+		//console.log(this.levelId);
+		//if (this.levelId !== "") {
+		//	console.log("create form");
+		//	this.createForm();
+		//	this.levelIdTmp = this.levelId;
+		//}
 	}
 
 	removeCIUUCode(code: string): void {
@@ -125,6 +130,12 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
 		if (index >= 0) {
 			this.CIUUCodeList.splice(index, 1);
+		}
+	}
+
+	addCIUUCodes(codes: Object[]) {
+		for (const code of codes) {
+			this.CIUUCodeList.push(code["ciiu_code"]);
 		}
 	}
 
@@ -183,8 +194,12 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		return value == null ? "" : value;
 	}
 
+	test() {
+		console.log(this.formArray.get([0]));
+	}
+
 	private createForm() {
-		console.log(this.editForm);
+		console.log(this.levelId === "1", this.levelId);
 		this.formGroup = this.formBuilder.group({
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
@@ -248,7 +263,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 						Validators.required
 					],
 					ciuuListCodeCtrl:
-						this.levelId === "2" ? ["", Validators.required] : null
+						this.levelId === "2"
+							? [this.editForm ? " " : "", Validators.required]
+							: null
 				}),
 				this.formBuilder.group({
 					contactNameCtrl: [
@@ -375,7 +392,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					scope: ["", Validators.required]
 				}),
 				this.formBuilder.group({
-					removals: this.formBuilder.array([this.createRemovalForm()])
+					removals: this.editForm
+						? this.createRemovalForm()
+						: this.formBuilder.array([this.createRemovalForm()])
 				}),
 				this.formBuilder.group({
 					activities: this.formBuilder.array([this.createActivityForm()])
@@ -383,21 +402,23 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 			])
 		});
 
-		const subsectors = this.service.subsectors(
-			"1",
-			this.i18nService.language.split("-")[0]
-		);
-		const initialFormData = this.initialFormData();
-		this.values$ = forkJoin([subsectors, initialFormData]).subscribe(
-			results => {
-				this.isLoading = false;
-				this.subSectors = results[0];
-				this.sectors = results[1].sector;
-				this.required_levels = results[1].required_level;
-				this.recognition_types = results[1].recognition_type;
-				this.ovvs = results[1].ovv;
-			}
-		);
+		if (!this.editForm) {
+			const subsectors = this.service.subsectors(
+				"1",
+				this.i18nService.language.split("-")[0]
+			);
+			const initialFormData = this.initialFormData();
+			this.values$ = forkJoin([subsectors, initialFormData]).subscribe(
+				results => {
+					this.isLoading = false;
+					this.subSectors = results[0];
+					this.sectors = results[1].sector;
+					this.required_levels = results[1].required_level;
+					this.recognition_types = results[1].recognition_type;
+					this.ovvs = results[1].ovv;
+				}
+			);
+		}
 	}
 
 	showRecognitionFormSection(elementsToShow: number[]) {
@@ -456,13 +477,27 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		});
 	}
 
-	createRemovalForm(): FormGroup {
-		return this.formBuilder.group({
-			costRemovalInventoryCtrl: [""],
-			costRemovalInventoryValueCtrl: ["CRC"],
-			removalProjectDetailCtrl: [""],
-			totalremovalsCtrl: [""]
-		});
+	createRemovalForm(): FormGroup | FormArray {
+		const removals: FormGroup[] = [];
+		if (this.editForm) {
+			for (let reduction of this.ppcnEdit.gas_removal) {
+				const form = this.formBuilder.group({
+					costRemovalInventoryCtrl: [reduction.removal_cost],
+					costRemovalInventoryValueCtrl: [reduction.removal_cost_currency],
+					removalProjectDetailCtrl: [reduction.removal_descriptions],
+					totalremovalsCtrl: [reduction.total]
+				});
+				removals.push(form);
+			}
+			return this.formBuilder.array(removals);
+		} else {
+			return this.formBuilder.group({
+				costRemovalInventoryCtrl: [""],
+				costRemovalInventoryValueCtrl: ["CRC"],
+				removalProjectDetailCtrl: [""],
+				totalremovalsCtrl: [""]
+			});
+		}
 	}
 
 	addItems(): void {

@@ -502,6 +502,7 @@ export class PpcnService {
 			});
 		}
 		formData["gei_organization"] = geiOrganization;
+		console.log(formData);
 		return formData;
 	}
 

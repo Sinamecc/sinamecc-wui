@@ -13,7 +13,7 @@
           <ng-template matStepLabel><span translate>geographyLabel.geographicLevel</span></ng-template>
           <app-ppcn-level [level]="editLevel"></app-ppcn-level>
           <div class="align-right">
-            <app-generic-button [disabled]="levelId === ''" (click)="stepper.next();" name="general.next">
+            <app-generic-button [disabled]="!levelId" (click)="stepper.next();" name="general.next">
             </app-generic-button>
           </div>
         </mat-step>
