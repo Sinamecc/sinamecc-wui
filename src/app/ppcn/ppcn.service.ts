@@ -351,8 +351,8 @@ export class PpcnService {
 		const organization_classification = {};
 		const gasRemovals: Object[] = [];
 
-		const validateListReduction = [2, 3, 4, 5];
-		const validateListCompensation = [4, 5];
+		const validateListReduction = [7, 8, 9, 10];
+		const validateListCompensation = [9, 10];
 
 		this.currentLevelId.subscribe(
 			levelId => (formData["geographic_level"] = levelId)
@@ -437,6 +437,11 @@ export class PpcnService {
 		organization_classification["data_inventory_quantity"] =
 			context.formArray[2].amountInventoryData;
 
+		console.log(
+			"recognition index control",
+			validateListReduction.indexOf(context.formArray[2].recognitionCtrl)
+		);
+		console.log("recognition  control", context.formArray[2].recognitionCtrl);
 		organization_classification["reduction"] =
 			validateListReduction.indexOf(context.formArray[2].recognitionCtrl) >= 0
 				? reductions
@@ -470,10 +475,15 @@ export class PpcnService {
 		formData["organization"] = organization;
 
 		if (!context.formArray[5].ovvCtrl) {
-			formData["base_year"] = this.datePipe.transform(
-				context.formArray[5].reportYearCtrl,
+			if (geiOrganizationId) {
+				geiOrganization["id"] = String(geiOrganizationId);
+			}
+			geiOrganization["emission_ovv_date"] = this.datePipe.transform(
+				context.formArray[5].implementationEmissionDateCtrl,
 				"yyyy-MM-dd"
 			);
+			geiOrganization["base_year"] = context.formArray[5].baseYearCtrl;
+			geiOrganization["report_year"] = context.formArray[5].reportYearCtrl;
 		} else {
 			if (geiOrganizationId) {
 				geiOrganization["id"] = String(geiOrganizationId);

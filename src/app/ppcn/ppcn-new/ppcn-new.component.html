@@ -547,7 +547,7 @@
 
             <br />
 
-            <app-gas-report-table *ngIf="levelId == '2'" #table></app-gas-report-table>
+            <app-gas-report-table [editForm]="editForm" [editData]="ppcnEdit" *ngIf="levelId == '2'" #table></app-gas-report-table>
 
             <br />
             <br />

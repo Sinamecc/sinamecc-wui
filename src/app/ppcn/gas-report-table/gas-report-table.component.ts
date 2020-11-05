@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
 	selector: "app-gas-report-table",
@@ -6,6 +6,9 @@ import { Component, OnInit } from "@angular/core";
 	styleUrls: ["./gas-report-table.component.scss"]
 })
 export class GasReportTableComponent implements OnInit {
+	@Input() editForm = false;
+	@Input() editData: Object;
+
 	inventaryResultTable = {
 		firstSection: {
 			tableHeaderValues: [
@@ -96,7 +99,12 @@ export class GasReportTableComponent implements OnInit {
 
 	constructor() {}
 
-	ngOnInit() {}
+	ngOnInit() {
+		if (this.editData) {
+			console.log(this.editData, "edit dattaaaa");
+			this.setTablesValues(this.editData["gei_organization"]["gas_report"]);
+		}
+	}
 
 	changeMatrixValues(row: number, column: number, value: string) {
 		this.inventaryResultTable.firstSection.tableRows[row][column].value = value;
@@ -114,6 +122,7 @@ export class GasReportTableComponent implements OnInit {
 	getTableValue(section: string, row: string, column: number) {
 		return this.inventaryResultTable[section][row][column];
 	}
+
 	getCategoryTableValue(row: string, column: string | number) {
 		return this.categoryTable[row][column];
 	}
@@ -214,5 +223,26 @@ export class GasReportTableComponent implements OnInit {
 		}
 
 		return gasScopes;
+	}
+
+	setTablesValues(data: any) {
+		console.log("gas report : ", data);
+		// set third section data
+		this.inventaryResultTable.thirdSection.firsRow[2] =
+			data["biogenic_emission"].total;
+		this.inventaryResultTable.thirdSection.secondRow[1] =
+			data["biogenic_emission"].scope_1;
+		this.inventaryResultTable.thirdSection.thirdSection[1] =
+			data["biogenic_emission"].scope_2;
+
+		// set fourth section data
+		this.inventaryResultTable.fourthSection.firsRow[1] =
+			data["cost_ghg_inventory"];
+		this.inventaryResultTable.fourthSection.firsRow[3] =
+			data["cost_ghg_inventory_currency"];
+		this.inventaryResultTable.fourthSection.secondRow[1] =
+			data["cost_ovv_process"];
+		this.inventaryResultTable.fourthSection.secondRow[3] =
+			data["cost_ovv_process_currency"];
 	}
 }

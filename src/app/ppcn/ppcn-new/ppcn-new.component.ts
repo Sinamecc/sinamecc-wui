@@ -107,22 +107,25 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 	getEditPpcn(id: string) {
 		this.service
 			.getPpcn(id, this.i18nService.language.split("-")[0])
-			.subscribe((response: any) => {
+			.subscribe((response: Ppcn) => {
 				console.log(response);
 				this.ppcnEdit = response;
 				this.addCIUUCodes(this.ppcnEdit.organization.ciiu_code);
 				this.levelId = this.ppcnEdit.geographic_level.id.toString();
+				this.reductionFormVar = +response.organization_classification
+					.recognition_type.id;
+
+				//this.table.setTablesValues(this.ppcnEdit.gei_organization.gas_report);
+
 				this.createForm();
 			});
 	}
 
 	ngDoCheck() {
-		//console.log(this.levelId);
-		//if (this.levelId !== "") {
-		//	console.log("create form");
-		//	this.createForm();
-		//	this.levelIdTmp = this.levelId;
-		//}
+		if (this.levelId !== this.levelIdTmp && this.levelId !== "") {
+			this.createForm();
+			this.levelIdTmp = this.levelId;
+		}
 	}
 
 	removeCIUUCode(code: string): void {
@@ -199,7 +202,6 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 	}
 
 	private createForm() {
-		console.log(this.levelId === "1", this.levelId);
 		this.formGroup = this.formBuilder.group({
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
@@ -351,10 +353,14 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					]
 				}),
 				this.formBuilder.group({
-					reductions: this.formBuilder.array([this.createReductionForm()])
+					reductions: this.editForm
+						? this.createReductionForm()
+						: this.formBuilder.array([this.createReductionForm()])
 				}),
 				this.formBuilder.group({
-					compensations: this.formBuilder.array([this.createcompensationForm()])
+					compensations: this.editForm
+						? this.createcompensationForm()
+						: this.formBuilder.array([this.createcompensationForm()])
 				}),
 				this.formBuilder.group({
 					baseYearCtrl: [
@@ -441,32 +447,108 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		] = value;
 	}
 
-	createReductionForm(): FormGroup {
-		return this.formBuilder.group({
-			reductionProjectCtrl: ["", Validators.required],
-			reductionActivityCtrl: ["", Validators.required],
-			reductionDetailsCtrl: ["", Validators.required],
-			reducedEmissionsCtrl: ["", Validators.required],
-			investmentReductions: ["CRC", Validators.required],
-			investmentReductionsValue: ["", Validators.required],
-			totalInvestmentReduction: ["CRC", Validators.required],
-			totalInvestmentReductionValue: ["", Validators.required],
-			totalEmisionesReducidas: ["", Validators.required]
-		});
+	createReductionForm(): FormGroup | FormArray {
+		if (this.editForm) {
+			const reductions: FormGroup[] = [];
+			for (const reduction of this.ppcnEdit.organization_classification
+				.reduction) {
+				const form = this.formBuilder.group({
+					reductionProjectCtrl: [reduction.project, Validators.required],
+					reductionActivityCtrl: [reduction.activity, Validators.required],
+					reductionDetailsCtrl: [
+						reduction.detail_reduction,
+						Validators.required
+					],
+					reducedEmissionsCtrl: [reduction.emission, Validators.required],
+					investmentReductions: [
+						reduction.investment_currency,
+						Validators.required
+					],
+					investmentReductionsValue: [
+						reduction.investment,
+						Validators.required
+					],
+					totalInvestmentReduction: [
+						reduction.total_investment_currency,
+						Validators.required
+					],
+					totalInvestmentReductionValue: [
+						reduction.total_investment,
+						Validators.required
+					],
+					totalEmisionesReducidas: [
+						reduction.total_emission,
+						Validators.required
+					]
+				});
+				reductions.push(form);
+			}
+			return this.formBuilder.array(reductions);
+		} else {
+			return this.formBuilder.group({
+				reductionProjectCtrl: ["", Validators.required],
+				reductionActivityCtrl: ["", Validators.required],
+				reductionDetailsCtrl: ["", Validators.required],
+				reducedEmissionsCtrl: ["", Validators.required],
+				investmentReductions: ["CRC", Validators.required],
+				investmentReductionsValue: ["", Validators.required],
+				totalInvestmentReduction: ["CRC", Validators.required],
+				totalInvestmentReductionValue: ["", Validators.required],
+				totalEmisionesReducidas: ["", Validators.required]
+			});
+		}
 	}
 
-	createcompensationForm(): FormGroup {
-		return this.formBuilder.group({
-			compensationScheme: ["", Validators.required],
-			projectLocation: ["", Validators.required],
-			certificateNumber: ["", Validators.required],
-			totalCompensation: ["", Validators.required],
-			compensationCost: ["CRC", Validators.required],
-			compensationCostValue: ["", Validators.required],
-			period: ["", Validators.required],
-			totalEmissionsOffsets: ["", Validators.required],
-			totalCostCompensation: ["CRC", Validators.required]
-		});
+	createcompensationForm(): FormGroup | FormArray {
+		if (this.editForm) {
+			const compensations: FormGroup[] = [];
+			for (const compensation of this.ppcnEdit.organization_classification
+				.carbon_offset) {
+				const form = this.formBuilder.group({
+					compensationScheme: [compensation.offset_scheme, Validators.required],
+					projectLocation: [compensation.project_location, Validators.required],
+					certificateNumber: [
+						compensation.certificate_identification,
+						Validators.required
+					],
+					totalCompensation: [
+						compensation.total_carbon_offset,
+						Validators.required
+					],
+					compensationCost: [
+						compensation.offset_cost_currency,
+						Validators.required
+					],
+					compensationCostValue: [
+						compensation.offset_cost,
+						Validators.required
+					],
+					period: [compensation.period, Validators.required],
+					totalEmissionsOffsets: [
+						compensation.total_offset_cost,
+						Validators.required
+					],
+					totalCostCompensation: [
+						compensation.total_offset_cost_currency,
+						Validators.required
+					]
+				});
+				compensations.push(form);
+			}
+			return this.formBuilder.array(compensations);
+		} else {
+			return this.formBuilder.group({
+				compensationScheme: ["", Validators.required],
+				projectLocation: ["", Validators.required],
+				certificateNumber: ["", Validators.required],
+				totalCompensation: ["", Validators.required],
+				compensationCost: ["CRC", Validators.required],
+				compensationCostValue: ["", Validators.required],
+				period: ["", Validators.required],
+				totalEmissionsOffsets: ["", Validators.required],
+				totalCostCompensation: ["CRC", Validators.required]
+			});
+		}
 	}
 
 	createActivityForm(): FormGroup {
@@ -478,8 +560,8 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 	}
 
 	createRemovalForm(): FormGroup | FormArray {
-		const removals: FormGroup[] = [];
 		if (this.editForm) {
+			const removals: FormGroup[] = [];
 			for (let reduction of this.ppcnEdit.gas_removal) {
 				const form = this.formBuilder.group({
 					costRemovalInventoryCtrl: [reduction.removal_cost],
