@@ -30,7 +30,7 @@ import {
 	RecognitionType
 } from "app/ppcn/ppcn-new-form-data";
 import { forkJoin } from "rxjs/observable/forkJoin";
-import { MatChipInputEvent } from "@angular/material";
+import { MatChipInputEvent, MatSnackBar } from "@angular/material";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { Ppcn } from "../ppcn_registry";
 import { Sector } from "../interfaces/sector";
@@ -38,6 +38,7 @@ import { SubSector } from "../interfaces/subSector";
 import { Ovv } from "../interfaces/ovv";
 import { GasReportTableComponent } from "../gas-report-table/gas-report-table.component";
 import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
+import { TranslateService } from "@ngx-translate/core";
 
 const log = new Logger("Report");
 @Component({
@@ -90,7 +91,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		private router: Router,
 		private formBuilder: FormBuilder,
 		private i18nService: I18nService,
-		private service: PpcnService
+		private service: PpcnService,
+		private translateService: TranslateService,
+		public snackBar: MatSnackBar
 	) {
 		this.createForm();
 	}
@@ -191,11 +194,14 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 			)
 			.subscribe(
 				response => {
-					//this.router.navigate(
-					//	[`/ppcn/${response.id}/download/${response.geographic}`],
-					//	{ replaceUrl: true }
-					//);
-					console.log("it works");
+					this.router.navigate(["/ppcn/registries"], { replaceUrl: true });
+					this.translateService
+						.get("ppcn.ppcnUpdateSuccess")
+						.subscribe((res: string) => {
+							this.snackBar.open(res, `PPCN ID ${response.id} `, {
+								duration: 3000
+							});
+						});
 				},
 				error => {
 					log.debug(`New PPCN Form error: ${error}`);
@@ -216,10 +222,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 			)
 			.subscribe(
 				response => {
-					this.router.navigate(
-						[`/ppcn/${response.id}/download/${response.geographic}`],
-						{ replaceUrl: true }
-					);
+					this.router.navigate([`ppcn/${response.id}/upload/new`], {
+						replaceUrl: true
+					});
 				},
 				error => {
 					log.debug(`New PPCN Form error: ${error}`);
