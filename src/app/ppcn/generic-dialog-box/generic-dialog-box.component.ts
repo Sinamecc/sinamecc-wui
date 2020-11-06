@@ -20,13 +20,13 @@ export class GenericDialogBoxComponent implements OnInit {
 
 	ngOnInit() {}
 
-	createComment(flieds: string[], comment: string) {
-		if (this.comments.length === 0) {
+	createComment(fields: string[], comment: string) {
+		if (!this.comments.length) {
 			const newModule = {
 				module: this.moduleName,
 				comments: [
 					{
-						fields: flieds,
+						fields: fields,
 						comment: comment
 					}
 				]
@@ -40,7 +40,7 @@ export class GenericDialogBoxComponent implements OnInit {
 
 			if (newModule) {
 				const newComment = {
-					fields: flieds,
+					fields: fields,
 					comment: comment
 				};
 				newModule["comments"].push(newComment);
@@ -49,7 +49,7 @@ export class GenericDialogBoxComponent implements OnInit {
 					module: this.moduleName,
 					comments: [
 						{
-							fields: flieds,
+							fields: fields,
 							comment: comment
 						}
 					]
