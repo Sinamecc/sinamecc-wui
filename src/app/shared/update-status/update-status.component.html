@@ -1,3 +1,8 @@
+<div>
+  <div #commentContainer>
+  </div>
+</div>
+
 <div class="container">
   <mat-card>
     <h1>
@@ -37,12 +42,18 @@
 
           <br />
 
+          <button (click)="loadComponent()" type="button" *ngIf="module == 'ppcn' && !moduleRef" mat-raised-button color="primary">
+            <span translate>specificLabel.commentForm</span>
+          </button>
+          <br />
           <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
             <span translate>specificLabel.submitReview</span>
           </button>
+
         </div>
       </form>
     </mat-card-content>
   </mat-card>
 </div>
+

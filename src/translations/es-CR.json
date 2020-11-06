@@ -160,6 +160,9 @@
   },
 
   "general": {
+    "comment":"Comentar",
+    "commentary":"Comentario",
+    "fields":"Campos",
     "level":"Nivel ",
     "exactDirection":"Dirección exacta",
     "dolar": "Dólar",
@@ -375,6 +378,7 @@
   },
 
   "specificLabel": {
+    "commentForm":"Comentar formulario",
     "addRemoval":"Agregar nuevas remociones",
     "addReductions":"Agregar nuevas reducciones",
     "addCompensations":"Agregar nuevas compensaciones",
