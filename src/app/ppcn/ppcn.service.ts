@@ -30,7 +30,8 @@ const routes = {
 	submitNewFilePPCN: () => `/v1/ppcn/file/`,
 	ppcnReviews: (id: string) => `/v1/ppcn/changelog/${id}`,
 	getAllOvv: () => `/v1/ppcn/ovv/`,
-	ppcnAvailableStatuses: () => `/v1/workflow/status`
+	ppcnAvailableStatuses: () => `/v1/workflow/status`,
+	getPpcnComments: (id: string) => `/v1/ppcn/${id}/comments`
 };
 
 export interface Response {
@@ -328,6 +329,19 @@ export class PpcnService {
 			{ route: `ppcn/${uuid}/edit`, status: "PPCN_changes_requested_by_DCC" }
 			// implementing_INGEI_changes
 		];
+	}
+
+	getPpcnComments(id: string) {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		return this.httpClient.get(routes.getPpcnComments(id), httpOptions).pipe(
+			map((body: any) => {
+				return body;
+			})
+		);
 	}
 
 	private buildFormData(
