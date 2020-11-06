@@ -98,10 +98,6 @@ export class PpcnService {
 		id: string,
 		contactFormId: number,
 		geographicFormId: number,
-		requiredFormId: number,
-		recognitionFormId: number,
-		sectorFormId: number,
-		subsectorFormId: number,
 		ovvFormId: number
 	): Observable<Response> {
 		const httpOptions = {
@@ -113,10 +109,6 @@ export class PpcnService {
 			context,
 			contactFormId,
 			geographicFormId,
-			requiredFormId,
-			recognitionFormId,
-			sectorFormId,
-			subsectorFormId,
 			ovvFormId
 		);
 		return this.httpClient
@@ -437,11 +429,6 @@ export class PpcnService {
 		organization_classification["data_inventory_quantity"] =
 			context.formArray[2].amountInventoryData;
 
-		console.log(
-			"recognition index control",
-			validateListReduction.indexOf(context.formArray[2].recognitionCtrl)
-		);
-		console.log("recognition  control", context.formArray[2].recognitionCtrl);
 		organization_classification["reduction"] =
 			validateListReduction.indexOf(context.formArray[2].recognitionCtrl) >= 0
 				? reductions

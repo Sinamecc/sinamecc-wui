@@ -376,10 +376,7 @@ export class MockPpcnService {
         id: string,
         contactFormId: number,
         geographicFormId: number,
-        requiredFormId: number,
-        recognitionFormId: number,
-        sectorFormId: number,
-        subsectorFormId: number,
+
         ovvFormId: number): Observable<Response> {
 
         const response = {

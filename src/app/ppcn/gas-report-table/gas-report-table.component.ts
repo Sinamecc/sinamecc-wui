@@ -101,8 +101,12 @@ export class GasReportTableComponent implements OnInit {
 
 	ngOnInit() {
 		if (this.editData) {
-			console.log(this.editData, "edit dattaaaa");
-			this.setTablesValues(this.editData["gei_organization"]["gas_report"]);
+			this.setInventaryResultTableValues(
+				this.editData["gei_organization"]["gas_report"]
+			);
+			this.setCategoryTableValues(
+				this.editData["gei_organization"]["organization_category"]
+			);
 		}
 	}
 
@@ -225,8 +229,7 @@ export class GasReportTableComponent implements OnInit {
 		return gasScopes;
 	}
 
-	setTablesValues(data: any) {
-		console.log("gas report : ", data);
+	setInventaryResultTableValues(data: any) {
 		// set third section data
 		this.inventaryResultTable.thirdSection.firsRow[2] =
 			data["biogenic_emission"].total;
@@ -244,5 +247,30 @@ export class GasReportTableComponent implements OnInit {
 			data["cost_ovv_process"];
 		this.inventaryResultTable.fourthSection.secondRow[3] =
 			data["cost_ovv_process_currency"];
+
+		// set second section data
+
+		this.inventaryResultTable.secondSection.firsRow[1] = data["other_gases"];
+
+		// set first section data
+		let indexRow = 0;
+		for (let row of data["gas_scopes"]) {
+			let indexColumn = 0;
+			for (let column of row["quantified_gases"]) {
+				this.inventaryResultTable.firstSection.tableRows[indexRow][
+					indexColumn
+				].value = Number(column.value).toString();
+				indexColumn += 1;
+			}
+			indexRow += 1;
+		}
+	}
+
+	setCategoryTableValues(data: any) {
+		this.categoryTable.category[1] = data["organization_category"];
+		this.categoryTable.categoryRow[0].value = data["emission_quantity"];
+		this.categoryTable.categoryRow[1].value = data["buildings_number"];
+		this.categoryTable.categoryRow[2].value = data["data_inventory_quantity"];
+		this.categoryTable.categoryRow[3].value = data["methodologies_complexity"];
 	}
 }

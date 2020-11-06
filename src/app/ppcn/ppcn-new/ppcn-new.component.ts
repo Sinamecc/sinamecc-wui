@@ -108,15 +108,12 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		this.service
 			.getPpcn(id, this.i18nService.language.split("-")[0])
 			.subscribe((response: Ppcn) => {
-				console.log(response);
+				console.log(response.organization.contact.id);
 				this.ppcnEdit = response;
 				this.addCIUUCodes(this.ppcnEdit.organization.ciiu_code);
 				this.levelId = this.ppcnEdit.geographic_level.id.toString();
 				this.reductionFormVar = +response.organization_classification
 					.recognition_type.id;
-
-				//this.table.setTablesValues(this.ppcnEdit.gei_organization.gas_report);
-
 				this.createForm();
 			});
 	}
@@ -170,6 +167,45 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 				this.levelId === "2" ? this.table.buildCategoryTableSection() : null
 		};
 
+		if (this.editForm) {
+			this.submitEditForm(context);
+		} else {
+			this.submitCreateForm(context);
+		}
+	}
+
+	submitEditForm(context: any) {
+		this.service
+			.submitUpdatePpcnForm(
+				context,
+				this.ppcnEdit.id,
+				this.ppcnEdit.organization.contact.id,
+				+this.levelId,
+				this.ppcnEdit.gei_organization.id
+			)
+			.pipe(
+				finalize(() => {
+					this.formGroup.markAsPristine();
+					this.isLoading = false;
+				})
+			)
+			.subscribe(
+				response => {
+					//this.router.navigate(
+					//	[`/ppcn/${response.id}/download/${response.geographic}`],
+					//	{ replaceUrl: true }
+					//);
+					console.log("it works");
+				},
+				error => {
+					log.debug(`New PPCN Form error: ${error}`);
+					this.errorComponent.parseErrors(error);
+					this.error = error;
+				}
+			);
+	}
+
+	submitCreateForm(context: any) {
 		this.service
 			.submitNewPpcnForm(context)
 			.pipe(
@@ -195,10 +231,6 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
 	filterValue(value: string) {
 		return value == null ? "" : value;
-	}
-
-	test() {
-		console.log(this.formArray.get([0]));
 	}
 
 	private createForm() {
