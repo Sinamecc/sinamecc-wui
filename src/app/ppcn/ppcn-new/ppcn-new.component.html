@@ -669,6 +669,7 @@
                       formControlName="sectorCtrl"
                       [placeholder]="'geographyLabel.sector' | translate"
                       (selectionChange)="onSectorChange($event)"
+                      [(value)]="sectorCtrl"
                     >
                       <mat-option *ngFor="let sector of sectors" [value]="sector.id">
                         {{ sector.name }}
@@ -676,6 +677,7 @@
                     </mat-select>
                     <mat-error translate>errorLabel.fieldRequired</mat-error>
                   </mat-form-field>
+
                   <br />
                   <mat-form-field class="field-ppcn">
                     <mat-label translate>geographyLabel.subsector</mat-label>

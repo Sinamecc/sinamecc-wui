@@ -63,7 +63,7 @@ export class PpcnLevelComponent implements OnInit {
 
 	private createForm() {
 		this.form = this.formBuilder.group({
-			geographicCtrl: [1, Validators.required]
+			geographicCtrl: [, Validators.required]
 		});
 		this.geographicLevel = this.initialFormData().pipe(
 			tap((geographicLevel: GeographicLevel[]) => {

@@ -384,7 +384,7 @@ export class PpcnService {
 		organization["phone_organization"] = context.formArray[0].telephoneCtrl;
 		organization["postal_code"] = context.formArray[0].postalCodeCtrl;
 		organization["fax"] = context.formArray[0].faxCtrl;
-		organization["email"] = context.formArray[0].emailCtrl;
+		organization["email_representative_legal"] = context.formArray[0].emailCtrl;
 		organization["ciiu_code_list"] = [];
 
 		// gas removal section
@@ -412,6 +412,9 @@ export class PpcnService {
 				total_investment: reduction["totalInvestmentReductionValue"],
 				total_investment_currency: reduction["totalInvestmentReduction"]
 			};
+			if (reduction["id"]) {
+				newReduction["id"] = reduction["id"];
+			}
 			reductions.push(newReduction);
 		});
 
@@ -429,8 +432,14 @@ export class PpcnService {
 				total_offset_cost: carbonOffset["totalEmissionsOffsets"],
 				total_offset_cost_currency: carbonOffset["totalCostCompensation"]
 			};
+			if (carbonOffset["id"]) {
+				newCarbonOffset["id"] = carbonOffset["id"];
+			}
 			carbonOffsets.push(newCarbonOffset);
 		});
+
+		organization_classification["methodologies_complexity"] =
+			context.formArray[2].complexityMethodologies;
 
 		organization_classification["required_level"] =
 			context.formArray[2].requiredCtrl;
@@ -485,10 +494,14 @@ export class PpcnService {
 			);
 			geiOrganization["base_year"] = context.formArray[5].baseYearCtrl;
 			geiOrganization["report_year"] = context.formArray[5].reportYearCtrl;
+
+			geiOrganization["scope"] = context.formArray[5].scope;
 		} else {
 			if (geiOrganizationId) {
 				geiOrganization["id"] = String(geiOrganizationId);
 			}
+
+			geiOrganization["scope"] = context.formArray[5].scope;
 			//geiOrganization["activity_type"] = context.formArray[5].activityCtrl;
 			geiOrganization["ovv"] = context.formArray[5].ovvCtrl;
 			geiOrganization["emission_ovv_date"] = this.datePipe.transform(
@@ -501,7 +514,7 @@ export class PpcnService {
 			geiOrganization["organization_category"] = data.categoryTable;
 			geiOrganization["gas_report"] = data.gasReportTable;
 		}
-		geiOrganization["gei_activity_types"] = [];
+		geiOrganization["gei_activity_type"] = [];
 		if (context.formArray[7].activities) {
 			context.formArray[7].activities.forEach((activity: any) => {
 				const objectToPush = {
@@ -509,11 +522,13 @@ export class PpcnService {
 					sub_sector: activity.subSectorCtrl,
 					sector: activity.sectorCtrl
 				};
-				geiOrganization["gei_activity_types"].push(objectToPush);
+				if (activity["id"]) {
+					objectToPush["id"] = activity["id"];
+				}
+				geiOrganization["gei_activity_type"].push(objectToPush);
 			});
 		}
 		formData["gei_organization"] = geiOrganization;
-		console.log(formData);
 		return formData;
 	}
 

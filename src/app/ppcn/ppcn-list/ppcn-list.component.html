@@ -63,10 +63,6 @@
         <button mat-icon-button color="primary" (click)="changelog(element.id)">
           <mat-icon color="white">history</mat-icon>
         </button>
-
-        <button *ngIf="element.fsm_state == 'PPCN_new' " [routerLink]="'/ppcn/registries/edit/' + element.id" mat-icon-button color="primary">
-          <mat-icon color="white">edit</mat-icon>
-        </button>
       </mat-cell>
     </ng-container>
 

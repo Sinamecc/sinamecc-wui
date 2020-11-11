@@ -77,6 +77,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
 	@Input() editForm = false;
 	@Input() idPpcnEdit: string;
+
 	ppcnEdit: any;
 
 	values$: any;
@@ -111,7 +112,6 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		this.service
 			.getPpcn(id, this.i18nService.language.split("-")[0])
 			.subscribe((response: Ppcn) => {
-				console.log(response.organization.contact.id);
 				this.ppcnEdit = response;
 				this.addCIUUCodes(this.ppcnEdit.organization.ciiu_code);
 				this.levelId = this.ppcnEdit.geographic_level.id.toString();
@@ -292,7 +292,17 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 							  ]
 							: null,
 
-					emailCtrl: this.levelId === "1" ? ["", Validators.required] : null,
+					emailCtrl:
+						this.levelId === "1"
+							? [
+									this.editForm
+										? this.filterValue(
+												this.ppcnEdit.organization.email_representative_legal
+										  )
+										: "",
+									Validators.required
+							  ]
+							: null,
 					legalRepresentativeIdCtrl: [
 						this.editForm
 							? this.filterValue(
@@ -379,7 +389,17 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 							  ]
 							: null,
 					complexityMethodologies:
-						this.levelId === "2" ? ["1", Validators.required] : null,
+						this.levelId === "2"
+							? [
+									this.editForm
+										? this.filterValue(
+												this.ppcnEdit.organization_classification
+													.methodologies_complexity
+										  )
+										: "",
+									Validators.required
+							  ]
+							: null,
 					recognitionCtrl: [
 						this.editForm
 							? this.filterValue(
@@ -432,7 +452,12 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 									Validators.required
 							  ]
 							: null,
-					scope: ["", Validators.required]
+					scope: [
+						this.editForm
+							? this.filterValue(this.ppcnEdit.gei_organization.scope)
+							: "",
+						Validators.required
+					]
 				}),
 				this.formBuilder.group({
 					removals: this.editForm
@@ -440,7 +465,12 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 						: this.formBuilder.array([this.createRemovalForm()])
 				}),
 				this.formBuilder.group({
-					activities: this.formBuilder.array([this.createActivityForm()])
+					activities:
+						this.levelId === "2"
+							? this.editForm
+								? this.createActivityForm()
+								: this.formBuilder.array([this.createActivityForm()])
+							: null
 				})
 			])
 		});
@@ -484,12 +514,13 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		] = value;
 	}
 
-	createReductionForm(): FormGroup | FormArray {
-		if (this.editForm) {
+	createReductionForm(newElement = false): FormGroup | FormArray {
+		if (this.editForm && !newElement) {
 			const reductions: FormGroup[] = [];
 			for (const reduction of this.ppcnEdit.organization_classification
 				.reduction) {
 				const form = this.formBuilder.group({
+					id: [reduction.id],
 					reductionProjectCtrl: [reduction.project, Validators.required],
 					reductionActivityCtrl: [reduction.activity, Validators.required],
 					reductionDetailsCtrl: [
@@ -536,12 +567,13 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		}
 	}
 
-	createcompensationForm(): FormGroup | FormArray {
-		if (this.editForm) {
+	createcompensationForm(newElement = false): FormGroup | FormArray {
+		if (this.editForm && !newElement) {
 			const compensations: FormGroup[] = [];
 			for (const compensation of this.ppcnEdit.organization_classification
 				.carbon_offset) {
 				const form = this.formBuilder.group({
+					id: [compensation.id],
 					compensationScheme: [compensation.offset_scheme, Validators.required],
 					projectLocation: [compensation.project_location, Validators.required],
 					certificateNumber: [
@@ -588,19 +620,44 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		}
 	}
 
-	createActivityForm(): FormGroup {
-		return this.formBuilder.group({
-			activityCtrl: this.levelId === "2" ? ["", Validators.required] : null,
-			sectorCtrl: this.levelId === "2" ? ["", Validators.required] : null,
-			subSectorCtrl: this.levelId === "2" ? ["", Validators.required] : null
-		});
+	createActivityForm(newElement = false): FormGroup | FormArray {
+		if (this.editForm && !newElement) {
+			const activities: FormGroup[] = [];
+			for (const activity of this.ppcnEdit.gei_organization.gei_activity_type) {
+				const form = this.formBuilder.group({
+					id: this.levelId === "2" ? [activity.id] : null,
+					activityCtrl:
+						this.levelId === "2"
+							? [activity.activity_type, Validators.required]
+							: null,
+					sectorCtrl:
+						this.levelId === "2"
+							? [activity.sector.id, Validators.required]
+							: null,
+					subSectorCtrl:
+						this.levelId === "2"
+							? [activity.sub_sector.id, Validators.required]
+							: null
+				});
+
+				activities.push(form);
+			}
+			return this.formBuilder.array(activities);
+		} else {
+			return this.formBuilder.group({
+				activityCtrl: this.levelId === "2" ? ["", Validators.required] : null,
+				sectorCtrl: this.levelId === "2" ? ["", Validators.required] : null,
+				subSectorCtrl: this.levelId === "2" ? ["", Validators.required] : null
+			});
+		}
 	}
 
-	createRemovalForm(): FormGroup | FormArray {
-		if (this.editForm) {
+	createRemovalForm(newElement = false): FormGroup | FormArray {
+		if (this.editForm && !newElement) {
 			const removals: FormGroup[] = [];
 			for (let reduction of this.ppcnEdit.gas_removal) {
 				const form = this.formBuilder.group({
+					id: [reduction.id],
 					costRemovalInventoryCtrl: [reduction.removal_cost],
 					costRemovalInventoryValueCtrl: [reduction.removal_cost_currency],
 					removalProjectDetailCtrl: [reduction.removal_descriptions],
@@ -623,21 +680,21 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		const control = <FormArray>(
 			this.formGroup.controls.formArray["controls"][7].controls["activities"]
 		);
-		control.push(this.createActivityForm());
+		control.push(this.createActivityForm(true));
 	}
 
 	addReductionItem() {
 		const control = <FormArray>(
 			this.formGroup.controls.formArray["controls"][3].controls["reductions"]
 		);
-		control.push(this.createReductionForm());
+		control.push(this.createReductionForm(true));
 	}
 
 	addCompensationItem() {
 		const control = <FormArray>(
 			this.formGroup.controls.formArray["controls"][4].controls["compensations"]
 		);
-		control.push(this.createcompensationForm());
+		control.push(this.createcompensationForm(true));
 	}
 
 	addRemovalItem() {
@@ -645,7 +702,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 			this.formGroup.controls.formArray["controls"][6].controls["removals"]
 		);
 
-		control.push(this.createRemovalForm());
+		control.push(this.createRemovalForm(true));
 	}
 
 	deleteRemovalItem(i: number) {

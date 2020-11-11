@@ -60,12 +60,24 @@ export class HomeComponent implements OnInit {
 		}
 	];
 
+	availableDataImage: object[] = [];
+
 	constructor(
 		private router: Router,
 		private authenticationService: AuthenticationService
 	) {}
 
-	ngOnInit() {}
+	validateDataImage() {
+		for (let element of this.dataImage) {
+			if (this.showModule(this.permissions, element.moduleName)) {
+				this.availableDataImage.push(element);
+			}
+		}
+	}
+
+	ngOnInit() {
+		this.validateDataImage();
+	}
 
 	goToSite(url: string) {
 		this.router.navigate([url], { replaceUrl: true });

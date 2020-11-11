@@ -1,5 +1,5 @@
 export interface GasRemoval {
-	id: number;
+	id: string;
 	ppcn: number;
 	removal_cost: string;
 	removal_cost_currency: string;

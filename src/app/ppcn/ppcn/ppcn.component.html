@@ -1,7 +1,11 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <mat-card-title class="section-heading" translate>PPCN</mat-card-title>
+      <mat-card-title class="section-heading" translate><label>PPCN</label> 
+        <button *ngIf="showComments" [routerLink]="'/ppcn/registries/edit/' + id" mat-icon-button color="primary">
+          <mat-icon color="white">edit</mat-icon>
+        </button>
+      </mat-card-title>
       <mat-divider class="divider-custom"></mat-divider>
       <mat-divider class="divider-custom"></mat-divider>
       <mat-card-subtitle>
