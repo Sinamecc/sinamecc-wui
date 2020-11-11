@@ -40,7 +40,7 @@ export class ErrorReportingComponent implements OnInit {
 
 			codeToSend.errors = errorList;
 		}
-		console.log(codeToSend);
+
 		return [codeToSend];
 	}
 

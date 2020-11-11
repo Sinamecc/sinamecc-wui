@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
 	) {}
 
 	validateDataImage() {
-		for (let element of this.dataImage) {
+		for (const element of this.dataImage) {
 			if (this.showModule(this.permissions, element.moduleName)) {
 				this.availableDataImage.push(element);
 			}

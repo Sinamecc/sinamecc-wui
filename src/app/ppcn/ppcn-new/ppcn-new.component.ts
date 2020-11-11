@@ -514,7 +514,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		] = value;
 	}
 
-	createReductionForm(newElement = false): FormGroup | FormArray {
+	createReductionForm(newElement: boolean = false): FormGroup | FormArray {
 		if (this.editForm && !newElement) {
 			const reductions: FormGroup[] = [];
 			for (const reduction of this.ppcnEdit.organization_classification
@@ -567,7 +567,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		}
 	}
 
-	createcompensationForm(newElement = false): FormGroup | FormArray {
+	createcompensationForm(newElement: boolean = false): FormGroup | FormArray {
 		if (this.editForm && !newElement) {
 			const compensations: FormGroup[] = [];
 			for (const compensation of this.ppcnEdit.organization_classification
@@ -620,7 +620,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		}
 	}
 
-	createActivityForm(newElement = false): FormGroup | FormArray {
+	createActivityForm(newElement: boolean = false): FormGroup | FormArray {
 		if (this.editForm && !newElement) {
 			const activities: FormGroup[] = [];
 			for (const activity of this.ppcnEdit.gei_organization.gei_activity_type) {
@@ -652,10 +652,10 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		}
 	}
 
-	createRemovalForm(newElement = false): FormGroup | FormArray {
+	createRemovalForm(newElement: boolean = false): FormGroup | FormArray {
 		if (this.editForm && !newElement) {
 			const removals: FormGroup[] = [];
-			for (let reduction of this.ppcnEdit.gas_removal) {
+			for (const reduction of this.ppcnEdit.gas_removal) {
 				const form = this.formBuilder.group({
 					id: [reduction.id],
 					costRemovalInventoryCtrl: [reduction.removal_cost],

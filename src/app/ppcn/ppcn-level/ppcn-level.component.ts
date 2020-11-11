@@ -41,7 +41,7 @@ export class PpcnLevelComponent implements OnInit {
 	processedGeographicLevel: GeographicLevel[] = [];
 	isLoading = false;
 
-	@Input() level: string = "-1";
+	@Input() level = "-1";
 
 	constructor(
 		private router: Router,

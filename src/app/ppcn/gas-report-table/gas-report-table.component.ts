@@ -254,9 +254,9 @@ export class GasReportTableComponent implements OnInit {
 
 		// set first section data
 		let indexRow = 0;
-		for (let row of data["gas_scopes"]) {
+		for (const row of data["gas_scopes"]) {
 			let indexColumn = 0;
-			for (let column of row["quantified_gases"]) {
+			for (const column of row["quantified_gases"]) {
 				this.inventaryResultTable.firstSection.tableRows[indexRow][
 					indexColumn
 				].value = Number(column.value).toString();
