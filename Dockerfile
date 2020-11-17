@@ -3,11 +3,11 @@ FROM node:carbon as node
 
 WORKDIR /app
 
-COPY package.json /app/
-
-RUN npm install
+COPY package*.json ./app/
 
 COPY ./ /app/
+
+RUN npm install
 
 ARG env=prod
 
