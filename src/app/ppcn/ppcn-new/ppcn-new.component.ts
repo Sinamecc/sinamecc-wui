@@ -544,10 +544,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 						reduction.total_investment,
 						Validators.required
 					],
-					totalEmisionesReducidas: [
-						reduction.total_emission,
-						Validators.required
-					]
+					totalEmissionsReduced: [reduction.total_emission, Validators.required]
 				});
 				reductions.push(form);
 			}
@@ -562,7 +559,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 				investmentReductionsValue: ["", Validators.required],
 				totalInvestmentReduction: ["CRC", Validators.required],
 				totalInvestmentReductionValue: ["", Validators.required],
-				totalEmisionesReducidas: ["", Validators.required]
+				totalEmissionsReduced: ["", Validators.required]
 			});
 		}
 	}

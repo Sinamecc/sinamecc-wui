@@ -406,7 +406,7 @@ export class PpcnService {
 				activity: reduction["reductionActivityCtrl"],
 				detail_reduction: reduction["reductionDetailsCtrl"],
 				emission: reduction["reducedEmissionsCtrl"],
-				total_emission: reduction["totalEmisionesReducidas"],
+				total_emission: reduction["totalEmissionsReduced"],
 				investment: reduction["investmentReductionsValue"],
 				investment_currency: reduction["investmentReductions"],
 				total_investment: reduction["totalInvestmentReductionValue"],
