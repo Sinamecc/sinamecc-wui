@@ -131,8 +131,6 @@ export class PpcnUploadComponent implements OnInit {
 					ppcnToFind => Number(ppcnToFind.id) === this.id
 				);
 
-				console.log(this.ppcn);
-
 				const idRecognition = this.ppcn.organization_classification
 					.recognition_type;
 				this.form = this.formBuilder.group({

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
 	selector: "app-gas-report-table",
@@ -6,6 +6,9 @@ import { Component, OnInit } from "@angular/core";
 	styleUrls: ["./gas-report-table.component.scss"]
 })
 export class GasReportTableComponent implements OnInit {
+	@Input() editForm = false;
+	@Input() editData: Object;
+
 	inventaryResultTable = {
 		firstSection: {
 			tableHeaderValues: [
@@ -96,7 +99,16 @@ export class GasReportTableComponent implements OnInit {
 
 	constructor() {}
 
-	ngOnInit() {}
+	ngOnInit() {
+		if (this.editData) {
+			this.setInventaryResultTableValues(
+				this.editData["gei_organization"]["gas_report"]
+			);
+			this.setCategoryTableValues(
+				this.editData["gei_organization"]["organization_category"]
+			);
+		}
+	}
 
 	changeMatrixValues(row: number, column: number, value: string) {
 		this.inventaryResultTable.firstSection.tableRows[row][column].value = value;
@@ -114,6 +126,7 @@ export class GasReportTableComponent implements OnInit {
 	getTableValue(section: string, row: string, column: number) {
 		return this.inventaryResultTable[section][row][column];
 	}
+
 	getCategoryTableValue(row: string, column: string | number) {
 		return this.categoryTable[row][column];
 	}
@@ -214,5 +227,50 @@ export class GasReportTableComponent implements OnInit {
 		}
 
 		return gasScopes;
+	}
+
+	setInventaryResultTableValues(data: any) {
+		// set third section data
+		this.inventaryResultTable.thirdSection.firsRow[2] =
+			data["biogenic_emission"].total;
+		this.inventaryResultTable.thirdSection.secondRow[1] =
+			data["biogenic_emission"].scope_1;
+		this.inventaryResultTable.thirdSection.thirdSection[1] =
+			data["biogenic_emission"].scope_2;
+
+		// set fourth section data
+		this.inventaryResultTable.fourthSection.firsRow[1] =
+			data["cost_ghg_inventory"];
+		this.inventaryResultTable.fourthSection.firsRow[3] =
+			data["cost_ghg_inventory_currency"];
+		this.inventaryResultTable.fourthSection.secondRow[1] =
+			data["cost_ovv_process"];
+		this.inventaryResultTable.fourthSection.secondRow[3] =
+			data["cost_ovv_process_currency"];
+
+		// set second section data
+
+		this.inventaryResultTable.secondSection.firsRow[1] = data["other_gases"];
+
+		// set first section data
+		let indexRow = 0;
+		for (const row of data["gas_scopes"]) {
+			let indexColumn = 0;
+			for (const column of row["quantified_gases"]) {
+				this.inventaryResultTable.firstSection.tableRows[indexRow][
+					indexColumn
+				].value = Number(column.value).toString();
+				indexColumn += 1;
+			}
+			indexRow += 1;
+		}
+	}
+
+	setCategoryTableValues(data: any) {
+		this.categoryTable.category[1] = data["organization_category"];
+		this.categoryTable.categoryRow[0].value = data["emission_quantity"];
+		this.categoryTable.categoryRow[1].value = data["buildings_number"];
+		this.categoryTable.categoryRow[2].value = data["data_inventory_quantity"];
+		this.categoryTable.categoryRow[3].value = data["methodologies_complexity"];
 	}
 }

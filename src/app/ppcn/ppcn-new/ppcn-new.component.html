@@ -115,6 +115,7 @@
             <br />
 
             <div class="box-button">
+
               <app-generic-button (click)="stepper.next()" name="general.next"> </app-generic-button>
             </div>
           </mat-step>
@@ -320,7 +321,7 @@
 
                     <mat-form-field class="field-ppcn">
                       <mat-label translate>geographyLabel.totalReducedEmissions<strong>(t CO2e)</strong></mat-label>
-                      <input type="number" matInput formControlName="totalEmisionesReducidas" required />
+                      <input type="number" matInput formControlName="totalEmissionsReduced" required />
                       <mat-error translate>errorLabel.fieldRequired</mat-error>
                     </mat-form-field>
                   </div>
@@ -546,7 +547,7 @@
 
             <br />
 
-            <app-gas-report-table *ngIf="levelId == '2'" #table></app-gas-report-table>
+            <app-gas-report-table [editForm]="editForm" [editData]="ppcnEdit" *ngIf="levelId == '2'" #table></app-gas-report-table>
 
             <br />
             <br />
@@ -668,6 +669,7 @@
                       formControlName="sectorCtrl"
                       [placeholder]="'geographyLabel.sector' | translate"
                       (selectionChange)="onSectorChange($event)"
+                      [(value)]="sectorCtrl"
                     >
                       <mat-option *ngFor="let sector of sectors" [value]="sector.id">
                         {{ sector.name }}
@@ -675,6 +677,7 @@
                     </mat-select>
                     <mat-error translate>errorLabel.fieldRequired</mat-error>
                   </mat-form-field>
+
                   <br />
                   <mat-form-field class="field-ppcn">
                     <mat-label translate>geographyLabel.subsector</mat-label>

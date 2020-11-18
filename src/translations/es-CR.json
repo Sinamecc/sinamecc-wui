@@ -86,6 +86,7 @@
   },
 
   "ppcn":{
+    "ppcnUpdateSuccess":"El formulario PPCN se actualizó correctamente",
     "emailContacPerson":"Email of the contact person",
     "tittleContacPerson":"Title of the contact person",
     "nameContactPerson":"Name of the contact person",

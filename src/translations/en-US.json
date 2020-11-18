@@ -88,6 +88,7 @@
   },
 
   "ppcn": {
+    "ppcnUpdateSuccess":"The PPCN form was updated successfully",
     "totalRemovals": "Total removals",
     "removalProjectDetail": "Removal Project Detail",
     "costInventoryRemovals": "Cost of carrying out inventory of removals",
