@@ -235,7 +235,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 	}
 
 	filterValue(value: string) {
-		return value == null ? "" : value;
+		return value ? value : "";
 	}
 
 	private createForm() {
