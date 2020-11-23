@@ -85,7 +85,7 @@ const routes: Routes = [
 		{
 			path: "ppcn/view/file/:id",
 			component: ViewPdfComponent,
-			data: { title: extract("View PDF") }
+			data: { title: extract("PPCN PDF") }
 		}
 	])
 ];
