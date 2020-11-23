@@ -99,6 +99,10 @@ export class PpcnComponent implements OnInit {
 				"ppcn.removalProjectDetail",
 				"ppcn.totalRemovals"
 			]
+		},
+		{
+			module: 8,
+			fields: ["reportData.files"]
 		}
 	];
 
@@ -132,6 +136,13 @@ export class PpcnComponent implements OnInit {
 		}
 
 		this.getUserPhoto();
+	}
+
+	getFileLink(text: string) {
+		const element = text.split("/").pop();
+		this.router.navigate([`ppcn/view/file/${element}`], {
+			replaceUrl: true
+		});
 	}
 
 	async download(file: string) {

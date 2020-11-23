@@ -1,0 +1,7 @@
+
+<div *ngIf="isLoading" fxLayout="column"  fxLayoutAlign="center center" > 
+   <mat-spinner ></mat-spinner>
+   <label translate>general.loadingFile</label>
+</div>
+<iframe *ngIf="!isLoading" [src]="document" class="frame-container" type="application/pdf"  >
+</iframe>

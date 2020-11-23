@@ -20,7 +20,7 @@ export interface Ppcn {
 	gei_organization: GeiOrganization;
 	fsm_state: string;
 	next_state: NextState;
-	files: Files[];
+	ppcn_files: Files[];
 	gas_removal: GasRemoval[];
 	comments?: Object[];
 }
