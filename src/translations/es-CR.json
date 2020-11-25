@@ -160,6 +160,7 @@
   },
 
   "general": {
+    "errorLoadingFile":"Error al cargar el archivo",
     "loadingFile":"Cargando archivo",
     "comment":"Comentar",
     "commentary":"Comentario",
