@@ -18,6 +18,8 @@ import { GenericButtonComponent } from "./generic-button/generic-button.componen
 import { GenericButtonSecondaryComponent } from "./generic-button-secondary/generic-button-secondary.component";
 import { CustomSearchBarComponent } from "./custom-search-bar/custom-search-bar.component";
 import { ErrorReportingComponent } from "./error-reporting/error-reporting.component";
+import { ViewPdfComponent } from "./view-pdf/view-pdf.component";
+import { ViewPdfService } from "./view-pdf/view-pdf.service";
 
 @NgModule({
 	imports: [
@@ -38,12 +40,14 @@ import { ErrorReportingComponent } from "./error-reporting/error-reporting.compo
 		GenericButtonComponent,
 		GenericButtonSecondaryComponent,
 		CustomSearchBarComponent,
-		ErrorReportingComponent
+		ErrorReportingComponent,
+		ViewPdfComponent
 	],
 	providers: [
 		UploadProposalService,
 		UpdateStatusService,
-		MockUpdateStatusService
+		MockUpdateStatusService,
+		ViewPdfService
 	],
 	exports: [
 		LoaderComponent,
@@ -55,7 +59,8 @@ import { ErrorReportingComponent } from "./error-reporting/error-reporting.compo
 		GenericButtonComponent,
 		GenericButtonSecondaryComponent,
 		CustomSearchBarComponent,
-		ErrorReportingComponent
+		ErrorReportingComponent,
+		ViewPdfComponent
 	]
 })
 export class SharedModule {}

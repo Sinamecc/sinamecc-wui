@@ -21,6 +21,7 @@ import { PpcnUploadComponent } from "@app/ppcn/ppcn-upload/ppcn-upload.component
 import { FileVersionComponent } from "@app/ppcn/file-version/file-version.component";
 import { NewReviewComponent } from "@app/ppcn/ppcn-reviews/new-review/new-review.component";
 import { ReviewsListComponent } from "@app/ppcn/ppcn-reviews/reviews-list/reviews-list.component";
+import { ViewPdfComponent } from "@app/shared/view-pdf/view-pdf.component";
 
 const routes: Routes = [
 	Route.withShell([
@@ -80,6 +81,11 @@ const routes: Routes = [
 			path: "ppcn/registries/edit/:id",
 			component: PpcnFlowComponent,
 			data: { title: extract("ppcn.createPPCN") }
+		},
+		{
+			path: "ppcn/:moduleID/view/file/:id",
+			component: ViewPdfComponent,
+			data: { title: extract("PPCN PDF") }
 		}
 	])
 ];

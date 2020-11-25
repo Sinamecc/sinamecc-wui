@@ -199,13 +199,33 @@
 
         <strong translate>Status: </strong> {{ppcn?.fsm_state}}<br />
         <!--<mat-divider></mat-divider>-->
-        <h3 translate class="text-color">Files</h3>
-        <div *ngFor="let file of ppcn?.files">
-          <strong translate>reportData.fileName</strong>: {{file.name}} <button mat-icon-button color="primary"
-            (click)="download(file.file)">
-            <mat-icon color="white">vertical_align_bottom</mat-icon>
+        <h3 translate class="text-color">reportData.files
+          <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="eightMenu">
+            <mat-icon>mode_comment</mat-icon>
           </button>
-        </div>
+          <mat-menu #eightMenu="matMenu"  class="comment-menu">
+            <app-generic-dialog-box  [moduleName]="'reportData.files'" [fieldsModule]="modulesToComment[7].fields" [comments]="comments"></app-generic-dialog-box>
+          </mat-menu>
+        </h3> 
+        <mat-accordion>
+          <mat-expansion-panel >
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+               <label translate>reportData.files</label> - ({{ppcn?.ppcn_files.length}})
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div *ngFor="let file of ppcn?.ppcn_files">
+              <mat-icon [style.font-size.px]="32">picture_as_pdf</mat-icon> <strong [style.margin-left.px]="15">{{file.name}}</strong> <button mat-icon-button color="primary"
+                (click)="download(file.file)">
+                <mat-icon color="white">vertical_align_bottom</mat-icon>
+                </button>
+              
+                <button (click)="getFileLink(file.file)"  mat-icon-button >
+                  <mat-icon>visibility</mat-icon>
+                </button>
+            </div>
+          </mat-expansion-panel>
+       </mat-accordion>
         <mat-divider></mat-divider>
       </div>
       <br />

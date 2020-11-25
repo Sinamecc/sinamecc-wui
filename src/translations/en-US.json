@@ -160,6 +160,8 @@
   },
 
   "general": {
+    "errorLoadingFile":"Error loading file",
+    "loadingFile":"Loading file",
     "comment":"Comment",
     "commentary":"Commentary",
     "fields":"Fields",
