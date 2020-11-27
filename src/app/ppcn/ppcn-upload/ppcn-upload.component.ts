@@ -96,7 +96,8 @@ export class PpcnUploadComponent implements OnInit {
 			name: "ppcnDocument.certificateCompensation",
 			description: "ppcnDocument.certificateCompensationDescription"
 		},
-	]
+	];
+
 	fileDetail:any = []
 
 	constructor(
@@ -151,39 +152,24 @@ export class PpcnUploadComponent implements OnInit {
 					ppcnToFind => Number(ppcnToFind.id) === this.id
 				);
 				
+				const numberOfItems = this.ppcn.geographic_level.id == 1 ? 4 : 12;
+
+				this.form = this.formBuilder.group({
+					ppcnCtrl: [this.ppcn.id, Validators.required],
+					files: this.formBuilder.array(
+						Array.from({length: numberOfItems}, (_, i) => i + 1).map(_ => {
+							return this.createItem()
+						})
+					)
+				});
 
 				if(this.ppcn.geographic_level.id == 1){
 					this.fileDetail = this.fileDetailPPCNCant
-					this.form = this.formBuilder.group({
-						ppcnCtrl: [this.ppcn.id, Validators.required],
-						files: this.formBuilder.array([
-							this.createItem(),
-							this.createItem(),
-							this.createItem(),
-							this.createItem(),
-						])
-					});
+					
 				}else{
 					this.fileDetail = this.fileDetailPPCNOrga
 					const idRecognition = this.ppcn.organization_classification
 					.recognition_type;
-					this.form = this.formBuilder.group({
-						ppcnCtrl: [this.ppcn.id, Validators.required],
-						files: this.formBuilder.array([
-							this.createItem(),
-							this.createItem(),
-							this.createItem(),
-							this.createItem(),
-							this.createItem(),
-							this.createItem(),
-							this.createItem(),
-							this.createItem(),
-							this.createItem(),
-							this.createItem(),
-							this.createItem(),
-							this.createItem()
-						])
-					});
 					this.loadDocumentsByRecognitionType(idRecognition.id);
 				}
 				

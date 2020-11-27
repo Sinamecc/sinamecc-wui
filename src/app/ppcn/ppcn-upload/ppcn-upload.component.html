@@ -62,7 +62,7 @@
             <mat-divider></mat-divider>
             <mat-card-actions>
               <button mat-raised-button (click)="addFile()" type="button"
-                *ngIf="form.controls.files.controls.length <= 10">
+                *ngIf="form.controls.files.controls.length <= 3">
                 <mat-icon>add box</mat-icon>
                 <span translate> Add new file</span>
               </button>
