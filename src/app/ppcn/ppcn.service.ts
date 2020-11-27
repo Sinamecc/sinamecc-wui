@@ -463,8 +463,11 @@ export class PpcnService {
 				: null;
 
 		formData["organization_classification"] = organization_classification;
-		formData["gas_removal"] = gasRemovals;
 
+		if(gasRemovals.length > 0){
+			formData["gas_removal"] = gasRemovals;
+		}
+		
 		for (const value of context.formArray[0].ciuuListCodeCtrl) {
 			const element = {
 				ciiu_code: value

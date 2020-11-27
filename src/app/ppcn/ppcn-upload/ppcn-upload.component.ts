@@ -28,7 +28,7 @@ export class PpcnUploadComponent implements OnInit {
 
 	ppcn: Ppcn;
 
-	fileDetail = [
+	fileDetailPPCNOrga = [
 		{
 			name: "ppcnDocument.legalPerson",
 			description: "ppcnDocument.legalPersonDescription"
@@ -78,6 +78,26 @@ export class PpcnUploadComponent implements OnInit {
 			description: "ppcnDocument.organizationLogoDescription"
 		}
 	];
+
+	fileDetailPPCNCant = [
+		{
+			name: "ppcnDocument.geiReportCant",
+			description: "ppcnDocument.geiReportCantDescription"
+		},
+		{
+			name: "ppcnDocument.verificationReport",
+			description: "ppcnDocument.verificationReportDescription"
+		},
+		{
+			name: "ppcnDocument.mitigationActionPlan",
+			description: "ppcnDocument.mitigationActionPlanDescription"
+		},
+		{
+			name: "ppcnDocument.certificateCompensation",
+			description: "ppcnDocument.certificateCompensationDescription"
+		},
+	]
+	fileDetail:any = []
 
 	constructor(
 		private router: Router,
@@ -130,27 +150,45 @@ export class PpcnUploadComponent implements OnInit {
 				this.ppcn = this.processedPpcns.find(
 					ppcnToFind => Number(ppcnToFind.id) === this.id
 				);
+				
 
-				const idRecognition = this.ppcn.organization_classification
+				if(this.ppcn.geographic_level.id == 1){
+					this.fileDetail = this.fileDetailPPCNCant
+					this.form = this.formBuilder.group({
+						ppcnCtrl: [this.ppcn.id, Validators.required],
+						files: this.formBuilder.array([
+							this.createItem(),
+							this.createItem(),
+							this.createItem(),
+							this.createItem(),
+						])
+					});
+				}else{
+					this.fileDetail = this.fileDetailPPCNOrga
+					const idRecognition = this.ppcn.organization_classification
 					.recognition_type;
-				this.form = this.formBuilder.group({
-					ppcnCtrl: [this.ppcn.id, Validators.required],
-					files: this.formBuilder.array([
-						this.createItem(),
-						this.createItem(),
-						this.createItem(),
-						this.createItem(),
-						this.createItem(),
-						this.createItem(),
-						this.createItem(),
-						this.createItem(),
-						this.createItem(),
-						this.createItem(),
-						this.createItem(),
-						this.createItem()
-					])
-				});
-				this.loadDocumentsByRecognitionType(idRecognition.id);
+					this.form = this.formBuilder.group({
+						ppcnCtrl: [this.ppcn.id, Validators.required],
+						files: this.formBuilder.array([
+							this.createItem(),
+							this.createItem(),
+							this.createItem(),
+							this.createItem(),
+							this.createItem(),
+							this.createItem(),
+							this.createItem(),
+							this.createItem(),
+							this.createItem(),
+							this.createItem(),
+							this.createItem(),
+							this.createItem()
+						])
+					});
+					this.loadDocumentsByRecognitionType(idRecognition.id);
+				}
+				
+
+				
 			})
 		);
 	}

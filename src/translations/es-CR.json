@@ -120,6 +120,14 @@
   },
 
   "ppcnDocument":{
+    "certificateCompensation":"Certificado de compensaciones",
+    "certificateCompensationDescription":"Compra del servicio de compensación de emisiones de GEI que indique el nombre del proyecto, su ubicación, la cantidad de créditos adquiridos y la fecha de adquisición.",
+    "mitigationActionPlan":"Plan de acción de mitigación",
+    "mitigationActionPlanDescription":"Que incluya los proyectos de mitigación a desarrollar por el cantón o distrito. ",
+    "verificationReport":"Informe de verificación",
+    "verificationReportDescription":"informe de verificación emitido por el Comité de Verificación.",
+    "geiReportCant":"Informe GEI",
+    "geiReportCantDescription":"Que respalde la Declaración de gases de efecto invernadero del cantón o distrito participante que incluya el detalle de las acciones de reducción realizadas en caso que aplique.",
     "legalPerson":"Persona jurídica",
     "legalPersonDescription":"En caso de persona jurídica, copia de certificación de personería jurídica vigente emitida por el Registro Nacional y copia de cédula del representante legal.",
     "physicalPerson":"Persona física",
