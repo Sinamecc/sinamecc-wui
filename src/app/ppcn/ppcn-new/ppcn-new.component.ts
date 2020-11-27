@@ -462,7 +462,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 				this.formBuilder.group({
 					removals: this.editForm
 						? this.createRemovalForm()
-						: this.formBuilder.array([this.createRemovalForm()])
+						: this.formBuilder.array([])
 				}),
 				this.formBuilder.group({
 					activities:

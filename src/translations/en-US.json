@@ -121,6 +121,14 @@
   },
 
   "ppcnDocument":{
+    "certificateCompensation":"Certificate of compensation",
+    "certificateCompensationDescription":"Purchase of the GEI emissions compensation service indicating the name of the project, its location, the amount of credits acquired and the date of acquisition.",
+    "mitigationActionPlan":"Mitigation action plan",
+    "mitigationActionPlanDescription":"That includes the mitigation projects to be developed by the canton or district.",
+    "verificationReport":"Verification report",
+    "verificationReportDescription":"Verification report issued by the Verification Committee.",
+    "geiReportCant":"GEI Report",
+    "geiReportCantDescription":"That endorse the Declaration of greenhouse gases of the participating canton or district that includes details of the reduction actions carried out, if applicable.",
     "legalPerson":"Legal person",
     "legalPersonDescription":"In the case of a legal entity, a copy of the certification of current legal status issued by the National Registry and a copy of the identity card of the legal representative.",
     "physicalPerson":"Physical person",
