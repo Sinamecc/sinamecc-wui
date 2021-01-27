@@ -101,12 +101,14 @@ export class GasReportTableComponent implements OnInit {
 
 	ngOnInit() {
 		if (this.editData) {
-			this.setInventaryResultTableValues(
-				this.editData["gei_organization"]["gas_report"]
-			);
-			this.setCategoryTableValues(
-				this.editData["gei_organization"]["organization_category"]
-			);
+			if (this.editData["gei_organization"]) {
+				this.setInventaryResultTableValues(
+					this.editData["gei_organization"]["gas_report"]
+				);
+				this.setCategoryTableValues(
+					this.editData["gei_organization"]["organization_category"]
+				);
+			}
 		}
 	}
 

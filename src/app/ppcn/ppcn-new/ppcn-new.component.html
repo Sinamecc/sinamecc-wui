@@ -11,8 +11,8 @@
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
-              <span *ngIf="levelId == '1'" translate>info.basicInfo </span>
-              <span *ngIf="levelId == '2'" translate>specificLabel.organizationInfo </span>
+              <span *ngIf="levelId == '1'" translate>info.basicInfo</span>
+              <span *ngIf="levelId == '2'" translate>specificLabel.organizationInfo</span>
             </ng-template>
 
             <mat-form-field class="field-ppcn">
@@ -115,14 +115,16 @@
             <br />
 
             <div class="box-button">
-
               <app-generic-button (click)="stepper.next()" name="general.next"> </app-generic-button>
             </div>
           </mat-step>
 
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
             <ng-template matStepLabel>
-              <div translate>info.contactInfo</div>
+              <div translate>info.contactInfo
+                <button [disabled]="!formArray?.get([1]).valid" type="button" (click)="saveState(1)" mat-icon-button >
+                <mat-icon>save</mat-icon>
+                </button></div>
             </ng-template>
             <mat-form-field class="field-ppcn">
               <mat-label translate>info.name</mat-label>
@@ -160,7 +162,11 @@
 
           <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
             <ng-template matStepLabel>
-              <span translate>geographyLabel.requestLevel</span>
+              <span translate>geographyLabel.requestLevel
+                <button [disabled]="!formArray?.get([2]).valid" type="button" (click)="saveState(2)" mat-icon-button >
+                <mat-icon>save</mat-icon>
+                </button>
+              </span>
             </ng-template>
 
             <div *ngIf="levelId == '2'">
@@ -251,7 +257,11 @@
 
                   <div [formGroupName]="i">
                     <ng-template matStepLabel>
-                      <span translate>geographyLabel.reduction</span>
+                      <span translate>geographyLabel.reduction
+                        <button [disabled]="!formArray?.get([3]).valid" type="button" (click)="saveState(3)" mat-icon-button >
+                          <mat-icon>save</mat-icon>
+                        </button>
+                      </span>
                     </ng-template>
 
                     <mat-form-field class="field-ppcn">
@@ -366,7 +376,11 @@
                   </mat-divider
                   ><br />
                 <ng-template matStepLabel>
-                  <span translate>geographyLabel.compensations</span>
+                  <span translate>geographyLabel.compensations
+                    <button [disabled]="!formArray?.get([4]).valid" type="button" (click)="saveState(4)" mat-icon-button >
+                      <mat-icon>save</mat-icon>
+                    </button>
+                  </span>
                 </ng-template>
                 <br />
                 <div [formGroupName]="i">
@@ -490,7 +504,11 @@
 
           <mat-step formGroupName="5" [stepControl]="formArray?.get([5])">
             <ng-template matStepLabel>
-              <span translate>specificLabel.GEIInformation</span>
+              <span translate>specificLabel.GEIInformation
+                <button [disabled]="!formArray?.get([5]).valid" type="button" (click)="saveState(5)" mat-icon-button >
+                  <mat-icon>save</mat-icon>
+                </button>
+              </span>
             </ng-template>
             <mat-form-field class="field-ppcn" *ngIf="levelId == '2'">
               <mat-label translate>specificLabel.selectOVV</mat-label>:
@@ -563,7 +581,11 @@
 
           <mat-step formGroupName="6" [stepControl]="formArray?.get([6])">
             <ng-template matStepLabel>
-              <span translate>ppcn.removals</span>
+              <span translate>ppcn.removals
+                <button [disabled]="!formArray?.get([6]).valid" type="button" (click)="saveState(6)" mat-icon-button >
+                  <mat-icon>save</mat-icon>
+                </button>
+              </span>
             </ng-template>
 
             <div formArrayName="removals">
@@ -646,7 +668,11 @@
 
           <mat-step formGroupName="7" [stepControl]="formArray?.get([7])"  *ngIf="levelId == '2'">
             <ng-template matStepLabel>
-              <span translate>specificLabel.GEIActivityTypes</span>
+              <span translate>specificLabel.GEIActivityTypes
+                <button [disabled]="!formArray?.get([7]).valid" type="button" (click)="saveState(7)" mat-icon-button >
+                  <mat-icon>save</mat-icon>
+                </button>
+              </span>
             </ng-template>
             <div formArrayName="activities">
               <div

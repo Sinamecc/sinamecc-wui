@@ -72,61 +72,6 @@ export class PpcnService {
 		private s3: S3Service
 	) {}
 
-	submitNewPpcnForm(context: any): Observable<Response> {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
-		const formData = this.buildFormData(context);
-		return this.httpClient
-			.post(routes.submitNewPpcn(), formData, httpOptions)
-			.pipe(
-				map((body: any) => {
-					const response = {
-						statusCode: 200,
-						id: body.id,
-						geographic: body.geographicLevel,
-						message: "Form submitted correctly"
-					};
-					return response;
-				})
-			);
-	}
-
-	submitUpdatePpcnForm(
-		context: any,
-		id: string,
-		contactFormId: number,
-		geographicFormId: number,
-		ovvFormId: number
-	): Observable<Response> {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
-		const formData = this.buildFormData(
-			context,
-			contactFormId,
-			geographicFormId,
-			ovvFormId
-		);
-		return this.httpClient
-			.put(routes.submitUpdatePpcn(id), formData, httpOptions)
-			.pipe(
-				map((body: any) => {
-					const response = {
-						statusCode: 200,
-						id: body.id,
-						geographic: "",
-						message: "Form updated correctly"
-					};
-					return response;
-				})
-			);
-	}
-
 	deletePpcn(uuid: string): Observable<{} | Object> {
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -336,71 +281,225 @@ export class PpcnService {
 		);
 	}
 
-	private buildFormData(
-		data: any,
+	submitNewPPCN(context: any) {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+
+		return this.httpClient
+			.post(routes.submitNewPpcn(), context, httpOptions)
+			.pipe(
+				map((body: any) => {
+					const response = {
+						statusCode: 200,
+						id: body.id,
+						geographic: body.geographicLevel,
+						message: "Form submitted correctly"
+					};
+					return response;
+				})
+			);
+	}
+
+	submitUpdatedPPCN(id: string, context: any) {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+
+		return this.httpClient
+			.put(routes.submitUpdatePpcn(id), context, httpOptions)
+			.pipe(
+				map((body: any) => {
+					const response = {
+						statusCode: 200,
+						id: body.id,
+						geographic: "",
+						message: "Form updated correctly"
+					};
+					return response;
+				})
+			);
+	}
+
+	submitPPCN(
+		state: number,
+		context: any,
+		savedPPCN: boolean,
+		contactFormId: number = null,
+		geiOrganizationId: number = null,
+		geographicFormId: number = null,
+		id: string = null
+	) {
+		const formData = this.buildPPCNForm(
+			state,
+			context,
+			contactFormId,
+			geographicFormId,
+			geiOrganizationId
+		);
+
+		if (!savedPPCN) {
+			return this.submitNewPPCN(formData);
+		}
+
+		return this.submitUpdatedPPCN(id, formData);
+	}
+
+	buildPPCNForm(
+		state: number,
+		context: any,
 		contactFormId: number = null,
 		geographicFormId: number = null,
-		requiredFormId: number = null,
-		recognitionFormId: number = null,
-		sectorFormId: number = null,
-		subsectorFormId: number = null,
 		geiOrganizationId: number = null
 	) {
-		const context = data.context;
 		const formData = {};
-		const organization = {};
-		const contact = {};
-		const geiOrganization = {};
-		const geiActivityTypes = {};
-		const reductions: Object[] = [];
-		const carbonOffsets: Object[] = [];
-		const organization_classification = {};
-		const gasRemovals: Object[] = [];
 
-		const validateListReduction = [7, 8, 9, 10];
-		const validateListCompensation = [9, 10];
+		const functionToInvokeByIndex = [
+			{
+				name: "",
+				function: "",
+				concat: ""
+			},
+			{
+				name: "organization",
+				function: "buildOrganizationData",
+				concat: ""
+			},
+			{
+				name: "organization_classification",
+				function: "buildOrganizationClassificationData",
+				concat: ""
+			},
+			{
+				name: "organization_classification",
+				function: "buildReductionData",
+				concat: "reduction"
+			},
+			{
+				name: "organization_classification",
+				function: "buildCarbonOffset",
+				concat: "carbon_offset"
+			},
+			{
+				name: "gei_organization",
+				function: "buildGeiOrganizationData",
+				concat: ""
+			},
+			{
+				name: "gas_removal",
+				function: "buildGasRemovalData",
+				concat: ""
+			},
+			{
+				name: "gei_organization",
+				function: "buildGeiActivityData",
+				concat: "gei_activity_type"
+			}
+		];
+
+		for (let index = 0; index <= state; index++) {
+			if (functionToInvokeByIndex[index].function !== "") {
+				if (functionToInvokeByIndex[index].concat === "") {
+					formData[functionToInvokeByIndex[index].name] = this[
+						functionToInvokeByIndex[index].function
+					](context);
+				} else {
+					formData[functionToInvokeByIndex[index].name][
+						functionToInvokeByIndex[index].concat
+					] = this[functionToInvokeByIndex[index].function](context);
+				}
+			}
+		}
+
+		if (contactFormId) {
+			formData["organization"]["contact"]["id"] = String(contactFormId);
+		}
 
 		this.currentLevelId.subscribe(
 			levelId => (formData["geographic_level"] = levelId)
 		);
 		formData["user"] = String(this.authenticationService.credentials.id);
+
 		if (geographicFormId) {
 			formData["geographic_level"] = String(geographicFormId);
 		}
 
-		formData["subsector"] = context.formArray[4].subSectorCtrl;
-		formData["sector"] = context.formArray[4].sectorCtrl;
+		if (geiOrganizationId) {
+			if (formData["gei_organization"]) {
+				formData["gei_organization"]["id"] = String(geiOrganizationId);
+			}
+		}
 
-		organization["name"] = context.formArray[0].nameCtrl;
-		organization["representative_name"] =
-			context.formArray[0].representativeNameCtrl;
+		return formData;
+	}
+
+	buildOrganizationData(context: any, contactFormId: number = null) {
+		const organization = {};
+		const contact = {};
+
+		organization["name"] = context[0].nameCtrl;
+		organization["representative_name"] = context[0].representativeNameCtrl;
 		organization["representative_legal_identification"] =
-			context.formArray[0].legalRepresentativeIdCtrl;
-		organization["legal_identification"] = context.formArray[0].legalIdCtrl;
-		organization["confidential"] = context.formArray[0].confidentialCtrl;
-		organization["confidential_fields"] =
-			context.formArray[0].confidentialValueCtrl;
+			context[0].legalRepresentativeIdCtrl;
+		organization["legal_identification"] = context[0].legalIdCtrl;
+		organization["confidential"] = context[0].confidentialCtrl;
+		organization["confidential_fields"] = context[0].confidentialValueCtrl;
 
-		organization["phone_organization"] = context.formArray[0].telephoneCtrl;
-		organization["postal_code"] = context.formArray[0].postalCodeCtrl;
-		organization["fax"] = context.formArray[0].faxCtrl;
-		organization["email_representative_legal"] = context.formArray[0].emailCtrl;
+		organization["phone_organization"] = context[0].telephoneCtrl;
+		organization["postal_code"] = context[0].postalCodeCtrl;
+		organization["fax"] = context[0].faxCtrl;
+		organization["email_representative_legal"] = context[0].emailCtrl;
 		organization["ciiu_code_list"] = [];
 
-		// gas removal section
-		context.formArray[6].removals.forEach((removal: Object) => {
-			const newRemoval = {
-				removal_cost: removal["costRemovalInventoryCtrl"],
-				removal_cost_currency: removal["costRemovalInventoryValueCtrl"],
-				total: removal["totalremovalsCtrl"],
-				removal_descriptions: removal["removalProjectDetailCtrl"]
+		for (const value of context[0].ciuuListCodeCtrl) {
+			const element = {
+				ciiu_code: value
 			};
-			gasRemovals.push(newRemoval);
-		});
+			organization["ciiu_code_list"].push(element);
+		}
+		organization["address"] = context[0].addressCtrl;
 
-		// Reduction form section //
+		if (contactFormId) {
+			contact["id"] = String(contactFormId);
+		}
+		contact["full_name"] = context[1].contactNameCtrl;
+		contact["job_title"] = context[1].positionCtrl;
+		contact["email"] = context[1].emailFormCtrl;
+		contact["phone"] = context[1].phoneCtrl;
 
-		context.formArray[3].reductions.forEach((reduction: Object) => {
+		organization["contact"] = contact;
+
+		return organization;
+	}
+
+	buildOrganizationClassificationData(context: any) {
+		const organization_classification = {};
+
+		organization_classification["methodologies_complexity"] =
+			context[2].complexityMethodologies;
+
+		organization_classification["required_level"] = context[2].requiredCtrl;
+		organization_classification["recognition_type"] =
+			context[2].recognitionCtrl;
+		organization_classification["emission_quantity"] =
+			context[2].amountOfEmissions;
+		organization_classification["buildings_number"] =
+			context[2].numberofDacilities;
+		organization_classification["data_inventory_quantity"] =
+			context[2].amountInventoryData;
+
+		return organization_classification;
+	}
+
+	buildReductionData(context: any) {
+		const reductions: any[] = [];
+		const validateListReduction = [7, 8, 9, 10];
+
+		context[3].reductions.forEach((reduction: Object) => {
 			const newReduction = {
 				project: reduction["reductionProjectCtrl"],
 				activity: reduction["reductionActivityCtrl"],
@@ -418,9 +517,16 @@ export class PpcnService {
 			reductions.push(newReduction);
 		});
 
-		// carbon offset form section
+		return validateListReduction.indexOf(context[2].recognitionCtrl) >= 0
+			? reductions
+			: null;
+	}
 
-		context.formArray[4].compensations.forEach((carbonOffset: Object) => {
+	buildCarbonOffset(context: any) {
+		const carbonOffsets: any = [];
+		const validateListCompensation = [9, 10];
+
+		context[4].compensations.forEach((carbonOffset: Object) => {
 			const newCarbonOffset = {
 				offset_scheme: carbonOffset["compensationScheme"],
 				project_location: carbonOffset["projectLocation"],
@@ -438,88 +544,67 @@ export class PpcnService {
 			carbonOffsets.push(newCarbonOffset);
 		});
 
-		organization_classification["methodologies_complexity"] =
-			context.formArray[2].complexityMethodologies;
+		return validateListCompensation.indexOf(context[2].recognitionCtrl) >= 0
+			? carbonOffsets
+			: null;
+	}
 
-		organization_classification["required_level"] =
-			context.formArray[2].requiredCtrl;
-		organization_classification["recognition_type"] =
-			context.formArray[2].recognitionCtrl;
-		organization_classification["emission_quantity"] =
-			context.formArray[2].amountOfEmissions;
-		organization_classification["buildings_number"] =
-			context.formArray[2].numberofDacilities;
-		organization_classification["data_inventory_quantity"] =
-			context.formArray[2].amountInventoryData;
+	buildGeiOrganizationData(context: any, geiOrganizationId: number = null) {
+		const geiOrganization = {};
 
-		organization_classification["reduction"] =
-			validateListReduction.indexOf(context.formArray[2].recognitionCtrl) >= 0
-				? reductions
-				: null;
-		organization_classification["carbon_offset"] =
-			validateListCompensation.indexOf(context.formArray[2].recognitionCtrl) >=
-			0
-				? carbonOffsets
-				: null;
-
-		formData["organization_classification"] = organization_classification;
-
-		if(gasRemovals.length > 0){
-			formData["gas_removal"] = gasRemovals;
-		}
-		
-		for (const value of context.formArray[0].ciuuListCodeCtrl) {
-			const element = {
-				ciiu_code: value
-			};
-			organization["ciiu_code_list"].push(element);
-		}
-		organization["address"] = context.formArray[0].addressCtrl;
-
-		if (contactFormId) {
-			contact["id"] = String(contactFormId);
-		}
-		contact["full_name"] = context.formArray[1].contactNameCtrl;
-		contact["job_title"] = context.formArray[1].positionCtrl;
-		contact["email"] = context.formArray[1].emailFormCtrl;
-		contact["phone"] = context.formArray[1].phoneCtrl;
-
-		organization["contact"] = contact;
-		formData["organization"] = organization;
-
-		if (!context.formArray[5].ovvCtrl) {
+		if (!context[5].ovvCtrl) {
 			if (geiOrganizationId) {
 				geiOrganization["id"] = String(geiOrganizationId);
 			}
 			geiOrganization["emission_ovv_date"] = this.datePipe.transform(
-				context.formArray[5].implementationEmissionDateCtrl,
+				context[5].implementationEmissionDateCtrl,
 				"yyyy-MM-dd"
 			);
-			geiOrganization["base_year"] = context.formArray[5].baseYearCtrl;
-			geiOrganization["report_year"] = context.formArray[5].reportYearCtrl;
+			geiOrganization["base_year"] = context[5].baseYearCtrl;
+			geiOrganization["report_year"] = context[5].reportYearCtrl;
 
-			geiOrganization["scope"] = context.formArray[5].scope;
+			geiOrganization["scope"] = context[5].scope;
 		} else {
 			if (geiOrganizationId) {
 				geiOrganization["id"] = String(geiOrganizationId);
 			}
 
-			geiOrganization["scope"] = context.formArray[5].scope;
+			geiOrganization["scope"] = context[5].scope;
 			//geiOrganization["activity_type"] = context.formArray[5].activityCtrl;
-			geiOrganization["ovv"] = context.formArray[5].ovvCtrl;
+			geiOrganization["ovv"] = context[5].ovvCtrl;
 			geiOrganization["emission_ovv_date"] = this.datePipe.transform(
-				context.formArray[5].implementationEmissionDateCtrl,
+				context[5].implementationEmissionDateCtrl,
 				"yyyy-MM-dd"
 			);
-			geiOrganization["base_year"] = context.formArray[5].baseYearCtrl;
-			geiOrganization["report_year"] = context.formArray[5].reportYearCtrl;
+			geiOrganization["base_year"] = context[5].baseYearCtrl;
+			geiOrganization["report_year"] = context[5].reportYearCtrl;
 
-			geiOrganization["organization_category"] = data.categoryTable;
-			geiOrganization["gas_report"] = data.gasReportTable;
+			geiOrganization["organization_category"] = context.categoryTable;
+			geiOrganization["gas_report"] = context.gasReportTable;
 		}
-		geiOrganization["gei_activity_type"] = [];
-		if (context.formArray[7].activities) {
-			context.formArray[7].activities.forEach((activity: any) => {
+
+		return geiOrganization;
+	}
+
+	buildGasRemovalData(context: any) {
+		const gasRemovals: any[] = [];
+		context[6].removals.forEach((removal: Object) => {
+			const newRemoval = {
+				removal_cost: removal["costRemovalInventoryCtrl"],
+				removal_cost_currency: removal["costRemovalInventoryValueCtrl"],
+				total: removal["totalremovalsCtrl"],
+				removal_descriptions: removal["removalProjectDetailCtrl"]
+			};
+			gasRemovals.push(newRemoval);
+		});
+		return gasRemovals.length > 0 ? gasRemovals : null;
+	}
+
+	buildGeiActivityData(context: any) {
+		const geiOrganization: any = [];
+
+		if (context[7].activities) {
+			context[7].activities.forEach((activity: any) => {
 				const objectToPush = {
 					activity_type: activity.activityCtrl,
 					sub_sector: activity.subSectorCtrl,
@@ -528,11 +613,11 @@ export class PpcnService {
 				if (activity["id"]) {
 					objectToPush["id"] = activity["id"];
 				}
-				geiOrganization["gei_activity_type"].push(objectToPush);
+				geiOrganization.push(objectToPush);
 			});
 		}
-		formData["gei_organization"] = geiOrganization;
-		return formData;
+
+		return geiOrganization;
 	}
 
 	public async downloadResource(filePath: string): Promise<S3File> {

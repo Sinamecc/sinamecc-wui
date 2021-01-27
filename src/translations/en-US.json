@@ -88,6 +88,8 @@
   },
 
   "ppcn": {
+    "ppcnSaveError":"Error saving ppcn",
+    "ppcnSave":"PPCN saved successfully",
     "ppcnUpdateSuccess":"The PPCN form was updated successfully",
     "totalRemovals": "Total removals",
     "removalProjectDetail": "Removal Project Detail",
