@@ -14,7 +14,6 @@ import { Route, extract } from "@app/core";
 import { PpcnLevelComponent } from "@app/ppcn/ppcn-level/ppcn-level.component";
 import { PpcnFlowComponent } from "@app/ppcn/ppcn-flow/ppcn-flow.component";
 import { PpcnListComponent } from "@app/ppcn/ppcn-list/ppcn-list.component";
-import { PpcnUpdateComponent } from "@app/ppcn/ppcn-update/ppcn-update.component";
 import { PpcnComponent } from "@app/ppcn/ppcn/ppcn.component";
 import { PpcnDownloadComponent } from "@app/ppcn/ppcn-download/ppcn-download.component";
 import { PpcnUploadComponent } from "@app/ppcn/ppcn-upload/ppcn-upload.component";
@@ -40,11 +39,6 @@ const routes: Routes = [
 			path: "ppcn/registries/new",
 			component: PpcnFlowComponent,
 			data: { title: extract("ppcn.createPPCN") }
-		},
-		{
-			path: "ppcn/:id/edit",
-			component: PpcnUpdateComponent,
-			data: { id: extract("EditPPCN") }
 		},
 		{ path: "ppcn/:id", component: PpcnComponent, data: { id: extract("id") } },
 		{

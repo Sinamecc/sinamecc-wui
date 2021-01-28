@@ -18,32 +18,32 @@
     <!-- Strategy Name Column -->
     <ng-container matColumnDef="organization_ppcn">
       <mat-header-cell *matHeaderCellDef translate> specificLabel.OrganizationDistrictCanton </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.organization.name }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element?.organization?.name }} </mat-cell>
     </ng-container>
 
     <!-- Objective Column -->
     <ng-container matColumnDef="fsm_state">
       <mat-header-cell *matHeaderCellDef translate> general.status </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.fsm_state}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element?.fsm_state}} </mat-cell>
     </ng-container>
 
     <!-- Status Column -->
     <ng-container matColumnDef="request_type">
       <mat-header-cell *matHeaderCellDef translate> geographyLabel.requestType </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.organization_classification.required_level.level_type }}
+      <mat-cell *matCellDef="let element"> {{ element?.organization_classification?.required_level?.level_type }}
       </mat-cell>
     </ng-container>
 
     <!-- Status Column -->
     <ng-container matColumnDef="required_recognition">
       <mat-header-cell *matHeaderCellDef translate> specificLabel.requiredRecognition </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.organization_classification.recognition_type.recognition_type }}
+      <mat-cell *matCellDef="let element"> {{ element?.organization_classification?.recognition_type?.recognition_type }}
       </mat-cell>
     </ng-container>
     <!-- Updated Column -->
     <ng-container matColumnDef="geographic_level">
       <mat-header-cell *matHeaderCellDef translate> geographyLabel.geographicLevel</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.geographic_level.level }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element?.geographic_level?.level }} </mat-cell>
     </ng-container>
 
     <!-- Actions Column -->
@@ -62,6 +62,9 @@
         </button>
         <button mat-icon-button color="primary" (click)="changelog(element.id)">
           <mat-icon color="white">history</mat-icon>
+        </button>
+        <button mat-icon-button *ngIf="element.fsm_state == 'PPCN_new'" color="primary" [routerLink]="'edit/' + element.id">
+          <mat-icon color="white">edit</mat-icon>
         </button>
       </mat-cell>
     </ng-container>

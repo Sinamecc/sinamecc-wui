@@ -139,10 +139,10 @@ export class PpcnComponent implements OnInit {
 	}
 
 	getFileLink(text: string) {
-		const splitsElements =  text.split("/")
+		const splitsElements = text.split("/");
 		const elementDocumentID = splitsElements.pop();
 		const ppcnID = splitsElements[4];
-		if(elementDocumentID && ppcnID){
+		if (elementDocumentID && ppcnID) {
 			this.router.navigate([`ppcn/${ppcnID}/view/file/${elementDocumentID}`], {
 				replaceUrl: true
 			});

@@ -84,6 +84,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 	@ViewChild("table") table: GasReportTableComponent;
 	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
 
+	savedPPCN = false;
+	ppcnAutoSaved: Ppcn;
+
 	get formArray(): AbstractControl | null {
 		return this.formGroup.get("formArray");
 	}
@@ -112,11 +115,15 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 		this.service
 			.getPpcn(id, this.i18nService.language.split("-")[0])
 			.subscribe((response: Ppcn) => {
+				this.ppcnAutoSaved = response;
+				this.savedPPCN = true;
+
 				this.ppcnEdit = response;
 				this.addCIUUCodes(this.ppcnEdit.organization.ciiu_code);
 				this.levelId = this.ppcnEdit.geographic_level.id.toString();
-				this.reductionFormVar = +response.organization_classification
-					.recognition_type.id;
+				this.reductionFormVar = response.organization_classification
+					? +response.organization_classification.recognition_type.id
+					: null;
 				this.createForm();
 			});
 	}
@@ -162,12 +169,29 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 			ciuuListCodeCtrl: this.CIUUCodeList
 		});
 
+		const contextForm = this.formGroup.value["formArray"];
+		contextForm["gasReportTable"] =
+			this.levelId === "2" ? this.table.buildTableSection() : null;
+		contextForm["categoryTable"] =
+			this.levelId === "2" ? this.table.buildCategoryTableSection() : null;
+
+		const contactFormId: any = this.ppcnAutoSaved
+			? this.ppcnAutoSaved.organization.contact.id
+			: null;
+		const geiOrganizationId: any = this.ppcnAutoSaved
+			? this.ppcnAutoSaved.gei_organization
+				? this.ppcnAutoSaved.gei_organization.id
+				: null
+			: null;
+		const geographicFormId: any = this.ppcnAutoSaved ? +this.levelId : null;
+		const id: any = this.ppcnAutoSaved ? this.ppcnAutoSaved.id : null;
+
 		const context = {
-			context: this.formGroup.value,
-			gasReportTable:
-				this.levelId === "2" ? this.table.buildTableSection() : null,
-			categoryTable:
-				this.levelId === "2" ? this.table.buildCategoryTableSection() : null
+			context: contextForm,
+			contactFormId: contactFormId,
+			geiOrganizationId: geiOrganizationId,
+			geographicFormId: geographicFormId,
+			id: id
 		};
 
 		if (this.editForm) {
@@ -179,12 +203,14 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
 	submitEditForm(context: any) {
 		this.service
-			.submitUpdatePpcnForm(
-				context,
-				this.ppcnEdit.id,
-				this.ppcnEdit.organization.contact.id,
-				+this.levelId,
-				this.ppcnEdit.gei_organization.id
+			.submitPPCN(
+				7,
+				context.context,
+				this.savedPPCN,
+				context.contactFormId,
+				context.geiOrganizationId,
+				context.geographicFormId,
+				context.id
 			)
 			.pipe(
 				finalize(() => {
@@ -202,6 +228,12 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 								duration: 3000
 							});
 						});
+
+					if (this.ppcnEdit.ppcn_files.length === 0) {
+						this.router.navigate([`ppcn/${response.id}/upload/new`], {
+							replaceUrl: true
+						});
+					}
 				},
 				error => {
 					log.debug(`New PPCN Form error: ${error}`);
@@ -211,14 +243,74 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 			);
 	}
 
+	saveState(state: number) {
+		this.formGroup.controls.formArray["controls"][0].patchValue({
+			ciuuListCodeCtrl: this.CIUUCodeList
+		});
+
+		const context = this.formGroup.value["formArray"];
+		context["gasReportTable"] =
+			this.levelId === "2" ? this.table.buildTableSection() : null;
+		context["categoryTable"] =
+			this.levelId === "2" ? this.table.buildCategoryTableSection() : null;
+
+		const contactFormId: any = this.ppcnAutoSaved
+			? this.ppcnAutoSaved.organization.contact.id
+			: null;
+		const geiOrganizationId: any = this.ppcnAutoSaved
+			? this.ppcnAutoSaved.gei_organization
+				? this.ppcnAutoSaved.gei_organization.id
+				: null
+			: null;
+		const geographicFormId: any = this.ppcnAutoSaved ? +this.levelId : null;
+		const id: any = this.ppcnAutoSaved ? this.ppcnAutoSaved.id : null;
+		this.service
+			.submitPPCN(
+				state,
+				context,
+				this.savedPPCN,
+				contactFormId,
+				geiOrganizationId,
+				geographicFormId,
+				id
+			)
+			.subscribe(
+				response => {
+					if (!this.savedPPCN) {
+						this.service
+							.getPpcn(response.id, this.i18nService.language.split("-")[0])
+							.subscribe((ppcnResponse: Ppcn) => {
+								this.ppcnAutoSaved = ppcnResponse;
+							});
+						this.savedPPCN = true;
+					}
+
+					this.responseMessaage("ppcn.ppcnSave");
+				},
+				error => {
+					this.responseMessaage("ppcn.ppcnSaveError");
+				}
+			);
+	}
+
+	responseMessaage(message: string) {
+		this.translateService.get(message).subscribe((res: string) => {
+			this.snackBar.open(res, null, {
+				duration: 3000
+			});
+		});
+	}
+
 	submitCreateForm(context: any) {
 		this.service
-			.submitNewPpcnForm(context)
-			.pipe(
-				finalize(() => {
-					this.formGroup.markAsPristine();
-					this.isLoading = false;
-				})
+			.submitPPCN(
+				7,
+				context.context,
+				this.savedPPCN,
+				context.contactFormId,
+				context.geiOrganizationId,
+				context.geographicFormId,
+				context.id
 			)
 			.subscribe(
 				response => {
@@ -227,7 +319,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					});
 				},
 				error => {
-					log.debug(`New PPCN Form error: ${error}`);
+					log.debug(`PPCN Form error: ${error}`);
 					this.errorComponent.parseErrors(error);
 					this.error = error;
 				}
@@ -346,7 +438,10 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					requiredCtrl: [
 						this.editForm
 							? this.filterValue(
-									this.ppcnEdit.organization_classification.required_level.id
+									this.ppcnEdit.organization_classification
+										? this.ppcnEdit.organization_classification.required_level
+												.id
+										: null
 							  )
 							: "",
 						Validators.required
@@ -358,7 +453,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 									this.editForm
 										? this.filterValue(
 												this.ppcnEdit.organization_classification
-													.emission_quantity
+													? this.ppcnEdit.organization_classification
+															.emission_quantity
+													: null
 										  )
 										: "",
 									Validators.required
@@ -370,7 +467,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 									this.editForm
 										? this.filterValue(
 												this.ppcnEdit.organization_classification
-													.data_inventory_quantity
+													? this.ppcnEdit.organization_classification
+															.data_inventory_quantity
+													: null
 										  )
 										: "",
 									Validators.required
@@ -382,7 +481,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 									this.editForm
 										? this.filterValue(
 												this.ppcnEdit.organization_classification
-													.buildings_number
+													? this.ppcnEdit.organization_classification
+															.buildings_number
+													: null
 										  )
 										: "",
 									Validators.required
@@ -394,7 +495,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 									this.editForm
 										? this.filterValue(
 												this.ppcnEdit.organization_classification
-													.methodologies_complexity
+													? this.ppcnEdit.organization_classification
+															.methodologies_complexity
+													: null
 										  )
 										: "",
 									Validators.required
@@ -403,7 +506,10 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 					recognitionCtrl: [
 						this.editForm
 							? this.filterValue(
-									this.ppcnEdit.organization_classification.recognition_type.id
+									this.ppcnEdit.organization_classification
+										? this.ppcnEdit.organization_classification.recognition_type
+												.id
+										: null
 							  )
 							: "",
 						Validators.required
@@ -422,13 +528,21 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 				this.formBuilder.group({
 					baseYearCtrl: [
 						this.editForm
-							? this.filterValue(this.ppcnEdit.gei_organization.base_year)
+							? this.filterValue(
+									this.ppcnEdit.gei_organization
+										? this.ppcnEdit.gei_organization.base_year
+										: null
+							  )
 							: "",
 						Validators.required
 					],
 					reportYearCtrl: [
 						this.editForm
-							? this.filterValue(this.ppcnEdit.gei_organization.report_year)
+							? this.filterValue(
+									this.ppcnEdit.gei_organization
+										? this.ppcnEdit.gei_organization.report_year
+										: null
+							  )
 							: "",
 						Validators.required
 					],
@@ -436,7 +550,11 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 						this.levelId === "2"
 							? [
 									this.editForm
-										? this.filterValue(this.ppcnEdit.gei_organization.ovv.id)
+										? this.filterValue(
+												this.ppcnEdit.gei_organization
+													? this.ppcnEdit.gei_organization.ovv.id
+													: null
+										  )
 										: "",
 									Validators.required
 							  ]
@@ -446,7 +564,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 							? [
 									this.editForm
 										? this.filterValue(
-												this.ppcnEdit.gei_organization.emission_ovv_date
+												this.ppcnEdit.gei_organization
+													? this.ppcnEdit.gei_organization.emission_ovv_date
+													: null
 										  )
 										: "",
 									Validators.required
@@ -454,7 +574,11 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 							: null,
 					scope: [
 						this.editForm
-							? this.filterValue(this.ppcnEdit.gei_organization.scope)
+							? this.filterValue(
+									this.ppcnEdit.gei_organization
+										? this.ppcnEdit.gei_organization.scope
+										: null
+							  )
 							: "",
 						Validators.required
 					]
@@ -515,130 +639,162 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 	}
 
 	createReductionForm(newElement: boolean = false): FormGroup | FormArray {
+		const cleanForm = this.formBuilder.group({
+			reductionProjectCtrl: ["", Validators.required],
+			reductionActivityCtrl: ["", Validators.required],
+			reductionDetailsCtrl: ["", Validators.required],
+			reducedEmissionsCtrl: ["", Validators.required],
+			investmentReductions: ["CRC", Validators.required],
+			investmentReductionsValue: ["", Validators.required],
+			totalInvestmentReduction: ["CRC", Validators.required],
+			totalInvestmentReductionValue: ["", Validators.required],
+			totalEmissionsReduced: ["", Validators.required]
+		});
+
 		if (this.editForm && !newElement) {
 			const reductions: FormGroup[] = [];
-			for (const reduction of this.ppcnEdit.organization_classification
-				.reduction) {
-				const form = this.formBuilder.group({
-					id: [reduction.id],
-					reductionProjectCtrl: [reduction.project, Validators.required],
-					reductionActivityCtrl: [reduction.activity, Validators.required],
-					reductionDetailsCtrl: [
-						reduction.detail_reduction,
-						Validators.required
-					],
-					reducedEmissionsCtrl: [reduction.emission, Validators.required],
-					investmentReductions: [
-						reduction.investment_currency,
-						Validators.required
-					],
-					investmentReductionsValue: [
-						reduction.investment,
-						Validators.required
-					],
-					totalInvestmentReduction: [
-						reduction.total_investment_currency,
-						Validators.required
-					],
-					totalInvestmentReductionValue: [
-						reduction.total_investment,
-						Validators.required
-					],
-					totalEmissionsReduced: [reduction.total_emission, Validators.required]
-				});
-				reductions.push(form);
+			if (this.ppcnEdit.organization_classification) {
+				if (this.ppcnEdit.organization_classification.reduction.length > 0) {
+					for (const reduction of this.ppcnEdit.organization_classification
+						.reduction) {
+						const form = this.formBuilder.group({
+							id: [reduction.id],
+							reductionProjectCtrl: [reduction.project, Validators.required],
+							reductionActivityCtrl: [reduction.activity, Validators.required],
+							reductionDetailsCtrl: [
+								reduction.detail_reduction,
+								Validators.required
+							],
+							reducedEmissionsCtrl: [reduction.emission, Validators.required],
+							investmentReductions: [
+								reduction.investment_currency,
+								Validators.required
+							],
+							investmentReductionsValue: [
+								reduction.investment,
+								Validators.required
+							],
+							totalInvestmentReduction: [
+								reduction.total_investment_currency,
+								Validators.required
+							],
+							totalInvestmentReductionValue: [
+								reduction.total_investment,
+								Validators.required
+							],
+							totalEmissionsReduced: [
+								reduction.total_emission,
+								Validators.required
+							]
+						});
+						reductions.push(form);
+					}
+				} else {
+					reductions.push(cleanForm);
+				}
 			}
+
 			return this.formBuilder.array(reductions);
 		} else {
-			return this.formBuilder.group({
-				reductionProjectCtrl: ["", Validators.required],
-				reductionActivityCtrl: ["", Validators.required],
-				reductionDetailsCtrl: ["", Validators.required],
-				reducedEmissionsCtrl: ["", Validators.required],
-				investmentReductions: ["CRC", Validators.required],
-				investmentReductionsValue: ["", Validators.required],
-				totalInvestmentReduction: ["CRC", Validators.required],
-				totalInvestmentReductionValue: ["", Validators.required],
-				totalEmissionsReduced: ["", Validators.required]
-			});
+			return cleanForm;
 		}
 	}
 
 	createcompensationForm(newElement: boolean = false): FormGroup | FormArray {
+		const cleanForm = this.formBuilder.group({
+			compensationScheme: ["", Validators.required],
+			projectLocation: ["", Validators.required],
+			certificateNumber: ["", Validators.required],
+			totalCompensation: ["", Validators.required],
+			compensationCost: ["CRC", Validators.required],
+			compensationCostValue: ["", Validators.required],
+			period: ["", Validators.required],
+			totalEmissionsOffsets: ["", Validators.required],
+			totalCostCompensation: ["CRC", Validators.required]
+		});
+
 		if (this.editForm && !newElement) {
 			const compensations: FormGroup[] = [];
-			for (const compensation of this.ppcnEdit.organization_classification
-				.carbon_offset) {
-				const form = this.formBuilder.group({
-					id: [compensation.id],
-					compensationScheme: [compensation.offset_scheme, Validators.required],
-					projectLocation: [compensation.project_location, Validators.required],
-					certificateNumber: [
-						compensation.certificate_identification,
-						Validators.required
-					],
-					totalCompensation: [
-						compensation.total_carbon_offset,
-						Validators.required
-					],
-					compensationCost: [
-						compensation.offset_cost_currency,
-						Validators.required
-					],
-					compensationCostValue: [
-						compensation.offset_cost,
-						Validators.required
-					],
-					period: [compensation.period, Validators.required],
-					totalEmissionsOffsets: [
-						compensation.total_offset_cost,
-						Validators.required
-					],
-					totalCostCompensation: [
-						compensation.total_offset_cost_currency,
-						Validators.required
-					]
-				});
-				compensations.push(form);
+			if (this.ppcnEdit.organization_classification) {
+				if (
+					this.ppcnEdit.organization_classification.carbon_offset.length > 0
+				) {
+					for (const compensation of this.ppcnEdit.organization_classification
+						.carbon_offset) {
+						const form = this.formBuilder.group({
+							id: [compensation.id],
+							compensationScheme: [
+								compensation.offset_scheme,
+								Validators.required
+							],
+							projectLocation: [
+								compensation.project_location,
+								Validators.required
+							],
+							certificateNumber: [
+								compensation.certificate_identification,
+								Validators.required
+							],
+							totalCompensation: [
+								compensation.total_carbon_offset,
+								Validators.required
+							],
+							compensationCost: [
+								compensation.offset_cost_currency,
+								Validators.required
+							],
+							compensationCostValue: [
+								compensation.offset_cost,
+								Validators.required
+							],
+							period: [compensation.period, Validators.required],
+							totalEmissionsOffsets: [
+								compensation.total_offset_cost,
+								Validators.required
+							],
+							totalCostCompensation: [
+								compensation.total_offset_cost_currency,
+								Validators.required
+							]
+						});
+						compensations.push(form);
+					}
+				} else {
+					compensations.push(cleanForm);
+				}
 			}
 			return this.formBuilder.array(compensations);
 		} else {
-			return this.formBuilder.group({
-				compensationScheme: ["", Validators.required],
-				projectLocation: ["", Validators.required],
-				certificateNumber: ["", Validators.required],
-				totalCompensation: ["", Validators.required],
-				compensationCost: ["CRC", Validators.required],
-				compensationCostValue: ["", Validators.required],
-				period: ["", Validators.required],
-				totalEmissionsOffsets: ["", Validators.required],
-				totalCostCompensation: ["CRC", Validators.required]
-			});
+			return cleanForm;
 		}
 	}
 
 	createActivityForm(newElement: boolean = false): FormGroup | FormArray {
 		if (this.editForm && !newElement) {
 			const activities: FormGroup[] = [];
-			for (const activity of this.ppcnEdit.gei_organization.gei_activity_type) {
-				const form = this.formBuilder.group({
-					id: this.levelId === "2" ? [activity.id] : null,
-					activityCtrl:
-						this.levelId === "2"
-							? [activity.activity_type, Validators.required]
-							: null,
-					sectorCtrl:
-						this.levelId === "2"
-							? [activity.sector.id, Validators.required]
-							: null,
-					subSectorCtrl:
-						this.levelId === "2"
-							? [activity.sub_sector.id, Validators.required]
-							: null
-				});
+			if (this.ppcnEdit.gei_organization) {
+				for (const activity of this.ppcnEdit.gei_organization
+					.gei_activity_type) {
+					const form = this.formBuilder.group({
+						id: this.levelId === "2" ? [activity.id] : null,
+						activityCtrl:
+							this.levelId === "2"
+								? [activity.activity_type, Validators.required]
+								: null,
+						sectorCtrl:
+							this.levelId === "2"
+								? [activity.sector.id, Validators.required]
+								: null,
+						subSectorCtrl:
+							this.levelId === "2"
+								? [activity.sub_sector.id, Validators.required]
+								: null
+					});
 
-				activities.push(form);
+					activities.push(form);
+				}
 			}
+
 			return this.formBuilder.array(activities);
 		} else {
 			return this.formBuilder.group({

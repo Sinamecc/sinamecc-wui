@@ -67,15 +67,15 @@
         </h3>
         <strong translate>geographyLabel.geographicLevel</strong>: {{ppcn?.geographic_level?.level}} <br />
         <strong translate>geographyLabel.requestLevel</strong>:
-        {{ppcn?.organization_classification.required_level?.level_type}} <br />
+        {{ppcn?.organization_classification?.required_level?.level_type}} <br />
         <strong translate>geographyLabel.recognitionType</strong>:
-        {{ppcn?.organization_classification.recognition_type?.recognition_type}} <br />
+        {{ppcn?.organization_classification?.recognition_type?.recognition_type}} <br />
         <strong translate>geographyLabel.classificationAmountEmissions</strong>:
-        {{ppcn?.organization_classification.emission_quantity}} <br />
+        {{ppcn?.organization_classification?.emission_quantity}} <br />
         <strong translate>geographyLabel.classificationNumberFacilities</strong>:
-        {{ppcn?.organization_classification.buildings_number}} <br />
+        {{ppcn?.organization_classification?.buildings_number}} <br />
         <strong translate>geographyLabel.ClassificationAmountInventoryData</strong>:
-        {{ppcn?.organization_classification.data_inventory_quantity}} <br />
+        {{ppcn?.organization_classification?.data_inventory_quantity}} <br />
 
         <div *ngIf="ppcn?.organization_classification?.reduction">
           <h3 translate class="text-color">geographyLabel.reduction

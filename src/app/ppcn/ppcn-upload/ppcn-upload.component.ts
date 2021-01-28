@@ -95,10 +95,10 @@ export class PpcnUploadComponent implements OnInit {
 		{
 			name: "ppcnDocument.certificateCompensation",
 			description: "ppcnDocument.certificateCompensationDescription"
-		},
+		}
 	];
 
-	fileDetail:any = []
+	fileDetail: any = [];
 
 	constructor(
 		private router: Router,
@@ -151,30 +151,26 @@ export class PpcnUploadComponent implements OnInit {
 				this.ppcn = this.processedPpcns.find(
 					ppcnToFind => Number(ppcnToFind.id) === this.id
 				);
-				
-				const numberOfItems = this.ppcn.geographic_level.id == 1 ? 4 : 12;
+
+				const numberOfItems = this.ppcn.geographic_level.id === 1 ? 4 : 12;
 
 				this.form = this.formBuilder.group({
 					ppcnCtrl: [this.ppcn.id, Validators.required],
 					files: this.formBuilder.array(
-						Array.from({length: numberOfItems}, (_, i) => i + 1).map(_ => {
-							return this.createItem()
+						Array.from({ length: numberOfItems }, (_, i) => i + 1).map(_ => {
+							return this.createItem();
 						})
 					)
 				});
 
-				if(this.ppcn.geographic_level.id == 1){
-					this.fileDetail = this.fileDetailPPCNCant
-					
-				}else{
-					this.fileDetail = this.fileDetailPPCNOrga
+				if (this.ppcn.geographic_level.id === 1) {
+					this.fileDetail = this.fileDetailPPCNCant;
+				} else {
+					this.fileDetail = this.fileDetailPPCNOrga;
 					const idRecognition = this.ppcn.organization_classification
-					.recognition_type;
+						.recognition_type;
 					this.loadDocumentsByRecognitionType(idRecognition.id);
 				}
-				
-
-				
 			})
 		);
 	}
