@@ -47,6 +47,7 @@ export class InitiativeFormComponent implements OnInit {
 	displayFinancialSource: boolean;
 
 	mitigationAction: MitigationAction;
+	initiativeGoalList: string[] = [];
 
 	@Input() newFormData: Observable<MitigationActionNewFormData>;
 	// @Input() action: string;
@@ -89,20 +90,13 @@ export class InitiativeFormComponent implements OnInit {
 					// initiativeRegisterTypeCtrl: ['', Validators.required],
 					initiativeTypeCtrl: ["", Validators.required],
 					initiativeNameCtrl: ["", Validators.required],
-					entityIniativeResponsibleCtrl: ["", Validators.required],
 					initiativeObjectiveCtrl: ["", Validators.required],
 					initiativeDescriptionCtrl: ["", Validators.required],
-					initiativeGoalCtrl: ["", Validators.required],
-					initiativeStatusCtrl: ["", Validators.required]
-				}),
-				this.formBuilder.group({
-					initiativeFinancingStatusCtrl: ["", Validators.required],
-					initiativeFinancingStatusTypeCtrl: ["", Validators.required],
-					initiatveFinancingSourceCtrl: "",
-					initiativeBudgetCtrl: ["", Validators.required]
+					initiativeGoalCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
 					// initiativeContactCtrl: ['', Validators.required],
+					entityReportingCtrl: ["", Validators.required],
 					initiativeContactNameCtrl: ["", Validators.required],
 					initiativePositionCtrl: ["", Validators.required],
 					initiativeEmailFormCtrl: ["", Validators.email],
@@ -110,7 +104,19 @@ export class InitiativeFormComponent implements OnInit {
 						"",
 						Validators.compose([Validators.required, Validators.minLength(8)])
 					]
-				})
+				}),
+				this.formBuilder.group({
+					initiativeStatusCtrl: ["", Validators.required],
+					startImplementationCtrl: ["", Validators.required],
+					deploymentCompletionCtrl: [""],
+					entityResponsibleMitigationActionCtrl: ["", Validators.required],
+					entitiesInvolvedMitigationActionCtrl: [""]
+				}),
+				this.formBuilder.group({
+					geographicScaleCtrl: ["", Validators.required],
+					locationActionCtrl: ["", Validators.required]
+				}),
+				this.formBuilder.group({})
 			])
 		});
 	}
@@ -305,5 +311,18 @@ export class InitiativeFormComponent implements OnInit {
 			)
 			.map(({ id }) => id);
 		this.displayFinancialSource = $event.value === insuredSourceTypeId;
+	}
+
+	removeGoal(item: string) {
+		const index = this.initiativeGoalList.indexOf(item);
+
+		if (index >= 0) {
+			this.initiativeGoalList.splice(index, 1);
+		}
+	}
+
+	wordCounter(text: string) {
+		const words = text ? text.split(/\s+/) : 0;
+		return words ? words.length : 0;
 	}
 }

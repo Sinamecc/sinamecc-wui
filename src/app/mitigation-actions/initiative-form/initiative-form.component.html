@@ -20,8 +20,8 @@
             <br />
 
             <span translate>specificLabel.initiativeType</span><br /><br />
-            <mat-radio-group formControlName="initiativeTypeCtrl">
-              <mat-radio-button *ngFor="let initiativeType of processedNewFormData?.initiative_types"
+            <mat-radio-group style="display: flex;flex-direction: column;" formControlName="initiativeTypeCtrl">
+              <mat-radio-button style=" margin: 5px;" *ngFor="let initiativeType of processedNewFormData?.initiative_types"
                 [value]="initiativeType.id">
                 {{ initiativeType.types }}
               </mat-radio-button>
@@ -34,12 +34,7 @@
               <input matInput formControlName="initiativeNameCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
-            <br />
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>specificLabel.entityResponsibleName</mat-label>
-              <input matInput formControlName="entityIniativeResponsibleCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
+          
             <br />
             <mat-form-field class="field-ppcn">
               <textarea matInput formControlName="initiativeObjectiveCtrl"
@@ -49,6 +44,8 @@
             </mat-form-field>
             <br />
 
+            <div fxLayout="row" fxLayoutAlign=" center">
+            <input type="file" accept=".rar,application/pdf,.zip" id="myFile" name="filename">
             <mat-form-field class="field-ppcn">
               <textarea matInput formControlName="initiativeDescriptionCtrl"
                 [placeholder]="'specificLabel.initiativeDescription' | translate" matTextareaAutosize
@@ -56,19 +53,27 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
+            </div>
+            <div>
             <mat-form-field class="field-ppcn">
-              <textarea matInput formControlName="initiativeGoalCtrl"
-                [placeholder]="'specificLabel.initiativeGoal' | translate" matTextareaAutosize matAutosizeMinRows="2"
-                matAutosizeMaxRows="20"></textarea>
+              <input #goalInput matInput formControlName="initiativeGoalCtrl"
+                [placeholder]="'specificLabel.initiativeGoal' | translate"  />
+                <button [disabled]="goalInput.value == ''" (click)="initiativeGoalList.push(goalInput.value);goalInput.value=''" type="button" mat-button matSuffix mat-icon-button>
+                  <mat-icon>add_circle_outline</mat-icon>
+                </button>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
-            <br />
-            <span translate>specificLabel.initiativeStatus</span><br /><br />
-            <mat-radio-group formControlName="initiativeStatusCtrl">
-              <mat-radio-button *ngFor="let status of processedNewFormData?.statuses" [value]="status.id">
-                {{ status.status }}
-              </mat-radio-button>
-            </mat-radio-group>
+
+            <div *ngIf="initiativeGoalList.length > 0">
+              <mat-chip-list>
+                <mat-chip (removed)="removeGoal(item)" *ngFor="let item of initiativeGoalList" selected color="primary">
+                  {{item}}
+                  <mat-icon matChipRemove >cancel</mat-icon>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+            
+            </div>
             <br />
             <!-- <div class="margin-20">
               <div>step details:-</div>
@@ -85,56 +90,14 @@
 
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
             <ng-template matStepLabel>
-              <div translate>specificLabel.initiativeFinanceInfo</div>
+              <span translate>specificLabel.initiativeContactInfo</span>
             </ng-template>
-
-            <span translate>specificLabel.initiativeFinanceStatus</span><br /><br />
-            <mat-radio-group formControlName="initiativeFinancingStatusCtrl">
-              <mat-radio-button *ngFor="let financeStatus of processedNewFormData?.finance_status"
-                [value]="financeStatus.id" (change)="financialSourceInputShown($event)">
-                {{ financeStatus.status }}
-              </mat-radio-button>
-            </mat-radio-group>
-            <br />
-            <br />
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>specificLabel.initiativeFinanceType</mat-label>
-              <mat-select formControlName="initiativeFinancingStatusTypeCtrl"
-                [placeholder]="'Finance Source Type' | translate">
-                <mat-option *ngFor="let financeStatus of processedNewFormData?.finance_source_types"
-                  [value]="financeStatus.id">
-                  {{ financeStatus.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <br />
-            <div *ngIf="displayFinancialSource">
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>specificLabel.cooperationPublicBudgetListSources</mat-label>
-                <input matInput formControlName="initiatveFinancingSourceCtrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-            </div>
-
-            <br />
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>specificLabel.budgetUSD</mat-label>
-              <input type="number" matInput formControlName="initiativeBudgetCtrl" />
+             <mat-form-field class="field-ppcn">
+              <mat-label translate>mitigationAction.entityReporting</mat-label>
+              <input matInput formControlName="entityReportingCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
-
-            <div class="box-button">
-              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
-              </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
-            </div>
-          </mat-step>
-
-          <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
-            <ng-template matStepLabel>
-              <span translate>specificLabel.initiativeContactInfo</span>
-            </ng-template>
             <mat-form-field class="field-ppcn">
               <mat-label translate>info.contactName</mat-label>
               <input matInput formControlName="initiativeContactNameCtrl" />
@@ -150,15 +113,16 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>info.emailAddress</mat-label>
-              <input matInput formControlName="initiativeEmailFormCtrl" />
+              <input type="email" matInput formControlName="initiativeEmailFormCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>info.phone</mat-label>
-              <input matInput formControlName="initiativePhoneCtrl" type="tel" />
-              <mat-error translate> errorLabel.inputOrLengthIncorrect</mat-error>
+              <span matPrefix>+506 &nbsp;</span>
+              <input matInput formControlName="initiativePhoneCtrl" type="tel" maxlength="8" />
+              <mat-error translate>errorLabel.inputOrLengthIncorrect</mat-error>
             </mat-form-field>
             <br />
             <div class="box-button">
@@ -166,6 +130,159 @@
               </app-generic-button-secondary>
               <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
+          </mat-step>
+
+
+          <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
+            <ng-template matStepLabel>
+              <span translate>mitigationAction.statusMitigationAction</span>
+            </ng-template>
+            <br />
+
+            <span translate>mitigationAction.initiativeStatus</span><br /><br />
+            <mat-radio-group style="display: flex;flex-direction: column;" formControlName="initiativeStatusCtrl">
+              <mat-radio-button style=" margin: 5px;"
+                [value]="1">
+                Planeación
+              </mat-radio-button>
+              <mat-radio-button style=" margin: 5px;"
+                [value]="2">
+                Implementación
+              </mat-radio-button>
+              <mat-radio-button style=" margin: 5px;"
+                [value]="3">
+                Finalizada
+              </mat-radio-button>
+            </mat-radio-group>
+
+            <br />
+
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>mitigationAction.startImplementation</mat-label>
+              <input matInput
+              [placeholder]="'Choose a date' | translate"
+              [matDatepicker]="implementationEmissionDatePicker"
+              formControlName="startImplementationCtrl" />
+
+              <mat-datepicker-toggle matSuffix [for]="implementationEmissionDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #implementationEmissionDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+             <br />
+
+             <span translate>mitigationAction.deploymentCompletion</span><br /><br />
+            <mat-radio-group  #deploymentCompletionOption="matRadioGroup"   style="display: flex;flex-direction: column;" >
+              <mat-radio-button style=" margin: 5px;"
+                value="1">
+                Fecha estimada 
+              </mat-radio-button>
+              <mat-radio-button style=" margin: 5px;"
+                value="2">
+                Otro
+              </mat-radio-button>
+            </mat-radio-group>
+
+            <br>
+
+
+            <mat-form-field *ngIf="deploymentCompletionOption.value == '1'" class="field-ppcn">
+              <mat-label translate>Fecha estimada</mat-label>
+              <input matInput
+              
+              [placeholder]="'Choose a date' | translate"
+              [matDatepicker]="implementationEmissionDatePickerEstimateDate"
+               />
+
+              <mat-datepicker-toggle matSuffix [for]="implementationEmissionDatePickerEstimateDate"></mat-datepicker-toggle>
+              <mat-datepicker #implementationEmissionDatePickerEstimateDate startView="year" [startAt]="startDate"></mat-datepicker>
+
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+            <br />
+
+            <mat-form-field *ngIf="deploymentCompletionOption.value == '2'" class="field-ppcn">
+              <mat-label translate>Otro</mat-label>
+              <input  matInput  />
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+            <br />
+
+            <mat-form-field class="field-ppcn">
+               <mat-label translate><label translate>mitigationAction.entitiesInvolvedMitigationActionCtrl</label>
+                <mat-icon [matTooltip]="('general.maxWords' | translate)">info</mat-icon></mat-label>
+               <textarea matInput formControlName="entityResponsibleMitigationActionCtrl"
+                matTextareaAutosize
+                matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="field-ppcn">
+              <mat-label ><label translate>mitigationAction.entitiesInvolvedMitigationActionCtrl</label>
+                <mat-icon >info</mat-icon></mat-label>
+               
+               <textarea matInput formControlName="entitiesInvolvedMitigationActionCtrl"
+                 matTextareaAutosize
+                matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+            
+          </mat-step>
+
+          <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
+            <ng-template matStepLabel>
+              <span translate>general.GeographicLocation</span>
+            </ng-template>
+            <br />
+
+            <span translate>general.geographicScale</span><br /><br />
+            <mat-radio-group formControlName="geographicScaleCtrl" style="display: flex;flex-direction: column;" >
+              <mat-radio-button style=" margin: 5px;"
+                value="1">
+                Nacional 
+              </mat-radio-button>
+              <mat-radio-button style=" margin: 5px;"
+                value="2">
+                Regional
+              </mat-radio-button>
+              <mat-radio-button style=" margin: 5px;"
+                value="3">
+                Otro
+              </mat-radio-button>
+            </mat-radio-group>
+
+             <br />
+
+            <div fxLayout="row" fxLayoutAlign=" center">
+              <input type="file" accept=".rar,application/pdf,.zip" name="filename2">
+              <mat-form-field class="field-ppcn">
+                <textarea matInput formControlName="locationActionCtrl"
+                  [placeholder]="'general.locationAction' | translate" matTextareaAutosize
+                  matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+            </div>
+
+             <br />
+
+          </mat-step>
+
+          <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
+
+            <ng-template matStepLabel>
+              <span translate>mitigationAction.CategorizationNationalInstruments</span>
+            </ng-template>
+            <br />
+
+            
+
+
+
           </mat-step>
 
           <mat-step>
@@ -180,6 +297,7 @@
             </div>
           </mat-step>
         </mat-vertical-stepper>
+
 
         <!-- <div class="margin-20">
             <div>form details:-</div>
