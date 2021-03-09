@@ -132,7 +132,6 @@
             </div>
           </mat-step>
 
-
           <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
             <ng-template matStepLabel>
               <span translate>mitigationAction.statusMitigationAction</span>
@@ -230,6 +229,14 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
+            <br />
+
+            <div class="box-button">
+              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
+              </app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+            </div>
+
             
           </mat-step>
 
@@ -270,6 +277,12 @@
 
              <br />
 
+             <div class="box-button">
+              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
+              </app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+            </div>
+
           </mat-step>
 
           <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
@@ -279,6 +292,84 @@
             </ng-template>
             <br />
 
+    
+            <mat-form-field class="field-ppcn" appearance="fill">
+              <mat-label>Relación con la NDC</mat-label>
+              <mat-select multiple>
+                <mat-optgroup *ngFor="let ndcItem of ndcList" [label]="ndcItem.name"
+                              >
+                  <mat-option *ngFor="let option of ndcItem.options" [value]="option.code">
+                    {{option.code}} - {{option.name}}
+                  </mat-option>
+                </mat-optgroup>
+              </mat-select>
+            </mat-form-field>
+
+            <br />
+            <br />
+
+            <mat-form-field class="field-ppcn" appearance="fill">
+              <mat-label>Relación con el Plan de Descarbonización</mat-label>
+              <mat-select multiple>
+                <mat-optgroup *ngFor="let eje of ejeList" [label]="eje.name"
+                              >
+                  <mat-option *ngFor="let option of eje.options" [value]="option.code">
+                    VT - {{option.code}} - {{option.name}}
+                  </mat-option>
+                </mat-optgroup>
+              </mat-select>
+            </mat-form-field>
+
+            <br />
+            <br />
+
+            <mat-form-field class="field-ppcn" appearance="fill">
+              <mat-label>Relación con el Plan de Descarbonización</mat-label>
+              <mat-select multiple>
+                <mat-optgroup *ngFor="let topic of temasList" [label]="topic.name"
+                              >
+                  <mat-option *ngFor="let option of topic.options" [value]="option.name">
+                   {{option.name}}
+                  </mat-option>
+                </mat-optgroup>
+              </mat-select>
+            </mat-form-field>
+
+            <br />
+            <br />
+
+
+           <span translate>Categoría de impacto</span><br /><br />
+            <mat-radio-group  style="display: flex;flex-direction: column;" >
+              <mat-radio-button style=" margin: 5px;"
+                value="1">
+                Impacto directo en GEI 
+              </mat-radio-button>
+              <mat-radio-button style=" margin: 5px;"
+                value="2">
+                Medida habilitante
+              </mat-radio-button>
+              <mat-radio-button style=" margin: 5px;"
+                value="3">
+                Ambas
+              </mat-radio-button>
+            </mat-radio-group>
+
+             <br />
+            <br />
+
+
+           <span translate>¿La acción de mitigación que está registrando forma parte de otra?</span><br /><br />
+            <mat-radio-group  style="display: flex;flex-direction: column;" >
+              <mat-radio-button style=" margin: 5px;"
+                value="1">
+                Si
+              </mat-radio-button>
+              <mat-radio-button style=" margin: 5px;"
+                value="2">
+                No
+              </mat-radio-button>
+            </mat-radio-group>
             
 
 
