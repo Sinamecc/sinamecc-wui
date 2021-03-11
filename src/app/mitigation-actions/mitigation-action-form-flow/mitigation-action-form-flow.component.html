@@ -10,7 +10,7 @@
 
     <form [formGroup]="mainGroup">
       <!-- {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}} -->
-      <mat-horizontal-stepper formArrayName="formArray" [linear]="isLinear" #stepper>
+      <mat-horizontal-stepper formArrayName="formArray"  #stepper>
         <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
           <ng-template matStepLabel><span translate>specificLabel.registerInitiatives</span></ng-template>
           <app-initiative-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData"
@@ -22,7 +22,7 @@
         </mat-step>
 
         <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
-          <ng-template matStepLabel><span translate>info.basicInfo</span></ng-template>
+          <ng-template matStepLabel><span translate>info.financingInformation</span></ng-template>
           <app-basic-information-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating">
           </app-basic-information-form>
