@@ -116,22 +116,8 @@ export class KeyAspectsFormComponent implements OnInit {
 		this.form = this.formBuilder.group({
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
-					actionObjectiveCtrl: ["", Validators.required],
-					actionStatusCtrl: ["", Validators.required],
-					implementationInitialDateCtrl: ["", Validators.required],
-					implementationEndDateCtrl: ["", Validators.required]
-				}),
-				this.formBuilder.group({
-					geographicScaleCtrl: ["", Validators.required]
-				}),
-				this.formBuilder.group({
-					locationNameCtrl: ["", Validators.required],
-					gisAnnexedCtrl: ["0", Validators.required]
-				}),
-				this.formBuilder.group({
-					financingStatusCtrl: ["", Validators.required],
-					financingSourceCtrl: [""],
-					gasInventoryCtrl: ["0"]
+					overviewImpactEmissionsRemovalsCtrl: ["", Validators.required],
+					graphicLogicImpactEmissionsRemovalsCtrl: ["", Validators.required]
 				})
 			])
 		});

@@ -22,6 +22,10 @@
   },
 
   "mitigationAction": {
+    "preliminaryIdentificationSustainableDevelopmentGoals":"Preliminary identification of the Sustainable Development Goals (SDG) impacted",
+    "sectorsGEIInventoryImpacted":"Sectores del inventario de GEI impactados",
+    "graphicLogicImpactEmissionsRemovals":"Descripción gráfica con la lógica en forma de cadena causal del impacto en emisiones y absorciones",
+    "overviewImpactEmissionsRemovals":"Descripción general del impacto en emisiones y absorciones",
     "entityProject":"Entidad Ejecutora del proyecto",
     "nameRegisteredMideplan":"¿Bajo que nombre se encuentra el proyecto registrado en Mideplan?",
     "registeredNonReimbursableCooperationMideplan":"¿Se encuentra la acción registrada en el registro de proyectos de cooperación internacional no reembolsable de Mideplan?",
@@ -240,7 +244,7 @@
     "download": "Descargar",
     "CIUUCode": "Códigos CIUU",
     "CIUU:": "CIUU:",
-    "keyAspects": "Aspectos Claves",
+    "keyAspects": "Identificación de impactos en mitigación y en ODS",
     "search": "Buscar",
     "data": "Datos",
     "add": "Agregar",
