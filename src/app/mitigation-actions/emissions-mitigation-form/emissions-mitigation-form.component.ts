@@ -79,11 +79,47 @@ export class EmissionsMitigationFormComponent implements OnInit {
 		this.form = this.formBuilder.group({
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
-					ingeiComplianceCtrl: null
+					exAnteEmissionReductionsCtrl: ["", Validators.required],
+					periodPotentialEmissionReductionEstimatedCtrl: [
+						"",
+						Validators.required
+					],
+					isourcesEmissionsGasesCoveredCtrl: ["", Validators.required],
+					carbonSinksReservoirsCtrl: ["", Validators.required],
+					definitionBaselineCtrl: ["", Validators.required],
+					methodologyExantePotentialReductionEmissionsCO2Ctrl: [
+						"",
+						Validators.required
+					],
+					documentationCalculationsEstimateReductionEmissionsCO2Ctrl: [
+						"",
+						Validators.required
+					],
+					isCurrentlyReflectedInventoryCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
-					emissionSourceCtrl: ["", Validators.required],
-					carbonSinksCtrl: ["", Validators.required]
+					standardizedCalculationMethodologyUsedCtrl: [""],
+					standardizedCalculationMethodologyUsedDetailCtrl: [
+						"",
+						Validators.required
+					],
+					calculationsDocumentedCtrl: [""],
+					calculationsDocumentedDetailCtrl: ["", Validators.required],
+					emissionFactorsUsedCalculationDocumentedCtrl: [""],
+					emissionFactorsUsedCalculationDocumentedDetailCtrl: [
+						"",
+						Validators.required
+					],
+					assumptionsDocumentedCtrl: [""],
+					assumptionsDocumentedDetailCtrl: ["", Validators.required]
+				}),
+				this.formBuilder.group({
+					intendParticipateInternationalCarbonMarketsCtrl: [
+						"",
+						Validators.required
+					],
+					mechanismStandardApplyCtrl: ["", Validators.required],
+					methodologyUsedCtrl: ["", Validators.required]
 				})
 			])
 		});
