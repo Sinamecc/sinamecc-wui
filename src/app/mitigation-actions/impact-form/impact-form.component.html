@@ -11,51 +11,150 @@
 
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
-            <ng-template matStepLabel>
-              <span translate>specificLabel.impactImplementation</span>
-            </ng-template>
 
+            <ng-template matStepLabel>
+              <span translate>specificLabel.monitoringDetail</span>
+            </ng-template>
+          
             <h3>
               <span translate>info.code</span>:<span>{{mitigationAction?.id}}</span>
             </h3>
 
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>mitigationAction.impactMA</mat-label>
-              <input matInput formControlName="mitigationActionImpactCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-            <br />
+        <div formArrayName="indicators">
+          <div 
+             *ngFor="
+                  let indicator of form.controls.formArray['controls'][0].controls['indicators'].controls;
+                  let i = index"
+          >
 
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>specificLabel.impactInEmissions</mat-label>
-              <input matInput formControlName="emissionImpactCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-            <br />
+          <mat-divider
+                *ngIf="
+                  form.controls.formArray['controls'][0].controls['indicators'].controls.length > 1 && i > 0
+                "
+              ></mat-divider>
 
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>specificLabel.sourcesConsultedCalculationMethodology</mat-label>
-              <input matInput formControlName="calculationMethodologyCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-            <br />
+            <div [formGroupName]="i">
 
-            <mat-label translate>geographyLabel.intMarketParticipation</mat-label>?
-            <mat-radio-group matInput formControlName="internationalParticipationCtrl">
-              <mat-radio-button value="1" class="mat-primary"> <span translate> general.yes </span></mat-radio-button>
-              <mat-radio-button value="0" class="mat-primary"><span translate> general.no </span></mat-radio-button>
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>mitigationAction.indicatorName</mat-label>
+                <input matInput formControlName="indicatorNameCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
 
-            </mat-radio-group>
+              <span translate>mitigationAction.indicatorType</span><br /><br />
+              <mat-radio-group formControlName="indicatorTypeCtrl"  style="display: flex;flex-direction: column;" >
+                <mat-radio-button style=" margin: 5px;"
+                  value="1">
+                  Impacto
+                </mat-radio-button>
+                <mat-radio-button style=" margin: 5px;"
+                  value="2">
+                  Gestion
+                </mat-radio-button>
+              </mat-radio-group>
 
-            <br />
+              <br />
 
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>geographyLabel.intMarketParticipation</mat-label>
-              <input matInput formControlName="internationalParticipationDetailCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-            <br />
-            <br />
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>mitigationAction.indicatorUnit</mat-label>
+                <input matInput formControlName="indicatorUnitCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+
+              <div fxLayout="row" fxLayoutAlign=" center">
+                  <input type="file" accept=".rar,application/pdf,.zip" name="filename">
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate>mitigationAction.methodologicalDetailIndicator</mat-label>
+                    <input matInput formControlName="methodologicalDetailIndicatorCtrl" />
+                    <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
+                  <br />
+              </div>
+
+              <br />
+
+              <span translate>mitigationAction.indicatorReportingPeriodicity</span><br /><br />
+              <mat-radio-group formControlName="indicatorReportingPeriodicityCtrl"  style="display: flex;flex-direction: column;" >
+                <mat-radio-button style=" margin: 5px;"
+                  value="1">
+                  Anual
+                </mat-radio-button>
+                <mat-radio-button style=" margin: 5px;"
+                  value="2">
+                  Semestral
+                </mat-radio-button>
+                <mat-radio-button style=" margin: 5px;"
+                  value="3">
+                  Trimestral
+                </mat-radio-button>
+                <mat-radio-button style=" margin: 5px;"
+                  value="4">
+                  Otro
+                </mat-radio-button>
+              </mat-radio-group>
+              <br />
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>mitigationAction.institutionResponsibleGeneratingData</mat-label>
+                <input matInput formControlName="institutionResponsibleGeneratingDataCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>mitigationAction.institutionResponsibleReportingIndicator</mat-label>
+                <input matInput formControlName="institutionResponsibleReportingIndicatorCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>mitigationAction.measurementStartDate</mat-label>
+                <input matInput
+                [placeholder]="'Choose a date' | translate"
+                [matDatepicker]="measurementStartDatePicker"
+                formControlName="measurementStartDateCtrl" />
+
+                <mat-datepicker-toggle matSuffix [for]="measurementStartDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #measurementStartDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+
+              <div fxLayout="row" fxLayoutAlign=" center">
+                  <input type="file" accept=".rar,application/pdf,.zip" name="filename">
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate>mitigationAction.additionalInformation</mat-label>
+                    <input matInput formControlName="additionalInformationCtrl" />
+                    <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
+                  <br />
+              </div>
+
+              <br />
+              <button
+                    mat-mini-fab
+                    color="warn"
+                    *ngIf="form.controls.formArray['controls'][0].controls['indicators'].controls.length > 1"
+                    (click)="deleteIndicatorItem(i)"
+                    type="button"
+                  >
+                    <mat-icon>delete forever</mat-icon>
+              </button>
+              <br />
+              <br />
+            </div>
+          </div>
+        </div>
+
+        <app-generic-button mat-raised-button (click)="addIndicatorItem()" name="mitigationAction.newIndicator" type="button"
+            *ngIf="activityFormGroup?.controls.length <= 10">
+        </app-generic-button>
+
             <div class="box-button">
               <app-generic-button-secondary type="button" (click)="stepper.previous();" name="general.back">
               </app-generic-button-secondary>
