@@ -162,7 +162,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
 			emissions_source: this.form.value.formArray[1].emissionSourceCtrl,
 			carbon_sinks: this.form.value.formArray[1].carbonSinksCtrl,
 			user: String(this.authenticationService.credentials.id),
-			registration_type: this.processedNewFormData.registration_types[0].id
+			registration_type: this.processedNewFormData.initiative_type[0].id
 		};
 
 		this.service

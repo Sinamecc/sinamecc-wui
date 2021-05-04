@@ -146,7 +146,7 @@ export class BasicInformationFormComponent implements OnInit {
 			name: this.form.value.formArray[0].nameCtrl,
 			institution: this.form.value.formArray[0].entityCtrl,
 			user: String(this.authenticationService.credentials.id),
-			registration_type: this.processedNewFormData.registration_types[0].id
+			registration_type: this.processedNewFormData.initiative_type[0].id
 		};
 		if (this.isUpdating) {
 			context.contact["id"] = this.mitigationAction.contact.id;

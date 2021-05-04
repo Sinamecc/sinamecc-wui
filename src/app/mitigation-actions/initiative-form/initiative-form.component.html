@@ -21,9 +21,9 @@
 
             <span translate>specificLabel.initiativeType</span><br /><br />
             <mat-radio-group style="display: flex;flex-direction: column;" formControlName="initiativeTypeCtrl">
-              <mat-radio-button style=" margin: 5px;" *ngFor="let initiativeType of processedNewFormData?.initiative_types"
+              <mat-radio-button style=" margin: 5px;" *ngFor="let initiativeType of processedNewFormData?.initiative_type"
                 [value]="initiativeType.id">
-                {{ initiativeType.types }}
+                {{ initiativeType.name }}
               </mat-radio-button>
             </mat-radio-group>
 
@@ -34,7 +34,7 @@
               <input matInput formControlName="initiativeNameCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
-          
+            
             <br />
             <mat-form-field class="field-ppcn">
               <textarea matInput formControlName="initiativeObjectiveCtrl"
@@ -141,16 +141,10 @@
             <span translate>mitigationAction.initiativeStatus</span><br /><br />
             <mat-radio-group style="display: flex;flex-direction: column;" formControlName="initiativeStatusCtrl">
               <mat-radio-button style=" margin: 5px;"
-                [value]="1">
-                Planeación
-              </mat-radio-button>
-              <mat-radio-button style=" margin: 5px;"
-                [value]="2">
-                Implementación
-              </mat-radio-button>
-              <mat-radio-button style=" margin: 5px;"
-                [value]="3">
-                Finalizada
+                *ngFor="let element of processedNewFormData?.status"
+                [value]="element.id"
+              >
+                {{element.status}}
               </mat-radio-button>
             </mat-radio-group>
 
@@ -172,7 +166,7 @@
              <br />
 
              <span translate>mitigationAction.deploymentCompletion</span><br /><br />
-            <mat-radio-group  #deploymentCompletionOption="matRadioGroup"   style="display: flex;flex-direction: column;" >
+            <mat-radio-group formControlName="deploymentCompletionIdCtrl"  #deploymentCompletionOption="matRadioGroup"   style="display: flex;flex-direction: column;" >
               <mat-radio-button style=" margin: 5px;"
                 value="1">
                 Fecha estimada 
@@ -189,7 +183,7 @@
             <mat-form-field *ngIf="deploymentCompletionOption.value == '1'" class="field-ppcn">
               <mat-label translate>Fecha estimada</mat-label>
               <input matInput
-              
+              formControlName="deploymentCompletionDateCtrl"
               [placeholder]="'Choose a date' | translate"
               [matDatepicker]="implementationEmissionDatePickerEstimateDate"
                />
@@ -204,7 +198,7 @@
 
             <mat-form-field *ngIf="deploymentCompletionOption.value == '2'" class="field-ppcn">
               <mat-label translate>Otro</mat-label>
-              <input  matInput  />
+              <input formControlName="deploymentCompletionOtherCtrl"  matInput  />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
@@ -249,16 +243,10 @@
             <span translate>general.geographicScale</span><br /><br />
             <mat-radio-group formControlName="geographicScaleCtrl" style="display: flex;flex-direction: column;" >
               <mat-radio-button style=" margin: 5px;"
-                value="1">
-                Nacional 
-              </mat-radio-button>
-              <mat-radio-button style=" margin: 5px;"
-                value="2">
-                Regional
-              </mat-radio-button>
-              <mat-radio-button style=" margin: 5px;"
-                value="3">
-                Otro
+                *ngFor="let element of processedNewFormData?.geographic_scale"
+                [value]="element.id"
+              >
+                {{element.name}}
               </mat-radio-button>
             </mat-radio-group>
 

@@ -91,9 +91,11 @@ export class MitigationActionFormFlowComponent
 	}
 
 	ngOnInit() {
+		console.log(1222);
 		this.newFormData = this.initFormOptions().pipe(
 			tap((processedNewFormData: MitigationActionNewFormData) => {
 				console.log("PROCESSED NEW FORM DATA", processedNewFormData);
+				console.log(processedNewFormData);
 				this.processedNewFormData = processedNewFormData;
 			})
 		);
@@ -131,9 +133,10 @@ export class MitigationActionFormFlowComponent
 	private initFormOptions(): Observable<MitigationActionNewFormData> {
 		const initialRequiredData = this.initialFormData().pipe(
 			tap(mitigationActionNewFormData => {
+				console.log(mitigationActionNewFormData, "1222");
 				this.isLoading = false;
 				this.registrationTypeId =
-					mitigationActionNewFormData.registration_types[0].id;
+					mitigationActionNewFormData.initiative_type[0].id;
 				this.institutions = mitigationActionNewFormData.institutions;
 				this.statusses = mitigationActionNewFormData.statuses;
 				this.ingeis = mitigationActionNewFormData.ingei_compliances;

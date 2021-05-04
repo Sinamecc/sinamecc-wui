@@ -158,7 +158,7 @@ export class ImpactFormComponent implements OnInit {
 			international_participation: this.form.value.formArray[0]
 				.internationalParticipationDetailCtrl,
 			user: String(this.authenticationService.credentials.id),
-			registration_type: this.processedNewFormData.registration_types[0].id
+			registration_type: this.processedNewFormData.initiative_type[0].id
 			// update_new_mitigation_action: false
 		};
 		if (this.isUpdating) {

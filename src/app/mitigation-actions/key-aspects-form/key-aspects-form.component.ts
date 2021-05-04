@@ -206,7 +206,7 @@ export class KeyAspectsFormComponent implements OnInit {
 				is_gis_annexed: this.form.value.formArray[2].gisAnnexedCtrl
 			},
 			user: String(this.authenticationService.credentials.id),
-			registration_type: this.processedNewFormData.registration_types[0].id
+			registration_type: this.processedNewFormData.initiative_type[0].id
 		};
 
 		if (this.isUpdating) {
