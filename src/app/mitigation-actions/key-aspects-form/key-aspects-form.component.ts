@@ -93,7 +93,8 @@ export class KeyAspectsFormComponent implements OnInit {
 		private authenticationService: AuthenticationService,
 		private service: MitigationActionsService,
 		private translateService: TranslateService,
-		public snackBar: MatSnackBar
+		public snackBar: MatSnackBar,
+		private router: Router
 	) {
 		// this.formData = new FormData();
 		this.service.currentMitigationAction.subscribe(
@@ -175,51 +176,33 @@ export class KeyAspectsFormComponent implements OnInit {
 		// this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
 	}
 
-	submitForm() {
-		this.isLoading = true;
-		let startDate = "";
-		let endDate = "";
-		if (this.isUpdating) {
-			startDate = this.form.value.formArray[0].implementationInitialDateCtrl;
-			endDate = this.form.value.formArray[0].implementationEndDateCtrl;
-		} else {
-			startDate = this.form.value.formArray[0].implementationInitialDateCtrl.format(
-				"YYYY-MM-DD"
-			);
-			endDate = this.form.value.formArray[0].implementationEndDateCtrl.format(
-				"YYYY-MM-DD"
-			);
-		}
+	buildPayload() {
 		const context = {
-			purpose: this.form.value.formArray[0].actionObjectiveCtrl,
-			status: this.form.value.formArray[0].actionStatusCtrl,
-			start_date: startDate,
-			end_date: endDate,
-			finance: {
-				status: this.form.value.formArray[3].financingStatusCtrl,
-				source: this.form.value.formArray[3].financingSourceCtrl
-			},
-			gas_inventory: this.form.value.formArray[3].gasInventoryCtrl,
-			geographic_scale: this.form.value.formArray[1].geographicScaleCtrl,
-			location: {
-				geographical_site: this.form.value.formArray[2].locationNameCtrl,
-				is_gis_annexed: this.form.value.formArray[2].gisAnnexedCtrl
-			},
-			user: String(this.authenticationService.credentials.id),
-			registration_type: this.processedNewFormData.initiative_type[0].id
+			ghg_information: {
+				impact_emission: this.form.value.formArray[0]
+					.overviewImpactEmissionsRemovalsCtrl,
+				graphic_description: this.form.value.formArray[0]
+					.graphicLogicImpactEmissionsRemovalsCtrl
+			}
 		};
 
+		return context;
+	}
+
+	submitForm() {
+		this.isLoading = true;
+		const context = this.buildPayload();
+
+		/*
 		if (this.isUpdating) {
 			context.finance["id"] = this.mitigationAction.finance.id;
 			context.location["id"] = this.mitigationAction.location.id;
 			// context['update_existing_mitigation_action'] = true;
 		}
+		*/
+
 		this.service
-			.submitMitigationActionUpdateForm(
-				context,
-				this.mitigationAction.id,
-				this.i18nService.language.split("-")[0]
-			)
+			.submitMitigationActionUpdateForm(context, this.mitigationAction.id)
 			.pipe(
 				finalize(() => {
 					this.form.markAsPristine();
@@ -233,7 +216,14 @@ export class KeyAspectsFormComponent implements OnInit {
 						.subscribe((res: string) => {
 							this.snackBar.open(res, null, { duration: 3000 });
 						});
+
 					this.wasSubmittedSuccessfully = true;
+
+					// temp route for finish form
+
+					setTimeout(() => {
+						this.router.navigate(["/mitigation/actions"], { replaceUrl: true });
+					}, 2000);
 				},
 				error => {
 					this.translateService

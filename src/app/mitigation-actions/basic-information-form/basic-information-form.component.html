@@ -19,12 +19,12 @@
             </h3>
 
             <span translate>mitigationAction.financingStatus</span><br /><br />
-            <mat-radio-group style="display: flex;flex-direction: column;" formControlName="programCtrl">
-              <mat-radio-button style=" margin: 5px;"
+            <mat-radio-group class="custom-radio-group" formControlName="programCtrl">
+              <mat-radio-button [style.margin.px]="5"
                 [value]="1">
                 Asegurado
               </mat-radio-button>
-              <mat-radio-button style=" margin: 5px;"
+              <mat-radio-button [style.margin.px]="5"
                 [value]="2">
                 Por obtener
               </mat-radio-button>
@@ -42,24 +42,24 @@
             </mat-form-field>
 
             <span translate>mitigationAction.detailfinancingSource</span><br /><br />
-            <mat-radio-group style="display: flex;flex-direction: column;" formControlName="detailfinancingSourceCtrl">
-              <mat-radio-button style=" margin: 5px;"
+            <mat-radio-group class="custom-radio-group" formControlName="detailfinancingSourceCtrl">
+              <mat-radio-button [style.margin.px]="5"
                 [value]="1">
                 Presupuesto público
               </mat-radio-button>
-              <mat-radio-button style=" margin: 5px;"
+              <mat-radio-button [style.margin.px]="5"
                 [value]="2">
                 Financiamiento privado
               </mat-radio-button>
-              <mat-radio-button style=" margin: 5px;"
+              <mat-radio-button [style.margin.px]="5"
                 [value]="3">
                 Proyecto de cooperación internacional
               </mat-radio-button>
-              <mat-radio-button style=" margin: 5px;"
+              <mat-radio-button [style.margin.px]="5"
                 [value]="4">
                 Préstamo
               </mat-radio-button>
-              <mat-radio-button style=" margin: 5px;"
+              <mat-radio-button [style.margin.px]="5"
                 [value]="5">
                 Por definir
               </mat-radio-button>
@@ -80,7 +80,7 @@
 
              <div fxLayout="row">
                 <div [style.margin-right]="'10px'">
-                  <mat-button-toggle-group name="fontStyle">
+                  <mat-button-toggle-group value="CRC"  (change)="setmitigationActionBudgeValuetCtrl($event.value)" name="fontStyle">
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
                   </mat-button-toggle-group>
@@ -119,12 +119,12 @@
             <br />
 
             <span translate>mitigationAction.registeredNonReimbursableCooperationMideplan</span><br /><br />
-            <mat-radio-group #registeredNonReimbursableCooperationMideplan="matRadioGroup" style="display: flex;flex-direction: column;" formControlName="registeredNonReimbursableCooperationMideplanCtrl">
-              <mat-radio-button style=" margin: 5px;"
+            <mat-radio-group #registeredNonReimbursableCooperationMideplan="matRadioGroup" class="custom-radio-group" formControlName="registeredNonReimbursableCooperationMideplanCtrl">
+              <mat-radio-button [style.margin.px]="5"
                 [value]="1">
                 Si
               </mat-radio-button>
-              <mat-radio-button style=" margin: 5px;"
+              <mat-radio-button [style.margin.px]="5"
                 [value]="2">
                 No
               </mat-radio-button>
@@ -133,7 +133,7 @@
 
             <mat-form-field *ngIf="registeredNonReimbursableCooperationMideplan.value == '1'" class="field-ppcn">
               <mat-label translate>mitigationAction.nameRegisteredMideplan</mat-label>
-              <input  matInput  />
+              <input formControlName="registeredNonReimbursableCooperationMideplanDetailCtrl" matInput  />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 

@@ -27,7 +27,7 @@
             <br />
 
             <div fxLayout="row" fxLayoutAlign=" center">
-              <input type="file" accept=".rar,application/pdf,.zip" name="filename">
+              <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
               <mat-form-field class="field-ppcn">
                 <mat-label translate>mitigationAction.graphicLogicImpactEmissionsRemovals</mat-label>
                 <input matInput formControlName="graphicLogicImpactEmissionsRemovalsCtrl" />
@@ -80,9 +80,7 @@
               <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
-
           
-
           <mat-step>
             <ng-template matStepLabel> <span translate> specificLabel.confirmInformation </span></ng-template>
 

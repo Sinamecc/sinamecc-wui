@@ -43,12 +43,12 @@
               <br />
 
               <span translate>mitigationAction.indicatorType</span><br /><br />
-              <mat-radio-group formControlName="indicatorTypeCtrl"  style="display: flex;flex-direction: column;" >
-                <mat-radio-button style=" margin: 5px;"
+              <mat-radio-group formControlName="indicatorTypeCtrl"  class="custom-radio-group" >
+                <mat-radio-button [style.margin.px]="5"
                   value="1">
                   Impacto
                 </mat-radio-button>
-                <mat-radio-button style=" margin: 5px;"
+                <mat-radio-button [style.margin.px]="5"
                   value="2">
                   Gestion
                 </mat-radio-button>
@@ -65,7 +65,7 @@
               <br />
 
               <div fxLayout="row" fxLayoutAlign=" center">
-                  <input type="file" accept=".rar,application/pdf,.zip" name="filename">
+                  <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
                   <mat-form-field class="field-ppcn">
                     <mat-label translate>mitigationAction.methodologicalDetailIndicator</mat-label>
                     <input matInput formControlName="methodologicalDetailIndicatorCtrl" />
@@ -77,20 +77,20 @@
               <br />
 
               <span translate>mitigationAction.indicatorReportingPeriodicity</span><br /><br />
-              <mat-radio-group formControlName="indicatorReportingPeriodicityCtrl"  style="display: flex;flex-direction: column;" >
-                <mat-radio-button style=" margin: 5px;"
+              <mat-radio-group formControlName="indicatorReportingPeriodicityCtrl"  class="custom-radio-group" >
+                <mat-radio-button [style.margin.px]="5"
                   value="1">
                   Anual
                 </mat-radio-button>
-                <mat-radio-button style=" margin: 5px;"
+                <mat-radio-button [style.margin.px]="5"
                   value="2">
                   Semestral
                 </mat-radio-button>
-                <mat-radio-button style=" margin: 5px;"
+                <mat-radio-button [style.margin.px]="5"
                   value="3">
                   Trimestral
                 </mat-radio-button>
-                <mat-radio-button style=" margin: 5px;"
+                <mat-radio-button [style.margin.px]="5"
                   value="4">
                   Otro
                 </mat-radio-button>
@@ -126,7 +126,7 @@
               <br />
 
               <div fxLayout="row" fxLayoutAlign=" center">
-                  <input type="file" accept=".rar,application/pdf,.zip" name="filename">
+                  <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
                   <mat-form-field class="field-ppcn">
                     <mat-label translate>mitigationAction.additionalInformation</mat-label>
                     <input matInput formControlName="additionalInformationCtrl" />

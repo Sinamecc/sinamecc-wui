@@ -20,8 +20,8 @@
             <br />
 
             <span translate>specificLabel.initiativeType</span><br /><br />
-            <mat-radio-group style="display: flex;flex-direction: column;" formControlName="initiativeTypeCtrl">
-              <mat-radio-button style=" margin: 5px;" *ngFor="let initiativeType of processedNewFormData?.initiative_type"
+            <mat-radio-group class="custom-radio-group" formControlName="initiativeTypeCtrl">
+              <mat-radio-button [style.margin.px]="5" *ngFor="let initiativeType of processedNewFormData?.initiative_type"
                 [value]="initiativeType.id">
                 {{ initiativeType.name }}
               </mat-radio-button>
@@ -45,7 +45,7 @@
             <br />
 
             <div fxLayout="row" fxLayoutAlign=" center">
-            <input type="file" accept=".rar,application/pdf,.zip" id="myFile" name="filename">
+            <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
             <mat-form-field class="field-ppcn">
               <textarea matInput formControlName="initiativeDescriptionCtrl"
                 [placeholder]="'specificLabel.initiativeDescription' | translate" matTextareaAutosize
@@ -139,8 +139,8 @@
             <br />
 
             <span translate>mitigationAction.initiativeStatus</span><br /><br />
-            <mat-radio-group style="display: flex;flex-direction: column;" formControlName="initiativeStatusCtrl">
-              <mat-radio-button style=" margin: 5px;"
+            <mat-radio-group class="custom-radio-group" formControlName="initiativeStatusCtrl">
+              <mat-radio-button [style.margin.px]="5"
                 *ngFor="let element of processedNewFormData?.status"
                 [value]="element.id"
               >
@@ -166,19 +166,18 @@
              <br />
 
              <span translate>mitigationAction.deploymentCompletion</span><br /><br />
-            <mat-radio-group formControlName="deploymentCompletionIdCtrl"  #deploymentCompletionOption="matRadioGroup"   style="display: flex;flex-direction: column;" >
-              <mat-radio-button style=" margin: 5px;"
+            <mat-radio-group formControlName="deploymentCompletionIdCtrl"  #deploymentCompletionOption="matRadioGroup"  class="custom-radio-group" >
+              <mat-radio-button [style.margin.px]="5"
                 value="1">
                 Fecha estimada 
               </mat-radio-button>
-              <mat-radio-button style=" margin: 5px;"
+              <mat-radio-button [style.margin.px]="5"
                 value="2">
                 Otro
               </mat-radio-button>
             </mat-radio-group>
 
-            <br>
-
+            <br />
 
             <mat-form-field *ngIf="deploymentCompletionOption.value == '1'" class="field-ppcn">
               <mat-label translate>Fecha estimada</mat-label>
@@ -241,8 +240,8 @@
             <br />
 
             <span translate>general.geographicScale</span><br /><br />
-            <mat-radio-group formControlName="geographicScaleCtrl" style="display: flex;flex-direction: column;" >
-              <mat-radio-button style=" margin: 5px;"
+            <mat-radio-group formControlName="geographicScaleCtrl" class="custom-radio-group" >
+              <mat-radio-button [style.margin.px]="5"
                 *ngFor="let element of processedNewFormData?.geographic_scale"
                 [value]="element.id"
               >
@@ -253,7 +252,7 @@
              <br />
 
             <div fxLayout="row" fxLayoutAlign=" center">
-              <input type="file" accept=".rar,application/pdf,.zip" name="filename2">
+              <input type="file" accept=".rar,application/pdf,.zip" name="filename2" />
               <mat-form-field class="field-ppcn">
                 <textarea matInput formControlName="locationActionCtrl"
                   [placeholder]="'general.locationAction' | translate" matTextareaAutosize
@@ -328,16 +327,16 @@
 
 
            <span translate>Categoría de impacto</span><br /><br />
-            <mat-radio-group  style="display: flex;flex-direction: column;" >
-              <mat-radio-button style=" margin: 5px;"
+            <mat-radio-group  class="custom-radio-group">
+              <mat-radio-button [style.margin.px]="5"
                 value="1">
                 Impacto directo en GEI 
               </mat-radio-button>
-              <mat-radio-button style=" margin: 5px;"
+              <mat-radio-button [style.margin.px]="5"
                 value="2">
                 Medida habilitante
               </mat-radio-button>
-              <mat-radio-button style=" margin: 5px;"
+              <mat-radio-button [style.margin.px]="5"
                 value="3">
                 Ambas
               </mat-radio-button>
@@ -348,19 +347,23 @@
 
 
            <span translate>¿La acción de mitigación que está registrando forma parte de otra?</span><br /><br />
-            <mat-radio-group  style="display: flex;flex-direction: column;" >
-              <mat-radio-button style=" margin: 5px;"
+            <mat-radio-group class="custom-radio-group" >
+              <mat-radio-button [style.margin.px]="5"
                 value="1">
                 Si
               </mat-radio-button>
-              <mat-radio-button style=" margin: 5px;"
+              <mat-radio-button [style.margin.px]="5"
                 value="2">
                 No
               </mat-radio-button>
             </mat-radio-group>
             
 
-
+            <div class="box-button">
+              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
+              </app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+            </div>
 
           </mat-step>
 

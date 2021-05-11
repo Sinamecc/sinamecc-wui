@@ -893,11 +893,11 @@ export class InitiativeFormComponent implements OnInit {
 	}
 
 	buildInitiativeGoal() {
-		let goals = [];
+		const goals = [];
 		if (this.initiativeGoalList.length < 1) {
 			goals.push({ goal: this.form.value.formArray[0].initiativeGoalCtrl });
 		} else {
-			for (let goal of this.initiativeGoalList) {
+			for (const goal of this.initiativeGoalList) {
 				goals.push({ goal: goal });
 			}
 		}
@@ -920,7 +920,7 @@ export class InitiativeFormComponent implements OnInit {
 					"yyyy-MM-dd"
 				),
 				other_end_date:
-					this.form.value.formArray[2].deploymentCompletionOtherCtrl != ""
+					this.form.value.formArray[2].deploymentCompletionOtherCtrl !== ""
 						? this.form.value.formArray[2].deploymentCompletionOtherCtrl
 						: null,
 				institution: this.form.value.formArray[2]

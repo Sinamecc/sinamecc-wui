@@ -166,11 +166,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
 		};
 
 		this.service
-			.submitMitigationActionUpdateForm(
-				context,
-				this.mitigationAction.id,
-				this.i18nService.language.split("-")[0]
-			)
+			.submitMitigationActionUpdateForm(context, this.mitigationAction.id)
 			.pipe(
 				finalize(() => {
 					this.form.markAsPristine();

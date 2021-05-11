@@ -17,13 +17,13 @@ import { S3File, S3Service } from "@app/core/s3.service";
 const routes = {
 	seededFormData: (lang: string, registration_type: string) =>
 		`/v1/mitigations/form/${lang}/${registration_type}`,
-	submitNewMitigationAction: () => `/v1/mitigation-action/`,
+	submitNewMitigationAction: (id: string = "") => `/v1/mitigation-action/${id}`,
 	submitUpdateMitigationAction: (uuid: string, lang: string) =>
 		`/v1/mitigations/${lang}/${uuid}`,
 	mitigationActions: (lang: string) => `/v1/mitigation-action/`,
 	mitigationActionReviews: (uuid: string) =>
 		`/v1/mitigations/changelog/${uuid}`,
-	deleteMitigationAction: (uuid: string) => `/v1/mitigations/${uuid}`,
+	deleteMitigationAction: (uuid: string) => `/v1/mitigation-action/${uuid}`,
 	getMitigationAction: (uuid: string, lang: string) =>
 		`/v1/mitigations/${lang}/${uuid}`,
 	mitigationActionAvailableStatuses: () => `/v1/workflow/status`,
@@ -70,7 +70,7 @@ export class MitigationActionsService {
 			.post(routes.submitNewMitigationAction(), context, httpOptions)
 			.pipe(
 				map((body: any) => {
-					this.updateCurrentMitigationAction(body[0]);
+					this.updateCurrentMitigationAction(body);
 					const response = {
 						statusCode: 200,
 						message: "Form submitted correctly"
@@ -82,8 +82,7 @@ export class MitigationActionsService {
 
 	submitMitigationActionUpdateForm(
 		context: any,
-		uuid: string,
-		lang: string
+		uuid: string
 	): Observable<Response> {
 		const httpOptions = {
 			headers: new HttpHeaders({
@@ -91,14 +90,10 @@ export class MitigationActionsService {
 			})
 		};
 		return this.httpClient
-			.put(
-				routes.submitUpdateMitigationAction(uuid, lang),
-				context,
-				httpOptions
-			)
+			.put(routes.submitNewMitigationAction(uuid + "/"), context, httpOptions)
 			.pipe(
 				map((body: any) => {
-					this.updateCurrentMitigationAction(body[0]);
+					this.updateCurrentMitigationAction(body);
 					const response = {
 						statusCode: 200,
 						id: body.id,

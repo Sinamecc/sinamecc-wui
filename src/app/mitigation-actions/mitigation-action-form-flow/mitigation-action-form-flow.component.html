@@ -10,7 +10,7 @@
 
     <form [formGroup]="mainGroup">
       <!-- {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}} -->
-      <mat-horizontal-stepper formArrayName="formArray"  #stepper>
+      <mat-horizontal-stepper formArrayName="formArray" [linear]="isLinear" #stepper>
         <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
           <ng-template matStepLabel><span translate>specificLabel.registerInitiatives</span></ng-template>
           <app-initiative-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData"
@@ -45,6 +45,7 @@
             [isUpdating]="isUpdating">
           </app-key-aspects-form>
 
+          <!--
           <div fxLayout="row">
             <div>
               <app-generic-button-secondary [disabled]="keyAspectsForm.wasSubmittedSuccessfully" type="button"
@@ -55,6 +56,7 @@
                 name="general.next"></app-generic-button>
             </div>
           </div>
+          -->
         </mat-step>
 
         <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
