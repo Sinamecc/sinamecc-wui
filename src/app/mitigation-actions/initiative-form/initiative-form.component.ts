@@ -905,9 +905,7 @@ export class InitiativeFormComponent implements OnInit {
 		return goals;
 	}
 
-	submitForm() {
-		this.isLoading = true;
-
+	buildPayload() {
 		const payload = {
 			status_information: {
 				status: this.form.value.formArray[2].initiativeStatusCtrl,
@@ -947,8 +945,13 @@ export class InitiativeFormComponent implements OnInit {
 				phone: this.form.value.formArray[1].initiativePhoneCtrl
 			}
 		};
+		return payload;
+	}
 
-		console.log(payload);
+	submitForm() {
+		this.isLoading = true;
+
+		const payload = this.buildPayload();
 
 		if (this.isUpdating) {
 			/*
