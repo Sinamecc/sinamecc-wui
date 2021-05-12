@@ -21,6 +21,7 @@ import { BasicInformationFormComponent } from "../basic-information-form/basic-i
 import { InitiativeFormComponent } from "../initiative-form/initiative-form.component";
 import { GenericButtonComponent } from "@app/shared/generic-button/generic-button.component";
 import { GenericButtonSecondaryComponent } from "@app/shared/generic-button-secondary/generic-button-secondary.component";
+import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
 
 describe("MitigationActionsUpdateComponent", () => {
 	let component: MitigationActionsUpdateComponent;
@@ -48,7 +49,8 @@ describe("MitigationActionsUpdateComponent", () => {
 				BasicInformationFormComponent,
 				InitiativeFormComponent,
 				GenericButtonComponent,
-				GenericButtonSecondaryComponent
+				GenericButtonSecondaryComponent,
+				ErrorReportingComponent
 			],
 			providers: [
 				MockS3Service,
@@ -67,7 +69,7 @@ describe("MitigationActionsUpdateComponent", () => {
 		fixture.detectChanges();
 	});
 
-	it("should create", () => {
+	fit("should create", () => {
 		expect(component).toBeTruthy();
 	});
 });

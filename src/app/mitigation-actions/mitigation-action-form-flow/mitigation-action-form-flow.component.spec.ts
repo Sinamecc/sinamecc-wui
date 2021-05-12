@@ -19,6 +19,7 @@ import { MockMitigationActionsService } from "../mitigation-actions.service.mock
 import { MockS3Service } from "@app/core/s3.service.mock";
 import { MockI18nService } from "@app/core/i18n.service.mock";
 import { SharedModule } from "@app/shared";
+import { DatePipe } from "@angular/common";
 
 describe("MitigationActionFormFlowComponent", () => {
 	let component: MitigationActionFormFlowComponent;
@@ -48,6 +49,7 @@ describe("MitigationActionFormFlowComponent", () => {
 			],
 			providers: [
 				MockS3Service,
+				DatePipe,
 				{
 					provide: MitigationActionsService,
 					useClass: MockMitigationActionsService
@@ -63,7 +65,7 @@ describe("MitigationActionFormFlowComponent", () => {
 		fixture.detectChanges();
 	});
 
-	it("should create", () => {
+	fit("should create", () => {
 		expect(component).toBeTruthy();
 	});
 });
