@@ -22,11 +22,11 @@
             <mat-radio-group class="custom-radio-group" formControlName="programCtrl">
               <mat-radio-button [style.margin.px]="5"
                 [value]="1">
-                Asegurado
+                <label translate>general.insured</label>
               </mat-radio-button>
               <mat-radio-button [style.margin.px]="5"
                 [value]="2">
-                Por obtener
+                <label translate>general.toGet</label>
               </mat-radio-button>
             </mat-radio-group>
             <br />
@@ -45,23 +45,23 @@
             <mat-radio-group class="custom-radio-group" formControlName="detailfinancingSourceCtrl">
               <mat-radio-button [style.margin.px]="5"
                 [value]="1">
-                Presupuesto público
+                <label translate>specificLabel.publicBudget</label>
               </mat-radio-button>
               <mat-radio-button [style.margin.px]="5"
                 [value]="2">
-                Financiamiento privado
+                <label translate>specificLabel.privateFinancing</label>
               </mat-radio-button>
               <mat-radio-button [style.margin.px]="5"
                 [value]="3">
-                Proyecto de cooperación internacional
+                 <label translate>specificLabel.internationalCooperationPoject</label>
               </mat-radio-button>
               <mat-radio-button [style.margin.px]="5"
                 [value]="4">
-                Préstamo
+                <label translate>general.loan</label>
               </mat-radio-button>
               <mat-radio-button [style.margin.px]="5"
                 [value]="5">
-                Por definir
+                 <label translate>general.toGet</label>
               </mat-radio-button>
             </mat-radio-group>
             <br />
@@ -122,7 +122,7 @@
             <mat-radio-group #registeredNonReimbursableCooperationMideplan="matRadioGroup" class="custom-radio-group" formControlName="registeredNonReimbursableCooperationMideplanCtrl">
               <mat-radio-button [style.margin.px]="5"
                 [value]="1">
-                Si
+                <label translate>general.yes</label>
               </mat-radio-button>
               <mat-radio-button [style.margin.px]="5"
                 [value]="2">

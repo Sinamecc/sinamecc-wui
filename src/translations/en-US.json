@@ -24,6 +24,11 @@
   },
 
   "mitigationAction": {
+    "enablingMeasure":"Enabling measure",
+    "directImpactGEI":"Direct impact on GEI",
+    "impactCategory":"Impact Category",
+    "relationshipDecarbonizationPlan":"Relationship with the Decarbonization Plan",
+    "relationshipNDC":"Relationship with the NDC",
     "newIndicator":"Add new indicator",
     "additionalInformation":"Additional Information",
     "measurementStartDate":"Measurement start date",
@@ -218,6 +223,14 @@
   },
 
   "general": {
+    "biannual":"Biannual",
+    "management":"Management",
+    "impact":"Impact",
+    "both":"Both",
+    "estimatedDate":"Estimated date",
+    "loan":"Loan",
+    "toGet":"To get",
+    "insured":"Insured",
     "details":"Details",
     "locationAction":"Location of the action",
     "geographicScale":"Geographic scale",
@@ -448,6 +461,9 @@
   },
 
   "specificLabel": {
+    "internationalCooperationPoject":"International cooperation project",
+    "privateFinancing":"Private financing",
+    "publicBudget":"Public budget",
     "commentForm":"Comment form",
     "addRemoval":"Add new removals",
     "addReductions":"Add new reductions",

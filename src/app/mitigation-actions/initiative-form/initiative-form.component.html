@@ -169,18 +169,18 @@
             <mat-radio-group formControlName="deploymentCompletionIdCtrl"  #deploymentCompletionOption="matRadioGroup"  class="custom-radio-group" >
               <mat-radio-button [style.margin.px]="5"
                 value="1">
-                Fecha estimada 
+                <label translate>general.estimatedDate</label> 
               </mat-radio-button>
               <mat-radio-button [style.margin.px]="5"
                 value="2">
-                Otro
+                <label translate>general.other</label>
               </mat-radio-button>
             </mat-radio-group>
 
             <br />
 
             <mat-form-field *ngIf="deploymentCompletionOption.value == '1'" class="field-ppcn">
-              <mat-label translate>Fecha estimada</mat-label>
+              <mat-label translate><label translate>general.estimatedDate</label> </mat-label>
               <input matInput
               formControlName="deploymentCompletionDateCtrl"
               [placeholder]="'Choose a date' | translate"
@@ -196,7 +196,7 @@
             <br />
 
             <mat-form-field *ngIf="deploymentCompletionOption.value == '2'" class="field-ppcn">
-              <mat-label translate>Otro</mat-label>
+              <mat-label translate><label translate>general.other</label> </mat-label>
               <input formControlName="deploymentCompletionOtherCtrl"  matInput  />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
@@ -281,7 +281,7 @@
 
     
             <mat-form-field class="field-ppcn" appearance="fill">
-              <mat-label>Relación con la NDC</mat-label>
+              <mat-label translate>mitigationAction.relationshipNDC</mat-label>
               <mat-select multiple>
                 <mat-optgroup *ngFor="let ndcItem of ndcList" [label]="ndcItem.name"
                               >
@@ -296,7 +296,7 @@
             <br />
 
             <mat-form-field class="field-ppcn" appearance="fill">
-              <mat-label>Relación con el Plan de Descarbonización</mat-label>
+              <mat-label translate>mitigationAction.relationshipDecarbonizationPlan</mat-label>
               <mat-select multiple>
                 <mat-optgroup *ngFor="let eje of ejeList" [label]="eje.name"
                               >
@@ -311,7 +311,7 @@
             <br />
 
             <mat-form-field class="field-ppcn" appearance="fill">
-              <mat-label>Relación con el Plan de Descarbonización</mat-label>
+              <mat-label translate>mitigationAction.relationshipDecarbonizationPlan</mat-label>
               <mat-select multiple>
                 <mat-optgroup *ngFor="let topic of temasList" [label]="topic.name"
                               >
@@ -326,19 +326,19 @@
             <br />
 
 
-           <span translate>Categoría de impacto</span><br /><br />
+           <span translate>mitigationAction.impactCategory</span><br /><br />
             <mat-radio-group  class="custom-radio-group">
               <mat-radio-button [style.margin.px]="5"
                 value="1">
-                Impacto directo en GEI 
+                <label translate>mitigationAction.directImpactGEI</label>
               </mat-radio-button>
               <mat-radio-button [style.margin.px]="5"
                 value="2">
-                Medida habilitante
+                <label translate>mitigationAction.enablingMeasure</label>
               </mat-radio-button>
               <mat-radio-button [style.margin.px]="5"
                 value="3">
-                Ambas
+                <label translate>general.both</label>
               </mat-radio-button>
             </mat-radio-group>
 
@@ -350,7 +350,7 @@
             <mat-radio-group class="custom-radio-group" >
               <mat-radio-button [style.margin.px]="5"
                 value="1">
-                Si
+                <label translate>general.yes</label>
               </mat-radio-button>
               <mat-radio-button [style.margin.px]="5"
                 value="2">
