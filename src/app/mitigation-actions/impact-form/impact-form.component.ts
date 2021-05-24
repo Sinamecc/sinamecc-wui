@@ -82,13 +82,37 @@ export class ImpactFormComponent implements OnInit {
 		this.form = this.formBuilder.group({
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
-					mitigationActionImpactCtrl: ["", Validators.required],
-					emissionImpactCtrl: ["", Validators.required],
-					calculationMethodologyCtrl: ["", Validators.required],
-					internationalParticipationCtrl: ["", Validators.required],
-					internationalParticipationDetailCtrl: null
+					indicators: this.formBuilder.array([this.createNewIndicatorForm()])
 				})
 			])
+		});
+	}
+
+	addIndicatorItem() {
+		const control = <FormArray>(
+			this.form.controls.formArray["controls"][0].controls["indicators"]
+		);
+		control.push(this.createNewIndicatorForm());
+	}
+
+	deleteIndicatorItem(i: number) {
+		const control = <FormArray>(
+			this.form.controls.formArray["controls"][0].controls["indicators"]
+		);
+		control.removeAt(i);
+	}
+
+	createNewIndicatorForm() {
+		return this.formBuilder.group({
+			indicatorNameCtrl: ["", Validators.required],
+			indicatorTypeCtrl: ["", Validators.required],
+			indicatorUnitCtrl: ["", Validators.required],
+			methodologicalDetailIndicatorCtrl: ["", Validators.required],
+			indicatorReportingPeriodicityCtrl: ["", Validators.required],
+			institutionResponsibleGeneratingDataCtrl: ["", Validators.required],
+			institutionResponsibleReportingIndicatorCtrl: ["", Validators.required],
+			measurementStartDateCtrl: ["", Validators.required],
+			additionalInformationCtrl: ["", Validators.required]
 		});
 	}
 
@@ -134,7 +158,7 @@ export class ImpactFormComponent implements OnInit {
 			international_participation: this.form.value.formArray[0]
 				.internationalParticipationDetailCtrl,
 			user: String(this.authenticationService.credentials.id),
-			registration_type: this.processedNewFormData.registration_types[0].id
+			registration_type: this.processedNewFormData.initiative_type[0].id
 			// update_new_mitigation_action: false
 		};
 		if (this.isUpdating) {
@@ -143,11 +167,7 @@ export class ImpactFormComponent implements OnInit {
 			context["update_new_mitigation_action"] = true;
 		}
 		this.service
-			.submitMitigationActionUpdateForm(
-				context,
-				this.mitigationAction.id,
-				this.i18nService.language.split("-")[0]
-			)
+			.submitMitigationActionUpdateForm(context, this.mitigationAction.id)
 			.pipe(
 				finalize(() => {
 					this.form.markAsPristine();

@@ -13,134 +13,76 @@
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
-              <span translate>general.objectives</span>
+              <span translate>mitigationAction.overviewImpactEmissionsRemovals</span>
             </ng-template>
 
             <h3>
               <span translate>info.code</span>:<span>{{ mitigationAction?.id }}</span>
             </h3>
 
-            <mat-form-field class="field-ppcn">
-              <textarea matInput formControlName="actionObjectiveCtrl"
-                [placeholder]="'mitigationAction.ObjectiveMA' | translate" matTextareaAutosize matAutosizeMinRows="2"
-                matAutosizeMaxRows="20"></textarea>
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
+             <mat-form-field class="field-ppcn">
+              <mat-label translate>mitigationAction.overviewImpactEmissionsRemovals</mat-label>
+              <input matInput formControlName="overviewImpactEmissionsRemovalsCtrl" />
             </mat-form-field>
             <br />
 
-            <span translate>mitigationAction.MAstatus</span><br /><br />
-            <mat-radio-group formControlName="actionStatusCtrl">
-              <mat-radio-button *ngFor="let status of processedNewFormData?.statuses" [value]="status.id">
-                {{ status.status }}
-              </mat-radio-button>
-            </mat-radio-group>
-
-            <br />
-
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>mitigationAction.StartMA</mat-label>
-              <input matInput [matDatepicker]="implementationInitialDatePicker"
-                [placeholder]="'info.chooseDate' | translate" formControlName="implementationInitialDateCtrl" />
-              <mat-datepicker-toggle matSuffix [for]="implementationInitialDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #implementationInitialDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
-            </mat-form-field>
-            <br />
-
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>mitigationAction.lastMA</mat-label>
-              <input matInput [matDatepicker]="implementationEndDatePicker"
-                [placeholder]="'info.chooseDate' | translate" formControlName="implementationEndDateCtrl" />
-              <mat-datepicker-toggle matSuffix [for]="implementationEndDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #implementationEndDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
-            </mat-form-field>
-
-            <div class="box-button">
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
-            </div>
-          </mat-step>
-
-          <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
-            <ng-template matStepLabel>
-              <div translate>geographyLabel.geographicScale</div>
-            </ng-template>
-
-            <span translate>geographyLabel.geographicScale</span><br /><br />
-            <mat-radio-group formControlName="geographicScaleCtrl">
-              <mat-radio-button *ngFor="let geographicScale of processedNewFormData?.geographic_scales"
-                [value]="geographicScale.id">
-                {{ geographicScale.name }}
-              </mat-radio-button>
-            </mat-radio-group>
-
-            <br />
-            <div class="box-button">
-              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
-              </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
-            </div>
-          </mat-step>
-
-          <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
-            <ng-template matStepLabel>
-              <div translate>info.location</div>
-            </ng-template>
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>geographyLabel.geographicSite</mat-label>
-              <input matInput formControlName="locationNameCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-            <br />
-
-            <mat-label translate>specificLabel.GISInformationAnnexed</mat-label>?
-            <mat-radio-group matInput formControlName="gisAnnexedCtrl">
-              <mat-radio-button value="1"><span translate> general.yes </span></mat-radio-button>
-              <mat-radio-button value="0"><span translate>general.no </span></mat-radio-button>
-            </mat-radio-group>
-            <div class="box-button">
-              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
-              </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
-            </div>
-          </mat-step>
-
-          <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
-            <ng-template matStepLabel>
-              <div translate>specificLabel.financing</div>
-            </ng-template>
-
-            <span translate>specificLabel.financeSourceStatus</span><br /><br />
-            <mat-radio-group formControlName="financingStatusCtrl" (change)="financialSourceInputShown($event)">
-              <mat-radio-button *ngFor="let financeStatus of processedNewFormData?.finance_status"
-                [value]="financeStatus.id">
-                {{ financeStatus.status }}
-              </mat-radio-button>
-            </mat-radio-group>
-
-            <br />
-            <br />
-
-            <div *ngIf="displayFinancialSource">
+            <div fxLayout="row" fxLayoutAlign=" center">
+              <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
               <mat-form-field class="field-ppcn">
-                <mat-label translate>specificLabel.caseInsuredListSources</mat-label>
-                <input matInput formControlName="financingSourceCtrl" />
+                <mat-label translate>mitigationAction.graphicLogicImpactEmissionsRemovals</mat-label>
+                <input matInput formControlName="graphicLogicImpactEmissionsRemovalsCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
+              <br />
             </div>
+
             <br />
 
-            <mat-label translate>specificLabel.gasInventory</mat-label>
-            <mat-radio-group matInput formControlName="gasInventoryCtrl">
-              <mat-radio-button value="1" translate class="mat-primary"><span translate>general.energy</span>
-              </mat-radio-button>
-            </mat-radio-group>
+             <mat-form-field class="field-ppcn" appearance="fill">
+              <mat-label translate>mitigationAction.sectorsGEIInventoryImpacted</mat-label>
+              <mat-select multiple>
+                <!-- This options will remplace for a catalog, waiting BE-->
+                  <mat-option  [value]="1">
+                    Energía
+                  </mat-option>
+                  <mat-option  [value]="2">
+                    Agricultura, silvicultura y otros usos de la tierra (AFOLU)  
+                  </mat-option>
+                  <mat-option  [value]="3">
+                    Procesos industriales y uso de productos  (IPPU)
+                  </mat-option>
+                  <mat-option  [value]="4">
+                    Residuos
+                  </mat-option>
+              </mat-select>
+            </mat-form-field>
+
             <br />
+
+            <mat-form-field class="field-ppcn" appearance="fill">
+              <mat-label translate>mitigationAction.preliminaryIdentificationSustainableDevelopmentGoals</mat-label>
+              <mat-select multiple>
+                <!-- This options will remplace for a catalog, waiting BE-->
+                  <mat-option  [value]="1">
+                    Objetivo 1: Poner fin a la pobreza en todas sus formas en todo el mundo
+                  </mat-option>
+                  <mat-option  [value]="2">
+                    Objetivo 2: Poner fin al hambre
+                  </mat-option>
+                  <mat-option  [value]="3">
+                    Objetivo 3: Garantizar una vida sana y promover el bienestar para todos en todas las edades
+                  </mat-option>
+                  <mat-option  [value]="4">
+                    Objetivo 4: Garantizar una educación inclusiva, equitativa y de calidad y promover oportunidades de aprendizaje durante toda la vida para todos
+                  </mat-option>
+              </mat-select>
+            </mat-form-field>
+
             <div class="box-button">
-              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
-              </app-generic-button-secondary>
               <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
-
+          
           <mat-step>
             <ng-template matStepLabel> <span translate> specificLabel.confirmInformation </span></ng-template>
 

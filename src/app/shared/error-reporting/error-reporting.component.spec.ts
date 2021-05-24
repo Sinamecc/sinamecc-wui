@@ -1,25 +1,39 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { TranslateModule } from "@ngx-translate/core";
+import { RouterTestingModule } from "@angular/router/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { CoreModule } from "@app/core";
+import { MaterialModule } from "@app/material.module";
+import { ErrorReportingComponent } from "./error-reporting.component";
 
-import { ErrorReportingComponent } from './error-reporting.component';
+describe("ErrorReportingComponent", () => {
+	let component: ErrorReportingComponent;
+	let fixture: ComponentFixture<ErrorReportingComponent>;
 
-describe('ErrorReportingComponent', () => {
-  let component: ErrorReportingComponent;
-  let fixture: ComponentFixture<ErrorReportingComponent>;
+	beforeEach(async(() => {
+		TestBed.configureTestingModule({
+			declarations: [ErrorReportingComponent],
+			imports: [
+				BrowserAnimationsModule,
+				FlexLayoutModule,
+				MaterialModule,
+				RouterTestingModule,
+				TranslateModule.forRoot(),
+				ReactiveFormsModule,
+				CoreModule
+			]
+		}).compileComponents();
+	}));
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ErrorReportingComponent ]
-    })
-    .compileComponents();
-  }));
+	beforeEach(() => {
+		fixture = TestBed.createComponent(ErrorReportingComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ErrorReportingComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	fit("should create", () => {
+		expect(component).toBeTruthy();
+	});
 });

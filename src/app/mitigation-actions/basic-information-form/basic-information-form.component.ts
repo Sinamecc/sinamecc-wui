@@ -24,6 +24,7 @@ import { MatSnackBar } from "@angular/material";
 import { Observable } from "rxjs/Observable";
 import { MitigationAction } from "../mitigation-action";
 import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
+import { DatePipe } from "@angular/common";
 
 const log = new Logger("MitigationAction");
 
@@ -39,6 +40,7 @@ export class BasicInformationFormComponent implements OnInit {
 	isLoading = false;
 	wasSubmittedSuccessfully = false;
 	mitigationAction: MitigationAction;
+	mitigationActionBudgeValuetCtrl = "CRC";
 
 	@Input() newFormData: Observable<MitigationActionNewFormData>;
 	@Input() processedNewFormData: MitigationActionNewFormData;
@@ -55,11 +57,12 @@ export class BasicInformationFormComponent implements OnInit {
 		private authenticationService: AuthenticationService,
 		private service: MitigationActionsService,
 		private translateService: TranslateService,
-		public snackBar: MatSnackBar
+		public snackBar: MatSnackBar,
+		private datePipe: DatePipe
 	) {
-		this.service.currentMitigationAction.subscribe(
-			message => (this.mitigationAction = message)
-		);
+		this.service.currentMitigationAction.subscribe(message => {
+			this.mitigationAction = message;
+		});
 		this.createForm();
 	}
 
@@ -72,22 +75,28 @@ export class BasicInformationFormComponent implements OnInit {
 		}
 	}
 
+	setmitigationActionBudgeValuetCtrl(value: string) {
+		this.mitigationActionBudgeValuetCtrl = value;
+	}
+
 	private createForm() {
 		this.form = this.formBuilder.group({
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
 					programCtrl: ["", Validators.required],
-					nameCtrl: ["", Validators.required],
-					entityCtrl: ["", Validators.required]
+					stepsTakingToFinancingCtrl: ["", Validators.required],
+					detailfinancingSourceCtrl: ["", Validators.required],
+					financingSourceApplyingCtrl: ["", Validators.required],
+					mitigationActionBudgetCtrl: ["", Validators.required],
+					referenceYearCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
-					contactNameCtrl: ["", Validators.required],
-					positionCtrl: ["", Validators.required],
-					emailFormCtrl: ["", Validators.email],
-					phoneCtrl: [
+					registeredNonReimbursableCooperationMideplanCtrl: [
 						"",
-						Validators.compose([Validators.required, Validators.minLength(8)])
-					]
+						Validators.required
+					],
+					entityProjectCtrl: ["", Validators.required],
+					registeredNonReimbursableCooperationMideplanDetailCtrl: [""]
 				})
 			])
 		});
@@ -131,9 +140,45 @@ export class BasicInformationFormComponent implements OnInit {
 		this.isLoading = false;
 	}
 
+	buildPayload() {
+		const context = {
+			status: this.form.value.formArray[0].programCtrl,
+			administration: this.form.value.formArray[0].stepsTakingToFinancingCtrl,
+			source: this.form.value.formArray[0].detailfinancingSourceCtrl,
+			source_description: this.form.value.formArray[0]
+				.financingSourceApplyingCtrl,
+			reference_year: this.datePipe.transform(
+				this.form.value.formArray[0].referenceYearCtrl,
+				"yyyy"
+			),
+			budget: this.form.value.formArray[0].mitigationActionBudgetCtrl,
+			currency: this.mitigationActionBudgeValuetCtrl,
+			mideplan_registered:
+				this.form.value.formArray[1]
+					.registeredNonReimbursableCooperationMideplanCtrl === 1
+					? true
+					: false,
+
+			executing_entity: this.form.value.formArray[1].entityProjectCtrl
+		};
+
+		if (
+			this.form.value.formArray[1]
+				.registeredNonReimbursableCooperationMideplanCtrl === 1
+		) {
+			context[
+				"mideplan_project"
+			] = this.form.value.formArray[1].registeredNonReimbursableCooperationMideplanDetailCtrl;
+		}
+
+		return context;
+	}
+
 	submitForm() {
+		const context = this.buildPayload();
 		this.isLoading = true;
 
+		/*
 		const context = {
 			contact: {
 				full_name: this.form.value.formArray[1].contactNameCtrl,
@@ -145,17 +190,15 @@ export class BasicInformationFormComponent implements OnInit {
 			name: this.form.value.formArray[0].nameCtrl,
 			institution: this.form.value.formArray[0].entityCtrl,
 			user: String(this.authenticationService.credentials.id),
-			registration_type: this.processedNewFormData.registration_types[0].id
+			registration_type: this.processedNewFormData.initiative_type[0].id
 		};
 		if (this.isUpdating) {
 			context.contact["id"] = this.mitigationAction.contact.id;
 		}
+
+		*/
 		this.service
-			.submitMitigationActionUpdateForm(
-				context,
-				this.mitigationAction.id,
-				this.i18nService.language.split("-")[0]
-			)
+			.submitMitigationActionUpdateForm(context, this.mitigationAction.id)
 			.pipe(
 				finalize(() => {
 					this.form.markAsPristine();

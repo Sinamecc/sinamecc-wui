@@ -417,14 +417,16 @@ export class MockMitigationActionsService {
 		registration_type: string
 	): Observable<MitigationActionNewFormData> {
 		const newFormData: MitigationActionNewFormData = {
-			registration_types: [
+			initiative_type: [
 				{
 					id: Math.random().toString(36).substring(5),
-					type: "Some type 1"
+					code: "01",
+					name: "Some type 1"
 				},
 				{
 					id: Math.random().toString(36).substring(5),
-					type: "Some type 2"
+					code: "02",
+					name: "Some type 2"
 				}
 			],
 			initiative_types: [

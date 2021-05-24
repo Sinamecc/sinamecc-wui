@@ -133,7 +133,7 @@ export class MitigationActionFormFlowComponent
 			tap(mitigationActionNewFormData => {
 				this.isLoading = false;
 				this.registrationTypeId =
-					mitigationActionNewFormData.registration_types[0].id;
+					mitigationActionNewFormData.initiative_type[0].id;
 				this.institutions = mitigationActionNewFormData.institutions;
 				this.statusses = mitigationActionNewFormData.statuses;
 				this.ingeis = mitigationActionNewFormData.ingei_compliances;

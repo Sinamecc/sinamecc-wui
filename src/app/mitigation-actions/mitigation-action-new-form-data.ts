@@ -1,5 +1,5 @@
 export interface MitigationActionNewFormData {
-	registration_types: RegistrationType[];
+	initiative_type: RegistrationType[];
 	institutions: Institution[];
 	statuses: Status[];
 	finances: Finance[];
@@ -12,7 +12,8 @@ export interface MitigationActionNewFormData {
 
 export interface RegistrationType {
 	id: string;
-	type: String;
+	code: string;
+	name: String;
 }
 
 export interface Institution {

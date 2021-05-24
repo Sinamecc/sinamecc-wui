@@ -22,7 +22,7 @@
         </mat-step>
 
         <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
-          <ng-template matStepLabel><span translate>info.basicInfo</span></ng-template>
+          <ng-template matStepLabel><span translate>info.financingInformation</span></ng-template>
           <app-basic-information-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating">
           </app-basic-information-form>
@@ -45,6 +45,7 @@
             [isUpdating]="isUpdating">
           </app-key-aspects-form>
 
+          <!--
           <div fxLayout="row">
             <div>
               <app-generic-button-secondary [disabled]="keyAspectsForm.wasSubmittedSuccessfully" type="button"
@@ -55,6 +56,7 @@
                 name="general.next"></app-generic-button>
             </div>
           </div>
+          -->
         </mat-step>
 
         <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
@@ -79,7 +81,7 @@
         </mat-step>
 
         <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
-          <ng-template matStepLabel><span translate>specificLabel.impactImplementation</span></ng-template>
+          <ng-template matStepLabel><span translate>specificLabel.informationMonitoring</span></ng-template>
           <app-impact-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating">
           </app-impact-form>

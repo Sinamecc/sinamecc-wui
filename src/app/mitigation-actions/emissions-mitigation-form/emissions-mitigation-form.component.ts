@@ -79,11 +79,47 @@ export class EmissionsMitigationFormComponent implements OnInit {
 		this.form = this.formBuilder.group({
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
-					ingeiComplianceCtrl: null
+					exAnteEmissionReductionsCtrl: ["", Validators.required],
+					periodPotentialEmissionReductionEstimatedCtrl: [
+						"",
+						Validators.required
+					],
+					isourcesEmissionsGasesCoveredCtrl: ["", Validators.required],
+					carbonSinksReservoirsCtrl: ["", Validators.required],
+					definitionBaselineCtrl: ["", Validators.required],
+					methodologyExantePotentialReductionEmissionsCO2Ctrl: [
+						"",
+						Validators.required
+					],
+					documentationCalculationsEstimateReductionEmissionsCO2Ctrl: [
+						"",
+						Validators.required
+					],
+					isCurrentlyReflectedInventoryCtrl: ["", Validators.required]
 				}),
 				this.formBuilder.group({
-					emissionSourceCtrl: ["", Validators.required],
-					carbonSinksCtrl: ["", Validators.required]
+					standardizedCalculationMethodologyUsedCtrl: [""],
+					standardizedCalculationMethodologyUsedDetailCtrl: [
+						"",
+						Validators.required
+					],
+					calculationsDocumentedCtrl: [""],
+					calculationsDocumentedDetailCtrl: ["", Validators.required],
+					emissionFactorsUsedCalculationDocumentedCtrl: [""],
+					emissionFactorsUsedCalculationDocumentedDetailCtrl: [
+						"",
+						Validators.required
+					],
+					assumptionsDocumentedCtrl: [""],
+					assumptionsDocumentedDetailCtrl: ["", Validators.required]
+				}),
+				this.formBuilder.group({
+					intendParticipateInternationalCarbonMarketsCtrl: [
+						"",
+						Validators.required
+					],
+					mechanismStandardApplyCtrl: ["", Validators.required],
+					methodologyUsedCtrl: ["", Validators.required]
 				})
 			])
 		});
@@ -126,15 +162,11 @@ export class EmissionsMitigationFormComponent implements OnInit {
 			emissions_source: this.form.value.formArray[1].emissionSourceCtrl,
 			carbon_sinks: this.form.value.formArray[1].carbonSinksCtrl,
 			user: String(this.authenticationService.credentials.id),
-			registration_type: this.processedNewFormData.registration_types[0].id
+			registration_type: this.processedNewFormData.initiative_type[0].id
 		};
 
 		this.service
-			.submitMitigationActionUpdateForm(
-				context,
-				this.mitigationAction.id,
-				this.i18nService.language.split("-")[0]
-			)
+			.submitMitigationActionUpdateForm(context, this.mitigationAction.id)
 			.pipe(
 				finalize(() => {
 					this.form.markAsPristine();
