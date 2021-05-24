@@ -24,6 +24,15 @@
   },
 
   "mitigationAction": {
+    "beenProgressActionPeriod":"What has been the progress of your action in the period?",
+    "reportingPeriod":"Reporting period",
+    "generalProgressReportClimateAction":"General progress report on climate action",
+    "indicatordataUpdateDate":"Indicator data update date",
+    "indicatorSelection":"Indicator selection",
+    "indicatorMonitoring":"Indicator monitoring",
+    "anyProgressMonitoringRecordedClimateActions":"Do you have any progress in monitoring your recorded climate actions?",
+    "monitoringProgressLog":"Monitoring progress log",
+    "monitoringReportingClimateactions":"Monitoring and reporting of climate actions through SINAMECC",
     "enablingMeasure":"Enabling measure",
     "directImpactGEI":"Direct impact on GEI",
     "impactCategory":"Impact Category",

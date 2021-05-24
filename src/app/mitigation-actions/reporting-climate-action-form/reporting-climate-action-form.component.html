@@ -1,0 +1,116 @@
+<div class="container">
+    <mat-card-content>
+      <form  [formGroup]="form" (ngSubmit)="submitForm()">
+
+        <div fxLayout="column">
+            <mat-vertical-stepper formArrayName="formArray" linear #stepper>
+
+
+              <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+                  <ng-template matStepLabel>
+                    <span translate>mitigationAction.monitoringProgressLog</span>
+                  </ng-template>
+
+                  <span translate>mitigationAction.anyProgressMonitoringRecordedClimateActions</span><br /><br />
+                  <mat-radio-group class="custom-radio-group" formControlName="anyProgressMonitoringRecordedClimateActionsCtrl">
+                    <mat-radio-button [style.margin.px]="5"
+                      [value]="1">
+                      <label translate>general.yes</label>
+                    </mat-radio-button>
+                    <mat-radio-button [style.margin.px]="5"
+                      [value]="2">
+                      <label translate>No</label>
+                    </mat-radio-button>
+                  </mat-radio-group>
+                  <br /> 
+
+              </mat-step>
+
+              <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+                  <ng-template matStepLabel>
+                    <span translate>mitigationAction.indicatorMonitoring</span>
+                  </ng-template>
+
+                  <span translate>mitigationAction.anyProgressMonitoringRecordedClimateActions</span><br /><br />
+                  <mat-radio-group class="custom-radio-group" formControlName="anyProgressMonitoringRecordedClimateActionsCtrl">
+                    <mat-radio-button [style.margin.px]="5"
+                      [value]="1">
+                      <label translate>general.yes</label>
+                    </mat-radio-button>
+                    <mat-radio-button [style.margin.px]="5"
+                      [value]="2">
+                      <label translate>No</label>
+                    </mat-radio-button>
+                  </mat-radio-group>
+                  <br /> 
+
+                  <span translate>mitigationAction.indicatorSelection</span><br /><br />
+                  <mat-radio-group class="custom-radio-group" formControlName="indicatorSelectionCtrl">
+                    <mat-radio-button [style.margin.px]="5"
+                      [value]="1">
+                      <label translate>Option 1</label>
+                    </mat-radio-button>
+                    <mat-radio-button [style.margin.px]="5"
+                      [value]="2">
+                      <label translate>Option 2</label>
+                    </mat-radio-button>
+                    <mat-radio-button [style.margin.px]="5"
+                      [value]="2">
+                      <label translate>Option 3</label>
+                    </mat-radio-button>
+                  </mat-radio-group>
+                  <br /> 
+
+                  <mat-form-field [style.width.%]="100"  class="ppcn-field">
+                  <mat-label translate>mitigationAction.indicatordataUpdateDate</mat-label>
+                  
+                  <input matInput
+                  [placeholder]="'Choose a date' | translate"
+                  [matDatepicker]="indicatordataUpdateDateDatePicker"
+                  formControlName="indicatordataUpdateDateCtrl" />
+
+                  <mat-datepicker-toggle matSuffix [for]="indicatordataUpdateDateDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #indicatordataUpdateDateDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+
+              </mat-step>
+
+              <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
+
+                <ng-template matStepLabel>
+                    <span translate>mitigationAction.generalProgressReportClimateAction</span>
+                </ng-template>
+
+                <mat-form-field [style.width.%]="100"  class="ppcn-field">
+                  <mat-label translate>mitigationAction.reportingPeriod</mat-label>
+                  
+                  <input matInput
+                  [placeholder]="'Choose a date' | translate"
+                  [matDatepicker]="reportingPeriodDatePicker"
+                  formControlName="reportingPeriodCtrl" />
+
+                  <mat-datepicker-toggle matSuffix [for]="reportingPeriodDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #reportingPeriodDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+
+                <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100"  class="ppcn-field">
+                  <mat-label translate>mitigationAction.beenProgressActionPeriod</mat-label>
+                  <input type="text" matInput formControlName="beenProgressActionPeriodCtrl" required />
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+
+               
+              </mat-step>
+
+            
+
+            </mat-vertical-stepper>
+        </div>
+
+      </form>
+    </mat-card-content>
+</div>
