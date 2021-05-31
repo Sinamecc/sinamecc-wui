@@ -147,6 +147,7 @@ export class ImpactFormComponent implements OnInit {
 	}
 
 	submitForm() {
+		/*
 		this.isLoading = true;
 		const context = {
 			impact_plan: this.form.value.formArray[0].mitigationActionImpactCtrl,
@@ -166,6 +167,18 @@ export class ImpactFormComponent implements OnInit {
 		} else {
 			context["update_new_mitigation_action"] = true;
 		}
+		*/
+		this.translateService
+			.get("Sucessfully submitted form")
+			.subscribe((res: string) => {
+				this.snackBar.open(res, null, { duration: 3000 });
+			});
+		this.wasSubmittedSuccessfully = true;
+		setTimeout(() => {
+			this.router.navigate(["/mitigation/actions"], { replaceUrl: true });
+		}, 2000);
+
+		/*
 		this.service
 			.submitMitigationActionUpdateForm(context, this.mitigationAction.id)
 			.pipe(
@@ -198,5 +211,6 @@ export class ImpactFormComponent implements OnInit {
 					this.wasSubmittedSuccessfully = false;
 				}
 			);
+		*/
 	}
 }

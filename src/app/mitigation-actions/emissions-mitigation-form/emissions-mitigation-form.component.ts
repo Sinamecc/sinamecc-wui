@@ -155,7 +155,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
 
 	submitForm() {
 		this.isLoading = true;
-		const context = {
+		/*const context = {
 			ingei_compliances: this.form.value.formArray[0].ingeiComplianceCtrl
 				? this.form.value.formArray[0].ingeiComplianceCtrl.join()
 				: "",
@@ -163,9 +163,10 @@ export class EmissionsMitigationFormComponent implements OnInit {
 			carbon_sinks: this.form.value.formArray[1].carbonSinksCtrl,
 			user: String(this.authenticationService.credentials.id),
 			registration_type: this.processedNewFormData.initiative_type[0].id
-		};
-
-		this.service
+		};*/
+		this.isLoading = false;
+		this.wasSubmittedSuccessfully = true;
+		/*this.service
 			.submitMitigationActionUpdateForm(context, this.mitigationAction.id)
 			.pipe(
 				finalize(() => {
@@ -194,5 +195,6 @@ export class EmissionsMitigationFormComponent implements OnInit {
 					this.wasSubmittedSuccessfully = false;
 				}
 			);
+		*/
 	}
 }
