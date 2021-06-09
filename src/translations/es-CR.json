@@ -22,6 +22,14 @@
   },
 
   "mitigationAction": {
+    "observationsComments":"Observaciones y comentarios ",
+    "sinameccClassifiers":"Clasificadores del SINAMECC",
+    "natureOriginData":"Naturaleza del origen de los datos ",
+    "dataSource":"Fuente de los datos",
+    "disintegration":"Desagregación",
+    "geographicCoverage":"Cobertura geográfica",
+    "timeSeriesAvailable":"Serie de tiempo disponible",
+    "indicatorDescription":"Descripción del indicador",
     "enablingMeasure":"Medida habilitante",
     "directImpactGEI":"Impacto directo en GEI",
     "impactCategory":"Categoría de impacto",
@@ -223,6 +231,7 @@
   },
 
   "general": {
+     "until":"Hasta",
     "biannual":"Semestral",
     "management":"Gestión",
     "impact":"Impacto",

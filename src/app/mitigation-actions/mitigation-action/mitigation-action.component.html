@@ -1,5 +1,7 @@
-<div class="container">
-  <mat-card>
+<div >
+
+
+  <mat-card *ngIf="isLoading" >
     <mat-card-content>
       <mat-card-title class="section-heading" translate>mitigationAction.MA</mat-card-title>
       <mat-divider class="divider-custom"></mat-divider>
@@ -12,9 +14,10 @@
         <!--<mat-divider></mat-divider>-->
         <strong translate>general.status</strong>: {{mitigationAction?.fsm_state}} <br />
         <strong translate>info.code</strong>: {{mitigationAction?.id}} <br />
-        <strong translate>info.name</strong>: {{mitigationAction?.name}} <br />
-        <strong translate>general.program</strong>: {{mitigationAction?.strategy_name}} <br />
-        <strong translate>general.objective</strong>: {{mitigationAction?.purpose}} <br />
+        <strong translate>info.name</strong>: {{mitigationAction?.initiative?.name}} <br />
+       <!-- <strong translate>specificLabel.initiativeType</strong>: {{mitigationAction?.initiative?.initiative_type?.name}} <br />-->
+        
+        <strong translate>general.objective</strong>: {{mitigationAction?.initiative?.objective}} <br />
         <strong translate>general.entity</strong>: {{mitigationAction?.institution.name}} <br />
         <!--<mat-divider></mat-divider>-->
         <h3 translate class="text-color">info.contact</h3>
@@ -52,5 +55,197 @@
 
     </mat-card-content>
   </mat-card>
+  
+
+
+  <mat-tab-group [style.padding.px]="'25'"  backgroundColor="primary">
+
+    <mat-tab [label]="'specificLabel.initiative' | translate"> 
+
+      <div [style.width.%]="100" [style.padding.px]="20" fxLayout="column" fxLayoutAlign="start start">
+
+         <strong translate>specificLabel.initiative</strong>
+         <mat-divider></mat-divider>
+         <br />
+        <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <label><strong translate>specificLabel.initiativeType</strong> {{mitigationAction?.initiative?.initiative_type?.name}}</label>
+          <label><strong translate>specificLabel.initiativeName</strong> {{mitigationAction?.initiative?.name}} </label>
+          <label><strong translate>specificLabel.initiativeObjective</strong> {{mitigationAction?.initiative?.objective}}</label>
+          <label><strong translate>specificLabel.initiativeDescription</strong> {{mitigationAction?.initiative?.description}}</label>
+          <label><strong translate>specificLabel.initiativeGoal</strong></label>
+        </div>
+
+         <br />
+         <strong translate>specificLabel.initiativeContactInfo</strong>
+         <mat-divider></mat-divider>
+         <br />
+        <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <label><strong translate>mitigationAction.entityReporting</strong> {{mitigationAction?.contact.institution}}</label>
+          <label><strong translate>info.contactName</strong> {{mitigationAction?.contact?.full_name}}</label>
+          <label><strong translate>general.position</strong> {{mitigationAction?.contact?.job_title}}</label>
+          <label><strong translate>info.emailAddress</strong> {{mitigationAction?.contact?.email}}</label>
+          <label><strong translate>info.phone</strong> {{mitigationAction?.contact?.phone}}</label>
+        </div>
+
+
+         <br />
+         <strong translate>mitigationAction.statusMitigationAction</strong>
+         <mat-divider></mat-divider>
+         <br />
+        <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <label><strong translate>mitigationAction.initiativeStatus</strong> {{mitigationAction?.status_information?.status?.status}}</label>
+          <label><strong translate>mitigationAction.startImplementation</strong> {{mitigationAction?.status_information?.start_date}}</label>
+          <label><strong translate>mitigationAction.deploymentCompletion</strong> {{mitigationAction?.status_information?.end_date}}</label>
+          <label><strong translate>general.other</strong> {{mitigationAction?.status_information?.other_end_date}}</label>
+          <label><strong translate>mitigationAction.entitiesInvolvedMitigationActionCtrl</strong> {{mitigationAction?.status_information?.institution}}</label>
+          <label><strong translate>mitigationAction.entitiesInvolvedMitigationActionCtrl</strong> {{mitigationAction?.status_information?.other_institution}}</label>
+        </div>
+
+        <br />
+         <strong translate>general.GeographicLocation</strong>
+         <mat-divider></mat-divider>
+         <br />
+        <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <label><strong translate>general.geographicScale</strong> {{mitigationAction?.geographic_location?.geographic_scale?.name}}</label>
+          <label><strong translate>general.locationAction</strong> {{mitigationAction?.geographic_location?.location}}</label>
+        </div>
+
+         <br />
+         <strong translate>mitigationAction.CategorizationNationalInstruments</strong>
+         <mat-divider></mat-divider>
+         <br />
+        <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <label><strong translate>mitigationAction.relationshipNDC</strong> {{mitigationAction?.CategorizationNationalInstruments}}</label>
+          <label><strong translate>mitigationAction.relationshipDecarbonizationPlan</strong> {{mitigationAction?.CategorizationNationalInstruments}}</label>
+          <label><strong translate>mitigationAction.relationshipDecarbonizationPlan</strong> {{mitigationAction?.CategorizationNationalInstruments}}</label>
+          <label><strong translate>mitigationAction.impactCategory</strong> {{mitigationAction?.CategorizationNationalInstruments}}</label>
+          <label><strong translate>mitigationAction.relationshipNDC</strong> {{mitigationAction?.CategorizationNationalInstruments}} </label>
+          
+        </div>
+
+      </div>
+
+    </mat-tab>
+
+    <mat-tab [label]="'info.financingInformation' | translate"> 
+      <div [style.width.%]="100" [style.padding.px]="20" fxLayout="column" fxLayoutAlign="start start">
+
+         <strong translate>info.financingInformation</strong>
+         <mat-divider></mat-divider>
+         <br />
+        <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <label><strong translate>mitigationAction.financingStatus</strong> {{mitigationAction?.finance?.status}}</label>
+          <label><strong translate>mitigationAction.stepsTakingToFinancing</strong> {{mitigationAction?.finance?.administration}}</label>
+          <label><strong translate>mitigationAction.detailfinancingSource</strong> {{mitigationAction?.finance?.source}}</label>
+          <label><strong translate>mitigationAction.financingSourceApplying</strong> {{mitigationAction?.finance?.source_description}}</label>
+          <label><strong translate>mitigationAction.mitigationActionBudget</strong>  {{mitigationAction?.finance?.currency}} - {{mitigationAction?.finance?.budget}}</label>
+          <label><strong translate>mitigationAction.referenceYear</strong> {{mitigationAction?.finance?.reference_year}}</label>
+
+        </div>
+
+        <br />
+         <strong translate>mitigationAction.financedSourcesInternationalCooperation</strong>
+         <mat-divider></mat-divider>
+         <br />
+        <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+           <label><strong translate>mitigationAction.registeredNonReimbursableCooperationMideplan</strong> {{mitigationAction?.finance?.mideplan_registered}}</label>
+          <label><strong translate>mitigationAction.nameRegisteredMideplan</strong> {{mitigationAction?.finance?.nameRegisteredMideplan}}</label>
+          <label><strong translate>mitigationAction.entityProject</strong> {{mitigationAction?.finance?.executing_entity}}</label>
+        </div>
+
+
+      </div>
+    </mat-tab>
+
+    <mat-tab  [label]="'general.keyAspects' | translate">
+
+      <div [style.width.%]="100" [style.padding.px]="20" fxLayout="column" fxLayoutAlign="start start">
+
+        <strong translate>mitigationAction.overviewImpactEmissionsRemovals</strong>
+         <mat-divider></mat-divider>
+         <br />
+        <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <label><strong translate>mitigationAction.overviewImpactEmissionsRemovals</strong> {{mitigationAction?.ghg_information?.impact_emission}}</label>
+          <label><strong translate>mitigationAction.graphicLogicImpactEmissionsRemovals</strong> {{mitigationAction?.ghg_information?.graphic_description}}</label>
+          <label><strong translate>mitigationAction.sectorsGEIInventoryImpacted</strong> {{mitigationAction?.ghg_information?.sectorsGEIInventoryImpacted}}</label>
+          <label><strong translate>mitigationAction.preliminaryIdentificationSustainableDevelopmentGoals</strong> {{mitigationAction?.ghg_information?.preliminaryIdentificationSustainableDevelopmentGoals}}</label>
+        </div>
+
+      </div>
+
+    </mat-tab>
+
+    <mat-tab [label]="'specificLabel.mitigationEmissions' | translate">
+
+      <div [style.width.%]="100" [style.padding.px]="20" fxLayout="column" fxLayoutAlign="start start">
+
+        <strong translate>specificLabel.documentationImpactEstimate</strong>
+         <mat-divider></mat-divider>
+         <br />
+        <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <label><strong translate>specificLabel.exAnteEmissionReductions</strong> {{mitigationAction?.impact_documentation?.estimate_reduction_co2}}</label>
+          <label><strong translate>mitigationAction.periodPotentialEmissionReductionEstimated</strong> {{mitigationAction?.impact_documentation?.period_potential_reduction}}</label>
+          <label><strong translate>mitigationAction.sourcesEmissionsGasesCovered</strong> {{mitigationAction?.impact_documentation?.sourcesEmissionsGasesCovered}}</label>
+          <label><strong translate>mitigationAction.carbonSinksReservoirs</strong> {{mitigationAction?.impact_documentation?.carbonSinksReservoirs}}</label>
+          <label><strong translate>mitigationAction.definitionBaseline</strong> {{mitigationAction?.impact_documentation?.base_line_definition}}</label>
+          <label><strong translate>mitigationAction.methodologyExantePotentialReductionEmissionsCO2</strong> {{mitigationAction?.impact_documentation?.calculation_methodology}}</label>
+          <label><strong translate>mitigationAction.documentationCalculationsEstimateReductionEmissionsCO2</strong> {{mitigationAction?.impact_documentation?.estimate_calculation_documentation}}</label>
+          <label><strong translate>mitigationAction.isCurrentlyReflectedInventory</strong> {{mitigationAction?.impact_documentation?.mitigation_action_in_inventory}}</label>
+        </div>
+        <br />
+
+        <strong translate>specificLabel.QA/QCEestimate</strong>
+         <mat-divider></mat-divider>
+         <br />
+        <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <strong translate>specificLabel.standardizedCalculationMethodologyUsed</strong>
+          <strong translate>general.details</strong>
+          <strong translate>mitigationAction.calculationsDocumented</strong>
+          <strong translate>general.details</strong>
+          <strong translate>mitigationAction.emissionFactorsUsedCalculationDocumented</strong>
+          <strong translate>general.details</strong>
+          <strong translate>mitigationAction.assumptionsDocumented</strong>
+          <strong translate>general.details</strong>
+
+        </div>
+
+      </div>
+
+    </mat-tab>
+
+    <mat-tab [label]="'specificLabel.informationMonitoring' | translate">
+
+      <div [style.width.%]="100" [style.padding.px]="20" fxLayout="column" fxLayoutAlign="start start">
+
+        <strong translate>specificLabel.monitoringDetail</strong>
+         <mat-divider></mat-divider>
+         <br />
+        <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <strong translate>mitigationAction.indicatorName</strong>
+          <strong translate>mitigationAction.indicatorDescription</strong>
+          <strong translate>mitigationAction.indicatorType</strong>
+          <strong translate>mitigationAction.indicatorUnit</strong>
+          <strong translate>mitigationAction.methodologicalDetailIndicator</strong>
+          <strong translate>mitigationAction.indicatorReportingPeriodicity</strong>
+          <strong translate>mitigationAction.institutionResponsibleGeneratingData</strong>
+          <strong translate>mitigationAction.institutionResponsibleReportingIndicator</strong>
+          <strong translate>mitigationAction.measurementStartDate</strong>
+          <strong translate>mitigationAction.timeSeriesAvailable</strong>
+          <strong translate>general.until</strong>
+          <strong translate>mitigationAction.disintegration</strong>
+          <strong translate>mitigationAction.dataSource</strong>
+          <strong translate>mitigationAction.natureOriginData</strong>
+          <strong translate>mitigationAction.sinameccClassifiers</strong>
+          <strong translate>mitigationAction.observationsComments</strong>
+          <strong translate>mitigationAction.additionalInformation</strong>
+        </div>
+        <br />
+
+      </div>
+
+    </mat-tab>
+
+  </mat-tab-group>
+
 
 </div>

@@ -153,20 +153,83 @@ export class EmissionsMitigationFormComponent implements OnInit {
 		// this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
 	}
 
+	buildPayload() {
+		const payload = {
+			impact_documentation: {
+				estimate_reduction_co2: this.form.value.formArray[0]
+					.exAnteEmissionReductionsCtrl,
+				period_potential_reduction: this.form.value.formArray[0]
+					.periodPotentialEmissionReductionEstimatedCtrl,
+				base_line_definition: this.form.value.formArray[0]
+					.definitionBaselineCtrl,
+				calculation_methodology: this.form.value.formArray[0]
+					.methodologyExantePotentialReductionEmissionsCO2Ctrl,
+				estimate_calculation_documentation: this.form.value.formArray[0]
+					.documentationCalculationsEstimateReductionEmissionsCO2Ctrl,
+				mitigation_action_in_inventory:
+					this.form.value.formArray[0].isCurrentlyReflectedInventoryCtrl === 1
+						? true
+						: false,
+
+				carbon_international_commerce: this.form.value.formArray[2]
+					.intendParticipateInternationalCarbonMarketsCtrl,
+				methodologies_to_use: this.form.value.formArray[2].methodologyUsedCtrl,
+				question: [
+					{
+						code: "Q1",
+						question: "mitigationAction.standardizedCalculationMethodologyUsed",
+						check:
+							this.form.value.formArray[1]
+								.standardizedCalculationMethodologyUsedCtrl === "1"
+								? true
+								: false,
+						detail: this.form.value.formArray[1]
+							.standardizedCalculationMethodologyUsedDetailCtrl
+					},
+					{
+						code: "Q2",
+						question: "mitigationAction.calculationsDocumented",
+						check:
+							this.form.value.formArray[1].calculationsDocumentedCtrl === "1"
+								? true
+								: false,
+						detail: this.form.value.formArray[1]
+							.calculationsDocumentedDetailCtrl
+					},
+					{
+						code: "Q3",
+						question:
+							"mitigationAction.emissionFactorsUsedCalculationDocumented",
+						check:
+							this.form.value.formArray[1]
+								.emissionFactorsUsedCalculationDocumentedCtrl === "1"
+								? true
+								: false,
+						detail: this.form.value.formArray[1]
+							.emissionFactorsUsedCalculationDocumentedDetailCtrl
+					},
+					{
+						code: "Q4",
+						question: "mitigationAction.assumptionsDocumented",
+						check:
+							this.form.value.formArray[1].assumptionsDocumentedCtrl === "1"
+								? true
+								: false,
+						detail: this.form.value.formArray[1].assumptionsDocumentedDetailCtrl
+					}
+				]
+			}
+		};
+
+		console.log(payload);
+		return payload;
+	}
+
 	submitForm() {
 		this.isLoading = true;
-		/*const context = {
-			ingei_compliances: this.form.value.formArray[0].ingeiComplianceCtrl
-				? this.form.value.formArray[0].ingeiComplianceCtrl.join()
-				: "",
-			emissions_source: this.form.value.formArray[1].emissionSourceCtrl,
-			carbon_sinks: this.form.value.formArray[1].carbonSinksCtrl,
-			user: String(this.authenticationService.credentials.id),
-			registration_type: this.processedNewFormData.initiative_type[0].id
-		};*/
-		this.isLoading = false;
-		this.wasSubmittedSuccessfully = true;
-		/*this.service
+		const context = this.buildPayload();
+
+		this.service
 			.submitMitigationActionUpdateForm(context, this.mitigationAction.id)
 			.pipe(
 				finalize(() => {
@@ -195,6 +258,5 @@ export class EmissionsMitigationFormComponent implements OnInit {
 					this.wasSubmittedSuccessfully = false;
 				}
 			);
-		*/
 	}
 }

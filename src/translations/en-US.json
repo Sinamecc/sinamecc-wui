@@ -4,7 +4,6 @@
     "changeText":"Choose a new password to finish the process and log in",
     "newPassword":"New Password",
     "confirmPassword":"Confirm password",
-
     "passwordRequired": "Password is required",
     "remember": "Remember me",
     "loggedAs": "Logged in as",
@@ -24,6 +23,14 @@
   },
 
   "mitigationAction": {
+    "observationsComments":"Observations and comments",
+    "sinameccClassifiers":"SINAMECC classifiers",
+    "natureOriginData":"Nature of the origin of the data",
+    "dataSource":"Data source",
+    "disintegration":"Disintegration",
+    "geographicCoverage":"Geographic coverage",
+    "timeSeriesAvailable":"Time series available",
+    "indicatorDescription":"Indicator description",
     "enablingMeasure":"Enabling measure",
     "directImpactGEI":"Direct impact on GEI",
     "impactCategory":"Impact Category",
@@ -223,6 +230,7 @@
   },
 
   "general": {
+    "until":"Until",
     "biannual":"Biannual",
     "management":"Management",
     "impact":"Impact",
