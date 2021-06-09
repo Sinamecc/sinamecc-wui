@@ -184,8 +184,6 @@ export class ImpactFormComponent implements OnInit {
 			code: "code", // this is requiered for BE, hardcode var
 			monitoring_indicator: list
 		};
-
-		console.log(payload);
 	}
 
 	submitForm() {

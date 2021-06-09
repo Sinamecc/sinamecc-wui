@@ -221,7 +221,6 @@ export class EmissionsMitigationFormComponent implements OnInit {
 			}
 		};
 
-		console.log(payload);
 		return payload;
 	}
 
