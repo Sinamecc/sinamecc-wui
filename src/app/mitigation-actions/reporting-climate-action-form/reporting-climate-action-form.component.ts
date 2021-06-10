@@ -1,6 +1,11 @@
 import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+	AbstractControl,
+	FormBuilder,
+	FormGroup,
+	Validators
+} from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
 import { AuthenticationService } from "@app/core";
 import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
@@ -36,6 +41,10 @@ export class ReportingClimateActionFormComponent implements OnInit {
 	}
 
 	ngOnInit() {}
+
+	get formArray(): AbstractControl | null {
+		return this.form.get("formArray");
+	}
 
 	private createForm() {
 		this.form = this.formBuilder.group({
