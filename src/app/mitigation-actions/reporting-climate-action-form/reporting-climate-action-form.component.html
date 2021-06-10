@@ -1,6 +1,6 @@
 <div class="container">
     <mat-card-content>
-      <form  [formGroup]="form" (ngSubmit)="submitForm()">
+      <form  [formGroup]="form" >
 
         <div fxLayout="column">
             <mat-vertical-stepper formArrayName="formArray" linear #stepper>
@@ -70,7 +70,7 @@
                   formControlName="indicatordataUpdateDateCtrl" />
 
                   <mat-datepicker-toggle matSuffix [for]="indicatordataUpdateDateDatePicker"></mat-datepicker-toggle>
-                  <mat-datepicker #indicatordataUpdateDateDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+                  <mat-datepicker #indicatordataUpdateDateDatePicker startView="year" ></mat-datepicker>
 
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
@@ -92,7 +92,7 @@
                   formControlName="reportingPeriodCtrl" />
 
                   <mat-datepicker-toggle matSuffix [for]="reportingPeriodDatePicker"></mat-datepicker-toggle>
-                  <mat-datepicker #reportingPeriodDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+                  <mat-datepicker #reportingPeriodDatePicker startView="year"></mat-datepicker>
 
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
