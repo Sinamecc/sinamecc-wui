@@ -182,7 +182,7 @@ export class ImpactFormComponent implements OnInit {
 		});
 		const payload = {
 			code: "code", // this is requiered for BE, hardcode var
-			monitoring_indicator: list
+			indicator: list
 		};
 	}
 
