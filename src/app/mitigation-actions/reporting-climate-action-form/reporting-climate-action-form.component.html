@@ -1,6 +1,6 @@
 <div class="container">
     <mat-card-content>
-      <form  [formGroup]="form" >
+      <form *ngIf="newFormData | async"  [formGroup]="form" >
 
         <div fxLayout="column">
             <mat-vertical-stepper formArrayName="formArray" linear #stepper>
@@ -31,19 +31,6 @@
                     <span translate>mitigationAction.indicatorMonitoring</span>
                   </ng-template>
 
-                  <span translate>mitigationAction.anyProgressMonitoringRecordedClimateActions</span><br /><br />
-                  <mat-radio-group class="custom-radio-group" formControlName="anyProgressMonitoringRecordedClimateActionsCtrl">
-                    <mat-radio-button [style.margin.px]="5"
-                      [value]="1">
-                      <label translate>general.yes</label>
-                    </mat-radio-button>
-                    <mat-radio-button [style.margin.px]="5"
-                      [value]="2">
-                      <label translate>No</label>
-                    </mat-radio-button>
-                  </mat-radio-group>
-                  <br /> 
-
                   <span translate>mitigationAction.indicatorSelection</span><br /><br />
                   <mat-radio-group class="custom-radio-group" formControlName="indicatorSelectionCtrl">
                     <mat-radio-button [style.margin.px]="5"
@@ -61,6 +48,39 @@
                   </mat-radio-group>
                   <br /> 
 
+                  <div fxLayout="row" fxLayoutAlign="start center">
+
+                    <mat-form-field [style.width.%]="100"  class="ppcn-field">
+                  <mat-label translate>mitigationAction.reportingPeriod</mat-label>
+                  
+                  <input matInput
+                  [placeholder]="'Choose a date' | translate"
+                  [matDatepicker]="reportingPeriodStartDateDatePicker"
+                  formControlName="reportingPeriodStartCtrl" />
+
+                  <mat-datepicker-toggle matSuffix [for]="reportingPeriodStartDateDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #reportingPeriodStartDateDatePicker startView="year" ></mat-datepicker>
+
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+
+                <mat-form-field [style.width.%]="100"  class="ppcn-field">
+                  <mat-label translate>general.until</mat-label>
+                  
+                  <input matInput
+                  [placeholder]="'Choose a date' | translate"
+                  [matDatepicker]="reportingPeriodEndDateDatePicker"
+                  formControlName="reportingPeriodEndCtrl" />
+
+                  <mat-datepicker-toggle matSuffix [for]="reportingPeriodEndDateDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #reportingPeriodEndDateDatePicker startView="year" ></mat-datepicker>
+
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+
+                  </div>
+                   <br /> 
+
                   <mat-form-field [style.width.%]="100"  class="ppcn-field">
                   <mat-label translate>mitigationAction.indicatordataUpdateDate</mat-label>
                   
@@ -72,6 +92,13 @@
                   <mat-datepicker-toggle matSuffix [for]="indicatordataUpdateDateDatePicker"></mat-datepicker-toggle>
                   <mat-datepicker #indicatordataUpdateDateDatePicker startView="year" ></mat-datepicker>
 
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+                 <br /> 
+                 
+                 <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100"  class="ppcn-field">
+                  <mat-label translate>mitigationAction.informationWantUpdate</mat-label>
+                  <input type="text" matInput formControlName="informationWantUpdateCtrl" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
 

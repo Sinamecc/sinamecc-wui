@@ -39,6 +39,7 @@ import { BasicInformationFormComponent } from "@app/mitigation-actions/basic-inf
 import { KeyAspectsFormComponent } from "@app/mitigation-actions/key-aspects-form/key-aspects-form.component";
 import { EmissionsMitigationFormComponent } from "@app/mitigation-actions/emissions-mitigation-form/emissions-mitigation-form.component";
 import { ImpactFormComponent } from "@app/mitigation-actions/impact-form/impact-form.component";
+import { ReportingClimateActionFormComponent } from "../reporting-climate-action-form/reporting-climate-action-form.component";
 
 @Component({
 	selector: "app-mitigation-action-form-flow",
@@ -54,7 +55,12 @@ export class MitigationActionFormFlowComponent
 	@ViewChild(EmissionsMitigationFormComponent)
 	emissionsMitigationForm: EmissionsMitigationFormComponent;
 	@ViewChild(ImpactFormComponent) impactForm: ImpactFormComponent;
-	@Input() title: string;
+
+	@ViewChild(ReportingClimateActionFormComponent)
+	reportingClimateFormComponent: ReportingClimateActionFormComponent;
+
+	@Input()
+	title: string;
 	// @Input() isLinear: boolean;
 	@Input() action: string;
 
@@ -110,7 +116,8 @@ export class MitigationActionFormFlowComponent
 				this.basicInformationFrm,
 				this.keyAspectsFrm,
 				this.emissionsMitigationFrm,
-				this.impactFrm
+				this.impactFrm,
+				this.reportingClimateFrmComponent
 			])
 		});
 	}
@@ -165,6 +172,12 @@ export class MitigationActionFormFlowComponent
 
 	get impactFrm() {
 		return this.impactForm ? this.impactForm.form : null;
+	}
+
+	get reportingClimateFrmComponent() {
+		return this.reportingClimateFormComponent
+			? this.reportingClimateFormComponent.form
+			: null;
 	}
 
 	ngAfterViewInit() {

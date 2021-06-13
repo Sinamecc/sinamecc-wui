@@ -22,6 +22,7 @@
   },
 
   "mitigationAction": {
+    "informationWantUpdate":"Ingrese dato que desea actualizar ",
     "beenProgressActionPeriod":"¿Cuál ha sido el avance de su acción en el periódo?",
     "reportingPeriod":"Periodo de reporte",
     "generalProgressReportClimateAction":"Reporte general de avance de la acción climática",
@@ -232,6 +233,7 @@
   },
 
   "general": {
+    "until":"Hasta",
     "biannual":"Semestral",
     "management":"Gestión",
     "impact":"Impacto",

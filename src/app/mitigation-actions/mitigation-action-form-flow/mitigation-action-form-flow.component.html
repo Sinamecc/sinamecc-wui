@@ -91,9 +91,10 @@
           </div>
         </mat-step>
 
-        <mat-step  >
+        <mat-step  formGroupName="5" [stepControl]="formArray?.get([5])">
           <ng-template matStepLabel><span translate>mitigationAction.monitoringReportingClimateactions</span></ng-template>
-          <app-reporting-climate-action-form></app-reporting-climate-action-form>
+          <app-reporting-climate-action-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData"
+            [isUpdating]="isUpdating"></app-reporting-climate-action-form>
         </mat-step>
 
       </mat-horizontal-stepper>

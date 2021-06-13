@@ -24,6 +24,7 @@
   },
 
   "mitigationAction": {
+    "informationWantUpdate":"Enter information you want to update",
     "beenProgressActionPeriod":"What has been the progress of your action in the period?",
     "reportingPeriod":"Reporting period",
     "generalProgressReportClimateAction":"General progress report on climate action",
@@ -232,6 +233,7 @@
   },
 
   "general": {
+    "until":"Until",
     "biannual":"Biannual",
     "management":"Management",
     "impact":"Impact",
