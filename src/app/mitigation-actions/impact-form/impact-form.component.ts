@@ -25,6 +25,7 @@ import { Observable } from "rxjs/Observable";
 import { MitigationActionNewFormData } from "@app/mitigation-actions/mitigation-action-new-form-data";
 import { MitigationAction } from "../mitigation-action";
 import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
+import { DatePipe } from "@angular/common";
 
 const log = new Logger("MitigationAction");
 
@@ -61,7 +62,8 @@ export class ImpactFormComponent implements OnInit {
 		private authenticationService: AuthenticationService,
 		private translateService: TranslateService,
 		private router: Router,
-		public snackBar: MatSnackBar
+		public snackBar: MatSnackBar,
+		private datePipe: DatePipe
 	) {
 		// this.formData = new FormData();
 		this.service.currentMitigationAction.subscribe(
@@ -105,6 +107,7 @@ export class ImpactFormComponent implements OnInit {
 	createNewIndicatorForm() {
 		return this.formBuilder.group({
 			indicatorNameCtrl: ["", Validators.required],
+			indicatorDescriptionCtrl: ["", Validators.required],
 			indicatorTypeCtrl: ["", Validators.required],
 			indicatorUnitCtrl: ["", Validators.required],
 			methodologicalDetailIndicatorCtrl: ["", Validators.required],
@@ -112,7 +115,15 @@ export class ImpactFormComponent implements OnInit {
 			institutionResponsibleGeneratingDataCtrl: ["", Validators.required],
 			institutionResponsibleReportingIndicatorCtrl: ["", Validators.required],
 			measurementStartDateCtrl: ["", Validators.required],
-			additionalInformationCtrl: ["", Validators.required]
+			additionalInformationCtrl: ["", Validators.required],
+			timeSeriesAvailableStartCtrl: ["", Validators.required],
+			timeSeriesAvailableEndCtrl: ["", Validators.required],
+			geographicCoverageCtrl: ["", Validators.required],
+			disintegrationCtrl: ["", Validators.required],
+			dataSourceCtrl: ["", Validators.required],
+			natureOriginDataCtrl: ["", Validators.required],
+			sinameccClassifiersCtrl: ["", Validators.required],
+			observationsCommentsCtrl: ["", Validators.required]
 		});
 	}
 
@@ -146,26 +157,47 @@ export class ImpactFormComponent implements OnInit {
 		// this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
 	}
 
-	submitForm() {
-		this.isLoading = true;
-		const context = {
-			impact_plan: this.form.value.formArray[0].mitigationActionImpactCtrl,
-			impact: this.form.value.formArray[0].emissionImpactCtrl,
-			calculation_methodology: this.form.value.formArray[0]
-				.calculationMethodologyCtrl,
-			is_international: this.form.value.formArray[0]
-				.internationalParticipationCtrl,
-			international_participation: this.form.value.formArray[0]
-				.internationalParticipationDetailCtrl,
-			user: String(this.authenticationService.credentials.id),
-			registration_type: this.processedNewFormData.initiative_type[0].id
-			// update_new_mitigation_action: false
+	buildPayload() {
+		const list: any = [];
+		this.form.value.formArray[0].indicators.forEach((element: any) => {
+			const context = {
+				name: element.indicatorNameCtrl,
+				description: element.indicatorDescriptionCtrl,
+				type: element.indicatorTypeCtrl,
+				unit: element.indicatorUnitCtrl,
+				methodological_detail: element.methodologicalDetailIndicatorCtrl,
+				reporting_periodicity: element.indicatorReportingPeriodicityCtrl,
+				data_generating_institution:
+					element.institutionResponsibleGeneratingDataCtrl,
+				reporting_institution:
+					element.institutionResponsibleReportingIndicatorCtrl,
+				measurement_start_date: this.datePipe.transform(
+					element.measurementStartDateCtrl,
+					"yyyy-MM-dd"
+				),
+				additional_information: element.additionalInformationCtrl
+			};
+
+			list.push(context);
+		});
+		const payload = {
+			code: "code", // this is requiered for BE, hardcode var
+			indicator: list
 		};
+	}
+
+	submitForm() {
+		this.buildPayload();
+		this.isLoading = true;
+		const context = this.buildPayload();
+		/*
 		if (this.isUpdating) {
 			context["update_existing_mitigation_action"] = true;
 		} else {
 			context["update_new_mitigation_action"] = true;
 		}
+		*/
+
 		this.service
 			.submitMitigationActionUpdateForm(context, this.mitigationAction.id)
 			.pipe(

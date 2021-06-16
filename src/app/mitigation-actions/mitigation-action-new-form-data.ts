@@ -50,6 +50,7 @@ export interface IngeiCompliance {
 export interface GeographicScale {
 	id: Number;
 	name: String;
+	code?: String;
 }
 
 export interface FinanceSourceType {

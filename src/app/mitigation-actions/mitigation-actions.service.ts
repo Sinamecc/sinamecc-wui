@@ -25,7 +25,7 @@ const routes = {
 		`/v1/mitigations/changelog/${uuid}`,
 	deleteMitigationAction: (uuid: string) => `/v1/mitigation-action/${uuid}`,
 	getMitigationAction: (uuid: string, lang: string) =>
-		`/v1/mitigations/${lang}/${uuid}`,
+		`/v1/mitigation-action/${uuid}/`,
 	mitigationActionAvailableStatuses: () => `/v1/workflow/status`,
 	submitMitigationActionReview: (uuid: string) => `/v1/mitigations/${uuid}`,
 	submitNewHarmonizationForMitigation: () =>

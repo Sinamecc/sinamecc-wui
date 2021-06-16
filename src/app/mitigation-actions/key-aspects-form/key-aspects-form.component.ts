@@ -221,9 +221,9 @@ export class KeyAspectsFormComponent implements OnInit {
 
 					// temp route for finish form
 
-					setTimeout(() => {
-						this.router.navigate(["/mitigation/actions"], { replaceUrl: true });
-					}, 2000);
+					//setTimeout(() => {
+					//	this.router.navigate(["/mitigation/actions"], { replaceUrl: true });
+					//}, 2000);
 				},
 				error => {
 					this.translateService

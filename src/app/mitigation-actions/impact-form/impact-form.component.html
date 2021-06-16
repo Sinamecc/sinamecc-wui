@@ -42,6 +42,13 @@
               </mat-form-field>
               <br />
 
+               <mat-form-field class="field-ppcn">
+                <mat-label translate>mitigationAction.indicatorDescription</mat-label>
+                <input matInput formControlName="indicatorDescriptionCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+
               <span translate>mitigationAction.indicatorType</span><br /><br />
               <mat-radio-group formControlName="indicatorTypeCtrl"  class="custom-radio-group" >
                 <mat-radio-button [style.margin.px]="5"
@@ -126,6 +133,142 @@
               <br />
 
               <div fxLayout="row" fxLayoutAlign=" center">
+                
+                <mat-form-field class="field-ppcn">
+                <mat-label translate>mitigationAction.timeSeriesAvailable</mat-label>
+                <input matInput
+                [placeholder]="'Choose a date' | translate"
+                [matDatepicker]="timeSeriesAvailableCtrl"
+                formControlName="timeSeriesAvailableStartCtrl" />
+
+                <mat-datepicker-toggle matSuffix [for]="timeSeriesAvailableCtrl"></mat-datepicker-toggle>
+                <mat-datepicker #timeSeriesAvailableCtrl startView="year" [startAt]="startDate"></mat-datepicker>
+
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+
+                 <mat-form-field class="field-ppcn">
+                <mat-label translate>general.until</mat-label>
+                <input matInput
+                [placeholder]="'Choose a date' | translate"
+                [matDatepicker]="timeSeriesAvailableEndCtrl"
+                formControlName="timeSeriesAvailableEndCtrl" />
+
+                <mat-datepicker-toggle matSuffix [for]="timeSeriesAvailableEndCtrl"></mat-datepicker-toggle>
+                <mat-datepicker #timeSeriesAvailableEndCtrl startView="year" [startAt]="startDate"></mat-datepicker>
+
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
+              </div>
+              <br />
+
+               <span translate>mitigationAction.geographicCoverage</span><br /><br />
+              <mat-radio-group formControlName="geographicCoverageCtrl"  class="custom-radio-group" >
+                <mat-radio-button [style.margin.px]="5"
+                  value="1">
+                   <label translate>Nacional</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5"
+                  value="2">
+                  <label translate>Regional</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5"
+                  value="3">
+                  <label translate>Provincial</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5"
+                  value="4">
+                  <label translate>Cantonal</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5"
+                  value="4">
+                  <label translate>Otro</label>
+                </mat-radio-button>
+              </mat-radio-group>
+              <br />
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>mitigationAction.disintegration</mat-label>
+                <input matInput formControlName="disintegrationCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>mitigationAction.dataSource</mat-label>
+                <input matInput formControlName="dataSourceCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br />
+
+               <span translate>mitigationAction.natureOriginData</span><br /><br />
+              <mat-radio-group formControlName="natureOriginDataCtrl"  class="custom-radio-group" >
+                <mat-radio-button [style.margin.px]="5"
+                  value="1">
+                   <label translate>Estimación directa</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5"
+                  value="2">
+                  <label translate>Estimación indirecta</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5"
+                  value="3">
+                  <label translate>Juicio de expertos</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5"
+                  value="4">
+                  <label translate>Compilación de datos de otras fuentes</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5"
+                  value="4">
+                  <label translate>Otro</label>
+                </mat-radio-button>
+              </mat-radio-group>
+              <br />
+
+              <span translate>mitigationAction.sinameccClassifiers</span><br /><br />
+              <mat-radio-group formControlName="sinameccClassifiersCtrl"  class="custom-radio-group" >
+                <mat-radio-button [style.margin.px]="5"
+                  value="1">
+                   <label translate>Acción Climática</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5"
+                  value="2">
+                  <label translate>Modelación</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5"
+                  value="3">
+                  <label translate>INGEI</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5"
+                  value="4">
+                  <label translate>Reportes</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5"
+                  value="4">
+                  <label translate>Finanzas Climaticas</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5"
+                  value="4">
+                  <label translate>Impactos</label>
+                </mat-radio-button>
+                 <mat-radio-button [style.margin.px]="5"
+                  value="4">
+                  <label translate>Otro</label>
+                </mat-radio-button>
+              </mat-radio-group>
+              <br />
+
+               <mat-form-field class="field-ppcn">
+                <mat-label translate>mitigationAction.observationsComments</mat-label>
+                <input matInput formControlName="observationsCommentsCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <br /> 
+
+
+
+              <div fxLayout="row" fxLayoutAlign=" center">
                   <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
                   <mat-form-field class="field-ppcn">
                     <mat-label translate>mitigationAction.additionalInformation</mat-label>
@@ -186,5 +329,5 @@
 
       </div>
     </form>
-  </mat-card-content>
-</div>
+  </mat-card-content> 
+</div>  
