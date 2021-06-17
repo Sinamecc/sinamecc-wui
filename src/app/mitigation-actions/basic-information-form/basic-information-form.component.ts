@@ -175,7 +175,7 @@ export class BasicInformationFormComponent implements OnInit {
 	}
 
 	submitForm() {
-		const context = this.buildPayload();
+		const context = { finance: this.buildPayload() };
 		this.isLoading = true;
 
 		/*

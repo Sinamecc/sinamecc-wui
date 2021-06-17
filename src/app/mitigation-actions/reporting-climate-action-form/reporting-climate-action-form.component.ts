@@ -7,10 +7,13 @@ import {
 	Validators
 } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
+import { Router } from "@angular/router";
 import { AuthenticationService } from "@app/core";
 import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
 import { TranslateService } from "@ngx-translate/core";
-import { Observable } from "rxjs";
+import { Observable } from "rxjs/Observable";
+
+import { finalize } from "rxjs/operators";
 import { MitigationAction } from "../mitigation-action";
 import { MitigationActionNewFormData } from "../mitigation-action-new-form-data";
 import { MitigationActionsService } from "../mitigation-actions.service";
@@ -21,6 +24,7 @@ import { MitigationActionsService } from "../mitigation-actions.service";
 	styleUrls: ["./reporting-climate-action-form.component.scss"]
 })
 export class ReportingClimateActionFormComponent implements OnInit {
+	indicator: any = [];
 	error: string;
 	form: FormGroup;
 	isLoading = false;
@@ -39,10 +43,12 @@ export class ReportingClimateActionFormComponent implements OnInit {
 		private service: MitigationActionsService,
 		private translateService: TranslateService,
 		public snackBar: MatSnackBar,
-		private datePipe: DatePipe
+		private datePipe: DatePipe,
+		private router: Router
 	) {
 		this.service.currentMitigationAction.subscribe(message => {
 			this.mitigationAction = message;
+			this.getIndicators();
 		});
 		this.createForm();
 	}
@@ -53,6 +59,22 @@ export class ReportingClimateActionFormComponent implements OnInit {
 		return this.form.get("formArray");
 	}
 
+	getIndicators() {
+		if (this.mitigationAction) {
+			if (this.mitigationAction.id) {
+				const code = this.mitigationAction.id;
+				this.service.getMitigationActionIndicators(code).subscribe(
+					context => {
+						this.indicator = context;
+					},
+					error => {
+						this.indicator = [];
+					}
+				);
+			}
+		}
+	}
+
 	buildPayload() {
 		const context = {
 			monitoring_reporting_indicator: {
@@ -60,17 +82,26 @@ export class ReportingClimateActionFormComponent implements OnInit {
 					.anyProgressMonitoringRecordedClimateActionsCtrl,
 				monitoring_indicator: [
 					{
-						initial_date_report_period: this.form.value.formArray[1]
-							.reportingPeriodStartCtrl,
-						final_date_report_period: this.form.value.formArray[1]
-							.reportingPeriodEndCtrl,
-						data_updated_date: this.form.value.formArray[1]
-							.indicatordataUpdateDateCtrl,
+						initial_date_report_period: this.datePipe.transform(
+							this.form.value.formArray[1].reportingPeriodStartCtrl,
+							"yyyy-MM-dd"
+						),
+
+						final_date_report_period: this.datePipe.transform(
+							this.form.value.formArray[1].reportingPeriodEndCtrl,
+							"yyyy-MM-dd"
+						),
+
+						data_updated_date: this.datePipe.transform(
+							this.form.value.formArray[1].indicatordataUpdateDateCtrl,
+							"yyyy-MM-dd"
+						),
+
 						updated_data: this.form.value.formArray[1]
 							.informationWantUpdateCtrl,
 						progress_report: this.form.value.formArray[2]
 							.beenProgressActionPeriodCtrl,
-						indicator: 1
+						indicator: this.form.value.formArray[1].indicatorSelectionCtrl
 					}
 				]
 			}
@@ -79,7 +110,41 @@ export class ReportingClimateActionFormComponent implements OnInit {
 		return context;
 	}
 
-	submitForm() {}
+	submitForm() {
+		const context = this.buildPayload();
+
+		this.service
+			.submitMitigationActionUpdateForm(context, this.mitigationAction.id)
+			.pipe(
+				finalize(() => {
+					this.form.markAsPristine();
+					this.isLoading = false;
+				})
+			)
+			.subscribe(
+				response => {
+					this.translateService
+						.get("Sucessfully submitted form")
+						.subscribe((res: string) => {
+							this.snackBar.open(res, null, { duration: 3000 });
+						});
+					this.wasSubmittedSuccessfully = true;
+					setTimeout(() => {
+						this.router.navigate(["/mitigation/actions"], { replaceUrl: true });
+					}, 2000);
+				},
+				error => {
+					this.translateService
+						.get("Error submitting form")
+						.subscribe((res: string) => {
+							this.snackBar.open(res, null, { duration: 3000 });
+						});
+					this.error = error;
+					this.errorComponent.parseErrors(error);
+					this.wasSubmittedSuccessfully = false;
+				}
+			);
+	}
 
 	private createForm() {
 		this.form = this.formBuilder.group({

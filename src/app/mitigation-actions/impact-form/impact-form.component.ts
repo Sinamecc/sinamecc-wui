@@ -181,13 +181,16 @@ export class ImpactFormComponent implements OnInit {
 			list.push(context);
 		});
 		const payload = {
-			code: "code", // this is requiered for BE, hardcode var
-			indicator: list
+			monitoring_information: {
+				code: "code", // this is requiered for BE, hardcode var
+				indicator: list
+			}
 		};
+
+		return payload;
 	}
 
 	submitForm() {
-		this.buildPayload();
 		this.isLoading = true;
 		const context = this.buildPayload();
 		/*
@@ -214,9 +217,6 @@ export class ImpactFormComponent implements OnInit {
 							this.snackBar.open(res, null, { duration: 3000 });
 						});
 					this.wasSubmittedSuccessfully = true;
-					setTimeout(() => {
-						this.router.navigate(["/mitigation/actions"], { replaceUrl: true });
-					}, 2000);
 				},
 				error => {
 					this.translateService

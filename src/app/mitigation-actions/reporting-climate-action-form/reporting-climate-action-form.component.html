@@ -1,6 +1,6 @@
 <div class="container">
     <mat-card-content>
-      <form *ngIf="newFormData | async"  [formGroup]="form" >
+      <form *ngIf="newFormData | async"  [formGroup]="form" (ngSubmit)="submitForm()">
 
         <div fxLayout="column">
             <mat-vertical-stepper formArrayName="formArray" linear #stepper>
@@ -33,18 +33,11 @@
 
                   <span translate>mitigationAction.indicatorSelection</span><br /><br />
                   <mat-radio-group class="custom-radio-group" formControlName="indicatorSelectionCtrl">
-                    <mat-radio-button [style.margin.px]="5"
-                      [value]="1">
-                      <label translate>Option 1</label>
+                    <mat-radio-button  *ngFor="let item of indicator" [style.margin.px]="5"
+                      [value]="item.id">
+                      <label translate>{{item.name}}</label>
                     </mat-radio-button>
-                    <mat-radio-button [style.margin.px]="5"
-                      [value]="2">
-                      <label translate>Option 2</label>
-                    </mat-radio-button>
-                    <mat-radio-button [style.margin.px]="5"
-                      [value]="2">
-                      <label translate>Option 3</label>
-                    </mat-radio-button>
+    
                   </mat-radio-group>
                   <br /> 
 
@@ -133,6 +126,17 @@
                
               </mat-step>
 
+               <mat-step>
+                  <ng-template matStepLabel> <span translate> specificLabel.confirmInformation </span></ng-template>
+
+                  <div *ngIf="form.valid; else elseBlock" translate>specificLabel.everythingCorrect </div>
+
+                  <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
+                  <div class="align-right">
+                    <app-generic-button type="submit" [disabled]="wasSubmittedSuccessfully" name="general.done">
+                    </app-generic-button>
+                  </div>
+               </mat-step>
             
 
             </mat-vertical-stepper>

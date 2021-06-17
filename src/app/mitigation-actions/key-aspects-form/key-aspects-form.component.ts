@@ -218,12 +218,6 @@ export class KeyAspectsFormComponent implements OnInit {
 						});
 
 					this.wasSubmittedSuccessfully = true;
-
-					// temp route for finish form
-
-					//setTimeout(() => {
-					//	this.router.navigate(["/mitigation/actions"], { replaceUrl: true });
-					//}, 2000);
 				},
 				error => {
 					this.translateService
