@@ -75,12 +75,12 @@
                    <br /> 
 
                   <mat-form-field [style.width.%]="100"  class="ppcn-field">
-                  <mat-label translate>mitigationAction.indicatordataUpdateDate</mat-label>
+                  <mat-label translate>mitigationAction.indicatorDataUpdateDate</mat-label>
                   
                   <input matInput
                   [placeholder]="'Choose a date' | translate"
                   [matDatepicker]="indicatordataUpdateDateDatePicker"
-                  formControlName="indicatordataUpdateDateCtrl" />
+                  formControlName="indicatorDataUpdateDateCtrl" />
 
                   <mat-datepicker-toggle matSuffix [for]="indicatordataUpdateDateDatePicker"></mat-datepicker-toggle>
                   <mat-datepicker #indicatordataUpdateDateDatePicker startView="year" ></mat-datepicker>
@@ -90,8 +90,8 @@
                  <br /> 
                  
                  <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100"  class="ppcn-field">
-                  <mat-label translate>mitigationAction.informationWantUpdate</mat-label>
-                  <input type="text" matInput formControlName="informationWantUpdateCtrl" required />
+                  <mat-label translate>mitigationAction.informationToUpdate</mat-label>
+                  <input type="text" matInput formControlName="informationToUpdateCtrl" required />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
 

@@ -97,8 +97,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
 							"yyyy-MM-dd"
 						),
 
-						updated_data: this.form.value.formArray[1]
-							.informationWantUpdateCtrl,
+						updated_data: this.form.value.formArray[1].informationToUpdateCtrl,
 						progress_report: this.form.value.formArray[2]
 							.beenProgressActionPeriodCtrl,
 						indicator: this.form.value.formArray[1].indicatorSelectionCtrl
@@ -157,10 +156,10 @@ export class ReportingClimateActionFormComponent implements OnInit {
 				}),
 				this.formBuilder.group({
 					indicatorSelectionCtrl: ["", Validators.required],
-					indicatordataUpdateDateCtrl: ["", Validators.required],
+					indicatorDataUpdateDateCtrl: ["", Validators.required],
 					reportingPeriodStartCtrl: ["", Validators.required],
 					reportingPeriodEndCtrl: ["", Validators.required],
-					informationWantUpdateCtrl: ["", Validators.required]
+					informationToUpdateCtrl: ["", Validators.required]
 				}),
 
 				this.formBuilder.group({

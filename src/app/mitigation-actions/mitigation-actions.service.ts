@@ -4,7 +4,10 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { HttpHeaders } from "@angular/common/http";
 import { map, catchError } from "rxjs/operators";
 import { Logger, I18nService, AuthenticationService } from "@app/core";
-import { MitigationAction } from "@app/mitigation-actions/mitigation-action";
+import {
+	Indicator,
+	MitigationAction
+} from "@app/mitigation-actions/mitigation-action";
 import { MitigationActionReview } from "@app/mitigation-actions/mitigation-action-review";
 import { MitigationActionNewFormData } from "@app/mitigation-actions/mitigation-action-new-form-data";
 import { DatePipe } from "@angular/common";
@@ -130,7 +133,7 @@ export class MitigationActionsService {
 			})
 		};
 		return this.httpClient.get(routes.getIndicator(id), httpOptions).pipe(
-			map((body: any) => {
+			map((body: Indicator[]) => {
 				return body;
 			})
 		);
