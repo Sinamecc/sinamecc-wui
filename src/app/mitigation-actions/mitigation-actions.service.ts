@@ -33,7 +33,7 @@ const routes = {
 	submitMitigationActionReview: (uuid: string) => `/v1/mitigations/${uuid}`,
 	submitNewHarmonizationForMitigation: () =>
 		`/v1/mitigations/harmonization/ingei/`,
-	getIndicator: (code: string) => `/api/v1/mitigation-action/${code}/indicator/`
+	getIndicator: (code: string) => `/v1/mitigation-action/${code}/indicator/`
 };
 
 export interface Response {
