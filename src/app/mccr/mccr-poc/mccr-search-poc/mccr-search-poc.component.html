@@ -1,0 +1,86 @@
+<br />
+<div class="search">
+  <mat-form-field class="seach-field">
+    <input
+      #idUcc
+      matInput
+      placeholder="{{ 'mccrPoc.searchUCC' | translate }}"
+      (keyup.enter)="search(idUcc.value)"
+      translate
+    />
+  </mat-form-field>
+  <a mat-button class="mat-raised-button mat-primary" (click)="search(idUcc.value)">
+    <span translate>
+      {{ 'general.search' | translate }}
+    </span>
+  </a>
+  <button
+    translate
+    matTooltip="{{ 'mccrPoc.addDAC' | translate }}"
+    (click)="openDialogDeveloper()"
+    mat-icon-button
+    color="blue"
+  >
+    <mat-icon color="white">person_add</mat-icon>
+  </button>
+  <button
+    translate
+    matTooltip="{{ 'mccrPoc.addBAC' | translate }}"
+    (click)="openDialogBuyer()"
+    mat-icon-button
+    color="black"
+  >
+    <mat-icon color="white">work</mat-icon>
+  </button>
+
+  <button translate matTooltip="{{ 'mccrPoc.addUCC' | translate }}" (click)="addUCC()" mat-icon-button color="black">
+    <mat-icon color="white">add</mat-icon>
+  </button>
+</div>
+
+<br />
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title class="section-heading" translate>{{ 'mccrPoc.POCDetail' | translate }}</mat-card-title>
+      <mat-divider class="divider-custom"></mat-divider>
+      <mat-card-subtitle>
+        <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
+      </mat-card-subtitle>
+
+      <div class="container-data" [hidden]="isLoading" *ngIf="mccr_poc != null">
+        <strong translate>{{ 'mccrPoc.uccCode' | translate }}</strong
+        >: {{ mccr_poc?.ucc_code }} <br />
+        <strong translate>{{ 'mccrPoc.minusqAccount' | translate }}</strong
+        >: {{ mccr_poc?.minusq_account }} <br />
+        <strong translate>{{ 'mccrPoc.generationAccount' | translate }}</strong
+        >: {{ mccr_poc?.generation_account }}
+        <br />
+        <strong translate>{{ 'mccrPoc.finalBalance' | translate }}</strong
+        >: {{ mccr_poc?.final_balance }} <br />
+        <strong translate>{{ 'mccrPoc.reserveAccount' | translate }}</strong
+        >: {{ mccr_poc?.reserve_account }} <br />
+        <strong *ngIf="mccr_poc.cancellation_account != null" translate>Cancellation Account:</strong
+        >{{ mccr_poc?.cancellation_account }} <br />
+        <button
+          mat-icon-button
+          color="primary"
+          matTooltip="{{ 'general.viewDetails' | translate }}"
+          *ngIf="mccr_poc != null"
+          (click)="view(idUcc.value)"
+        >
+          <mat-icon color="white">visibility</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="black"
+          matTooltip="{{ 'mccrPoc.cancelUCC' | translate }}"
+          *ngIf="mccr_poc != null && mccr_poc.generation_account != 0"
+          (click)="openDeleteConfirmationDialog(idUcc.value)"
+        >
+          <mat-icon color="white">remove_circle</mat-icon>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

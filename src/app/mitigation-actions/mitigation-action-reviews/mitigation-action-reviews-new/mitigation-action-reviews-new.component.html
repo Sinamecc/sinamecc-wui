@@ -1,0 +1,11 @@
+<app-update-status
+  *ngIf="mitigationActionObservable | async"
+  [title]="title"
+  [nextRoute]="nextRoute"
+  [entity]="mitigationAction"
+  [formData]="formData"
+  [formSubmitRoute]="formSubmitRoute"
+  [statusses]="statusses"
+  [shouldDisplayComment]="shouldDisplayComment"
+  (formSubmitted)="onSubmission($event)"
+></app-update-status>

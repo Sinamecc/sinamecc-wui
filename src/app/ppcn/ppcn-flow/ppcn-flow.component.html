@@ -1,0 +1,32 @@
+<div class="container">
+  <mat-card>
+    <h3>
+      <mat-card-title>
+        <span translate class="section-heading">ppcn.createPPCN</span>
+        <mat-divider class="divider-custom"></mat-divider>
+        <mat-divider class="divider-custom"></mat-divider>
+      </mat-card-title>
+    </h3>
+    <form [formGroup]="mainGroup">
+      <mat-horizontal-stepper [linear]="true" formArrayName="formArray" #stepper>
+        <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+          <ng-template matStepLabel><span translate>geographyLabel.geographicLevel</span></ng-template>
+          <app-ppcn-level></app-ppcn-level>
+          <div class="align-right">
+            <app-generic-button [disabled]="levelId === ''" (click)="stepper.next()" name="general.next">
+            </app-generic-button>
+          </div>
+        </mat-step>
+
+        <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+          <ng-template matStepLabel><span translate>ppcn.PPCNForm</span></ng-template>
+          <app-ppcn-new> </app-ppcn-new>
+          <div class="align-right">
+            <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
+            </app-generic-button-secondary>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </form>
+  </mat-card>
+</div>

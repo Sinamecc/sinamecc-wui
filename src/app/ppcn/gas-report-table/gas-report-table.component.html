@@ -1,0 +1,172 @@
+<div>
+  <br />
+  <label><strong translate>ppcn.resultsVerifiedInventory</strong></label>
+  <br />
+  <br />
+  <table class="tg mat-elevation-z2">
+    <tr>
+      <th
+        [innerHTML]="header | translate"
+        class="tg-qv16"
+        *ngFor="let header of inventaryResultTable.firstSection.tableHeaderValues"
+      ></th>
+    </tr>
+
+    <tr *ngFor="let row of inventaryResultTable.firstSection.tableRows; index as i">
+      <td class="tg-qv16"><span translate>general.scope</span> {{ i + 1 }}</td>
+      <td class="tg-qv16" *ngFor="let field of row; index as j">
+        <input
+          type="number"
+          matInput
+          class="custom-imput custom-height-matrix-first-section"
+          [(value)]="field.value"
+          (change)="changeMatrixValues(i, j, $event.target.value)"
+        />
+      </td>
+    </tr>
+
+    <tr>
+      <td class="tg-qv16">
+        <span translate>{{ getTableValue('secondSection', 'firsRow', 0) }}</span>
+      </td>
+      <td class="tg-qv16" colspan="11">
+        <textarea
+          class="custom-imput custom-height-matrix-second-section"
+          type="text"
+          (change)="changeTableValue('secondSection', 'firsRow', 1, $event.target.value)"
+          [value]="getTableValue('secondSection', 'firsRow', 1)"
+        >
+        </textarea>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="tg-qv16" rowspan="2">
+        <span translate>{{ getTableValue('thirdSection', 'firsRow', 0) }}</span>
+      </td>
+      <td class="tg-qv16" rowspan="2">{{ inventaryResultTable.thirdSection.firsRow[1] }}</td>
+      <td class="tg-qv16" rowspan="2" colspan="3">
+        <input
+          type="number"
+          class="custom-imput custom-height-matrix-second-section"
+          (change)="changeTableValue('thirdSection', 'firsRow', 2, $event.target.value)"
+          [value]="getTableValue('thirdSection', 'firsRow', 2)"
+        />
+      </td>
+      <td class="tg-qv16">
+        <span translate>{{ getTableValue('thirdSection', 'secondRow', 0) }}</span>
+      </td>
+      <td class="tg-qv16" colspan="6">
+        <input
+          class="custom-imput custom-height-matrix-first-section"
+          type="text"
+          (change)="changeTableValue('thirdSection', 'secondRow', 1, $event.target.value)"
+          [value]="getTableValue('thirdSection', 'secondRow', 1)"
+        />
+      </td>
+    </tr>
+    <tr>
+      <td class="tg-qv16">
+        <span translate>{{ getTableValue('thirdSection', 'thirdSection', 0) }}</span>
+      </td>
+      <td class="tg-qv16" colspan="6">
+        <input
+          class="custom-imput custom-height-matrix-first-section"
+          (change)="changeTableValue('thirdSection', 'thirdSection', 1, $event.target.value)"
+          [value]="getTableValue('thirdSection', 'thirdSection', 1)"
+        />
+      </td>
+    </tr>
+
+    <tr>
+      <td class="tg-qv16" colspan="3">
+        <span translate>{{ getTableValue('fourthSection', 'firsRow', 0) }}</span>
+      </td>
+      <td class="tg-qv16" colspan="2">
+        <input
+          type="number"
+          class="custom-imput custom-height-matrix-third-section"
+          (change)="changeTableValue('fourthSection', 'firsRow', 1, $event.target.value)"
+          [value]="getTableValue('fourthSection', 'firsRow', 1)"
+        />
+      </td>
+      <td class="tg-qv16" colspan="3">
+        <span translate>{{ getTableValue('fourthSection', 'firsRow', 2) }}</span>
+      </td>
+      <td class="tg-qv16" colspan="4">
+        <mat-form-field>
+          <mat-select [value]="getTableValue('fourthSection', 'firsRow', 3)">
+            <mat-option value="CRC">
+              <span translate>general.colon</span>
+            </mat-option>
+            <mat-option value="USD">
+              <span translate>general.dolar</span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td class="tg-qv16" colspan="3">
+        <span translate>{{ getTableValue('fourthSection', 'secondRow', 0) }}</span>
+      </td>
+      <td class="tg-qv16" colspan="2">
+        <input
+          class="custom-imput custom-height-matrix-third-section"
+          type="number"
+          (change)="changeTableValue('fourthSection', 'secondRow', 1, $event.target.value)"
+          [value]="getTableValue('fourthSection', 'secondRow', 1)"
+        />
+      </td>
+      <td class="tg-qv16" colspan="3">
+        <span translate>{{ getTableValue('fourthSection', 'secondRow', 2) }}</span>
+      </td>
+      <td class="tg-qv16" colspan="4">
+        <mat-form-field>
+          <mat-select [value]="getTableValue('fourthSection', 'secondRow', 3)">
+            <mat-option value="CRC">
+              <span translate>general.colon</span>
+            </mat-option>
+            <mat-option value="USD">
+              <span translate>general.dolar</span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+  <br />
+  <br />
+  <label><strong translate>ppcn.organitationCategory</strong></label>
+  <br />
+  <br />
+  <table class="tg mat-elevation-z2">
+    <tr>
+      <th class="tg-qv16" rowspan="2">
+        <span translate>{{ getCategoryTableValue('category', '0') }}</span>
+      </th>
+      <td class="tg-qv16" rowspan="2">
+        <input
+          class="custom-imput custom-height-matrix-fourth-section"
+          type="text"
+          (change)="changeCategoryTableValue('category', '1', $event.target.value)"
+          [value]="getCategoryTableValue('category', '1')"
+        />
+      </td>
+      <th *ngFor="let header of categoryTable.categoryHeader" class="tg-qv16">
+        <span translate>{{ header }}</span>
+      </th>
+    </tr>
+    <tr>
+      <td *ngFor="let row of categoryTable.categoryRow; index as i" class="tg-qv16">
+        <input
+          class="custom-imput custom-height-matrix-third-section"
+          [type]="row.type"
+          (change)="changeCategoryTableValue('categoryRow', i, $event.target.value, true)"
+          [value]="getCategoryTableValue('categoryRow', i).value"
+        />
+      </td>
+    </tr>
+  </table>
+  <br />
+</div>

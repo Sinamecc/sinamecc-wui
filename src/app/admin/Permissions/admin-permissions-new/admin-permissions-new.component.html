@@ -1,0 +1,44 @@
+<div class="container">
+  <mat-card>
+    <h3>
+      <mat-card-title translate class="section-heading">
+        <span *ngIf="!edit" translate>admin.createPerm</span>
+        <span *ngIf="edit" translate>admin.editPerm</span>
+      </mat-card-title>
+      <mat-divider class="divider-custom"></mat-divider>
+      <mat-divider class="divider-custom"></mat-divider>
+    </h3>
+
+    <mat-card-content>
+      <form (ngSubmit)="submitForm(searchType.value)" [formGroup]="createPermissionsForm" novalidate>
+        <div fxLayout="column">
+          <mat-form-field>
+            <input
+              type="text"
+              #textbox
+              [ngModel]="name"
+              formControlName="name"
+              matInput
+              [placeholder]="'admin.permName' | translate"
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label><span translate>admin.permissionType</span></mat-label>
+            <mat-select #searchType name="search">
+              <mat-option value="ma">MA</mat-option>
+              <mat-option value="report">Report</mat-option>
+              <mat-option value="mccr">MCCR</mat-option>
+              <mat-option value="ppcn">PPCN</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="box-button">
+          <app-generic-button *ngIf="!edit" type="submit" name=" admin.createPerm"></app-generic-button>
+          <app-generic-button *ngIf="edit" type="submit" name=" admin.editPerm"></app-generic-button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

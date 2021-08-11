@@ -1,0 +1,35 @@
+<div class="container data">
+  <mat-card>
+    <h3>
+      <mat-card-title class="section-heading" translate>admin.groups</mat-card-title>
+      <mat-divider class="divider-custom"></mat-divider>
+      <mat-divider class="divider-custom"></mat-divider>
+    </h3>
+
+    <mat-card-content>
+      <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef translate>admin.groupName</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.label }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef translate>admin.action </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef translate>admin.action </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" *ngIf="!containsGroups(element.id)" (click)="add(element)">
+              <mat-icon color="white">add</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" *ngIf="containsGroups(element.id)" (click)="remove(element)">
+              <mat-icon color="white">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      </mat-table>
+      <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10]" [showFirstLastButtons]="true"> </mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>
