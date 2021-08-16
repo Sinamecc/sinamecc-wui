@@ -84,7 +84,7 @@ export class BasicInformationFormComponent implements OnInit {
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
 					programCtrl: ["", Validators.required],
-					stepsTakingToFinancingCtrl: ["", Validators.required],
+					stepsTakingToFinancingCtrl: [""],
 					detailfinancingSourceCtrl: ["", Validators.required],
 					financingSourceApplyingCtrl: ["", Validators.required],
 					mitigationActionBudgetCtrl: ["", Validators.required],

@@ -45,13 +45,13 @@
             <br />
 
             <div fxLayout="row" fxLayoutAlign=" center">
-            <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
             <mat-form-field class="field-ppcn">
               <textarea matInput formControlName="initiativeDescriptionCtrl"
                 [placeholder]="'specificLabel.initiativeDescription' | translate" matTextareaAutosize
                 matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
+            <input type="file" name="filename" />
             <br />
             </div>
             <div>
@@ -204,7 +204,7 @@
             <br />
 
             <mat-form-field class="field-ppcn">
-               <mat-label translate><label translate>mitigationAction.entitiesInvolvedMitigationActionCtrl</label>
+               <mat-label translate><label translate>mitigationAction.entityResponsibleMitigationAction</label>
                 <mat-icon [matTooltip]="('general.maxWords' | translate)">info</mat-icon></mat-label>
                <textarea matInput formControlName="entityResponsibleMitigationActionCtrl"
                 matTextareaAutosize
@@ -252,13 +252,13 @@
              <br />
 
             <div fxLayout="row" fxLayoutAlign=" center">
-              <input type="file" accept=".rar,application/pdf,.zip" name="filename2" />
               <mat-form-field class="field-ppcn">
                 <textarea matInput formControlName="locationActionCtrl"
                   [placeholder]="'general.locationAction' | translate" matTextareaAutosize
                   matAutosizeMinRows="2" matAutosizeMaxRows="20"></textarea>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
+              <input type="file" name="filename2" />
               <br />
             </div>
 
@@ -279,16 +279,24 @@
             </ng-template>
             <br />
 
-    
             <mat-form-field class="field-ppcn" appearance="fill">
               <mat-label translate>mitigationAction.relationshipNDC</mat-label>
+              <mat-select (selectionChange)="loadSubNDCcatalogs($event.value)">
+                <mat-option 
+                  *ngFor="let element of processedNewFormData?.action_areas"
+                  [value]="element.id">
+                    {{element.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field *ngIf="ndcList.length > 0" class="field-ppcn" appearance="fill">
+              <mat-label translate>mitigationAction.relationshipNDC</mat-label>
               <mat-select multiple>
-                <mat-optgroup *ngFor="let ndcItem of ndcList" [label]="ndcItem.name"
-                              >
-                  <mat-option *ngFor="let option of ndcItem.options" [value]="option.code">
-                    {{option.code}} - {{option.name}}
+                  <mat-option *ngFor="let option of ndcList" [value]="option.code">
+                    {{option.area}}.{{option.code}} - {{option.goal}}
                   </mat-option>
-                </mat-optgroup>
               </mat-select>
             </mat-form-field>
 
@@ -297,35 +305,28 @@
 
             <mat-form-field class="field-ppcn" appearance="fill">
               <mat-label translate>mitigationAction.relationshipDecarbonizationPlan</mat-label>
-              <mat-select multiple>
-                <mat-optgroup *ngFor="let eje of ejeList" [label]="eje.name"
-                              >
-                  <mat-option *ngFor="let option of eje.options" [value]="option.code">
-                    VT - {{option.code}} - {{option.name}}
-                  </mat-option>
-                </mat-optgroup>
+              <mat-select (selectionChange)="loadSubDescarbonizatiocatalogs($event.value)">
+                <mat-option 
+                  *ngFor="let element of processedNewFormData?.descarbonization_axis"
+                  [value]="element.id">
+                    {{element.description}}
+                </mat-option>
               </mat-select>
             </mat-form-field>
-
-            <br />
             <br />
 
-            <mat-form-field class="field-ppcn" appearance="fill">
+            <mat-form-field *ngIf="ejeList.length > 0" class="field-ppcn" appearance="fill">
               <mat-label translate>mitigationAction.relationshipDecarbonizationPlan</mat-label>
               <mat-select multiple>
-                <mat-optgroup *ngFor="let topic of temasList" [label]="topic.name"
-                              >
-                  <mat-option *ngFor="let option of topic.options" [value]="option.name">
-                   {{option.name}}
+                  <mat-option *ngFor="let option of ejeList" [value]="option.code">
+                    VT - {{option.axis}}.{{option.code}} - {{option.description}}
                   </mat-option>
-                </mat-optgroup>
               </mat-select>
             </mat-form-field>
 
             <br />
             <br />
-
-
+            
            <span translate>mitigationAction.impactCategory</span><br /><br />
             <mat-radio-group  class="custom-radio-group">
               <mat-radio-button [style.margin.px]="5"

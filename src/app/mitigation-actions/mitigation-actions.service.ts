@@ -33,7 +33,9 @@ const routes = {
 	submitMitigationActionReview: (uuid: string) => `/v1/mitigations/${uuid}`,
 	submitNewHarmonizationForMitigation: () =>
 		`/v1/mitigations/harmonization/ingei/`,
-	getIndicator: (code: string) => `/v1/mitigation-action/${code}/indicator/`
+	getIndicator: (code: string) => `/v1/mitigation-action/${code}/indicator/`,
+	getCatalogs: (id: string, parentCatalog: string, catalog: string) =>
+		`/v1/mitigation-action/data/${parentCatalog}/${id}/${catalog}/`
 };
 
 export interface Response {
@@ -62,6 +64,21 @@ export class MitigationActionsService {
 
 	updateCurrentMitigationAction(newMitigationAction: MitigationAction) {
 		this.mitigationActionSource.next(newMitigationAction);
+	}
+
+	loadCatalogs(id:string,parentCatalog:string,catalog:string){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		return this.httpClient
+			.get(routes.getCatalogs(id, parentCatalog, catalog), httpOptions)
+			.pipe(
+				map((body: any) => {
+					return body;
+				})
+			);
 	}
 
 	submitMitigationActionNewForm(context: any): Observable<Response> {

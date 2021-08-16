@@ -19,7 +19,7 @@
             </h3>
 
             <span translate>mitigationAction.financingStatus</span><br /><br />
-            <mat-radio-group class="custom-radio-group" formControlName="programCtrl">
+            <mat-radio-group #programCtrl="matRadioGroup" class="custom-radio-group" formControlName="programCtrl">
               <mat-radio-button [style.margin.px]="5"
                 [value]="1">
                 <label translate>general.insured</label>
@@ -30,8 +30,8 @@
               </mat-radio-button>
             </mat-radio-group>
             <br />
-
-            <mat-form-field class="field-ppcn">
+           
+            <mat-form-field *ngIf="programCtrl.value === 2" class="field-ppcn">
             <mat-label translate>mitigationAction.stepsTakingToFinancing</mat-label>
             <textarea matInput 
                 matTextareaAutosize
@@ -41,31 +41,31 @@
             <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
-            <span translate>mitigationAction.detailfinancingSource</span><br /><br />
-            <mat-radio-group class="custom-radio-group" formControlName="detailfinancingSourceCtrl">
-              <mat-radio-button [style.margin.px]="5"
-                [value]="1">
-                <label translate>specificLabel.publicBudget</label>
-              </mat-radio-button>
-              <mat-radio-button [style.margin.px]="5"
-                [value]="2">
-                <label translate>specificLabel.privateFinancing</label>
-              </mat-radio-button>
-              <mat-radio-button [style.margin.px]="5"
-                [value]="3">
-                 <label translate>specificLabel.internationalCooperationPoject</label>
-              </mat-radio-button>
-              <mat-radio-button [style.margin.px]="5"
-                [value]="4">
-                <label translate>general.loan</label>
-              </mat-radio-button>
-              <mat-radio-button [style.margin.px]="5"
-                [value]="5">
-                 <label translate>general.toGet</label>
-              </mat-radio-button>
-            </mat-radio-group>
-            <br />
+            <mat-form-field class="field-ppcn" appearance="fill">
+              <mat-label translate>mitigationAction.detailfinancingSource</mat-label>
+              <mat-select [(value)]="selectedFood" formControlName="detailfinancingSourceCtrl" multiple>
+                  <mat-option [value]="1">
+                   <label translate>specificLabel.publicBudget</label>
+                  </mat-option>
 
+                  <mat-option [value]="2">
+                   <label translate>specificLabel.privateFinancing</label>
+                  </mat-option>
+
+                  <mat-option [value]="3">
+                   <label translate>specificLabel.internationalCooperationPoject</label>
+                  </mat-option>
+
+                  <mat-option [value]="4">
+                   <label translate>general.loan</label>
+                  </mat-option>
+
+                  <mat-option [value]="5">
+                   <label translate>general.toGet</label>
+                  </mat-option>
+              </mat-select>
+            </mat-form-field>
+            {{selectedFood}}
             <mat-form-field class="field-ppcn">
             <mat-label translate>mitigationAction.financingSourceApplying</mat-label>
             <textarea matInput 
@@ -80,11 +80,19 @@
 
              <div fxLayout="row">
                 <div [style.margin-right]="'10px'">
-                  <mat-button-toggle-group value="CRC"  (change)="setmitigationActionBudgeValuetCtrl($event.value)" name="fontStyle">
+                  <mat-button-toggle-group #budgetCtrlgroup="matButtonToggleGroup" value="CRC"  (change)="setmitigationActionBudgeValuetCtrl($event.value)" name="fontStyle">
                     <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                     <mat-button-toggle value="USD">USD</mat-button-toggle>
+                    <mat-button-toggle value="other"><span translate>general.other</span></mat-button-toggle>
                   </mat-button-toggle-group>
                 </div>
+
+                <mat-form-field *ngIf="budgetCtrlgroup.value == 'other'" [style.margin-right]="'10px'" [style.width.%]="100"  class="ppcn-field">
+                  <mat-label translate>general.other</mat-label>
+                  <input type="text" matInput required />
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+
                 <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100"  class="ppcn-field">
                   <mat-label translate>mitigationAction.mitigationActionBudget</mat-label>
                   <input type="number" matInput formControlName="mitigationActionBudgetCtrl" required />
@@ -139,7 +147,7 @@
 
              <br />
 
-            <mat-form-field  class="field-ppcn">
+            <mat-form-field *ngIf="registeredNonReimbursableCooperationMideplan.value == '1'" class="field-ppcn">
               <mat-label translate>mitigationAction.entityProject</mat-label>
               <input formControlName="entityProjectCtrl"  matInput  />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
