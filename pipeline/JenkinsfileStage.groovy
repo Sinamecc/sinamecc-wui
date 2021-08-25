@@ -1,23 +1,37 @@
 pipeline {
     agent any;
 
+    environment {
+        BASE_ECR = "973157324549.dkr.ecr.us-east-2.amazonaws.com"
+        ENVIRONMENT = "stage"
+        APP = "sinamecc-frontend"
+        ECS_CLUSTER_NAME = "sinamecc-cluster-$ENVIRONMENT"
+        ECS_SERVICE_NAME = "sinamecc-frontend-$ENVIRONMENT"
+    }
+
     stages {
 
         stage ("Building docker image") {
             steps {
                     echo "Step: Building docker image"
-                    sh 'docker build --build-arg env=stage -t sinamecc_frontend:stage .'
-            }   
+                    sh 'docker build --build-arg env=dev -t $BASE_ECR/$ENVIRONMENT/$APP:$ENVIRONMENT .'
+            }
         }
 
-        stage ("Restarting docker container") {
-            steps {
-                echo "Step: Stopping current container"
-                sh 'test ! -z "`docker ps | grep sinamecc_frontend_stage`" && (docker stop sinamecc_frontend_stage && docker rm sinamecc_frontend_stage) || echo "sinamecc_frontend_stage does not exists"'
+        stage ("Pushing Images and Updating Service to Stage") {
+          steps {
+            echo "Step: Login ECR"
+            sh '/usr/local/bin/aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin $BASE_ECR/$ENVIRONMENT/$APP'
 
-                echo "Step: Running new container"
-                sh 'docker run -d --name sinamecc_frontend_stage -p 8026:80 sinamecc_frontend:stage'
-            }   
+            echo "Step: Pushing base image"
+            sh 'docker push $BASE_ECR/$ENVIRONMENT/$APP:$ENVIRONMENT'
+
+            echo "Step: Restarting ECS Service"
+            sh '/usr/local/bin/aws ecs update-service --cluster $ECS_CLUSTER_NAME --service $ECS_SERVICE_NAME --force-new-deployment'
+
+            echo "Step: Waiting on Service to be healthy"
+            sh '/usr/local/bin/aws ecs wait services-stable --cluster $ECS_CLUSTER_NAME --service $ECS_SERVICE_NAME'
+          }
         }
     }
 }
