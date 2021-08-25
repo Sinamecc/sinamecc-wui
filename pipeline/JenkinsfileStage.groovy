@@ -14,7 +14,7 @@ pipeline {
         stage ("Building docker image") {
             steps {
                 echo "Step: Cleaning up local docker"
-                sh 'docker prune system -a -f'
+                sh 'docker system prune -a -f'
 
                 echo "Step: Building docker image"
                 sh 'docker build --build-arg env=dev -t $BASE_ECR/$ENVIRONMENT/$APP:$ENVIRONMENT .'
