@@ -1,10 +1,5 @@
 pipeline {
     agent any;
-    options {
-      // This is required if you want to clean before build
-      skipDefaultCheckout(true)
-    }
-
     environment {
         BASE_ECR = "973157324549.dkr.ecr.us-east-2.amazonaws.com"
         ENVIRONMENT = "dev"
@@ -17,10 +12,6 @@ pipeline {
 
         stage ("Building docker image") {
             steps {
-                // Clean before build
-                echo "Step: Cleaning up local docker"
-                cleanWs()
-
                 echo "Step: Cleaning up local docker"
                 sh 'docker system prune -a -f'
 
