@@ -1,5 +1,9 @@
 pipeline {
     agent any;
+    options {
+      // This is required if you want to clean before build
+      skipDefaultCheckout(true)
+    }
 
     environment {
         BASE_ECR = "973157324549.dkr.ecr.us-east-2.amazonaws.com"
@@ -13,6 +17,10 @@ pipeline {
 
         stage ("Building docker image") {
             steps {
+                // Clean before build
+                echo "Step: Cleaning up local docker"
+                cleanWs()
+
                 echo "Step: Cleaning up local docker"
                 sh 'docker system prune -a -f'
 
@@ -36,5 +44,12 @@ pipeline {
             sh '/usr/local/bin/aws ecs wait services-stable --cluster $ECS_CLUSTER_NAME --service $ECS_SERVICE_NAME'
           }
         }
+    }
+
+    post {
+      // Clean after build
+      always {
+        cleanWs(cleanWhenNotBuilt: true, deleteDirs: true, disableDeferredWipeout: true)
+      }
     }
 }
