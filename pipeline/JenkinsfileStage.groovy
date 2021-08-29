@@ -17,7 +17,7 @@ pipeline {
                 sh 'docker system prune -a -f'
 
                 echo "Step: Building docker image"
-                sh 'docker build --build-arg env=dev -t $BASE_ECR/$ENVIRONMENT/$APP:$ENVIRONMENT .'
+                sh 'docker build --build-arg env=stage -t $BASE_ECR/$ENVIRONMENT/$APP:$ENVIRONMENT .'
             }
         }
 
