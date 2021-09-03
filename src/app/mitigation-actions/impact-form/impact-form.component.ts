@@ -85,6 +85,35 @@ export class ImpactFormComponent implements OnInit {
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
 					indicators: this.formBuilder.array([this.createNewIndicatorForm()])
+				}),
+				this.formBuilder.group({
+					responsibleInstitutionCtrl: ["", Validators.required],
+					sourceTypeCtrl: ["", Validators.required],
+					sourceTypeOtherCtrl: [""],
+					statisticalOperationNameCtrl: ["", Validators.required]
+				}),
+
+				this.formBuilder.group({
+					datatypeCtrl: ["", Validators.required],
+					datatypeOtherCtrl: [""],
+					sinameccClassifiersCtrl: ["", Validators.required],
+					sinameccClassifiersOtherCtrl: [""]
+				}),
+				this.formBuilder.group({
+					namePersonResponsibleCtrl: ["", Validators.required],
+					institutionCtrl: ["", Validators.required],
+					contactPersonTitleCtrl: ["", Validators.required],
+					emailAddressCtrl: ["", Validators.email],
+					phoneCtrl: [
+						"",
+						Validators.compose([Validators.required, Validators.minLength(8)])
+					]
+				}),
+				this.formBuilder.group({
+					dateLastUpdateCtrl: ["", Validators.required],
+					changesLastupdateCtrl: ["", Validators.required],
+					descriptionChangesCtrl: ["", Validators.required],
+					authorLastUpdateCtrl: ["", Validators.required]
 				})
 			])
 		});
@@ -106,22 +135,20 @@ export class ImpactFormComponent implements OnInit {
 
 	createNewIndicatorForm() {
 		return this.formBuilder.group({
+			howSustainabilityIndicatorCtrl: ["", Validators.required],
 			indicatorNameCtrl: ["", Validators.required],
 			indicatorDescriptionCtrl: ["", Validators.required],
-			indicatorTypeCtrl: ["", Validators.required],
 			indicatorUnitCtrl: ["", Validators.required],
 			methodologicalDetailIndicatorCtrl: ["", Validators.required],
+			indicatorReportingPeriodicityOtherCtrl: [""],
 			indicatorReportingPeriodicityCtrl: ["", Validators.required],
-			institutionResponsibleGeneratingDataCtrl: ["", Validators.required],
-			institutionResponsibleReportingIndicatorCtrl: ["", Validators.required],
-			measurementStartDateCtrl: ["", Validators.required],
 			additionalInformationCtrl: ["", Validators.required],
 			timeSeriesAvailableStartCtrl: ["", Validators.required],
 			timeSeriesAvailableEndCtrl: ["", Validators.required],
 			geographicCoverageCtrl: ["", Validators.required],
+			geographicCoverageOtherCtrl: [""],
 			disintegrationCtrl: ["", Validators.required],
 			dataSourceCtrl: ["", Validators.required],
-			natureOriginDataCtrl: ["", Validators.required],
 			sinameccClassifiersCtrl: ["", Validators.required],
 			observationsCommentsCtrl: ["", Validators.required]
 		});
@@ -167,14 +194,6 @@ export class ImpactFormComponent implements OnInit {
 				unit: element.indicatorUnitCtrl,
 				methodological_detail: element.methodologicalDetailIndicatorCtrl,
 				reporting_periodicity: element.indicatorReportingPeriodicityCtrl,
-				data_generating_institution:
-					element.institutionResponsibleGeneratingDataCtrl,
-				reporting_institution:
-					element.institutionResponsibleReportingIndicatorCtrl,
-				measurement_start_date: this.datePipe.transform(
-					element.measurementStartDateCtrl,
-					"yyyy-MM-dd"
-				),
 				additional_information: element.additionalInformationCtrl
 			};
 

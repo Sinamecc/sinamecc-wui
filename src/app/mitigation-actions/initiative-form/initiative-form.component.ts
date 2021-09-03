@@ -119,13 +119,11 @@ export class InitiativeFormComponent implements OnInit {
 	}
 
 	loadSubDescarbonizatiocatalogs(id: string) {
-
 		this.service
 			.loadCatalogs(id, "descarbonization-axis", "transformational-visions")
 			.subscribe(response => {
 				this.ejeList = response;
 			});
-		console.log(id)
 	}
 
 	ngOnInit() {

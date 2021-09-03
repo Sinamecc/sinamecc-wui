@@ -143,7 +143,9 @@ export class BasicInformationFormComponent implements OnInit {
 	buildPayload() {
 		const context = {
 			status: this.form.value.formArray[0].programCtrl,
-			administration: this.form.value.formArray[0].stepsTakingToFinancingCtrl,
+			administration: this.form.value.formArray[0].stepsTakingToFinancingCtrl
+				? this.form.value.formArray[0].stepsTakingToFinancingCtrl
+				: "empty field",
 			source: this.form.value.formArray[0].detailfinancingSourceCtrl,
 			source_description: this.form.value.formArray[0]
 				.financingSourceApplyingCtrl,

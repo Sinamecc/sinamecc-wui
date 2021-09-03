@@ -155,7 +155,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
 					]
 				}),
 				this.formBuilder.group({
-					indicatorSelectionCtrl: ["", Validators.required],
+					indicatorSelectionCtrl: [""],
 					indicatorDataUpdateDateCtrl: ["", Validators.required],
 					reportingPeriodStartCtrl: ["", Validators.required],
 					reportingPeriodEndCtrl: ["", Validators.required],
