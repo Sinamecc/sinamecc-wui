@@ -34,7 +34,7 @@ pipeline {
           }
         }
 
-        stage ("Waiting on Service to be healthy") {
+        stage ("Waiting on Stage Service to be healthy") {
           steps {
             echo "Step: Waiting on Service to be healthy"
             sh '/usr/local/bin/aws ecs wait services-stable --cluster $ECS_CLUSTER_NAME --service $ECS_SERVICE_NAME'
@@ -72,7 +72,7 @@ pipeline {
           }
         }
 
-        stage ("Waiting on Service to be healthy") {
+        stage ("Waiting on Prod Service to be healthy") {
           environment {
               ENVIRONMENT = "prod"
               ECS_CLUSTER_NAME = "sinamecc-cluster-$ENVIRONMENT"
