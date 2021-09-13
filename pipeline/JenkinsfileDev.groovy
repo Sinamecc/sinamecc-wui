@@ -1,23 +1,46 @@
 pipeline {
     agent any;
+    environment {
+        BASE_ECR = "973157324549.dkr.ecr.us-east-2.amazonaws.com"
+        ENVIRONMENT = "dev"
+        APP = "sinamecc-frontend"
+        ECS_CLUSTER_NAME = "sinamecc-cluster-$ENVIRONMENT"
+        ECS_SERVICE_NAME = "sinamecc-frontend-$ENVIRONMENT"
+    }
 
     stages {
 
         stage ("Building docker image") {
             steps {
-                    echo "Step: Building docker image"
-                    sh 'docker build --build-arg env=dev -t sinamecc_frontend:dev .'
-            }   
+                echo "Step: Cleaning up local docker"
+                sh 'docker system prune -a -f'
+
+                echo "Step: Building docker image"
+                sh 'docker build --build-arg env=dev -t $BASE_ECR/$ENVIRONMENT/$APP:$ENVIRONMENT .'
+            }
         }
 
-        stage ("Restarting docker container") {
-            steps {
-                echo "Step: Stopping current container"
-                sh 'test ! -z "`docker ps -a | grep sinamecc_frontend_dev`" && (docker stop sinamecc_frontend_dev && docker rm sinamecc_frontend_dev) || echo "sinamecc_frontend_dev does not exists"'
+        stage ("Pushing Images and Updating Service") {
+          steps {
+            echo "Step: Login ECR"
+            sh '/usr/local/bin/aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin $BASE_ECR/$ENVIRONMENT/$APP'
 
-                echo "Step: Running new container"
-                sh 'docker run -d --name sinamecc_frontend_dev -p 8016:80 sinamecc_frontend:dev'
-            }   
+            echo "Step: Pushing base image"
+            sh 'docker push $BASE_ECR/$ENVIRONMENT/$APP:$ENVIRONMENT'
+
+            echo "Step: Restarting ECS Service"
+            sh '/usr/local/bin/aws ecs update-service --cluster $ECS_CLUSTER_NAME --service $ECS_SERVICE_NAME --force-new-deployment'
+
+            echo "Step: Waiting on Service to be healthy"
+            sh '/usr/local/bin/aws ecs wait services-stable --cluster $ECS_CLUSTER_NAME --service $ECS_SERVICE_NAME'
+          }
         }
+    }
+
+    post {
+      // Clean after build
+      always {
+        cleanWs(cleanWhenNotBuilt: true, deleteDirs: true, disableDeferredWipeout: true)
+      }
     }
 }
