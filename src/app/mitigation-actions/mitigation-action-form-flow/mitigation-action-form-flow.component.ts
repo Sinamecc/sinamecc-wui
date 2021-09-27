@@ -99,7 +99,6 @@ export class MitigationActionFormFlowComponent
 	ngOnInit() {
 		this.newFormData = this.initFormOptions().pipe(
 			tap((processedNewFormData: MitigationActionNewFormData) => {
-				console.log("PROCESSED NEW FORM DATA", processedNewFormData);
 				this.processedNewFormData = processedNewFormData;
 			})
 		);

@@ -172,7 +172,6 @@ export class BasicInformationFormComponent implements OnInit {
 				"mideplan_project"
 			] = this.form.value.formArray[1].registeredNonReimbursableCooperationMideplanDetailCtrl;
 		}
-
 		return context;
 	}
 

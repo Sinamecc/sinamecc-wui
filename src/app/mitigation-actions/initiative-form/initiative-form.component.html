@@ -281,7 +281,7 @@
 
             <mat-form-field class="field-ppcn" appearance="fill">
               <mat-label translate>mitigationAction.relationshipNDC</mat-label>
-              <mat-select (selectionChange)="loadSubNDCcatalogs($event.value)">
+              <mat-select formControlName="relationshipNDCCtrl" (selectionChange)="loadSubNDCcatalogs($event.value)">
                 <mat-option 
                   *ngFor="let element of processedNewFormData?.action_areas"
                   [value]="element.id">
@@ -293,7 +293,7 @@
 
             <mat-form-field *ngIf="ndcList.length > 0" class="field-ppcn" appearance="fill">
               <mat-label translate>mitigationAction.relationshipNDC</mat-label>
-              <mat-select multiple>
+              <mat-select formControlName="relationshipNDCTopicCtrl" multiple>
                   <mat-option *ngFor="let option of ndcList" [value]="option.code">
                     {{option.area}}.{{option.code}} - {{option.goal}}
                   </mat-option>
@@ -305,7 +305,7 @@
 
             <mat-form-field class="field-ppcn" appearance="fill">
               <mat-label translate>mitigationAction.relationshipDecarbonizationPlan</mat-label>
-              <mat-select (selectionChange)="loadSubDescarbonizatiocatalogs($event.value)">
+              <mat-select formControlName="relationshipDecarbonizationPlanCtrl" (selectionChange)="loadSubDescarbonizatiocatalogs($event.value)">
                 <mat-option 
                   *ngFor="let element of processedNewFormData?.descarbonization_axis"
                   [value]="element.id">
@@ -317,8 +317,8 @@
 
             <mat-form-field *ngIf="ejeList.length > 0" class="field-ppcn" appearance="fill">
               <mat-label translate>mitigationAction.relationshipDecarbonizationPlan</mat-label>
-              <mat-select multiple>
-                  <mat-option *ngFor="let option of ejeList" [value]="option.code">
+              <mat-select formControlName="relationshipDecarbonizationTopicPlanCtrl" multiple>
+                  <mat-option *ngFor="let option of ejeList" [value]="option.id">
                     VT - {{option.axis}}.{{option.code}} - {{option.description}}
                   </mat-option>
               </mat-select>
@@ -328,7 +328,7 @@
             <br />
             
            <span translate>mitigationAction.impactCategory</span><br /><br />
-            <mat-radio-group  class="custom-radio-group">
+            <mat-radio-group formControlName="impactCategoryCtrl" class="custom-radio-group">
               <mat-radio-button [style.margin.px]="5"
                 value="1">
                 <label translate>mitigationAction.directImpactGEI</label>
@@ -348,7 +348,7 @@
 
 
            <span translate>¿La acción de mitigación que está registrando forma parte de otra?</span><br /><br />
-            <mat-radio-group class="custom-radio-group" >
+            <mat-radio-group formControlName="descriptionRelationshipMitigationActionOthersQuestionCtrl" #descriptionRelationshipMitigationActionOthers="matRadioGroup" class="custom-radio-group" >
               <mat-radio-button [style.margin.px]="5"
                 value="1">
                 <label translate>general.yes</label>
@@ -358,6 +358,12 @@
                 No
               </mat-radio-button>
             </mat-radio-group>
+
+            <mat-form-field *ngIf="descriptionRelationshipMitigationActionOthers.value == '1'" class="field-ppcn">
+              <mat-label translate>mitigationAction.descriptionRelationshipMitigationActionOthers</mat-label>
+              <input formControlName="descriptionRelationshipMitigationActionOthersCtrl" type="tex" matInput  />
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
             
 
             <div class="box-button">

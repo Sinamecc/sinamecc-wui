@@ -23,6 +23,7 @@
   },
 
   "mitigationAction": {
+    "descriptionRelationshipMitigationActionOthers":"Description of the relationship of the mitigation action with others",
     "authorLastUpdate":"Author of the last update",
     "descriptionChanges":"Description of the changes",
     "changesLastupdate":"Changes in the last update",
@@ -35,7 +36,7 @@
     "datatype":"Datatype",
     "thematicCategorization":"Thematic categorization",
     "statisticalOperationName":"Statistical operation name",
-    "sourceType":"Source type",
+    "sourceType":"Enter the information you want to update",
     "responsibleInstitution":"Responsible institution",
     "indicatorDataSource":"Data source",
     "howSustainabilityIndicator":"How is sustainability in the measurement of the indicator ensured?",
@@ -109,7 +110,7 @@
     "startImplementation":"Start of implementation",
     "initiativeStatus":"Mitigation Action Status",
     "statusMitigationAction":"Status of mitigation action",
-    "entityReporting":"Mitigation Action Contact Information",
+    "entityReporting":"Entity responsible for the report",
     "newMa": "New mitigation action",
     "editMA": "Edit a mitigation action:",
     "MA": "Mitigation Action",

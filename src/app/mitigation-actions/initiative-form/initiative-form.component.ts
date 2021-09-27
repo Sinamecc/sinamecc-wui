@@ -198,7 +198,18 @@ export class InitiativeFormComponent implements OnInit {
 					geographicScaleCtrl: ["", Validators.required],
 					locationActionCtrl: ["", Validators.minLength(1)]
 				}),
-				this.formBuilder.group({})
+				this.formBuilder.group({
+					relationshipNDCCtrl: ["", Validators.required],
+					relationshipNDCTopicCtrl: ["", Validators.required],
+					relationshipDecarbonizationPlanCtrl: ["", Validators.required],
+					relationshipDecarbonizationTopicPlanCtrl: ["", Validators.required],
+					impactCategoryCtrl: ["", Validators.required],
+					descriptionRelationshipMitigationActionOthersQuestionCtrl: [
+						"",
+						Validators.required
+					],
+					descriptionRelationshipMitigationActionOthersCtrl: [""]
+				})
 			])
 		});
 	}
@@ -330,6 +341,28 @@ export class InitiativeFormComponent implements OnInit {
 				job_title: this.form.value.formArray[1].initiativePositionCtrl,
 				email: this.form.value.formArray[1].initiativeEmailFormCtrl,
 				phone: this.form.value.formArray[1].initiativePhoneCtrl
+			},
+			categorization: {
+				action_goal: [
+					this.form.value.formArray[4].relationshipDecarbonizationPlanCtrl
+				],
+				transformational_vision: [
+					this.form.value.formArray[4].relationshipNDCCtrl
+				],
+				sub_topics: this.form.value.formArray[4]
+					.relationshipDecarbonizationTopicPlanCtrl,
+				activities: this.form.value.formArray[4].relationshipNDCTopicCtrl,
+				impact_categories:
+					this.form.value.formArray[4].impactCategoryCtrl === "3"
+						? ["1", "2"]
+						: [this.form.value.formArray[4].impactCategoryCtrl],
+				is_part_to_another_mitigation_action:
+					this.form.value.formArray[4]
+						.descriptionRelationshipMitigationActionOthersQuestionCtrl === "1"
+						? true
+						: false,
+				relation_description: this.form.value.formArray[4]
+					.descriptionRelationshipMitigationActionOthersCtrl
 			}
 		};
 		return payload;
@@ -383,7 +416,7 @@ export class InitiativeFormComponent implements OnInit {
 						this.wasSubmittedSuccessfully = false;
 					}
 				);
-				*/
+		*/
 		} else {
 			this.service
 				.submitMitigationActionNewForm(payload)

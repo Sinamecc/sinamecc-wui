@@ -10,7 +10,7 @@
 
     <form [formGroup]="mainGroup">
       <!-- {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}} -->
-      <mat-horizontal-stepper formArrayName="formArray"  [linear]="isLinear" #stepper>
+      <mat-horizontal-stepper formArrayName="formArray" [linear]="isLinear" #stepper>
 
         <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
           <ng-template matStepLabel><span translate>specificLabel.registerInitiatives</span></ng-template>
@@ -83,9 +83,11 @@
 
         <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
           <ng-template matStepLabel><span translate>specificLabel.informationMonitoring</span></ng-template>
+
           <app-impact-form [newFormData]="newFormData" [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating">
           </app-impact-form>
+
           <div class="align-right">
             <app-generic-button (click)="stepper.next()" [disabled]="impactForm.wasSubmittedSuccessfully"
               name="general.next"></app-generic-button>
