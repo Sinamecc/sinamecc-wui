@@ -84,7 +84,7 @@ export class BasicInformationFormComponent implements OnInit {
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
 					programCtrl: ["", Validators.required],
-					stepsTakingToFinancingCtrl: ["", Validators.required],
+					stepsTakingToFinancingCtrl: [""],
 					detailfinancingSourceCtrl: ["", Validators.required],
 					financingSourceApplyingCtrl: ["", Validators.required],
 					mitigationActionBudgetCtrl: ["", Validators.required],
@@ -143,7 +143,9 @@ export class BasicInformationFormComponent implements OnInit {
 	buildPayload() {
 		const context = {
 			status: this.form.value.formArray[0].programCtrl,
-			administration: this.form.value.formArray[0].stepsTakingToFinancingCtrl,
+			administration: this.form.value.formArray[0].stepsTakingToFinancingCtrl
+				? this.form.value.formArray[0].stepsTakingToFinancingCtrl
+				: "empty field",
 			source: this.form.value.formArray[0].detailfinancingSourceCtrl,
 			source_description: this.form.value.formArray[0]
 				.financingSourceApplyingCtrl,
@@ -170,12 +172,11 @@ export class BasicInformationFormComponent implements OnInit {
 				"mideplan_project"
 			] = this.form.value.formArray[1].registeredNonReimbursableCooperationMideplanDetailCtrl;
 		}
-
 		return context;
 	}
 
 	submitForm() {
-		const context = this.buildPayload();
+		const context = { finance: this.buildPayload() };
 		this.isLoading = true;
 
 		/*

@@ -48,6 +48,20 @@ export class EmissionsMitigationFormComponent implements OnInit {
 	mitigationAction: MitigationAction;
 	@ViewChild("errorComponent") errorComponent: ErrorReportingComponent;
 
+	gasList = [
+		"CO2",
+		"CH4",
+		"N2O",
+		"HFC*",
+		"SF6",
+		"CO",
+		"NOx",
+		"NMVOC",
+		"SO2",
+		"C Negro",
+		"Otro"
+	];
+
 	get formArray(): AbstractControl | null {
 		return this.form.get("formArray");
 	}
@@ -58,7 +72,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
 		private service: MitigationActionsService,
 		private translateService: TranslateService,
 		private authenticationService: AuthenticationService,
-		public snackBar: MatSnackBar
+		public snackBar: MatSnackBar,
+		private router: Router
 	) {
 		this.service.currentMitigationAction.subscribe(
 			message => (this.mitigationAction = message)
@@ -119,6 +134,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
 						Validators.required
 					],
 					mechanismStandardApplyCtrl: ["", Validators.required],
+					methodologyExantePotentialReductionEmissionsCO2OtherCtrl: [""],
 					methodologyUsedCtrl: ["", Validators.required]
 				})
 			])
@@ -243,6 +259,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
 						.subscribe((res: string) => {
 							this.snackBar.open(res, null, { duration: 3000 });
 						});
+
 					this.wasSubmittedSuccessfully = true;
 				},
 				error => {

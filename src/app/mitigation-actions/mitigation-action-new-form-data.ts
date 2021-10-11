@@ -8,6 +8,16 @@ export interface MitigationActionNewFormData {
 	finance_source_types: FinanceSourceType[];
 	finance_status: FinanceStatus[];
 	initiative_types: InitiativeType[];
+	monitoring_reporting_indicator: any;
+}
+
+export interface MonitoringReportingIndicator {
+	initial_date_report_period: string;
+	final_date_report_period: string;
+	data_updated_date: string;
+	updated_data: string;
+	progress_report: string;
+	indicator: Number;
 }
 
 export interface RegistrationType {

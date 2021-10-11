@@ -1,6 +1,6 @@
 <div class="container">
   <mat-card-content>
-    <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
+    <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()"> 
 
       <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
         <span translate>errorLabel.errorSubmittingForm</span>
@@ -10,6 +10,7 @@
 
       <br />
       <div fxLayout="column">
+        
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
@@ -27,12 +28,12 @@
             <br />
 
             <div fxLayout="row" fxLayoutAlign=" center">
-              <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
               <mat-form-field class="field-ppcn">
                 <mat-label translate>mitigationAction.graphicLogicImpactEmissionsRemovals</mat-label>
                 <input matInput formControlName="graphicLogicImpactEmissionsRemovalsCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
+               <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
               <br />
             </div>
 
@@ -41,18 +42,8 @@
              <mat-form-field class="field-ppcn" appearance="fill">
               <mat-label translate>mitigationAction.sectorsGEIInventoryImpacted</mat-label>
               <mat-select multiple>
-                <!-- This options will remplace for a catalog, waiting BE-->
-                  <mat-option  [value]="1">
-                    Energía
-                  </mat-option>
-                  <mat-option  [value]="2">
-                    Agricultura, silvicultura y otros usos de la tierra (AFOLU)  
-                  </mat-option>
-                  <mat-option  [value]="3">
-                    Procesos industriales y uso de productos  (IPPU)
-                  </mat-option>
-                  <mat-option  [value]="4">
-                    Residuos
+                  <mat-option *ngFor="let option of processedNewFormData?.ghg_impact_sector"  [value]="option.id">
+                    {{option.name}}
                   </mat-option>
               </mat-select>
             </mat-form-field>
@@ -62,18 +53,8 @@
             <mat-form-field class="field-ppcn" appearance="fill">
               <mat-label translate>mitigationAction.preliminaryIdentificationSustainableDevelopmentGoals</mat-label>
               <mat-select multiple>
-                <!-- This options will remplace for a catalog, waiting BE-->
-                  <mat-option  [value]="1">
-                    Objetivo 1: Poner fin a la pobreza en todas sus formas en todo el mundo
-                  </mat-option>
-                  <mat-option  [value]="2">
-                    Objetivo 2: Poner fin al hambre
-                  </mat-option>
-                  <mat-option  [value]="3">
-                    Objetivo 3: Garantizar una vida sana y promover el bienestar para todos en todas las edades
-                  </mat-option>
-                  <mat-option  [value]="4">
-                    Objetivo 4: Garantizar una educación inclusiva, equitativa y de calidad y promover oportunidades de aprendizaje durante toda la vida para todos
+                  <mat-option *ngFor="let option of processedNewFormData?.sustainable_development_goals"  [value]="option.id">
+                    {{option.description}}
                   </mat-option>
               </mat-select>
             </mat-form-field>

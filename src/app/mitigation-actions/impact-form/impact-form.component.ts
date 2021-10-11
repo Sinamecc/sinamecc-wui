@@ -55,6 +55,14 @@ export class ImpactFormComponent implements OnInit {
 		return this.form.get("formArray");
 	}
 
+	getFormObject(key: string) {
+		return this.form.get(key);
+	}
+
+	getFormKeys() {
+		return Object.keys(this.form.controls);
+	}
+
 	constructor(
 		private formBuilder: FormBuilder,
 		private i18nService: I18nService,
@@ -80,51 +88,71 @@ export class ImpactFormComponent implements OnInit {
 			});
 		}
 	}
+
 	private createForm() {
 		this.form = this.formBuilder.group({
-			formArray: this.formBuilder.array([
-				this.formBuilder.group({
-					indicators: this.formBuilder.array([this.createNewIndicatorForm()])
-				})
-			])
+			formArray: this.buildForm()
 		});
 	}
 
-	addIndicatorItem() {
-		const control = <FormArray>(
-			this.form.controls.formArray["controls"][0].controls["indicators"]
-		);
-		control.push(this.createNewIndicatorForm());
+	addNewForm() {
+		const index = Object.keys(this.form.controls).length + 1;
+		this.form.controls["formArray" + index] = this.buildForm();
 	}
 
-	deleteIndicatorItem(i: number) {
-		const control = <FormArray>(
-			this.form.controls.formArray["controls"][0].controls["indicators"]
-		);
-		control.removeAt(i);
+	removeForm(key: string) {
+		delete this.form.controls[key];
 	}
 
-	createNewIndicatorForm() {
-		return this.formBuilder.group({
-			indicatorNameCtrl: ["", Validators.required],
-			indicatorDescriptionCtrl: ["", Validators.required],
-			indicatorTypeCtrl: ["", Validators.required],
-			indicatorUnitCtrl: ["", Validators.required],
-			methodologicalDetailIndicatorCtrl: ["", Validators.required],
-			indicatorReportingPeriodicityCtrl: ["", Validators.required],
-			institutionResponsibleGeneratingDataCtrl: ["", Validators.required],
-			institutionResponsibleReportingIndicatorCtrl: ["", Validators.required],
-			measurementStartDateCtrl: ["", Validators.required],
-			additionalInformationCtrl: ["", Validators.required],
-			timeSeriesAvailableStartCtrl: ["", Validators.required],
-			timeSeriesAvailableEndCtrl: ["", Validators.required],
-			geographicCoverageCtrl: ["", Validators.required],
-			disintegrationCtrl: ["", Validators.required],
-			dataSourceCtrl: ["", Validators.required],
-			natureOriginDataCtrl: ["", Validators.required],
-			sinameccClassifiersCtrl: ["", Validators.required],
-			observationsCommentsCtrl: ["", Validators.required]
-		});
+	buildForm() {
+		return this.formBuilder.array([
+			this.formBuilder.group({
+				howSustainabilityIndicatorCtrl: ["", Validators.required],
+				indicatorNameCtrl: ["", Validators.required],
+				indicatorDescriptionCtrl: ["", Validators.required],
+				indicatorUnitCtrl: ["", Validators.required],
+				methodologicalDetailIndicatorCtrl: ["", Validators.required],
+				indicatorReportingPeriodicityOtherCtrl: [""],
+				indicatorReportingPeriodicityCtrl: ["", Validators.required],
+				additionalInformationCtrl: ["", Validators.required],
+				timeSeriesAvailableStartCtrl: ["", Validators.required],
+				timeSeriesAvailableEndCtrl: ["", Validators.required],
+				geographicCoverageCtrl: ["", Validators.required],
+				geographicCoverageOtherCtrl: [""],
+				disintegrationCtrl: ["", Validators.required],
+				dataSourceCtrl: ["", Validators.required],
+				sinameccClassifiersCtrl: ["", Validators.required],
+				observationsCommentsCtrl: ["", Validators.required]
+			}),
+			this.formBuilder.group({
+				responsibleInstitutionCtrl: ["", Validators.required],
+				sourceTypeCtrl: ["", Validators.required],
+				sourceTypeOtherCtrl: [""],
+				statisticalOperationNameCtrl: ["", Validators.required]
+			}),
+			this.formBuilder.group({
+				datatypeCtrl: ["", Validators.required],
+				datatypeOtherCtrl: [""],
+				sinameccClassifiersCtrl: ["", Validators.required],
+				sinameccClassifiersOtherCtrl: [""]
+			}),
+			this.formBuilder.group({
+				namePersonResponsibleCtrl: ["", Validators.required],
+				institutionCtrl: ["", Validators.required],
+				contactPersonTitleCtrl: ["", Validators.required],
+				emailAddressCtrl: ["", Validators.email],
+				phoneCtrl: [
+					"",
+					Validators.compose([Validators.required, Validators.minLength(8)])
+				]
+			}),
+			this.formBuilder.group({
+				dateLastUpdateCtrl: ["", Validators.required],
+				changesLastupdateCtrl: ["", Validators.required],
+				descriptionChangesCtrl: ["", Validators.required],
+				authorLastUpdateCtrl: ["", Validators.required]
+			})
+		]);
 	}
 
 	private updateFormData() {
@@ -159,35 +187,69 @@ export class ImpactFormComponent implements OnInit {
 
 	buildPayload() {
 		const list: any = [];
-		this.form.value.formArray[0].indicators.forEach((element: any) => {
+		for (const element of Object.keys(this.form.controls)) {
+			const actualForm = this.form.get(element).value;
 			const context = {
-				name: element.indicatorNameCtrl,
-				description: element.indicatorDescriptionCtrl,
-				type: element.indicatorTypeCtrl,
-				unit: element.indicatorUnitCtrl,
-				methodological_detail: element.methodologicalDetailIndicatorCtrl,
-				reporting_periodicity: element.indicatorReportingPeriodicityCtrl,
-				data_generating_institution:
-					element.institutionResponsibleGeneratingDataCtrl,
-				reporting_institution:
-					element.institutionResponsibleReportingIndicatorCtrl,
-				measurement_start_date: this.datePipe.transform(
-					element.measurementStartDateCtrl,
+				name: actualForm[0].indicatorNameCtrl,
+				description: actualForm[0].indicatorDescriptionCtrl,
+				unit: actualForm[0].indicatorUnitCtrl,
+				methodological_detail: actualForm[0].methodologicalDetailIndicatorCtrl,
+				reporting_periodicity: actualForm[0].indicatorReportingPeriodicityCtrl,
+				additional_information: actualForm[0].additionalInformationCtrl,
+				available_time_start_date: this.datePipe.transform(
+					actualForm[0].timeSeriesAvailableStartCtrl,
 					"yyyy-MM-dd"
 				),
-				additional_information: element.additionalInformationCtrl
+				available_time_end_date: this.datePipe.transform(
+					actualForm[0].timeSeriesAvailableEndCtrl,
+					"yyyy-MM-dd"
+				),
+				geographic_coverage: actualForm[0].geographicCoverageCtrl,
+				other_geographic_coverage: actualForm[0].geographicCoverageOtherCtrl,
+				disaggregation: actualForm[0].disintegrationCtrl,
+				limitation: actualForm[0].dataSourceCtrl,
+				comments: actualForm[0].observationsCommentsCtrl,
+				information_source: {
+					responsible_institution: actualForm[1].responsibleInstitutionCtrl,
+					type: actualForm[1].sourceTypeCtrl,
+					other_type: actualForm[1].sourceTypeOtherCtrl,
+					statistical_operation: actualForm[1].statisticalOperationNameCtrl
+				},
+				type_of_data: actualForm[2].datatypeCtrl,
+				other_type_of_data: actualForm[2].datatypeOtherCtrl,
+				classifier: [actualForm[2].sinameccClassifiersCtrl],
+				other_classifier: actualForm[2].sinameccClassifiersOtherCtrl,
+				contact: {
+					institution: actualForm[3].institutionCtrl,
+					full_name: actualForm[3].namePersonResponsibleCtrl,
+					job_title: actualForm[3].contactPersonTitleCtrl,
+					email: actualForm[3].emailAddressCtrl,
+					phone: actualForm[3].phoneCtrl
+				},
+				change_log: {
+					update_date: this.datePipe.transform(
+						actualForm[4].dateLastUpdateCtrl,
+						"yyyy-MM-dd"
+					),
+					changes: actualForm[4].changesLastupdateCtrl,
+					changes_description: actualForm[4].descriptionChangesCtrl,
+					author: actualForm[4].authorLastUpdateCtrl
+				}
 			};
-
 			list.push(context);
-		});
+		}
+
 		const payload = {
-			code: "code", // this is requiered for BE, hardcode var
-			indicator: list
+			monitoring_information: {
+				code: "code", // this is requiered for BE, hardcode var
+				indicator: list
+			}
 		};
+
+		return payload;
 	}
 
 	submitForm() {
-		this.buildPayload();
 		this.isLoading = true;
 		const context = this.buildPayload();
 		/*
@@ -214,9 +276,6 @@ export class ImpactFormComponent implements OnInit {
 							this.snackBar.open(res, null, { duration: 3000 });
 						});
 					this.wasSubmittedSuccessfully = true;
-					setTimeout(() => {
-						this.router.navigate(["/mitigation/actions"], { replaceUrl: true });
-					}, 2000);
 				},
 				error => {
 					this.translateService

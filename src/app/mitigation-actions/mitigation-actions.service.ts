@@ -4,7 +4,10 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { HttpHeaders } from "@angular/common/http";
 import { map, catchError } from "rxjs/operators";
 import { Logger, I18nService, AuthenticationService } from "@app/core";
-import { MitigationAction } from "@app/mitigation-actions/mitigation-action";
+import {
+	Indicator,
+	MitigationAction
+} from "@app/mitigation-actions/mitigation-action";
 import { MitigationActionReview } from "@app/mitigation-actions/mitigation-action-review";
 import { MitigationActionNewFormData } from "@app/mitigation-actions/mitigation-action-new-form-data";
 import { DatePipe } from "@angular/common";
@@ -29,7 +32,10 @@ const routes = {
 	mitigationActionAvailableStatuses: () => `/v1/workflow/status`,
 	submitMitigationActionReview: (uuid: string) => `/v1/mitigations/${uuid}`,
 	submitNewHarmonizationForMitigation: () =>
-		`/v1/mitigations/harmonization/ingei/`
+		`/v1/mitigations/harmonization/ingei/`,
+	getIndicator: (code: string) => `/v1/mitigation-action/${code}/indicator/`,
+	getCatalogs: (id: string, parentCatalog: string, catalog: string) =>
+		`/v1/mitigation-action/data/${parentCatalog}/${id}/${catalog}/`
 };
 
 export interface Response {
@@ -58,6 +64,21 @@ export class MitigationActionsService {
 
 	updateCurrentMitigationAction(newMitigationAction: MitigationAction) {
 		this.mitigationActionSource.next(newMitigationAction);
+	}
+
+	loadCatalogs(id:string,parentCatalog:string,catalog:string){
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		return this.httpClient
+			.get(routes.getCatalogs(id, parentCatalog, catalog), httpOptions)
+			.pipe(
+				map((body: any) => {
+					return body;
+				})
+			);
 	}
 
 	submitMitigationActionNewForm(context: any): Observable<Response> {
@@ -120,6 +141,19 @@ export class MitigationActionsService {
 					return body;
 				})
 			);
+	}
+
+	getMitigationActionIndicators(id: string) {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		return this.httpClient.get(routes.getIndicator(id), httpOptions).pipe(
+			map((body: Indicator[]) => {
+				return body;
+			})
+		);
 	}
 
 	mitigationActions(language: string): Observable<MitigationAction[]> {
