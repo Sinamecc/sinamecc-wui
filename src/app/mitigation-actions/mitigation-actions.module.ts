@@ -27,6 +27,7 @@ import { KeyAspectsFormComponent } from "./key-aspects-form/key-aspects-form.com
 import { EmissionsMitigationFormComponent } from "./emissions-mitigation-form/emissions-mitigation-form.component";
 import { ImpactFormComponent } from "./impact-form/impact-form.component";
 import { ReportingClimateActionFormComponent } from "./reporting-climate-action-form/reporting-climate-action-form.component";
+import { MitigationActionInfoModalComponent } from "./mitigation-action-info-modal/mitigation-action-info-modal.component";
 @NgModule({
 	imports: [
 		CommonModule,
@@ -56,8 +57,10 @@ import { ReportingClimateActionFormComponent } from "./reporting-climate-action-
 		KeyAspectsFormComponent,
 		EmissionsMitigationFormComponent,
 		ImpactFormComponent,
-		ReportingClimateActionFormComponent
+		ReportingClimateActionFormComponent,
+		MitigationActionInfoModalComponent
 	],
+	entryComponents: [MitigationActionInfoModalComponent],
 	providers: [MitigationActionsService, DatePipe]
 })
 export class MitigationActionsModule {}

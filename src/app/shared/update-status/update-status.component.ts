@@ -23,6 +23,7 @@ const log = new Logger("UploadProposal");
 
 import { UpdateStatusService } from "@app/shared/update-status/update-status.service";
 import { PpcnComponent } from "@app/ppcn/ppcn/ppcn.component";
+import { MitigationActionComponent } from "@app/mitigation-actions/mitigation-action/mitigation-action.component";
 
 @Component({
 	selector: "app-update-status",
@@ -65,7 +66,19 @@ export class UpdateStatusComponent implements OnInit {
 	loadComponent() {
 		if (this.module === "ppcn") {
 			this.loadPPCNCommentComponent();
+		} else {
+			if (this.module == "ma") {
+				this.loadMAComponent();
+			}
 		}
+	}
+
+	loadMAComponent() {
+		const siglePostFactory = this.resolver.resolveComponentFactory(
+			MitigationActionComponent
+		);
+		this.moduleRef = this.container.createComponent(siglePostFactory);
+		this.moduleRef.instance.edit = true;
 	}
 
 	loadPPCNCommentComponent() {

@@ -129,6 +129,7 @@ export class InitiativeFormComponent implements OnInit {
 	ngOnInit() {
 		if (this.isUpdating) {
 			this.service.currentMitigationAction.subscribe(message => {
+				console.log(message, "message");
 				this.mitigationAction = message;
 				this.updateFormData();
 			});
@@ -215,6 +216,17 @@ export class InitiativeFormComponent implements OnInit {
 	}
 
 	private updateFormData() {
+		this.initiativeGoalList = this.mitigationAction.initiative.goal.map(
+			x => x["goal"]
+		);
+
+		const ndcListID = this.mitigationAction.categorization
+			.transformational_vision[0]["id"];
+		const decarbonizationPlanID = this.mitigationAction.categorization
+			.action_goal[0]["id"];
+
+		this.loadSubNDCcatalogs(ndcListID);
+		this.loadSubDescarbonizatiocatalogs(decarbonizationPlanID);
 		this.form = this.formBuilder.group({
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
@@ -225,62 +237,114 @@ export class InitiativeFormComponent implements OnInit {
 					],
 					initiativeNameCtrl: [
 						this.mitigationAction.initiative.name,
-						Validators.required
-					],
-					entityIniativeResponsibleCtrl: [
-						this.mitigationAction.initiative.entity_responsible,
-						Validators.required
+						[Validators.required, Validators.maxLength(200)]
 					],
 					initiativeObjectiveCtrl: [
 						this.mitigationAction.initiative.objective,
-						Validators.required
+						[Validators.required, Validators.maxLength(500)]
 					],
 					initiativeDescriptionCtrl: [
 						this.mitigationAction.initiative.description,
-						Validators.required
+						[Validators.required, Validators.maxLength(1000)]
 					],
 					initiativeGoalCtrl: [
-						this.mitigationAction.initiative.goal,
-						Validators.required
-					],
-					initiativeStatusCtrl: [
-						this.mitigationAction.initiative.status.id,
-						Validators.required
-					]
-				}),
-				this.formBuilder.group({
-					initiativeFinancingStatusCtrl: [
-						this.mitigationAction.initiative.finance.status.id,
-						Validators.required
-					],
-					initiativeFinancingStatusTypeCtrl: [
-						this.mitigationAction.initiative.finance.finance_source_type.id,
-						Validators.required
-					],
-					initiatveFinancingSourceCtrl: this.mitigationAction.initiative.finance
-						.source,
-					initiativeBudgetCtrl: [
-						this.mitigationAction.initiative.budget,
-						Validators.required
+						"",
+						[Validators.required, Validators.maxLength(500)]
 					]
 				}),
 				this.formBuilder.group({
 					// initiativeContactCtrl: ['', Validators.required],
+					entityReportingCtrl: [
+						this.mitigationAction.contact.institution,
+						[Validators.required, Validators.maxLength(50)]
+					],
 					initiativeContactNameCtrl: [
-						this.mitigationAction.initiative.contact.full_name,
-						Validators.required
+						this.mitigationAction.contact.full_name,
+						[Validators.required, Validators.maxLength(40)]
 					],
 					initiativePositionCtrl: [
-						this.mitigationAction.initiative.contact.job_title,
-						Validators.required
+						this.mitigationAction.contact.job_title,
+						[Validators.required, Validators.maxLength(100)]
 					],
 					initiativeEmailFormCtrl: [
-						this.mitigationAction.initiative.contact.email,
+						this.mitigationAction.contact.email,
 						Validators.email
 					],
 					initiativePhoneCtrl: [
-						this.mitigationAction.initiative.contact.phone,
+						this.mitigationAction.contact.phone,
 						Validators.compose([Validators.required, Validators.minLength(8)])
+					]
+				}),
+				this.formBuilder.group({
+					deploymentCompletionIdCtrl: [
+						this.mitigationAction.status_information.other_end_date === null
+							? "1"
+							: "2",
+						Validators.required
+					],
+					deploymentCompletionDateCtrl: [
+						this.mitigationAction.status_information.end_date
+					],
+					deploymentCompletionOtherCtrl: [
+						this.mitigationAction.status_information.other_end_date
+					],
+					initiativeStatusCtrl: [
+						this.mitigationAction.status_information.status.id,
+						Validators.required
+					],
+					startImplementationCtrl: [
+						this.mitigationAction.status_information.start_date,
+						Validators.required
+					],
+					deploymentCompletionCtrl: [""],
+					entityResponsibleMitigationActionCtrl: [
+						this.mitigationAction.status_information.institution,
+						[Validators.required, Validators.minLength(1)]
+					],
+					entitiesInvolvedMitigationActionCtrl: [
+						this.mitigationAction.status_information.other_institution,
+						[Validators.required, Validators.minLength(1)]
+					]
+				}),
+				this.formBuilder.group({
+					geographicScaleCtrl: [
+						this.mitigationAction.geographic_location.geographic_scale.id,
+						Validators.required
+					],
+					locationActionCtrl: [
+						this.mitigationAction.geographic_location.location,
+						Validators.minLength(1)
+					]
+				}),
+				this.formBuilder.group({
+					relationshipNDCCtrl: [ndcListID, Validators.required],
+					relationshipNDCTopicCtrl: [
+						this.mitigationAction.categorization.activities.map(x => x["code"]),
+						Validators.required
+					],
+					relationshipDecarbonizationPlanCtrl: [
+						decarbonizationPlanID,
+						Validators.required
+					],
+					relationshipDecarbonizationTopicPlanCtrl: [
+						this.mitigationAction.categorization.sub_topics.map(x => x["id"]),
+						Validators.required
+					],
+					impactCategoryCtrl: [
+						this.mitigationAction.categorization.impact_categories.length > 1
+							? "3"
+							: this.mitigationAction.categorization.impact_categories[0]["id"],
+						Validators.required
+					],
+					descriptionRelationshipMitigationActionOthersQuestionCtrl: [
+						this.mitigationAction.categorization
+							.is_part_to_another_mitigation_action
+							? "1"
+							: "2",
+						Validators.required
+					],
+					descriptionRelationshipMitigationActionOthersCtrl: [
+						this.mitigationAction.categorization.relation_description
 					]
 				})
 			])
@@ -374,20 +438,8 @@ export class InitiativeFormComponent implements OnInit {
 		const payload = this.buildPayload();
 
 		if (this.isUpdating) {
-			/*
-			context.initiative["id"] = this.mitigationAction.initiative.id;
-			context.initiative.contact[
-				"id"
-			] = this.mitigationAction.initiative.contact.id;
-			context.initiative.finance[
-				"id"
-			] = this.mitigationAction.initiative.finance.id;
 			this.service
-				.submitMitigationActionUpdateForm(
-					context,
-					this.mitigationAction.id,
-					this.i18nService.language.split("-")[0]
-				)
+				.submitMitigationActionUpdateForm(payload, this.mitigationAction.id)
 				.pipe(
 					finalize(() => {
 						this.form.markAsPristine();
@@ -395,7 +447,7 @@ export class InitiativeFormComponent implements OnInit {
 					})
 				)
 				.subscribe(
-					response => {
+					_ => {
 						this.translateService
 							.get("Sucessfully submitted form")
 							.subscribe((res: string) => {
@@ -416,7 +468,6 @@ export class InitiativeFormComponent implements OnInit {
 						this.wasSubmittedSuccessfully = false;
 					}
 				);
-		*/
 		} else {
 			this.service
 				.submitMitigationActionNewForm(payload)
@@ -427,7 +478,7 @@ export class InitiativeFormComponent implements OnInit {
 					})
 				)
 				.subscribe(
-					response => {
+					_ => {
 						this.translateService
 							.get("Sucessfully submitted form")
 							.subscribe((res: string) => {

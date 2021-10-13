@@ -20,7 +20,7 @@
         <br />
         <div fxLayout="column">
 
-          <h3 translate>general.currentStatus</h3><span>{{entity.fsm_state}}</span>
+          <h3 translate>general.currentStatus</h3><span>{{entity.fsm_state.label}}</span>
           <hr />
           <mat-form-field>
             <mat-select formControlName="statusCtrl" [placeholder]="'specificLabel.nextStatus' | translate"
@@ -42,7 +42,7 @@
 
           <br />
 
-          <button (click)="loadComponent()" type="button" *ngIf="module == 'ppcn' && !moduleRef" mat-raised-button color="primary">
+          <button (click)="loadComponent()" type="button" *ngIf="(module == 'ppcn' || module === 'ma') && !moduleRef" mat-raised-button color="primary">
             <span translate>specificLabel.commentForm</span>
           </button>
           <br />

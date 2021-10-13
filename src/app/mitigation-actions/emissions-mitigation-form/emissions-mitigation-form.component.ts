@@ -145,20 +145,81 @@ export class EmissionsMitigationFormComponent implements OnInit {
 		this.form = this.formBuilder.group({
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
-					ingeiComplianceCtrl: [
-						this.mitigationAction["ingei_compliances"].map(
-							(elem: any) => elem.id
-						),
+					exAnteEmissionReductionsCtrl: [
+						this.mitigationAction.impact_documentation.estimate_reduction_co2,
+						Validators.required
+					],
+					periodPotentialEmissionReductionEstimatedCtrl: [
+						this.mitigationAction.impact_documentation
+							.period_potential_reduction,
+						Validators.required
+					],
+					isourcesEmissionsGasesCoveredCtrl: ["", Validators.required],
+					carbonSinksReservoirsCtrl: ["", Validators.required],
+					definitionBaselineCtrl: [
+						this.mitigationAction.impact_documentation.base_line_definition,
+						Validators.required
+					],
+					methodologyExantePotentialReductionEmissionsCO2Ctrl: [
+						this.mitigationAction.impact_documentation.calculation_methodology,
+						Validators.required
+					],
+					documentationCalculationsEstimateReductionEmissionsCO2Ctrl: [
+						this.mitigationAction.impact_documentation
+							.estimate_calculation_documentation,
+						Validators.required
+					],
+					isCurrentlyReflectedInventoryCtrl: [
+						this.mitigationAction.impact_documentation
+							.mitigation_action_in_inventory
+							? 1
+							: 2,
 						Validators.required
 					]
 				}),
 				this.formBuilder.group({
-					emissionSourceCtrl: [
-						this.mitigationAction.emissions_source,
+					standardizedCalculationMethodologyUsedCtrl: [""],
+					standardizedCalculationMethodologyUsedDetailCtrl: [
+						this.mitigationAction.impact_documentation.question.find(
+							(x: { code: string }) => x.code === "Q1"
+						).detail,
 						Validators.required
 					],
-					carbonSinksCtrl: [
-						this.mitigationAction.carbon_sinks,
+					calculationsDocumentedCtrl: [""],
+					calculationsDocumentedDetailCtrl: [
+						this.mitigationAction.impact_documentation.question.find(
+							(x: { code: string }) => x.code === "Q2"
+						).detail,
+
+						Validators.required
+					],
+					emissionFactorsUsedCalculationDocumentedCtrl: [""],
+					emissionFactorsUsedCalculationDocumentedDetailCtrl: [
+						this.mitigationAction.impact_documentation.question.find(
+							(x: { code: string }) => x.code === "Q3"
+						).detail,
+
+						Validators.required
+					],
+					assumptionsDocumentedCtrl: [""],
+					assumptionsDocumentedDetailCtrl: [
+						this.mitigationAction.impact_documentation.question.find(
+							(x: { code: string }) => x.code === "Q4"
+						).detail,
+
+						Validators.required
+					]
+				}),
+				this.formBuilder.group({
+					intendParticipateInternationalCarbonMarketsCtrl: [
+						this.mitigationAction.impact_documentation
+							.carbon_international_commerce,
+						Validators.required
+					],
+					mechanismStandardApplyCtrl: ["", Validators.required],
+					methodologyExantePotentialReductionEmissionsCO2OtherCtrl: [""],
+					methodologyUsedCtrl: [
+						this.mitigationAction.impact_documentation.methodologies_to_use,
 						Validators.required
 					]
 				})

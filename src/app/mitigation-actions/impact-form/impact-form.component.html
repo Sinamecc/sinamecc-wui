@@ -180,55 +180,12 @@
                     <br />
                 </div>
 
-                <span translate>mitigationAction.sinameccClassifiers</span><br /><br />
-                <mat-radio-group formControlName="sinameccClassifiersCtrl"  class="custom-radio-group" >
-                  <mat-radio-button [style.margin.px]="5"
-                    value="1">
-                    <label translate>Acción Climática</label>
-                  </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5"
-                    value="2">
-                    <label translate>Modelación</label>
-                  </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5"
-                    value="3">
-                    <label translate>INGEI</label>
-                  </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5"
-                    value="4">
-                    <label translate>Reportes</label>
-                  </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5"
-                    value="4">
-                    <label translate>Finanzas Climaticas</label>
-                  </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5"
-                    value="4">
-                    <label translate>Impactos</label>
-                  </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5"
-                    value="4">
-                    <label translate>Otro</label>
-                  </mat-radio-button>
-                </mat-radio-group>
-                <br />
-
                 <mat-form-field class="field-ppcn">
                   <mat-label translate>mitigationAction.observationsComments</mat-label>
                   <input matInput formControlName="observationsCommentsCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
                 <br /> 
-
-                <div fxLayout="row" fxLayoutAlign=" center">
-                    <mat-form-field class="field-ppcn">
-                      <mat-label translate>mitigationAction.additionalInformation</mat-label>
-                      <input matInput formControlName="additionalInformationCtrl" />
-                      <mat-error translate>errorLabel.fieldRequired</mat-error>
-                    </mat-form-field>
-                    <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
-                    <br />
-                </div>
 
       
                 <br />

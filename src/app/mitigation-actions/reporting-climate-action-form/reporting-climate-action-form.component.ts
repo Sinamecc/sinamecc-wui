@@ -53,7 +53,14 @@ export class ReportingClimateActionFormComponent implements OnInit {
 		this.createForm();
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+		if (this.isUpdating) {
+			this.service.currentMitigationAction.subscribe(message => {
+				this.mitigationAction = message;
+				this.createUpdateForm();
+			});
+		}
+	}
 
 	get formArray(): AbstractControl | null {
 		return this.form.get("formArray");
@@ -143,6 +150,57 @@ export class ReportingClimateActionFormComponent implements OnInit {
 					this.wasSubmittedSuccessfully = false;
 				}
 			);
+	}
+
+	private createUpdateForm() {
+		this.form = this.formBuilder.group({
+			formArray: this.formBuilder.array([
+				this.formBuilder.group({
+					anyProgressMonitoringRecordedClimateActionsCtrl: [
+						this.mitigationAction.monitoring_reporting_indicator
+							.progress_in_monitoring
+							? 1
+							: 2,
+						Validators.required
+					]
+				}),
+				this.formBuilder.group({
+					indicatorSelectionCtrl: [
+						this.mitigationAction.monitoring_reporting_indicator
+							.monitoring_indicator[0].indicator
+					],
+					indicatorDataUpdateDateCtrl: [
+						this.mitigationAction.monitoring_reporting_indicator
+							.monitoring_indicator[0].data_updated_date,
+						Validators.required
+					],
+					reportingPeriodStartCtrl: [
+						this.mitigationAction.monitoring_reporting_indicator
+							.monitoring_indicator[0].initial_date_report_period,
+						Validators.required
+					],
+					reportingPeriodEndCtrl: [
+						this.mitigationAction.monitoring_reporting_indicator
+							.monitoring_indicator[0].final_date_report_period,
+						Validators.required
+					],
+					informationToUpdateCtrl: [
+						this.mitigationAction.monitoring_reporting_indicator
+							.monitoring_indicator[0].updated_data,
+						Validators.required
+					]
+				}),
+
+				this.formBuilder.group({
+					reportingPeriodCtrl: ["", Validators.required],
+					beenProgressActionPeriodCtrl: [
+						this.mitigationAction.monitoring_reporting_indicator
+							.monitoring_indicator[0].progress_report,
+						Validators.required
+					]
+				})
+			])
+		});
 	}
 
 	private createForm() {

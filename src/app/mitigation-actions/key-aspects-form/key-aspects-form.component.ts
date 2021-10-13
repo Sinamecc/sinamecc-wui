@@ -25,7 +25,8 @@ import {
 	MatSnackBar,
 	DateAdapter,
 	MAT_DATE_LOCALE,
-	MAT_DATE_FORMATS
+	MAT_DATE_FORMATS,
+	MatDialog
 } from "@angular/material";
 import { Observable } from "rxjs/Observable";
 import { MitigationActionNewFormData } from "@app/mitigation-actions/mitigation-action-new-form-data";
@@ -34,6 +35,7 @@ import { MomentDateAdapter } from "@angular/material-moment-adapter";
 
 import * as _moment from "moment";
 import { ErrorReportingComponent } from "@app/shared/error-reporting/error-reporting.component";
+import { MitigationActionInfoModalComponent } from "../mitigation-action-info-modal/mitigation-action-info-modal.component";
 
 const moment = _moment;
 
@@ -94,7 +96,8 @@ export class KeyAspectsFormComponent implements OnInit {
 		private service: MitigationActionsService,
 		private translateService: TranslateService,
 		public snackBar: MatSnackBar,
-		private router: Router
+		private router: Router,
+		public dialog: MatDialog
 	) {
 		// this.formData = new FormData();
 		this.service.currentMitigationAction.subscribe(
@@ -118,7 +121,12 @@ export class KeyAspectsFormComponent implements OnInit {
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
 					overviewImpactEmissionsRemovalsCtrl: ["", Validators.required],
-					graphicLogicImpactEmissionsRemovalsCtrl: ["", Validators.required]
+					graphicLogicImpactEmissionsRemovalsCtrl: ["", Validators.required],
+					sectorsGEIInventoryImpactedCtrl: ["", Validators.required],
+					preliminaryIdentificationSustainableDevelopmentGoalsCtrl: [
+						"",
+						Validators.required
+					]
 				})
 			])
 		});
@@ -128,46 +136,24 @@ export class KeyAspectsFormComponent implements OnInit {
 		this.form = this.formBuilder.group({
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
-					actionObjectiveCtrl: [
-						this.mitigationAction.purpose,
+					overviewImpactEmissionsRemovalsCtrl: [
+						this.mitigationAction.ghg_information.impact_emission,
 						Validators.required
 					],
-					actionStatusCtrl: [
-						this.mitigationAction.status.id,
+					graphicLogicImpactEmissionsRemovalsCtrl: [
+						this.mitigationAction.ghg_information.graphic_description,
 						Validators.required
 					],
-					implementationInitialDateCtrl: [
-						this.mitigationAction.start_date,
+					sectorsGEIInventoryImpactedCtrl: [
+						this.mitigationAction.ghg_information.impact_sector.map(
+							x => x["id"]
+						),
 						Validators.required
 					],
-					implementationEndDateCtrl: [
-						this.mitigationAction.end_date,
+					preliminaryIdentificationSustainableDevelopmentGoalsCtrl: [
+						this.mitigationAction.ghg_information.goals.map(x => x["id"]),
 						Validators.required
 					]
-				}),
-				this.formBuilder.group({
-					geographicScaleCtrl: [
-						this.mitigationAction.geographic_scale.id,
-						Validators.required
-					]
-				}),
-				this.formBuilder.group({
-					locationNameCtrl: [
-						this.mitigationAction.location.geographical_site,
-						Validators.required
-					],
-					gisAnnexedCtrl: [
-						String(+this.mitigationAction.location.is_gis_annexed),
-						Validators.required
-					]
-				}),
-				this.formBuilder.group({
-					financingStatusCtrl: [
-						this.mitigationAction.finance.status.id,
-						Validators.required
-					],
-					financingSourceCtrl: [this.mitigationAction.finance.source],
-					gasInventoryCtrl: [this.mitigationAction.gas_inventory]
 				})
 			])
 		});
@@ -176,13 +162,24 @@ export class KeyAspectsFormComponent implements OnInit {
 		// this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
 	}
 
+	openInfoModal() {
+		const dialogRef = this.dialog.open(MitigationActionInfoModalComponent, {
+			width: "50%",
+			height: "50%"
+		});
+	}
+
 	buildPayload() {
 		const context = {
 			ghg_information: {
 				impact_emission: this.form.value.formArray[0]
 					.overviewImpactEmissionsRemovalsCtrl,
 				graphic_description: this.form.value.formArray[0]
-					.graphicLogicImpactEmissionsRemovalsCtrl
+					.graphicLogicImpactEmissionsRemovalsCtrl,
+				impact_sector: this.form.value.formArray[0]
+					.sectorsGEIInventoryImpactedCtrl,
+				goals: this.form.value.formArray[0]
+					.preliminaryIdentificationSustainableDevelopmentGoalsCtrl
 			}
 		};
 
@@ -192,14 +189,6 @@ export class KeyAspectsFormComponent implements OnInit {
 	submitForm() {
 		this.isLoading = true;
 		const context = this.buildPayload();
-
-		/*
-		if (this.isUpdating) {
-			context.finance["id"] = this.mitigationAction.finance.id;
-			context.location["id"] = this.mitigationAction.location.id;
-			// context['update_existing_mitigation_action'] = true;
-		}
-		*/
 
 		this.service
 			.submitMitigationActionUpdateForm(context, this.mitigationAction.id)

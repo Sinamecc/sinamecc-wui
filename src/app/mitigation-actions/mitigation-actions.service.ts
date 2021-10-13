@@ -21,6 +21,7 @@ const routes = {
 	seededFormData: (lang: string, registration_type: string) =>
 		`/v1/mitigations/form/${lang}/${registration_type}`,
 	submitNewMitigationAction: (id: string = "") => `/v1/mitigation-action/${id}`,
+	getComments: (id: string = "") => `/v1/mitigation-action/${id}/comments/`,
 	submitUpdateMitigationAction: (uuid: string, lang: string) =>
 		`/v1/mitigations/${lang}/${uuid}`,
 	mitigationActions: (lang: string) => `/v1/mitigation-action/`,
@@ -66,7 +67,7 @@ export class MitigationActionsService {
 		this.mitigationActionSource.next(newMitigationAction);
 	}
 
-	loadCatalogs(id:string,parentCatalog:string,catalog:string){
+	loadCatalogs(id: string, parentCatalog: string, catalog: string) {
 		const httpOptions = {
 			headers: new HttpHeaders({
 				Authorization: this.authenticationService.credentials.token
@@ -79,6 +80,19 @@ export class MitigationActionsService {
 					return body;
 				})
 			);
+	}
+
+	getComments(id: string) {
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: this.authenticationService.credentials.token
+			})
+		};
+		return this.httpClient.get(routes.getComments(id), httpOptions).pipe(
+			map((body: any) => {
+				return body;
+			})
+		);
 	}
 
 	submitMitigationActionNewForm(context: any): Observable<Response> {

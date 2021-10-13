@@ -107,31 +107,40 @@ export class BasicInformationFormComponent implements OnInit {
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
 					programCtrl: [
-						this.mitigationAction.strategy_name,
+						this.mitigationAction.finance.status,
 						Validators.required
 					],
-					nameCtrl: [this.mitigationAction.name, Validators.required],
-					entityCtrl: [
-						this.mitigationAction.institution.id,
+					stepsTakingToFinancingCtrl: [
+						this.mitigationAction.finance.administration
+					],
+					detailfinancingSourceCtrl: [
+						this.mitigationAction.finance.source,
+						Validators.required
+					],
+					financingSourceApplyingCtrl: [
+						this.mitigationAction.finance.source_description,
+						Validators.required
+					],
+					mitigationActionBudgetCtrl: [
+						this.mitigationAction.finance.budget,
+						Validators.required
+					],
+					referenceYearCtrl: [
+						this.mitigationAction.finance.reference_year,
 						Validators.required
 					]
 				}),
 				this.formBuilder.group({
-					contactNameCtrl: [
-						this.mitigationAction.contact.full_name,
+					registeredNonReimbursableCooperationMideplanCtrl: [
+						this.mitigationAction.finance.mideplan_registered ? 1 : 2,
 						Validators.required
 					],
-					positionCtrl: [
-						this.mitigationAction.contact.job_title,
+					entityProjectCtrl: [
+						this.mitigationAction.finance.executing_entity,
 						Validators.required
 					],
-					emailFormCtrl: [
-						this.mitigationAction.contact.email,
-						Validators.email
-					],
-					phoneCtrl: [
-						this.mitigationAction.contact.phone,
-						Validators.compose([Validators.required, Validators.minLength(8)])
+					registeredNonReimbursableCooperationMideplanDetailCtrl: [
+						this.mitigationAction.finance.mideplan_project
 					]
 				})
 			])
@@ -141,6 +150,7 @@ export class BasicInformationFormComponent implements OnInit {
 	}
 
 	buildPayload() {
+		console.log(this.form.value.formArray[0].referenceYearCtrl);
 		const context = {
 			status: this.form.value.formArray[0].programCtrl,
 			administration: this.form.value.formArray[0].stepsTakingToFinancingCtrl

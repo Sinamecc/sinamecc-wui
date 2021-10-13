@@ -114,14 +114,12 @@ export class ImpactFormComponent implements OnInit {
 				methodologicalDetailIndicatorCtrl: ["", Validators.required],
 				indicatorReportingPeriodicityOtherCtrl: [""],
 				indicatorReportingPeriodicityCtrl: ["", Validators.required],
-				additionalInformationCtrl: ["", Validators.required],
 				timeSeriesAvailableStartCtrl: ["", Validators.required],
 				timeSeriesAvailableEndCtrl: ["", Validators.required],
 				geographicCoverageCtrl: ["", Validators.required],
 				geographicCoverageOtherCtrl: [""],
 				disintegrationCtrl: ["", Validators.required],
 				dataSourceCtrl: ["", Validators.required],
-				sinameccClassifiersCtrl: ["", Validators.required],
 				observationsCommentsCtrl: ["", Validators.required]
 			}),
 			this.formBuilder.group({
@@ -155,32 +153,116 @@ export class ImpactFormComponent implements OnInit {
 		]);
 	}
 
+	buildUpdateForm(indicator: Object) {
+		return this.formBuilder.array([
+			this.formBuilder.group({
+				howSustainabilityIndicatorCtrl: ["", Validators.required],
+				indicatorNameCtrl: [indicator["name"], Validators.required],
+				indicatorDescriptionCtrl: [indicator["unit"], Validators.required],
+				indicatorUnitCtrl: [indicator["unit"], Validators.required],
+				methodologicalDetailIndicatorCtrl: [
+					indicator["methodological_detail"],
+					Validators.required
+				],
+				indicatorReportingPeriodicityOtherCtrl: [""],
+				indicatorReportingPeriodicityCtrl: [
+					indicator["reporting_periodicity"],
+					Validators.required
+				],
+				timeSeriesAvailableStartCtrl: [
+					indicator["available_time_start_date"],
+					Validators.required
+				],
+				timeSeriesAvailableEndCtrl: [
+					indicator["available_time_end_date"],
+					Validators.required
+				],
+				geographicCoverageCtrl: [
+					indicator["geographic_coverage"],
+					Validators.required
+				],
+				geographicCoverageOtherCtrl: [indicator["other_geographic_coverage"]],
+				disintegrationCtrl: [indicator["disaggregation"], Validators.required],
+				dataSourceCtrl: [indicator["limitation"], Validators.required],
+				observationsCommentsCtrl: [indicator["comments"], Validators.required]
+			}),
+			this.formBuilder.group({
+				responsibleInstitutionCtrl: [
+					indicator["information_source"]["responsible_institution"],
+					Validators.required
+				],
+				sourceTypeCtrl: [
+					indicator["information_source"]["type"],
+					Validators.required
+				],
+				sourceTypeOtherCtrl: [indicator["information_source"]["other_type"]],
+				statisticalOperationNameCtrl: [
+					indicator["information_source"]["statistical_operation"],
+					Validators.required
+				]
+			}),
+			this.formBuilder.group({
+				datatypeCtrl: [indicator["type_of_data"], Validators.required],
+				datatypeOtherCtrl: [indicator["other_type_of_data"]],
+				sinameccClassifiersCtrl: [indicator["classifier"], Validators.required],
+				sinameccClassifiersOtherCtrl: [indicator["other_classifier"]]
+			}),
+			this.formBuilder.group({
+				namePersonResponsibleCtrl: [
+					indicator["contact"]["full_name"],
+					Validators.required
+				],
+				institutionCtrl: [
+					indicator["contact"]["institution"],
+					Validators.required
+				],
+				contactPersonTitleCtrl: [
+					indicator["contact"]["job_title"],
+					Validators.required
+				],
+				emailAddressCtrl: [indicator["contact"]["email"], Validators.email],
+				phoneCtrl: [
+					indicator["contact"]["phone"],
+					Validators.compose([Validators.required, Validators.minLength(8)])
+				]
+			}),
+			this.formBuilder.group({
+				dateLastUpdateCtrl: [
+					indicator["change_log"][0]["update_date"],
+					Validators.required
+				],
+				changesLastupdateCtrl: [
+					indicator["change_log"][0]["changes"],
+					Validators.required
+				],
+				descriptionChangesCtrl: [
+					indicator["change_log"][0]["changes_description"],
+					Validators.required
+				],
+				authorLastUpdateCtrl: [
+					indicator["change_log"][0]["author"],
+					Validators.required
+				]
+			})
+		]);
+	}
+
 	private updateFormData() {
 		this.form = this.formBuilder.group({
-			formArray: this.formBuilder.array([
-				this.formBuilder.group({
-					mitigationActionImpactCtrl: [
-						this.mitigationAction.impact_plan,
-						Validators.required
-					],
-					emissionImpactCtrl: [
-						this.mitigationAction.impact,
-						Validators.required
-					],
-					calculationMethodologyCtrl: [
-						this.mitigationAction.calculation_methodology,
-						Validators.required
-					],
-					internationalParticipationCtrl: [
-						String(+this.mitigationAction.is_international),
-						Validators.required
-					],
-					internationalParticipationDetailCtrl: this.mitigationAction
-						.international_participation
-				})
-			])
+			formArray: this.buildUpdateForm(
+				this.mitigationAction.monitoring_information.indicator[0]
+			)
 		});
-
+		if (this.mitigationAction.monitoring_information.indicator.length > 1) {
+			const elementList = this.mitigationAction.monitoring_information
+				.indicator;
+			elementList.shift();
+			let index = 1;
+			for (const element of elementList) {
+				this.form.controls["formArray" + index] = this.buildUpdateForm(element);
+				index += 1;
+			}
+		}
 		this.isLoading = false;
 		// this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
 	}
@@ -195,7 +277,6 @@ export class ImpactFormComponent implements OnInit {
 				unit: actualForm[0].indicatorUnitCtrl,
 				methodological_detail: actualForm[0].methodologicalDetailIndicatorCtrl,
 				reporting_periodicity: actualForm[0].indicatorReportingPeriodicityCtrl,
-				additional_information: actualForm[0].additionalInformationCtrl,
 				available_time_start_date: this.datePipe.transform(
 					actualForm[0].timeSeriesAvailableStartCtrl,
 					"yyyy-MM-dd"

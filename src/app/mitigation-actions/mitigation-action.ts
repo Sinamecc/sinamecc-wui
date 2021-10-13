@@ -28,16 +28,19 @@ export interface MitigationAction {
 	sustainability: string;
 	location: Location;
 	progress_indicator: ProgressIndicator;
-	next_state: NextState;
+	next_state: any;
 	created: string;
 	updated: string;
 	fsm_state: string;
 	files: Files[];
 	status_information: StatusInformation;
 	geographic_location: GeographicLocation;
+	categorization: Categorization;
 	CategorizationNationalInstruments: any; //waiting BE have this data
 	ghg_information: GHGInformation;
 	impact_documentation: any;
+	monitoring_information: MonitoringInformation;
+	monitoring_reporting_indicator: any;
 }
 
 export interface ImpacDocumentationQuestion {
@@ -47,6 +50,23 @@ export interface ImpacDocumentationQuestion {
 	id: number;
 	impact_documentation: number;
 	question: string;
+}
+
+export interface MonitoringInformation {
+	code: string;
+	id: number;
+	indicator: any[]; //change type
+}
+
+export interface Categorization {
+	action_goal: Object[];
+	activities: Object[];
+	id: number;
+	impact_categories: Object[];
+	is_part_to_another_mitigation_action: boolean;
+	relation_description: string;
+	sub_topics: Object[];
+	transformational_vision: Object[];
 }
 
 export interface ImpactDocumentation {
@@ -66,6 +86,8 @@ export interface GHGInformation {
 	graphic_description: string;
 	id: number;
 	impact_emission: string;
+	goals: Object[];
+	impact_sector: Object[];
 	sectorsGEIInventoryImpacted: string; //waiting BE have this data
 	preliminaryIdentificationSustainableDevelopmentGoals: string; //waiting BE have this data
 }
@@ -107,7 +129,7 @@ export interface Initiative {
 	description: string;
 	entity_responsible: string;
 	finance: Finance;
-	goal: string;
+	goal: object[];
 	id: string;
 	initiative_type: InitiativeType;
 	objective: string;
@@ -157,7 +179,8 @@ export interface Finance {
 	currency?: string;
 	budget?: string;
 	reference_year?: string;
-	mideplan_registered?: string;
+	mideplan_registered?: boolean;
+	mideplan_project?: string;
 	nameRegisteredMideplan?: string;
 	executing_entity?: string;
 }

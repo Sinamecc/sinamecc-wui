@@ -28,12 +28,13 @@
             <br />
 
             <div fxLayout="row" fxLayoutAlign=" center">
+              <mat-icon class="ma-custom-icon" (click)="openInfoModal()" aria-hidden="false">info</mat-icon>
               <mat-form-field class="field-ppcn">
                 <mat-label translate>mitigationAction.graphicLogicImpactEmissionsRemovals</mat-label>
                 <input matInput formControlName="graphicLogicImpactEmissionsRemovalsCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-               <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
+               <input type="file"  name="filename" />
               <br />
             </div>
 
@@ -41,7 +42,7 @@
 
              <mat-form-field class="field-ppcn" appearance="fill">
               <mat-label translate>mitigationAction.sectorsGEIInventoryImpacted</mat-label>
-              <mat-select multiple>
+              <mat-select formControlName="sectorsGEIInventoryImpactedCtrl" multiple>
                   <mat-option *ngFor="let option of processedNewFormData?.ghg_impact_sector"  [value]="option.id">
                     {{option.name}}
                   </mat-option>
@@ -52,7 +53,7 @@
 
             <mat-form-field class="field-ppcn" appearance="fill">
               <mat-label translate>mitigationAction.preliminaryIdentificationSustainableDevelopmentGoals</mat-label>
-              <mat-select multiple>
+              <mat-select formControlName="preliminaryIdentificationSustainableDevelopmentGoalsCtrl" multiple>
                   <mat-option *ngFor="let option of processedNewFormData?.sustainable_development_goals"  [value]="option.id">
                     {{option.description}}
                   </mat-option>
