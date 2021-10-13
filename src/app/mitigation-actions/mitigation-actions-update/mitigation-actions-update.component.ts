@@ -76,7 +76,6 @@ export class MitigationActionsUpdateComponent implements OnInit {
 		this.isLinear = true;
 		this.action = "update";
 		this.id = this.route.snapshot.paramMap.get("id");
-		console.log(this.id, "id");
 
 		this.service
 			.getMitigationAction(this.id, this.i18nService.language.split("-")[0])
@@ -89,7 +88,6 @@ export class MitigationActionsUpdateComponent implements OnInit {
 			.getMitigationAction(this.id, this.i18nService.language.split("-")[0])
 			.pipe(
 				tap((mitigationAction: MitigationAction) => {
-					console.log("MA", mitigationAction);
 					this.processedMitigationAction = mitigationAction;
 					this.service.updateCurrentMitigationAction(mitigationAction);
 				})

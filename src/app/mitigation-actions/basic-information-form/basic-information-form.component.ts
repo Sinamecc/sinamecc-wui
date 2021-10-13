@@ -150,7 +150,6 @@ export class BasicInformationFormComponent implements OnInit {
 	}
 
 	buildPayload() {
-		console.log(this.form.value.formArray[0].referenceYearCtrl);
 		const context = {
 			status: this.form.value.formArray[0].programCtrl,
 			administration: this.form.value.formArray[0].stepsTakingToFinancingCtrl

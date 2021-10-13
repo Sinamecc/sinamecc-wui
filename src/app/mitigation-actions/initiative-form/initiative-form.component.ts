@@ -129,7 +129,6 @@ export class InitiativeFormComponent implements OnInit {
 	ngOnInit() {
 		if (this.isUpdating) {
 			this.service.currentMitigationAction.subscribe(message => {
-				console.log(message, "message");
 				this.mitigationAction = message;
 				this.updateFormData();
 			});
