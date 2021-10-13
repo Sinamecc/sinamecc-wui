@@ -41,7 +41,7 @@ export class MitigationActionComponent implements OnInit {
 						"specificLabel.initiativeType",
 						"specificLabel.initiativeName",
 						"specificLabel.initiativeDescription",
-						"specificLabel.initiativeGoa"
+						"specificLabel.initiativeGoal"
 					]
 				},
 				{
@@ -283,7 +283,9 @@ export class MitigationActionComponent implements OnInit {
 			)
 			.subscribe((response: MitigationAction) => {
 				this.mitigationAction = response;
-				this.getComments(response.id);
+				if (!this.edit) {
+					this.getComments(response.id);
+				}
 			});
 
 		if (this.edit) {
