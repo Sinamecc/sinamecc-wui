@@ -22,6 +22,11 @@
   },
 
   "mitigationAction": {
+    "infoModal":{
+      "mainMessage":"Se recomienda utilizar de guía el método de cadena causal del Estándar de Política y acción del WRI (2014) para la construcción del mapa de cadena causal'",
+      "diagramDescription":"Ejemplo del esquema requerido utilizando Diagrama Causal",
+      "linkButton":"Ver link"
+    },
     "descriptionRelationshipMitigationActionOthers":"Descripción de la relación de la acción de mitigación con otras",
     "authorLastUpdate":"Autor de la última actualización ",
     "descriptionChanges":"Descripción de los cambios",
@@ -258,6 +263,12 @@
   },
 
   "general": {
+    "selectField":"Seleccione los Campos",
+    "selectSubModule":"Seleccione el Sub-Módulo",
+    "selectModule":"Seleccione el Módulo",
+    "subModule":"Sub-Módulo",
+    "module":"Módulo",
+    "comments":"Comentarios",
     "until":"Hasta",
     "biannual":"Semestral",
     "management":"Gestión",

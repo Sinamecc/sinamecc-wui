@@ -265,9 +265,11 @@ export class MitigationActionComponent implements OnInit {
 
 	findQuestion(id: string) {
 		if (this.mitigationAction) {
-			return this.mitigationAction.impact_documentation.question.find(
-				(x: { code: string }) => x.code === id
-			).detail;
+			if (this.mitigationAction.impact_documentation.question) {
+				return this.mitigationAction.impact_documentation.question.find(
+					(x: { code: string }) => x.code === id
+				).detail;
+			}
 		}
 		return "";
 	}
@@ -372,7 +374,7 @@ export class MitigationActionComponent implements OnInit {
 		comment: string
 	) {
 		return (
-			module != "" && subModule != "" && comment != "" && fields.length > 0
+			module !== "" && subModule !== "" && comment !== "" && fields.length > 0
 		);
 	}
 

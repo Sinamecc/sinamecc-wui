@@ -368,7 +368,7 @@
   <div *ngIf="edit || showComments" [style.width.%]="45">
     <br />
     <div  fxLayout="column" fxLayoutAlign="center center" >
-      <mat-card-title class="section-heading" translate>Comentarios</mat-card-title>
+      <mat-card-title class="section-heading" translate>general.comments</mat-card-title>
       <mat-divider class="divider-custom"></mat-divider>
       <mat-divider class="divider-custom"></mat-divider>
     </div>
@@ -393,17 +393,17 @@
 
         <div class="custom-comment" [style.width.%]="addComment ? 60 : 100">
 
-          <strong translate>Comentarios</strong>
+          <strong translate>general.comments</strong>
           <mat-divider></mat-divider>
           <br />
           <div *ngFor="let comment of comments" class="custom-comment" fxLayout="column" fxLayoutAlign="start start">
-            <label><strong translate>Modulo: </strong><label translate>{{comment.module}}</label></label>
-             <label><strong translate>Sub-Modulo: </strong><label translate>{{comment.subModule}}</label></label>
-             <label><strong translate>Campos: </strong></label>
+            <label><strong translate>general.module </strong><label translate>:{{comment.module}}</label></label>
+             <label><strong translate>general.subModule</strong><label translate>:{{comment.subModule}}</label></label>
+             <label><strong translate>general.fields</strong></label>
              <div class="custom-comment" fxLayout="column" >
               <label *ngFor="let field of comment.fields" translate>{{field}}</label>
              </div>
-            <label><strong translate>Comentario: </strong></label>
+            <label><strong translate>general.comments </strong>:</label>
             <label>{{comment.comment}}</label>
              <mat-divider *ngIf="comments.length > 1"></mat-divider>
           </div>
@@ -413,21 +413,21 @@
         <div *ngIf="addComment" class="mat-elevation-z2 custom-comment" [style.width.%]="40">
 
           <mat-form-field appearance="fill" [style.width.%]="100">
-            <mat-label translate>Select module</mat-label>
+            <mat-label translate>general.selectModule</mat-label>
             <mat-select  #schemaModule>
               <mat-option *ngFor="let module of commentSchema" [value]="module">{{module.module | translate}}</mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field appearance="fill" [style.width.%]="100">
-            <mat-label translate>Select a sub module</mat-label>
+            <mat-label translate>general.selectSubModule</mat-label>
             <mat-select  #schemaSubModule>
               <mat-option *ngFor="let submodule of schemaModule.value?.subModules" [value]="submodule">{{submodule.name | translate}}</mat-option>
             </mat-select>
           </mat-form-field>
 
            <mat-form-field appearance="fill" [style.width.%]="100">
-            <mat-label translate>Select a fields</mat-label>
+            <mat-label translate>general.selectField</mat-label>
             <mat-select multiple #fields>
               <mat-option *ngFor="let field of schemaSubModule.value?.fields" [value]="field">{{field | translate}}</mat-option>
             </mat-select>

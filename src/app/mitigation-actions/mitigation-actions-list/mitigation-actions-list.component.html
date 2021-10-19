@@ -63,6 +63,9 @@
         <button mat-icon-button color="primary" (click)="changelog(element.id)">
           <mat-icon color="white">history</mat-icon>
         </button>
+        <button mat-icon-button *ngIf="element.fsm_state.state == 'new'" color="primary" [routerLink]="element.id + '/edit'">
+          <mat-icon color="white">edit</mat-icon>
+        </button>
         <!-- <button mat-icon-button color="primary" (click)="uploadProposal(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button> -->
       </mat-cell>
     </ng-container>

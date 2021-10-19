@@ -108,6 +108,7 @@ export class MitigationActionsListComponent implements OnInit {
 		this.service
 			.mitigationActions(this.i18nService.language.split("-")[0])
 			.subscribe((mas: MitigationAction[]) => {
+				console.log(mas);
 				const maList = mas;
 				this.dataSource = new MatTableDataSource<MitigationAction>(maList);
 				this.dataSource.paginator = this.paginator;

@@ -103,9 +103,7 @@ export class InitiativeFormComponent implements OnInit {
 		public snackBar: MatSnackBar,
 		private datePipe: DatePipe
 	) {
-		// this.formData = new FormData();
 		this.isLoading = true;
-		// this.isUpdating = this.action === 'update';
 		this.displayFinancialSource = false;
 		this.createForm();
 	}
@@ -139,7 +137,6 @@ export class InitiativeFormComponent implements OnInit {
 		this.form = this.formBuilder.group({
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
-					// initiativeRegisterTypeCtrl: ['', Validators.required],
 					initiativeTypeCtrl: ["", Validators.required],
 					initiativeNameCtrl: [
 						"",
@@ -159,7 +156,6 @@ export class InitiativeFormComponent implements OnInit {
 					]
 				}),
 				this.formBuilder.group({
-					// initiativeContactCtrl: ['', Validators.required],
 					entityReportingCtrl: [
 						"",
 						[Validators.required, Validators.maxLength(50)]
@@ -229,7 +225,6 @@ export class InitiativeFormComponent implements OnInit {
 		this.form = this.formBuilder.group({
 			formArray: this.formBuilder.array([
 				this.formBuilder.group({
-					// initiativeRegisterTypeCtrl: ['', Validators.required],
 					initiativeTypeCtrl: [
 						this.mitigationAction.initiative.initiative_type.id,
 						Validators.required
@@ -252,7 +247,6 @@ export class InitiativeFormComponent implements OnInit {
 					]
 				}),
 				this.formBuilder.group({
-					// initiativeContactCtrl: ['', Validators.required],
 					entityReportingCtrl: [
 						this.mitigationAction.contact.institution,
 						[Validators.required, Validators.maxLength(50)]
@@ -350,7 +344,6 @@ export class InitiativeFormComponent implements OnInit {
 		});
 
 		this.isLoading = false;
-		// this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
 	}
 
 	buildInitiativeGoal() {

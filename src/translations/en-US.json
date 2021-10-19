@@ -23,6 +23,11 @@
   },
 
   "mitigationAction": {
+    "infoModal":{
+      "mainMessage":"'It is recommended to use the causal chain method of the Standard of Policy and action of the WRI (2014) for the construction of the chain mapcausal'",
+      "diagramDescription":"Example of the required scheme using Causal Diagram",
+      "linkButton":"See link"
+    },
     "descriptionRelationshipMitigationActionOthers":"Description of the relationship of the mitigation action with others",
     "authorLastUpdate":"Author of the last update",
     "descriptionChanges":"Description of the changes",
@@ -257,6 +262,12 @@
   },
 
   "general": {
+    "selectField":"Select Field",
+    "selectSubModule":"Select Sub-Module",
+    "selectModule":"Select Module",
+    "subModule":"Sub-module",
+    "module":"Module",
+    "comments":"Comments",
     "until":"Until",
     "biannual":"Biannual",
     "management":"Management",

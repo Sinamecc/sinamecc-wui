@@ -67,7 +67,7 @@ export class UpdateStatusComponent implements OnInit {
 		if (this.module === "ppcn") {
 			this.loadPPCNCommentComponent();
 		} else {
-			if (this.module == "ma") {
+			if (this.module === "ma") {
 				this.loadMAComponent();
 			}
 		}
