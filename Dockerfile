@@ -1,16 +1,18 @@
 # Stage 0, based on Node.js, to build and compile Angular
-FROM node:erbium-alpine3.12 as node
+FROM node:gallium as node
 
 WORKDIR /app
 
-COPY package.json /app/
-
-RUN npm install
+COPY package*.json ./app/
 
 COPY ./ /app/
 
+RUN npm install
+
+ARG env=prod
+
 # RUN npm run build -- --prod --environment $env
-RUN npm run env -s && ng build --$env
+RUN npm run build -- --env=$env
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM nginx:1.13
