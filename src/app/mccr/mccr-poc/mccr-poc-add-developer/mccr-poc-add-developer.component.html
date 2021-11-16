@@ -7,30 +7,32 @@
     </h3>
     <mat-card-content>
       <form (ngSubmit)="submitForm()" [formGroup]="form" novalidate>
-
         <div class="report-error" [hidden]="!error || isLoading" translate>
           <span translate>errorLabel.errorSubmittingForm</span>
         </div>
 
         <div fxLayout="column">
-
           <mat-form-field>
-            <input type="text" matInput formControlName="userId" [placeholder]="'admin.IDuser'| translate" />
+            <input type="text" matInput formControlName="userId" [placeholder]="'admin.IDuser' | translate" />
             <mat-error *ngIf="form.controls.userId.invalid || form.controls.userId.untouched">
               <span translate>errorLabel.IDUserRequired</span>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <input [disabled]="true" value="{{id}}" matInput placeholder="{{ 'mccrPoc.uccBaseCode' | translate }}" />
-
+            <input [disabled]="true" value="{{ id }}" matInput placeholder="{{ 'mccrPoc.uccBaseCode' | translate }}" />
           </mat-form-field>
 
           <mat-form-field>
-            <input type="text" matInput formControlName="developerAccountNUmber"
-              [placeholder]="'Developer account number'| translate" />
+            <input
+              type="text"
+              matInput
+              formControlName="developerAccountNUmber"
+              [placeholder]="'Developer account number' | translate"
+            />
             <mat-error
-              *ngIf="form.controls.developerAccountNUmber.invalid || form.controls.developerAccountNUmber.untouched">
+              *ngIf="form.controls.developerAccountNUmber.invalid || form.controls.developerAccountNUmber.untouched"
+            >
               <span translate>mccrPoc.DevAccountNumber</span>
             </mat-error>
           </mat-form-field>
@@ -41,17 +43,11 @@
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
             <span translate>general.add</span>
           </button>
-          <button class="options" mat-raised-button color="primary" (click)="back()"><span
-              translate>general.cancel</span></button>
-
+          <button class="options" mat-raised-button color="primary" (click)="back()">
+            <span translate>general.cancel</span>
+          </button>
         </div>
-
       </form>
     </mat-card-content>
-
-
-
   </mat-card>
-
-
 </div>

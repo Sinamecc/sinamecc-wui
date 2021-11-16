@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SharedModule } from '@app/shared';
+import { SharedModule } from '@shared';
 
 describe('AdminEditPasswordDialogComponent', () => {
   let component: AdminEditPasswordDialogComponent;
@@ -25,11 +25,10 @@ describe('AdminEditPasswordDialogComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        SharedModule
+        SharedModule,
       ],
-      declarations: [ AdminEditPasswordDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminEditPasswordDialogComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Groups } from '../../groups';
-import { AdminService } from '../../admin.service';
-import { MatDialogConfig, MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
-import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
-import { Observable } from 'rxjs/Observable';
-import { DataSource } from '@angular/cdk/table';
-
+import { Groups } from '@app/admin/groups';
+import { Observable } from 'rxjs';
+import { AdminService } from '@app/admin/admin.service';
+import { DataSource } from '@angular/cdk/collections';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 
 export class GroupsDataSource extends DataSource<any> {
-
   groups: Groups[];
   groups$: Observable<Groups[]>;
 
@@ -23,24 +23,24 @@ export class GroupsDataSource extends DataSource<any> {
     });
     return this.groups$;
   }
-  disconnect() { }
-
+  disconnect() {}
 }
+
 @Component({
   selector: 'app-admin-groups',
   templateUrl: './admin-groups.component.html',
-  styleUrls: ['./admin-groups.component.scss']
+  styleUrls: ['./admin-groups.component.scss'],
 })
 export class AdminGroupsComponent implements OnInit {
   displayedColumns = ['name', 'action'];
   dataSource: MatTableDataSource<Groups>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  fieldsToSearch: string[][] = [ ['label'] ];
+  fieldsToSearch: string[][] = [['label']];
 
-  constructor(private adminService: AdminService, public dialog: MatDialog) { }
+  constructor(private adminService: AdminService, public dialog: MatDialog) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadGroups();
   }
 
@@ -48,7 +48,6 @@ export class AdminGroupsComponent implements OnInit {
     const data = {
       title: 'Delete Group',
       question: 'general.youSure',
-
     };
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -56,7 +55,6 @@ export class AdminGroupsComponent implements OnInit {
     dialogConfig.data = data;
     dialogConfig.width = '350px';
     const dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
-
   }
 
   loadGroups() {
@@ -66,5 +64,4 @@ export class AdminGroupsComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
     });
   }
-
 }

@@ -16,14 +16,16 @@
         <div fxLayout="column">
           <br />
           <mat-card formArrayName="files">
-            <mat-card-title translate><strong>PPCN ID : </strong> {{ppcn.id}} -  <strong>PPCN </strong> {{ ppcn.organization.name }}</mat-card-title>
+            <mat-card-title translate
+              ><strong>PPCN ID : </strong> {{ ppcn.id }} - <strong>PPCN </strong>
+              {{ ppcn.organization.name }}
+            </mat-card-title>
             <mat-divider></mat-divider>
 
             <!-- loop throught units -->
-            <div *ngFor="let file of form.controls.files.controls; let i=index">
-
+            <div *ngFor="let file of form.get('files')['controls']; let i = index">
               <!-- row divider show for every nex row exclude if first row -->
-              <mat-divider *ngIf="form.controls.files.controls.length > 1 && i > 0"></mat-divider><br />
+              <mat-divider *ngIf="form.get('files')['controls'].length > 1 && i > 0"></mat-divider><br />
 
               <!-- group name in this case row index -->
               <div [formGroupName]="i">
@@ -32,17 +34,22 @@
                     <div>
                       <mat-card fxLayout="row" fxLayoutAlign="start center" class="document-card">
                         <div>
-                          <mat-icon  [style.font-size.px]="50">picture_as_pdf</mat-icon>
+                          <mat-icon [style.font-size.px]="50">picture_as_pdf</mat-icon>
                         </div>
-                        <div class="description-section" fxLayout="column"  fxLayoutAlign="start start" >
-                          <mat-card-title translate>{{fileDetail[i].name}}</mat-card-title>
-                          <mat-card-subtitle translate>{{fileDetail[i].description}}</mat-card-subtitle>
+                        <div class="description-section" fxLayout="column" fxLayoutAlign="start start">
+                          <mat-card-title translate>{{ fileDetail[i].name }}</mat-card-title>
+                          <mat-card-subtitle translate>{{ fileDetail[i].description }}</mat-card-subtitle>
                         </div>
                         <span fxFlex></span>
-                        <div fxLayoutAlign=" end" >
-                          <app-input-file class="mat-raised-button mat-primary" formControlName="file"
-                            [placeholder]="'errorLabel.requiredInput' | translate" valuePlaceholder="No file selected"
-                            required accept="application/pdf">
+                        <div fxLayoutAlign=" end">
+                          <app-input-file
+                            class="mat-raised-button mat-primary"
+                            formControlName="file"
+                            [placeholder]="'errorLabel.requiredInput' | translate"
+                            valuePlaceholder="No file selected"
+                            required
+                            accept="application/pdf"
+                          >
                           </app-input-file>
                         </div>
                       </mat-card>
@@ -51,7 +58,6 @@
                     <mat-error *ngIf="file.controls.file.hasError('required')">
                       {{ 'reportData.selectFile' | translate }}
                     </mat-error>
-
                   </mat-form-field>
                   <!-- row delete button, hidden if there is just one row -->
                 </div>
@@ -61,8 +67,12 @@
             <!-- New unit button -->
             <mat-divider></mat-divider>
             <mat-card-actions>
-              <button mat-raised-button (click)="addFile()" type="button"
-                *ngIf="form.controls.files.controls.length <= 3">
+              <button
+                mat-raised-button
+                (click)="addFile()"
+                type="button"
+                *ngIf="form.get('files')['controls'].length <= 3"
+              >
                 <mat-icon>add box</mat-icon>
                 <span translate> Add new file</span>
               </button>
@@ -72,7 +82,7 @@
 
           <br />
 
-          <button mat-raised-button color="primary" type="submit" >
+          <button mat-raised-button color="primary" type="submit">
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
             <span translate>Submit Ppcn Files</span>
           </button>

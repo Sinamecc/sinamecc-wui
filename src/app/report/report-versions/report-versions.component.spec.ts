@@ -7,13 +7,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { LoaderComponent } from '@app/shared/loader/loader.component';
-import { I18nService, AuthenticationService, MockAuthenticationService } from '@app/core';
+import { LoaderComponent } from '@shared/loader/loader.component';
+import { I18nService } from '@app/i18n/i18n.service';
 import { ReportService } from '../report.service';
 import { MockReportService } from '../report.service.mock';
-import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
-import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
-import { CustomSearchBarComponent } from '@app/shared/custom-search-bar/custom-search-bar.component';
+import { GenericButtonComponent } from '@shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@shared/generic-button-secondary/generic-button-secondary.component';
+import { CustomSearchBarComponent } from '@shared/custom-search-bar/custom-search-bar.component';
 
 describe('ReportVersionsComponent', () => {
   let component: ReportVersionsComponent;
@@ -27,17 +27,17 @@ describe('ReportVersionsComponent', () => {
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
-      declarations: [ ReportVersionsComponent, LoaderComponent,
+      declarations: [
+        ReportVersionsComponent,
+        LoaderComponent,
         GenericButtonComponent,
         GenericButtonSecondaryComponent,
-        CustomSearchBarComponent ],
-      providers: [I18nService,
-        { provide: AuthenticationService, useClass: MockAuthenticationService },
-        { provide: ReportService, useClass: MockReportService }]
-    })
-    .compileComponents();
+        CustomSearchBarComponent,
+      ],
+      providers: [I18nService, { provide: ReportService, useClass: MockReportService }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

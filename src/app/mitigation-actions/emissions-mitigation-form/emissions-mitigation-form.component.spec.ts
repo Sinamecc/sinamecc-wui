@@ -8,12 +8,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, I18nService, S3Service } from '@app/core';
+import { CoreModule } from '@core';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
-import { MockI18nService } from '@app/core/i18n.service.mock';
-import { MockS3Service } from '@app/core/s3.service.mock';
-import { SharedModule } from '@app/shared';
+import { SharedModule, S3Service, MockS3Service } from '@shared';
 
 describe('EmissionsMitigationFormComponent', () => {
   let component: EmissionsMitigationFormComponent;
@@ -31,15 +29,18 @@ describe('EmissionsMitigationFormComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         CoreModule,
-        SharedModule
+        SharedModule,
       ],
-      declarations: [ EmissionsMitigationFormComponent ],
-      providers: [ MockS3Service,
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService},
-        { provide: S3Service, useClass: MockS3Service}
-      ]
-    })
-    .compileComponents();
+      declarations: [EmissionsMitigationFormComponent],
+      providers: [
+        MockS3Service,
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
+        { provide: S3Service, useClass: MockS3Service },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

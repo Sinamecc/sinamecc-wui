@@ -1,5 +1,5 @@
 # Stage 0, based on Node.js, to build and compile Angular
-FROM node:carbon as node
+FROM node:gallium as node
 
 WORKDIR /app
 

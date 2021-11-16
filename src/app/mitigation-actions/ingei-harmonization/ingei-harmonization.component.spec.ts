@@ -7,11 +7,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { DownloadProposalComponent } from '@app/shared/download-proposal/download-proposal.component';
-import { I18nService } from '@app/core';
-import { MockI18nService } from '@app/core/i18n.service.mock';
-import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
-import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
+import { GenericButtonComponent, DownloadProposalComponent, GenericButtonSecondaryComponent } from '@shared';
+import { I18nService } from '@app/i18n';
+import { MockI18nService } from '@app/i18n/i18n.service.mock';
 
 describe('IngeiHarmonizationComponent', () => {
   let component: IngeiHarmonizationComponent;
@@ -25,13 +23,16 @@ describe('IngeiHarmonizationComponent', () => {
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
-      declarations: [ IngeiHarmonizationComponent, DownloadProposalComponent, GenericButtonComponent,
-        GenericButtonSecondaryComponent ],
-      providers: [ { provide: I18nService, useClass: MockI18nService } ]
-    })
-    .compileComponents();
+      declarations: [
+        IngeiHarmonizationComponent,
+        DownloadProposalComponent,
+        GenericButtonComponent,
+        GenericButtonSecondaryComponent,
+      ],
+      providers: [{ provide: I18nService, useClass: MockI18nService }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

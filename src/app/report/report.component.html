@@ -1,6 +1,5 @@
 <mat-toolbar>
   <div class="section-heading" translate>reportData.dataReport</div>
-
 </mat-toolbar>
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
@@ -14,43 +13,42 @@
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef translate> info.name </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
     </ng-container>
 
     <!-- Last Active Version -->
     <ng-container matColumnDef="last_active_version">
       <mat-header-cell *matHeaderCellDef translate> reportData.lastActiveVer </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.last_active_version}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.last_active_version }} </mat-cell>
     </ng-container>
 
     <!-- Created Column -->
     <ng-container matColumnDef="updated">
       <mat-header-cell *matHeaderCellDef translate>general.lastUpdate </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.updated | date:"MM/dd/yyy hh:mm:ss"}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.updated | date: 'MM/dd/yyy hh:mm:ss' }} </mat-cell>
     </ng-container>
 
     <!-- Updates Column -->
     <ng-container matColumnDef="created">
       <mat-header-cell *matHeaderCellDef translate> general.createdAt </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.created | date:"MM/dd/yyy hh:mm:ss"}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.created | date: 'MM/dd/yyy hh:mm:ss' }} </mat-cell>
     </ng-container>
 
     <!-- Versions Column -->
     <ng-container matColumnDef="versions">
       <mat-header-cell *matHeaderCellDef translate>general.versions </mat-header-cell>
-      <mat-cell *matCellDef="let element"><a mat-button
-          routerLink="/report/{{element.id}}/versions">{{element.versions}}</a></mat-cell>
+      <mat-cell *matCellDef="let element"
+        ><a mat-button routerLink="/report/{{ element.id }}/versions">{{ element.versions }}</a></mat-cell
+      >
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
 
   <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
   </mat-paginator>
-
 </div>
-
 <br />
 
 <div class="box-button">

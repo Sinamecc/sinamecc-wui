@@ -8,12 +8,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule } from '@app/core';
+import { CoreModule } from '@core';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { MockS3Service } from '@app/core/s3.service.mock';
-import { SharedModule } from '@app/shared';
+import { MockS3Service } from '@shared/s3.service.mock';
+import { SharedModule } from '@shared';
 
 describe('BasicInformationFormComponent', () => {
   let component: BasicInformationFormComponent;
@@ -31,21 +31,25 @@ describe('BasicInformationFormComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         CoreModule,
-        SharedModule
+        SharedModule,
       ],
-      declarations: [ BasicInformationFormComponent ],
-      providers: [ MockS3Service,
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService},
+      declarations: [BasicInformationFormComponent],
+      providers: [
+        MockS3Service,
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
         {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
-              paramMap: convertToParamMap({id: '1'})
-            }
-          }
-        }]
-    })
-    .compileComponents();
+              paramMap: convertToParamMap({ id: '1' }),
+            },
+          },
+        },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

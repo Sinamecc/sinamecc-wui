@@ -8,9 +8,8 @@ describe('ReportingClimateActionFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReportingClimateActionFormComponent ]
-    })
-    .compileComponents();
+      declarations: [ReportingClimateActionFormComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

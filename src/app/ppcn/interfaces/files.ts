@@ -1,4 +1,4 @@
 export interface Files {
-    name: string;
-    file: string;
+  name: string;
+  file: string;
 }

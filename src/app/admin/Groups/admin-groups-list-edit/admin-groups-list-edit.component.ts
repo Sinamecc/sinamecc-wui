@@ -1,19 +1,18 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
-import { GroupsDataSource } from '../admin-groups/admin-groups.component';
-import { Groups } from '../../groups';
-import { AdminService } from '../../admin.service';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+import { Groups } from '@app/admin/groups';
+import { MatPaginator } from '@angular/material/paginator';
+import { AdminService } from '@app/admin/admin.service';
 
 @Component({
   selector: 'app-admin-groups-list-edit',
   templateUrl: './admin-groups-list-edit.component.html',
-  styleUrls: ['./admin-groups-list-edit.component.scss']
+  styleUrls: ['./admin-groups-list-edit.component.scss'],
 })
 export class AdminGroupsListEditComponent implements OnInit, AfterViewInit {
-
   displayedColumns = ['name', 'action'];
   dataSource: MatTableDataSource<Groups>;
-  @Input() dataTable: Groups [];
+  @Input() dataTable: Groups[];
   @Input() userGroups: Groups[];
 
   public groups: Groups[];
@@ -25,11 +24,12 @@ export class AdminGroupsListEditComponent implements OnInit, AfterViewInit {
     this.paginator = mp;
     this.dataSource.paginator = this.paginator;
   }
+
   constructor(private adminService: AdminService) {
     this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
-   }
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
     this.initTempList();
   }
@@ -53,25 +53,25 @@ export class AdminGroupsListEditComponent implements OnInit, AfterViewInit {
   }
 
   containsGroups(idGroup: string) {
-    return this.userGroups.some(group => group.id === idGroup);
+    return this.userGroups.some((group) => group.id === idGroup);
   }
 
   add(group: Groups) {
     this.newListOfUserGroups.push(group);
-    this.listOfDeleteUserGroups = this.listOfDeleteUserGroups.filter(groups =>  groups.id === group.id);
+    this.listOfDeleteUserGroups = this.listOfDeleteUserGroups.filter((groups) => groups.id === group.id);
     this.userGroups.push(group);
   }
+
   remove(group: Groups) {
     this.listOfDeleteUserGroups.push(group);
-    this.newListOfUserGroups = this.newListOfUserGroups.filter(groups =>  groups.id !== group.id);
-    this.userGroups = this.userGroups.filter(groups =>  groups.id !== group.id);
+    this.newListOfUserGroups = this.newListOfUserGroups.filter((groups) => groups.id !== group.id);
+    this.userGroups = this.userGroups.filter((groups) => groups.id !== group.id);
   }
 
   getRemoveGroups() {
     const removePerm: Groups[] = [];
-    const filteredGroups = this.groups.filter(useGroup => !this.containsGroups(useGroup.id));
+    const filteredGroups = this.groups.filter((useGroup) => !this.containsGroups(useGroup.id));
     removePerm.push(...filteredGroups);
     return removePerm;
   }
-
 }

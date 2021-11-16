@@ -1,8 +1,11 @@
-<app-update-status *ngIf="mccrRegistryObservable | async" [title]="title"
-              [nextRoute]="nextRoute"
-              [entity]="mccrRegistry"
-              [formData]="formData"
-              [formSubmitRoute]="formSubmitRoute"
-              [statusses]="statusses"
-              [shouldDisplayComment]="shouldDisplayComment"
-              (formSubmitted)="onSubmission($event)"></app-update-status>
+<app-update-status
+  *ngIf="mccrRegistryObservable | async"
+  [title]="title"
+  [nextRoute]="nextRoute"
+  [entity]="mccrRegistry"
+  [formData]="formData"
+  [formSubmitRoute]="formSubmitRoute"
+  [statuses]="statuses"
+  [shouldDisplayComment]="shouldDisplayComment"
+  (formSubmitted)="onSubmission($event)"
+></app-update-status>

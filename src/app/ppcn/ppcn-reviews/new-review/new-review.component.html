@@ -1,3 +1,10 @@
-<app-update-status *ngIf="ppcnObservable | async" [title]="title" [nextRoute]="nextRoute" [entity]="ppcn"
-  [formData]="formData" [formSubmitRoute]="formSubmitRoute" [statusses]="statusses"
-  (formSubmitted)="onSubmission($event)" [module]="module"></app-update-status>
+<app-update-status
+  *ngIf="ppcnObservable | async"
+  [title]="title"
+  [nextRoute]="nextRoute"
+  [entity]="ppcn"
+  [formData]="formData"
+  [formSubmitRoute]="formSubmitRoute"
+  [statuses]="statuses"
+  (formSubmitted)="onSubmission($event)"
+></app-update-status>

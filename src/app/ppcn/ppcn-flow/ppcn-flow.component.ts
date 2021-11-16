@@ -1,107 +1,61 @@
-import {
-	Component,
-	OnInit,
-	ViewChild,
-	EventEmitter,
-	Output
-} from "@angular/core";
-import {
-	FormBuilder,
-	FormGroup,
-	Validators,
-	AbstractControl
-} from "@angular/forms";
-import { PpcnLevelComponent } from "app/ppcn/ppcn-level/ppcn-level.component";
-import { PpcnNewComponent } from "app/ppcn/ppcn-new/ppcn-new.component";
-import { PpcnService } from "@app/ppcn/ppcn.service";
-import { DownloadProposalComponent } from "@app/shared/download-proposal/download-proposal.component";
-import { PpcnUploadComponent } from "@app/ppcn/ppcn-upload/ppcn-upload.component";
-import { Router } from "@angular/router";
-import { I18nService } from "@app/core";
-import { Ppcn } from "../ppcn_registry";
+import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
+import { PpcnLevelComponent } from '@app/ppcn/ppcn-level/ppcn-level.component';
+import { PpcnNewComponent } from '@app/ppcn/ppcn-new/ppcn-new.component';
+import { DownloadProposalComponent } from '@shared/download-proposal/download-proposal.component';
+import { PpcnUploadComponent } from '@app/ppcn/ppcn-upload/ppcn-upload.component';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { PpcnService } from '@app/ppcn/ppcn.service';
 
 @Component({
-	selector: "app-ppcn-flow",
-	templateUrl: "./ppcn-flow.component.html",
-	styleUrls: ["./ppcn-flow.component.scss"]
+  selector: 'app-ppcn-flow',
+  templateUrl: './ppcn-flow.component.html',
+  styleUrls: ['./ppcn-flow.component.scss'],
 })
 export class PpcnFlowComponent implements OnInit {
-	@ViewChild("PpcnLevelComponent") geographicLvl: PpcnLevelComponent;
-	@ViewChild("PpcnNewComponent") ppcnForm: PpcnNewComponent;
-	@ViewChild("DownloadProposalComponent")
-	downloadProposal: DownloadProposalComponent;
-	@ViewChild("PpcnUploadComponent") uploadFiles: PpcnUploadComponent;
-	@ViewChild("stepper") stepper: any;
+  @ViewChild('PpcnLevelComponent') geographicLvl: PpcnLevelComponent;
+  @ViewChild('PpcnNewComponent') ppcnForm: PpcnNewComponent;
+  @ViewChild('DownloadProposalComponent') downloadProposal: DownloadProposalComponent;
+  @ViewChild('PpcnUploadComponent') uploadFiles: PpcnUploadComponent;
 
-	mainGroup: FormGroup;
+  mainGroup: FormGroup;
 
-	get formArray(): AbstractControl | null {
-		return this.mainGroup.get("formArray");
-	}
-	isLinear = true;
-	formData: FormData;
-	isLoading = false;
-	generalFormData: FormData;
-	levelId = "1";
+  get formArray(): AbstractControl | null {
+    return this.mainGroup.get('formArray');
+  }
+  isLinear = true;
+  formData: FormData;
+  isLoading = false;
+  generalFormData: FormData;
+  levelId = '1';
 
-	editLevel = "-1";
+  constructor(private _formBuilder: FormBuilder, private service: PpcnService) {
+    this.formData = new FormData();
+    this.createForm();
+  }
 
-	editForm: boolean;
-	idPpcnEdit: string;
-	ppcnEdit: Ppcn;
+  ngOnInit(): void {
+    this.service.currentLevelId.subscribe((levelId: string) => (this.levelId = levelId));
+  }
 
-	constructor(
-		private _formBuilder: FormBuilder,
-		private service: PpcnService,
-		private router: Router,
-		private i18nService: I18nService
-	) {
-		this.formData = new FormData();
-		this.createForm();
-	}
+  createForm() {
+    this.mainGroup = this._formBuilder.group({
+      formArray: this._formBuilder.array([this.frmGeographic, this.frmPpcn]),
+    });
+  }
 
-	ngOnInit() {
-		this.service.currentLevelId.subscribe((levelId: string) => {
-			this.levelId = levelId.toString();
-		});
+  get frmGeographic() {
+    return this.geographicLvl ? this.geographicLvl.form : null;
+  }
 
-		this.editForm = this.router.url.includes("edit") ? true : false;
-		if (this.editForm) {
-			this.idPpcnEdit = this.router.url.split("/").splice(-1)[0];
-			this.getEditPpcn(this.idPpcnEdit);
-		}
-	}
+  get frmPpcn() {
+    return this.ppcnForm ? this.ppcnForm.formGroup : null;
+  }
 
-	getEditPpcn(id: string) {
-		this.service
-			.getPpcn(id, this.i18nService.language.split("-")[0])
-			.subscribe((response: Ppcn) => {
-				this.editLevel = response.geographic_level.id.toString();
-				this.ppcnEdit = response;
-				this.levelId = this.ppcnEdit.geographic_level.id.toString();
-				this.stepper.next();
-			});
-	}
+  get frmDownload() {
+    return this.downloadProposal ? this.downloadProposal.fileName : null;
+  }
 
-	createForm() {
-		this.mainGroup = this._formBuilder.group({
-			formArray: this._formBuilder.array([this.frmGeographic, this.frmPpcn])
-		});
-	}
-
-	get frmGeographic() {
-		return this.geographicLvl ? this.geographicLvl.form : null;
-	}
-
-	get frmPpcn() {
-		return this.ppcnForm ? this.ppcnForm.formGroup : null;
-	}
-
-	get frmDownload() {
-		return this.downloadProposal ? this.downloadProposal.fileName : null;
-	}
-
-	get frmUpload() {
-		return this.uploadFiles ? this.uploadFiles.form : null;
-	}
+  get frmUpload() {
+    return this.uploadFiles ? this.uploadFiles.form : null;
+  }
 }

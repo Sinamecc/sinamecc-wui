@@ -4,19 +4,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from '@app/material.module';
-import { AboutRoutingModule } from '@app/about/about-routing.module';
-import { AboutComponent } from '@app/about/about.component';
+import { AboutRoutingModule } from './about-routing.module';
+import { AboutComponent } from './about.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    FlexLayoutModule,
-    MaterialModule,
-    AboutRoutingModule
-  ],
-  declarations: [
-    AboutComponent
-  ]
+  imports: [CommonModule, TranslateModule, FlexLayoutModule, MaterialModule, AboutRoutingModule],
+  declarations: [AboutComponent],
 })
-export class AboutModule { }
+export class AboutModule {}

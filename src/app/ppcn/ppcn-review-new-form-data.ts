@@ -1,7 +1,7 @@
 export interface PpcnReviewNewFormData {
-    statuses: ReviewStatus[];
+  statuses: ReviewStatus[];
 }
 
 export interface ReviewStatus {
-    status: string;
+  status: string;
 }

@@ -5,18 +5,17 @@ import { finalize } from 'rxjs/operators';
 import { AdminService } from '@app/admin/admin.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
-import { Logger } from '@app/core';
-import { MatSnackBar } from '@angular/material';
+import { Logger } from '@core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('CreatePermission');
 
 @Component({
   selector: 'app-admin-permissions-new',
   templateUrl: './admin-permissions-new.component.html',
-  styleUrls: ['./admin-permissions-new.component.scss']
+  styleUrls: ['./admin-permissions-new.component.scss'],
 })
 export class AdminPermissionsNewComponent implements OnInit {
-
   createPermissionsForm: FormGroup;
   isLoading = false;
   error: string;
@@ -28,18 +27,19 @@ export class AdminPermissionsNewComponent implements OnInit {
 
   name: string;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private service: AdminService,
     private translateService: TranslateService,
     private router: Router,
     public snackBar: MatSnackBar
-    ) {
+  ) {
     this.createForm();
     this.contentTypeMap = new Map<string, number>();
     this.contentTypeMap.set('mccr', 1);
     this.contentTypeMap.set('ma', 2);
     this.contentTypeMap.set('ppcn', 3);
-    this.contentTypeMap.set('report', 4, );
+    this.contentTypeMap.set('report', 4);
     this.name = '';
   }
 
@@ -54,35 +54,38 @@ export class AdminPermissionsNewComponent implements OnInit {
   }
 
   submitForm(value: string) {
-
-    this.createPermissionsForm.value.codename = `${value}_${this.createPermissionsForm.value.name
-      .replace(new RegExp(' ', 'g'), '_')}`;
+    this.createPermissionsForm.value.codename = `${value}_${this.createPermissionsForm.value.name.replace(
+      new RegExp(' ', 'g'),
+      '_'
+    )}`;
     this.createPermissionsForm.value.content_type = this.contentTypeMap.get(value);
 
     if (this.createPermissionsForm.value.name.length <= 80) {
       if (this.edit) {
-
       } else {
-
         this.isLoading = true;
-        this.service.submitCreatePermissions(this.createPermissionsForm.value)
-        .pipe(finalize(() => {
-          this.createPermissionsForm.markAsPristine();
-          this.isLoading = false;
-        }))
-        .subscribe(response => {
-          this.translateService.get('Sucessfully submitted form')
-            .subscribe((res: string) => { this.snackBar.open(res, null, {duration: 3000 }); });
-          log.debug(`${response.statusCode} status code received from create permissions `);
-          this.router.navigate([`/home`], { replaceUrl: true });
-
-        }, error => {
-          log.debug(`Create permission error: ${error}`);
-          this.error = error;
-        });
-
+        this.service
+          .submitCreatePermissions(this.createPermissionsForm.value)
+          .pipe(
+            finalize(() => {
+              this.createPermissionsForm.markAsPristine();
+              this.isLoading = false;
+            })
+          )
+          .subscribe(
+            (response) => {
+              this.translateService.get('Sucessfully submitted form').subscribe((res: string) => {
+                this.snackBar.open(res, null, { duration: 3000 });
+              });
+              log.debug(`${response.statusCode} status code received from create permissions `);
+              this.router.navigate([`/home`], { replaceUrl: true });
+            },
+            (error) => {
+              log.debug(`Create permission error: ${error}`);
+              this.error = error;
+            }
+          );
       }
-
     }
   }
 
@@ -93,6 +96,4 @@ export class AdminPermissionsNewComponent implements OnInit {
       content_type: ['', Validators.required],
     });
   }
-
-
 }

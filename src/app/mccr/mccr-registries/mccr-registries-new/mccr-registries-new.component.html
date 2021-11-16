@@ -1,10 +1,5 @@
 <div class="container">
   <mat-card>
-    <!--<h1>
-      <mat-card-title translate>APP_NAME</mat-card-title>
-    
-      <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
-    </h1>-->
     <h3>
       <mat-card-title class="section-heading" translate>mccr.createMCCR</mat-card-title>
       <mat-divider class="divider-custom"></mat-divider>
@@ -12,14 +7,11 @@
     </h3>
     <mat-card-content>
       <form (ngSubmit)="submitForm()" *ngIf="mitigationActions | async" [formGroup]="form" novalidate>
-        <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
+        <div class="form-error" [hidden]="!error || isLoading" translate>
           <span translate>errorLabel.errorSubmittingForm</span>
-          <br />
-          <app-error-reporting #errorComponent></app-error-reporting>
         </div>
         <br />
         <div fxLayout="column">
-
           <mat-form-field>
             <mat-select formControlName="mitigationActionCtrl" [placeholder]="'mitigationAction.MA' | translate">
               <mat-option *ngFor="let mitigationAction of processedMitigationActions" [value]="mitigationAction.id">
@@ -33,32 +25,35 @@
             <mat-divider></mat-divider>
 
             <!-- loop throught units -->
-            <div *ngFor="let file of form.controls.files.controls; let i=index">
-
+            <div *ngFor="let file of form.controls['files']['controls']; let i = index">
               <!-- row divider show for every nex row exclude if first row -->
-              <mat-divider *ngIf="form.controls.files.controls.length > 1 && i > 0"></mat-divider><br />
+              <mat-divider *ngIf="form.controls['files']['controls'].length > 1 && i > 0"></mat-divider><br />
 
               <!-- group name in this case row index -->
               <div [formGroupName]="i">
                 <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="3.5%" fxLayoutAlign="center">
-
-
                   <mat-form-field class="input-full-width">
-                    <app-input-file class="mat-raised-button mat-primary" formControlName="file"
+                    <app-input-file
+                      class="mat-raised-button mat-primary"
+                      formControlName="file"
                       [placeholder]="'errorLabel.requiredInput' | translate"
-                      [valuePlaceholder]="'reportData.noFileSelected' | translate" required></app-input-file>
+                      [valuePlaceholder]="'reportData.noFileSelected' | translate"
+                      required
+                    ></app-input-file>
                     <mat-icon matSuffix>folder</mat-icon>
                     <mat-error *ngIf="file.controls.file.hasError('required')">
                       <span translate="">reportData.selectFile</span>
                     </mat-error>
-
                   </mat-form-field>
 
-
-
                   <!-- row delete button, hidden if there is just one row -->
-                  <button mat-mini-fab color="warn" *ngIf="form.controls.files.controls.length > 1"
-                    (click)="removeFile(i)" type="button">
+                  <button
+                    mat-mini-fab
+                    color="warn"
+                    *ngIf="form.controls['files']['controls'].length > 1"
+                    (click)="removeFile(i)"
+                    type="button"
+                  >
                     <mat-icon>delete forever</mat-icon>
                   </button>
                 </div>
@@ -69,16 +64,25 @@
             <mat-divider></mat-divider>
             <br />
             <mat-card-actions>
-              <app-generic-button class="white-button" (click)="addFile()"
-                *ngIf="form.controls.files.controls.length <= 10" name="reportData.addFile"></app-generic-button>
+              <app-generic-button
+                class="white-button"
+                (click)="addFile()"
+                *ngIf="form.controls['files']['controls'].length <= 10"
+                name="reportData.addFile"
+              ></app-generic-button>
             </mat-card-actions>
-          </mat-card> <!-- End form units array -->
+          </mat-card>
+          <!-- End form units array -->
           <br />
           <br />
         </div>
         <div class="box-button">
-          <app-generic-button type="submit" [disabled]="form.invalid || isLoading" routerLink="/mccr/registries/new"
-            name="mccr.submitMccr"></app-generic-button>
+          <app-generic-button
+            type="submit"
+            [disabled]="form.invalid || isLoading"
+            routerLink="/mccr/registries/new"
+            name="mccr.submitMccr"
+          ></app-generic-button>
           <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
         </div>
       </form>

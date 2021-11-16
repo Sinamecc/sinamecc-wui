@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-groups-new',
   templateUrl: './admin-groups-new.component.html',
-  styleUrls: ['./admin-groups-new.component.scss']
+  styleUrls: ['./admin-groups-new.component.scss'],
 })
 export class AdminGroupsNewComponent implements OnInit {
-
   createGroupForm: FormGroup;
   isLoading = false;
   error: string;
@@ -16,16 +15,13 @@ export class AdminGroupsNewComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {
     this.createForm();
     this.name = '';
-   }
-
-  ngOnInit() {
   }
 
+  ngOnInit(): void {}
 
   private createForm() {
     this.createGroupForm = this.formBuilder.group({
       name: ['', Validators.required],
     });
   }
-
 }

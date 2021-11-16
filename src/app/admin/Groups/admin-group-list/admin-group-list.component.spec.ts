@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedModule } from '@app/shared';
+import { SharedModule } from '@shared';
 
 describe('AdminGroupListComponent', () => {
   let component: AdminGroupListComponent;
@@ -13,24 +13,19 @@ describe('AdminGroupListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        BrowserAnimationsModule,
-        FlexLayoutModule,
-        TranslateModule.forRoot(),
-        SharedModule
-      ],
-      declarations: [ AdminGroupListComponent ],
-      providers: []
-    })
-    .compileComponents();
+      imports: [MaterialModule, BrowserAnimationsModule, FlexLayoutModule, TranslateModule.forRoot(), SharedModule],
+      declarations: [AdminGroupListComponent],
+      providers: [],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminGroupListComponent);
     component = fixture.componentInstance;
-    const groups = [{id: '01', label: 'admin', name: 'admin'},
-                     {id: '02', label: 'dcc', name: 'dcc'}];
+    const groups = [
+      { id: '01', label: 'admin', name: 'admin' },
+      { id: '02', label: 'dcc', name: 'dcc' },
+    ];
     component.dataTable = groups;
     fixture.detectChanges();
   });

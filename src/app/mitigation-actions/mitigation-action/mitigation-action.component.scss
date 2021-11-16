@@ -1,20 +1,18 @@
 @import "src/theme/theme-variables";
 
-
 .container {
   text-align: center;
   padding: 1rem;
 }
-  
+
 .mat-icon {
   vertical-align: middle;
 }
-  
 
 .report-error {
   color: mat-color($app-warn);
 }
 
-mat-divider{
+mat-divider {
   width: 100%;
 }

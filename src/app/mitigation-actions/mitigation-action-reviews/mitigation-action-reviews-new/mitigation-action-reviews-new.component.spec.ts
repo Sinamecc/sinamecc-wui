@@ -7,17 +7,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { UpdateStatusComponent } from '@app/shared/update-status/update-status.component';
-import { LoaderComponent } from '@app/shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, I18nService } from '@app/core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
-import { MockS3Service } from '@app/core/s3.service.mock';
-import { MockI18nService } from '@app/core/i18n.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
+import { MockI18nService } from '@app/i18n/i18n.service.mock';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { UpdateStatusService } from '@app/shared/update-status/update-status.service';
-import { MockUpdateStatusService } from '@app/shared/update-status/update-status.service.mock';
+import { CoreModule } from '@core';
+import { I18nService } from '@app/i18n';
+import { UpdateStatusComponent, LoaderComponent, UpdateStatusService, MockUpdateStatusService } from '@shared';
 
 describe('MitigationActionReviewsNewComponent', () => {
   let component: MitigationActionReviewsNewComponent;
@@ -34,24 +32,27 @@ describe('MitigationActionReviewsNewComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
       ],
-      declarations: [ MitigationActionReviewsNewComponent, UpdateStatusComponent, LoaderComponent ],
-      providers: [ MockS3Service,
+      declarations: [MitigationActionReviewsNewComponent, UpdateStatusComponent, LoaderComponent],
+      providers: [
+        MockS3Service,
         { provide: I18nService, useClass: MockI18nService },
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
         {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
-              paramMap: convertToParamMap({id: '1'})
-            }
-          }
+              paramMap: convertToParamMap({ id: '1' }),
+            },
+          },
         },
         { provide: UpdateStatusService, useClass: MockUpdateStatusService },
-      ]
-    })
-    .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -12,20 +12,20 @@
         <div class="report-error" [hidden]="!error || isLoading" translate>
           <span translate>errorLabel.errorSubmittingForm</span>
         </div>
-        <br/>
+        <br />
         <div fxLayout="column">
           <h3>
-            <span translate>info.code</span>:<span>{{mccrRegistry?.id}}</span>
+            <span translate>info.code</span>:<span>{{ mccrRegistry?.id }}</span>
           </h3>
           <mat-form-field>
-            <mat-select  formControlName="ovvCtrl" [placeholder]="'OVV' | translate">
+            <mat-select formControlName="ovvCtrl" [placeholder]="'OVV' | translate">
               <mat-option *ngFor="let ovv of ovvs" [value]="ovv.id">
                 {{ ovv.email }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <br/>
-          <br/>
+          <br />
+          <br />
           <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
             <span translate>specificLabel.assignOvv</span>

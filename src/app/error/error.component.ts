@@ -4,17 +4,14 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-error',
   templateUrl: './error.component.html',
-  styleUrls: ['./error.component.scss']
+  styleUrls: ['./error.component.scss'],
 })
 export class ErrorComponent implements OnInit {
+  constructor(private router: Router) {}
 
-  constructor(private router: Router, ) { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   goHome() {
     this.router.navigate([`/home`], { replaceUrl: true });
   }
-
 }

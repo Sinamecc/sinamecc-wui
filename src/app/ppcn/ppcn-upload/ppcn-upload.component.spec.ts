@@ -7,15 +7,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { LoaderComponent, InputFileComponent, SharedModule } from '@app/shared';
+import { LoaderComponent, SharedModule } from '@shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, I18nService } from '@app/core';
-import { MockS3Service } from '@app/core/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { PpcnService } from '../ppcn.service';
 import { MockPpcnService } from '../ppcn.service.mock';
-import { MockI18nService } from '@app/core/i18n.service.mock';
-import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
-import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
+import { MockI18nService } from '@app/i18n/i18n.service.mock';
+import { GenericButtonComponent } from '@shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@shared/generic-button-secondary/generic-button-secondary.component';
+import { CoreModule } from '@core';
+import { InputFileComponent } from '@shared/input-file/input-file.component';
+import { I18nService } from '@app/i18n';
 
 describe('PpcnUploadComponent', () => {
   let component: PpcnUploadComponent;
@@ -34,16 +36,19 @@ describe('PpcnUploadComponent', () => {
         ReactiveFormsModule,
         CoreModule,
       ],
-      declarations: [ PpcnUploadComponent, LoaderComponent, InputFileComponent,
+      declarations: [
+        PpcnUploadComponent,
+        LoaderComponent,
+        InputFileComponent,
         GenericButtonComponent,
-        GenericButtonSecondaryComponent, ],
+        GenericButtonSecondaryComponent,
+      ],
       providers: [
         MockS3Service,
         { provide: PpcnService, useClass: MockPpcnService },
-        { provide: I18nService, useClass: MockI18nService}
-      ]
-    })
-    .compileComponents();
+        { provide: I18nService, useClass: MockI18nService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

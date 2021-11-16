@@ -1,13 +1,21 @@
 {
-  "name": "sinamecc wui",
-  "short_name": "sinamecc wui",
-  "start_url": "index.html",
-  "display": "standalone",
-  "icons": [{
-    "src": "assets/ngx-rocket-logo.png",
-    "sizes": "512x512",
-    "type": "image/png"
-  }],
+  "name": "sinamecc-wui",
+  "short_name": "sinamecc-wui",
+  "theme_color": "#488aff",
   "background_color": "#488aff",
-  "theme_color": "#488aff"
+  "scope": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "assets/ngx-rocket-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/ngx-rocket-logo@192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
 }

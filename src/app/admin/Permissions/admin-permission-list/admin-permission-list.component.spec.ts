@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedModule } from '@app/shared';
+import { SharedModule } from '@shared';
 
 describe('AdminPermissionListComponent', () => {
   let component: AdminPermissionListComponent;
@@ -13,22 +13,15 @@ describe('AdminPermissionListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        BrowserAnimationsModule,
-        FlexLayoutModule,
-        TranslateModule.forRoot(),
-        SharedModule
-      ],
-      declarations: [ AdminPermissionListComponent ]
-    })
-    .compileComponents();
+      imports: [MaterialModule, BrowserAnimationsModule, FlexLayoutModule, TranslateModule.forRoot(), SharedModule],
+      declarations: [AdminPermissionListComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminPermissionListComponent);
     component = fixture.componentInstance;
-    const permissions = [{id: '01', name: 'test', codename: 'test codename' , content_type: 'fake content'}];
+    const permissions = [{ id: '01', name: 'test', codename: 'test codename', content_type: 'fake content' }];
 
     component.dataTable = permissions;
     fixture.detectChanges();

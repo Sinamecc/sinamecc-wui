@@ -7,15 +7,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { UploadProposalComponent } from '@app/shared/upload-proposal/upload-proposal.component';
-import { LoaderComponent, InputFileComponent } from '@app/shared';
-import { ByteFormatPipe } from '@app/shared/input-file/byte-format.pipe';
+import { LoaderComponent } from '@shared';
+import { ByteFormatPipe } from '@shared/input-file/byte-format.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, I18nService } from '@app/core';
-import { MockS3Service } from '@app/core/s3.service.mock';
+import { CoreModule } from '@core';
+import { MockS3Service } from '@shared/s3.service.mock';
 import { PpcnService } from '../ppcn.service';
 import { MockPpcnService } from '../ppcn.service.mock';
-import { MockI18nService } from '@app/core/i18n.service.mock';
+import { MockI18nService } from '@app/i18n/i18n.service.mock';
+import { InputFileComponent } from '@shared/input-file/input-file.component';
+import { I18nService } from '@app/i18n';
+import { UploadProposalComponent } from '@shared/upload-proposal/upload-proposal.component';
 
 describe('FileVersionComponent', () => {
   let component: FileVersionComponent;
@@ -32,20 +34,21 @@ describe('FileVersionComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
       ],
-      declarations: [FileVersionComponent,
+      declarations: [
+        FileVersionComponent,
         UploadProposalComponent,
         LoaderComponent,
         InputFileComponent,
-        ByteFormatPipe],
+        ByteFormatPipe,
+      ],
       providers: [
         MockS3Service,
         { provide: PpcnService, useClass: MockPpcnService },
-        { provide: I18nService, useClass: MockI18nService }
-      ]
-    })
-      .compileComponents();
+        { provide: I18nService, useClass: MockI18nService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

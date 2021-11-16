@@ -6,11 +6,10 @@
 
 .image-container {
   border-top: solid #2196f3;
-  background-image: url("assets/slider_2.jpeg");
+  background-image: url("/assets/slider_2.jpeg");
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: 100% 100%;
   width: 100%;
-  background-position: 0% 25%;
   height: 100%;
   filter: brightness(70%);
 }
@@ -21,12 +20,12 @@
   top: 30%;
 }
 
-.home-text {
+.custom-text {
   color: white;
   margin-left: 10%;
 }
 
-.home-button {
+.custom-button {
   margin-left: 10%;
   border-radius: 20px;
 }

@@ -8,10 +8,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule } from '@app/core';
-import { DownloadProposalComponent } from '@app/shared/download-proposal/download-proposal.component';
-import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
-import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
+import { CoreModule } from '@core';
+import { DownloadProposalComponent } from '@shared/download-proposal/download-proposal.component';
+import { GenericButtonComponent } from '@shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@shared/generic-button-secondary/generic-button-secondary.component';
 
 describe('ConceptualIntegrationComponent', () => {
   let component: ConceptualIntegrationComponent;
@@ -28,12 +28,15 @@ describe('ConceptualIntegrationComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
       ],
-      declarations: [ ConceptualIntegrationComponent, DownloadProposalComponent, GenericButtonComponent,
-        GenericButtonSecondaryComponent ]
-    })
-    .compileComponents();
+      declarations: [
+        ConceptualIntegrationComponent,
+        DownloadProposalComponent,
+        GenericButtonComponent,
+        GenericButtonSecondaryComponent,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -8,11 +8,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoaderComponent } from '@app/shared';
-import { I18nService } from '@app/core';
+import { LoaderComponent } from '@shared';
+import { I18nService } from '@app/i18n';
 import { MccrPocService } from '../mccr-poc.service';
 import { MockMccrPocService } from '../mccr-poc.service.mock';
-import { MockI18nService } from '@app/core/i18n.service.mock';
+import { MockI18nService } from '@app/i18n/i18n.service.mock';
 
 describe('MccrPocListComponent', () => {
   let component: MccrPocListComponent;
@@ -29,12 +29,12 @@ describe('MccrPocListComponent', () => {
         HttpClientTestingModule,
         ReactiveFormsModule,
       ],
-      declarations: [ MccrPocListComponent, LoaderComponent ],
-      providers: [{ provide: I18nService, useClass: MockI18nService},
-        { provide: MccrPocService, useClass: MockMccrPocService }
-      ]
-    })
-    .compileComponents();
+      declarations: [MccrPocListComponent, LoaderComponent],
+      providers: [
+        { provide: I18nService, useClass: MockI18nService },
+        { provide: MccrPocService, useClass: MockMccrPocService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

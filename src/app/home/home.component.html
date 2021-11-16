@@ -1,24 +1,39 @@
 <div class="main-div" [@fadeInOut]>
-  <div class="image-container">
-  </div>
+  <div class="image-container"></div>
   <div class="text-container">
-    <span class="mat-h1 home-text" translate>specificLabel.sinamecc</span>
+    <span class="mat-h1 custom-text" translate>specificLabel.sinamecc</span>
     <br />
     <br />
-    <span class="mat-h2 home-text" translate>specificLabel.learnMore</span>
+    <span class="mat-h2 custom-text" translate>specificLabel.learnMore</span>
     <br />
     <br />
-    <a class="home-button" mat-raised-button color="primary" href="http://www.sinamecc.go.cr/"><span
-        translate>specificLabel.goWebSite</span></a>
+    <a class="custom-button" mat-raised-button color="primary" href="http://www.sinamecc.go.cr/"
+      ><span translate>specificLabel.goWebSite</span></a
+    >
   </div>
   <div>
-
-    <div fxLayout="row" fxLayout.xs="column"  class="custom-container" fxLayoutAlign="start none" >
-      <div *ngFor="let item of availableDataImage"  fxFlex="20%" fxFlex.sm="calc(50%-25px)"  class="main-card-container" [@fadeInOut] >
-        <div *ngIf="showModule(permissions,item.moduleName)" [style.background-image]="item.image"
-          class="card-image-container"></div>
-        <div *ngIf="showModule(permissions,item.moduleName)" matRipple matRippleColor="rgb(61, 61, 61,0.5)"
-          (click)="goToSite(item.url)" class="card-container"><span class="mat-h2">{{item.name}}</span></div>
+    <div fxLayout="row" fxLayout.xs="column" class="custom-container">
+      <div
+        *ngFor="let item of dataImage"
+        fxFlex="20%"
+        fxFlex.sm="calc(50%-25px)"
+        class="main-card-container"
+        [@fadeInOut]
+      >
+        <div
+          *ngIf="showModule(permissions, item.moduleName)"
+          [style.background-image]="item.image"
+          class="card-image-container"
+        ></div>
+        <div
+          *ngIf="showModule(permissions, item.moduleName)"
+          matRipple
+          matRippleColor="rgb(61, 61, 61,0.5)"
+          (click)="goToSite(item.url)"
+          class="card-container"
+        >
+          <span class="mat-h2">{{ item.name }}</span>
+        </div>
       </div>
     </div>
   </div>

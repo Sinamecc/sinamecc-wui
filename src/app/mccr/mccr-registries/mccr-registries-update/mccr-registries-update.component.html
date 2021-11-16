@@ -1,9 +1,5 @@
 <div class="container">
   <mat-card>
-    <!--<h1>
-      <mat-card-title translate>APP_NAME</mat-card-title>
-      <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
-    </h1>-->
     <h3>
       <mat-card-title translate class="section-heading">mccr.EditMCCR</mat-card-title>
       <mat-divider class="divider-custom"></mat-divider>
@@ -16,7 +12,6 @@
         </div>
         <br />
         <div fxLayout="column">
-
           <mat-form-field>
             <mat-select formControlName="mitigation" placeholder="mitigationAction.MA" [compareWith]="compareIds">
               <mat-option *ngFor="let mitigationAction of processedMitigationActions" [value]="mitigationAction.id">
@@ -32,9 +27,6 @@
             <mat-error translate>errorLabel.inputInvalid</mat-error>
           </mat-form-field>
           <br />
-
-
-
         </div>
         <div class="box-button">
           <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">

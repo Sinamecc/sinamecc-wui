@@ -24,9 +24,8 @@ describe('ErrorComponent', () => {
         HttpClientTestingModule,
         ReactiveFormsModule,
       ],
-      declarations: [ ErrorComponent ]
-    })
-    .compileComponents();
+      declarations: [ErrorComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

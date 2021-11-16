@@ -1,23 +1,27 @@
-import { TestBed, inject } from '@angular/core/testing';
-
-import { ReportService } from '@app/report/report.service';
-import { AuthenticationService, MockAuthenticationService, S3Service } from '@app/core';
+import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MockS3Service } from '@app/core/s3.service.mock';
+import { CredentialsService } from '@app/auth';
+import { MockCredentialsService } from '@app/auth/credentials.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
+import { S3Service } from '@shared/s3.service';
+
+import { ReportService } from './report.service';
 
 describe('ReportService', () => {
+  let service: ReportService;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
+      imports: [HttpClientTestingModule],
+      providers: [
+        { provide: CredentialsService, useClass: MockCredentialsService },
+        { provide: S3Service, useClass: MockS3Service },
       ],
-      providers: [ReportService,
-        { provide: AuthenticationService, useClass: MockAuthenticationService },
-        { provide: S3Service, useClass: MockS3Service }]
     });
+    service = TestBed.inject(ReportService);
   });
 
-  it('should be created', inject([ReportService], (service: ReportService) => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
-  }));
+  });
 });

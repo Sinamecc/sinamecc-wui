@@ -9,19 +9,19 @@
       </mat-card-subtitle>
       <div class="container" [hidden]="isLoading">
         <h3 translate class="text-color">info.generalData</h3>
-        <strong translate>info.code</strong>: {{mccrRegistry?.id}} <br />
-        <strong translate>mitigationAction.MA</strong>: {{mccrRegistry?.mitigation}} <br />
-        <strong translate>general.status</strong>: {{mccrRegistry?.fsm_state}} <br />
-        <!--<mat-divider></mat-divider>-->
+        <strong translate>info.code</strong>: {{ mccrRegistry?.id }} <br />
+        <strong translate>mitigationAction.MA</strong>: {{ mccrRegistry?.mitigation }} <br />
+        <strong translate>general.status</strong>: {{ mccrRegistry?.fsm_state }} <br />
         <h3 translate class="text-color">reportData.files</h3>
         <div>
           <ul>
             <li *ngFor="let file of mccrRegistry?.files">
-
-              <span>{{file.name}}<button mat-icon-button color="primary" (click)="download(file.file)">
+              <span
+                >{{ file.name
+                }}<button mat-icon-button color="primary" (click)="download(file.file)">
                   <mat-icon color="white">vertical_align_bottom</mat-icon>
-                </button></span>
-
+                </button></span
+              >
             </li>
           </ul>
         </div>
@@ -29,23 +29,25 @@
         <div>
           <ul>
             <li *ngFor="let file of mccrRegistry?.workflow_step_files">
-
-              <span>{{file.name}}<button mat-icon-button color="primary" (click)="download(file.file)">
+              <span
+                >{{ file.name
+                }}<button mat-icon-button color="primary" (click)="download(file.file)">
                   <mat-icon color="white">vertical_align_bottom</mat-icon>
-                </button></span>
-
+                </button></span
+              >
             </li>
           </ul>
         </div>
-        <!--<mat-divider></mat-divider>-->
         <h3 class="text-color" translate>general.actions</h3>
-        <button mat-icon-button color="primary" *ngIf="mccrRegistry?.fsm_state !== 'end'"
-          (click)="addReview(mccrRegistry?.id)">
+        <button
+          mat-icon-button
+          color="primary"
+          *ngIf="mccrRegistry?.fsm_state !== 'end'"
+          (click)="addReview(mccrRegistry?.id)"
+        >
           <mat-icon color="white">navigate_next</mat-icon>Next State
         </button>
       </div>
-
     </mat-card-content>
   </mat-card>
-
 </div>
