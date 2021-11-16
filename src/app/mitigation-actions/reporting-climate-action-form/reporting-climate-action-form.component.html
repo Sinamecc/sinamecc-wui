@@ -114,8 +114,8 @@
               <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
                 <mat-label translate
                   ><span translate>mitigationAction.sourceType</span>
-                  {{ informationToUpdate.value === 3 ? '- Webservice' : '' }}</mat-label
-                >
+                  {{ informationToUpdate.value === 3 ? '- Webservice' : '' }}
+                </mat-label>
                 <input type="text" matInput formControlName="informationToUpdateCtrl" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
@@ -130,11 +130,8 @@
             </div>
 
             <div class="box-button">
-              <app-generic-button-secondary
-                type="button"
-                (click)="stepper.previous()"
-                name="general.back"
-              ></app-generic-button-secondary>
+              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
+              </app-generic-button-secondary>
               <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
@@ -171,11 +168,8 @@
             </mat-form-field>
 
             <div class="box-button">
-              <app-generic-button-secondary
-                type="button"
-                (click)="stepper.previous()"
-                name="general.back"
-              ></app-generic-button-secondary>
+              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
+              </app-generic-button-secondary>
               <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
             </div>
           </mat-step>
