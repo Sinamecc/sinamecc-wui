@@ -1,20 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from '@env/environment';
-
 import { Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from '@env/environment';
+import { DataSource } from '@angular/cdk/table';
+import { Observable } from 'rxjs';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
-import { Logger } from '@core';
-import { I18nService } from '@app/i18n';
-import { DataSource } from '@angular/cdk/table';
-import { TranslateService } from '@ngx-translate/core';
-import { CredentialsService } from '@app/auth';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
+import { Logger } from '@app/@core';
+import { I18nService } from '@app/i18n';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CredentialsService } from '@app/auth';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 const log = new Logger('Report');
 
@@ -34,7 +33,6 @@ export class MitigationActionSource extends DataSource<any> {
   }
   disconnect() {}
 }
-
 @Component({
   selector: 'app-mitigation-actions-list',
   templateUrl: './mitigation-actions-list.component.html',
@@ -61,7 +59,7 @@ export class MitigationActionsListComponent implements OnInit {
     private credentialsService: CredentialsService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadMAData();
   }
 
@@ -103,6 +101,10 @@ export class MitigationActionsListComponent implements OnInit {
     });
   }
 
+  // uploadProposal(uuid: string) {
+  //   this.router.navigate([`mitigation/actions/${uuid}/conceptual/integration/new`], { replaceUrl: true });
+  // }
+
   delete(uuid: string) {
     this.isLoading = true;
     this.service.deleteMitigationAction(uuid).subscribe(() => {
@@ -128,7 +130,7 @@ export class MitigationActionsListComponent implements OnInit {
     dialogConfig.width = '350px';
     const dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         this.delete(uuid);
       }

@@ -19,7 +19,7 @@ const log = new Logger('Report');
   styleUrls: ['./report-new.component.scss'],
 })
 export class ReportNewComponent implements OnInit {
-  value = 'example: email, web page, REST API Call, SFTP, FTP, WeTransfer, other.';
+  transferMethodToInstitutions = 'example: email, web page, REST API Call, SFTP, FTP, WeTransfer, other.';
   version: string = environment.version;
   error: string;
   reportForm: FormGroup;
@@ -78,7 +78,7 @@ export class ReportNewComponent implements OnInit {
       personName: [''],
       personLastName: [''],
       personEmail: [''],
-      sent: [''],
+      sent: [this.transferMethodToInstitutions],
       updatePeriod: [''],
       methodological: [''],
     });

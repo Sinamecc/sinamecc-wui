@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { CredentialsService } from '@app/auth';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { S3File, S3Service } from '@app/s3.service';
+import { S3File, S3Service } from '@shared/s3.service';
 import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
 import { map } from 'rxjs/operators';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
@@ -49,12 +49,6 @@ export class MccrRegistriesService {
   }
 
   submitMccrRegistryNewForm(context: any): Observable<Response> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-
     const fileList = context.files;
     const formData: FormData = new FormData();
     formData.append('mitigation', context.mitigationActionCtrl);
@@ -66,7 +60,7 @@ export class MccrRegistriesService {
         const fileToUpload = file.file.files[0];
         formData.append('files[]', fileToUpload, fileToUpload.name);
       }
-      return this.httpClient.post(routes.submitNewMccrRegistry(), formData, httpOptions).pipe(
+      return this.httpClient.post(routes.submitNewMccrRegistry(), formData, {}).pipe(
         map((body: any) => {
           const response = {
             statusCode: 200,
@@ -81,20 +75,9 @@ export class MccrRegistriesService {
   }
 
   submitMitigationActionUpdateForm(context: any, uuid: string): Observable<Response> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-
     context['user'] = String(this.credentialsService.credentials.id);
     context['user_type'] = String(1);
-    /*let formData: FormData = new FormData();
-    formData.append('mitigation', context.mitigationActionCtrl);
-    formData.append('user', String(this.authenticationService.credentials.id));
-    formData.append('user_type', String(1));
-    formData.append('status', 'updated'); */
-    return this.httpClient.put(routes.submitUpdateMccrRegistry(uuid), context, httpOptions).pipe(
+    return this.httpClient.put(routes.submitUpdateMccrRegistry(uuid), context, {}).pipe(
       map((body: any) => {
         const response = {
           statusCode: 200,
@@ -106,12 +89,7 @@ export class MccrRegistriesService {
   }
 
   newMccrRegistryFormData(): Observable<MitigationAction[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-    return this.httpClient.get(routes.seededFormData(), httpOptions).pipe(
+    return this.httpClient.get(routes.seededFormData(), {}).pipe(
       map((body: any) => {
         return body;
       })
@@ -119,12 +97,7 @@ export class MccrRegistriesService {
   }
 
   mccrRegistries(): Observable<MccrRegistry[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-    return this.httpClient.get(routes.mccrRegistries(), httpOptions).pipe(
+    return this.httpClient.get(routes.mccrRegistries(), {}).pipe(
       map((body: any) => {
         return body;
       })
@@ -132,13 +105,7 @@ export class MccrRegistriesService {
   }
 
   getMccrRegistry(uuid: string): Observable<MccrRegistry> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-
-    return this.httpClient.get(routes.getMccrRegistry(uuid), httpOptions).pipe(
+    return this.httpClient.get(routes.getMccrRegistry(uuid), {}).pipe(
       map((body: any) => {
         return body;
       })
@@ -146,14 +113,9 @@ export class MccrRegistriesService {
   }
 
   deleteMccrRegistry(uuid: string): Observable<{} | Object> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
     const url = routes.deleteMccrRegistry(uuid);
     // routes.deleteMitigationAction(uuid)
-    return this.httpClient.delete(url, httpOptions).pipe(
+    return this.httpClient.delete(url, {}).pipe(
       map((body: any) => {
         const response = {
           statusCode: 200,
@@ -165,13 +127,7 @@ export class MccrRegistriesService {
   }
 
   getOvvs(): Observable<Ovv[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-
-    return this.httpClient.get(routes.ovvs(), httpOptions).pipe(
+    return this.httpClient.get(routes.ovvs(), {}).pipe(
       map((body: any) => {
         return body;
       })
@@ -179,12 +135,7 @@ export class MccrRegistriesService {
   }
 
   submitOvvSelector(context: any, mccrUuid: string): Observable<Response> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-    return this.httpClient.patch(routes.patchOvv(context.ovvCtrl, mccrUuid), {}, httpOptions).pipe(
+    return this.httpClient.patch(routes.patchOvv(context.ovvCtrl, mccrUuid), {}, {}).pipe(
       map((body: any) => {
         const response = {
           statusCode: 200,
@@ -201,14 +152,35 @@ export class MccrRegistriesService {
 
   mapRoutesStatuses(uuid: string): StatusRoutesMap[] {
     return [
-      { route: `mccr/registries/${uuid}/ovv`, status: 'mccr_ovv_assigned_first_review' },
-      { route: `mccr/registries/${uuid}/ovv/proposal`, status: 'mccr_ovv_accept_assignation' },
-      { route: `mccr/registries/${uuid}`, status: 'mccr_secretary_get_dp_information' },
-      { route: `mccr/registries/${uuid}`, status: 'mccr_in_exec_committee_evaluation' },
-      { route: `mccr/registries/${uuid}`, status: 'mccr_secretary_get_report_information' },
-      { route: `mccr/registries/${uuid}`, status: 'mccr_ucc_in_exec_committee_evaluation' },
+      {
+        route: `mccr/registries/${uuid}/ovv`,
+        status: 'mccr_ovv_assigned_first_review',
+      },
+      {
+        route: `mccr/registries/${uuid}/ovv/proposal`,
+        status: 'mccr_ovv_accept_assignation',
+      },
+      {
+        route: `mccr/registries/${uuid}`,
+        status: 'mccr_secretary_get_dp_information',
+      },
+      {
+        route: `mccr/registries/${uuid}`,
+        status: 'mccr_in_exec_committee_evaluation',
+      },
+      {
+        route: `mccr/registries/${uuid}`,
+        status: 'mccr_secretary_get_report_information',
+      },
+      {
+        route: `mccr/registries/${uuid}`,
+        status: 'mccr_ucc_in_exec_committee_evaluation',
+      },
       // mccr_ucc_in_exec_committee_evaluation
-      { route: `mccr/registries/${uuid}/monitoring/proposal/new`, status: 'mccr_upload_report_sinamecc' },
+      {
+        route: `mccr/registries/${uuid}/monitoring/proposal/new`,
+        status: 'mccr_upload_report_sinamecc',
+      },
       {
         route: `mccr/registries/${uuid}/monitoring/verification/proposal/new`,
         status: 'mccr_ovv_upload_evaluation_monitoring',

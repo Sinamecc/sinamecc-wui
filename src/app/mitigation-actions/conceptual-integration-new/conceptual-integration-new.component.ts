@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '@env/environment';
-import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
-import { Observable } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { I18nService } from '@app/i18n';
 import { tap } from 'rxjs/operators';
+import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
+import { Observable } from 'rxjs';
+import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
+import { I18nService } from '@app/i18n';
 
 @Component({
   selector: 'app-conceptual-integration-new',
@@ -24,7 +24,6 @@ export class ConceptualIntegrationNewComponent implements OnInit {
   formSubmitRoute: string;
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private service: MitigationActionsService,
     private i18nService: I18nService
@@ -44,7 +43,7 @@ export class ConceptualIntegrationNewComponent implements OnInit {
       );
   }
 
-  ngOnInit(): void {}
+  ngOnInit() {}
 
   onSubmission(context: any) {
     this.formData.append('mitigation', context.entityCtrl);

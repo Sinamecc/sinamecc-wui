@@ -10,7 +10,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DownloadProposalComponent } from '@shared/download-proposal/download-proposal.component';
 import { PpcnService } from '../ppcn.service';
 import { MockPpcnService } from '../ppcn.service.mock';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { I18nService } from '@app/i18n';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
 import { GenericButtonComponent } from '@shared/generic-button/generic-button.component';

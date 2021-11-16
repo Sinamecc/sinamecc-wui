@@ -9,10 +9,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@core';
-import { MockS3Service } from '@app/s3.service.mock';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
-import { SharedModule } from '@shared';
+import { SharedModule, MockS3Service } from '@shared';
+import { DatePipe } from '@angular/common';
 
 describe('InitiativeFormComponent', () => {
   let component: InitiativeFormComponent;
@@ -33,7 +33,14 @@ describe('InitiativeFormComponent', () => {
         SharedModule,
       ],
       declarations: [InitiativeFormComponent],
-      providers: [MockS3Service, { provide: MitigationActionsService, useClass: MockMitigationActionsService }],
+      providers: [
+        MockS3Service,
+        DatePipe,
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
+      ],
     }).compileComponents();
   }));
 

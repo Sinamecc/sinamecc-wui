@@ -17,7 +17,7 @@ import { HarmonizationProposalNewComponent } from '@app/mitigation-actions/harmo
 
 const routes: Routes = [
   Route.withShell([
-    { path: '', redirectTo: 'mitigation/actionst', pathMatch: 'full' },
+    { path: '', redirectTo: 'mitigation/actions', pathMatch: 'full' },
     {
       path: 'mitigation/actions',
       component: MitigationActionsListComponent,

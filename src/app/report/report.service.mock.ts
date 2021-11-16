@@ -1,9 +1,9 @@
 import { Response, Version, Report, ReportContext } from './report.service';
 import { Observable } from 'rxjs';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { of } from 'rxjs';
 import * as _moment from 'moment';
-import { S3File } from '@app/s3.service';
+import { S3File } from '@shared/s3.service';
 const moment = _moment;
 
 export class MockReportService {

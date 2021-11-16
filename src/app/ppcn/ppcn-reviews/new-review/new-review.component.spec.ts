@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@core';
 import { UpdateStatusComponent } from '@app/ppcn/update-status/update-status.component';
 import { LoaderComponent } from '@shared';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 import { MockPpcnService } from '@app/ppcn/ppcn.service.mock';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';

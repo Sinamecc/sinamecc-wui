@@ -33,7 +33,7 @@ export class MitigationActionReviewsListComponent implements OnInit {
   dataSource = new MitigationActionReviewSource(this.service, this.route.snapshot.paramMap.get('id'));
   displayedColumns = ['date', 'current_status', 'previous_state'];
 
-  constructor(private router: Router, private route: ActivatedRoute, private service: MitigationActionsService) {
+  constructor(private route: ActivatedRoute, private service: MitigationActionsService) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 

@@ -11,8 +11,8 @@ import { OvvProposalComponent } from '@app/mccr/mccr-registries/ovv-proposal/ovv
 import { MaterialModule } from '@app/material.module';
 import { DownloadProposalComponent } from '@shared/download-proposal/download-proposal.component';
 import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
-import { MockS3Service } from '@app/s3.service.mock';
-import { S3Service } from '@app/s3.service';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
+import { S3Service } from '@shared/s3.service';
 import { GenericButtonComponent } from '@shared/generic-button/generic-button.component';
 import { GenericButtonSecondaryComponent } from '@shared/generic-button-secondary/generic-button-secondary.component';
 import { CustomSearchBarComponent } from '@shared/custom-search-bar/custom-search-bar.component';

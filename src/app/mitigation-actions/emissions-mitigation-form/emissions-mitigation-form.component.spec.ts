@@ -11,9 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@core';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
-import { MockS3Service } from '@app/s3.service.mock';
-import { S3Service } from '@app/s3.service';
-import { SharedModule } from '@shared';
+import { SharedModule, S3Service, MockS3Service } from '@shared';
 
 describe('EmissionsMitigationFormComponent', () => {
   let component: EmissionsMitigationFormComponent;
@@ -36,7 +34,10 @@ describe('EmissionsMitigationFormComponent', () => {
       declarations: [EmissionsMitigationFormComponent],
       providers: [
         MockS3Service,
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
         { provide: S3Service, useClass: MockS3Service },
       ],
     }).compileComponents();

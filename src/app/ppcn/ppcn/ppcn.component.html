@@ -1,108 +1,300 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <mat-card-title class="section-heading" translate>PPCN</mat-card-title>
+      <mat-card-title class="section-heading" translate
+        ><label>PPCN</label>
+        <button *ngIf="showComments" [routerLink]="'/ppcn/registries/edit/' + id" mat-icon-button color="primary">
+          <mat-icon color="white">edit</mat-icon>
+        </button>
+      </mat-card-title>
       <mat-divider class="divider-custom"></mat-divider>
       <mat-divider class="divider-custom"></mat-divider>
       <mat-card-subtitle>
         <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
       </mat-card-subtitle>
-      <div class="container" [hidden]="isLoading">
-        <h3 translate class="text-color">specificLabel.organizationInformation</h3>
-        <strong translate>ID</strong>: {{ ppcn?.organization?.id }} <br />
-        <strong translate>info.name</strong>: {{ ppcn?.organization?.name }} <br />
-        <strong translate>general.legalCertificate</strong>: {{ ppcn?.organization?.legal_identification }} <br />
-        <strong translate>specificLabel.representativeName</strong>: {{ ppcn?.organization?.representative_name }}
-        <br />
-        <strong translate>general.legalRepresentativeCertificate</strong>:
-        {{ ppcn?.organization?.representative_legal_identification }} <br />
-        <strong translate>info.phone</strong>: {{ ppcn?.organization?.phone_organization }} <br />
-        <strong translate>general.confidential</strong>: {{ ppcn?.organization?.confidential }}
-        <span *ngIf="ppcn?.organization?.confidential_fields"
-          ><span> : </span>{{ ppcn?.organization?.confidential_fields }}</span
-        ><br />
-        <strong translate>info.postalCode</strong>: {{ ppcn?.organization?.postal_code }} <br />
-        <strong translate>info.fax</strong>: {{ ppcn?.organization?.fax }} <br />
-        <strong translate>info.address</strong>: {{ ppcn?.organization?.address }} <br />
-        <strong translate>CIIU:</strong>: {{ ppcn?.organization?.ciiu }} <br />
-        <!--<mat-divider></mat-divider>-->
-        <h3 translate class="text-color">{{ 'info.contact' | translate }}</h3>
-        <strong translate>info.contactName</strong>: {{ ppcn?.organization?.contact.full_name }} <br />
-        <strong translate>info.contactPosition</strong>: {{ ppcn?.organization?.contact.job_title }} <br />
-        <strong translate>info.contactPhone</strong>: {{ ppcn?.organization?.contact.phone }} <br />
-        <strong translate>info.contactEmail</strong>: {{ ppcn?.organization?.contact.email }} <br />
-        <!--<mat-divider></mat-divider>-->
-        <h3 translate class="text-color">geographyLabel.requestLevel</h3>
-        <strong translate>geographyLabel.geographicLevel</strong>: {{ ppcn?.geographic_level?.level }} <br />
-        <strong translate>geographyLabel.requestLevel</strong>:
-        {{ ppcn?.organization_classification.required_level?.level_type }} <br />
-        <strong translate>geographyLabel.recognitionType</strong>:
-        {{ ppcn?.organization_classification.recognition_type?.recognition_type }} <br />
-        <strong translate>geographyLabel.classificationAmountEmissions</strong>:
-        {{ ppcn?.organization_classification.emission_quantity }} <br />
-        <strong translate>geographyLabel.classificationNumberFacilities</strong>:
-        {{ ppcn?.organization_classification.buildings_number }} <br />
-        <strong translate>geographyLabel.ClassificationAmountInventoryData</strong>:
-        {{ ppcn?.organization_classification.data_inventory_quantity }} <br />
-
-        <div *ngIf="ppcn?.organization_classification?.reduction">
-          <h3 translate class="text-color">geographyLabel.reduction</h3>
-          <strong translate>geographyLabel.reductionProyect</strong>:
-          {{ ppcn?.organization_classification?.reduction?.detail_reduction }} <br />
-          <strong translate>geographyLabel.activityReduction</strong>:
-          {{ ppcn?.organization_classification?.reduction?.activity }} <br />
-          <strong translate>geographyLabel.detailReduction</strong>:
-          {{ ppcn?.organization_classification?.reduction?.detail_reduction }} <br />
-          <strong translate>geographyLabel.reducedEmissions</strong>:
-          {{ ppcn?.organization_classification?.reduction?.emission }} <br />
-          <strong translate>geographyLabel.investmentReductions</strong>:
-          {{ ppcn?.organization_classification?.reduction?.investment }} <br />
-          <strong translate>geographyLabel.totalInversion</strong>:
-          {{ ppcn?.organization_classification?.reduction?.total_investment }} <br />
-          <strong translate>geographyLabel.totalReducedEmissions</strong>:
-          {{ ppcn?.organization_classification?.reduction?.total_emission }} <br />
-        </div>
-
-        <div *ngIf="ppcn?.organization_classification?.carbon_offset">
-          <h3 translate class="text-color">geographyLabel.compensations</h3>
-          <strong translate>geographyLabel.compensationScheme</strong>:
-          {{ ppcn?.organization_classification?.carbon_offset?.offset_scheme }} <br />
-          <strong translate>geographyLabel.projectLocation</strong>:
-          {{ ppcn?.organization_classification?.carbon_offset?.project_location }} <br />
-          <strong translate>geographyLabel.certificateNumber</strong>:
-          {{ ppcn?.organization_classification?.carbon_offset?.certificate_identification }} <br />
-          <strong translate>geographyLabel.totalCompensation</strong>:
-          {{ ppcn?.organization_classification?.carbon_offset?.total_carbon_offset }} <br />
-          <strong translate>geographyLabel.compensationCost</strong>:
-          {{ ppcn?.organization_classification?.carbon_offset?.offset_cost }} <br />
-          <strong translate>geographyLabel.period</strong>:
-          {{ ppcn?.organization_classification?.carbon_offset?.period }}
+      <div fxLayout="row" fxLayoutAlign="start start">
+        <div class="info-container" [hidden]="isLoading">
+          <h3 translate class="text-color">
+            specificLabel.organizationInformation
+            <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>mode_comment</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" class="comment-menu">
+              <app-generic-dialog-box
+                [moduleName]="'specificLabel.organizationInformation'"
+                [fieldsModule]="modulesToComment[0].fields"
+                [comments]="comments"
+              ></app-generic-dialog-box>
+            </mat-menu>
+          </h3>
+          <strong translate>ID</strong>: {{ ppcn?.organization?.id }} <br />
+          <strong translate>info.name</strong>: {{ ppcn?.organization?.name }} <br />
+          <strong translate>general.legalCertificate</strong>: {{ ppcn?.organization?.legal_identification }} <br />
+          <strong translate>specificLabel.representativeName</strong>: {{ ppcn?.organization?.representative_name }}
           <br />
-          <strong translate>geographyLabel.totalEmissionsOffsets</strong>:
-          {{ ppcn?.organization_classification?.carbon_offset?.total_offset_cost }} <br />
-        </div>
+          <strong translate>general.legalRepresentativeCertificate</strong>:
+          {{ ppcn?.organization?.representative_legal_identification }} <br />
+          <strong translate>info.phone</strong>: {{ ppcn?.organization?.phone_organization }} <br />
+          <strong translate>general.confidential</strong>: {{ ppcn?.organization?.confidential }}
+          <span *ngIf="ppcn?.organization?.confidential_fields"
+            ><span> : </span>{{ ppcn?.organization?.confidential_fields }}</span
+          ><br />
+          <strong translate>info.postalCode</strong>: {{ ppcn?.organization?.postal_code }} <br />
+          <strong translate>info.fax</strong>: {{ ppcn?.organization?.fax }} <br />
+          <strong translate>info.address</strong>: {{ ppcn?.organization?.address }} <br />
 
-        <!--<mat-divider></mat-divider>-->
-        <h3 translate class="text-color">specificLabel.GEIInformation</h3>
-        <strong translate>OVV:</strong> {{ ppcn?.gei_organization?.ovv?.name }} <br />
-        <strong translate>Emission Date:</strong> {{ ppcn?.gei_organization?.emission_ovv_date }} <br />
-        <strong translate>specificLabel.reportYear</strong>: {{ ppcn?.gei_organization?.report_year }} <br />
-        <strong translate>specificLabel.baseYear</strong>: {{ ppcn?.gei_organization?.base_year }} <br />
-        <div *ngFor="let activity of ppcn?.gei_organization?.gei_activity_types">
-          <strong translate>geographyLabel.sector</strong>: {{ activity.sector?.name }} <br />
-          <strong translate>geographyLabel.subsector</strong>: {{ activity.sub_sector?.name }} <br />
-          <strong translate>Activity carried out by organization:</strong> {{ activity.activity_type }} <br />
+          <strong translate>CIIU</strong>: <br />
+          <mat-chip-list fxLayout="row">
+            <mat-chip *ngFor="let ciuu of ppcn?.organization?.ciiu_code" color="primary"
+              >{{ ciuu.ciiu_code }}
+            </mat-chip>
+          </mat-chip-list>
+
+          <!--<mat-divider></mat-divider>-->
+          <h3 translate class="text-color">
+            {{ 'info.contact' | translate }}
+            <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="secondMenu">
+              <mat-icon>mode_comment</mat-icon>
+            </button>
+            <mat-menu #secondMenu="matMenu" class="comment-menu">
+              <app-generic-dialog-box
+                [moduleName]="'info.contact'"
+                [fieldsModule]="modulesToComment[1].fields"
+                [comments]="comments"
+              ></app-generic-dialog-box>
+            </mat-menu>
+          </h3>
+          <strong translate>info.contactName</strong>: {{ ppcn?.organization?.contact.full_name }} <br />
+          <strong translate>info.contactPosition</strong>: {{ ppcn?.organization?.contact.job_title }} <br />
+          <strong translate>info.contactPhone</strong>: {{ ppcn?.organization?.contact.phone }} <br />
+          <strong translate>info.contactEmail</strong>: {{ ppcn?.organization?.contact.email }} <br />
+          <!--<mat-divider></mat-divider>-->
+          <h3 translate class="text-color">
+            geographyLabel.requestLevel
+
+            <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="thirdMenu">
+              <mat-icon>mode_comment</mat-icon>
+            </button>
+            <mat-menu #thirdMenu="matMenu" class="comment-menu">
+              <app-generic-dialog-box
+                [moduleName]="'geographyLabel.requestLevel'"
+                [fieldsModule]="modulesToComment[2].fields"
+                [comments]="comments"
+              ></app-generic-dialog-box>
+            </mat-menu>
+          </h3>
+          <strong translate>geographyLabel.geographicLevel</strong>: {{ ppcn?.geographic_level?.level }} <br />
+          <strong translate>geographyLabel.requestLevel</strong>:
+          {{ ppcn?.organization_classification?.required_level?.level_type }} <br />
+          <strong translate>geographyLabel.recognitionType</strong>:
+          {{ ppcn?.organization_classification?.recognition_type?.recognition_type }} <br />
+          <strong translate>geographyLabel.classificationAmountEmissions</strong>:
+          {{ ppcn?.organization_classification?.emission_quantity }} <br />
+          <strong translate>geographyLabel.classificationNumberFacilities</strong>:
+          {{ ppcn?.organization_classification?.buildings_number }} <br />
+          <strong translate>geographyLabel.ClassificationAmountInventoryData</strong>:
+          {{ ppcn?.organization_classification?.data_inventory_quantity }} <br />
+
+          <div *ngIf="ppcn?.organization_classification?.reduction">
+            <h3 translate class="text-color">
+              geographyLabel.reduction
+
+              <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="fourMenu">
+                <mat-icon>mode_comment</mat-icon>
+              </button>
+              <mat-menu #fourMenu="matMenu" class="comment-menu">
+                <app-generic-dialog-box
+                  [moduleName]="'geographyLabel.reduction'"
+                  [fieldsModule]="modulesToComment[3].fields"
+                  [comments]="comments"
+                ></app-generic-dialog-box>
+              </mat-menu>
+            </h3>
+
+            <mat-accordion>
+              <mat-expansion-panel *ngFor="let reduction of ppcn?.organization_classification?.reduction">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ reduction.detail_reduction }}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <strong translate>geographyLabel.reductionProyect</strong>: {{ reduction?.detail_reduction }} <br />
+                <strong translate>geographyLabel.activityReduction</strong>: {{ reduction?.activity }} <br />
+                <strong translate>geographyLabel.detailReduction</strong>: {{ reduction?.detail_reduction }} <br />
+                <strong translate>geographyLabel.reducedEmissions</strong>: {{ reduction?.emission }} <br />
+                <strong translate>geographyLabel.investmentReductions</strong>: {{ reduction?.investment }} <br />
+                <strong translate>geographyLabel.totalInversion</strong>: {{ reduction?.total_investment }} <br />
+                <strong translate>geographyLabel.totalReducedEmissions</strong>: {{ reduction?.total_emission }} <br />
+              </mat-expansion-panel>
+            </mat-accordion>
+            <br />
+          </div>
+
+          <div *ngIf="ppcn?.organization_classification?.carbon_offset">
+            <h3 translate class="text-color">
+              geographyLabel.compensations
+
+              <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="fiveMenu">
+                <mat-icon>mode_comment</mat-icon>
+              </button>
+              <mat-menu #fiveMenu="matMenu" class="comment-menu">
+                <app-generic-dialog-box
+                  [moduleName]="'geographyLabel.compensations'"
+                  [fieldsModule]="modulesToComment[4].fields"
+                  [comments]="comments"
+                ></app-generic-dialog-box>
+              </mat-menu>
+            </h3>
+            <mat-accordion>
+              <mat-expansion-panel *ngFor="let compensations of ppcn?.organization_classification?.carbon_offset">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ compensations.certificate_identification }}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <strong translate>geographyLabel.compensationScheme</strong>: {{ compensations?.offset_scheme }} <br />
+                <strong translate>geographyLabel.projectLocation</strong>: {{ compensations?.project_location }} <br />
+                <strong translate>geographyLabel.certificateNumber</strong>:
+                {{ compensations?.certificate_identification }} <br />
+                <strong translate>geographyLabel.totalCompensation</strong>: {{ compensations?.total_carbon_offset }}
+                <br />
+                <strong translate>geographyLabel.compensationCost</strong>: {{ compensations?.offset_cost }} <br />
+                <strong translate>geographyLabel.period</strong>: {{ compensations?.period }}
+                <br />
+                <strong translate>geographyLabel.totalEmissionsOffsets</strong>: {{ compensations?.total_offset_cost }}
+                <br />
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+
+          <!--<mat-divider></mat-divider>-->
+          <h3 translate class="text-color">
+            specificLabel.GEIInformation
+
+            <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="sixMenu">
+              <mat-icon>mode_comment</mat-icon>
+            </button>
+            <mat-menu #sixMenu="matMenu" class="comment-menu">
+              <app-generic-dialog-box
+                [moduleName]="'specificLabel.GEIInformation'"
+                [fieldsModule]="modulesToComment[5].fields"
+                [comments]="comments"
+              ></app-generic-dialog-box>
+            </mat-menu>
+          </h3>
+          <strong translate>OVV:</strong> {{ ppcn?.gei_organization?.ovv?.name }} <br />
+          <strong translate>Emission Date:</strong> {{ ppcn?.gei_organization?.emission_ovv_date }} <br />
+          <strong translate>specificLabel.reportYear</strong>: {{ ppcn?.gei_organization?.report_year }} <br />
+          <strong translate>specificLabel.baseYear</strong>: {{ ppcn?.gei_organization?.base_year }} <br />
+          <div *ngFor="let activity of ppcn?.gei_organization?.gei_activity_types">
+            <strong translate>geographyLabel.sector</strong>: {{ activity.sector?.name }} <br />
+            <strong translate>geographyLabel.subsector</strong>: {{ activity.sub_sector?.name }} <br />
+            <strong translate>Activity carried out by organization:</strong> {{ activity.activity_type }} <br />
+          </div>
+
+          <div>
+            <h3 translate class="text-color">
+              ppcn.removals
+
+              <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="sevenMenu">
+                <mat-icon>mode_comment</mat-icon>
+              </button>
+              <mat-menu #sevenMenu="matMenu" class="comment-menu">
+                <app-generic-dialog-box
+                  [moduleName]="'specificLabel.GEIInformation'"
+                  [fieldsModule]="modulesToComment[6].fields"
+                  [comments]="comments"
+                ></app-generic-dialog-box>
+              </mat-menu>
+            </h3>
+            <mat-accordion>
+              <mat-expansion-panel *ngFor="let removal of ppcn?.gas_removal">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ removal.removal_descriptions }}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <strong translate>ppcn.costInventoryRemovals</strong>: {{ removal.removal_cost_currency }}
+                {{ removal.removal_cost }} <br />
+                <strong translate>ppcn.removalProjectDetail</strong>: {{ removal.removal_descriptions }} <br />
+                <strong translate>ppcn.totalRemovals</strong>: {{ removal.total }} <br />
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+
+          <strong translate>Status: </strong> {{ ppcn?.fsm_state }}<br />
+          <!--<mat-divider></mat-divider>-->
+          <h3 translate class="text-color">
+            reportData.files
+            <button *ngIf="edit" class="comment-button" mat-icon-button [matMenuTriggerFor]="eightMenu">
+              <mat-icon>mode_comment</mat-icon>
+            </button>
+            <mat-menu #eightMenu="matMenu" class="comment-menu">
+              <app-generic-dialog-box
+                [moduleName]="'reportData.files'"
+                [fieldsModule]="modulesToComment[7].fields"
+                [comments]="comments"
+              ></app-generic-dialog-box>
+            </mat-menu>
+          </h3>
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <label translate>reportData.files</label> - ({{ ppcn?.ppcn_files.length }})
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div *ngFor="let file of ppcn?.ppcn_files">
+                <mat-icon [style.font-size.px]="32">picture_as_pdf</mat-icon>
+                <strong [style.margin-left.px]="15">{{ file.name }}</strong>
+                <button mat-icon-button color="primary" (click)="download(file.file)">
+                  <mat-icon color="white">vertical_align_bottom</mat-icon>
+                </button>
+
+                <button (click)="getFileLink(file.file)" mat-icon-button>
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <mat-divider></mat-divider>
         </div>
-        <strong translate>Status: </strong> {{ ppcn?.fsm_state }}<br />
-        <!--<mat-divider></mat-divider>-->
-        <h3 translate class="text-color">Files</h3>
-        <div *ngFor="let file of ppcn?.files">
-          <strong translate>reportData.fileName</strong>: {{ file.name }}
-          <button mat-icon-button color="primary" (click)="download(file.file)">
-            <mat-icon color="white">vertical_align_bottom</mat-icon>
-          </button>
+        <br />
+        <br />
+        <div class="comment-container" *ngIf="edit || showComments">
+          <div fxLayout="row" class="comment-box-header">
+            <div class="image-container">
+              <img [src]="userImage" class="mat-elevation-z2 custom-image" />
+            </div>
+            <div [style.margin-lef.px]="15" fxLayout="row" fxLayoutAlign="start center">
+              <strong class="header-text"
+                ><label>{{ usernameComment }}</label></strong
+              >
+              ,
+              <label>{{ actualDate | date: 'yyyy-MM-dd' }}</label>
+            </div>
+          </div>
+          <div class="main-comment-container">
+            <div *ngFor="let module of comments" class="border-comment-container">
+              <div class="sub-comment-container">
+                <label class="mat-h2"
+                  ><strong>{{ module.module | translate }}</strong></label
+                >
+              </div>
+              <br />
+              <div class="mat-elevation-z2 sub-comment" *ngFor="let comment of module.comments">
+                <div>
+                  <label><strong>Fields :</strong></label>
+                  <label *ngFor="let field of comment.fields"> {{ field | translate }} ,</label>
+                </div>
+                <div>
+                  <label><strong>Comment</strong></label> <br />
+                  <label>{{ comment.comment }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <mat-divider></mat-divider>
       </div>
     </mat-card-content>
   </mat-card>

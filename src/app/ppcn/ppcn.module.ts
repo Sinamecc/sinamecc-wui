@@ -14,32 +14,25 @@ import { GasReportTableComponent } from './gas-report-table/gas-report-table.com
 import { PpcnUploadComponent } from './ppcn-upload/ppcn-upload.component';
 import { PpcnFlowComponent } from './ppcn-flow/ppcn-flow.component';
 import { PpcnComponent } from './ppcn/ppcn.component';
-import { PpcnUpdateComponent } from './ppcn-update/ppcn-update.component';
 import { PpcnDownloadComponent } from './ppcn-download/ppcn-download.component';
 import { FileVersionComponent } from './file-version/file-version.component';
-import { UploadProposalComponent } from '@app/ppcn/upload-proposal/upload-proposal.component';
-import { UploadProposalService } from '@app/ppcn/upload-proposal/upload-proposal.service';
-import { UpdateStatusComponent } from '@app/ppcn/update-status/update-status.component';
-import { UpdateStatusService } from '@app/ppcn/update-status/update-status.service';
 import { ReviewsListComponent } from './ppcn-reviews/reviews-list/reviews-list.component';
 import { NewReviewComponent } from './ppcn-reviews/new-review/new-review.component';
-
+import { GenericDialogBoxComponent } from './generic-dialog-box/generic-dialog-box.component';
 @NgModule({
   declarations: [
-    PpcnListComponent,
     PpcnLevelComponent,
-    PpcnNewComponent,
-    GasReportTableComponent,
-    PpcnUploadComponent,
     PpcnFlowComponent,
-    PpcnComponent,
-    PpcnUpdateComponent,
+    PpcnNewComponent,
     PpcnDownloadComponent,
+    PpcnUploadComponent,
+    PpcnComponent,
+    PpcnListComponent,
     FileVersionComponent,
-    UploadProposalComponent,
-    UpdateStatusComponent,
-    ReviewsListComponent,
     NewReviewComponent,
+    ReviewsListComponent,
+    GasReportTableComponent,
+    GenericDialogBoxComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +44,6 @@ import { NewReviewComponent } from './ppcn-reviews/new-review/new-review.compone
     MaterialModule,
     PpcnRoutingModule,
   ],
-  providers: [PpcnService, DatePipe, UploadProposalService, UpdateStatusService],
+  providers: [PpcnService, DatePipe],
 })
 export class PpcnModule {}

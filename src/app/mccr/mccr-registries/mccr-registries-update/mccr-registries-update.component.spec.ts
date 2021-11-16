@@ -9,7 +9,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoaderComponent } from '@shared/loader/loader.component';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { MccrRegistriesService } from '../mccr-registries.service';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
@@ -44,7 +44,10 @@ describe('MccrRegistriesUpdateComponent', () => {
         MockTranslateService,
         { provide: CredentialsService, useClass: MockCredentialsService },
         { provide: MccrRegistriesService, useClass: MockMccrRegistriesService },
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
         { provide: I18nService, useClass: MockI18nService },
         {
           provide: ActivatedRoute,

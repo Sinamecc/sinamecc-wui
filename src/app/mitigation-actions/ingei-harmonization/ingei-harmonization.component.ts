@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Logger } from '@core';
-import { ActivatedRoute, Router } from '@angular/router';
 
 const log = new Logger('Report');
 
@@ -24,5 +24,5 @@ export class IngeiHarmonizationComponent implements OnInit {
     this.nextRoute = `mitigation/actions/${this.id}/harmonization/proposal/new`;
   }
 
-  ngOnInit(): void {}
+  ngOnInit() {}
 }

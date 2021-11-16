@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,7 +18,6 @@ import { HomeModule } from './home/home.module';
 import { ShellModule } from './shell/shell.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { S3Service } from '@app/s3.service';
 import { RouteReuseStrategy } from '@angular/router';
 import { RouteReusableStrategy } from '@app/route-reusable-strategy';
 import { RouteService } from '@app/route.service';
@@ -32,7 +31,9 @@ import { MccrPocModule } from '@app/mccr/mccr-poc/mccr-poc.module';
 @NgModule({
   imports: [
     BrowserModule,
-    ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('./ngsw-worker.js', {
+      enabled: environment.production,
+    }),
     FormsModule,
     HttpClientModule,
     TranslateModule.forRoot(),
@@ -54,7 +55,6 @@ import { MccrPocModule } from '@app/mccr/mccr-poc/mccr-poc.module';
   ],
   declarations: [AppComponent, ErrorComponent],
   providers: [
-    S3Service,
     RouteService,
     {
       provide: RouteReuseStrategy,

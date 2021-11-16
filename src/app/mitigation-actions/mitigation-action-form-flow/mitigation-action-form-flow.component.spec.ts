@@ -16,7 +16,7 @@ import { BasicInformationFormComponent } from '../basic-information-form/basic-i
 import { InitiativeFormComponent } from '../initiative-form/initiative-form.component';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
 import { I18nService } from '@app/i18n/i18n.service';
 import { SharedModule } from '@shared';

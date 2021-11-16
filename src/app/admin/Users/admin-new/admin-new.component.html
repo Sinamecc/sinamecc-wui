@@ -26,7 +26,7 @@
                 <span translate>errorLabel.errorSubmittingForm</span>
               </div>
 
-              <mat-form-field>
+              <mat-form-field appearance="fill">
                 <input
                   type="text"
                   [ngModel]="name"
@@ -39,7 +39,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field>
+              <mat-form-field appearance="fill">
                 <input
                   type="text"
                   [ngModel]="lastName"
@@ -54,7 +54,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field>
+              <mat-form-field appearance="fill">
                 <input
                   type="text"
                   [ngModel]="userName"
@@ -69,7 +69,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field>
+              <mat-form-field appearance="fill">
                 <input
                   type="email"
                   [ngModel]="email"
@@ -82,7 +82,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field *ngIf="!edit">
+              <mat-form-field appearance="fill" *ngIf="!edit">
                 <input
                   type="password"
                   [ngModel]="password"

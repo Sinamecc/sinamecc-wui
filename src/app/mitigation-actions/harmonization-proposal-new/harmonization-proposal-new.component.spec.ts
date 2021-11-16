@@ -8,17 +8,19 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UploadProposalComponent } from '@app/mitigation-actions/upload-proposal/upload-proposal.component';
-import { ByteFormatPipe } from '@shared/input-file/byte-format.pipe';
+import { CoreModule } from '@core';
+import {
+  UploadProposalComponent,
+  LoaderComponent,
+  InputFileComponent,
+  ByteFormatPipe,
+  MockS3Service,
+  S3Service,
+} from '@shared';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
-import { MockS3Service } from '@app/s3.service.mock';
-import { MockI18nService } from '@app/i18n/i18n.service.mock';
-import { LoaderComponent } from '@shared';
-import { InputFileComponent } from '@shared/input-file/input-file.component';
-import { CoreModule } from '@core';
-import { S3Service } from '@app/s3.service';
 import { I18nService } from '@app/i18n';
+import { MockI18nService } from '@app/i18n/i18n.service.mock';
 
 describe('HarmonizationProposalNewComponent', () => {
   let component: HarmonizationProposalNewComponent;
@@ -46,7 +48,10 @@ describe('HarmonizationProposalNewComponent', () => {
       ],
       providers: [
         MockS3Service,
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
         { provide: S3Service, useClass: MockS3Service },
         { provide: I18nService, useClass: MockI18nService },
       ],

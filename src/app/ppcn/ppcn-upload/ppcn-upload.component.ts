@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Logger } from '@core';
+import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { environment } from '@env/environment';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { Ppcn } from '@app/ppcn/ppcn_registry';
-import { Router } from '@angular/router';
-import { I18nService } from '@app/i18n';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Logger } from '@core';
 import { TranslateService } from '@ngx-translate/core';
-import { PpcnService } from '@app/ppcn/ppcn.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { finalize, tap } from 'rxjs/operators';
-
+import { Ppcn } from '@app/ppcn/ppcn_registry';
+import { Observable } from 'rxjs';
+import { PpcnService } from '@app/ppcn/ppcn.service';
+import { tap, finalize } from 'rxjs/operators';
+import { I18nService } from '@app/i18n/i18n.service';
 const log = new Logger('Report');
 
 @Component({
@@ -26,6 +25,81 @@ export class PpcnUploadComponent implements OnInit {
   files: FormArray;
   ppcns: Observable<Ppcn[]>;
   processedPpcns: Ppcn[] = [];
+  id: number;
+
+  ppcn: Ppcn;
+
+  fileDetailPPCNOrga = [
+    {
+      name: 'ppcnDocument.legalPerson',
+      description: 'ppcnDocument.legalPersonDescription',
+    },
+    {
+      name: 'ppcnDocument.physicalPerson',
+      description: 'ppcnDocument.physicalPersonDescription',
+    },
+    {
+      name: 'ppcnDocument.CCSSWorkerFees',
+      description: 'ppcnDocument.CCSSWorkerFeesDescription',
+    },
+    {
+      name: 'ppcnDocument.sanitaryPermit',
+      description: 'ppcnDocument.sanitaryPermitDescription',
+    },
+    {
+      name: 'ppcnDocument.municipalObligations',
+      description: 'ppcnDocument.municipalObligationsDescription',
+    },
+    {
+      name: 'ppcnDocument.openConvictions',
+      description: 'ppcnDocument.openConvictionsDescription',
+    },
+    {
+      name: 'ppcnDocument.GEIreport',
+      description: 'ppcnDocument.GEIreportDescription',
+    },
+    {
+      name: 'ppcnDocument.GEIManagementPlan',
+      description: 'ppcnDocument.GEIManagementPlanDescription',
+    },
+    {
+      name: 'ppcnDocument.verificationreportOVV',
+      description: 'ppcnDocument.verificationreportOVVDescription',
+    },
+    {
+      name: 'ppcnDocument.copyGEIVerification',
+      description: 'ppcnDocument.copyGEIVerificationDescription',
+    },
+    {
+      name: 'ppcnDocument.ownRemovals',
+      description: 'ppcnDocument.ownRemovalsDescription',
+    },
+    {
+      name: 'ppcnDocument.organizationLogo',
+      description: 'ppcnDocument.organizationLogoDescription',
+    },
+  ];
+
+  fileDetailPPCNCant = [
+    {
+      name: 'ppcnDocument.geiReportCant',
+      description: 'ppcnDocument.geiReportCantDescription',
+    },
+    {
+      name: 'ppcnDocument.verificationReport',
+      description: 'ppcnDocument.verificationReportDescription',
+    },
+    {
+      name: 'ppcnDocument.mitigationActionPlan',
+      description: 'ppcnDocument.mitigationActionPlanDescription',
+    },
+    {
+      name: 'ppcnDocument.certificateCompensation',
+      description: 'ppcnDocument.certificateCompensationDescription',
+    },
+  ];
+
+  fileDetail: any = [];
 
   constructor(
     private router: Router,
@@ -33,12 +107,15 @@ export class PpcnUploadComponent implements OnInit {
     private i18nService: I18nService,
     private translateService: TranslateService,
     private ppcnService: PpcnService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private route: ActivatedRoute
   ) {
     this.createForm();
   }
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+  }
 
   submitForm() {
     this.isLoading = true;
@@ -66,28 +143,99 @@ export class PpcnUploadComponent implements OnInit {
   }
 
   private createForm() {
-    this.form = this.formBuilder.group({
-      ppcnCtrl: ['', Validators.required],
-      files: this.formBuilder.array([this.createItem(), this.createItem(), this.createItem()]),
-    });
     this.ppcns = this.initialFormData().pipe(
       tap((ppcns: Ppcn[]) => {
         this.processedPpcns = ppcns;
+
+        this.ppcn = this.processedPpcns.find((ppcnToFind) => Number(ppcnToFind.id) === this.id);
+
+        const numberOfItems = this.ppcn.geographic_level.id === 1 ? 4 : 12;
+
+        this.form = this.formBuilder.group({
+          ppcnCtrl: [this.ppcn.id, Validators.required],
+          files: this.formBuilder.array(
+            Array.from({ length: numberOfItems }, (_, i) => i + 1).map((_) => {
+              return this.createItem();
+            })
+          ),
+        });
+
+        if (this.ppcn.geographic_level.id === 1) {
+          this.fileDetail = this.fileDetailPPCNCant;
+        } else {
+          this.fileDetail = this.fileDetailPPCNOrga;
+          const idRecognition = this.ppcn.organization_classification.recognition_type;
+          this.loadDocumentsByRecognitionType(idRecognition.id);
+        }
       })
     );
   }
 
-  createItem(): FormGroup {
+  loadDocumentsByRecognitionType(id: Number) {
+    const idNeutralCarbonDocuments = 9;
+    const idNeutralCarbonPlus = 10;
+    const idCarbonoReductionPlus = 8;
+    const neutralCarbonDocuments = [
+      {
+        name: 'ppcnDocument.purchaseCertificate',
+        description: 'ppcnDocument.purchaseCertificateDescription',
+      },
+      {
+        name: 'ppcnDocument.formalConclusionVV',
+        description: 'ppcnDocument.formalConclusionVVDescription',
+      },
+    ];
+    const neutralCarbonPlus = [
+      {
+        name: 'ppcnDocument.FONAFIFOPurchaseCertificate',
+        description: 'ppcnDocument.FONAFIFOPurchaseCertificateDescription',
+      },
+      {
+        name: 'ppcnDocument.supportingEvidence',
+        description: 'ppcnDocument.supportingEvidenceDescription',
+      },
+      {
+        name: 'ppcnDocument.evidenceOVVConclusion',
+        description: 'ppcnDocument.evidenceOVVConclusionDescription',
+      },
+    ];
+
+    const carbonoReductionPlus = {
+      name: 'ppcnDocument.evidenceActionsTaken',
+      description: 'ppcnDocument.evidenceActionsTakenDescription',
+    };
+
+    if (id === idNeutralCarbonPlus) {
+      this.fileDetail = this.fileDetail.concat(neutralCarbonPlus);
+      for (const element of neutralCarbonPlus) {
+        this.addFile();
+      }
+    }
+
+    if (id === idNeutralCarbonDocuments) {
+      this.fileDetail = this.fileDetail.concat(neutralCarbonDocuments);
+      for (const element of neutralCarbonDocuments) {
+        this.addFile();
+      }
+    }
+
+    if (id === idCarbonoReductionPlus) {
+      this.fileDetail.push(carbonoReductionPlus);
+      this.addFile();
+    }
+  }
+
+  private createItem(): FormGroup {
     return this.formBuilder.group({
       file: [{ value: undefined, disabled: false }, []],
     });
   }
-  addFile(): void {
+  private addFile(): void {
     const control = <FormArray>this.form.controls['files'];
     control.push(this.createItem());
   }
 
-  removeFile(i: number) {
+  private removeFile(i: number) {
     const control = <FormArray>this.form.controls['files'];
     control.removeAt(i);
   }

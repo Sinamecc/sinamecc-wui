@@ -1,25 +1,26 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { DatePipe } from '@angular/common';
-import { S3File, S3Service } from '@app/s3.service';
-import { CredentialsService } from '@app/auth';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { MitigationActionReview } from '@app/mitigation-actions/mitigation-action-review';
+import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { DatePipe } from '@angular/common';
 import { MitigationActionReviewNewFormData } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
+import { BehaviorSubject } from 'rxjs';
 import { StatusRoutesMap } from '@shared/status-routes-map';
+import { S3File, S3Service } from '@shared/s3.service';
+import { CredentialsService } from '@app/auth';
 
 const routes = {
   seededFormData: (lang: string, registration_type: string) => `/v1/mitigations/form/${lang}/${registration_type}`,
-  submitNewMitigationAction: () => `/v1/mitigations/`,
+  submitNewMitigationAction: (id: string = '') => `/v1/mitigation-action/${id}`,
   submitUpdateMitigationAction: (uuid: string, lang: string) => `/v1/mitigations/${lang}/${uuid}`,
-  mitigationActions: (lang: string) => `/v1/mitigations/${lang}`,
+  mitigationActions: (lang: string) => `/v1/mitigation-action/`,
   mitigationActionReviews: (uuid: string) => `/v1/mitigations/changelog/${uuid}`,
-  deleteMitigationAction: (uuid: string) => `/v1/mitigations/${uuid}`,
-  getMitigationAction: (uuid: string, lang: string) => `/v1/mitigations/${lang}/${uuid}`,
+  deleteMitigationAction: (uuid: string) => `/v1/mitigation-action/${uuid}`,
+  getMitigationAction: (uuid: string, lang: string) => `/v1/mitigation-action/${uuid}/`,
   mitigationActionAvailableStatuses: () => `/v1/workflow/status`,
   submitMitigationActionReview: (uuid: string) => `/v1/mitigations/${uuid}`,
   submitNewHarmonizationForMitigation: () => `/v1/mitigations/harmonization/ingei/`,
@@ -37,9 +38,7 @@ export interface ReportContext {
   file: string | any;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class MitigationActionsService {
   constructor(
     private credentialsService: CredentialsService,
@@ -56,14 +55,9 @@ export class MitigationActionsService {
   }
 
   submitMitigationActionNewForm(context: any): Observable<Response> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-    return this.httpClient.post(routes.submitNewMitigationAction(), context, httpOptions).pipe(
+    return this.httpClient.post(routes.submitNewMitigationAction(), context, {}).pipe(
       map((body: any) => {
-        this.updateCurrentMitigationAction(body[0]);
+        this.updateCurrentMitigationAction(body);
         const response = {
           statusCode: 200,
           message: 'Form submitted correctly',
@@ -73,15 +67,10 @@ export class MitigationActionsService {
     );
   }
 
-  submitMitigationActionUpdateForm(context: any, uuid: string, lang: string): Observable<Response> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-    return this.httpClient.put(routes.submitUpdateMitigationAction(uuid, lang), context, httpOptions).pipe(
+  submitMitigationActionUpdateForm(context: any, uuid: string): Observable<Response> {
+    return this.httpClient.put(routes.submitNewMitigationAction(uuid + '/'), context, {}).pipe(
       map((body: any) => {
-        this.updateCurrentMitigationAction(body[0]);
+        this.updateCurrentMitigationAction(body);
         const response = {
           statusCode: 200,
           id: body.id,
@@ -93,12 +82,7 @@ export class MitigationActionsService {
   }
 
   newMitigationActionFormData(language: string, registration_type: string): Observable<MitigationActionNewFormData> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-    return this.httpClient.get(routes.seededFormData(language, registration_type), httpOptions).pipe(
+    return this.httpClient.get(routes.seededFormData(language, registration_type), {}).pipe(
       map((body: any) => {
         return body;
       })
@@ -106,12 +90,7 @@ export class MitigationActionsService {
   }
 
   mitigationActions(language: string): Observable<MitigationAction[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-    return this.httpClient.get(routes.mitigationActions(language), httpOptions).pipe(
+    return this.httpClient.get(routes.mitigationActions(language), {}).pipe(
       map((body: any) => {
         return body;
       })
@@ -119,13 +98,7 @@ export class MitigationActionsService {
   }
 
   mitigationActionReviews(uuid: string): Observable<MitigationActionReview[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-
-    return this.httpClient.get(routes.mitigationActionReviews(uuid), httpOptions).pipe(
+    return this.httpClient.get(routes.mitigationActionReviews(uuid), {}).pipe(
       map((body: any) => {
         return body;
       })
@@ -133,12 +106,7 @@ export class MitigationActionsService {
   }
 
   getMitigationAction(uuid: string, lang: string): Observable<MitigationAction> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-    return this.httpClient.get(routes.getMitigationAction(uuid, lang), httpOptions).pipe(
+    return this.httpClient.get(routes.getMitigationAction(uuid, lang), {}).pipe(
       map((body: any) => {
         return body;
       })
@@ -146,14 +114,9 @@ export class MitigationActionsService {
   }
 
   deleteMitigationAction(uuid: string): Observable<{} | Object> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
     const url = routes.deleteMitigationAction(uuid);
     // routes.deleteMitigationAction(uuid)
-    return this.httpClient.delete(url, httpOptions).pipe(
+    return this.httpClient.delete(url, {}).pipe(
       map((body: any) => {
         const response = {
           statusCode: 200,
@@ -165,12 +128,7 @@ export class MitigationActionsService {
   }
 
   getMitigationActionReviewStatuses(): Observable<MitigationActionReviewNewFormData> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-    return this.httpClient.get(routes.mitigationActionAvailableStatuses(), httpOptions).pipe(
+    return this.httpClient.get(routes.mitigationActionAvailableStatuses(), {}).pipe(
       map((body: any) => {
         return body;
       })
@@ -178,15 +136,9 @@ export class MitigationActionsService {
   }
 
   submitNewMitigationActionReviewForm(context: any, uuid: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-
     context['user'] = this.credentialsService.credentials.id;
     const url = routes.submitMitigationActionReview(uuid);
-    return this.httpClient.patch(url, context, httpOptions).pipe(
+    return this.httpClient.patch(url, context, {}).pipe(
       map((body: any) => {
         const response = {
           statusCode: 200,
@@ -199,13 +151,22 @@ export class MitigationActionsService {
 
   mapRoutesStatuses(uuid: string): StatusRoutesMap[] {
     return [
-      { route: `mitigation/actions/${uuid}/edit`, status: 'changes_requested_by_DCC' },
-      { route: `mitigation/actions/${uuid}/harmonization/integration`, status: 'updating_INGEI_changes_proposal' },
+      {
+        route: `mitigation/actions/${uuid}/edit`,
+        status: 'changes_requested_by_DCC',
+      },
+      {
+        route: `mitigation/actions/${uuid}/harmonization/integration`,
+        status: 'updating_INGEI_changes_proposal',
+      },
       {
         route: `mitigation/actions/${uuid}/harmonization/integration`,
         status: 'updating_INGEI_changes_proposal_by_request_of_DCC_IMN',
       },
-      { route: `mitigation/actions/${uuid}/conceptual/integration`, status: 'implementing_INGEI_changes' },
+      {
+        route: `mitigation/actions/${uuid}/conceptual/integration`,
+        status: 'implementing_INGEI_changes',
+      },
       // implementing_INGEI_changes
     ];
   }
@@ -219,8 +180,7 @@ export class MitigationActionsService {
       // The response body may contain clues as to what went wrong,
       console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
     }
-    // return an ErrorObservable with a user-facing error message
-    return throwError('Something bad happened; please try again later.');
+    throw new Error('Something bad happened; please try again later.');
   }
 
   public async downloadResource(filePath: string): Promise<S3File> {

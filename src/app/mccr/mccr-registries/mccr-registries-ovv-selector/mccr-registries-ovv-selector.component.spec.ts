@@ -12,7 +12,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { MockMccrRegistriesService } from '@app/mccr-registries/mccr-registries.service.mock';
 
 describe('MccrRegistriesOvvSelectorComponent', () => {
@@ -36,7 +36,10 @@ describe('MccrRegistriesOvvSelectorComponent', () => {
         MockMitigationActionsService,
         MockS3Service,
         { provide: MccrRegistriesService, useClass: MockMccrRegistriesService },
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
       ],
     }).compileComponents();
   }));

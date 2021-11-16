@@ -1,21 +1,31 @@
-import { Component, OnInit, ViewChild, Input, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  EventEmitter,
+  Input,
+  AfterViewInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
+import {
+  MitigationActionNewFormData,
+  FinanceSourceType,
+} from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { Institution } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { Status } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { IngeiCompliance } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { GeographicScale } from '@app/mitigation-actions/mitigation-action-new-form-data';
+
+import { Observable } from 'rxjs';
 import { InitiativeFormComponent } from '@app/mitigation-actions/initiative-form/initiative-form.component';
 import { BasicInformationFormComponent } from '@app/mitigation-actions/basic-information-form/basic-information-form.component';
 import { KeyAspectsFormComponent } from '@app/mitigation-actions/key-aspects-form/key-aspects-form.component';
 import { EmissionsMitigationFormComponent } from '@app/mitigation-actions/emissions-mitigation-form/emissions-mitigation-form.component';
 import { ImpactFormComponent } from '@app/mitigation-actions/impact-form/impact-form.component';
-import { Institution } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { IngeiCompliance } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { Status } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { GeographicScale } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import {
-  MitigationActionNewFormData,
-  FinanceSourceType,
-} from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { Observable } from 'rxjs';
 import { I18nService } from '@app/i18n';
 
 @Component({
@@ -24,14 +34,15 @@ import { I18nService } from '@app/i18n';
   styleUrls: ['./mitigation-action-form-flow.component.scss'],
 })
 export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit {
-  @ViewChild(InitiativeFormComponent, { static: true }) initiativeForm: InitiativeFormComponent;
-  @ViewChild(BasicInformationFormComponent, { static: true })
+  @ViewChild(InitiativeFormComponent) initiativeForm: InitiativeFormComponent;
+  @ViewChild(BasicInformationFormComponent)
   basicInfoForm: BasicInformationFormComponent;
-  @ViewChild(KeyAspectsFormComponent, { static: true }) keyAspectsForm: KeyAspectsFormComponent;
-  @ViewChild(EmissionsMitigationFormComponent, { static: true })
+  @ViewChild(KeyAspectsFormComponent) keyAspectsForm: KeyAspectsFormComponent;
+  @ViewChild(EmissionsMitigationFormComponent)
   emissionsMitigationForm: EmissionsMitigationFormComponent;
-  @ViewChild(ImpactFormComponent, { static: true }) impactForm: ImpactFormComponent;
+  @ViewChild(ImpactFormComponent) impactForm: ImpactFormComponent;
   @Input() title: string;
+  // @Input() isLinear: boolean;
   @Input() action: string;
 
   mainGroup: FormGroup;
@@ -43,7 +54,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   id: string;
   institutions: Institution[];
   ingeis: IngeiCompliance[];
-  statusses: Status[];
+  statuses: Status[];
   geographicScales: GeographicScale[];
   financeSourceTypes: FinanceSourceType[];
   registrationTypeId: string;
@@ -66,7 +77,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     this.createForm();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.newFormData = this.initFormOptions().pipe(
       tap((processedNewFormData: MitigationActionNewFormData) => {
         console.log('PROCESSED NEW FORM DATA', processedNewFormData);
@@ -80,6 +91,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
 
   createForm() {
     this.mainGroup = this._formBuilder.group({
+      // this.formBuilder.array([])
       formArray: this._formBuilder.array([
         this.initiativeFrm,
         this.basicInformationFrm,
@@ -102,11 +114,11 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     const initialRequiredData = this.initialFormData().pipe(
       tap((mitigationActionNewFormData) => {
         this.isLoading = false;
-        this.registrationTypeId = mitigationActionNewFormData.registration_types[0].id;
+        this.registrationTypeId = mitigationActionNewFormData.initiative_type[0].id;
         this.institutions = mitigationActionNewFormData.institutions;
-        this.statusses = mitigationActionNewFormData.statuses;
+        this.statuses = mitigationActionNewFormData.status;
         this.ingeis = mitigationActionNewFormData.ingei_compliances;
-        this.geographicScales = mitigationActionNewFormData.geographic_scales;
+        this.geographicScales = mitigationActionNewFormData.geographic_scale;
         this.financeSourceTypes = mitigationActionNewFormData.finance_source_types;
       })
     );
@@ -133,7 +145,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     return this.impactForm ? this.impactForm.form : null;
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
     this.cdRef.detectChanges();
     setTimeout(() => this.createForm(), 0);
   }

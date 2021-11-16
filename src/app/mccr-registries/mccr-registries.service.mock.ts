@@ -2,9 +2,9 @@ import { Observable, of, throwError } from 'rxjs';
 import { Response } from '@app/mccr/mccr-poc/mccr-poc.service';
 import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { StatusRoutesMap } from '@shared/status-routes-map';
-import { S3File } from '@app/s3.service';
+import { S3File } from '@shared/s3.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as _moment from 'moment';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
@@ -125,13 +125,34 @@ export class MockMccrRegistriesService {
 
   mapRoutesStatuses(uuid: string): StatusRoutesMap[] {
     return [
-      { route: `mccr/registries/${uuid}/ovv`, status: 'mccr_ovv_assigned_first_review' },
-      { route: `mccr/registries/${uuid}/ovv/proposal`, status: 'mccr_ovv_accept_assignation' },
-      { route: `mccr/registries/${uuid}`, status: 'mccr_secretary_get_dp_information' },
-      { route: `mccr/registries/${uuid}`, status: 'mccr_in_exec_committee_evaluation' },
-      { route: `mccr/registries/${uuid}`, status: 'mccr_secretary_get_report_information' },
-      { route: `mccr/registries/${uuid}`, status: 'mccr_ucc_in_exec_committee_evaluation' },
-      { route: `mccr/registries/${uuid}/monitoring/proposal/new`, status: 'mccr_upload_report_sinamecc' },
+      {
+        route: `mccr/registries/${uuid}/ovv`,
+        status: 'mccr_ovv_assigned_first_review',
+      },
+      {
+        route: `mccr/registries/${uuid}/ovv/proposal`,
+        status: 'mccr_ovv_accept_assignation',
+      },
+      {
+        route: `mccr/registries/${uuid}`,
+        status: 'mccr_secretary_get_dp_information',
+      },
+      {
+        route: `mccr/registries/${uuid}`,
+        status: 'mccr_in_exec_committee_evaluation',
+      },
+      {
+        route: `mccr/registries/${uuid}`,
+        status: 'mccr_secretary_get_report_information',
+      },
+      {
+        route: `mccr/registries/${uuid}`,
+        status: 'mccr_ucc_in_exec_committee_evaluation',
+      },
+      {
+        route: `mccr/registries/${uuid}/monitoring/proposal/new`,
+        status: 'mccr_upload_report_sinamecc',
+      },
       {
         route: `mccr/registries/${uuid}/monitoring/verification/proposal/new`,
         status: 'mccr_ovv_upload_evaluation_monitoring',

@@ -1,10 +1,10 @@
 export interface MitigationActionNewFormData {
-  registration_types: RegistrationType[];
+  initiative_type: RegistrationType[];
   institutions: Institution[];
-  statuses: Status[];
+  status: Status[];
   finances: Finance[];
   ingei_compliances: IngeiCompliance[];
-  geographic_scales: GeographicScale[];
+  geographic_scale: GeographicScale[];
   finance_source_types: FinanceSourceType[];
   finance_status: FinanceStatus[];
   initiative_types: InitiativeType[];
@@ -12,7 +12,8 @@ export interface MitigationActionNewFormData {
 
 export interface RegistrationType {
   id: string;
-  type: String;
+  code: string;
+  name: String;
 }
 
 export interface Institution {
@@ -39,6 +40,7 @@ export interface IngeiCompliance {
 export interface GeographicScale {
   id: Number;
   name: String;
+  code?: String;
 }
 
 export interface FinanceSourceType {

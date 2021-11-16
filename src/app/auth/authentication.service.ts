@@ -15,6 +15,8 @@ export interface LoginContext {
 const routes = {
   login: () => `/v1/token/`,
   userData: (username: string) => `/v1/user/${username}`,
+  emailResetPassword: () => `/v1/user/change_password/`,
+  changePassword: (token: string, code: string) => `/v1/user/change_password/${code}/${token}`,
 };
 
 /**
@@ -49,13 +51,14 @@ export class AuthenticationService {
         return this.httpClient.get(routes.userData(context.username), innerHttpOptions).pipe(
           map((req: any) => {
             const data = {
+              fullName: req.first_name + ' ' + req.last_name,
               username: req.username,
               token: 'JWT ' + body.token,
               id: req.id,
               email: req.email,
               groups: req.groups,
               permissions: req.available_apps,
-              is_administrador_dcc: req.is_administrador_dcc,
+              userPhoto: req.profile_picture,
             };
             this.credentialsService.setCredentials(data, context.remember);
             return data;
@@ -73,5 +76,20 @@ export class AuthenticationService {
     // Customize credentials invalidation here
     this.credentialsService.setCredentials();
     return of(true);
+  }
+
+  restorePassword(context: any) {
+    const body = {
+      password: context.password,
+    };
+    return this.httpClient.put(routes.changePassword(context.token, context.code), body);
+  }
+
+  getUserPhoto(photoUrl: string) {
+    return this.httpClient.get(photoUrl, { responseType: 'blob' }).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
   }
 }

@@ -11,13 +11,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DownloadProposalComponent } from '@shared/download-proposal/download-proposal.component';
 import { DatePipe } from '@angular/common';
 import { MccrRegistriesService } from '../mccr-registries.service';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { GenericButtonComponent } from '@shared/generic-button/generic-button.component';
 import { GenericButtonSecondaryComponent } from '@shared/generic-button-secondary/generic-button-secondary.component';
 import { I18nService } from '@app/i18n';
 import { AuthenticationService } from '@app/auth';
 import { MockAuthenticationService } from '@app/auth/authentication.service.mock';
-import { S3Service } from '@app/s3.service';
+import { S3Service } from '@shared/s3.service';
 
 describe('OvvProposalComponent', () => {
   let component: OvvProposalComponent;

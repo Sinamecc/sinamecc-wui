@@ -28,12 +28,11 @@ export class MccrRegistriesReviewComponent implements OnInit {
   nextRoute: string;
   formData: FormData;
   formSubmitRoute: string;
-  statusses: string[];
+  statuses: string[];
   shouldDisplayComment: boolean;
 
   formValues: any;
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private credentialsService: CredentialsService,
     private service: MccrRegistriesService
@@ -43,7 +42,7 @@ export class MccrRegistriesReviewComponent implements OnInit {
     this.nextRoute = `mccr/registries`;
     this.formData = new FormData();
     this.formSubmitRoute = `/v1/mccr/${this.id}`;
-    this.statusses = [];
+    this.statuses = [];
 
     this.mccrRegistryObservable = this.service.getMccrRegistry(this.id).pipe(
       finalize(() => {
@@ -52,7 +51,7 @@ export class MccrRegistriesReviewComponent implements OnInit {
     );
     this.mccrRegistryObservable.subscribe((response: MccrRegistry) => {
       this.mccrRegistry = response;
-      this.statusses = this.mccrRegistry.next_state.states;
+      this.statuses = this.mccrRegistry.next_state.states;
       this.shouldDisplayComment = this.mccrRegistry.next_state.required_comments;
     });
   }

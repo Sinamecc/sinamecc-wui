@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { Permissions } from '../@core/permissions';
 
 export interface Credentials {
@@ -6,10 +8,11 @@ export interface Credentials {
   id: number;
   email: string;
   username: string;
+  fullName: string;
   token: string;
   groups: object;
   permissions: Permissions;
-  is_administrador_dcc: boolean;
+  userPhoto: any;
 }
 
 const credentialsKey = 'credentials';

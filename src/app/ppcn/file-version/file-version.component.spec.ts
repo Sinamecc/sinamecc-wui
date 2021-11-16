@@ -11,13 +11,13 @@ import { LoaderComponent } from '@shared';
 import { ByteFormatPipe } from '@shared/input-file/byte-format.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@core';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@shared/s3.service.mock';
 import { PpcnService } from '../ppcn.service';
 import { MockPpcnService } from '../ppcn.service.mock';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
 import { InputFileComponent } from '@shared/input-file/input-file.component';
 import { I18nService } from '@app/i18n';
-import { UploadProposalComponent } from '@app/ppcn/upload-proposal/upload-proposal.component';
+import { UploadProposalComponent } from '@shared/upload-proposal/upload-proposal.component';
 
 describe('FileVersionComponent', () => {
   let component: FileVersionComponent;

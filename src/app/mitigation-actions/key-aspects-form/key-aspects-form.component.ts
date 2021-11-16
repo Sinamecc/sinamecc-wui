@@ -1,21 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Logger } from '@core';
-import * as _moment from 'moment';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl, FormControl } from '@angular/forms';
-import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
-import { Observable } from 'rxjs';
-import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { I18nService } from '@app/i18n';
-import { CredentialsService } from '@app/auth';
+import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import { finalize } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { MitigationAction } from '../mitigation-action';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
-const moment = _moment;
+import * as _moment from 'moment';
+import { ErrorReportingComponent } from '@shared';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { I18nService } from '@app/i18n';
 
 export const MY_FORMATS = {
   parse: {
@@ -57,11 +57,11 @@ export class KeyAspectsFormComponent implements OnInit {
 
   mitigationAction: MitigationAction;
 
-  startDate = new Date();
-
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
+
+  @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
 
   get formArray(): AbstractControl | null {
     return this.form.get('formArray');
@@ -70,17 +70,18 @@ export class KeyAspectsFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private i18nService: I18nService,
-    private credentialsService: CredentialsService,
     private service: MitigationActionsService,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private router: Router
   ) {
+    // this.formData = new FormData();
     this.service.currentMitigationAction.subscribe((message) => (this.mitigationAction = message));
     this.createForm();
     this.displayFinancialSource = false;
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     if (this.isUpdating) {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
@@ -93,22 +94,8 @@ export class KeyAspectsFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
-          actionObjectiveCtrl: ['', Validators.required],
-          actionStatusCtrl: ['', Validators.required],
-          implementationInitialDateCtrl: ['', Validators.required],
-          implementationEndDateCtrl: ['', Validators.required],
-        }),
-        this.formBuilder.group({
-          geographicScaleCtrl: ['', Validators.required],
-        }),
-        this.formBuilder.group({
-          locationNameCtrl: ['', Validators.required],
-          gisAnnexedCtrl: ['0', Validators.required],
-        }),
-        this.formBuilder.group({
-          financingStatusCtrl: ['', Validators.required],
-          financingSourceCtrl: [''],
-          gasInventoryCtrl: ['0'],
+          overviewImpactEmissionsRemovalsCtrl: ['', Validators.required],
+          graphicLogicImpactEmissionsRemovalsCtrl: ['', Validators.required],
         }),
       ]),
     });
@@ -139,45 +126,34 @@ export class KeyAspectsFormComponent implements OnInit {
     });
 
     this.isLoading = false;
+    // this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
+  }
+
+  buildPayload() {
+    const context = {
+      ghg_information: {
+        impact_emission: this.form.value.formArray[0].overviewImpactEmissionsRemovalsCtrl,
+        graphic_description: this.form.value.formArray[0].graphicLogicImpactEmissionsRemovalsCtrl,
+      },
+    };
+
+    return context;
   }
 
   submitForm() {
     this.isLoading = true;
-    let startDate = '';
-    let endDate = '';
-    if (this.isUpdating) {
-      startDate = this.form.value.formArray[0].implementationInitialDateCtrl;
-      endDate = this.form.value.formArray[0].implementationEndDateCtrl;
-    } else {
-      startDate = this.form.value.formArray[0].implementationInitialDateCtrl.format('YYYY-MM-DD');
-      endDate = this.form.value.formArray[0].implementationEndDateCtrl.format('YYYY-MM-DD');
-    }
-    const context = {
-      purpose: this.form.value.formArray[0].actionObjectiveCtrl,
-      status: this.form.value.formArray[0].actionStatusCtrl,
-      start_date: startDate,
-      end_date: endDate,
-      finance: {
-        status: this.form.value.formArray[3].financingStatusCtrl,
-        source: this.form.value.formArray[3].financingSourceCtrl,
-      },
-      gas_inventory: this.form.value.formArray[3].gasInventoryCtrl,
-      geographic_scale: this.form.value.formArray[1].geographicScaleCtrl,
-      location: {
-        geographical_site: this.form.value.formArray[2].locationNameCtrl,
-        is_gis_annexed: this.form.value.formArray[2].gisAnnexedCtrl,
-      },
-      user: String(this.credentialsService.credentials.id),
-      registration_type: this.processedNewFormData.registration_types[0].id,
-    };
+    const context = this.buildPayload();
 
-    if (this.isUpdating) {
-      context.finance['id'] = this.mitigationAction.finance.id;
-      context.location['id'] = this.mitigationAction.location.id;
-      // context['update_existing_mitigation_action'] = true;
-    }
+    /*
+		if (this.isUpdating) {
+			context.finance["id"] = this.mitigationAction.finance.id;
+			context.location["id"] = this.mitigationAction.location.id;
+			// context['update_existing_mitigation_action'] = true;
+		}
+		*/
+
     this.service
-      .submitMitigationActionUpdateForm(context, this.mitigationAction.id, this.i18nService.language.split('-')[0])
+      .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
       .pipe(
         finalize(() => {
           this.form.markAsPristine();
@@ -186,16 +162,24 @@ export class KeyAspectsFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
+          this.translateService.get('Sucessfully submitted form').subscribe((res: string) => {
             this.snackBar.open(res, null, { duration: 3000 });
           });
+
           this.wasSubmittedSuccessfully = true;
+
+          // temp route for finish form
+
+          //setTimeout(() => {
+          //	this.router.navigate(["/mitigation/actions"], { replaceUrl: true });
+          //}, 2000);
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
             this.snackBar.open(res, null, { duration: 3000 });
           });
           log.debug(`New Mitigation Action Form error: ${error}`);
+          this.errorComponent.parseErrors(error);
           this.error = error;
           this.wasSubmittedSuccessfully = false;
         }
@@ -203,7 +187,7 @@ export class KeyAspectsFormComponent implements OnInit {
   }
 
   financialSourceInputShown($event: any) {
-    // todo: when we translate in the backend we need to translate this hardcoded value here
+    // todo: when we traslate in the backend we need to traslate this hardcoded value here
     const insuredSourceTypeId = this.processedNewFormData.finance_status
       .filter((financeSource) => financeSource.status === 'Asegurado' || financeSource.status === 'Insured')
       .map(({ id }) => id);

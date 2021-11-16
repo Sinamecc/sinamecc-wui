@@ -9,13 +9,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@core';
-import { S3Service } from '@app/s3.service';
-import { MockS3Service } from '@app/s3.service.mock';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
+import { SharedModule, S3Service, MockS3Service } from '@shared';
+import { I18nService } from '@app/i18n';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
-import { I18nService } from '@app/i18n/i18n.service';
-import { SharedModule } from '@shared';
 
 describe('ImpactFormComponent', () => {
   let component: ImpactFormComponent;
@@ -38,7 +36,10 @@ describe('ImpactFormComponent', () => {
       declarations: [ImpactFormComponent],
       providers: [
         MockS3Service,
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
         { provide: S3Service, useClass: MockS3Service },
         { provide: I18nService, useClass: MockI18nService },
       ],

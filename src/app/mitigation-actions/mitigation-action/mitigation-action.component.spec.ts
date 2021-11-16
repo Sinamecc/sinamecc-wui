@@ -11,7 +11,7 @@ import { LoaderComponent } from '@shared';
 import { I18nService } from '@app/i18n';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
 
 describe('MitigationActionComponent', () => {
@@ -32,7 +32,10 @@ describe('MitigationActionComponent', () => {
       providers: [
         I18nService,
         MockS3Service,
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
         { provide: I18nService, useClass: MockI18nService },
       ],
     }).compileComponents();

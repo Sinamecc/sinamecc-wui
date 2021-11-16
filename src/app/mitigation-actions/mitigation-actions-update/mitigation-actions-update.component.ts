@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '@env/environment';
-import { Logger } from '@core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
+import { environment } from '@env/environment';
+import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import {
-  GeographicScale,
-  IngeiCompliance,
   MitigationActionNewFormData,
   FinanceSourceType,
 } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { Institution } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { Status } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { ActivatedRoute, Router } from '@angular/router';
+import { IngeiCompliance } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { GeographicScale } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { Logger } from '@core';
+import { Observable } from 'rxjs';
+import { MitigationAction } from '../mitigation-action';
 import { I18nService } from '@app/i18n';
-import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 
 const log = new Logger('Report');
 
@@ -43,7 +43,7 @@ export class MitigationActionsUpdateComponent implements OnInit {
   startDate = new Date(1990, 0, 1);
   institutions: Institution[];
   ingeis: IngeiCompliance[];
-  statusses: Status[];
+  statuses: Status[];
   geographicScales: GeographicScale[];
   financeSourceTypes: FinanceSourceType[];
   displayFinancialSource: Boolean;
@@ -53,8 +53,6 @@ export class MitigationActionsUpdateComponent implements OnInit {
   }
 
   constructor(
-    private router: Router,
-    private formBuilder: FormBuilder,
     private i18nService: I18nService,
     private route: ActivatedRoute,
     private service: MitigationActionsService
@@ -71,7 +69,7 @@ export class MitigationActionsUpdateComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit() {}
 
   activateInsured(id: number): void {
     this.displayFinancialSource = id !== 1;
@@ -86,7 +84,7 @@ export class MitigationActionsUpdateComponent implements OnInit {
   }
 
   financialSourceInputShown($event: any) {
-    // todo: when we translate in the backend we need to translate this hardcoded value here
+    // todo: when we traslate in the backend we need to traslate this hardcoded value here
     const insuredSourceTypeId = this.financeSourceTypes
       .filter((financeSource) => financeSource.name === 'Asegurado')
       .map(({ id }) => id);

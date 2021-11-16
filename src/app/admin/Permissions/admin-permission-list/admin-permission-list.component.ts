@@ -59,7 +59,7 @@ export class AdminPermissionListComponent implements OnInit {
     this.dataTable.splice(this.dataTable.indexOf(perm), 1);
     this.dataSource = new MatTableDataSource<Permissions>(this.dataTable);
     this.translateService.get('admin.successfullyAdded').subscribe((res: string) => {
-      this.snackBar.open(`${group.name}  ${res}`, null, { duration: 3000 });
+      this.snackBar.open(`${perm.name}  ${res}`, null, { duration: 3000 });
     });
   }
 

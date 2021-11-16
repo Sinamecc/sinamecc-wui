@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Logger } from '@core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Permissions } from '../../permissions';
+import { finalize } from 'rxjs/operators';
 import { AdminService } from '@app/admin/admin.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { Logger } from '@core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { finalize } from 'rxjs/operators';
-import { Permissions } from '@app/admin/permissions';
 
 const log = new Logger('CreatePermission');
 
@@ -43,7 +43,7 @@ export class AdminPermissionsNewComponent implements OnInit {
     this.name = '';
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.setData();
   }
 
@@ -74,7 +74,7 @@ export class AdminPermissionsNewComponent implements OnInit {
           )
           .subscribe(
             (response) => {
-              this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
+              this.translateService.get('Sucessfully submitted form').subscribe((res: string) => {
                 this.snackBar.open(res, null, { duration: 3000 });
               });
               log.debug(`${response.statusCode} status code received from create permissions `);

@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Ppcn } from '@app/ppcn/ppcn_registry';
-import { ActivatedRoute, Router } from '@angular/router';
-import { I18nService } from '@app/i18n';
+import { Component, Input, OnInit } from '@angular/core';
 import { PpcnService } from '@app/ppcn/ppcn.service';
+import { Ppcn } from '@app/ppcn/ppcn_registry';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthenticationService, Credentials, CredentialsService } from '@app/auth';
 import { finalize } from 'rxjs/operators';
-
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { groupBy } from 'lodash';
+import { I18nService } from '@app/i18n';
 @Component({
   selector: 'app-ppcn',
   templateUrl: './ppcn.component.html',
@@ -15,16 +17,94 @@ export class PpcnComponent implements OnInit {
   isLoading: boolean;
   id: string;
 
+  @Input() edit = false;
+  showComments = false;
+  userImage: string | SafeUrl = 'assets/default_user_image.png';
+  usernameComment = '';
+  actualDate = new Date();
+
+  comments: object[] = [];
+  modulesToComment = [
+    {
+      module: 1,
+      fields: [
+        'ID',
+        'info.name',
+        'general.legalCertificate',
+        'specificLabel.representativeName',
+        'general.legalRepresentativeCertificate',
+        'info.phone',
+        'general.confidential',
+        'info.postalCode',
+        'info.fax',
+        'info.address',
+      ],
+    },
+    {
+      module: 2,
+      fields: ['info.contactName', 'info.contactPosition', 'info.contactPhone', 'info.contactEmail'],
+    },
+    {
+      module: 3,
+      fields: [
+        'geographyLabel.geographicLevel',
+        'geographyLabel.requestLevel',
+        'geographyLabel.recognitionType',
+        'geographyLabel.classificationAmountEmissions',
+        'geographyLabel.classificationNumberFacilities',
+        'geographyLabel.ClassificationAmountInventoryData',
+      ],
+    },
+    {
+      module: 4,
+      fields: [
+        'geographyLabel.reductionProyect',
+        'geographyLabel.activityReduction',
+        'geographyLabel.detailReduction',
+        'geographyLabel.reducedEmissions',
+        'geographyLabel.investmentReductions',
+        'geographyLabel.totalInversion',
+        'geographyLabel.totalReducedEmissions',
+      ],
+    },
+    {
+      module: 5,
+      fields: [
+        'geographyLabel.compensationScheme',
+        'geographyLabel.projectLocation',
+        'geographyLabel.certificateNumber',
+        'geographyLabel.totalCompensation',
+        'geographyLabel.compensationCost',
+        'geographyLabel.period',
+      ],
+    },
+    {
+      module: 6,
+      fields: ['OVV', 'Emission Date', 'specificLabel.reportYear', 'specificLabel.baseYear'],
+    },
+    {
+      module: 7,
+      fields: ['ppcn.costInventoryRemovals', 'ppcn.removalProjectDetail', 'ppcn.totalRemovals'],
+    },
+    {
+      module: 8,
+      fields: ['reportData.files'],
+    },
+  ];
+
   constructor(
     private router: Router,
     private i18nService: I18nService,
     private service: PpcnService,
-    private route: ActivatedRoute
+    private authenticationService: AuthenticationService,
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    private credentialsService: CredentialsService
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.isLoading = true;
     this.service
       .getPpcn(this.id, this.i18nService.language.split('-')[0])
@@ -36,6 +116,22 @@ export class PpcnComponent implements OnInit {
       .subscribe((response: Ppcn) => {
         this.ppcn = response;
       });
+    if (!this.edit) {
+      this.loadComments(this.id);
+    }
+
+    this.getUserPhoto();
+  }
+
+  getFileLink(text: string) {
+    const splitsElements = text.split('/');
+    const elementDocumentID = splitsElements.pop();
+    const ppcnID = splitsElements[4];
+    if (elementDocumentID && ppcnID) {
+      this.router.navigate([`ppcn/${ppcnID}/view/file/${elementDocumentID}`], {
+        replaceUrl: true,
+      });
+    }
   }
 
   async download(file: string) {
@@ -51,5 +147,87 @@ export class PpcnComponent implements OnInit {
     window.URL.revokeObjectURL(url);
     a.remove();
     this.isLoading = false;
+  }
+
+  loadComments(id: string) {
+    this.isLoading = true;
+    this.service
+      .getPpcnComments(id)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe((response: Object[]) => {
+        if (response.length > 0) {
+          this.comments = this.buildCommentsToShow(response);
+          this.showComments = true;
+        }
+      });
+  }
+
+  buildCommentsToShow(comments: any[]) {
+    const groups = groupBy(comments, (comment) => comment['form_section']);
+    const keys = Object.keys(groups);
+    const modules = [];
+    for (const key of keys) {
+      const commentList = [];
+      for (const comment of groups[key]) {
+        const newComment = {
+          fields: comment.field.split(','),
+          comment: comment.comment,
+        };
+        commentList.push(newComment);
+      }
+      const module = {
+        module: key,
+        comments: commentList,
+      };
+      modules.push(module);
+    }
+    return modules;
+  }
+
+  getCurrentPhoto(photoList: any[]) {
+    for (const photo of photoList) {
+      if (photo.current) {
+        return photo;
+      }
+    }
+    return undefined;
+  }
+
+  get credential(): Credentials {
+    return this.credentialsService.credentials;
+  }
+
+  getUserPhoto() {
+    this.usernameComment = this.credential.fullName;
+    const userPhoto = this.getCurrentPhoto(this.credential.userPhoto);
+    if (userPhoto) {
+      this.authenticationService.getUserPhoto(userPhoto.image).subscribe((image: any) => {
+        this.userImage = this.sanitizer.bypassSecurityTrustUrl(this.createImageFromBlob(image));
+      });
+    }
+  }
+
+  createImageFromBlob(image: Blob) {
+    return URL.createObjectURL(image);
+  }
+
+  buildFormatComments(comments: any[]) {
+    const commentList = [];
+    for (const module of comments) {
+      for (const comment of module.comments) {
+        const newComment = {
+          form_section: module.module,
+          comment: comment.comment,
+          field: comment.fields.toString(),
+        };
+        commentList.push(newComment);
+      }
+    }
+
+    return commentList;
   }
 }

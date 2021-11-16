@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Logger } from '@core';
 import { ActivatedRoute } from '@angular/router';
 
-const log = new Logger('Report');
+import { Logger } from '@core';
+
+const log = new Logger('Conceptual integration');
 
 @Component({
   selector: 'app-conceptual-integration',
@@ -24,5 +24,5 @@ export class ConceptualIntegrationComponent implements OnInit {
     this.nextRoute = `mitigation/actions/${this.id}/conceptual/integration/new`;
   }
 
-  ngOnInit(): void {}
+  ngOnInit() {}
 }

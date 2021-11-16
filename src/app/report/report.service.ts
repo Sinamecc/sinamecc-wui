@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { S3File, S3Service } from '@app/s3.service';
+import { S3File, S3Service } from '@shared/s3.service';
 
 import { CredentialsService } from '@app/auth';
 
@@ -52,11 +51,6 @@ export class ReportService {
    */
   submitReport(context: ReportContext): Observable<Response> {
     // Replace by proper api call, verify params in component
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
 
     const fileList = context.file.files;
     if (fileList.length > 0) {
@@ -75,7 +69,7 @@ export class ReportService {
       }
       formData.append('metadata', JSON.stringify(metadata));
 
-      return this.httpClient.post(routes.submitReport(), formData, httpOptions).pipe(
+      return this.httpClient.post(routes.submitReport(), formData).pipe(
         map((body: any) => {
           const response = {
             statusCode: 200,
@@ -96,11 +90,6 @@ export class ReportService {
    */
   submitReportVersion(context: ReportContext, id: number): Observable<Response> {
     // Replace by proper api call, verify params in component
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
 
     const fileList = context.file.files;
     if (fileList.length > 0) {
@@ -109,7 +98,10 @@ export class ReportService {
       formData.append('name', context.name);
       formData.append('file', file, file.name);
       return this.httpClient
-        .put(routes.submitVersion(id), formData, { headers: httpOptions.headers, observe: 'response' })
+        .put(routes.submitVersion(id), formData, {
+          headers: {},
+          observe: 'response',
+        })
         .pipe(
           map((body: any) => {
             const response = {
@@ -125,12 +117,7 @@ export class ReportService {
   }
 
   reports(): Observable<Report[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-    return this.httpClient.get(routes.reports(), httpOptions).pipe(
+    return this.httpClient.get(routes.reports(), {}).pipe(
       map((body: any) => {
         return body;
       })
@@ -138,12 +125,7 @@ export class ReportService {
   }
 
   versions(id: number): Observable<Version[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-    return this.httpClient.get(routes.versions(id), httpOptions).pipe(
+    return this.httpClient.get(routes.versions(id), {}).pipe(
       map((body: any) => {
         return body.versions;
       })
@@ -155,12 +137,7 @@ export class ReportService {
   }
 
   reportVersionsName(id: number): Observable<string> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: this.credentialsService.credentials.token,
-      }),
-    };
-    return this.httpClient.get(routes.versions(id), httpOptions).pipe(
+    return this.httpClient.get(routes.versions(id), {}).pipe(
       map((body: any) => {
         return body.name;
       })

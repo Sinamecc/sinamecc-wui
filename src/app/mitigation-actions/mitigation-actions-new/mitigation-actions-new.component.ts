@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '@env/environment';
+import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { environment } from '@env/environment';
+import { Logger } from '@core';
+import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import {
   MitigationActionNewFormData,
   FinanceSourceType,
 } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { IngeiCompliance, Institution, Status } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { Institution } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { Status } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { IngeiCompliance } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { GeographicScale } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { Logger } from '@core';
+import { Observable } from 'rxjs';
 import { I18nService } from '@app/i18n';
-import { Router } from '@angular/router';
-import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
+
+const log = new Logger('Report');
 
 @Component({
   selector: 'app-mitigation-actions-new',
@@ -32,7 +36,7 @@ export class MitigationActionsNewComponent implements OnInit {
   startDate = new Date(1990, 0, 1);
   institutions: Institution[];
   ingeis: IngeiCompliance[];
-  statusses: Status[];
+  statuses: Status[];
   geographicScales: GeographicScale[];
   financeSourceTypes: FinanceSourceType[];
   displayFinancialSource: Boolean;
@@ -47,11 +51,12 @@ export class MitigationActionsNewComponent implements OnInit {
     private i18nService: I18nService,
     private service: MitigationActionsService
   ) {
+    // this.createForm();
     this.action = 'new';
     this.isLinear = true;
   }
 
-  ngOnInit(): void {}
+  ngOnInit() {}
 
   activateInsured(id: number): void {
     this.displayFinancialSource = id !== 1;

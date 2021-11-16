@@ -12,13 +12,13 @@ import { UploadProposalComponent } from '../upload-proposal/upload-proposal.comp
 import { LoaderComponent } from '@shared';
 import { ByteFormatPipe } from '@shared/input-file/byte-format.pipe';
 import { MccrRegistriesService } from '../mccr-registries.service';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { DatePipe } from '@angular/common';
 import { InputFileComponent } from '@shared/input-file/input-file.component';
 import { I18nService } from '@app/i18n';
 import { CredentialsService } from '@app/auth';
 import { MockCredentialsService } from '@app/auth/credentials.service.mock';
-import { S3Service } from '@app/s3.service';
+import { S3Service } from '@shared/s3.service';
 
 describe('MonitoringProposalVerificationNewComponent', () => {
   let component: MonitoringProposalVerificationNewComponent;

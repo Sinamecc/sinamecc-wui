@@ -7,16 +7,18 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CredentialsService } from '@app/auth';
-import { MockCredentialsService } from '@app/auth/credentials.service.mock';
-import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MitigationActionsService } from '../mitigation-actions.service';
+import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
+import {
+  MockS3Service,
+  CustomSearchBarComponent,
+  GenericButtonComponent,
+  GenericButtonSecondaryComponent,
+} from '@shared';
+import { AuthenticationService } from '@app/auth';
+import { MockAuthenticationService } from '@app/auth/authentication.service.mock';
+import { I18nService } from '@app/i18n';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
-import { I18nService } from '@app/i18n/i18n.service';
-import { CustomSearchBarComponent } from '@shared/custom-search-bar/custom-search-bar.component';
-import { GenericButtonComponent } from '@shared/generic-button/generic-button.component';
-import { GenericButtonSecondaryComponent } from '@shared/generic-button-secondary/generic-button-secondary.component';
 
 describe('MitigationActionsListComponent', () => {
   let component: MitigationActionsListComponent;
@@ -41,8 +43,11 @@ describe('MitigationActionsListComponent', () => {
       providers: [
         I18nService,
         MockS3Service,
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
-        { provide: CredentialsService, useClass: MockCredentialsService },
+        { provide: AuthenticationService, useClass: MockAuthenticationService },
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
         { provide: I18nService, useClass: MockI18nService },
       ],
     }).compileComponents();

@@ -11,7 +11,7 @@ import { I18nService } from '@app/i18n';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
 import { PpcnService } from '../ppcn.service';
 import { MockPpcnService } from '../ppcn.service.mock';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { CustomSearchBarComponent } from '@shared/custom-search-bar/custom-search-bar.component';
 import { GenericButtonComponent } from '@shared/generic-button/generic-button.component';
 import { GenericButtonSecondaryComponent } from '@shared/generic-button-secondary/generic-button-secondary.component';

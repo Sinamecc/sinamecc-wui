@@ -4,8 +4,8 @@ import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries
 import { CredentialsService } from '@app/auth';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DatePipe } from '@angular/common';
-import { S3Service } from '@app/s3.service';
-import { MockS3Service } from '@app/s3.service.mock';
+import { S3Service } from '@shared/s3.service';
+import { MockS3Service } from '@shared/s3.service.mock';
 import { MockCredentialsService } from '@app/auth/credentials.service.mock';
 
 describe('MccrRegistriesService', () => {

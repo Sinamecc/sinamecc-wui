@@ -349,19 +349,10 @@ export class AdminNewComponent implements OnInit {
   submitUserDetail(type: string, list: any[]) {
     const tempList: string[] = [];
     const addList = list;
-    let message: string;
 
     for (const perm of addList) {
       tempList.push(perm.id);
     }
-
-    // if (type === 'permissions') {
-    //   this.createUserForm.value.permissions = tempList;
-    //   message = 'permissions';
-    // } else {
-    //   this.createUserForm.value.groups = tempList;
-    //   message = 'groups';
-    // }
 
     this.isLoading = true;
     this.adminService
@@ -377,11 +368,11 @@ export class AdminNewComponent implements OnInit {
           this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
             this.snackBar.open(res, null, { duration: 3000 });
           });
-          log.debug(`${response.statusCode} status code received from create user `.concat(message));
+          log.debug(`${response.statusCode} status code received from create user`);
           this.router.navigate([`/home`], { replaceUrl: true });
         },
         (error) => {
-          log.debug(`Create user `.concat(message).concat(` error: ${error}`));
+          log.debug(`Create user `.concat(` error: ${error}`));
           this.error = error;
         }
       );

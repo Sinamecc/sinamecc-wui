@@ -13,7 +13,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@shared/s3.service.mock';
 import { MockMccrRegistriesService } from '@app/mccr-registries/mccr-registries.service.mock';
 import { MccrRegistriesNewComponent } from './mccr-registries-new.component';
 import { GenericButtonComponent } from '@shared/generic-button/generic-button.component';
@@ -23,7 +23,7 @@ import { MockCredentialsService } from '@app/auth/credentials.service.mock';
 import { CoreModule } from '@core';
 import { InputFileComponent } from '@shared/input-file/input-file.component';
 import { DatePipe } from '@angular/common';
-import { S3Service } from '@app/s3.service';
+import { S3Service } from '@shared/s3.service';
 
 describe('MccrRegistriesNewComponent', () => {
   let component: MccrRegistriesNewComponent;
@@ -50,7 +50,10 @@ describe('MccrRegistriesNewComponent', () => {
         MockTranslateService,
         { provide: CredentialsService, useClass: MockCredentialsService },
         { provide: MccrRegistriesService, useClass: MockMccrRegistriesService },
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
         { provide: I18nService, useClass: MockI18nService },
         { provide: S3Service, useClass: MockS3Service },
         DatePipe,

@@ -6,7 +6,7 @@ import { I18nService } from '@app/i18n';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { finalize } from 'rxjs/operators';
 
-const log = new Logger('Report');
+const log = new Logger('Mitigation Action');
 
 @Component({
   selector: 'app-mitigation-action',
@@ -42,7 +42,9 @@ export class MitigationActionComponent implements OnInit {
   }
 
   review(uuid: string) {
-    this.router.navigate([`mitigation/actions/${uuid}/reviews`], { replaceUrl: true });
+    this.router.navigate([`mitigation/actions/${uuid}/reviews`], {
+      replaceUrl: true,
+    });
   }
 
   async download(file: string) {

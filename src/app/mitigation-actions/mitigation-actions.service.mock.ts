@@ -8,8 +8,8 @@ import * as _moment from 'moment';
 import { MitigationActionReviewNewFormData } from './mitigation-action-review-new-form-data';
 import { StatusRoutesMap } from '@shared/status-routes-map';
 import { HttpErrorResponse } from '@angular/common/http';
-import { S3File } from '@app/s3.service';
-import { MockS3Service } from '@app/s3.service.mock';
+import { S3File } from '@shared/s3.service';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 
 const moment = _moment;
 
@@ -404,7 +404,10 @@ export class MockMitigationActionsService {
           id: +Math.random().toString(36).substring(5),
           status: 'DCC approved',
         },
-        { id: +Math.random().toString(36).substring(5), status: 'DCC rejected' },
+        {
+          id: +Math.random().toString(36).substring(5),
+          status: 'DCC rejected',
+        },
       ],
       finances: [
         {

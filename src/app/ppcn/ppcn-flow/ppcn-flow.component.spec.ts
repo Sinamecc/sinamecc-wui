@@ -10,7 +10,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PpcnLevelComponent } from '../ppcn-level/ppcn-level.component';
 import { PpcnNewComponent } from '../ppcn-new/ppcn-new.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { PpcnService } from '../ppcn.service';
 import { MockPpcnService } from '../ppcn.service.mock';
 import { SharedModule } from '@shared';

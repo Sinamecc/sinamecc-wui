@@ -11,9 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@core';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
-import { MockS3Service } from '@app/s3.service.mock';
-import { S3Service } from '@app/s3.service';
-import { SharedModule } from '@shared';
+import { SharedModule, MockS3Service, S3Service } from '@shared';
 
 describe('KeyAspectsFormComponent', () => {
   let component: KeyAspectsFormComponent;
@@ -37,7 +35,10 @@ describe('KeyAspectsFormComponent', () => {
       providers: [
         MockS3Service,
         { provide: S3Service, useClass: MockS3Service },
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
       ],
     }).compileComponents();
   }));

@@ -9,7 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@shared/s3.service.mock';
 
 describe('MitigationActionsReviewsListComponent', () => {
   let component: MitigationActionReviewsListComponent;
@@ -26,7 +26,13 @@ describe('MitigationActionsReviewsListComponent', () => {
         HttpClientTestingModule,
       ],
       declarations: [MitigationActionReviewsListComponent],
-      providers: [MockS3Service, { provide: MitigationActionsService, useClass: MockMitigationActionsService }],
+      providers: [
+        MockS3Service,
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
+      ],
     }).compileComponents();
   }));
 

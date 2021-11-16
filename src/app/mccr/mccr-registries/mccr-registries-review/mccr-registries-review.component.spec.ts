@@ -13,7 +13,7 @@ import { LoaderComponent } from '@shared/loader/loader.component';
 import { MccrRegistriesService } from '../mccr-registries.service';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { convertToParamMap, ActivatedRoute } from '@angular/router';
 import { UpdateStatusService } from '@app/mccr/mccr-registries/update-status/update-status.service';
 import { MockUpdateStatusService } from '@app/mccr/mccr-registries/update-status/update-status.service.mock';
@@ -46,7 +46,10 @@ describe('MccrRegistriesReviewComponent', () => {
         { provide: CredentialsService, useClass: MockCredentialsService },
         { provide: MccrRegistriesService, useClass: MockMccrRegistriesService },
         { provide: UpdateStatusService, useClass: MockUpdateStatusService },
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
         { provide: UpdateStatusService, useClass: MockUpdateStatusService },
         {
           provide: ActivatedRoute,

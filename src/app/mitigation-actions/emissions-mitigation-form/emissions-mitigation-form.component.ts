@@ -1,19 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Logger } from '@core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
+import { finalize, tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
-import { Observable } from 'rxjs';
-import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
-import { I18nService } from '@app/i18n';
+import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import { CredentialsService } from '@app/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { finalize } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import { MitigationAction } from '../mitigation-action';
+import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
+import { I18nService } from '@app/i18n';
 
 const log = new Logger('MitigationAction');
-
 @Component({
   selector: 'app-emissions-mitigation-form',
   templateUrl: './emissions-mitigation-form.component.html',
@@ -30,6 +30,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
   wasSubmittedSuccessfully = false;
 
   mitigationAction: MitigationAction;
+  @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
 
   get formArray(): AbstractControl | null {
     return this.form.get('formArray');
@@ -40,14 +41,13 @@ export class EmissionsMitigationFormComponent implements OnInit {
     private i18nService: I18nService,
     private service: MitigationActionsService,
     private translateService: TranslateService,
-    private credentialsService: CredentialsService,
     public snackBar: MatSnackBar
   ) {
     this.service.currentMitigationAction.subscribe((message) => (this.mitigationAction = message));
     this.createForm();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     if (this.isUpdating) {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
@@ -60,11 +60,29 @@ export class EmissionsMitigationFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
-          ingeiComplianceCtrl: null,
+          exAnteEmissionReductionsCtrl: ['', Validators.required],
+          periodPotentialEmissionReductionEstimatedCtrl: ['', Validators.required],
+          isourcesEmissionsGasesCoveredCtrl: ['', Validators.required],
+          carbonSinksReservoirsCtrl: ['', Validators.required],
+          definitionBaselineCtrl: ['', Validators.required],
+          methodologyExantePotentialReductionEmissionsCO2Ctrl: ['', Validators.required],
+          documentationCalculationsEstimateReductionEmissionsCO2Ctrl: ['', Validators.required],
+          isCurrentlyReflectedInventoryCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
-          emissionSourceCtrl: ['', Validators.required],
-          carbonSinksCtrl: ['', Validators.required],
+          standardizedCalculationMethodologyUsedCtrl: [''],
+          standardizedCalculationMethodologyUsedDetailCtrl: ['', Validators.required],
+          calculationsDocumentedCtrl: [''],
+          calculationsDocumentedDetailCtrl: ['', Validators.required],
+          emissionFactorsUsedCalculationDocumentedCtrl: [''],
+          emissionFactorsUsedCalculationDocumentedDetailCtrl: ['', Validators.required],
+          assumptionsDocumentedCtrl: [''],
+          assumptionsDocumentedDetailCtrl: ['', Validators.required],
+        }),
+        this.formBuilder.group({
+          intendParticipateInternationalCarbonMarketsCtrl: ['', Validators.required],
+          mechanismStandardApplyCtrl: ['', Validators.required],
+          methodologyUsedCtrl: ['', Validators.required],
         }),
       ]),
     });
@@ -87,22 +105,61 @@ export class EmissionsMitigationFormComponent implements OnInit {
     });
 
     this.isLoading = false;
+    // this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
+  }
+
+  buildPayload() {
+    const payload = {
+      impact_documentation: {
+        estimate_reduction_co2: this.form.value.formArray[0].exAnteEmissionReductionsCtrl,
+        period_potential_reduction: this.form.value.formArray[0].periodPotentialEmissionReductionEstimatedCtrl,
+        base_line_definition: this.form.value.formArray[0].definitionBaselineCtrl,
+        calculation_methodology: this.form.value.formArray[0].methodologyExantePotentialReductionEmissionsCO2Ctrl,
+        estimate_calculation_documentation: this.form.value.formArray[0]
+          .documentationCalculationsEstimateReductionEmissionsCO2Ctrl,
+        mitigation_action_in_inventory:
+          this.form.value.formArray[0].isCurrentlyReflectedInventoryCtrl === 1 ? true : false,
+
+        carbon_international_commerce: this.form.value.formArray[2].intendParticipateInternationalCarbonMarketsCtrl,
+        methodologies_to_use: this.form.value.formArray[2].methodologyUsedCtrl,
+        question: [
+          {
+            code: 'Q1',
+            question: 'mitigationAction.standardizedCalculationMethodologyUsed',
+            check: this.form.value.formArray[1].standardizedCalculationMethodologyUsedCtrl === '1' ? true : false,
+            detail: this.form.value.formArray[1].standardizedCalculationMethodologyUsedDetailCtrl,
+          },
+          {
+            code: 'Q2',
+            question: 'mitigationAction.calculationsDocumented',
+            check: this.form.value.formArray[1].calculationsDocumentedCtrl === '1' ? true : false,
+            detail: this.form.value.formArray[1].calculationsDocumentedDetailCtrl,
+          },
+          {
+            code: 'Q3',
+            question: 'mitigationAction.emissionFactorsUsedCalculationDocumented',
+            check: this.form.value.formArray[1].emissionFactorsUsedCalculationDocumentedCtrl === '1' ? true : false,
+            detail: this.form.value.formArray[1].emissionFactorsUsedCalculationDocumentedDetailCtrl,
+          },
+          {
+            code: 'Q4',
+            question: 'mitigationAction.assumptionsDocumented',
+            check: this.form.value.formArray[1].assumptionsDocumentedCtrl === '1' ? true : false,
+            detail: this.form.value.formArray[1].assumptionsDocumentedDetailCtrl,
+          },
+        ],
+      },
+    };
+
+    return payload;
   }
 
   submitForm() {
     this.isLoading = true;
-    const context = {
-      ingei_compliances: this.form.value.formArray[0].ingeiComplianceCtrl
-        ? this.form.value.formArray[0].ingeiComplianceCtrl.join()
-        : '',
-      emissions_source: this.form.value.formArray[1].emissionSourceCtrl,
-      carbon_sinks: this.form.value.formArray[1].carbonSinksCtrl,
-      user: String(this.credentialsService.credentials.id),
-      registration_type: this.processedNewFormData.registration_types[0].id,
-    };
+    const context = this.buildPayload();
 
     this.service
-      .submitMitigationActionUpdateForm(context, this.mitigationAction.id, this.i18nService.language.split('-')[0])
+      .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
       .pipe(
         finalize(() => {
           this.form.markAsPristine();
@@ -111,7 +168,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
+          this.translateService.get('Sucessfully submitted form').subscribe((res: string) => {
             this.snackBar.open(res, null, { duration: 3000 });
           });
           this.wasSubmittedSuccessfully = true;
@@ -121,6 +178,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
             this.snackBar.open(res, null, { duration: 3000 });
           });
           log.debug(`New Mitigation Action Form error: ${error}`);
+          this.errorComponent.parseErrors(error);
           this.error = error;
           this.wasSubmittedSuccessfully = false;
         }

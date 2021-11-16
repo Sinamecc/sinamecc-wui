@@ -7,11 +7,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { DownloadProposalComponent } from '@shared/download-proposal/download-proposal.component';
+import { GenericButtonComponent, DownloadProposalComponent, GenericButtonSecondaryComponent } from '@shared';
 import { I18nService } from '@app/i18n';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
-import { GenericButtonComponent } from '@shared/generic-button/generic-button.component';
-import { GenericButtonSecondaryComponent } from '@shared/generic-button-secondary/generic-button-secondary.component';
 
 describe('IngeiHarmonizationComponent', () => {
   let component: IngeiHarmonizationComponent;

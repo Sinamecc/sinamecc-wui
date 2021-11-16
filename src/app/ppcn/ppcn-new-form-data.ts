@@ -45,7 +45,6 @@ export interface Contact {
 }
 
 export interface Sector {
-  name: any;
   id: Number;
   sector: string;
 }

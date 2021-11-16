@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { MitigationActionReviewNewFormData } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
+import { Router, ActivatedRoute } from '@angular/router';
+import { tap } from 'rxjs/operators';
+import { environment } from '@env/environment';
+import { Logger } from '@core';
+import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { Observable } from 'rxjs';
-import { environment } from '@env/environment';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MitigationActionReviewNewFormData } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
 import { I18nService } from '@app/i18n';
-import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { CredentialsService } from '@app/auth';
-import { tap } from 'rxjs/operators';
+
+const log = new Logger('Report');
 
 @Component({
   selector: 'app-mitigation-action-reviews-new',
@@ -27,25 +30,24 @@ export class MitigationActionReviewsNewComponent implements OnInit {
   nextRoute: string;
   formData: FormData;
   formSubmitRoute: string;
-  statusses: string[];
+  statuses: string[];
   shouldDisplayComment: boolean;
 
-  processedMitigationActionsStatusses: MitigationActionReviewNewFormData;
+  processedMitigationActionsstatuses: MitigationActionReviewNewFormData;
   formValues: any;
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private i18nService: I18nService,
-    private credentialsService: CredentialsService,
-    private service: MitigationActionsService
+    private service: MitigationActionsService,
+    private credentialsService: CredentialsService
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'mitigationAction.addReviewMA';
     this.nextRoute = `mitigation/actions`;
     this.formData = new FormData();
     this.formSubmitRoute = `/v1/mitigations/${this.id}`;
-    this.statusses = [];
+    this.statuses = [];
 
     this.mitigationActionObservable = this.service
       .getMitigationAction(this.id, this.i18nService.language.split('-')[0])
@@ -53,14 +55,14 @@ export class MitigationActionReviewsNewComponent implements OnInit {
         tap((mitigationAction: MitigationAction) => {
           this.mitigationAction = mitigationAction;
           if (mitigationAction.next_state) {
-            this.statusses = mitigationAction.next_state.states;
+            this.statuses = mitigationAction.next_state.states;
             this.shouldDisplayComment = mitigationAction.next_state.required_comments;
           }
         })
       );
   }
 
-  ngOnInit(): void {}
+  ngOnInit() {}
 
   onSubmission(context: any) {
     this.formData.append('comment', context.descriptionCtrl);

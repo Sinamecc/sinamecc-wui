@@ -33,6 +33,57 @@ export interface MitigationAction {
   updated: string;
   fsm_state: string;
   files: Files[];
+  status_information: StatusInformation;
+  geographic_location: GeographicLocation;
+  CategorizationNationalInstruments: any; //waiting BE have this data
+  ghg_information: GHGInformation;
+  impact_documentation: any;
+}
+
+export interface ImpacDocumentationQuestion {
+  check: number;
+  code: string;
+  detail: string;
+  id: number;
+  impact_documentation: number;
+  question: string;
+}
+
+export interface ImpactDocumentation {
+  base_line_definition: string;
+  calculation_methodology: string;
+  carbon_international_commerce: boolean;
+  estimate_calculation_documentation: string;
+  estimate_reduction_co2: string;
+  id: number;
+  methodologies_to_use: string;
+  mitigation_action_in_inventory: boolean;
+  period_potential_reduction: string;
+  question: ImpacDocumentationQuestion[];
+}
+
+export interface GHGInformation {
+  graphic_description: string;
+  id: number;
+  impact_emission: string;
+  sectorsGEIInventoryImpacted: string; //waiting BE have this data
+  preliminaryIdentificationSustainableDevelopmentGoals: string; //waiting BE have this data
+}
+
+export interface GeographicLocation {
+  id: string;
+  location: string;
+  geographic_scale: GeographicScale;
+}
+
+export interface StatusInformation {
+  end_date: string;
+  id: number;
+  institution: string;
+  other_end_date: string;
+  other_institution: string;
+  start_date: string;
+  status: GenericStatus;
 }
 
 export interface Initiative {
@@ -61,6 +112,7 @@ export interface Contact {
   email: string;
   job_title: string;
   phone: string;
+  institution?: string;
 }
 
 export interface Location {
@@ -77,6 +129,7 @@ export interface Institution {
 export interface GenericStatus {
   id: string;
   status: string;
+  code?: string;
 }
 
 export interface Finance {
@@ -84,11 +137,20 @@ export interface Finance {
   status: FinanceSourceType;
   finance_source_type: FinanceSourceType;
   source: string;
+  administration?: string;
+  source_description?: string;
+  currency?: string;
+  budget?: string;
+  reference_year?: string;
+  mideplan_registered?: string;
+  nameRegisteredMideplan?: string;
+  executing_entity?: string;
 }
 
 export interface InitiativeType {
   id: string;
   initiative_type: string;
+  name?: string;
 }
 
 export interface FinanceSourceType {

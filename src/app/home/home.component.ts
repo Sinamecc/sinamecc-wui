@@ -24,16 +24,22 @@ import { Permissions } from '@app/@core/permissions';
 export class HomeComponent implements OnInit {
   dataImage = [
     {
-      image: 'url(assets/ma_image.jpg)',
-      name: 'MA',
-      url: '/mitigation/actions',
-      moduleName: 'ma',
+      image: 'url(assets/ppcn_image.jpg)',
+      name: 'PPCN',
+      url: '/ppcn/registries',
+      moduleName: 'ppcn',
     },
     {
       image: 'url(assets/report_image.jpg)',
       name: 'Report',
       url: '/report',
       moduleName: '',
+    },
+    {
+      image: 'url(assets/ma_image.jpg)',
+      name: 'AM',
+      url: '/mitigation/actions',
+      moduleName: 'ma',
     },
     {
       image: 'url(assets/mccr_image.jpg)',
@@ -46,12 +52,6 @@ export class HomeComponent implements OnInit {
       name: 'ADMIN',
       url: '/admin/users',
       moduleName: 'admin',
-    },
-    {
-      image: 'url(assets/ppcn_image.jpg)',
-      name: 'PPCN',
-      url: '/ppcn/registries',
-      moduleName: 'ppcn',
     },
   ];
 

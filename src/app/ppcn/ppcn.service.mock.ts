@@ -3,9 +3,9 @@ import { Observable, of } from 'rxjs';
 import { Ppcn } from '@app/ppcn/ppcn_registry';
 import { PpcnNewFormData, Ovv, GeiOrganization } from '@app/ppcn/ppcn-new-form-data';
 import { PpcnReview } from '@app/ppcn/ppcn-review';
-import { S3File } from '@app/s3.service';
+import { S3File } from '@shared/s3.service';
 import { StatusRoutesMap } from '@app/ppcn/status-routes-map';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import * as _moment from 'moment';
 import { Organization } from './interfaces/organization';
 import { SubSector } from './interfaces/subSector';
@@ -43,7 +43,8 @@ export class MockPpcnService {
   currentLevelId: Observable<string>;
   ppcnNewFormData: PpcnNewFormData;
 
-  constructor() {
+  constructor(@Inject(MockS3Service) s3: MockS3Service) {
+    this.s3 = s3;
     this.oneOrganization = {
       id: 1,
       name: 'MINAE',
@@ -55,7 +56,7 @@ export class MockPpcnService {
       phone_organization: '22334455',
       postal_code: '10311',
       fax: '22334400',
-      ciiu: 'Some data',
+      ciiu_code: [{ name: 'Some data code' }, { name: 'Some data code 2' }],
       address: 'Some address',
       contact: {
         full_name: 'Carl Michael',
@@ -95,14 +96,31 @@ export class MockPpcnService {
         },
         base_year: '2001',
         ovv: [
-          { id: 1, email: 'ovv1@minae.com', phone: '22440077', name: 'Random OVV 1' },
-          { id: 2, email: 'ovv2@minae.com', phone: '22440088', name: 'Random OVV 8' },
+          {
+            id: 1,
+            email: 'ovv1@minae.com',
+            phone: '22440077',
+            name: 'Random OVV 1',
+          },
+          {
+            id: 2,
+            email: 'ovv2@minae.com',
+            phone: '22440088',
+            name: 'Random OVV 8',
+          },
         ],
         gei_organization: {
           id: 1,
           activity_type: 'CO2 Control',
-          ovv: { id: 1, email: 'ovv10@minae.com', phone: '22445077', name: 'Random OVV 10' },
-          emission_ovv_date: '01/01/1990',
+          ovv: {
+            id: 1,
+            email: 'ovv10@minae.com',
+            phone: '22445077',
+            name: 'Random OVV 10',
+          },
+          emission_ovv_date: moment(new Date(+new Date() - Math.floor(Math.random() * 10000000000))).format(
+            'MM/DD/YYYY'
+          ),
           report_year: '1998',
           base_year: '1991',
           gei_activity_types: [
@@ -129,9 +147,19 @@ export class MockPpcnService {
           states: ['DCC approved', 'DCC rejected'],
           required_comments: false,
         },
-        files: [
+        ppcn_files: [
           { name: '', file: '' },
           { name: '', file: '' },
+        ],
+        gas_removal: [
+          {
+            id: '1',
+            ppcn: 1,
+            removal_cost: '100',
+            removal_cost_currency: 'USD',
+            removal_descriptions: 'Some description',
+            total: '1000',
+          },
         ],
       },
       {
@@ -166,7 +194,7 @@ export class MockPpcnService {
           phone_organization: '22337755',
           postal_code: '10312',
           fax: '22334400',
-          ciiu: 'Some data',
+          ciiu_code: [{ name: 'Some data code' }, { name: 'Some data code 2' }],
           address: 'Some address',
           contact: {
             full_name: 'Michal Johanssen',
@@ -183,14 +211,31 @@ export class MockPpcnService {
         },
         base_year: '1988',
         ovv: [
-          { id: 1, email: 'ovv1@ice.com', phone: '22440077', name: 'Random OVV 1' },
-          { id: 2, email: 'ovv2@ice.com', phone: '22440088', name: 'Random OVV 8' },
+          {
+            id: 1,
+            email: 'ovv1@ice.com',
+            phone: '22440077',
+            name: 'Random OVV 1',
+          },
+          {
+            id: 2,
+            email: 'ovv2@ice.com',
+            phone: '22440088',
+            name: 'Random OVV 8',
+          },
         ],
         gei_organization: {
           id: 1,
           activity_type: 'Heat Control',
-          ovv: { id: 1, email: 'ovv10@ice.com', phone: '22445077', name: 'Random OVV 10' },
-          emission_ovv_date: '01/01/1990',
+          ovv: {
+            id: 1,
+            email: 'ovv10@ice.com',
+            phone: '22445077',
+            name: 'Random OVV 10',
+          },
+          emission_ovv_date: moment(new Date(+new Date() - Math.floor(Math.random() * 10000000000))).format(
+            'MM/DD/YYYY'
+          ),
           report_year: '2010',
           base_year: '2015',
           gei_activity_types: [
@@ -217,9 +262,19 @@ export class MockPpcnService {
           states: ['DCC approved', 'DCC rejected'],
           required_comments: false,
         },
-        files: [
+        ppcn_files: [
           { name: '', file: '' },
           { name: '', file: '' },
+        ],
+        gas_removal: [
+          {
+            id: '2',
+            ppcn: 2,
+            removal_cost: '10000',
+            removal_cost_currency: 'CRC',
+            removal_descriptions: 'Some description',
+            total: '10000',
+          },
         ],
       },
     ];
@@ -257,12 +312,10 @@ export class MockPpcnService {
       ],
       sector: [
         {
-          name: 'name',
           id: 1,
           sector: 'Guanacaste',
         },
         {
-          name: 'name',
           id: 2,
           sector: 'Alajuela',
         },
@@ -273,7 +326,6 @@ export class MockPpcnService {
           name: 'Liberia',
           sector: {
             id: 1,
-            name: 'name',
             sector: 'Guanacaste',
           },
         },
@@ -281,7 +333,6 @@ export class MockPpcnService {
           id: 2,
           name: 'Nicoya',
           sector: {
-            name: 'name',
             id: 1,
             sector: 'Guanacaste',
           },
@@ -322,16 +373,20 @@ export class MockPpcnService {
       gei_organization: {
         id: 1,
         activity_type: 'Farming',
-        ovv: { id: 1, email: 'ovv1@minae.com', phone: '22440077', name: 'Random OVV 1' },
-        emission_OVV: '01/01/1990',
-        report_date_start: '01/01/1990',
-        report_date_end: '01/01/1990',
+        ovv: {
+          id: 1,
+          email: 'ovv1@minae.com',
+          phone: '22440077',
+          name: 'Random OVV 1',
+        },
+        emission_OVV: moment(new Date(+new Date() - Math.floor(Math.random() * 10000000000))).format('MM/DD/YYYY'),
+        report_date_start: moment(new Date(+new Date() - Math.floor(Math.random() * 10000000000))).format('MM/DD/YYYY'),
+        report_date_end: moment(new Date(+new Date() - Math.floor(Math.random() * 10000000000))).format('MM/DD/YYYY'),
         base_year: '2001',
         gei_activity_types: [
           {
             id: 1,
             sector: {
-              name: 'name',
               id: 1,
               sector: 'Guanacaste',
             },
@@ -339,7 +394,6 @@ export class MockPpcnService {
               id: 1,
               name: 'Liberia',
               sector: {
-                name: 'name',
                 id: 1,
                 sector: 'Guanacaste',
               },
@@ -349,7 +403,6 @@ export class MockPpcnService {
           {
             id: 2,
             sector: {
-              name: 'name',
               id: 2,
               sector: 'Alajuela',
             },
@@ -357,7 +410,6 @@ export class MockPpcnService {
               id: 1,
               name: 'San Carlos',
               sector: {
-                name: 'name',
                 id: 1,
                 sector: 'Alajuela',
               },
@@ -385,10 +437,7 @@ export class MockPpcnService {
     id: string,
     contactFormId: number,
     geographicFormId: number,
-    requiredFormId: number,
-    recognitionFormId: number,
-    sectorFormId: number,
-    subsectorFormId: number,
+
     ovvFormId: number
   ): Observable<Response> {
     const response = {
@@ -487,12 +536,12 @@ export class MockPpcnService {
   ppcnReviews(id: string): Observable<PpcnReview[]> {
     const response = [
       {
-        date: '01/01/1990',
+        date: moment(new Date(+new Date() - Math.floor(Math.random() * 10000000000))).format('MM/DD/YYYY'),
         previous_status: 'In Evaluation',
         current_status: 'Approved',
       },
       {
-        date: '01/01/1990',
+        date: moment(new Date(+new Date() - Math.floor(Math.random() * 10000000000))).format('MM/DD/YYYY'),
         previous_status: 'Submitted',
         current_status: 'DCC examination',
       },
@@ -504,7 +553,7 @@ export class MockPpcnService {
     return of(this.ppcnNewFormData);
   }
 
-  commonStatusses(ppcn: Ppcn): string[] {
+  commonstatuses(ppcn: Ppcn): string[] {
     return fsm_next_state[ppcn.fsm_state];
   }
 

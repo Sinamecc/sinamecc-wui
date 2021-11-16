@@ -5,8 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DatePipe } from '@angular/common';
 import { CredentialsService } from '@app/auth';
 import { MockCredentialsService } from '@app/auth/credentials.service.mock';
-import { MockS3Service } from '@app/s3.service.mock';
-import { S3Service } from '@app/s3.service';
+import { S3Service, MockS3Service } from '@shared';
 
 describe('MitigationActionsService', () => {
   beforeEach(() => {

@@ -25,11 +25,8 @@ import { MitigationActionReviewsListComponent } from './mitigation-action-review
 import { ConceptualIntegrationComponent } from './conceptual-integration/conceptual-integration.component';
 import { IngeiHarmonizationComponent } from './ingei-harmonization/ingei-harmonization.component';
 import { MitigationActionReviewsNewComponent } from './mitigation-action-reviews/mitigation-action-reviews-new/mitigation-action-reviews-new.component';
-import { UpdateStatusComponent } from '@app/mitigation-actions/update-status/update-status.component';
-import { UpdateStatusService } from '@app/mitigation-actions/update-status/update-status.service';
 import { ConceptualIntegrationNewComponent } from './conceptual-integration-new/conceptual-integration-new.component';
-import { UploadProposalComponent } from './upload-proposal/upload-proposal.component';
-import { UploadProposalService } from '@app/mitigation-actions/upload-proposal/upload-proposal.service';
+import { UploadProposalService } from '@shared/upload-proposal/upload-proposal.service';
 import { HarmonizationProposalNewComponent } from './harmonization-proposal-new/harmonization-proposal-new.component';
 
 @NgModule({
@@ -48,9 +45,7 @@ import { HarmonizationProposalNewComponent } from './harmonization-proposal-new/
     ConceptualIntegrationComponent,
     IngeiHarmonizationComponent,
     MitigationActionReviewsNewComponent,
-    UpdateStatusComponent,
     ConceptualIntegrationNewComponent,
-    UploadProposalComponent,
     HarmonizationProposalNewComponent,
   ],
   imports: [
@@ -64,6 +59,6 @@ import { HarmonizationProposalNewComponent } from './harmonization-proposal-new/
     MaterialModule,
     MitigationActionsRoutingModule,
   ],
-  providers: [MitigationActionsService, UpdateStatusService, UploadProposalService, DatePipe],
+  providers: [MitigationActionsService, DatePipe],
 })
 export class MitigationActionsModule {}

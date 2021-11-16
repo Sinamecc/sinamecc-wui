@@ -7,7 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 import { MockPpcnService } from '@app/ppcn/ppcn.service.mock';
 import { I18nService } from '@app/i18n';

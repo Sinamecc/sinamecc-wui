@@ -14,8 +14,9 @@ export class DownloadProposalComponent implements OnInit {
   @Input() nextRoute: string;
   @Input() isButton: boolean;
   @Input() formSubmitRoute: string;
+  isLoading = true;
 
-  constructor(private router: Router, private i18nService: I18nService) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 

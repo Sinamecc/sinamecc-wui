@@ -12,7 +12,7 @@ import { CoreModule } from '@core';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { MockS3Service } from '@app/s3.service.mock';
+import { MockS3Service } from '@shared/s3.service.mock';
 import { SharedModule } from '@shared';
 
 describe('BasicInformationFormComponent', () => {
@@ -36,7 +36,10 @@ describe('BasicInformationFormComponent', () => {
       declarations: [BasicInformationFormComponent],
       providers: [
         MockS3Service,
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService },
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -58,4 +61,8 @@ describe('BasicInformationFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // it('should create', inject([MockMitigationActionsService], () => {
+  //   expect(component).toBeTruthy();
+  // }));
 });

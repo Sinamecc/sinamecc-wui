@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CredentialsService } from '@app/auth';
 import { MockCredentialsService } from '@app/auth/credentials.service.mock';
-import { MockS3Service } from '@app/s3.service.mock';
-import { S3Service } from '@app/s3.service';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
+import { S3Service } from '@shared/s3.service';
 
 import { ReportService } from './report.service';
 

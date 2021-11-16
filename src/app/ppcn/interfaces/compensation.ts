@@ -1,4 +1,5 @@
 export interface Compensation {
+  id?: string;
   certificate_identification: string;
   offset_cost: string;
   offset_cost_currency: string;

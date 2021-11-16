@@ -9,6 +9,7 @@ import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { TokenInterceptor } from './http/token.interceptor';
 
 @NgModule({
   imports: [CommonModule, HttpClientModule, TranslateModule, RouterModule, MatDialogModule],
@@ -28,6 +29,7 @@ import { MatDialogModule } from '@angular/material/dialog';
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy,
     },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],
 })
 export class CoreModule {

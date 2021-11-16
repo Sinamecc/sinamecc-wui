@@ -1,12 +1,12 @@
 <div class="container">
   <mat-card>
-    <h3>
+    <h4>
       <mat-card-title>
         <span translate class="section-heading">ppcn.uploadFilesPPCNRegistry </span>:
         <mat-divider class="divider-custom"></mat-divider>
         <mat-divider class="divider-custom"></mat-divider>
       </mat-card-title>
-    </h3>
+    </h4>
     <mat-card-content>
       <form (ngSubmit)="submitForm()" *ngIf="ppcns | async" [formGroup]="form" novalidate>
         <div class="form-error" [hidden]="!error || isLoading" translate>
@@ -14,50 +14,52 @@
         </div>
         <br />
         <div fxLayout="column">
-          <mat-form-field>
-            <mat-select formControlName="ppcnCtrl" [placeholder]="'PPCN' | translate">
-              <mat-option *ngFor="let ppcn of processedPpcns" [value]="ppcn.id">
-                {{ ppcn.id }}- {{ ppcn.organization.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
           <br />
           <mat-card formArrayName="files">
-            <mat-card-title translate>Files</mat-card-title>
+            <mat-card-title translate
+              ><strong>PPCN ID : </strong> {{ ppcn.id }} - <strong>PPCN </strong>
+              {{ ppcn.organization.name }}
+            </mat-card-title>
             <mat-divider></mat-divider>
 
             <!-- loop throught units -->
-            <div *ngFor="let file of form.get('files')['controls']; let i = index">
+            <div *ngFor="let file of form.controls.files.controls; let i = index">
               <!-- row divider show for every nex row exclude if first row -->
-              <mat-divider *ngIf="form.get('files')['controls'].length > 1 && i > 0"></mat-divider><br />
+              <mat-divider *ngIf="form.controls.files.controls.length > 1 && i > 0"></mat-divider><br />
 
               <!-- group name in this case row index -->
               <div [formGroupName]="i">
-                <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="3.5%" fxLayoutAlign="center">
-                  <mat-form-field>
-                    <app-input-file
-                      class="mat-raised-button mat-primary"
-                      formControlName="file"
-                      [placeholder]="'errorLabel.requiredInput' | translate"
-                      valuePlaceholder="No file selected"
-                      required
-                    ></app-input-file>
-                    <mat-icon matSuffix>folder</mat-icon>
+                <div>
+                  <mat-form-field [style.width.%]="100">
+                    <div>
+                      <mat-card fxLayout="row" fxLayoutAlign="start center" class="document-card">
+                        <div>
+                          <mat-icon [style.font-size.px]="50">picture_as_pdf</mat-icon>
+                        </div>
+                        <div class="description-section" fxLayout="column" fxLayoutAlign="start start">
+                          <mat-card-title translate>{{ fileDetail[i].name }}</mat-card-title>
+                          <mat-card-subtitle translate>{{ fileDetail[i].description }}</mat-card-subtitle>
+                        </div>
+                        <span fxFlex></span>
+                        <div fxLayoutAlign=" end">
+                          <app-input-file
+                            class="mat-raised-button mat-primary"
+                            formControlName="file"
+                            [placeholder]="'errorLabel.requiredInput' | translate"
+                            valuePlaceholder="No file selected"
+                            required
+                            accept="application/pdf"
+                          >
+                          </app-input-file>
+                        </div>
+                      </mat-card>
+                    </div>
+
                     <mat-error *ngIf="file.controls.file.hasError('required')">
                       {{ 'reportData.selectFile' | translate }}
                     </mat-error>
                   </mat-form-field>
-
                   <!-- row delete button, hidden if there is just one row -->
-                  <button
-                    mat-mini-fab
-                    color="warn"
-                    *ngIf="form.get('files')['controls'].length > 1"
-                    (click)="removeFile(i)"
-                    type="button"
-                  >
-                    <mat-icon>delete forever</mat-icon>
-                  </button>
                 </div>
               </div>
             </div>
@@ -69,7 +71,7 @@
                 mat-raised-button
                 (click)="addFile()"
                 type="button"
-                *ngIf="form.get('files')['controls'].length <= 10"
+                *ngIf="form.controls.files.controls.length <= 3"
               >
                 <mat-icon>add box</mat-icon>
                 <span translate> Add new file</span>
@@ -80,7 +82,7 @@
 
           <br />
 
-          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">
+          <button mat-raised-button color="primary" type="submit">
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
             <span translate>Submit Ppcn Files</span>
           </button>

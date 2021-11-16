@@ -30,10 +30,10 @@ export class NewReviewComponent implements OnInit {
   nextRoute: string;
   formData: FormData;
   formSubmitRoute: string;
-  statusses: string[];
+  statuses: string[];
   shouldDisplayComment: boolean;
 
-  processedPpcnsStatusses: PpcnReviewNewFormData;
+  processedPpcnsstatuses: PpcnReviewNewFormData;
   formValues: any;
 
   constructor(
@@ -48,16 +48,16 @@ export class NewReviewComponent implements OnInit {
     this.nextRoute = `ppcn/registries`;
     this.formData = new FormData();
     this.formSubmitRoute = `/v1/ppcn/${this.id}`;
-    this.statusses = [];
+    this.statuses = [];
 
     this.ppcnObservable = this.service.getPpcn(this.id, this.i18nService.language.split('-')[0]).pipe(
       tap((ppcn: Ppcn) => {
         this.ppcn = ppcn;
         if (ppcn.next_state) {
-          this.statusses = ppcn.next_state.states;
+          this.statuses = ppcn.next_state.states;
           this.shouldDisplayComment = false;
         } else {
-          this.statusses = this.service.commonStatusses(ppcn);
+          this.statuses = this.service.commonstatuses(ppcn);
           this.shouldDisplayComment = true;
         }
       })
