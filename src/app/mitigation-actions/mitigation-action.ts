@@ -70,6 +70,21 @@ export interface GHGInformation {
   preliminaryIdentificationSustainableDevelopmentGoals: string; //waiting BE have this data
 }
 
+export interface Indicator {
+  id: number;
+  name: string;
+  description: string;
+  type: string;
+  unit: string;
+  methodological_detail: string;
+  reporting_periodicity: string;
+  data_generating_institution: string;
+  reporting_institution: string;
+  measurement_start_date: string;
+  additional_information: string;
+  monitoring_information: number;
+}
+
 export interface GeographicLocation {
   id: string;
   location: string;

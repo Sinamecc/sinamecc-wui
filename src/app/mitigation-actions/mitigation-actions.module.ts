@@ -26,27 +26,27 @@ import { ConceptualIntegrationComponent } from './conceptual-integration/concept
 import { IngeiHarmonizationComponent } from './ingei-harmonization/ingei-harmonization.component';
 import { MitigationActionReviewsNewComponent } from './mitigation-action-reviews/mitigation-action-reviews-new/mitigation-action-reviews-new.component';
 import { ConceptualIntegrationNewComponent } from './conceptual-integration-new/conceptual-integration-new.component';
-import { UploadProposalService } from '@shared/upload-proposal/upload-proposal.service';
 import { HarmonizationProposalNewComponent } from './harmonization-proposal-new/harmonization-proposal-new.component';
-
+import { ReportingClimateActionFormComponent } from './reporting-climate-action-form/reporting-climate-action-form.component';
 @NgModule({
   declarations: [
     MitigationActionsListComponent,
     MitigationActionsNewComponent,
+    MitigationActionComponent,
+    MitigationActionsUpdateComponent,
+    MitigationActionReviewsNewComponent,
+    MitigationActionReviewsListComponent,
+    ConceptualIntegrationComponent,
+    IngeiHarmonizationComponent,
+    ConceptualIntegrationNewComponent,
+    HarmonizationProposalNewComponent,
     MitigationActionFormFlowComponent,
     InitiativeFormComponent,
     BasicInformationFormComponent,
     KeyAspectsFormComponent,
     EmissionsMitigationFormComponent,
     ImpactFormComponent,
-    MitigationActionComponent,
-    MitigationActionsUpdateComponent,
-    MitigationActionReviewsListComponent,
-    ConceptualIntegrationComponent,
-    IngeiHarmonizationComponent,
-    MitigationActionReviewsNewComponent,
-    ConceptualIntegrationNewComponent,
-    HarmonizationProposalNewComponent,
+    ReportingClimateActionFormComponent,
   ],
   imports: [
     CommonModule,

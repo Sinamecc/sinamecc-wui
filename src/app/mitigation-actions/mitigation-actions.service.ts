@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
+import { MitigationAction, Indicator } from '@app/mitigation-actions/mitigation-action';
 import { MitigationActionReview } from '@app/mitigation-actions/mitigation-action-review';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { DatePipe } from '@angular/common';
 import { MitigationActionReviewNewFormData } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
 import { BehaviorSubject } from 'rxjs';
 import { StatusRoutesMap } from '@shared/status-routes-map';
@@ -24,6 +22,9 @@ const routes = {
   mitigationActionAvailableStatuses: () => `/v1/workflow/status`,
   submitMitigationActionReview: (uuid: string) => `/v1/mitigations/${uuid}`,
   submitNewHarmonizationForMitigation: () => `/v1/mitigations/harmonization/ingei/`,
+  getIndicator: (code: string) => `/v1/mitigation-action/${code}/indicator/`,
+  getCatalogs: (id: string, parentCatalog: string, catalog: string) =>
+    `/v1/mitigation-action/data/${parentCatalog}/${id}/${catalog}/`,
 };
 
 export interface Response {
@@ -40,18 +41,21 @@ export interface ReportContext {
 
 @Injectable()
 export class MitigationActionsService {
-  constructor(
-    private credentialsService: CredentialsService,
-    private httpClient: HttpClient,
-    private datePipe: DatePipe,
-    private s3: S3Service
-  ) {}
+  constructor(private credentialsService: CredentialsService, private httpClient: HttpClient, private s3: S3Service) {}
 
   private mitigationActionSource = new BehaviorSubject(null);
   currentMitigationAction = this.mitigationActionSource.asObservable();
 
   updateCurrentMitigationAction(newMitigationAction: MitigationAction) {
     this.mitigationActionSource.next(newMitigationAction);
+  }
+
+  loadCatalogs(id: string, parentCatalog: string, catalog: string) {
+    return this.httpClient.get(routes.getCatalogs(id, parentCatalog, catalog), {}).pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
   }
 
   submitMitigationActionNewForm(context: any): Observable<Response> {
@@ -100,6 +104,14 @@ export class MitigationActionsService {
   mitigationActionReviews(uuid: string): Observable<MitigationActionReview[]> {
     return this.httpClient.get(routes.mitigationActionReviews(uuid), {}).pipe(
       map((body: any) => {
+        return body;
+      })
+    );
+  }
+
+  getMitigationActionIndicators(id: string) {
+    return this.httpClient.get(routes.getIndicator(id), {}).pipe(
+      map((body: Indicator[]) => {
         return body;
       })
     );

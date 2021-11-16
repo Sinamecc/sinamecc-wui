@@ -8,7 +8,8 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
 } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AbstractControl, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import {
@@ -26,6 +27,7 @@ import { BasicInformationFormComponent } from '@app/mitigation-actions/basic-inf
 import { KeyAspectsFormComponent } from '@app/mitigation-actions/key-aspects-form/key-aspects-form.component';
 import { EmissionsMitigationFormComponent } from '@app/mitigation-actions/emissions-mitigation-form/emissions-mitigation-form.component';
 import { ImpactFormComponent } from '@app/mitigation-actions/impact-form/impact-form.component';
+import { ReportingClimateActionFormComponent } from '../reporting-climate-action-form/reporting-climate-action-form.component';
 import { I18nService } from '@app/i18n';
 
 @Component({
@@ -41,7 +43,12 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   @ViewChild(EmissionsMitigationFormComponent)
   emissionsMitigationForm: EmissionsMitigationFormComponent;
   @ViewChild(ImpactFormComponent) impactForm: ImpactFormComponent;
-  @Input() title: string;
+
+  @ViewChild(ReportingClimateActionFormComponent)
+  reportingClimateFormComponent: ReportingClimateActionFormComponent;
+
+  @Input()
+  title: string;
   // @Input() isLinear: boolean;
   @Input() action: string;
 
@@ -54,7 +61,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   id: string;
   institutions: Institution[];
   ingeis: IngeiCompliance[];
-  statuses: Status[];
+  statusses: Status[];
   geographicScales: GeographicScale[];
   financeSourceTypes: FinanceSourceType[];
   registrationTypeId: string;
@@ -80,7 +87,6 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   ngOnInit() {
     this.newFormData = this.initFormOptions().pipe(
       tap((processedNewFormData: MitigationActionNewFormData) => {
-        console.log('PROCESSED NEW FORM DATA', processedNewFormData);
         this.processedNewFormData = processedNewFormData;
       })
     );
@@ -98,6 +104,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
         this.keyAspectsFrm,
         this.emissionsMitigationFrm,
         this.impactFrm,
+        this.reportingClimateFrmComponent,
       ]),
     });
   }
@@ -116,9 +123,9 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
         this.isLoading = false;
         this.registrationTypeId = mitigationActionNewFormData.initiative_type[0].id;
         this.institutions = mitigationActionNewFormData.institutions;
-        this.statuses = mitigationActionNewFormData.status;
+        this.statusses = mitigationActionNewFormData.statuses;
         this.ingeis = mitigationActionNewFormData.ingei_compliances;
-        this.geographicScales = mitigationActionNewFormData.geographic_scale;
+        this.geographicScales = mitigationActionNewFormData.geographic_scales;
         this.financeSourceTypes = mitigationActionNewFormData.finance_source_types;
       })
     );
@@ -143,6 +150,10 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
 
   get impactFrm() {
     return this.impactForm ? this.impactForm.form : null;
+  }
+
+  get reportingClimateFrmComponent() {
+    return this.reportingClimateFormComponent ? this.reportingClimateFormComponent.form : null;
   }
 
   ngAfterViewInit() {

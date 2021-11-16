@@ -28,9 +28,12 @@ export class EmissionsMitigationFormComponent implements OnInit {
   @Input() isUpdating: boolean;
   isLoading = false;
   wasSubmittedSuccessfully = false;
-
+  mechanismStandardApplyModel: number;
+  intendParticipateInternationalCarbonMarketsModel: number;
   mitigationAction: MitigationAction;
   @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
+
+  gasList = ['CO2', 'CH4', 'N2O', 'HFC*', 'SF6', 'CO', 'NOx', 'NMVOC', 'SO2', 'C Negro', 'Otro'];
 
   get formArray(): AbstractControl | null {
     return this.form.get('formArray');
@@ -41,7 +44,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
     private i18nService: I18nService,
     private service: MitigationActionsService,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.service.currentMitigationAction.subscribe((message) => (this.mitigationAction = message));
     this.createForm();
@@ -82,6 +86,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
         this.formBuilder.group({
           intendParticipateInternationalCarbonMarketsCtrl: ['', Validators.required],
           mechanismStandardApplyCtrl: ['', Validators.required],
+          methodologyExantePotentialReductionEmissionsCO2OtherCtrl: [''],
           methodologyUsedCtrl: ['', Validators.required],
         }),
       ]),

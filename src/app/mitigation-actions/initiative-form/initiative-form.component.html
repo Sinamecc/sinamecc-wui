@@ -53,7 +53,6 @@
             <br />
 
             <div fxLayout="row" fxLayoutAlign=" center">
-              <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
               <mat-form-field class="field-ppcn">
                 <textarea
                   matInput
@@ -65,6 +64,7 @@
                 ></textarea>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
+              <input type="file" name="filename" />
               <br />
             </div>
             <div>
@@ -170,7 +170,7 @@
             <mat-radio-group class="custom-radio-group" formControlName="initiativeStatusCtrl">
               <mat-radio-button
                 [style.margin.px]="5"
-                *ngFor="let element of processedNewFormData?.status"
+                *ngFor="let element of processedNewFormData?.statuses"
                 [value]="element.id"
               >
                 {{ element.status }}
@@ -241,7 +241,7 @@
 
             <mat-form-field class="field-ppcn">
               <mat-label translate
-                ><label translate>mitigationAction.entitiesInvolvedMitigationActionCtrl</label>
+                ><label translate>mitigationAction.entityResponsibleMitigationAction</label>
                 <mat-icon [matTooltip]="'general.maxWords' | translate">info</mat-icon>
               </mat-label>
               <textarea
@@ -289,7 +289,7 @@
             <mat-radio-group formControlName="geographicScaleCtrl" class="custom-radio-group">
               <mat-radio-button
                 [style.margin.px]="5"
-                *ngFor="let element of processedNewFormData?.geographic_scale"
+                *ngFor="let element of processedNewFormData?.geographic_scales"
                 [value]="element.id"
               >
                 {{ element.name }}
@@ -299,7 +299,6 @@
             <br />
 
             <div fxLayout="row" fxLayoutAlign=" center">
-              <input type="file" accept=".rar,application/pdf,.zip" name="filename2" />
               <mat-form-field class="field-ppcn">
                 <textarea
                   matInput
@@ -311,6 +310,7 @@
                 ></textarea>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
+              <input type="file" name="filename2" />
               <br />
             </div>
 
@@ -331,12 +331,20 @@
 
             <mat-form-field class="field-ppcn" appearance="fill">
               <mat-label translate>mitigationAction.relationshipNDC</mat-label>
-              <mat-select multiple>
-                <mat-optgroup *ngFor="let ndcItem of ndcList" [label]="ndcItem.name">
-                  <mat-option *ngFor="let option of ndcItem.options" [value]="option.code">
-                    {{ option.code }} - {{ option.name }}
-                  </mat-option>
-                </mat-optgroup>
+              <mat-select formControlName="relationshipNDCCtrl" (selectionChange)="loadSubNDCcatalogs($event.value)">
+                <mat-option *ngFor="let element of processedNewFormData?.action_areas" [value]="element.id">
+                  {{ element.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br />
+
+            <mat-form-field *ngIf="ndcList.length > 0" class="field-ppcn" appearance="fill">
+              <mat-label translate>mitigationAction.relationshipNDC</mat-label>
+              <mat-select formControlName="relationshipNDCTopicCtrl" multiple>
+                <mat-option *ngFor="let option of ndcList" [value]="option.code">
+                  {{ option.area }}.{{ option.code }} - {{ option.goal }}
+                </mat-option>
               </mat-select>
             </mat-form-field>
 
@@ -345,26 +353,23 @@
 
             <mat-form-field class="field-ppcn" appearance="fill">
               <mat-label translate>mitigationAction.relationshipDecarbonizationPlan</mat-label>
-              <mat-select multiple>
-                <mat-optgroup *ngFor="let eje of ejeList" [label]="eje.name">
-                  <mat-option *ngFor="let option of eje.options" [value]="option.code">
-                    VT - {{ option.code }} - {{ option.name }}
-                  </mat-option>
-                </mat-optgroup>
+              <mat-select
+                formControlName="relationshipDecarbonizationPlanCtrl"
+                (selectionChange)="loadSubDescarbonizatiocatalogs($event.value)"
+              >
+                <mat-option *ngFor="let element of processedNewFormData?.descarbonization_axis" [value]="element.id">
+                  {{ element.description }}
+                </mat-option>
               </mat-select>
             </mat-form-field>
-
-            <br />
             <br />
 
-            <mat-form-field class="field-ppcn" appearance="fill">
+            <mat-form-field *ngIf="ejeList.length > 0" class="field-ppcn" appearance="fill">
               <mat-label translate>mitigationAction.relationshipDecarbonizationPlan</mat-label>
-              <mat-select multiple>
-                <mat-optgroup *ngFor="let topic of temasList" [label]="topic.name">
-                  <mat-option *ngFor="let option of topic.options" [value]="option.name">
-                    {{ option.name }}
-                  </mat-option>
-                </mat-optgroup>
+              <mat-select formControlName="relationshipDecarbonizationTopicPlanCtrl" multiple>
+                <mat-option *ngFor="let option of ejeList" [value]="option.id">
+                  VT - {{ option.axis }}.{{ option.code }} - {{ option.description }}
+                </mat-option>
               </mat-select>
             </mat-form-field>
 
@@ -372,7 +377,7 @@
             <br />
 
             <span translate>mitigationAction.impactCategory</span><br /><br />
-            <mat-radio-group class="custom-radio-group">
+            <mat-radio-group formControlName="impactCategoryCtrl" class="custom-radio-group">
               <mat-radio-button [style.margin.px]="5" value="1">
                 <label translate>mitigationAction.directImpactGEI</label>
               </mat-radio-button>
@@ -388,7 +393,11 @@
             <br />
 
             <span translate>¿La acción de mitigación que está registrando forma parte de otra?</span><br /><br />
-            <mat-radio-group class="custom-radio-group">
+            <mat-radio-group
+              formControlName="descriptionRelationshipMitigationActionOthersQuestionCtrl"
+              #descriptionRelationshipMitigationActionOthers="matRadioGroup"
+              class="custom-radio-group"
+            >
               <mat-radio-button [style.margin.px]="5" value="1">
                 <label translate>general.yes</label>
               </mat-radio-button>
@@ -396,6 +405,12 @@
                 No
               </mat-radio-button>
             </mat-radio-group>
+
+            <mat-form-field *ngIf="descriptionRelationshipMitigationActionOthers.value == '1'" class="field-ppcn">
+              <mat-label translate>mitigationAction.descriptionRelationshipMitigationActionOthers</mat-label>
+              <input formControlName="descriptionRelationshipMitigationActionOthersCtrl" type="tex" matInput />
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
 
             <div class="box-button">
               <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
@@ -416,6 +431,15 @@
             </div>
           </mat-step>
         </mat-vertical-stepper>
+
+        <!-- <div class="margin-20">
+            <div>form details:-</div>
+            <pre>Is myForm valid?: <br />{{form.valid | json}}</pre>
+            <pre>form value: <br />{{form.value | json}}</pre>
+            <pre>formArray?.get([0]) : <br />{{formArray?.get([0]) | json }}</pre>
+            <pre>first step valid? : <br />{{formArray?.get([0]).valid | json}}</pre>
+
+          </div> -->
       </div>
     </form>
   </mat-card-content>

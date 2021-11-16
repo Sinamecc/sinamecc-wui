@@ -23,9 +23,9 @@
             <mat-divider></mat-divider>
 
             <!-- loop throught units -->
-            <div *ngFor="let file of form.controls.files.controls; let i = index">
+            <div *ngFor="let file of form.get('files')['controls']; let i = index">
               <!-- row divider show for every nex row exclude if first row -->
-              <mat-divider *ngIf="form.controls.files.controls.length > 1 && i > 0"></mat-divider><br />
+              <mat-divider *ngIf="form.get('files')['controls'].length > 1 && i > 0"></mat-divider><br />
 
               <!-- group name in this case row index -->
               <div [formGroupName]="i">
@@ -71,7 +71,7 @@
                 mat-raised-button
                 (click)="addFile()"
                 type="button"
-                *ngIf="form.controls.files.controls.length <= 3"
+                *ngIf="form.get('files')['controls'].length <= 3"
               >
                 <mat-icon>add box</mat-icon>
                 <span translate> Add new file</span>

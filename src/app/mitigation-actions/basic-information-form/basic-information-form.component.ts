@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { MitigationAction } from '../mitigation-action';
-import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
+import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 
 const log = new Logger('MitigationAction');
@@ -29,6 +29,7 @@ export class BasicInformationFormComponent implements OnInit {
   mitigationAction: MitigationAction;
   mitigationActionBudgeValuetCtrl = 'CRC';
   startDate = new Date();
+  selectedFood = '';
 
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
@@ -70,7 +71,7 @@ export class BasicInformationFormComponent implements OnInit {
       formArray: this.formBuilder.array([
         this.formBuilder.group({
           programCtrl: ['', Validators.required],
-          stepsTakingToFinancingCtrl: ['', Validators.required],
+          stepsTakingToFinancingCtrl: [''],
           detailfinancingSourceCtrl: ['', Validators.required],
           financingSourceApplyingCtrl: ['', Validators.required],
           mitigationActionBudgetCtrl: ['', Validators.required],
@@ -111,7 +112,9 @@ export class BasicInformationFormComponent implements OnInit {
   buildPayload() {
     const context = {
       status: this.form.value.formArray[0].programCtrl,
-      administration: this.form.value.formArray[0].stepsTakingToFinancingCtrl,
+      administration: this.form.value.formArray[0].stepsTakingToFinancingCtrl
+        ? this.form.value.formArray[0].stepsTakingToFinancingCtrl
+        : 'empty field',
       source: this.form.value.formArray[0].detailfinancingSourceCtrl,
       source_description: this.form.value.formArray[0].financingSourceApplyingCtrl,
       reference_year: this.datePipe.transform(this.form.value.formArray[0].referenceYearCtrl, 'yyyy'),
@@ -126,12 +129,11 @@ export class BasicInformationFormComponent implements OnInit {
     if (this.form.value.formArray[1].registeredNonReimbursableCooperationMideplanCtrl === 1) {
       context['mideplan_project'] = this.form.value.formArray[1].registeredNonReimbursableCooperationMideplanDetailCtrl;
     }
-
     return context;
   }
 
   submitForm() {
-    const context = this.buildPayload();
+    const context = { finance: this.buildPayload() };
     this.isLoading = true;
 
     /*

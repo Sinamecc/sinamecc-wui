@@ -142,6 +142,11 @@ export class PpcnUploadComponent implements OnInit {
       );
   }
 
+  public addFile(): void {
+    const control = <FormArray>this.form.controls['files'];
+    control.push(this.createItem());
+  }
+
   private createForm() {
     this.ppcns = this.initialFormData().pipe(
       tap((ppcns: Ppcn[]) => {
@@ -229,10 +234,6 @@ export class PpcnUploadComponent implements OnInit {
     return this.formBuilder.group({
       file: [{ value: undefined, disabled: false }, []],
     });
-  }
-  private addFile(): void {
-    const control = <FormArray>this.form.controls['files'];
-    control.push(this.createItem());
   }
 
   private removeFile(i: number) {
