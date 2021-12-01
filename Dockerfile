@@ -9,10 +9,10 @@ COPY ./ /app/
 
 RUN npm install
 
-ARG env=prod
+ENV env=prod
 
 # RUN npm run build -- --prod --environment $env
-RUN npm run build -- --env=$env
+RUN npm run build  --production
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM nginx:1.13
