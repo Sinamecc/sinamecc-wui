@@ -1,0 +1,43 @@
+<div class="container">
+	<mat-card>
+		<h3>
+			<mat-card-title>
+				<span class="section-heading" translate>
+					Nueva acción de adaptación
+				</span>
+				<mat-divider class="divider-custom"></mat-divider>
+				<mat-divider class="divider-custom"></mat-divider>
+			</mat-card-title>
+		</h3>
+
+		<mat-horizontal-stepper #stepper>
+			<mat-step>
+				<ng-template matStepLabel>
+					<span translate>Registro general</span>
+				</ng-template>
+				<app-general-register></app-general-register>
+			</mat-step>
+
+			<mat-step>
+				<ng-template matStepLabel>
+					<span translate>Reporte de Acciones de Adaptación</span>
+				</ng-template>
+				<app-adaptation-actions-report></app-adaptation-actions-report>
+			</mat-step>
+
+			<mat-step>
+				<ng-template matStepLabel>
+					<span translate>Financiamiento</span>
+				</ng-template>
+				<app-adaptation-actions-financing></app-adaptation-actions-financing>
+			</mat-step>
+
+			<mat-step>
+				<ng-template matStepLabel>
+					<span translate>Registro de indicadores</span>
+				</ng-template>
+				<app-adaptation-actions-indicators></app-adaptation-actions-indicators>
+			</mat-step>
+		</mat-horizontal-stepper>
+	</mat-card>
+</div>;

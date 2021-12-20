@@ -1,0 +1,155 @@
+<div class="container">
+  <form [formGroup]="form" >
+      <mat-vertical-stepper formArrayName="formArray">
+        <mat-step formGroupName="0" [stepControl]="formArray?.get([0])" >
+          <ng-template matStepLabel>
+            <span translate>Información general del financiamiento</span>
+          </ng-template>
+
+          <span translate>Estado del financimiento</span>
+        <mat-radio-group
+          #adaptationActionFinancingStatus="matRadioGroup"
+          formControlName="adaptationActionFinancingStatusCtrl"
+          class="custom-radio-group"
+        >
+          <mat-radio-button value="1">
+            <label translate>Asegurado</label>
+          </mat-radio-button>
+          <mat-radio-button value="2">
+            <label translate>Por obtener</label>
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field *ngIf="adaptationActionFinancingStatus.value == 2" class="field-ppcn">
+         <mat-label translate>¿Qué gestiones está realizando para acceder al financiamiento?</mat-label>
+            <input matInput formControlName="adaptationActionFinancingManagementCtrl" />
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field class="field-ppcn" appearance="fill">
+              <mat-label translate>Detalle la fuente de financiamiento</mat-label>
+              <mat-select #climateValue formControlName="adaptationActionFinancingSourceDetailCtrl" multiple>
+                  <mat-option [value]="1">
+                   <label translate>Presupuesto público nacional</label>
+                  </mat-option>
+
+                 <mat-option [value]="2">
+                   <label translate>Presupuesto privado nacional</label>
+                  </mat-option>
+
+                  <mat-option [value]="3">
+                   <label translate>Cooperación internacional</label>
+                  </mat-option>
+
+                  <mat-option [value]="4">
+                   <label translate>Por definir</label>
+                  </mat-option>
+
+              </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="field-ppcn" appearance="fill">
+              <mat-label translate>Detalle el instrumento de financiamiento</mat-label>
+              <mat-select #climateValue formControlName="adaptationActionFinancingDetailInstrumentCtrl" multiple>
+                  <mat-option [value]="1">
+                   <label translate>Fondos</label>
+                  </mat-option>
+
+                 <mat-option [value]="2">
+                   <label translate>Préstamos tradicionales</label>
+                  </mat-option>
+
+                  <mat-option [value]="3">
+                   <label translate>Préstamos concesionales</label>
+                  </mat-option>
+
+                  <mat-option [value]="4">
+                   <label translate>Subsidios</label>
+                  </mat-option>
+
+                   <mat-option [value]="5">
+                   <label translate>Garantías</label>
+                  </mat-option>
+
+              </mat-select>
+        </mat-form-field>
+
+        <div fxLayout="row">
+                <div [style.margin-right]="'10px'">
+                  <mat-button-toggle-group #budgetCtrlgroup="matButtonToggleGroup" value="CRC">
+                    <mat-button-toggle value="CRC">CRC</mat-button-toggle>
+                    <mat-button-toggle value="USD">USD</mat-button-toggle>
+                    <mat-button-toggle value="other"><span translate>general.other</span></mat-button-toggle>
+                  </mat-button-toggle-group>
+                </div>
+
+                <mat-form-field *ngIf="budgetCtrlgroup.value == 'other'" [style.margin-right]="'10px'" [style.width.%]="100"  class="ppcn-field">
+                  <mat-label translate>general.other</mat-label>
+                  <input formControlName="adaptationActionFinancingBufgetOtherCtrl" type="text" matInput required />
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+
+                <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100"  class="ppcn-field">
+                  <mat-label translate>Presupuesto</mat-label>
+                  <input type="number" matInput formControlName="adaptationActionFinancingBufgetValueCtrl" required />
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+
+                <mat-form-field [style.width.%]="100"  class="ppcn-field">
+                  <mat-label translate>mitigationAction.referenceYear</mat-label>
+                  
+                  <input matInput
+                  [placeholder]="'Choose a date' | translate"
+                  [matDatepicker]="adaptationActionFinancingBufgetStarDate"
+                  formControlName="adaptationActionFinancingBufgetStarDateCtrl" />
+
+                  <mat-datepicker-toggle matSuffix [for]="adaptationActionFinancingBufgetStarDate"></mat-datepicker-toggle>
+                  <mat-datepicker #adaptationActionFinancingBufgetStarDate startView="year"></mat-datepicker>
+
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+        </div>
+
+        </mat-step>
+
+        <mat-step formGroupName="1" [stepControl]="formArray?.get([1])" >
+          <ng-template matStepLabel>
+            <span translate>Acciones financiadas con fuentes de cooperación internacional</span>
+          </ng-template>
+
+          <span translate>¿Se encuentra la acción en el registro de proyectos de cooperación internacional no reembolsable de Mideplan?</span>
+        <mat-radio-group
+          #adaptationActionFinancingRegisterMIDEPLANC="matRadioGroup"
+          formControlName="adaptationActionFinancingRegisterMIDEPLANCtrl"
+          class="custom-radio-group"
+        >
+          <mat-radio-button [value]="1">
+            <label translate>Si</label>
+          </mat-radio-button>
+          <mat-radio-button [value]="2">
+            <label translate>No</label>
+          </mat-radio-button>
+        </mat-radio-group>
+
+         <mat-form-field *ngIf="adaptationActionFinancingRegisterMIDEPLANC.value == 1" class="field-ppcn">
+         <mat-label translate>¿Bajo que nombre se encuentra el proyecto registrado en Mideplan?</mat-label>
+            <input matInput formControlName="adaptationActionFinancingRegisterNameMIDEPLANCtrl" />
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field-ppcn">
+         <mat-label translate>Entidad Ejecutora del proyecto</mat-label>
+            <input matInput formControlName="adaptationActionFinancingRegisterEntityMIDEPLANCtrl" />
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+        </mat-form-field>
+
+
+
+
+        </mat-step>
+
+      </mat-vertical-stepper>
+
+  </form>
+</div>
