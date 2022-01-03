@@ -13,8 +13,9 @@ COPY ./ /app/
 RUN npm install
 
 ENV environment ${env}
-# we need to change this config to use the correct npm script
+
 RUN  npm run  build -- --configuration=${environment}
+
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM nginx:1.13
 
