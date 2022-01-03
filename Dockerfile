@@ -1,5 +1,8 @@
 # Stage 0, based on Node.js, to build and compile Angular
+
 FROM node:gallium as node
+
+ARG env=dev
 
 WORKDIR /app
 
@@ -9,11 +12,9 @@ COPY ./ /app/
 
 RUN npm install
 
-ENV env=prod
-
-# RUN npm run build -- --prod --environment $env
-RUN npm run build  --production
-
+ENV environment ${env}
+# we need to change this config to use the correct npm script
+RUN  npm run  build -- --configuration=${environment}
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM nginx:1.13
 
