@@ -12,6 +12,8 @@ import { MaterialModule } from "@app/material.module";
 import { AdaptationActionsReportComponent } from "./adaptation-actions-report/adaptation-actions-report.component";
 import { AdaptationActionsFinancingComponent } from "./adaptation-actions-financing/adaptation-actions-financing.component";
 import { AdaptationActionsIndicatorsComponent } from "./adaptation-actions-indicators/adaptation-actions-indicators.component";
+import { AdaptationActionsClimateMonitoringComponent } from "./adaptation-actions-climate-monitoring/adaptation-actions-climate-monitoring.component";
+import { AdaptationActionsActionImpactComponent } from "./adaptation-actions-action-impact/adaptation-actions-action-impact.component";
 
 @NgModule({
 	imports: [
@@ -30,7 +32,9 @@ import { AdaptationActionsIndicatorsComponent } from "./adaptation-actions-indic
 		GeneralRegisterComponent,
 		AdaptationActionsReportComponent,
 		AdaptationActionsFinancingComponent,
-		AdaptationActionsIndicatorsComponent
+		AdaptationActionsIndicatorsComponent,
+		AdaptationActionsClimateMonitoringComponent,
+		AdaptationActionsActionImpactComponent
 	]
 })
 export class AdaptationActionsModule {}

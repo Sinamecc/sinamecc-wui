@@ -1,0 +1,214 @@
+<div class="container">
+  <form [formGroup]="form" >
+      <mat-vertical-stepper #stepper formArrayName="formArray">
+        <mat-step formGroupName="0" [stepControl]="formArray?.get([0])" >
+          <ng-template matStepLabel>
+            <span translate>Registro de avances de monitoreo</span>
+          </ng-template>
+
+          <span translate>Estado de la acción correspondiente al periodo de reporte</span>
+          <mat-radio-group
+            #actionStatusCorrespondingReportingPeriodControl="matRadioGroup"
+            formControlName="actionStatusCorrespondingReportingPeriodCtrl"
+            class="custom-radio-group"
+          >
+            <mat-radio-button value="1">
+              <label translate>No iniciada</label>
+            </mat-radio-button>
+            <mat-radio-button value="2">
+              <label translate>Iniciada</label>
+            </mat-radio-button>
+            <mat-radio-button value="3">
+              <label translate>Finalizada</label>
+            </mat-radio-button>
+          
+          </mat-radio-group>
+          <br />
+          <br />
+
+          <span translate>¿Tiene algún avance en el monitoreo de sus acciones climáticas registradas?</span>
+          <mat-radio-group
+            #progressMonitoringRecordedClimateActionsControl="matRadioGroup"
+            formControlName="progressMonitoringRecordedClimateActionsCtrl"
+            class="custom-radio-group"
+          >
+            <mat-radio-button value="1">
+              <label translate>Si</label>
+            </mat-radio-button>
+            <mat-radio-button value="2">
+              <label translate>No</label>
+            </mat-radio-button>
+            
+          </mat-radio-group>
+
+          <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+            <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>
+          </div>
+
+        </mat-step>
+
+        <mat-step formGroupName="1" [stepControl]="formArray?.get([1])" >
+          <ng-template matStepLabel>
+            <span translate>Monitoreo de indicadores</span>
+          </ng-template>
+
+           <mat-label>Periodo de reporte </mat-label>
+          <div  fxLayout="row" fxLayoutAlign="start center"> 
+            <mat-form-field class="field-ppcn">
+                  <mat-label translate>Desde</mat-label>
+                  <input matInput
+                  [placeholder]="'Choose a date' | translate"
+                  [matDatepicker]="reportPeriodStart"
+                  formControlName="reportPeriodStartCtrl" />
+
+                  <mat-datepicker-toggle matSuffix [for]="reportPeriodStart"></mat-datepicker-toggle>
+                  <mat-datepicker #reportPeriodStart startView="year"></mat-datepicker>
+
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="field-ppcn">
+                  <mat-label translate>Hasta</mat-label>
+                  <input matInput
+                  [placeholder]="'Choose a date' | translate"
+                  [matDatepicker]="reportPeriodEndt"
+                  formControlName="reportPeriodEndtCtrl" />
+
+                  <mat-datepicker-toggle matSuffix [for]="reportPeriodEndt"></mat-datepicker-toggle>
+                  <mat-datepicker #reportPeriodEndt startView="year"></mat-datepicker>
+
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+          </div>
+
+        
+           <mat-form-field class="field-ppcn">
+                  <mat-label translate>Fecha de actualización del dato del indicador </mat-label>
+                  <input matInput
+                  [placeholder]="'Choose a date' | translate"
+                  [matDatepicker]="indicatorDataUpdateDate"
+                  formControlName="indicatorDataUpdateDateCtrl" />
+
+                  <mat-datepicker-toggle matSuffix [for]="indicatorDataUpdateDate"></mat-datepicker-toggle>
+                  <mat-datepicker #indicatorDataUpdateDate startView="year"></mat-datepicker>
+
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+          </mat-form-field>
+
+           <mat-form-field class="field-ppcn" appearance="fill">
+              <mat-label translate>Indicator verification source</mat-label>
+              <mat-select  #indicatorVerificationSource formControlName="indicatorVerificationSourceCtrl" >
+                  <mat-option [value]="1">
+                   <label translate>Censos</label>
+                  </mat-option>
+
+                 <mat-option [value]="2">
+                   <label translate>Encuesta por muestreo</label>
+                  </mat-option>
+
+                  <mat-option [value]="3">
+                   <label translate>Combinación de censo y muestreo</label>
+                  </mat-option>
+
+                   <mat-option [value]="4">
+                   <label translate>Sondeos de opinión</label>
+                  </mat-option>
+
+                  <mat-option [value]="5">
+                   <label translate>Registro administrativo</label>
+                  </mat-option>
+
+                  <mat-option [value]="6">
+                   <label translate>Sistema de Monitoreo</label>
+                  </mat-option>
+
+                  <mat-option [value]="7">
+                   <label translate>Estimación directa</label>
+                  </mat-option>
+
+                  <mat-option [value]="8">
+                   <label translate>Otro</label>
+                  </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="field-ppcn" *ngIf="indicatorVerificationSource.value === 8">
+            <mat-label translate>Indicator verification source - Otro </mat-label>
+                <input matInput formControlName="indicatorVerificationSourceOtherCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+            <div fxLayout="row" fxLayoutAlign=" center">
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate>Por favor, anexe la información de soporte para el proceso de monitoreo y seguimiento</mat-label>
+                    <input matInput formControlName="attachSupportingInformationCtrl" />
+                    <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
+                  <input type="file" name="filename2" />
+                  <br />
+              </div>
+
+
+            <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+              <app-generic-button-secondary (click)="stepper.previous();" name="general.back">
+              </app-generic-button-secondary>
+              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+            </div>
+
+
+        </mat-step>
+
+        <mat-step formGroupName="2" [stepControl]="formArray?.get([2])" >
+          <ng-template matStepLabel>
+            <span translate>Reporte general de avance de la acción climática</span>
+          </ng-template>
+
+          <mat-label>Periodo de reporte </mat-label>
+          <div  fxLayout="row" fxLayoutAlign="start center"> 
+            <mat-form-field class="field-ppcn">
+                  <mat-label translate>Desde</mat-label>
+                  <input matInput
+                  [placeholder]="'Choose a date' | translate"
+                  [matDatepicker]="reportPeriodStart2"
+                  formControlName="reportPeriodStartCtrl" />
+
+                  <mat-datepicker-toggle matSuffix [for]="reportPeriodStart2"></mat-datepicker-toggle>
+                  <mat-datepicker #reportPeriodStart2 startView="year"></mat-datepicker>
+
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="field-ppcn">
+                  <mat-label translate>Hasta</mat-label>
+                  <input matInput
+                  [placeholder]="'Choose a date' | translate"
+                  [matDatepicker]="reportPeriodEndt2"
+                  formControlName="reportPeriodEndtCtrl" />
+
+                  <mat-datepicker-toggle matSuffix [for]="reportPeriodEndt2"></mat-datepicker-toggle>
+                  <mat-datepicker #reportPeriodEndt2 startView="year"></mat-datepicker>
+
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field class="field-ppcn">
+            <mat-label translate>A modo descriptivo, ¿cuál ha sido el avance de su acción en el periódo? </mat-label>
+                <input matInput formControlName="advanceDescriptionCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
+  <div fxLayout="row" class="button-box" fxLayoutAlign="end center" >
+              <app-generic-button (click)="buildPayload()" name="general.done">
+              </app-generic-button>
+            </div>
+
+        </mat-step>
+
+
+
+
+      </mat-vertical-stepper>
+  </form>
+</div>

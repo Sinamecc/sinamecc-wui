@@ -15,28 +15,42 @@
 				<ng-template matStepLabel>
 					<span translate>Registro general</span>
 				</ng-template>
-				<app-general-register></app-general-register>
+				<app-general-register  [mainStepper]="stepper" [adaptationActionForm]="adaptationActionForm"></app-general-register>
 			</mat-step>
 
 			<mat-step>
 				<ng-template matStepLabel>
 					<span translate>Reporte de Acciones de Adaptación</span>
 				</ng-template>
-				<app-adaptation-actions-report></app-adaptation-actions-report>
+				<app-adaptation-actions-report [mainStepper]="stepper"></app-adaptation-actions-report>
 			</mat-step>
 
 			<mat-step>
 				<ng-template matStepLabel>
 					<span translate>Financiamiento</span>
 				</ng-template>
-				<app-adaptation-actions-financing></app-adaptation-actions-financing>
+				<app-adaptation-actions-financing [mainStepper]="stepper"></app-adaptation-actions-financing>
 			</mat-step>
 
 			<mat-step>
 				<ng-template matStepLabel>
 					<span translate>Registro de indicadores</span>
 				</ng-template>
-				<app-adaptation-actions-indicators></app-adaptation-actions-indicators>
+				<app-adaptation-actions-indicators [mainStepper]="stepper"></app-adaptation-actions-indicators>
+			</mat-step>
+
+			<mat-step>
+				<ng-template matStepLabel>
+					<span translate>Monitoreo y seguimiento de acciones climáticas a través del SINAMECC</span>
+				</ng-template>
+				<app-adaptation-actions-climate-monitoring [mainStepper]="stepper"></app-adaptation-actions-climate-monitoring>
+			</mat-step>
+
+			<mat-step>
+				<ng-template matStepLabel>
+					<span translate>Impacto de la acción</span>
+				</ng-template>
+				<app-adaptation-actions-action-impact></app-adaptation-actions-action-impact>
 			</mat-step>
 		</mat-horizontal-stepper>
 	</mat-card>

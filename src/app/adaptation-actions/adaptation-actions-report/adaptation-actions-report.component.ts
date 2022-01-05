@@ -1,10 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import {
 	AbstractControl,
 	FormBuilder,
 	FormGroup,
 	Validators
 } from "@angular/forms";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
 	selector: "app-adaptation-actions-report",
@@ -13,8 +14,10 @@ import {
 })
 export class AdaptationActionsReportComponent implements OnInit {
 	form: FormGroup;
+	@Input() mainStepper: any;
+	durationInSeconds = 3;
 
-	constructor(private formBuilder: FormBuilder) {}
+	constructor(private formBuilder: FormBuilder, public snackBar: MatSnackBar) {}
 
 	ngOnInit() {
 		this.createForm();
@@ -27,6 +30,12 @@ export class AdaptationActionsReportComponent implements OnInit {
 	private createForm() {
 		this.form = this.formBuilder.group({
 			formArray: this.buildRegisterForm()
+		});
+	}
+
+	openSnackBar(message: string, action: string = "") {
+		this.snackBar.open(message, action, {
+			duration: this.durationInSeconds * 1000
 		});
 	}
 
@@ -102,5 +111,74 @@ export class AdaptationActionsReportComponent implements OnInit {
 				]
 			})
 		]);
+	}
+
+	buildPayload() {
+		const context = {
+			adaptationActionTypeCtrl: this.form.value.formArray[0]
+				.adaptationActionTypeCtrl,
+			adaptationActionNameCtrl: this.form.value.formArray[0]
+				.adaptationActionNameCtrl,
+			adaptationActionTargetCtrl: this.form.value.formArray[0]
+				.adaptationActionTargetCtrl,
+			adaptationActionDescriptionCtrl: this.form.value.formArray[0]
+				.adaptationActionDescriptionCtrl,
+			adaptationActionGoalCtrl: this.form.value.formArray[0]
+				.adaptationActionGoalCtrl,
+			adaptationActionODSCtrl: this.form.value.formArray[0]
+				.adaptationActionODSCtrl,
+
+			adaptationActionProvinceCtrl: this.form.value.formArray[1]
+				.adaptationActionProvinceCtrl,
+			adaptationActionCantonCtrl: this.form.value.formArray[1]
+				.adaptationActionCantonCtrl,
+			adaptationActionDistritCtrl: this.form.value.formArray[1]
+				.adaptationActionDistritCtrl,
+			adaptationActionDescriptionNarrativeCtrl: this.form.value.formArray[1]
+				.adaptationActionDescriptionNarrativeCtrl,
+			adaptationActionLocationCtrl: this.form.value.formArray[1]
+				.adaptationActionLocationCtrl,
+
+			adaptationActionThemeCtrl: this.form.value.formArray[2]
+				.adaptationActionThemeCtrl,
+			adaptationActionTypologyCtrl: this.form.value.formArray[2]
+				.adaptationActionTypologyCtrl,
+			adaptationActionGoalRelationCtrl: this.form.value.formArray[2]
+				.adaptationActionGoalRelationCtrl,
+			adaptationActionEjeRelationCtrl: this.form.value.formArray[2]
+				.adaptationActionEjeRelationCtrl,
+			adaptationActionLinealRelationCtrl: this.form.value.formArray[2]
+				.adaptationActionLinealRelationCtrl,
+
+			adaptationActionInstrumentCtrl: this.form.value.formArray[3]
+				.adaptationActionInstrumentCtrl,
+			adaptationActionDescriptionInstrumentCtrl: this.form.value.formArray[3]
+				.adaptationActionDescriptionInstrumentCtrl,
+
+			adaptationActionClimateThreatCtrl: this.form.value.formArray[3]
+				.adaptationActionClimateThreatCtrl,
+			adaptationActionClimateThreatOtherCtrl: this.form.value.formArray[3]
+				.adaptationActionClimateThreatOtherCtrl,
+			adaptationActionInfoSourceCtrl: this.form.value.formArray[3]
+				.adaptationActionInfoSourceCtrl,
+
+			adaptationActionStartDateCtrl: this.form.value.formArray[5]
+				.adaptationActionStartDateCtrl,
+			adaptationActionEndDateCtrl: this.form.value.formArray[5]
+				.adaptationActionEndDateCtrl,
+			adaptationActionDurationTimeCtrl: this.form.value.formArray[5]
+				.adaptationActionDurationTimeCtrl,
+			adaptationActionEntityCtrl: this.form.value.formArray[5]
+				.adaptationActionEntityCtrl,
+			adaptationActionEntityOthersCtrl: this.form.value.formArray[5]
+				.adaptationActionEntityOthersCtrl,
+			adaptationActionCodeCtrl: this.form.value.formArray[5]
+				.adaptationActionCodeCtrl
+		};
+
+		this.openSnackBar("Formulario creado correctamente", "");
+		this.mainStepper.next();
+
+		return context;
 	}
 }
