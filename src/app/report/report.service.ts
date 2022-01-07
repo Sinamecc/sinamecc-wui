@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 import { S3File, S3Service } from '@shared/s3.service';
 
 import { CredentialsService } from '@app/auth';
+import { ReportDataCatalog } from './interfaces/report-data';
+import { ReportDataPayload } from './interfaces/report-data-payload';
 
 export interface Response {
   // Customize received credentials here
@@ -32,10 +34,11 @@ export interface ReportContext {
 }
 
 const routes = {
-  submitReport: () => `/v1/report_file/`,
+  submitReport: () => `/v1/report-data/report/`,
   submitVersion: (id: number) => `/v1/report_file/${id}`,
-  reports: () => `/v1/report_file/`,
+  reports: () => `/v1/report-data/report/`,
   versions: (id: number) => `/v1/report_file/${id}/versions`,
+  reportDataCatalogs: () => `/v1/report-data/data/`,
 };
 
 @Injectable({
@@ -49,38 +52,39 @@ export class ReportService {
    * @param {ReportContext} context The report form parameters.
    * @return {Observable<Response>} The report response.
    */
-  submitReport(context: ReportContext): Observable<Response> {
+  submitReport(context: ReportDataPayload): Observable<Response> {
     // Replace by proper api call, verify params in component
 
-    const fileList = context.file.files;
-    if (fileList.length > 0) {
+    //const fileList = context.source_file.files;
+    // ** when BE support files **
+    /*
       const file: File = fileList[0];
       const formData: FormData = new FormData();
-
       formData.append('name', context.name);
       formData.append('file', file, file.name);
-
-      const metadata = [];
-      for (const element in context) {
-        if (element !== 'file' && context[element] !== '') {
-          const value = { name: element, value: context[element] };
-          metadata.push(value);
-        }
-      }
-      formData.append('metadata', JSON.stringify(metadata));
-
-      return this.httpClient.post(routes.submitReport(), formData).pipe(
-        map((body: any) => {
-          const response = {
-            statusCode: 200,
-            message: 'Form submitted correctly',
-          };
-          return response;
-        })
-      );
-    } else {
-      // raise exception
-    }
+      formData.append('description', context.description);
+      formData.append('source', context.source);
+      formData.append('data_type', context.data_type);
+      formData.append('other_data_type', context.other_data_type);
+      formData.append('classifier', context.classifier);
+      formData.append('classifier', context.classifier);
+      formData.append('other_classifier', context.other_classifier);
+      formData.append('report_information', context.report_information);
+      formData.append('have_line_base', context.have_line_base.toString());
+      formData.append('have_quality_element', context.have_quality_element.toString());
+      formData.append('quality_element_description', context.quality_element_description);
+      formData.append('transfer_data_with_sinamecc', context.transfer_data_with_sinamecc);
+      formData.append('contact', JSON.stringify(context.contact));
+    */
+    return this.httpClient.post(routes.submitReport(), context).pipe(
+      map(() => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly',
+        };
+        return response;
+      })
+    );
   }
 
   /**
@@ -140,6 +144,14 @@ export class ReportService {
     return this.httpClient.get(routes.versions(id), {}).pipe(
       map((body: any) => {
         return body.name;
+      })
+    );
+  }
+
+  getReportCatalogs() {
+    return this.httpClient.get(routes.reportDataCatalogs()).pipe(
+      map((body: ReportDataCatalog) => {
+        return body;
       })
     );
   }

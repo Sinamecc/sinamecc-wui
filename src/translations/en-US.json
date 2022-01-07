@@ -131,6 +131,15 @@
   },
 
   "reportData": {
+    "additionalAnnotations": "Additional annotations",
+    "agreementTransferSINAMECC": "Is there an agreement to transfer this data with SINAMECC?",
+    "qualityPreItems": "Do you have quality pre-items?",
+    "isBaseline": "Is there a baseline?",
+    "whatInformationReported": "What information is being reported?",
+    "methodologicalDetailsInformationRecorded": "Methodological details of the information to be recorded",
+    "thematicCategorization": "Thematic categorization",
+    "informationSources": "Information sources",
+    "dataReportsAnalysis": "Data for reports and analysis (Include a brief description of the data, information report provides)",
     "dataReport": "Data for Report",
     "reports": "Reports",
     "report": "Report",
@@ -256,6 +265,8 @@
   },
 
   "general": {
+    "positionPerson": "Position",
+    "results": "Results",
     "until": "Until",
     "biannual": "Biannual",
     "management": "Management",
