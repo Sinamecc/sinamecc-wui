@@ -55,27 +55,6 @@ export class ReportService {
   submitReport(context: ReportDataPayload): Observable<Response> {
     // Replace by proper api call, verify params in component
 
-    //const fileList = context.source_file.files;
-    // ** when BE support files **
-    /*
-      const file: File = fileList[0];
-      const formData: FormData = new FormData();
-      formData.append('name', context.name);
-      formData.append('file', file, file.name);
-      formData.append('description', context.description);
-      formData.append('source', context.source);
-      formData.append('data_type', context.data_type);
-      formData.append('other_data_type', context.other_data_type);
-      formData.append('classifier', context.classifier);
-      formData.append('classifier', context.classifier);
-      formData.append('other_classifier', context.other_classifier);
-      formData.append('report_information', context.report_information);
-      formData.append('have_line_base', context.have_line_base.toString());
-      formData.append('have_quality_element', context.have_quality_element.toString());
-      formData.append('quality_element_description', context.quality_element_description);
-      formData.append('transfer_data_with_sinamecc', context.transfer_data_with_sinamecc);
-      formData.append('contact', JSON.stringify(context.contact));
-    */
     return this.httpClient.post(routes.submitReport(), context).pipe(
       map(() => {
         const response = {
