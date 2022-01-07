@@ -12,3 +12,8 @@
 .report-error {
   color: mat-color($app-warn);
 }
+
+.custom-radio-group {
+  display: flex;
+  flex-direction: column;
+}

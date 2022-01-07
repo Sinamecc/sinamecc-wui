@@ -19,8 +19,8 @@ export class ReportComponent implements OnInit {
   error: string;
   isLoading = false;
   dataSource: MatTableDataSource<Report>;
-  displayedColumns = ['name', 'last_active_version', 'created', 'updated', 'versions'];
-  fieldsToSearch: string[][] = [['name'], ['last_active_version'], ['versions']];
+  displayedColumns = ['name', 'email'];
+  fieldsToSearch: string[][] = [['name'], ['email']];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

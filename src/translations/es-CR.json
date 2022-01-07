@@ -131,6 +131,15 @@
   },
 
   "reportData": {
+    "additionalAnnotations": "Anotaciones adicionales",
+    "agreementTransferSINAMECC": "¿Se cuenta con un acuerdo para transferir estos datos con el SINAMECC?",
+    "qualityPreItems": "¿Tiene elementos previos de calidad?",
+    "isBaseline": "¿Se cuenta con línea base?",
+    "whatInformationReported": "¿Que información se está reportando? ",
+    "methodologicalDetailsInformationRecorded": "Detalle metodológico de la información por registrar",
+    "thematicCategorization": "Categorización temática",
+    "informationSources": "Fuentes de información",
+    "dataReportsAnalysis": "Datos para reportes y análisis (Incluir una breve descripción del dato, reporte de la información proporciona)",
     "dataReport": "Información para Reporte",
     "reports": "Reportes",
     "report": "Reporte",
@@ -256,6 +265,8 @@
   },
 
   "general": {
+    "positionPerson": "Cargo",
+    "results": "Resultados",
     "until": "Hasta",
     "biannual": "Semestral",
     "management": "Gestión",

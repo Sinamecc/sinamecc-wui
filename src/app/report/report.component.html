@@ -17,29 +17,9 @@
     </ng-container>
 
     <!-- Last Active Version -->
-    <ng-container matColumnDef="last_active_version">
-      <mat-header-cell *matHeaderCellDef translate> reportData.lastActiveVer </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.last_active_version }} </mat-cell>
-    </ng-container>
-
-    <!-- Created Column -->
-    <ng-container matColumnDef="updated">
-      <mat-header-cell *matHeaderCellDef translate>general.lastUpdate </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.updated | date: 'MM/dd/yyy hh:mm:ss' }} </mat-cell>
-    </ng-container>
-
-    <!-- Updates Column -->
-    <ng-container matColumnDef="created">
-      <mat-header-cell *matHeaderCellDef translate> general.createdAt </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.created | date: 'MM/dd/yyy hh:mm:ss' }} </mat-cell>
-    </ng-container>
-
-    <!-- Versions Column -->
-    <ng-container matColumnDef="versions">
-      <mat-header-cell *matHeaderCellDef translate>general.versions </mat-header-cell>
-      <mat-cell *matCellDef="let element"
-        ><a mat-button routerLink="/report/{{ element.id }}/versions">{{ element.versions }}</a></mat-cell
-      >
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef translate> info.emailAddress </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.contact.email }} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
