@@ -236,6 +236,12 @@
                 <span translate>mitigationAction.indicatorDataSource</span>
               </ng-template>
 
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>mitigationAction.responsibleInstitution</mat-label>
+                <input matInput formControlName="responsibleInstitutionCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+
               <span translate>mitigationAction.sourceType</span><br /><br />
               <mat-radio-group #sourceType="matRadioGroup" formControlName="sourceTypeCtrl" class="custom-radio-group">
                 <mat-radio-button [style.margin.px]="5" [value]="1">

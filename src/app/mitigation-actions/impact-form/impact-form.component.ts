@@ -91,8 +91,9 @@ export class ImpactFormComponent implements OnInit {
   buildForm() {
     return this.formBuilder.array([
       this.formBuilder.group({
+        responsibleInstitutionCtrl: ['', Validators.required],
         howSustainabilityIndicatorCtrl: ['', Validators.required],
-        indicatorNameCtrl: ['', Validators.required],
+        indicatorNameCtrl: [''],
         indicatorDescriptionCtrl: ['', Validators.required],
         indicatorUnitCtrl: ['', Validators.required],
         methodologicalDetailIndicatorCtrl: ['', Validators.required],
