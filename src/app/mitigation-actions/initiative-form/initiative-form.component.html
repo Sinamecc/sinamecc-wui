@@ -170,7 +170,7 @@
             <mat-radio-group class="custom-radio-group" formControlName="initiativeStatusCtrl">
               <mat-radio-button
                 [style.margin.px]="5"
-                *ngFor="let element of processedNewFormData?.statuses"
+                *ngFor="let element of processedNewFormData?.status"
                 [value]="element.id"
               >
                 {{ element.status }}
