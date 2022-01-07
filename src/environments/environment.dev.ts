@@ -13,4 +13,5 @@ export const environment = {
   carbonUrl: 'http://mccr.devel.sinamecc.go.cr/api',
   defaultLanguage: 'en-US',
   supportedLanguages: ['en-US', 'es-CR'],
+  hmr: false,
 };
