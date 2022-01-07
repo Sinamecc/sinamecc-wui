@@ -1,10 +1,10 @@
 export interface MitigationActionNewFormData {
   initiative_type: RegistrationType[];
   institutions: Institution[];
-  statuses: Status[];
+  status: Status[];
   finances: Finance[];
   ingei_compliances: IngeiCompliance[];
-  geographic_scales: GeographicScale[];
+  geographic_scale: GeographicScale[];
   finance_source_types: FinanceSourceType[];
   finance_status: FinanceStatus[];
   initiative_types: InitiativeType[];
