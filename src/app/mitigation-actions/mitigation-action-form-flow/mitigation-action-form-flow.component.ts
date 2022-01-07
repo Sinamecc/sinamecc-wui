@@ -123,9 +123,9 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
         this.isLoading = false;
         this.registrationTypeId = mitigationActionNewFormData.initiative_type[0].id;
         this.institutions = mitigationActionNewFormData.institutions;
-        this.statusses = mitigationActionNewFormData.statuses;
+        this.statusses = mitigationActionNewFormData.status;
         this.ingeis = mitigationActionNewFormData.ingei_compliances;
-        this.geographicScales = mitigationActionNewFormData.geographic_scales;
+        this.geographicScales = mitigationActionNewFormData.geographic_scale;
         this.financeSourceTypes = mitigationActionNewFormData.finance_source_types;
       })
     );
