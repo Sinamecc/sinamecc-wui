@@ -1,4 +1,11 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { DatePipe } from "@angular/common";
+import {
+	Component,
+	Input,
+	OnChanges,
+	OnInit,
+	SimpleChanges
+} from "@angular/core";
 import {
 	AbstractControl,
 	FormBuilder,
@@ -6,6 +13,9 @@ import {
 	Validators
 } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
+import { AdaptationActionService } from "../adaptation-actions-service";
+import { AdaptationAction } from "../interfaces/adaptationAction";
+import { ODS, SubTopics, Topic } from "../interfaces/catalogs";
 
 @Component({
 	selector: "app-adaptation-actions-report",
@@ -14,12 +24,35 @@ import { MatSnackBar } from "@angular/material";
 })
 export class AdaptationActionsReportComponent implements OnInit {
 	form: FormGroup;
+	topics: Topic[] = [];
+	subTopics: SubTopics[] = [];
+	subTopicsToShow: SubTopics[] = [];
+	ods: ODS[];
+	adaptationAction: AdaptationAction;
 	@Input() mainStepper: any;
 	durationInSeconds = 3;
 
-	constructor(private formBuilder: FormBuilder, public snackBar: MatSnackBar) {}
+	typesTooltipTxt = [
+		"Tipo A - Instrumentos de políticas y planes: acciones que plantean esquemas que buscan reducir la vulnerabilidad antes los efectos del cambio climático a través de instrumentos de política, usualmente con alcance nacional o sectorial. Pueden tener la forma de ley, política, reglamentos, planes, estrategias, entre otros. Las políticas son el conjunto de decisiones, principios y normas que orientan a la acción, definiendo objetivos y metas precisas a legitimar y ejercer el poder y la autoridad que conduzcan a satisfacer determinadas necesidades de un país, sector, etc. Los planes son un esquema general de acción que define las prioridades, los lineamientos básicos de una gestión y el alcance de las funciones, para un lapso temporal determinado.",
+		"Tipo B - Proyectos y programas : Los programas son un conjunto organizado, coherente e integrado de actividades, servicios o procesos expresados en agrupaciones de proyectos que se relacionan entre sí y se desarrollan en forma simultánea o sucesiva, con los recursos necesarios y con la finalidad de alcanzar los objetivos de reducción de vulnerabilidad determinados, todo esto configurado desde un plan y con un alcance, escala y duración delimitada.",
+		"Tipo C - Actividades: conjunto de operaciones o tareas enfocadas en la reducción de la vulnerabilidad que tienen alcance, escala y duración delimitada. Pueden ser parte de un proyecto, programa, de un instrumento de política, o bien, ocurrir de manera aislada."
+	];
+
+	constructor(
+		private formBuilder: FormBuilder,
+		public snackBar: MatSnackBar,
+		private datePipe: DatePipe,
+		private service: AdaptationActionService
+	) {
+		this.service.currentAdaptationActionSource.subscribe(message => {
+			this.adaptationAction = message;
+		});
+	}
 
 	ngOnInit() {
+		this.loadODS();
+		this.loadTopics();
+		this.loadSubTopics();
 		this.createForm();
 	}
 
@@ -31,6 +64,45 @@ export class AdaptationActionsReportComponent implements OnInit {
 		this.form = this.formBuilder.group({
 			formArray: this.buildRegisterForm()
 		});
+	}
+
+	loadODS() {
+		this.service.loadODS().subscribe(
+			ods => {
+				this.ods = ods;
+			},
+			error => {
+				this.ods = [];
+			}
+		);
+	}
+
+	loadTopics() {
+		this.service.loadTopics().subscribe(
+			topics => {
+				this.topics = topics;
+			},
+			error => {
+				this.topics = [];
+			}
+		);
+	}
+
+	loadSubTopics() {
+		this.service.loadSubTopics().subscribe(
+			subTopics => {
+				this.subTopics = subTopics;
+			},
+			error => {
+				this.subTopics = [];
+			}
+		);
+	}
+
+	changeSubTopics(idTopic: string) {
+		this.subTopicsToShow = this.subTopics.filter(
+			subTopic => subTopic.topic.toString() == idTopic.toString()
+		);
 	}
 
 	openSnackBar(message: string, action: string = "") {
@@ -106,79 +178,104 @@ export class AdaptationActionsReportComponent implements OnInit {
 					[Validators.required, Validators.maxLength(250)]
 				],
 				adaptationActionCodeCtrl: [
-					"CODAA0001",
+					"AA1",
 					[Validators.required, Validators.maxLength(50)]
 				]
 			})
 		]);
 	}
 
+	submitForm() {
+		const payload: AdaptationAction = this.buildPayload();
+
+		this.service.updateCurrentAdaptationAction(
+			Object.assign(this.adaptationAction, payload)
+		);
+		this.mainStepper.next();
+
+		/*
+		this.service
+			.createNewAdaptationAction(Object.assign(this.adaptationAction, payload))
+			.subscribe(_ => {
+				this.openSnackBar("Formulario creado correctamente", "");
+				this.mainStepper.next();
+			});
+		*/
+	}
+
 	buildPayload() {
 		const context = {
-			adaptationActionTypeCtrl: this.form.value.formArray[0]
-				.adaptationActionTypeCtrl,
-			adaptationActionNameCtrl: this.form.value.formArray[0]
-				.adaptationActionNameCtrl,
-			adaptationActionTargetCtrl: this.form.value.formArray[0]
-				.adaptationActionTargetCtrl,
-			adaptationActionDescriptionCtrl: this.form.value.formArray[0]
-				.adaptationActionDescriptionCtrl,
-			adaptationActionGoalCtrl: this.form.value.formArray[0]
-				.adaptationActionGoalCtrl,
-			adaptationActionODSCtrl: this.form.value.formArray[0]
-				.adaptationActionODSCtrl,
+			adaptation_action_information: {
+				name: this.form.value.formArray[0].adaptationActionNameCtrl,
+				objective: this.form.value.formArray[0].adaptationActionTargetCtrl,
+				description: this.form.value.formArray[0]
+					.adaptationActionDescriptionCtrl,
+				meta: this.form.value.formArray[0].adaptationActionGoalCtrl,
+				adaptation_action_type: this.form.value.formArray[0]
+					.adaptationActionTypeCtrl,
+				ods: this.form.value.formArray[0].adaptationActionODSCtrl
+			},
 
-			adaptationActionProvinceCtrl: this.form.value.formArray[1]
+			address: {
+				/*adaptationActionProvinceCtrl: this.form.value.formArray[1]
 				.adaptationActionProvinceCtrl,
 			adaptationActionCantonCtrl: this.form.value.formArray[1]
 				.adaptationActionCantonCtrl,
 			adaptationActionDistritCtrl: this.form.value.formArray[1]
-				.adaptationActionDistritCtrl,
-			adaptationActionDescriptionNarrativeCtrl: this.form.value.formArray[1]
-				.adaptationActionDescriptionNarrativeCtrl,
-			adaptationActionLocationCtrl: this.form.value.formArray[1]
-				.adaptationActionLocationCtrl,
+				.adaptationActionDistritCtrl,*/
+				description: this.form.value.formArray[1]
+					.adaptationActionDescriptionNarrativeCtrl,
+				GIS: this.form.value.formArray[1].adaptationActionLocationCtrl,
+				district: ""
+			},
 
-			adaptationActionThemeCtrl: this.form.value.formArray[2]
-				.adaptationActionThemeCtrl,
-			adaptationActionTypologyCtrl: this.form.value.formArray[2]
-				.adaptationActionTypologyCtrl,
-			adaptationActionGoalRelationCtrl: this.form.value.formArray[2]
-				.adaptationActionGoalRelationCtrl,
-			adaptationActionEjeRelationCtrl: this.form.value.formArray[2]
-				.adaptationActionEjeRelationCtrl,
-			adaptationActionLinealRelationCtrl: this.form.value.formArray[2]
-				.adaptationActionLinealRelationCtrl,
+			activity: {
+				code: this.form.value.formArray[2].adaptationActionThemeCtrl,
+				description: this.form.value.formArray[2]
+					.adaptationActionGoalRelationCtrl,
+				sub_topic: parseInt(
+					this.form.value.formArray[2].adaptationActionTypologyCtrl
+				),
+				ndc_contribution: [
+					1 //parseInt(this.form.value.formArray[2].adaptationActionEjeRelationCtrl)
+				],
+				adaptation_axis_guideline: 1 //parseInt(this.form.value.formArray[2].adaptationActionLinealRelationCtrl)
+			},
 
-			adaptationActionInstrumentCtrl: this.form.value.formArray[3]
-				.adaptationActionInstrumentCtrl,
-			adaptationActionDescriptionInstrumentCtrl: this.form.value.formArray[3]
-				.adaptationActionDescriptionInstrumentCtrl,
+			instrument: {
+				name: this.form.value.formArray[3].adaptationActionInstrumentCtrl,
+				description: this.form.value.formArray[3]
+					.adaptationActionDescriptionInstrumentCtrl
+			},
 
-			adaptationActionClimateThreatCtrl: this.form.value.formArray[3]
-				.adaptationActionClimateThreatCtrl,
-			adaptationActionClimateThreatOtherCtrl: this.form.value.formArray[3]
+			climate_threat: {
+				type_climated_threat: this.form.value.formArray[3]
+					.adaptationActionInstrumentCtrl
+				/*
+				adaptationActionClimateThreatOtherCtrl: this.form.value.formArray[3]
 				.adaptationActionClimateThreatOtherCtrl,
 			adaptationActionInfoSourceCtrl: this.form.value.formArray[3]
 				.adaptationActionInfoSourceCtrl,
+				*/
+			},
 
-			adaptationActionStartDateCtrl: this.form.value.formArray[5]
-				.adaptationActionStartDateCtrl,
-			adaptationActionEndDateCtrl: this.form.value.formArray[5]
-				.adaptationActionEndDateCtrl,
-			adaptationActionDurationTimeCtrl: this.form.value.formArray[5]
-				.adaptationActionDurationTimeCtrl,
-			adaptationActionEntityCtrl: this.form.value.formArray[5]
-				.adaptationActionEntityCtrl,
-			adaptationActionEntityOthersCtrl: this.form.value.formArray[5]
-				.adaptationActionEntityOthersCtrl,
-			adaptationActionCodeCtrl: this.form.value.formArray[5]
-				.adaptationActionCodeCtrl
+			implementation: {
+				start_date: this.datePipe.transform(
+					this.form.value.formArray[5].adaptationActionStartDateCtrl,
+					"yyyy-MM-dd"
+				),
+				end_date: this.datePipe.transform(
+					this.form.value.formArray[5].adaptationActionEndDateCtrl,
+					"yyyy-MM-dd"
+				),
+				duration: this.form.value.formArray[5].adaptationActionDurationTimeCtrl,
+				responsible_entity: this.form.value.formArray[5]
+					.adaptationActionEntityCtrl,
+				other_entity: this.form.value.formArray[5]
+					.adaptationActionEntityOthersCtrl,
+				action_code: this.form.value.formArray[5].adaptationActionCodeCtrl
+			}
 		};
-
-		this.openSnackBar("Formulario creado correctamente", "");
-		this.mainStepper.next();
-
 		return context;
 	}
 }

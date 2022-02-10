@@ -1,3 +1,4 @@
+import { DatePipe } from "@angular/common";
 import { Component, Input, OnInit } from "@angular/core";
 import {
 	AbstractControl,
@@ -6,6 +7,8 @@ import {
 	Validators
 } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
+import { AdaptationActionService } from "../adaptation-actions-service";
+import { AdaptationAction } from "../interfaces/adaptationAction";
 
 @Component({
 	selector: "app-general-register",
@@ -14,12 +17,16 @@ import { MatSnackBar } from "@angular/material";
 })
 export class GeneralRegisterComponent implements OnInit {
 	form: FormGroup;
-	@Input() adaptationActionForm: any;
 	@Input() mainStepper: any;
 
 	durationInSeconds = 5;
 
-	constructor(private formBuilder: FormBuilder, public snackBar: MatSnackBar) {}
+	constructor(
+		private formBuilder: FormBuilder,
+		public snackBar: MatSnackBar,
+		private service: AdaptationActionService,
+		private datePipe: DatePipe
+	) {}
 
 	ngOnInit() {
 		this.createForm();
@@ -76,27 +83,35 @@ export class GeneralRegisterComponent implements OnInit {
 		]);
 	}
 
-	buildPayload() {
-		const context = {
-			reportingEntityTypeCtrl: this.form.value.formArray[0]
-				.reportingEntityTypeCtrl,
-			entityResponsibleReportingCtrl: this.form.value.formArray[0]
-				.entityResponsibleReportingCtrl,
-			legalIdentificationCtrl: this.form.value.formArray[0]
-				.legalIdentificationCtrl,
-			reportPreparationDateCtrl: this.form.value.formArray[0]
-				.reportPreparationDateCtrl,
-			nameContactPersonCtrl: this.form.value.formArray[0].nameContactPersonCtrl,
-			titleResponsibleReportingCtrl: this.form.value.formArray[0]
-				.titleResponsibleReportingCtrl,
-			emailCtrl: this.form.value.formArray[0].emailCtrl,
-			phoneCtrl: this.form.value.formArray[0].phoneCtrl,
-			entityAddress: this.form.value.formArray[0].entityAddress
+	submitForm() {
+		const payload: AdaptationAction = {
+			report_organization: this.buildPayload()
 		};
 
-		this.adaptationActionForm["form1"] = context;
-		this.openSnackBar("Formulario creado correctamente", "");
+		this.service.updateCurrentAdaptationAction(payload);
 		this.mainStepper.next();
+		/*
+		this.service.createNewAdaptationAction(payload).subscribe(_ => {
+			this.openSnackBar("Formulario creado correctamente", "");
+			this.mainStepper.next();
+		});
+		*/
+	}
+
+	buildPayload() {
+		const context = {
+			responsible_entity: this.form.value.formArray[0]
+				.entityResponsibleReportingCtrl,
+			legal_identification: this.form.value.formArray[0]
+				.legalIdentificationCtrl,
+			elaboration_date: this.datePipe.transform(
+				this.form.value.formArray[0].reportPreparationDateCtrl,
+				"yyyy-MM-dd"
+			),
+			entity_address: this.form.value.formArray[0].entityAddress,
+			report_organization_type: this.form.value.formArray[0]
+				.reportingEntityTypeCtrl
+		};
 		return context;
 	}
 }

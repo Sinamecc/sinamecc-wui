@@ -1,6 +1,6 @@
 <div class="container">
   <form [formGroup]="form" >
-      <mat-vertical-stepper #stepper  formArrayName="formArray">
+      <mat-vertical-stepper #stepper linear formArrayName="formArray">
         <mat-step formGroupName="0" [stepControl]="formArray?.get([0])" >
           <ng-template matStepLabel>
             <span translate>Información general del financiamiento</span>
@@ -148,12 +148,10 @@
             <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
-
-
          <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
               <app-generic-button-secondary (click)="stepper.previous();" name="general.back">
               </app-generic-button-secondary>
-              <app-generic-button (click)="buildPayload()" name="general.next"></app-generic-button>
+              <app-generic-button (click)="submitForm()" name="general.next"></app-generic-button>
             </div>
 
         </mat-step>

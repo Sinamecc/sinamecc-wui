@@ -1,6 +1,6 @@
 <div class="container">
   <form [formGroup]="form" >
-      <mat-vertical-stepper #stepper formArrayName="formArray">
+      <mat-vertical-stepper #stepper linear formArrayName="formArray">
         <mat-step formGroupName="0" [stepControl]="formArray?.get([0])" >
           <ng-template matStepLabel>
             <span translate>Registro de avances de monitoreo</span>
@@ -171,7 +171,7 @@
                   <input matInput
                   [placeholder]="'Choose a date' | translate"
                   [matDatepicker]="reportPeriodStart2"
-                  formControlName="reportPeriodStartCtrl" />
+                  formControlName="reportPeriodStart2Ctrl" />
 
                   <mat-datepicker-toggle matSuffix [for]="reportPeriodStart2"></mat-datepicker-toggle>
                   <mat-datepicker #reportPeriodStart2 startView="year"></mat-datepicker>
@@ -184,7 +184,7 @@
                   <input matInput
                   [placeholder]="'Choose a date' | translate"
                   [matDatepicker]="reportPeriodEndt2"
-                  formControlName="reportPeriodEndtCtrl" />
+                  formControlName="reportPeriodEndt2Ctrl" />
 
                   <mat-datepicker-toggle matSuffix [for]="reportPeriodEndt2"></mat-datepicker-toggle>
                   <mat-datepicker #reportPeriodEndt2 startView="year"></mat-datepicker>
@@ -199,8 +199,8 @@
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
-  <div fxLayout="row" class="button-box" fxLayoutAlign="end center" >
-              <app-generic-button (click)="buildPayload()" name="general.done">
+          <div fxLayout="row" class="button-box" fxLayoutAlign="end center" >
+              <app-generic-button (click)="submitForm()" name="general.done">
               </app-generic-button>
             </div>
 

@@ -6,6 +6,8 @@ import {
 	Validators
 } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
+import { AdaptationActionService } from "../adaptation-actions-service";
+import { AdaptationAction } from "../interfaces/adaptationAction";
 
 @Component({
 	selector: "app-adaptation-actions-financing",
@@ -16,8 +18,17 @@ export class AdaptationActionsFinancingComponent implements OnInit {
 	form: FormGroup;
 	@Input() mainStepper: any;
 	durationInSeconds = 3;
+	adaptationAction: AdaptationAction;
 
-	constructor(private formBuilder: FormBuilder, public snackBar: MatSnackBar) {}
+	constructor(
+		private formBuilder: FormBuilder,
+		public snackBar: MatSnackBar,
+		private service: AdaptationActionService
+	) {
+		this.service.currentAdaptationActionSource.subscribe(message => {
+			this.adaptationAction = message;
+		});
+	}
 
 	ngOnInit() {
 		this.createForm();
@@ -43,13 +54,13 @@ export class AdaptationActionsFinancingComponent implements OnInit {
 		return this.formBuilder.array([
 			this.formBuilder.group({
 				adaptationActionFinancingStatusCtrl: ["", Validators.required],
-				adaptationActionFinancingManagementCtrl: ["", Validators.required],
+				adaptationActionFinancingManagementCtrl: [""],
 				adaptationActionFinancingSourceDetailCtrl: ["", Validators.required],
 				adaptationActionFinancingDetailInstrumentCtrl: [
 					"",
 					Validators.required
 				],
-				adaptationActionFinancingBufgetCtrl: ["", Validators.required],
+				adaptationActionFinancingBufgetCtrl: [""],
 				adaptationActionFinancingBufgetValueCtrl: ["", Validators.required],
 				adaptationActionFinancingBufgetStarDateCtrl: ["", Validators.required],
 				adaptationActionFinancingBufgetOtherCtrl: [""]
@@ -61,44 +72,60 @@ export class AdaptationActionsFinancingComponent implements OnInit {
 				],
 				adaptationActionFinancingRegisterNameMIDEPLANCtrl: [
 					"",
-					[Validators.minLength(300)]
+					[Validators.maxLength(300)]
 				],
 				adaptationActionFinancingRegisterEntityMIDEPLANCtrl: [
 					"",
-					[Validators.required, Validators.minLength(200)]
+					[Validators.required, Validators.maxLength(200)]
 				]
 			})
 		]);
 	}
 
-	buildPayload() {
-		const context = {
-			adaptationActionFinancingStatusCtrl: this.form.value.formArray[0]
-				.adaptationActionFinancingStatusCtrl,
-			adaptationActionFinancingManagementCtrl: this.form.value.formArray[0]
-				.adaptationActionFinancingManagementCtrl,
-			adaptationActionFinancingSourceDetailCtrl: this.form.value.formArray[0]
-				.adaptationActionFinancingSourceDetailCtrl,
-			adaptationActionFinancingDetailInstrumentCtrl: this.form.value
-				.formArray[0].adaptationActionFinancingDetailInstrumentCtrl,
-			adaptationActionFinancingBufgetCtrl: this.form.value.formArray[0]
-				.adaptationActionFinancingBufgetCtrl,
-			adaptationActionFinancingBufgetValueCtrl: this.form.value.formArray[0]
-				.adaptationActionFinancingBufgetValueCtrl,
-			adaptationActionFinancingBufgetStarDateCtrl: this.form.value.formArray[0]
-				.adaptationActionFinancingBufgetStarDateCtrl,
-			adaptationActionFinancingBufgetOtherCtrl: this.form.value.formArray[0]
-				.adaptationActionFinancingBufgetOtherCtrl,
+	submitForm() {
+		const payload: AdaptationAction = this.buildPayload();
 
-			adaptationActionFinancingRegisterMIDEPLANCtrl: this.form.value
-				.formArray[1].adaptationActionFinancingRegisterMIDEPLANCtrl,
-			adaptationActionFinancingRegisterNameMIDEPLANCtrl: this.form.value
-				.formArray[1].adaptationActionFinancingRegisterNameMIDEPLANCtrl,
-			adaptationActionFinancingRegisterEntityMIDEPLANCtrl: this.form.value
-				.formArray[1].adaptationActionFinancingRegisterEntityMIDEPLANCtrl
-		};
-		this.openSnackBar("Formulario creado correctamente", "");
+		this.service.updateCurrentAdaptationAction(
+			Object.assign(this.adaptationAction, payload)
+		);
+
 		this.mainStepper.next();
+		/*
+		this.service
+			.updateNewAdaptationAction(payload, this.adaptationAction.id)
+			.subscribe(_ => {
+				this.openSnackBar("Formulario creado correctamente", "");
+				this.mainStepper.next();
+			});
+
+			*/
+	}
+
+	buildPayload() {
+		const context: AdaptationAction = {
+			finance: {
+				administration: this.form.value.formArray[0]
+					.adaptationActionFinancingManagementCtrl,
+				budget: this.form.value.formArray[0]
+					.adaptationActionFinancingBufgetValueCtrl,
+				status: {
+					code: this.form.value.formArray[0]
+						.adaptationActionFinancingStatusCtrl,
+					name: "Test status finance"
+				},
+				mideplan: {
+					registry: this.form.value.formArray[1]
+						.adaptationActionFinancingRegisterMIDEPLANCtrl,
+					name: this.form.value.formArray[1]
+						.adaptationActionFinancingRegisterNameMIDEPLANCtrl,
+					entity: this.form.value.formArray[1]
+						.adaptationActionFinancingRegisterEntityMIDEPLANCtrl
+				},
+				source: [1, 2],
+				finance_instrument: this.form.value.formArray[0]
+					.adaptationActionFinancingDetailInstrumentCtrl
+			}
+		};
 
 		return context;
 	}

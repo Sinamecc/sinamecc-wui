@@ -32,6 +32,10 @@
           
           </mat-menu>
 
+          <button  mat-button routerLink="/adaptation/actions" routerLinkActive="active">
+            <span translate>ACCIONES DE ADAPTACIÓN</span>
+          </button>
+
         <mat-divider></mat-divider>
           <a *ngIf="showModule(permissions,'ppcn')" mat-list-item routerLink="/ppcn/registries" routerLinkActive="active" (click)="sidenav.close()">
             <span translate>PPCN</span>

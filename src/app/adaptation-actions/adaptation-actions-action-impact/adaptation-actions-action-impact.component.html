@@ -1,6 +1,6 @@
 <div class="container">
   <form [formGroup]="form" >
-      <mat-vertical-stepper #stepper formArrayName="formArray">
+      <mat-vertical-stepper #stepper linear formArrayName="formArray">
         <mat-step formGroupName="0" [stepControl]="formArray?.get([0])" >
           <ng-template matStepLabel>
             <span translate>Registro de avances de monitoreo</span>
@@ -12,46 +12,20 @@
             formControlName="generalImpactCtrl"
             class="custom-radio-group"
           >
-            <mat-radio-button value="1">
-              <label translate>Aumento de resiliencia </label>
+            <mat-radio-button *ngFor="let element of generalImpact" [value]="element.code">
+              <label translate>{{element.name}}</label>
             </mat-radio-button>
-            <mat-radio-button value="2">
-              <label translate>Disminución de vulnerabilidad</label>
-            </mat-radio-button>
-            <mat-radio-button value="3">
-              <label translate>Mitigación de riego</label>
-            </mat-radio-button>
-            <mat-radio-button value="4">
-              <label translate>Creción de capacidades</label>
-            </mat-radio-button>
-            <mat-radio-button value="5">
-              <label translate>Conocimiento sobre amenazas</label>
-            </mat-radio-button>
-            <mat-radio-button value="6">
-              <label translate>Planeación basada en el cambio climático.</label>
-            </mat-radio-button>
+          
           
           </mat-radio-group>
           <br />
           <br />
 
           <mat-form-field class="field-ppcn" appearance="fill">
-              <mat-label translate>"Temporalidad del impacto en adaptación de la acción</mat-label>
+              <mat-label translate>Temporalidad del impacto en adaptación de la acción</mat-label>
               <mat-select formControlName="adaptationTemporalityImpactCtrl" multiple>
-                  <mat-option [value]="1">
-                   <label translate>Inmediato</label>
-                  </mat-option>
-
-                 <mat-option [value]="2">
-                   <label translate>Corto plazo (hasta 1 año)</label>
-                  </mat-option>
-
-                  <mat-option [value]="3">
-                   <label translate>Mediano plazo (entre 1- 5 años)</label>
-                  </mat-option>
-
-                   <mat-option [value]="4">
-                   <label translate>Largo plazo (más de 5 años)</label>
+                  <mat-option *ngFor="let element of temporalityImpact" [value]="element.code">
+                   <label translate>{{element.name}}</label>
                   </mat-option>
               </mat-select>
             </mat-form-field>
@@ -68,10 +42,10 @@
             formControlName="genderEquityElementsCtrl"
             class="custom-radio-group"
           >
-            <mat-radio-button value="1">
+            <mat-radio-button [value]="1">
               <label translate>Si </label>
             </mat-radio-button>
-            <mat-radio-button value="2">
+            <mat-radio-button [value]="2">
               <label translate>No</label>
             </mat-radio-button>
            
@@ -104,7 +78,7 @@
 
 
             <div fxLayout="row" class="button-box" fxLayoutAlign="end center" >
-              <app-generic-button (click)="buildPayload()" name="general.done">
+              <app-generic-button (click)="submitForm()" name="general.done">
               </app-generic-button>
             </div>
 

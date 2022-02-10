@@ -14,7 +14,7 @@
 					<label translate>Entidad pública</label>
 				</mat-radio-button>
 				<mat-radio-button value="2">
-					<label translate>Entidad privada</label>
+					<label translate>Entidad privada</label> 
 				</mat-radio-button>
 				<mat-radio-button value="3">
 					<label translate>Municipalidad</label>
@@ -37,7 +37,7 @@
       </mat-form-field>
 
       <mat-form-field class="field-ppcn">
-                  <mat-label translate>Fecha de elaboración del reportee</mat-label>
+                  <mat-label translate>Fecha de elaboración del reporte</mat-label>
                   <input matInput
                   [placeholder]="'Choose a date' | translate"
                   [matDatepicker]="reportPreparationDateControl"
@@ -82,7 +82,7 @@
 
 
             <div fxLayout="row" class="button-box" fxLayoutAlign="end center" >
-              <app-generic-button (click)="buildPayload()" name="general.done">
+              <app-generic-button (click)="submitForm()" name="general.done">
               </app-generic-button>
             </div>
 

@@ -1,6 +1,6 @@
 <div class="container">
-  <form [formGroup]="form" >
-      <mat-vertical-stepper #stepper formArrayName="formArray">
+  <form [formGroup]="form"  >
+      <mat-vertical-stepper #stepper linear formArrayName="formArray">
         <mat-step formGroupName="0" [stepControl]="formArray?.get([0])" >
           <ng-template matStepLabel>
             <span translate>Información de registro</span>
@@ -12,13 +12,13 @@
             formControlName="adaptationActionTypeCtrl"
             class="custom-radio-group"
           >
-            <mat-radio-button value="1">
-              <label translate>Tipo A - Instrumentos de políticas y planes </label>
+            <mat-radio-button [matTooltip]="typesTooltipTxt[0]">
+              <label translate>Tipo A - Instrumentos de políticas y planes </label> 
             </mat-radio-button>
-            <mat-radio-button value="2">
+            <mat-radio-button [matTooltip]="typesTooltipTxt[1]" value="2">
               <label translate>Tipo B - Proyecto y programas</label>
             </mat-radio-button>
-            <mat-radio-button value="3">
+            <mat-radio-button [matTooltip]="typesTooltipTxt[2]" value="3">
               <label translate>Tipo C - Actividad</label>
             </mat-radio-button>
           
@@ -51,17 +51,10 @@
            <mat-form-field class="field-ppcn" appearance="fill">
               <mat-label translate>Identificación preliminar de los Objetivos de Desarrollo Sostenible (ODS) impactados</mat-label>
               <mat-select formControlName="adaptationActionODSCtrl" multiple>
-                  <mat-option [value]="1">
-                   <label translate>Option 1</label>
+                  <mat-option *ngFor="let element of ods" [value]="element.code">
+                   <label translate>{{element.name}}</label>
                   </mat-option>
 
-                 <mat-option [value]="2">
-                   <label translate>Option 2</label>
-                  </mat-option>
-
-                  <mat-option [value]="3">
-                   <label translate>Option 3</label>
-                  </mat-option>
               </mat-select>
             </mat-form-field>
 
@@ -173,48 +166,20 @@
 
           <mat-form-field class="field-ppcn" appearance="fill">
               <mat-label translate>Seleccione el tema al que pertenece la acción</mat-label>
-              <mat-select  formControlName="adaptationActionThemeCtrl">
-                  <mat-option [value]="1">
-                   <label translate>Transporte y movilidad sostenible</label>
-                  </mat-option>
+              <mat-select (selectionChange)="changeSubTopics($event.value)" formControlName="adaptationActionThemeCtrl">
+                <mat-option *ngFor="let topic of topics" [value]="topic.code">
+                   <label translate>{{topic.name}}</label>
+                </mat-option>
 
-                 <mat-option [value]="2">
-                   <label translate>Energía</label>
-                  </mat-option>
-
-                  <mat-option [value]="3">
-                   <label translate>Desarrollo y Ordenamiento Territorial</label>
-                  </mat-option>
-
-                  <mat-option [value]="4">
-                   <label translate>Infraestructura</label>
-                  </mat-option>
-
-                  <mat-option [value]="5">
-                   <label translate>Industria</label>
-                  </mat-option>
-
-                  <mat-option [value]="6">
-                   <label translate>Residuos</label>
-                  </mat-option>
               </mat-select>
           </mat-form-field>
 
             <mat-form-field class="field-ppcn" appearance="fill">
               <mat-label translate>Seleccione la tipología de acción </mat-label>
-              <mat-select  formControlName="adaptationActionThemeCtrl">
-                  <mat-option [value]="1">
-                   <label translate>option 1</label>
+              <mat-select  formControlName="adaptationActionTypologyCtrl">
+                  <mat-option *ngFor="let subTopic of subTopicsToShow" [value]="subTopic.code">
+                   <label translate>{{subTopic.name}}</label>
                   </mat-option>
-
-                 <mat-option [value]="2">
-                   <label translate>option 2</label>
-                  </mat-option>
-
-                  <mat-option [value]="3">
-                   <label translate>option 4</label>
-                  </mat-option>
-
               </mat-select>
             </mat-form-field>
 
@@ -389,7 +354,7 @@
            <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
               <app-generic-button-secondary (click)="stepper.previous();" name="general.back">
               </app-generic-button-secondary>
-              <app-generic-button (click)="buildPayload()" name="general.next"></app-generic-button>
+              <app-generic-button (click)="submitForm()" name="general.next"></app-generic-button>
             </div>
 
           </mat-step>

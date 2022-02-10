@@ -1,3 +1,4 @@
+import { DatePipe } from "@angular/common";
 import { Component, Input, OnInit } from "@angular/core";
 import {
 	AbstractControl,
@@ -6,6 +7,8 @@ import {
 	Validators
 } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
+import { AdaptationActionService } from "../adaptation-actions-service";
+import { AdaptationAction } from "../interfaces/adaptationAction";
 
 @Component({
 	selector: "app-adaptation-actions-indicators",
@@ -16,8 +19,20 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
 	form: FormGroup;
 	@Input() mainStepper: any;
 	durationInSeconds = 3;
+	adaptationAction: AdaptationAction;
+	indicatorToolTipTxt =
+		"Los indicadores pueden ser del tipo Gestión: permiten medir la cantidad de bienes y servicios generados, así como el grado de avance de acciones climáticas a nivel de insumos, actividades y productos, centrándose en aspectos relevantes y evitar medir aspectos rutinarios y operativos o Resultados: se refiere a la medición de efectos e impactos logrados por alguna intervención, o bien, por causa de la crisis climática";
 
-	constructor(private formBuilder: FormBuilder, public snackBar: MatSnackBar) {}
+	constructor(
+		private formBuilder: FormBuilder,
+		public snackBar: MatSnackBar,
+		private datePipe: DatePipe,
+		private service: AdaptationActionService
+	) {
+		this.service.currentAdaptationActionSource.subscribe(message => {
+			this.adaptationAction = message;
+		});
+	}
 
 	ngOnInit() {
 		this.createForm();
@@ -123,64 +138,75 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
 		});
 	}
 
+	submitForm() {
+		const payload: AdaptationAction = this.buildPayload();
+
+		this.service.updateCurrentAdaptationAction(
+			Object.assign(this.adaptationAction, payload)
+		);
+
+		this.mainStepper.next();
+
+		/*
+		this.service
+			.updateNewAdaptationAction(payload, this.adaptationAction.id)
+			.subscribe(_ => {
+				this.openSnackBar("Formulario creado correctamente", "");
+				this.mainStepper.next();
+			});
+
+			*/
+	}
+
 	buildPayload() {
 		const context = {
-			adaptationActionIndicatorNameCtrl: this.form.value.formArray[0]
-				.adaptationActionIndicatorNameCtrl,
-			adaptationActionIndicatorDescriptionCtrl: this.form.value.formArray[0]
-				.adaptationActionIndicatorDescriptionCtrl,
-			adaptationActionIndicatorUnitCtrl: this.form.value.formArray[0]
-				.adaptationActionIndicatorUnitCtrl,
-			adaptationActionIndicatorMetodologyCtrl: this.form.value.formArray[0]
-				.adaptationActionIndicatorMetodologyCtrl,
-			adaptationActionIndicatorFrecuenceCtrl: this.form.value.formArray[0]
-				.adaptationActionIndicatorFrecuenceCtrl,
-			adaptationActionIndicatorStartDateCtrl: this.form.value.formArray[0]
-				.adaptationActionIndicatorStartDateCtrl,
-			adaptationActionIndicatorEndDateCtrl: this.form.value.formArray[0]
-				.adaptationActionIndicatorEndDateCtrl,
-			adaptationActionIndicatorTimeCtrl: this.form.value.formArray[0]
-				.adaptationActionIndicatorTimeCtrl,
-			adaptationActionIndicatorCoverageCtrl: this.form.value.formArray[0]
-				.adaptationActionIndicatorCoverageCtrl,
-			adaptationActionIndicatorDisintegrationCtrl: this.form.value.formArray[0]
-				.adaptationActionIndicatorDisintegrationCtrl,
-			adaptationActionIndicatorLimitCtrl: this.form.value.formArray[0]
-				.adaptationActionIndicatorLimitCtrl,
-			adaptationActionIndicatorMeasurementCtrl: this.form.value.formArray[0]
-				.adaptationActionIndicatorMeasurementCtrl,
-			adaptationActionIndicatorDetailsCtrl: this.form.value.formArray[0]
-				.adaptationActionIndicatorDetailsCtrl,
+			indicator: {
+				name: this.form.value.formArray[0].adaptationActionIndicatorNameCtrl,
+				description: this.form.value.formArray[0]
+					.adaptationActionIndicatorDescriptionCtrl,
+				unit: this.form.value.formArray[0].adaptationActionIndicatorUnitCtrl,
+				methodological_detail: this.form.value.formArray[0]
+					.adaptationActionIndicatorMetodologyCtrl,
+				reporting_periodicity: this.form.value.formArray[0]
+					.adaptationActionIndicatorFrecuenceCtrl,
+				available_time_start_date: this.datePipe.transform(
+					this.form.value.formArray[0].adaptationActionIndicatorStartDateCtrl,
+					"yyyy-MM-dd"
+				),
 
-			adaptationActionIndicatorResponsibleInstitutionCtrl: this.form.value
-				.formArray[1].adaptationActionIndicatorResponsibleInstitutionCtrl,
-			adaptationActionIndicatorSourceTypeCtrl: this.form.value.formArray[1]
-				.adaptationActionIndicatorSourceTypeCtrl,
-			adaptationActionIndicatorOperationNameCtrl: this.form.value.formArray[1]
-				.adaptationActionIndicatorOperationNameCtrl,
+				geographic_coverage: this.form.value.formArray[0]
+					.adaptationActionIndicatorCoverageCtrl,
+				other_geographic_coverage: "",
+				disaggregation: this.form.value.formArray[0]
+					.adaptationActionIndicatorDisintegrationCtrl,
+				limitation: this.form.value.formArray[0]
+					.adaptationActionIndicatorLimitCtrl,
+				additional_information: this.form.value.formArray[0]
+					.adaptationActionIndicatorMeasurementCtrl,
+				comments: this.form.value.formArray[0]
+					.adaptationActionIndicatorDetailsCtrl,
 
-			adaptationActionIndicatorSourceDataCtrl: this.form.value.formArray[2]
-				.adaptationActionIndicatorSourceDataCtrl,
-			adaptationActionIndicatorSourceDataOtherCtrl: this.form.value.formArray[2]
-				.adaptationActionIndicatorSourceDataOtherCtrl,
-			adaptationActionIndicatorClassifiersCtrl: this.form.value.formArray[2]
-				.adaptationActionIndicatorClassifiersCtrl,
-			adaptationActionIndicatorClassifiersOtherCtrl: this.form.value
-				.formArray[2].adaptationActionIndicatorClassifiersOtherCtrl,
-
-			adaptationActionIndicatorContactNameCtrl: this.form.value.formArray[3]
-				.adaptationActionIndicatorContactNameCtrl,
-			adaptationActionIndicatorContactInstitutionCtrl: this.form.value
-				.formArray[3].adaptationActionIndicatorContactInstitutionCtrl,
-			adaptationActionIndicatorContactDepartmentCtrl: this.form.value
-				.formArray[3].adaptationActionIndicatorContactDepartmentCtrl,
-			adaptationActionIndicatorContactEmailCtrl: this.form.value.formArray[3]
-				.adaptationActionIndicatorContactEmailCtrl,
-			adaptationActionIndicatorContactPhoneCtrl: this.form.value.formArray[3]
-				.adaptationActionIndicatorContactPhoneCtrl
+				information_source: {
+					responsible_institution: this.form.value.formArray[1]
+						.adaptationActionIndicatorResponsibleInstitutionCtrl,
+					type_information: this.form.value.formArray[1]
+						.adaptationActionIndicatorSourceTypeCtrl,
+					Other_type: "",
+					statistical_operation: this.form.value.formArray[1]
+						.adaptationActionIndicatorOperationNameCtrl
+				},
+				type_of_data: this.form.value.formArray[2]
+					.adaptationActionIndicatorSourceDataCtrl,
+				other_type_of_data: this.form.value.formArray[2]
+					.adaptationActionIndicatorSourceDataOtherCtrl,
+				classifier: [
+					this.form.value.formArray[2].adaptationActionIndicatorClassifiersCtrl
+				],
+				other_classifier: this.form.value.formArray[2]
+					.adaptationActionIndicatorClassifiersOtherCtrl
+			}
 		};
-		this.openSnackBar("Formulario creado correctamente", "");
-		this.mainStepper.next();
+
 		return context;
 	}
 }

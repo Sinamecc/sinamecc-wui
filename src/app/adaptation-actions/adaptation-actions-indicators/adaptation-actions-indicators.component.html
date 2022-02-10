@@ -1,13 +1,15 @@
 <div class="container">
   <form [formGroup]="form" >
-      <mat-vertical-stepper #stepper formArrayName="formArray">
+      <mat-vertical-stepper #stepper linear formArrayName="formArray">
         <mat-step formGroupName="0" [stepControl]="formArray?.get([0])" >
           <ng-template matStepLabel>
             <span translate>Registro de indicadores</span>
           </ng-template>
 
           <mat-form-field class="field-ppcn">
-         <mat-label translate>Nombre del indicador</mat-label>
+         <mat-label [matTooltip]="indicatorToolTipTxt" translate>Nombre del indicador 
+           <mat-icon  [matTooltip]="indicatorToolTipTxt">info</mat-icon>
+          </mat-label>
             <input matInput formControlName="adaptationActionIndicatorNameCtrl" />
             <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
@@ -36,16 +38,16 @@
           formControlName="adaptationActionIndicatorFrecuenceCtrl"
           class="custom-radio-group"
         >
-          <mat-radio-button value="1">
+          <mat-radio-button value="YEARLY">
             <label translate>Anual</label>
           </mat-radio-button>
-          <mat-radio-button value="2">
+          <mat-radio-button value="BIANNUAL">
             <label translate>Semestral</label>
           </mat-radio-button>
-          <mat-radio-button value="3">
+          <mat-radio-button value="QUARTERLY">
             <label translate>Trimestral</label>
           </mat-radio-button>
-          <mat-radio-button value="4">
+          <mat-radio-button value="OTHER">
             <label translate>Otro</label>
           </mat-radio-button>
         </mat-radio-group>
@@ -95,20 +97,20 @@
           formControlName="adaptationActionIndicatorCoverageCtrl"
           class="custom-radio-group"
         >
-          <mat-radio-button value="1">
+          <mat-radio-button value="NATIONAL">
             <label translate>Nacional</label>
           </mat-radio-button>
-          <mat-radio-button value="2">
+          <mat-radio-button value="REGIONAL">
             <label translate>Regional</label>
           </mat-radio-button>
-          <mat-radio-button value="3">
+          <mat-radio-button value="PROVINCIAL">
             <label translate>Provincial</label>
           </mat-radio-button>
-          <mat-radio-button value="4">
+          <mat-radio-button value="CANTONAL">
             <label translate>Cantonal</label>
           </mat-radio-button>
 
-          <mat-radio-button value="5">
+          <mat-radio-button value="OTHER">
             <label translate>Otro</label>
           </mat-radio-button>
         </mat-radio-group>
@@ -304,7 +306,7 @@
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
               <app-generic-button-secondary (click)="stepper.previous();" name="general.back">
               </app-generic-button-secondary>
-              <app-generic-button (click)="buildPayload()" name="general.next"></app-generic-button>
+              <app-generic-button (click)="submitForm()" name="general.next"></app-generic-button>
             </div>
 
               
