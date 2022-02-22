@@ -16,6 +16,7 @@ import { AdaptationActionsClimateMonitoringComponent } from "./adaptation-action
 import { AdaptationActionsActionImpactComponent } from "./adaptation-actions-action-impact/adaptation-actions-action-impact.component";
 import { AdaptationActionService } from "./adaptation-actions-service";
 import { AdaptationActionsListComponent } from "./adaptation-actions-list/adaptation-actions-list.component";
+import { AdaptationActionsViewComponent } from "./adaptation-actions-view/adaptation-actions-view.component";
 
 @NgModule({
 	imports: [
@@ -37,7 +38,8 @@ import { AdaptationActionsListComponent } from "./adaptation-actions-list/adapta
 		AdaptationActionsIndicatorsComponent,
 		AdaptationActionsClimateMonitoringComponent,
 		AdaptationActionsActionImpactComponent,
-		AdaptationActionsListComponent
+		AdaptationActionsListComponent,
+		AdaptationActionsViewComponent
 	],
 	providers: [AdaptationActionService]
 })

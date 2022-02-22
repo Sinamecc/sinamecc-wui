@@ -6,7 +6,7 @@
             <span translate>Información de registro</span>
           </ng-template>
 
-          <span translate>Tipo de acción de adaptación</span>
+          <span translate>Tipo de acción de adaptación</span> 
           <mat-radio-group
             #reportingEntityTypeControl="matRadioGroup"
             formControlName="adaptationActionTypeCtrl"
@@ -287,7 +287,7 @@
               <br />
             </div>
 
- <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+            <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
               <app-generic-button-secondary (click)="stepper.previous();" name="general.back">
               </app-generic-button-secondary>
               <app-generic-button (click)="stepper.next();" name="general.next"></app-generic-button>

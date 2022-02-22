@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator, MatTableDataSource } from "@angular/material";
+import { Router } from "@angular/router";
 import { AdaptationActionService } from "../adaptation-actions-service";
 import { AdaptationAction } from "../interfaces/adaptationAction";
 import { adaptationsActionsTypeMap } from "../interfaces/catalogs";
@@ -17,10 +18,19 @@ export class AdaptationActionsListComponent implements OnInit {
 	typesMap = adaptationsActionsTypeMap;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
-	constructor(private service: AdaptationActionService) {}
+	constructor(
+		private service: AdaptationActionService,
+		private router: Router
+	) {}
 
 	ngOnInit() {
 		this.loadData();
+	}
+
+	view(uuid: string) {
+		this.router.navigate([`/adaptation/actions/${uuid}`], {
+			replaceUrl: true
+		});
 	}
 
 	loadData() {

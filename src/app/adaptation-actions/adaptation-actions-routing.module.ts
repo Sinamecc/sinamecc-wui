@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { extract, Route } from "@app/core";
 import { AdaptationActionsListComponent } from "./adaptation-actions-list/adaptation-actions-list.component";
 import { AdaptationActionsNewComponent } from "./adaptation-actions-new/adaptation-actions-new.component";
+import { AdaptationActionsViewComponent } from "./adaptation-actions-view/adaptation-actions-view.component";
 
 const routes: Routes = [
 	Route.withShell([
@@ -15,7 +16,12 @@ const routes: Routes = [
 		{
 			path: "adaptation/actions/new",
 			component: AdaptationActionsNewComponent,
-			data: { title: extract("Nueva acción de adaptación") }
+			data: { title: extract("Lista de acciones de adaptación") }
+		},
+		{
+			path: "adaptation/actions/:id",
+			component: AdaptationActionsViewComponent,
+			data: { id: extract("id") }
 		}
 	])
 ];
