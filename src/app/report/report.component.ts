@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from '@env/environment';
-import { Logger } from '@core';
-
-const log = new Logger('Report');
-
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-
 import { ReportService, Report } from '@app/report/report.service';
+import { Logger } from '@app/@core';
+
+const log = new Logger('Report');
 
 @Component({
   selector: 'app-report',
@@ -27,7 +25,7 @@ export class ReportComponent implements OnInit {
   constructor(private reportService: ReportService) {}
 
   ngOnInit(): void {
-    this.loadReportData();
+    // this.loadReportData();
   }
 
   loadReportData() {

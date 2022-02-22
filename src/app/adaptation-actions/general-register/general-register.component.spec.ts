@@ -8,9 +8,8 @@ describe('GeneralRegisterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GeneralRegisterComponent ]
-    })
-    .compileComponents();
+      declarations: [GeneralRegisterComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

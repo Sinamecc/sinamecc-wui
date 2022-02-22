@@ -1,92 +1,88 @@
 <div class="container">
+  <label class="mat-h1">Registro de datos</label>
+  <br />
+  <br />
+  <form fxLayout="column" fxLayoutAlign="space-around start" [formGroup]="formArray?.get([0])">
+    <span translate>Tipo de entidad que reporta</span>
+    <mat-radio-group
+      #reportingEntityTypeControl="matRadioGroup"
+      formControlName="reportingEntityTypeCtrl"
+      class="custom-radio-group"
+    >
+      <mat-radio-button value="1">
+        <label translate>Entidad pública</label>
+      </mat-radio-button>
+      <mat-radio-button value="2">
+        <label translate>Entidad privada</label>
+      </mat-radio-button>
+      <mat-radio-button value="3">
+        <label translate>Municipalidad</label>
+      </mat-radio-button>
+      <mat-radio-button value="4">
+        <label translate>ONG</label>
+      </mat-radio-button>
+    </mat-radio-group>
 
-		<label class="mat-h1">Registro de datos</label> 
-    <br />
-    <br />
-		<form fxLayout="column" fxLayoutAlign="space-around start" [formGroup]="formArray?.get([0])">
-			<span translate>Tipo de entidad que reporta</span>
-			<mat-radio-group
-				#reportingEntityTypeControl="matRadioGroup"
-				formControlName="reportingEntityTypeCtrl"
-				class="custom-radio-group"
-			>
-				<mat-radio-button value="1">
-					<label translate>Entidad pública</label>
-				</mat-radio-button>
-				<mat-radio-button value="2">
-					<label translate>Entidad privada</label> 
-				</mat-radio-button>
-				<mat-radio-button value="3">
-					<label translate>Municipalidad</label>
-				</mat-radio-button>
-				<mat-radio-button value="4">
-					<label translate>ONG</label>
-				</mat-radio-button>
-			</mat-radio-group>
+    <mat-form-field class="field-ppcn">
+      <mat-label translate>Entidad responsable de reporte</mat-label>
+      <input matInput formControlName="entityResponsibleReportingCtrl" />
+      <mat-error translate>errorLabel.fieldRequired</mat-error>
+    </mat-form-field>
 
-      <mat-form-field class="field-ppcn">
-         <mat-label translate>Entidad responsable de reporte</mat-label>
-            <input matInput formControlName="entityResponsibleReportingCtrl" />
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
-      </mat-form-field>
+    <mat-form-field class="field-ppcn">
+      <mat-label translate>Cédula jurídica (en caso de ser una empresa u organización)</mat-label>
+      <input matInput type="number" formControlName="legalIdentificationCtrl" />
+      <mat-error translate>errorLabel.fieldRequired</mat-error>
+    </mat-form-field>
 
-      <mat-form-field class="field-ppcn">
-         <mat-label translate>Cédula jurídica (en caso de ser una empresa u organización)</mat-label>
-            <input matInput type="number" formControlName="legalIdentificationCtrl" />
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
-      </mat-form-field>
+    <mat-form-field class="field-ppcn">
+      <mat-label translate>Fecha de elaboración del reporte</mat-label>
+      <input
+        matInput
+        [placeholder]="'Choose a date' | translate"
+        [matDatepicker]="reportPreparationDateControl"
+        formControlName="reportPreparationDateCtrl"
+      />
 
-      <mat-form-field class="field-ppcn">
-                  <mat-label translate>Fecha de elaboración del reporte</mat-label>
-                  <input matInput
-                  [placeholder]="'Choose a date' | translate"
-                  [matDatepicker]="reportPreparationDateControl"
-                  formControlName="reportPreparationDateCtrl" />
+      <mat-datepicker-toggle matSuffix [for]="reportPreparationDateControl"></mat-datepicker-toggle>
+      <mat-datepicker #reportPreparationDateControl startView="year"></mat-datepicker>
 
-                  <mat-datepicker-toggle matSuffix [for]="reportPreparationDateControl"></mat-datepicker-toggle>
-                  <mat-datepicker #reportPreparationDateControl startView="year"></mat-datepicker>
+      <mat-error translate>errorLabel.fieldRequired</mat-error>
+    </mat-form-field>
 
-                  <mat-error translate>errorLabel.fieldRequired</mat-error>
-       </mat-form-field>
+    <mat-form-field class="field-ppcn">
+      <mat-label translate>Nombre de la persona de contacto</mat-label>
+      <input matInput formControlName="nameContactPersonCtrl" />
+      <mat-error translate>errorLabel.fieldRequired</mat-error>
+    </mat-form-field>
 
-       <mat-form-field class="field-ppcn">
-         <mat-label translate>Nombre de la persona de contacto</mat-label>
-            <input matInput formControlName="nameContactPersonCtrl" />
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
-      </mat-form-field>
+    <mat-form-field class="field-ppcn">
+      <mat-label translate>Cargo de la persona responsable de reporte</mat-label>
+      <input matInput formControlName="titleResponsibleReportingCtrl" />
+      <mat-error translate>errorLabel.fieldRequired</mat-error>
+    </mat-form-field>
 
-      <mat-form-field class="field-ppcn">
-         <mat-label translate>Cargo de la persona responsable de reporte</mat-label>
-            <input matInput formControlName="titleResponsibleReportingCtrl" />
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
-      </mat-form-field>
+    <mat-form-field class="field-ppcn">
+      <mat-label translate>Correo electrónico</mat-label>
+      <input matInput type="email" formControlName="emailCtrl" />
+      <mat-error translate>errorLabel.fieldRequired</mat-error>
+    </mat-form-field>
 
-      <mat-form-field class="field-ppcn">
-         <mat-label translate>Correo electrónico</mat-label>
-            <input matInput type="email" formControlName="emailCtrl" />
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
-      </mat-form-field>
+    <mat-form-field class="field-ppcn">
+      <mat-label translate>info.phone</mat-label>
+      <span matPrefix>+506 &nbsp;</span>
+      <input matInput formControlName="phoneCtrl" type="tel" maxlength="8" />
+      <mat-error translate>errorLabel.inputOrLengthIncorrect</mat-error>
+    </mat-form-field>
 
-       <mat-form-field class="field-ppcn">
-              <mat-label translate>info.phone</mat-label>
-              <span matPrefix>+506 &nbsp;</span>
-              <input matInput formControlName="phoneCtrl" type="tel" maxlength="8" />
-              <mat-error translate>errorLabel.inputOrLengthIncorrect</mat-error>
-        </mat-form-field>
+    <mat-form-field class="field-ppcn">
+      <mat-label translate>Dirección de la entidad </mat-label>
+      <input matInput formControlName="entityAddress" />
+      <mat-error translate>errorLabel.fieldRequired</mat-error>
+    </mat-form-field>
 
-        <mat-form-field class="field-ppcn">
-         <mat-label translate>Dirección de la entidad </mat-label>
-            <input matInput formControlName="entityAddress" />
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
-      </mat-form-field>
-
-
-            <div fxLayout="row" class="button-box" fxLayoutAlign="end center" >
-              <app-generic-button (click)="submitForm()" name="general.done">
-              </app-generic-button>
-            </div>
-
-
-		</form>
-
+    <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+      <app-generic-button (click)="submitForm()" name="general.done"> </app-generic-button>
+    </div>
+  </form>
 </div>

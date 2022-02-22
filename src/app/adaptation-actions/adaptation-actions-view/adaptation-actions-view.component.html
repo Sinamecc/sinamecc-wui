@@ -1,307 +1,256 @@
-<div
-	class="main-container"
-	fxLayout="column"
-	fxLayoutAlign="start start"
-	fxFill
->
+<div class="main-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
   <div fxFill>
     <mat-tab-group class="custom-tabs">
       <mat-tab label="Registro general">
         <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div
-            class="header-container"
-            fxLayout="row"
-            fxLayoutAlign="space-around center"
-          >
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
             <label class="mat-h1">Registro de datos</label>
           </div>
 
           <div fxLayout="column" fxLayoutAlign="space-around start">
             <div fxLayout="row">
-              <h3 class="mat-h3">Tipo de entidad que reporta</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{ adaptationAction?.report_organization?.report_organization_type ? reportingEntityType[adaptationAction?.report_organization?.report_organization_type] : ''}}</h3>
+              <h3 class="mat-h3">Tipo de entidad que reporta</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{
+                  adaptationAction?.report_organization?.report_organization_type
+                    ? reportingEntityType[adaptationAction?.report_organization?.report_organization_type]
+                    : ''
+                }}
+              </h3>
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3">Entidad responsable de reporte</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.report_organization?.responsible_entity}}</h3>
+              <h3 class="mat-h3">Entidad responsable de reporte</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.report_organization?.responsible_entity }}</h3>
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3">Cédula jurídica (en caso de ser una empresa u organización) </h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.report_organization?.legal_identification}}</h3>
+              <h3 class="mat-h3">Cédula jurídica (en caso de ser una empresa u organización)</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.report_organization?.legal_identification }}</h3>
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3">Fecha de elaboración del reporte</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.report_organization?.elaboration_date}}</h3>
+              <h3 class="mat-h3">Fecha de elaboración del reporte</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.report_organization?.elaboration_date }}</h3>
             </div>
-
-
-
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="Reporte de Acciones de Adaptación"> 
-
+      <mat-tab label="Reporte de Acciones de Adaptación">
         <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-
-          <div
-            class="header-container"
-            fxLayout="row"
-            fxLayoutAlign="space-around center"
-          >
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
             <label class="mat-h1">Información de registro</label>
           </div>
 
-           <div fxLayout="column" fxLayoutAlign="space-around start">
-
-            <div fxLayout="row">
-              <h3 class="mat-h3">Tipo de acción de adaptación</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.adaptation_action_information?.adaptation_action_type ? adaptationsActionsType[adaptationAction?.adaptation_action_information?.adaptation_action_type] : ''}}</h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3">Nombre de la acción de adaptación</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.adaptation_action_information?.name}}</h3>
-            </div>
-
-             <div fxLayout="row">
-              <h3 class="mat-h3">Objetivo de la acción de adaptación</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.adaptation_action_information?.objective}}</h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3">Descripción de la acción de adaptación</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.adaptation_action_information?.description}}</h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3">Meta de la acción</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.adaptation_action_information?.meta}}</h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3">Identificación preliminar de los Objetivos de Desarrollo Sostenible (ODS) impactados</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> -- multiple values define --</h3>
-            </div>
-            
-
-           </div>
-
-           <mat-divider style="width: 100%;"></mat-divider>
-
-           <div
-            class="header-container"
-            fxLayout="row"
-            fxLayoutAlign="space-around center"
-          >
-            <label class="mat-h1">Ubicación geográfica</label>
-          </div>
-
           <div fxLayout="column" fxLayoutAlign="space-around start">
-
-             <div fxLayout="row">
-              <h3 class="mat-h3">Provincia donde se ejecuta la acción</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{'-'}}</h3>
+            <div fxLayout="row">
+              <h3 class="mat-h3">Tipo de acción de adaptación</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{
+                  adaptationAction?.adaptation_action_information?.adaptation_action_type
+                    ? adaptationsActionsType[adaptationAction?.adaptation_action_information?.adaptation_action_type]
+                    : ''
+                }}
+              </h3>
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3">Descripción narrativa localización donde se desarrolla la acción</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.address?.description}}</h3>
+              <h3 class="mat-h3">Nombre de la acción de adaptación</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.adaptation_action_information?.name }}</h3>
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3">Localización geográfica de la acción</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.address?.GIS}}</h3>
+              <h3 class="mat-h3">Objetivo de la acción de adaptación</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.adaptation_action_information?.objective }}</h3>
             </div>
 
+            <div fxLayout="row">
+              <h3 class="mat-h3">Descripción de la acción de adaptación</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.adaptation_action_information?.description }}</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Meta de la acción</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.adaptation_action_information?.meta }}</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">
+                Identificación preliminar de los Objetivos de Desarrollo Sostenible (ODS) impactados
+              </h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">-- multiple values define --</h3>
+            </div>
           </div>
 
           <mat-divider style="width: 100%;"></mat-divider>
 
-           <div
-            class="header-container"
-            fxLayout="row"
-            fxLayoutAlign="space-around center"
-          >
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+            <label class="mat-h1">Ubicación geográfica</label>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="space-around start">
+            <div fxLayout="row">
+              <h3 class="mat-h3">Provincia donde se ejecuta la acción</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ '-' }}</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Descripción narrativa localización donde se desarrolla la acción</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.address?.description }}</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Localización geográfica de la acción</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.address?.GIS }}</h3>
+            </div>
+          </div>
+
+          <mat-divider style="width: 100%;"></mat-divider>
+
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
             <label class="mat-h1">Categorización con instrumentos nacionales</label>
           </div>
 
-           <div fxLayout="column" fxLayoutAlign="space-around start">
-
+          <div fxLayout="column" fxLayoutAlign="space-around start">
             <div fxLayout="row">
-              <h3 class="mat-h3">Tema al que pertenece la acción</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.activity?.code}}</h3>
+              <h3 class="mat-h3">Tema al que pertenece la acción</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.activity?.code }}</h3>
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3">Tipología de acción</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.activity?.sub_topic}}</h3>
+              <h3 class="mat-h3">Tipología de acción</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.activity?.sub_topic }}</h3>
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3">Relación con Política Nacional de Adaptación al que pertenece la acción (Eje)</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.activity?.ndc_contribution}}</h3>
+              <h3 class="mat-h3">Relación con Política Nacional de Adaptación al que pertenece la acción (Eje)</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.activity?.ndc_contribution }}</h3>
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3">Relación con Política Nacional de Adaptación al que pertenece la acción (Lineamiento)</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.activity?.adaptation_axis_guideline}}</h3>
+              <h3 class="mat-h3">
+                Relación con Política Nacional de Adaptación al que pertenece la acción (Lineamiento)
+              </h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.activity?.adaptation_axis_guideline }}</h3>
             </div>
+          </div>
 
-           </div>
+          <mat-divider style="width: 100%;"></mat-divider>
 
-            <mat-divider style="width: 100%;"></mat-divider>
-
-           <div
-            class="header-container"
-            fxLayout="row"
-            fxLayoutAlign="space-around center"
-          >
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
             <label class="mat-h1">Relación con otros instrumentos</label>
           </div>
 
-           <div fxLayout="column" fxLayoutAlign="space-around start">
-
-             <div fxLayout="row">
-              <h3 class="mat-h3"> Nombre de instrumento al que pertenece la acción</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.instrument?.name}}</h3>
+          <div fxLayout="column" fxLayoutAlign="space-around start">
+            <div fxLayout="row">
+              <h3 class="mat-h3">Nombre de instrumento al que pertenece la acción</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.instrument?.name }}</h3>
             </div>
 
-             <div fxLayout="row">
-              <h3 class="mat-h3">Descripción cómo se ha integrado la adaptación dentro del instrumento</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.instrument?.description}}</h3>
+            <div fxLayout="row">
+              <h3 class="mat-h3">Descripción cómo se ha integrado la adaptación dentro del instrumento</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.instrument?.description }}</h3>
             </div>
+          </div>
 
-           </div>
+          <mat-divider style="width: 100%;"></mat-divider>
 
-           <mat-divider style="width: 100%;"></mat-divider>
-
-           <div
-            class="header-container"
-            fxLayout="row"
-            fxLayoutAlign="space-around center"
-          >
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
             <label class="mat-h1">Amenaza climática relacionada</label>
           </div>
 
-           <div fxLayout="column" fxLayoutAlign="space-around start">
-
-             <div fxLayout="row">
-              <h3 class="mat-h3">Amenaza climática relacionada</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{ adaptationActionClimateThreaType[1] }}</h3>
+          <div fxLayout="column" fxLayoutAlign="space-around start">
+            <div fxLayout="row">
+              <h3 class="mat-h3">Amenaza climática relacionada</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationActionClimateThreaType[1] }}</h3>
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3">Amenaza climática relacionada (otro)</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{ '-' }}</h3>
+              <h3 class="mat-h3">Amenaza climática relacionada (otro)</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ '-' }}</h3>
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3">Fuente de información sobre la amenaza climática</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{ '-' }}</h3>
+              <h3 class="mat-h3">Fuente de información sobre la amenaza climática</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ '-' }}</h3>
             </div>
+          </div>
 
+          <mat-divider style="width: 100%;"></mat-divider>
 
-           </div>
-
-           <mat-divider style="width: 100%;"></mat-divider>
-
-           <div
-            class="header-container"
-            fxLayout="row"
-            fxLayoutAlign="space-around center"
-          >
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
             <label class="mat-h1">Implementación</label>
           </div>
 
-           <div fxLayout="column" fxLayoutAlign="space-around start">
-
-             <div fxLayout="row">
-              <h3 class="mat-h3">Inicio de la implementación</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.implementation?.start_date}}</h3>
-            </div>
-
-             <div fxLayout="row">
-              <h3 class="mat-h3">Finalización de la implementación</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.implementation?.end_date}}</h3>
+          <div fxLayout="column" fxLayoutAlign="space-around start">
+            <div fxLayout="row">
+              <h3 class="mat-h3">Inicio de la implementación</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.implementation?.start_date }}</h3>
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3">Tiempo de duración de la acción (meses)</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.implementation?.duration}}</h3>
-            </div>
-
-             <div fxLayout="row">
-              <h3 class="mat-h3">Entidad responsable de ejecución de la acción de adaptación</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.implementation?.responsible_entity}}</h3>
+              <h3 class="mat-h3">Finalización de la implementación</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.implementation?.end_date }}</h3>
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3">Otras entidades involucradas en la acción de adaptación</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.implementation?.other_entity}}</h3>
+              <h3 class="mat-h3">Tiempo de duración de la acción (meses)</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.implementation?.duration }}</h3>
             </div>
 
-             <div fxLayout="row">
-              <h3 class="mat-h3">Código de la acción</h3> 
-              <h3 class="mat-h3 txt-separator"> : </h3> 
-              <h3 class="mat-h3"> {{adaptationAction?.implementation?.action_code}}</h3>
+            <div fxLayout="row">
+              <h3 class="mat-h3">Entidad responsable de ejecución de la acción de adaptación</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.implementation?.responsible_entity }}</h3>
             </div>
 
-           </div>
+            <div fxLayout="row">
+              <h3 class="mat-h3">Otras entidades involucradas en la acción de adaptación</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.implementation?.other_entity }}</h3>
+            </div>
 
+            <div fxLayout="row">
+              <h3 class="mat-h3">Código de la acción</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.implementation?.action_code }}</h3>
+            </div>
+          </div>
         </div>
-
-
       </mat-tab>
-      <mat-tab label="Financiamiento"> 
-        
-       <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-
-        <div
-            class="header-container"
-            fxLayout="row"
-            fxLayoutAlign="space-around center"
-        >
+      <mat-tab label="Financiamiento">
+        <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
             <label class="mat-h1">Información de registro</label>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="space-around start"></div>
         </div>
-
-        <div fxLayout="column" fxLayoutAlign="space-around start">
-
-          
-        </div>
-
-
-       </div>
-      
       </mat-tab>
       <mat-tab label="Registro de indicadores"> Content 1 </mat-tab>
       <mat-tab label="Monitoreo y seguimiento de acciones climáticas">

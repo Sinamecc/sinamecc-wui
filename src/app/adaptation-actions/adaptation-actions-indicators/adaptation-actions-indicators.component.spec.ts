@@ -8,9 +8,8 @@ describe('AdaptationActionsIndicatorsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdaptationActionsIndicatorsComponent ]
-    })
-    .compileComponents();
+      declarations: [AdaptationActionsIndicatorsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

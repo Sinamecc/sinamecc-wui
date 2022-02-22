@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-
-import { Logger } from '@core';
 import { I18nService } from '@app/i18n';
 import { environment } from '@env/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize } from 'rxjs/operators';
-
 import { ReportService, Report } from '@app/report/report.service';
 import { ReportDataCatalog } from '../interfaces/report-data';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
+import { Logger } from '@app/@core';
 
 const log = new Logger('Report');
 
@@ -114,8 +112,6 @@ export class ReportNewComponent implements OnInit {
         change_description: '',
       },
     };
-
-    console.log(payload, 'payload');
 
     return payload;
   }

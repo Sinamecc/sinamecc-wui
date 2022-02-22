@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { S3File, S3Service } from '@shared/s3.service';
 
 import { CredentialsService } from '@app/auth';
 import { ReportDataCatalog } from './interfaces/report-data';
 import { ReportDataPayload } from './interfaces/report-data-payload';
+import { S3Service, S3File } from '@app/@shared';
 
 export interface Response {
   // Customize received credentials here
