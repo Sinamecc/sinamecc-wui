@@ -1,31 +1,30 @@
-import { Component, OnInit, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
-
 import { environment } from '@env/environment';
-import { Logger, I18nService } from '@app/core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { MitigationActionNewFormData, FinanceSourceType } from '@app/mitigation-actions/mitigation-action-new-form-data';
+import {
+  MitigationActionNewFormData,
+  FinanceSourceType,
+} from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { Institution } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { Status } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { IngeiCompliance } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { GeographicScale } from '@app/mitigation-actions/mitigation-action-new-form-data';
-
-import { Observable } from 'rxjs/Observable';
-import { MatSelectChange } from '@angular/material/select';
+import { Logger } from '@core';
+import { Observable } from 'rxjs';
 import { MitigationAction } from '../mitigation-action';
+import { I18nService } from '@app/i18n';
 
 const log = new Logger('Report');
-
 
 @Component({
   selector: 'app-mitigation-actions-update',
   templateUrl: './mitigation-actions-update.component.html',
-  styleUrls: ['./mitigation-actions-update.component.scss']
+  styleUrls: ['./mitigation-actions-update.component.scss'],
 })
 export class MitigationActionsUpdateComponent implements OnInit {
-
   version: string = environment.version;
   error: string;
   formGroup: FormGroup;
@@ -44,19 +43,20 @@ export class MitigationActionsUpdateComponent implements OnInit {
   startDate = new Date(1990, 0, 1);
   institutions: Institution[];
   ingeis: IngeiCompliance[];
-  statusses: Status[];
+  statuses: Status[];
   geographicScales: GeographicScale[];
   financeSourceTypes: FinanceSourceType[];
   displayFinancialSource: Boolean;
 
+  get formArray(): AbstractControl | null {
+    return this.formGroup.get('formArray');
+  }
 
-  get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
-
-  constructor(private router: Router,
-    private formBuilder: FormBuilder,
+  constructor(
     private i18nService: I18nService,
     private route: ActivatedRoute,
-    private service: MitigationActionsService) {
+    private service: MitigationActionsService
+  ) {
     this.title = 'Update mitigation action';
     this.isLinear = true;
     this.action = 'update';
@@ -69,23 +69,25 @@ export class MitigationActionsUpdateComponent implements OnInit {
     );
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   activateInsured(id: number): void {
     this.displayFinancialSource = id !== 1;
   }
 
   private initialFormData(): Observable<MitigationActionNewFormData> {
-    return this.service.newMitigationActionFormData(this.i18nService.language.split('-')[0], 'new')
-    .pipe(finalize(() => { this.isLoading = false; }));
-
+    return this.service.newMitigationActionFormData(this.i18nService.language.split('-')[0], 'new').pipe(
+      finalize(() => {
+        this.isLoading = false;
+      })
+    );
   }
 
   financialSourceInputShown($event: any) {
     // todo: when we traslate in the backend we need to traslate this hardcoded value here
     const insuredSourceTypeId = this.financeSourceTypes
-      .filter(financeSource => financeSource.name === 'Asegurado').map(({ id }) => id);
+      .filter((financeSource) => financeSource.name === 'Asegurado')
+      .map(({ id }) => id);
     this.displayFinancialSource = $event.value === insuredSourceTypeId;
   }
-
 }

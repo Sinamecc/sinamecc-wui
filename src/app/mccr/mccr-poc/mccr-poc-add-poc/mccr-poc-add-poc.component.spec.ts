@@ -10,7 +10,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MccrPocService } from '../mccr-poc.service';
 import { MockMccrPocService } from '../mccr-poc.service.mock';
-import { LoaderComponent } from '@app/shared';
+import { LoaderComponent } from '@shared';
 
 describe('MccrPocAddPocComponent', () => {
   let component: MccrPocAddPocComponent;
@@ -27,12 +27,9 @@ describe('MccrPocAddPocComponent', () => {
         HttpClientTestingModule,
         ReactiveFormsModule,
       ],
-      declarations: [ MccrPocAddPocComponent, LoaderComponent ],
-      providers: [
-        { provide: MccrPocService, useClass: MockMccrPocService },
-      ]
-    })
-    .compileComponents();
+      declarations: [MccrPocAddPocComponent, LoaderComponent],
+      providers: [{ provide: MccrPocService, useClass: MockMccrPocService }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

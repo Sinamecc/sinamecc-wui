@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { MccrPoc } from '@app/mccr/mccr-poc/mccr-poc';
-import { Observable } from 'rxjs/Observable';
-import { map, catchError } from 'rxjs/operators';
-import { HttpHeaders } from '@angular/common/http';
-
+import { map } from 'rxjs/operators';
 
 const routes = {
   getMccrPoc: (uuid: string, lang: string) => `/v1/ucc/${uuid}/balance`,
@@ -16,7 +12,6 @@ const routes = {
   submitNewUcc: () => '/v1/ucc',
   submitNewDeveloperAccount: () => '/v1/account/developer',
   submitNewBuyerAccount: () => '/v1/account/buyer',
-
 };
 
 export interface Response {
@@ -24,7 +19,6 @@ export interface Response {
   statusCode: number;
   message: string;
   id?: string;
-
 }
 
 export interface ReportContext {
@@ -32,67 +26,54 @@ export interface ReportContext {
   file: string | any;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MccrPocService {
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   private mccr_POCActionSource = new BehaviorSubject(null);
   currentMmcr_POC = this.mccr_POCActionSource.asObservable();
 
-
   getMccrPoc(uuid: string, lang: string): Observable<MccrPoc> {
-
     const httpOptions = {
-      headers: new HttpHeaders({
-
-      }),
+      headers: new HttpHeaders({}),
       params: {
-        remoteUrl: '/carbonmarket'
-      }
+        remoteUrl: '/carbonmarket',
+      },
     };
 
-    return this.httpClient
-      .get(routes.getMccrPoc(uuid, lang), httpOptions)
-      .pipe(
-        map((body: any) => {
-          return body;
-        })
-      );
-
+    return this.httpClient.get(routes.getMccrPoc(uuid, lang), httpOptions).pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
   }
 
   cancelUcc(uuid: string): Observable<{} | Object> {
     const httpOptions = {
-      headers: new HttpHeaders({
-
-      }),
+      headers: new HttpHeaders({}),
       params: {
-        remoteUrl: '/carbonmarket'
-      }
+        remoteUrl: '/carbonmarket',
+      },
     };
-    return this.httpClient
-      .get(routes.cancelUcc(uuid), httpOptions)
-      .pipe(
-        map((body: any) => {
-          const response = {
-            statusCode: 200,
-            message: 'UCC cancel correctly'
-          };
-          return response;
-        })
-      );
-
+    return this.httpClient.get(routes.cancelUcc(uuid), httpOptions).pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          message: 'UCC cancel correctly',
+        };
+        return response;
+      })
+    );
   }
-
 
   submitUccBuyerTransfer(context: any): Observable<Response> {
     const httpOptions = {
-      headers: new HttpHeaders({
-      }),
+      headers: new HttpHeaders({}),
       params: {
-        remoteUrl: '/carbonmarket'
-      }
+        remoteUrl: '/carbonmarket',
+      },
     };
 
     const formData: FormData = new FormData();
@@ -103,84 +84,69 @@ export class MccrPocService {
     formData.append('number_ucc_to_transfer', context.numberUccToTransfer);
     formData.append('status', 'created');
 
-    return this.httpClient
-      .post(routes.submitUccBuyerTransfer(), formData, httpOptions)
-      .pipe(
-        map((body: any) => {
-          const response = {
-            statusCode: 200,
-            message: 'Form submitted correctly'
-          };
-          return response;
-        })
-      );
+    return this.httpClient.post(routes.submitUccBuyerTransfer(), formData, httpOptions).pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly',
+        };
+        return response;
+      })
+    );
   }
 
   submitNewDeveloperAccount(context: any): Observable<Response> {
     const httpOptions = {
-      headers: new HttpHeaders({
-      }),
+      headers: new HttpHeaders({}),
       params: {
-        remoteUrl: '/carbonmarket'
-      }
+        remoteUrl: '/carbonmarket',
+      },
     };
 
     const formData: FormData = new FormData();
     formData.append('user_id', context.user_id);
 
-    return this.httpClient
-      .post(routes.submitNewDeveloperAccount(), formData, httpOptions)
-      .pipe(
-        map((body: any) => {
-          const response = {
-            statusCode: 200,
-            message: 'Form submitted correctly',
-            account_number: body.account_number
-          };
-          return response;
-        })
-      );
-
-
+    return this.httpClient.post(routes.submitNewDeveloperAccount(), formData, httpOptions).pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly',
+          account_number: body.account_number,
+        };
+        return response;
+      })
+    );
   }
 
   submitNewBuyerAccount(context: any): Observable<Response> {
     const httpOptions = {
-      headers: new HttpHeaders({
-
-      }),
+      headers: new HttpHeaders({}),
       params: {
-        remoteUrl: '/carbonmarket'
-      }
+        remoteUrl: '/carbonmarket',
+      },
     };
 
     const formData: FormData = new FormData();
     formData.append('user_id', context.user_id);
 
-    return this.httpClient
-      .post(routes.submitNewBuyerAccount(), formData, httpOptions)
-      .pipe(
-        map((body: any) => {
-          const response = {
-            statusCode: 200,
-            message: 'Form submitted correctly',
-            account_number: body.account_number
-          };
-          return response;
-        })
-      );
-
-
+    return this.httpClient.post(routes.submitNewBuyerAccount(), formData, httpOptions).pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly',
+          account_number: body.account_number,
+        };
+        return response;
+      })
+    );
   }
 
   submitNewUcc(context: any): Observable<Response> {
     const httpOptions = {
-      headers: new HttpHeaders({
-
-      }),
+      headers: new HttpHeaders({}),
       params: {
-        remoteUrl: '/carbonmarket'
-      }
+        remoteUrl: '/carbonmarket',
+      },
     };
 
     const formData: FormData = new FormData();
@@ -190,28 +156,23 @@ export class MccrPocService {
     formData.append('ucc_batch_size', context.uccBatchSize);
     formData.append('status', 'created');
 
-    return this.httpClient
-      .post(routes.submitNewUcc(), formData, httpOptions)
-      .pipe(
-        map((body: any) => {
-          const response = {
-            statusCode: 200,
-            message: 'Form submitted correctly'
-          };
-          return response;
-        })
-      );
-
-
+    return this.httpClient.post(routes.submitNewUcc(), formData, httpOptions).pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly',
+        };
+        return response;
+      })
+    );
   }
 
   submitUccDeveloperTransfer(context: any): Observable<Response> {
     const httpOptions = {
-      headers: new HttpHeaders({
-      }),
+      headers: new HttpHeaders({}),
       params: {
-        remoteUrl: '/carbonmarket'
-      }
+        remoteUrl: '/carbonmarket',
+      },
     };
 
     const formData: FormData = new FormData();
@@ -220,18 +181,14 @@ export class MccrPocService {
     formData.append('developer_account_number', context.developerAccountNUmber);
     formData.append('status', 'created');
 
-    return this.httpClient
-      .post(routes.submitUccDeveloperTransfer(), formData, httpOptions)
-      .pipe(
-        map((body: any) => {
-          const response = {
-            statusCode: 200,
-            message: 'Form submitted correctly'
-          };
-          return response;
-        })
-      );
-
+    return this.httpClient.post(routes.submitUccDeveloperTransfer(), formData, httpOptions).pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly',
+        };
+        return response;
+      })
+    );
   }
-
 }

@@ -9,13 +9,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AdminService } from '@app/admin/admin.service';
-import { AuthenticationService, MockAuthenticationService } from '@app/core';
 import { AdminNewComponent } from '../admin-new/admin-new.component';
 import { AdminGroupsListEditComponent } from '@app/admin/Groups/admin-groups-list-edit/admin-groups-list-edit.component';
 import { AdminGroupListComponent } from '@app/admin/Groups/admin-group-list/admin-group-list.component';
 import { AdminPermissionListComponent } from '@app/admin/Permissions/admin-permission-list/admin-permission-list.component';
 import { AdminPermissionsListEditComponent } from '@app/admin/Permissions/admin-permissions-list-edit/admin-permissions-list-edit.component';
-import { SharedModule } from '@app/shared';
+import { SharedModule } from '@shared';
+import { CredentialsService } from '@app/auth';
+import { MockCredentialsService } from '@app/auth/credentials.service.mock';
 
 describe('AdminUserDetailComponent', () => {
   let component: AdminUserDetailComponent;
@@ -32,13 +33,18 @@ describe('AdminUserDetailComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        SharedModule
+        SharedModule,
       ],
-      declarations: [ AdminUserDetailComponent, AdminNewComponent, AdminGroupsListEditComponent, AdminGroupListComponent, AdminPermissionListComponent, AdminPermissionsListEditComponent ],
-      providers: [AdminService, { provide: AuthenticationService, useClass: MockAuthenticationService }]
-
-    })
-    .compileComponents();
+      declarations: [
+        AdminUserDetailComponent,
+        AdminNewComponent,
+        AdminGroupsListEditComponent,
+        AdminGroupListComponent,
+        AdminPermissionListComponent,
+        AdminPermissionsListEditComponent,
+      ],
+      providers: [AdminService, { provide: CredentialsService, useClass: MockCredentialsService }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -48,8 +54,7 @@ describe('AdminUserDetailComponent', () => {
       name: 'Randall',
       lastName: 'Valenciano',
       userName: 'randy',
-      email: 'ravf.226@gmail.com'
-
+      email: 'ravf.226@gmail.com',
     };
     fixture.detectChanges();
   });

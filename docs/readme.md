@@ -1,4 +1,4 @@
-# sinamecc wui
+# sinamecc-wui
 
 Welcome to the project documentation!
 

@@ -7,15 +7,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { LoaderComponent } from '@app/shared/loader/loader.component';
+import { LoaderComponent } from '@shared/loader/loader.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, I18nService, AuthenticationService, MockAuthenticationService } from '@app/core';
-import { InputFileComponent } from '@app/shared/input-file/input-file.component';
-import { ByteFormatPipe } from '@app/shared/input-file/byte-format.pipe';
+import { CoreModule } from '@core';
+import { InputFileComponent } from '@shared/input-file/input-file.component';
+import { I18nService } from '@app/i18n/i18n.service';
+import { ByteFormatPipe } from '@shared/input-file/byte-format.pipe';
 import { ReportService } from '../report.service';
 import { MockReportService } from '../report.service.mock';
-import { GenericButtonSecondaryComponent } from '@app/shared/generic-button-secondary/generic-button-secondary.component';
-import { GenericButtonComponent } from '@app/shared/generic-button/generic-button.component';
+import { GenericButtonSecondaryComponent } from '@shared/generic-button-secondary/generic-button-secondary.component';
+import { GenericButtonComponent } from '@shared/generic-button/generic-button.component';
 
 describe('ReportVersionsNewComponent', () => {
   let component: ReportVersionsNewComponent;
@@ -32,16 +33,18 @@ describe('ReportVersionsNewComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
       ],
-      declarations: [ ReportVersionsNewComponent, LoaderComponent, InputFileComponent, ByteFormatPipe,
+      declarations: [
+        ReportVersionsNewComponent,
+        LoaderComponent,
+        InputFileComponent,
+        ByteFormatPipe,
         GenericButtonComponent,
-        GenericButtonSecondaryComponent ],
-      providers: [I18nService,
-        { provide: AuthenticationService, useClass: MockAuthenticationService },
-        { provide: ReportService, useClass: MockReportService }]
-    })
-    .compileComponents();
+        GenericButtonSecondaryComponent,
+      ],
+      providers: [I18nService, { provide: ReportService, useClass: MockReportService }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -9,51 +9,54 @@
 <br />
 <div class="container mat-elevation-z8 table-sinamecc">
   <mat-table #table [dataSource]="dataSource">
-
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef translate> info.name</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
     </ng-container>
 
     <!-- Strategy Name Column -->
     <ng-container matColumnDef="strategy_name">
       <mat-header-cell *matHeaderCellDef translate> mitigationAction.ProgramStrategyInitiative</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.strategy_name}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.strategy_name }} </mat-cell>
     </ng-container>
 
     <!-- Objective Column -->
     <ng-container matColumnDef="purpose">
       <mat-header-cell *matHeaderCellDef translate> general.objective</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.purpose}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.purpose }} </mat-cell>
     </ng-container>
 
     <!-- Status Column -->
     <ng-container matColumnDef="fsm_state">
       <mat-header-cell *matHeaderCellDef translate> general.status</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.fsm_state}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.fsm_state }} </mat-cell>
     </ng-container>
     <!-- Updated Column -->
     <ng-container matColumnDef="updated">
       <mat-header-cell *matHeaderCellDef translate>general.lastUpdate </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.updated | date:"MM/dd/yyy hh:mm:ss"}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.updated | date: 'MM/dd/yyy hh:mm:ss' }} </mat-cell>
     </ng-container>
 
     <!-- Created Column -->
     <ng-container matColumnDef="created">
       <mat-header-cell *matHeaderCellDef translate> general.createdAt</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.created | date:"MM/dd/yyy hh:mm:ss"}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.created | date: 'MM/dd/yyy hh:mm:ss' }} </mat-cell>
     </ng-container>
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
       <mat-cell *matCellDef="let element" class="login-box">
-        <button  mat-icon-button color="primary" (click)="view(element.id)">
+        <button mat-icon-button color="primary" (click)="view(element.id)">
           <mat-icon color="white">visibility</mat-icon>
         </button>
-        <button *ngIf="hasPermProvider()" mat-icon-button color="warn"
-          (click)="openDeleteConfirmationDialog(element.id)">
+        <button
+          *ngIf="hasPermProvider()"
+          mat-icon-button
+          color="warn"
+          (click)="openDeleteConfirmationDialog(element.id)"
+        >
           <mat-icon color="white">delete</mat-icon>
         </button>
         <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
@@ -68,7 +71,7 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row [ngClass]="row.fsm_state" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row [ngClass]="row.fsm_state" *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
 
   <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">

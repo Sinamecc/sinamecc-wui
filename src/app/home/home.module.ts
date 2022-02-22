@@ -1,26 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home.component';
-import { HomeRoutingModule } from './home-routing-module';
 import { TranslateModule } from '@ngx-translate/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { SharedModule } from '@app/shared';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { Angulartics2Module } from 'angulartics2';
+
+import { CoreModule } from '@core';
+import { SharedModule } from '@shared';
 import { MaterialModule } from '@app/material.module';
-import { CoreModule } from '@app/core';
+import { HomeRoutingModule } from './home-routing.module';
+import { HomeComponent } from './home.component';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule,
-    ReactiveFormsModule,
-    FormsModule,
     CoreModule,
     SharedModule,
     FlexLayoutModule,
     MaterialModule,
-    HomeRoutingModule
+    Angulartics2Module,
+    HomeRoutingModule,
   ],
-  declarations: [HomeComponent]
+  declarations: [HomeComponent],
 })
-export class HomeModule { }
+export class HomeModule {}

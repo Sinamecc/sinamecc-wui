@@ -18,21 +18,12 @@ body {
   height: 100%;
 }
 
-// .mat-toolbar.mat-primary{
-
-//   background: #8bc444;
-// }
-
 .section-heading {
   position: relative;
   font-size: 30px !important;
   text-transform: uppercase;
   font-family: "Open Sans", sans-serif;
   font-weight: 800 !important;
-  font-size: 30px;
-  text-transform: uppercase;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 800;
   display: inline-block;
   color: #333;
   margin-bottom: 15px;
@@ -59,10 +50,7 @@ body {
   font-weight: 800;
   display: inline-block;
   color: #333;
-  margin-top: 0;
-  margin-right: auto;
-  margin-bottom: 15px;
-  margin-left: auto;
+  margin: 0 auto 15px;
 }
 
 .section-heading-inline::before {
@@ -80,26 +68,9 @@ body {
   width: 120px;
 }
 
-mat-toolbar>div {
+.mat-toolbar > div {
   text-align: right;
   width: 100%;
   text-transform: uppercase;
   padding-top: 8px;
-}
-
-
-
-$spaceamounts: (5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100); // Adjust this to include the pixel amounts you need.
-$sides: (top, bottom, left, right); // Leave this variable alone
-
-@each $space in $spaceamounts {
-  @each $side in $sides {
-    .m-#{str-slice($side, 0, 1)}-#{$space} {
-      margin-#{$side}: #{$space}px !important;
-    }
-
-    .p-#{str-slice($side, 0, 1)}-#{$space} {
-      padding-#{$side}: #{$space}px !important;
-    }
-  }
 }

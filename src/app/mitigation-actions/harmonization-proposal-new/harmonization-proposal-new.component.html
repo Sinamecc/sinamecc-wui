@@ -1,3 +1,10 @@
-<app-upload-proposal *ngIf="mitigationActionObservable | async" [title]="title" [code]="id" [nextRoute]="nextRoute"
-  [entity]="mitigationAction" [formData]="formData" [formSubmitRoute]="formSubmitRoute"
-  (formSubmitted)="onSubmission($event)"></app-upload-proposal>
+<app-upload-proposal
+  *ngIf="mitigationActionObservable | async"
+  [title]="title"
+  [code]="id"
+  [nextRoute]="nextRoute"
+  [entity]="mitigationAction"
+  [formData]="formData"
+  [formSubmitRoute]="formSubmitRoute"
+  (formSubmitted)="onSubmission($event)"
+></app-upload-proposal>

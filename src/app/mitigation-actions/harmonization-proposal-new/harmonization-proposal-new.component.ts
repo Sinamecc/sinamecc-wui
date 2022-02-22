@@ -4,16 +4,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '@env/environment';
 import { tap } from 'rxjs/operators';
 
-
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
-import { I18nService } from '@app/core';
+import { I18nService } from '@app/i18n';
 @Component({
   selector: 'app-harmonization-proposal-new',
   templateUrl: './harmonization-proposal-new.component.html',
-  styleUrls: ['./harmonization-proposal-new.component.scss']
+  styleUrls: ['./harmonization-proposal-new.component.scss'],
 })
 export class HarmonizationProposalNewComponent implements OnInit {
   version: string = environment.version;
@@ -26,25 +25,26 @@ export class HarmonizationProposalNewComponent implements OnInit {
   formData: FormData;
   formSubmitRoute: string;
 
-
-  constructor(private router: Router,
+  constructor(
     private route: ActivatedRoute,
     private service: MitigationActionsService,
-    private i18nService: I18nService) {
+    private i18nService: I18nService
+  ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'Harmonization Proposal Integration';
     this.nextRoute = `mitigation/actions`;
     this.formData = new FormData();
     this.formSubmitRoute = '/v1/mitigations/step/harmonization_ingei/';
 
-
-    this.mitigationActionObservable = this.service.getMitigationAction(this.id, this.i18nService.language.split('-')[0])
-    .pipe(
-      tap((mitigationAction: MitigationAction) => { this.mitigationAction = mitigationAction; })
-    );
+    this.mitigationActionObservable = this.service
+      .getMitigationAction(this.id, this.i18nService.language.split('-')[0])
+      .pipe(
+        tap((mitigationAction: MitigationAction) => {
+          this.mitigationAction = mitigationAction;
+        })
+      );
   }
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onSubmission(context: any) {
     this.formData.append('mitigation', context.entityCtrl);
@@ -58,7 +58,4 @@ export class HarmonizationProposalNewComponent implements OnInit {
       this.formData.append('file', file, file.name);
     }
   }
-
-
 }
-

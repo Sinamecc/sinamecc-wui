@@ -1,26 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AdminService } from '../../admin.service';
-import { Permissions } from '@app/core/permissions';
-import { MatDialogConfig, MatDialog, MatTableDataSource, MatPaginator } from '@angular/material';
-import { ComponentDialogComponent } from '@app/core/component-dialog/component-dialog.component';
-import { AdminPermissionsDetailComponent } from '../admin-permissions-detail/admin-permissions-detail.component';
-
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AdminService } from '@app/admin/admin.service';
+import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
+import { AdminPermissionsDetailComponent } from '@app/admin/Permissions/admin-permissions-detail/admin-permissions-detail.component';
 
 @Component({
   selector: 'app-admin-permissions',
   templateUrl: './admin-permissions.component.html',
-  styleUrls: ['./admin-permissions.component.scss']
+  styleUrls: ['./admin-permissions.component.scss'],
 })
 export class AdminPermissionsComponent implements OnInit {
-
   displayedColumns = ['name', 'content_type', 'action'];
   dataSource: MatTableDataSource<Permissions>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  fieldsToSearch: string[][] = [ ['name'], ['content_type'] ];
+  fieldsToSearch: string[][] = [['name'], ['content_type']];
 
-  constructor(private adminService: AdminService, public dialog: MatDialog, ) { }
+  constructor(private adminService: AdminService, public dialog: MatDialog) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadPermissions();
   }
 
@@ -36,7 +35,6 @@ export class AdminPermissionsComponent implements OnInit {
     const data = {
       title: 'Delete Permission',
       question: 'Are you sure?',
-
     };
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -44,7 +42,6 @@ export class AdminPermissionsComponent implements OnInit {
     dialogConfig.data = data;
     dialogConfig.width = '350px';
     const dialogRef = this.dialog.open(ComponentDialogComponent, dialogConfig);
-
   }
 
   openEditDialog(permission: Permissions) {
@@ -52,10 +49,8 @@ export class AdminPermissionsComponent implements OnInit {
       width: '60%',
       data: {
         edit: true,
-        perm: permission
-      }
+        perm: permission,
+      },
     });
   }
-
 }
-

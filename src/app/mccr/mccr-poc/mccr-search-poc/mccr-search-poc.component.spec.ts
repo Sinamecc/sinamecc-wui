@@ -10,9 +10,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MccrPocService } from '../mccr-poc.service';
 import { MockMccrPocService } from '../mccr-poc.service.mock';
-import { LoaderComponent } from '@app/shared';
-import { I18nService } from '@app/core/i18n.service';
-import { MockI18nService } from '@app/core/i18n.service.mock';
+import { LoaderComponent } from '@shared';
+import { I18nService } from '@app/i18n/i18n.service';
+import { MockI18nService } from '@app/i18n/i18n.service.mock';
 
 describe('MccrSearchPocComponent', () => {
   let component: MccrSearchPocComponent;
@@ -29,13 +29,12 @@ describe('MccrSearchPocComponent', () => {
         HttpClientTestingModule,
         ReactiveFormsModule,
       ],
-      declarations: [ MccrSearchPocComponent, LoaderComponent ],
+      declarations: [MccrSearchPocComponent, LoaderComponent],
       providers: [
-        { provide: I18nService, useClass: MockI18nService},
+        { provide: I18nService, useClass: MockI18nService },
         { provide: MccrPocService, useClass: MockMccrPocService },
-      ]
-    })
-    .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -9,8 +9,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AdminService } from '@app/admin/admin.service';
-import { AuthenticationService, MockAuthenticationService } from '@app/core';
-import { SharedModule } from '@app/shared';
+import { SharedModule } from '@shared';
+import { CredentialsService } from '@app/auth';
+import { MockCredentialsService } from '@app/auth/credentials.service.mock';
 
 describe('AdminGroupsListEditComponent', () => {
   let component: AdminGroupsListEditComponent;
@@ -27,19 +28,20 @@ describe('AdminGroupsListEditComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        SharedModule
+        SharedModule,
       ],
-      declarations: [ AdminGroupsListEditComponent ],
-      providers: [AdminService, { provide: AuthenticationService, useClass: MockAuthenticationService }]
-    })
-    .compileComponents();
+      declarations: [AdminGroupsListEditComponent],
+      providers: [AdminService, { provide: CredentialsService, useClass: MockCredentialsService }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminGroupsListEditComponent);
     component = fixture.componentInstance;
-    const groups = [{id: '01', label: 'admin', name: 'admin'},
-    {id: '02', label: 'dcc', name: 'dcc'}];
+    const groups = [
+      { id: '01', label: 'admin', name: 'admin' },
+      { id: '02', label: 'dcc', name: 'dcc' },
+    ];
     component.dataTable = groups;
     component.userGroups = groups;
     fixture.detectChanges();

@@ -1,68 +1,66 @@
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
-	selector: "app-generic-dialog-box",
-	templateUrl: "./generic-dialog-box.component.html",
-	styleUrls: ["./generic-dialog-box.component.scss"]
+  selector: 'app-generic-dialog-box',
+  templateUrl: './generic-dialog-box.component.html',
+  styleUrls: ['./generic-dialog-box.component.scss'],
 })
 export class GenericDialogBoxComponent implements OnInit {
-	@Input() moduleName: string;
-	@Input() fieldsModule: object[];
-	@Input() comments: object[];
-	@Input() forms = false;
+  @Input() moduleName: string;
+  @Input() fieldsModule: object[];
+  @Input() comments: object[];
+  @Input() forms = false;
 
-	@ViewChild("fieldsOrganizationInformation")
-	fieldsOrganizationInformation: any;
-	@ViewChild("commentOrganizationInformation")
-	commentOrganizationInformation: any;
+  @ViewChild('fieldsOrganizationInformation')
+  fieldsOrganizationInformation: any;
+  @ViewChild('commentOrganizationInformation')
+  commentOrganizationInformation: any;
 
-	constructor() {}
+  constructor() {}
 
-	ngOnInit() {}
+  ngOnInit() {}
 
-	createComment(fields: string[], comment: string) {
-		if (!this.comments.length) {
-			const newModule = {
-				module: this.moduleName,
-				comments: [
-					{
-						fields: fields,
-						comment: comment
-					}
-				]
-			};
+  createComment(fields: string[], comment: string) {
+    if (!this.comments.length) {
+      const newModule = {
+        module: this.moduleName,
+        comments: [
+          {
+            fields: fields,
+            comment: comment,
+          },
+        ],
+      };
 
-			this.comments.push(newModule);
-		} else {
-			const newModule = this.comments.find(
-				x => x["module"] === this.moduleName
-			);
+      this.comments.push(newModule);
+    } else {
+      const newModule = this.comments.find((x) => x['module'] === this.moduleName);
 
-			if (newModule) {
-				const newComment = {
-					fields: fields,
-					comment: comment
-				};
-				newModule["comments"].push(newComment);
-			} else {
-				const newMod = {
-					module: this.moduleName,
-					comments: [
-						{
-							fields: fields,
-							comment: comment
-						}
-					]
-				};
+      if (newModule) {
+        const newComment = {
+          fields: fields,
+          comment: comment,
+        };
+        newModule['comments'].push(newComment);
+      } else {
+        const newMod = {
+          module: this.moduleName,
+          comments: [
+            {
+              fields: fields,
+              comment: comment,
+            },
+          ],
+        };
 
-				this.comments.push(newMod);
-			}
-		}
-		this.clearForm();
-	}
+        this.comments.push(newMod);
+      }
+    }
+    this.clearForm();
+  }
 
-	clearForm() {
-		this.fieldsOrganizationInformation._value = [];
-		this.commentOrganizationInformation.nativeElement["value"] = "";
-	}
+  clearForm() {
+    this.fieldsOrganizationInformation._value = [];
+    this.commentOrganizationInformation.nativeElement['value'] = '';
+  }
 }

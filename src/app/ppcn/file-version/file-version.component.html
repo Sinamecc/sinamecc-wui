@@ -1,3 +1,11 @@
-<app-upload-proposal *ngIf="ppcnObservable | async" [title]="title" [code]="id" [nextRoute]="nextRoute" [entity]="ppcn"
-  [formData]="formData" [formSubmitRoute]="formSubmitRoute" (formSubmitted)="onSubmission($event)">
+<app-upload-proposal
+  *ngIf="ppcnObservable | async"
+  [title]="title"
+  [code]="id"
+  [nextRoute]="nextRoute"
+  [entity]="ppcn"
+  [formData]="formData"
+  [formSubmitRoute]="formSubmitRoute"
+  (formSubmitted)="onSubmission($event)"
+>
 </app-upload-proposal>

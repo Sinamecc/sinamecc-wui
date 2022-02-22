@@ -1,22 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-
 import { environment } from '@env/environment';
-import { tap, finalize } from 'rxjs/operators';
-
-import { Observable } from 'rxjs/Observable';
-
-import { I18nService } from '@app/core';
-import { MccrRegistry } from '../mccr-registry';
-import { MccrRegistriesService } from '../mccr-registries.service';
+import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
+import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
+import { I18nService } from '@app/i18n';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-monitoring-proposal-verification-new',
   templateUrl: './monitoring-proposal-verification-new.component.html',
-  styleUrls: ['./monitoring-proposal-verification-new.component.scss']
+  styleUrls: ['./monitoring-proposal-verification-new.component.scss'],
 })
 export class MonitoringProposalVerificationNewComponent implements OnInit {
-
   version: string = environment.version;
 
   id: string;
@@ -28,29 +24,29 @@ export class MonitoringProposalVerificationNewComponent implements OnInit {
   formSubmitRoute: string;
   isLoading: boolean;
 
-  // @Output() formDataEvent = new EventEmitter<any>();
-
-
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private service: MccrRegistriesService,
-    private i18nService: I18nService) {
+    private i18nService: I18nService
+  ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'Informe de Verificacion del Reporte de Monitoreo';
     this.nextRoute = 'mccr/registries';
     this.formData = new FormData();
     this.formSubmitRoute = '/v1/mccr/step/conceptual_proposal';
 
-
-    this.mccrRegistryObservable = this.service.getMccrRegistry(this.id)
-      .pipe(finalize(() => { this.isLoading = false; }));
+    this.mccrRegistryObservable = this.service.getMccrRegistry(this.id).pipe(
+      finalize(() => {
+        this.isLoading = false;
+      })
+    );
     this.mccrRegistryObservable.subscribe((response: MccrRegistry) => {
       this.mccrRegistry = response;
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit(): void {}
 
   onSubmission(context: any) {
     this.formData.append('mccr', context.entityCtrl);
@@ -63,6 +59,4 @@ export class MonitoringProposalVerificationNewComponent implements OnInit {
       this.formData.append('file', file, file.name);
     }
   }
-
-
 }

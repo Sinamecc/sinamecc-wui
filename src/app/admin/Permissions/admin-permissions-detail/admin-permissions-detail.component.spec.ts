@@ -10,8 +10,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AdminPermissionsNewComponent } from '../admin-permissions-new/admin-permissions-new.component';
 import { AdminService } from '@app/admin/admin.service';
-import { AuthenticationService, MockAuthenticationService } from '@app/core';
-import { SharedModule } from '@app/shared';
+import { CredentialsService } from '@app/auth';
+import { MockCredentialsService } from '@app/auth/credentials.service.mock';
+import { SharedModule } from '@shared';
 
 describe('AdminPermissionsDetailComponent', () => {
   let component: AdminPermissionsDetailComponent;
@@ -28,12 +29,11 @@ describe('AdminPermissionsDetailComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        SharedModule
+        SharedModule,
       ],
-      declarations: [ AdminPermissionsDetailComponent, AdminPermissionsNewComponent ],
-      providers: [AdminService, { provide: AuthenticationService, useClass: MockAuthenticationService }]
-    })
-    .compileComponents();
+      declarations: [AdminPermissionsDetailComponent, AdminPermissionsNewComponent],
+      providers: [AdminService, { provide: CredentialsService, useClass: MockCredentialsService }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -44,7 +44,7 @@ describe('AdminPermissionsDetailComponent', () => {
       id: '1',
       name: 'wtf',
       codename: 'wtf',
-      content_type: 'wtf'
+      content_type: 'wtf',
     };
     fixture.detectChanges();
   });

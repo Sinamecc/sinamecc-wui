@@ -9,8 +9,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AdminService } from '@app/admin/admin.service';
-import { AuthenticationService, MockAuthenticationService } from '@app/core';
-import { SharedModule } from '@app/shared';
+import { CredentialsService } from '@app/auth';
+import { MockCredentialsService } from '@app/auth/credentials.service.mock';
+import { SharedModule } from '@shared';
 
 describe('AdminPermissionsNewComponent', () => {
   let component: AdminPermissionsNewComponent;
@@ -27,12 +28,11 @@ describe('AdminPermissionsNewComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        SharedModule
+        SharedModule,
       ],
-      declarations: [ AdminPermissionsNewComponent ],
-      providers: [AdminService, { provide: AuthenticationService, useClass: MockAuthenticationService }]
-    })
-    .compileComponents();
+      declarations: [AdminPermissionsNewComponent],
+      providers: [AdminService, { provide: CredentialsService, useClass: MockCredentialsService }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

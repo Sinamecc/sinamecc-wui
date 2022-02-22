@@ -4,16 +4,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { LoaderComponent, SharedModule } from '@app/shared';
+import { LoaderComponent } from '@shared';
 import { RouterTestingModule } from '@angular/router/testing';
-import { I18nService } from '@app/core/i18n.service';
+import { I18nService } from '@app/i18n/i18n.service';
 import { MccrRegistriesService } from '../mccr-registries.service';
-import { AuthenticationService, MockAuthenticationService } from '@app/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DatePipe } from '@angular/common';
-import { S3Service } from '@app/core/s3.service';
-import { MockS3Service } from '@app/core/s3.service.mock';
+import { S3Service } from '@shared/s3.service';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { MccrRegistryComponent } from './mccr-registry.component';
+import { CredentialsService } from '@app/auth';
+import { MockCredentialsService } from '@app/auth/credentials.service.mock';
 
 describe('MccrRegistryComponent', () => {
   let component: MccrRegistryComponent;
@@ -27,14 +28,17 @@ describe('MccrRegistryComponent', () => {
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
-      declarations: [ MccrRegistryComponent, LoaderComponent ],
-      providers: [I18nService, DatePipe, MccrRegistriesService,
-        { provide: AuthenticationService, useClass: MockAuthenticationService },
-        { provide: S3Service, useClass: MockS3Service }]
-    })
-    .compileComponents();
+      declarations: [MccrRegistryComponent, LoaderComponent],
+      providers: [
+        I18nService,
+        DatePipe,
+        MccrRegistriesService,
+        { provide: CredentialsService, useClass: MockCredentialsService },
+        { provide: S3Service, useClass: MockS3Service },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

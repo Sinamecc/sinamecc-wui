@@ -8,13 +8,17 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UploadProposalComponent } from '@app/shared/upload-proposal/upload-proposal.component';
-import { LoaderComponent, InputFileComponent } from '@app/shared';
-import { ByteFormatPipe } from '@app/shared/input-file/byte-format.pipe';
+import { UploadProposalComponent } from '../upload-proposal/upload-proposal.component';
+import { LoaderComponent } from '@shared';
+import { ByteFormatPipe } from '@shared/input-file/byte-format.pipe';
 import { MccrRegistriesService } from '../mccr-registries.service';
-import { AuthenticationService, MockAuthenticationService, S3Service, I18nService } from '@app/core';
-import { MockS3Service } from '@app/core/s3.service.mock';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { DatePipe } from '@angular/common';
+import { InputFileComponent } from '@shared/input-file/input-file.component';
+import { I18nService } from '@app/i18n';
+import { CredentialsService } from '@app/auth';
+import { MockCredentialsService } from '@app/auth/credentials.service.mock';
+import { S3Service } from '@shared/s3.service';
 
 describe('MonitoringProposalVerificationNewComponent', () => {
   let component: MonitoringProposalVerificationNewComponent;
@@ -32,16 +36,21 @@ describe('MonitoringProposalVerificationNewComponent', () => {
         FormsModule,
         ReactiveFormsModule,
       ],
-      declarations: [ MonitoringProposalVerificationNewComponent,
-                      LoaderComponent,
-                      ByteFormatPipe,
-                      InputFileComponent,
-                      UploadProposalComponent ],
-      providers: [I18nService, DatePipe, MccrRegistriesService,
-                  { provide: AuthenticationService, useClass: MockAuthenticationService },
-                  { provide: S3Service, useClass: MockS3Service }]
-    })
-    .compileComponents();
+      declarations: [
+        MonitoringProposalVerificationNewComponent,
+        LoaderComponent,
+        ByteFormatPipe,
+        InputFileComponent,
+        UploadProposalComponent,
+      ],
+      providers: [
+        I18nService,
+        DatePipe,
+        MccrRegistriesService,
+        { provide: CredentialsService, useClass: MockCredentialsService },
+        { provide: S3Service, useClass: MockS3Service },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

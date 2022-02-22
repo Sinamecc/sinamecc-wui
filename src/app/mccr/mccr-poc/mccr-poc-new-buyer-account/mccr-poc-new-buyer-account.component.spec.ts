@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoaderComponent } from '@app/shared';
+import { LoaderComponent } from '@shared';
 import { MccrPocService } from '../mccr-poc.service';
 import { MockMccrPocService } from '../mccr-poc.service.mock';
 
@@ -27,12 +27,9 @@ describe('MccrPocNewBuyerAccountComponent', () => {
         HttpClientTestingModule,
         ReactiveFormsModule,
       ],
-      declarations: [ MccrPocNewBuyerAccountComponent, LoaderComponent ],
-      providers: [
-        { provide: MccrPocService, useClass: MockMccrPocService },
-      ]
-    })
-    .compileComponents();
+      declarations: [MccrPocNewBuyerAccountComponent, LoaderComponent],
+      providers: [{ provide: MccrPocService, useClass: MockMccrPocService }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

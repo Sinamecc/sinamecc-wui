@@ -1,51 +1,49 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { TranslateModule } from "@ngx-translate/core";
-import { DatePipe } from "@angular/common";
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-import { MaterialModule } from "@app/material.module";
-import { SharedModule } from "@app/shared";
-import { PpcnService } from "@app/ppcn/ppcn.service";
-import { PpcnLevelComponent } from "@app/ppcn/ppcn-level/ppcn-level.component";
-import { PpcnRoutingModule } from "@app/ppcn/ppcn-routing.module";
-import { PpcnFlowComponent } from "./ppcn-flow/ppcn-flow.component";
-import { PpcnNewComponent } from "./ppcn-new/ppcn-new.component";
-import { PpcnDownloadComponent } from "./ppcn-download/ppcn-download.component";
-import { PpcnUploadComponent } from "./ppcn-upload/ppcn-upload.component";
-import { PpcnComponent } from "./ppcn/ppcn.component";
-import { PpcnListComponent } from "./ppcn-list/ppcn-list.component";
-import { FileVersionComponent } from "./file-version/file-version.component";
-import { NewReviewComponent } from "./ppcn-reviews/new-review/new-review.component";
-import { ReviewsListComponent } from "./ppcn-reviews/reviews-list/reviews-list.component";
-import { GasReportTableComponent } from "./gas-report-table/gas-report-table.component";
-import { GenericDialogBoxComponent } from "./generic-dialog-box/generic-dialog-box.component";
-
+import { NgModule } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '@shared';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MaterialModule } from '@app/material.module';
+import { PpcnRoutingModule } from '@app/ppcn/ppcn-routing.module';
+import { PpcnListComponent } from './ppcn-list/ppcn-list.component';
+import { PpcnService } from '@app/ppcn/ppcn.service';
+import { PpcnLevelComponent } from './ppcn-level/ppcn-level.component';
+import { PpcnNewComponent } from './ppcn-new/ppcn-new.component';
+import { GasReportTableComponent } from './gas-report-table/gas-report-table.component';
+import { PpcnUploadComponent } from './ppcn-upload/ppcn-upload.component';
+import { PpcnFlowComponent } from './ppcn-flow/ppcn-flow.component';
+import { PpcnComponent } from './ppcn/ppcn.component';
+import { PpcnDownloadComponent } from './ppcn-download/ppcn-download.component';
+import { FileVersionComponent } from './file-version/file-version.component';
+import { ReviewsListComponent } from './ppcn-reviews/reviews-list/reviews-list.component';
+import { NewReviewComponent } from './ppcn-reviews/new-review/new-review.component';
+import { GenericDialogBoxComponent } from './generic-dialog-box/generic-dialog-box.component';
 @NgModule({
-	imports: [
-		CommonModule,
-		TranslateModule,
-		ReactiveFormsModule,
-		FormsModule,
-		SharedModule,
-		FlexLayoutModule,
-		MaterialModule,
-		PpcnRoutingModule
-	],
-	declarations: [
-		PpcnLevelComponent,
-		PpcnFlowComponent,
-		PpcnNewComponent,
-		PpcnDownloadComponent,
-		PpcnUploadComponent,
-		PpcnComponent,
-		PpcnListComponent,
-		FileVersionComponent,
-		NewReviewComponent,
-		ReviewsListComponent,
-		GasReportTableComponent,
-		GenericDialogBoxComponent
-	],
-	providers: [PpcnService, DatePipe]
+  declarations: [
+    PpcnLevelComponent,
+    PpcnFlowComponent,
+    PpcnNewComponent,
+    PpcnDownloadComponent,
+    PpcnUploadComponent,
+    PpcnComponent,
+    PpcnListComponent,
+    FileVersionComponent,
+    NewReviewComponent,
+    ReviewsListComponent,
+    GasReportTableComponent,
+    GenericDialogBoxComponent,
+  ],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    ReactiveFormsModule,
+    FormsModule,
+    SharedModule,
+    FlexLayoutModule,
+    MaterialModule,
+    PpcnRoutingModule,
+  ],
+  providers: [PpcnService, DatePipe],
 })
 export class PpcnModule {}

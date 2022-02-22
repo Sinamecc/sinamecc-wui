@@ -15,15 +15,18 @@
 // rgb(139,196,68)
 $app-primary: mat-palette($mat-blue, 500);
 
-$app-accent: mat-palette($mat-orange, 500);
+$app-accent: mat-palette($mat-orange, 500, a200, a700);
 
 // The warn palette is optional (defaults to red).
 $app-warn: mat-palette($mat-red);
 // Create the theme object (a Sass map containing all of the palettes).
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 
+// Material design icons font path
+$material-design-icons-font-directory-path: "~material-design-icons-iconfont/dist/fonts/";
+
 .login-box {
-  $alternate-primary: mat-palette($mat-light-blue, 900);
+  $alternate-primary: mat-palette($mat-light-blue);
   $alternate-accent: mat-palette($mat-yellow, 400);
 
   $login-box: mat-light-theme($alternate-primary, $alternate-accent);
@@ -32,13 +35,13 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 }
 
 // Toolbar
-mat-toolbar[_ngcontent-c6],
+.mat-toolbar[_ngcontent-c6],
 .mat-toolbar.mat-primary {
   background: #000;
   color: #fff;
-  font-weight: 800;
   width: 100%;
   font: 18px/28px "Open Sans", sans-serif;
+  font-weight: 800;
 }
 
 .mat-button,
@@ -56,7 +59,7 @@ mat-toolbar[_ngcontent-c6],
   border-bottom: 3px solid #ccc;
   position: relative;
   padding: 5px;
-  width: 70%;
+  width: 50%;
 }
 
 .text-color::after {
@@ -67,7 +70,7 @@ mat-toolbar[_ngcontent-c6],
   position: absolute;
   width: 50px;
   background: #2aa7d9;
-  font-size: 18pt;
+  font-size: 18px;
 }
 
 @media only screen and (max-width: 700px) {
@@ -107,7 +110,7 @@ mat-toolbar[_ngcontent-c6],
 .mat-card .mat-divider {
   position: relative;
   margin: 5px auto 0 auto;
-  font-size: 15pt;
+  font-size: 15px;
 }
 
 .mat-toolbar-row,
@@ -123,10 +126,9 @@ mat-toolbar[_ngcontent-c6],
 
 .mat-row {
   text-align: center;
-
 }
 
-.mat-table>.mat-header-row>.mat-header-cell {
+.mat-table > .mat-header-row > .mat-header-cell {
   color: #2aa7d9;
   font-weight: bold;
 }
@@ -138,10 +140,7 @@ mat-toolbar[_ngcontent-c6],
 
 .box-button {
   width: 90%;
-  margin-top: 5px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 10px;
+  margin: 5px auto 10px;
   text-align: right;
 }
 
@@ -151,14 +150,14 @@ mat-toolbar[_ngcontent-c6],
 
 .table-sinamecc {
   width: 90%;
-  margin: 0 auto 0 auto;
+  margin: 0 auto;
 }
 
 .brand {
   float: left;
 }
 
-.mat-card>:first-child {
+.mat-card > :first-child {
   margin-top: 0;
   text-align: center;
 }
@@ -166,7 +165,6 @@ mat-toolbar[_ngcontent-c6],
 .text-upload {
   position: relative;
   float: left;
-  margin-right: 10px;
   margin-right: 10px;
 }
 

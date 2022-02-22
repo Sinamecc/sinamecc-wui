@@ -8,11 +8,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, S3Service } from '@app/core';
+import { CoreModule } from '@core';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
-import { MockS3Service } from '@app/core/s3.service.mock';
-import { SharedModule } from '@app/shared';
+import { SharedModule, MockS3Service, S3Service } from '@shared';
 
 describe('KeyAspectsFormComponent', () => {
   let component: KeyAspectsFormComponent;
@@ -30,16 +29,18 @@ describe('KeyAspectsFormComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         CoreModule,
-        SharedModule
+        SharedModule,
       ],
-      declarations: [ KeyAspectsFormComponent ],
+      declarations: [KeyAspectsFormComponent],
       providers: [
         MockS3Service,
         { provide: S3Service, useClass: MockS3Service },
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService }
-      ]
-    })
-    .compileComponents();
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

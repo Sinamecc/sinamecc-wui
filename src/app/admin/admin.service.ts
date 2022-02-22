@@ -1,329 +1,224 @@
-import { Injectable } from "@angular/core";
-import { HttpHeaders, HttpClient, HttpParams } from "@angular/common/http";
-import { AuthenticationService } from "@app/core";
-import { map } from "rxjs/operators";
-import { Permissions } from "./permissions";
-import { Groups } from "./groups";
-import { Observable } from "rxjs/Observable";
-import { User } from "./users";
-import { Role } from "./roles";
-
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Groups } from '@app/admin/groups';
+import { Observable } from 'rxjs';
+import { User } from '@app/admin/users';
+import { Role } from '@app/admin/roles';
 export interface Response {
-	// Customize received credentials here
-	statusCode: number;
-	message: string;
-	id?: string;
-	body?: any;
+  // Customize received credentials here
+  statusCode: number;
+  message: string;
+  id?: string;
+  body?: any;
 }
 
 const routes = {
-	permissions: () => `/v1/user/permission/`,
-	groups: () => `/v1/user/group/`,
-	roles: () => `/v1/user/roles/`,
-	submitUser: () => `/v1/user/`,
-	submitPermissions: (userName: string) => `/v1/user/${userName}/permission/`,
-	submitGroups: (userName: string) => `/v1/user/${userName}/group/`,
-	users: () => `/v1/user/`,
-	user: (userName: string) => `/v1/user/${userName}`,
-	editUser: (userId: string) => `/v1/user/${userId}`,
-	submitImage: () => `/v1/user/1/profile_picture/`,
-	assignRoles: (userId: string) => `/v1/user/${userId}/roles/`
+  permissions: () => `/v1/user/permission/`,
+  groups: () => `/v1/user/group/`,
+  roles: () => `/v1/user/roles/`,
+  submitUser: () => `/v1/user/`,
+  submitPermissions: (userName: string) => `/v1/user/${userName}/permission/`,
+  submitGroups: (userName: string) => `/v1/user/${userName}/group/`,
+  users: () => `/v1/user/`,
+  user: (userName: string) => `/v1/user/${userName}`,
+  editUser: (userId: string) => `/v1/user/${userId}`,
+  submitImage: () => `/v1/user/1/profile_picture/`,
+  assignRoles: (userId: string) => `/v1/user/${userId}/roles/`,
 };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AdminService {
-	constructor(
-		private authenticationService: AuthenticationService,
-		private httpClient: HttpClient
-	) {}
+  constructor(private httpClient: HttpClient) {}
 
-	permissions() {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
-		const asyncResult = this.httpClient
-			.get<Permissions[]>(routes.permissions(), httpOptions)
-			.pipe(
-				map((body: any) => {
-					return body;
-				})
-			);
+  permissions() {
+    const asyncResult = this.httpClient.get<Permissions[]>(routes.permissions(), {}).pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
+    return asyncResult;
+  }
 
-		return asyncResult;
-	}
+  groups() {
+    const asyncResult = this.httpClient.get<Groups[]>(routes.groups(), {}).pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
+    return asyncResult;
+  }
 
-	groups() {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
-		const asyncResult = this.httpClient
-			.get<Groups[]>(routes.groups(), httpOptions)
-			.pipe(
-				map((body: any) => {
-					return body;
-				})
-			);
+  users(): Observable<User[]> {
+    return this.httpClient.get(routes.users(), {}).pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
+  }
 
-		return asyncResult;
-	}
+  roles(): Observable<Role[]> {
+    return this.httpClient.get(routes.roles(), {}).pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
+  }
 
-	users(): Observable<User[]> {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
-		return this.httpClient.get(routes.users(), httpOptions).pipe(
-			map((body: any) => {
-				return body;
-			})
-		);
-	}
+  user(username: string) {
+    return this.httpClient.get(routes.user(username), {}).pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
+  }
 
-	roles(): Observable<Role[]> {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
-		return this.httpClient.get(routes.roles(), httpOptions).pipe(
-			map((body: any) => {
-				return body;
-			})
-		);
-	}
+  editUser(userId: string, context: any): Observable<Response> {
+    const formData: FormData = new FormData();
+    formData.append('username', context.userName);
+    formData.append('email', context.email);
+    formData.append('first_name', context.name);
+    formData.append('last_name', context.lastName);
+    formData.append('status', 'created');
 
-	user(username: string) {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
-		return this.httpClient.get(routes.user(username), httpOptions).pipe(
-			map((body: any) => {
-				return body;
-			})
-		);
-	}
+    return this.httpClient.put(routes.editUser(userId), formData, {}).pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
+  }
 
-	editUser(userId: string, context: any): Observable<Response> {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
+  submitPermissions(context: any): Observable<Response> {
+    const form = {
+      permissions: context.permissions,
+    };
 
-		const formData: FormData = new FormData();
-		formData.append("username", context.userName);
-		formData.append("email", context.email);
-		formData.append("first_name", context.name);
-		formData.append("last_name", context.lastName);
-		formData.append("status", "created");
+    return this.httpClient.post(routes.submitPermissions(context.userName), form, {}).pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly',
+        };
+        return response;
+      })
+    );
+  }
 
-		return this.httpClient
-			.put(routes.editUser(userId), formData, httpOptions)
-			.pipe(
-				map((body: any) => {
-					return body;
-				})
-			);
-	}
+  deletePermissions(context: any, permissions: any): Observable<Response> {
+    const form = {
+      permissions: permissions,
+    };
 
-	submitPermissions(context: any): Observable<Response> {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
-		const form = {
-			permissions: context.permissions
-		};
+    return this.httpClient.put(routes.submitPermissions(context.userName), form, {}).pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly',
+        };
+        return response;
+      })
+    );
+  }
 
-		return this.httpClient
-			.post(routes.submitPermissions(context.userName), form, httpOptions)
-			.pipe(
-				map((body: any) => {
-					const response = {
-						statusCode: 200,
-						message: "Form submitted correctly"
-					};
-					return response;
-				})
-			);
-	}
+  submitDetail(context: any, type: string): Observable<Response> {
+    if (type === 'permissions') {
+      return this.submitPermissions(context);
+    }
 
-	deletePermissions(context: any, permissions: any): Observable<Response> {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
-		const form = {
-			permissions: permissions
-		};
+    return this.submitGroups(context);
+  }
 
-		return this.httpClient
-			.put(routes.submitPermissions(context.userName), form, httpOptions)
-			.pipe(
-				map((body: any) => {
-					const response = {
-						statusCode: 200,
-						message: "Form submitted correctly"
-					};
-					return response;
-				})
-			);
-	}
+  submitGroups(context: any): Observable<Response> {
+    const form = {
+      groups: context.groups,
+    };
+    return this.httpClient.post(routes.submitGroups(context.userName), form, {}).pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly',
+        };
+        return response;
+      })
+    );
+  }
 
-	submitDetail(context: any, type: string): Observable<Response> {
-		if (type === "permissions") {
-			return this.submitPermissions(context);
-		}
+  deleteGroups(context: any, groups: any): Observable<Response> {
+    const form = {
+      groups: groups,
+    };
+    return this.httpClient.put(routes.submitGroups(context.userName), form, {}).pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly',
+        };
+        return response;
+      })
+    );
+  }
 
-		return this.submitGroups(context);
-	}
+  assignRoles(context: any) {
+    const userId = context.userId;
+    const formData: FormData = new FormData();
+    formData.append('roles', JSON.stringify(context.roles));
+    return this.httpClient.post(routes.assignRoles(userId), formData, {});
+  }
 
-	submitGroups(context: any): Observable<Response> {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
-		const form = {
-			groups: context.groups
-		};
-		return this.httpClient
-			.post(routes.submitGroups(context.userName), form, httpOptions)
-			.pipe(
-				map((body: any) => {
-					const response = {
-						statusCode: 200,
-						message: "Form submitted correctly"
-					};
-					return response;
-				})
-			);
-	}
+  submitCreatePermissions(context: any): Observable<Response> {
+    const formData: FormData = new FormData();
+    formData.append('name', context.name);
+    formData.append('codename', context.codename);
+    formData.append('content_type', context.content_type);
+    formData.append('status', 'created');
 
-	deleteGroups(context: any, groups: any): Observable<Response> {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
-		const form = {
-			groups: groups
-		};
+    return this.httpClient.post(routes.permissions(), formData, {}).pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly',
+        };
+        return response;
+      })
+    );
+  }
 
-		return this.httpClient
-			.put(routes.submitGroups(context.userName), form, httpOptions)
-			.pipe(
-				map((body: any) => {
-					const response = {
-						statusCode: 200,
-						message: "Form submitted correctly"
-					};
-					return response;
-				})
-			);
-	}
+  createUserImage(context: any) {
+    const formData: FormData = new FormData();
+    formData.append('user', context.user);
+    formData.append('image', context.image);
 
-	submitCreatePermissions(context: any): Observable<Response> {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
+    return this.httpClient.post(routes.submitImage(), formData, {}).pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          message: 'Image submitted correctly',
+        };
+        return response;
+      })
+    );
+  }
 
-		const formData: FormData = new FormData();
-		formData.append("name", context.name);
-		formData.append("codename", context.codename);
-		formData.append("content_type", context.content_type);
-		formData.append("status", "created");
+  submitUser(context: any): Observable<Response> {
+    const formData: FormData = new FormData();
+    formData.append('username', context.userName);
+    formData.append('password', context.password);
+    formData.append('email', context.email);
+    formData.append('first_name', context.name);
+    formData.append('last_name', context.lastName);
+    formData.append('status', 'created');
 
-		return this.httpClient
-			.post(routes.permissions(), formData, httpOptions)
-			.pipe(
-				map((body: any) => {
-					const response = {
-						statusCode: 200,
-						message: "Form submitted correctly"
-					};
-					return response;
-				})
-			);
-	}
-
-	assignRoles(context: any) {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
-		const userId = context.userId;
-		const formData: FormData = new FormData();
-		formData.append("roles", JSON.stringify(context.roles));
-		return this.httpClient.post(
-			routes.assignRoles(userId),
-			formData,
-			httpOptions
-		);
-	}
-
-	createUserImage(context: any) {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
-
-		const formData: FormData = new FormData();
-		formData.append("user", context.user);
-		formData.append("image", context.image);
-
-		return this.httpClient
-			.post(routes.submitImage(), formData, httpOptions)
-			.pipe(
-				map((body: any) => {
-					const response = {
-						statusCode: 200,
-						message: "Image submitted correctly"
-					};
-					return response;
-				})
-			);
-	}
-
-	submitUser(context: any): Observable<Response> {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				Authorization: this.authenticationService.credentials.token
-			})
-		};
-
-		const formData: FormData = new FormData();
-		formData.append("username", context.userName);
-		formData.append("password", context.password);
-		formData.append("email", context.email);
-		formData.append("first_name", context.name);
-		formData.append("last_name", context.lastName);
-		formData.append("status", "created");
-
-		return this.httpClient
-			.post(routes.submitUser(), formData, httpOptions)
-			.pipe(
-				map((body: any) => {
-					const response = {
-						statusCode: 200,
-						message: "Form submitted correctly",
-						body: body
-					};
-					return response;
-				})
-			);
-	}
+    return this.httpClient.post(routes.submitUser(), formData, {}).pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly',
+          body: body,
+        };
+        return response;
+      })
+    );
+  }
 }

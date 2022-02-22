@@ -1,3 +1,3 @@
 export interface ReviewStatus {
-    status: string;
+  status: string;
 }

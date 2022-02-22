@@ -1,38 +1,33 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
 
 import { environment } from '@env/environment';
-import { Logger, I18nService, AuthenticationService } from '@app/core';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { Logger } from '@core';
+import { I18nService } from '@app/i18n';
 import { DataSource } from '@angular/cdk/collections';
-import { Observable } from 'rxjs/Observable';
-
+import { Observable } from 'rxjs';
+import { ReportService, Report, Version } from '@app/report/report.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 const log = new Logger('Report');
 
-
-import { ReportService, Report, Version } from '@app/report/report.service';
-
 export class ReportVersionsDataSource extends DataSource<any> {
   id: number;
-  constructor(private reportService: ReportService,
-    private current_id: number) {
+  constructor(private reportService: ReportService, private current_id: number) {
     super();
     this.id = current_id;
   }
   connect(): Observable<Version[]> {
     return this.reportService.versions(this.id);
   }
-  disconnect() { }
+  disconnect() {}
 }
+
 @Component({
   selector: 'app-report-versions',
   templateUrl: './report-versions.component.html',
-  styleUrls: ['./report-versions.component.scss']
+  styleUrls: ['./report-versions.component.scss'],
 })
 export class ReportVersionsComponent implements OnInit {
-
   version: string = environment.version;
   serverUrl: string = environment.serverUrl;
   report: number;
@@ -43,19 +38,17 @@ export class ReportVersionsComponent implements OnInit {
   displayedColumns = ['version', 'file'];
   reportFileName: Observable<string>;
 
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
-  // @ViewChild(MatSort) sort: MatSort;
-
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private i18nService: I18nService,
     private reportService: ReportService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute
+  ) {
     this.id = +this.route.snapshot.paramMap.get('id');
     this.reportFileName = this.reportService.reportVersionsName(this.id);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit(): void {}
 
   async download(file: string) {
     this.isLoading = true;
@@ -71,6 +64,4 @@ export class ReportVersionsComponent implements OnInit {
     a.remove(); // remove the element
     this.isLoading = false;
   }
-
-
 }

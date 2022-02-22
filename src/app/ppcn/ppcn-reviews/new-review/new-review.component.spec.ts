@@ -8,16 +8,17 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, I18nService } from '@app/core';
-import { UpdateStatusComponent } from '@app/shared/update-status/update-status.component';
-import { LoaderComponent } from '@app/shared';
-import { MockS3Service } from '@app/core/s3.service.mock';
+import { CoreModule } from '@core';
+import { UpdateStatusComponent } from '@app/ppcn/update-status/update-status.component';
+import { LoaderComponent } from '@shared';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 import { MockPpcnService } from '@app/ppcn/ppcn.service.mock';
-import { MockI18nService } from '@app/core/i18n.service.mock';
+import { MockI18nService } from '@app/i18n/i18n.service.mock';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { UpdateStatusService } from '@app/shared/update-status/update-status.service';
-import { MockUpdateStatusService } from '@app/shared/update-status/update-status.service.mock';
+import { UpdateStatusService } from '@app/ppcn/update-status/update-status.service';
+import { MockUpdateStatusService } from '@app/ppcn/update-status/update-status.service.mock';
+import { I18nService } from '@app/i18n';
 
 describe('NewReviewComponent', () => {
   let component: NewReviewComponent;
@@ -34,25 +35,24 @@ describe('NewReviewComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
       ],
-      declarations: [ NewReviewComponent, UpdateStatusComponent, LoaderComponent ],
+      declarations: [NewReviewComponent, UpdateStatusComponent, LoaderComponent],
       providers: [
         MockS3Service,
         { provide: PpcnService, useClass: MockPpcnService },
-        { provide: I18nService, useClass: MockI18nService},
+        { provide: I18nService, useClass: MockI18nService },
         { provide: UpdateStatusService, useClass: MockUpdateStatusService },
         {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
-              paramMap: convertToParamMap({id: '1'})
-            }
-          }
-        }
-      ]
-    })
-    .compileComponents();
+              paramMap: convertToParamMap({ id: '1' }),
+            },
+          },
+        },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

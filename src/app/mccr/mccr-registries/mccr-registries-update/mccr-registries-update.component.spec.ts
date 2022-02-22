@@ -7,20 +7,19 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoaderComponent } from '@app/shared/loader/loader.component';
+import { LoaderComponent } from '@shared/loader/loader.component';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
-import { MockS3Service } from '@app/core/s3.service.mock';
-import { I18nService, AuthenticationService, MockAuthenticationService } from '@app/core';
+import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { MccrRegistriesService } from '../mccr-registries.service';
-import { UpdateStatusService } from '@app/shared/update-status/update-status.service';
-import { MockUpdateStatusService } from '@app/shared/update-status/update-status.service.mock';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { MockI18nService } from '@app/core/i18n.service.mock';
-import { MockTranslateService } from '@app/core/translate.service.mock';
+import { MockI18nService } from '@app/i18n/i18n.service.mock';
+import { MockTranslateService } from '@app/i18n/translate.service.mock';
 import { MccrRegistriesUpdateComponent } from './mccr-registries-update.component';
 import { MockMccrRegistriesService } from '@app/mccr-registries/mccr-registries.service.mock';
-import { SharedModule } from '@app/shared';
+import { CredentialsService } from '@app/auth';
+import { MockCredentialsService } from '@app/auth/credentials.service.mock';
+import { I18nService } from '@app/i18n';
 
 describe('MccrRegistriesUpdateComponent', () => {
   let component: MccrRegistriesUpdateComponent;
@@ -35,27 +34,31 @@ describe('MccrRegistriesUpdateComponent', () => {
         TranslateModule.forRoot(),
         RouterTestingModule,
         HttpClientTestingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
       ],
-      declarations: [ MccrRegistriesUpdateComponent, LoaderComponent ],
+      declarations: [MccrRegistriesUpdateComponent, LoaderComponent],
       providers: [
-        MockMccrRegistriesService, MockMitigationActionsService, MockS3Service, MockTranslateService,
-        { provide: AuthenticationService, useClass: MockAuthenticationService },
+        MockMccrRegistriesService,
+        MockMitigationActionsService,
+        MockS3Service,
+        MockTranslateService,
+        { provide: CredentialsService, useClass: MockCredentialsService },
         { provide: MccrRegistriesService, useClass: MockMccrRegistriesService },
-        { provide: UpdateStatusService, useClass: MockUpdateStatusService },
-        { provide: MitigationActionsService, useClass: MockMitigationActionsService},
-        { provide: I18nService, useClass: MockI18nService},
+        {
+          provide: MitigationActionsService,
+          useClass: MockMitigationActionsService,
+        },
+        { provide: I18nService, useClass: MockI18nService },
         {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
-              paramMap: convertToParamMap({id: '1'})
-            }
-          }
-        }
-      ]
-    })
-    .compileComponents();
+              paramMap: convertToParamMap({ id: '1' }),
+            },
+          },
+        },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
