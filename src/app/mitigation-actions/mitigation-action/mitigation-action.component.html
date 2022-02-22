@@ -97,23 +97,34 @@
         <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
           <label
             ><strong translate>mitigationAction.relationshipNDC</strong>
-            {{ mitigationAction?.CategorizationNationalInstruments }}</label
+            {{ (mitigationAction?.categorization?.sub_topics)[0].name }}</label
           >
+          <label><strong translate>mitigationAction.relationshipNDC</strong></label>
+          <label *ngFor="let element of mitigationAction?.categorization?.action_goal">
+            {{ element.goal }}
+            <br />
+          </label>
+
+          <label><strong translate>mitigationAction.relationshipDecarbonizationPlan</strong> </label>
+          <label *ngFor="let element of mitigationAction?.categorization?.transformational_vision">
+            {{ element.description }}
+            <br />
+          </label>
+          <label><strong translate>mitigationAction.impactCategory</strong> </label>
+
+          <label *ngFor="let element of mitigationAction?.categorization?.impact_categories">
+            {{ element.name }}
+            <br />
+          </label>
+
           <label
-            ><strong translate>mitigationAction.relationshipDecarbonizationPlan</strong>
-            {{ mitigationAction?.CategorizationNationalInstruments }}</label
-          >
-          <label
-            ><strong translate>mitigationAction.relationshipDecarbonizationPlan</strong>
-            {{ mitigationAction?.CategorizationNationalInstruments }}</label
-          >
-          <label
-            ><strong translate>mitigationAction.impactCategory</strong>
-            {{ mitigationAction?.CategorizationNationalInstruments }}</label
-          >
-          <label
-            ><strong translate>mitigationAction.relationshipNDC</strong>
-            {{ mitigationAction?.CategorizationNationalInstruments }}
+            ><strong translate>¿La acción de mitigación que está registrando forma parte de otra?</strong>
+            <label translate> {{ mitigationAction?.categorization?.is_part_to_another_mitigation_action }}</label>
+          </label>
+
+          <label *ngIf="mitigationAction?.categorization?.is_part_to_another_mitigation_action"
+            ><strong translate>mitigationAction.descriptionRelationshipMitigationActionOthers</strong>
+            <label> {{ mitigationAction?.categorization?.relation_description }}</label>
           </label>
         </div>
       </div>
