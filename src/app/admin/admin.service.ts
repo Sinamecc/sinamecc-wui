@@ -221,4 +221,16 @@ export class AdminService {
       })
     );
   }
+
+  removeUser(id: string) {
+    return this.httpClient.delete(routes.editUser(id), {}).pipe(
+      map((body: any) => {
+        const response = {
+          statusCode: 200,
+          id: body.id,
+        };
+        return response;
+      })
+    );
+  }
 }

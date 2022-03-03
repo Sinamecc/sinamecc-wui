@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 export class UsersDataSource extends DataSource<any> {
   users: User[];
@@ -43,13 +45,18 @@ export class AdminUsersComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private adminService: AdminService, public dialog: MatDialog) {}
+  constructor(
+    private adminService: AdminService,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit() {
     this.loadUsers();
   }
 
-  openDeleteConfirmationDialog() {
+  openDeleteConfirmationDialog(id: string) {
     const data = {
       title: 'Delete User',
       question: 'general.youSure',
@@ -63,6 +70,7 @@ export class AdminUsersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        this.removeUser(id);
       }
     });
   }
@@ -90,5 +98,25 @@ export class AdminUsersComponent implements OnInit {
       this.dataSource = new MatTableDataSource<User>(usersList);
       this.dataSource.paginator = this.paginator;
     });
+  }
+
+  openSnackBar(durationSeconds: number, message: string) {
+    this.translateService.get(message).subscribe((res: string) => {
+      this.snackBar.open(res, null, {
+        duration: 1000 * durationSeconds,
+      });
+    });
+  }
+
+  removeUser(id: string) {
+    this.adminService.removeUser(id).subscribe(
+      (response) => {
+        this.openSnackBar(3, 'admin.createUserSuccess');
+        this.loadUsers();
+      },
+      (error) => {
+        this.openSnackBar(3, 'admin.createUserError');
+      }
+    );
   }
 }
