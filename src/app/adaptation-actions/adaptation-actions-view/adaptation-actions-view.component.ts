@@ -4,7 +4,11 @@ import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import {
   adaptationActionClimateThreaMap,
+  adaptationActionFinanceStatusMap,
   adaptationsActionsTypeMap,
+  classifiersSINAMECCMap,
+  financeInstrumentMap,
+  indicatorsTypeOfDataMap,
   provinciaMap,
   reportingEntityTypeMap,
 } from '../interfaces/catalogs';
@@ -21,20 +25,23 @@ export class AdaptationActionsViewComponent implements OnInit {
   adaptationsActionsType = adaptationsActionsTypeMap;
   provinciaType = provinciaMap;
   adaptationActionClimateThreaType = adaptationActionClimateThreaMap;
+  adaptationActionFinanceStatusType = adaptationActionFinanceStatusMap;
+  financeInstrumentType = financeInstrumentMap;
+  indicatorsTypeOfDataType = indicatorsTypeOfDataMap;
+  classifiersSINAMECCType = classifiersSINAMECCMap;
 
   constructor(private route: ActivatedRoute, private service: AdaptationActionService) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.loadAdaptationAction();
-
-    this.adaptationAction.report_organization.report_organization_type;
   }
 
   loadAdaptationAction() {
     this.service.loadAdaptationActions().subscribe(
       (response) => {
         this.adaptationAction = response.find((element) => element.id == this.id);
+        console.log(this.adaptationAction);
       },
       (error) => {
         this.adaptationAction = {};

@@ -249,10 +249,204 @@
             <label class="mat-h1">Información de registro</label>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start"></div>
+          <div fxLayout="column" fxLayoutAlign="space-around start">
+            <div fxLayout="row">
+              <h3 class="mat-h3">Estado del financimiento</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{
+                  adaptationAction?.finance?.status
+                    ? adaptationActionFinanceStatusType[adaptationAction?.finance?.status]
+                    : ''
+                }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">¿Qué gestiones está realizando para acceder al financiamiento?</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.finance?.administration }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Detalle el instrumento de financiamiento</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <br />
+              <div fxLayout="column" *ngFor="let element of adaptationAction?.finance?.finance_instrument">
+                <h3 class="mat-h3">
+                  {{ financeInstrumentType[element] }}
+                </h3>
+                <br />
+              </div>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Presupuesto</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.finance?.budget }}
+              </h3>
+            </div>
+          </div>
+
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+            <label class="mat-h1">Acciones financiadas con fuentes de cooperación internacional</label>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="space-around start">
+            <div fxLayout="row">
+              <h3 class="mat-h3">
+                ¿Se encuentra la acción en el registro de proyectos de cooperación internacional no reembolsable de
+                Mideplan?
+              </h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.finance?.mideplan }}
+              </h3>
+            </div>
+          </div>
         </div>
       </mat-tab>
-      <mat-tab label="Registro de indicadores"> Content 1 </mat-tab>
+      <mat-tab label="Registro de indicadores">
+        <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+            <label class="mat-h1">Registro de indicadores</label>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="space-around start">
+            <div fxLayout="row">
+              <h3 class="mat-h3">Nombre del indicador</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.indicator?.name }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Descripción del indicador</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.indicator?.description }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Unidad de medida</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.indicator?.unit }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Metodología de cálculo</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.indicator?.methodological_detail }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Tipo de entidad que reporta</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.indicator?.reporting_periodicity }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Fecha de inicio de la medición</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.indicator?.available_time_start_date }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Cobertura geográfica</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.indicator?.geographic_coverage }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Desagregación</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.indicator?.disaggregation }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Limitaciones</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.indicator?.limitation }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">¿Cómo se asegura la sostenibilidad en la medición del indicador?</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.indicator?.additional_information }}
+              </h3>
+            </div>
+            <div fxLayout="row">
+              <h3 class="mat-h3">Observaciones y comentarios</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.indicator?.comments }}
+              </h3>
+            </div>
+
+            <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+              <label class="mat-h1"> Categorización temática</label>
+            </div>
+
+            <div fxLayout="column" fxLayoutAlign="space-around start">
+              <div fxLayout="row">
+                <h3 class="mat-h3">Tipo de dato</h3>
+                <h3 class="mat-h3 txt-separator">:</h3>
+                <h3 class="mat-h3">
+                  {{
+                    adaptationAction?.indicator?.type_of_data
+                      ? indicatorsTypeOfDataType[adaptationAction?.indicator?.type_of_data]
+                      : ''
+                  }}
+                </h3>
+              </div>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Tipo de dato (otro)</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.indicator?.other_type_of_data }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Clasificadores del SINAMECC</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 *ngFor="let element of adaptationAction?.indicator?.classifier" class="mat-h3">
+                {{ classifiersSINAMECCType[element] }} ,
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3">Clasificadores del SINAMECC (otro)</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ adaptationAction?.indicator?.other_classifier }}
+              </h3>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
       <mat-tab label="Monitoreo y seguimiento de acciones climáticas">
         Content 2
       </mat-tab>

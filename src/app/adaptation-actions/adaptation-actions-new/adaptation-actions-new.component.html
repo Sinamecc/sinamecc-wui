@@ -11,7 +11,7 @@
     </h3>
 
     <form [formGroup]="mainGroup">
-      <mat-horizontal-stepper formArrayName="formArray" linear #stepper>
+      <mat-horizontal-stepper formArrayName="formArray" #stepper>
         <mat-step [stepControl]="formArray?.get([0])">
           <ng-template matStepLabel>
             <span translate>Registro general</span>

@@ -62,3 +62,30 @@ export const adaptationActionClimateThreaMap = {
   5: 'Sequía',
   6: 'Otro',
 };
+
+export const adaptationActionFinanceStatusMap = {
+  1: 'Asegurado',
+  2: 'Por obtener',
+};
+
+export const financeInstrumentMap = {
+  1: 'Fondos',
+  2: 'Préstamos tradicionales',
+  3: 'Préstamos concesionales',
+  4: 'Subsidios',
+  5: 'Garantías',
+};
+
+export const indicatorsTypeOfDataMap = {
+  0: 'Gestión',
+  1: 'Resultado',
+  2: 'Otro',
+};
+
+export const classifiersSINAMECCMap = {
+  1: 'Acción Climática',
+  2: 'Modelación',
+  3: 'INGEI',
+  4: 'Reportes',
+  5: 'Otro',
+};
