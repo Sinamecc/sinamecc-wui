@@ -97,7 +97,7 @@
                 </mat-error>
               </mat-form-field>
               <br />
-              <div formGroupName="roles">
+              <div *ngIf="roles" formGroupName="roles">
                 <h3><span translate>admin.availableRoles</span></h3>
                 <div *ngFor="let role of roles; let i = index">
                   <mat-checkbox formControlName="{{ role.role }}">{{ role.role_name }}</mat-checkbox>

@@ -86,7 +86,7 @@ export class AdminNewComponent implements OnInit {
         const rolesList = roles;
         this.roles = rolesList;
         this.createForm(rolesList);
-        this.setData();
+        this.setData(rolesList);
       },
       (err) => {
         this.translateService.get('Error loading form information').subscribe((res: string) => {
@@ -96,13 +96,13 @@ export class AdminNewComponent implements OnInit {
     );
   }
 
-  setData() {
+  setData(rolesList: Array<Role>) {
     if (this.edit) {
       this.name = this.editData.first_name;
       this.lastName = this.editData.last_name;
       this.userName = this.editData.username;
       this.email = this.editData.email;
-      this.createFormEdit();
+      this.createFormEdit(rolesList);
     }
   }
 
@@ -396,13 +396,19 @@ export class AdminNewComponent implements OnInit {
     });
   }
 
-  private createFormEdit() {
+  private createFormEdit(roles: Array<Role>) {
+    const rolesFormObj = {};
+    roles.map((role) => {
+      rolesFormObj[role.role] = new FormControl('');
+    });
+
     this.createUserForm = this.formBuilder.group({
       name: ['', Validators.required],
       lastName: ['', Validators.required],
       userName: ['', Validators.required],
       email: ['', Validators.required],
       password: [''],
+      roles: new FormGroup(rolesFormObj),
       // permissions: ['', Validators.required],
       // groups: ['', Validators.required],
     });

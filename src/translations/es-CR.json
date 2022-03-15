@@ -438,6 +438,8 @@
   },
 
   "admin": {
+    "createUserError": "El usuario no se pudo borrar, intente de nuevo más tarde",
+    "createUserSuccess": "Usuario eliminado exitosamente",
     "createUser": "Crear un nuevo Usuario",
     "lastName": "Apellido",
     "userName": "Nombre de Usuario",

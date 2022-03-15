@@ -439,6 +439,8 @@
   },
 
   "admin": {
+    "createUserError": "User could not be removed, please try again later",
+    "createUserSuccess": "User removed successfully",
     "createUser": "Create a new User",
     "lastName": "Last Name",
     "userName": "User Name",

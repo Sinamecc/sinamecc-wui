@@ -32,7 +32,7 @@
             <button mat-icon-button color="primary" (click)="openUserDetail(element)">
               <mat-icon color="white">visibility</mat-icon>
             </button>
-            <button disabled mat-icon-button color="warn" (click)="openDeleteConfirmationDialog()">
+            <button mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element.id)">
               <mat-icon color="white">delete</mat-icon>
             </button>
           </mat-cell>
