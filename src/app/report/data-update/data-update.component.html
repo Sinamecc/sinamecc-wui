@@ -1,0 +1,80 @@
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="reportForm">
+        <div fxLayout="column">
+          <div class="report-error" [hidden]="!error || isLoading" translate>
+            <span translate>errorLabel.errorSubmittingForm</span>
+          </div>
+          <mat-vertical-stepper formArrayName="formArray" #stepper>
+            <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+              <ng-template matStepLabel>
+                <span translate>Actualización de datos</span>
+              </ng-template>
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Fecha de la última actualización</mat-label>
+                <input
+                  matInput
+                  [placeholder]="'Choose a date' | translate"
+                  [matDatepicker]="timeSeriesAvailableCtrl"
+                  formControlName="lastUpdateCtrl"
+                />
+
+                <mat-datepicker-toggle matSuffix [for]="timeSeriesAvailableCtrl"></mat-datepicker-toggle>
+                <mat-datepicker #timeSeriesAvailableCtrl startView="year"></mat-datepicker>
+
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Cambios en la última actualización </mat-label>
+                <textarea
+                  matInput
+                  matTextareaAutosize
+                  matAutosizeMinRows="2"
+                  matAutosizeMaxRows="20"
+                  formControlName="lastUpdateChangeCtrl"
+                ></textarea>
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Descripción de la razón de los cambios </mat-label>
+                <textarea
+                  matInput
+                  matTextareaAutosize
+                  matAutosizeMinRows="2"
+                  matAutosizeMaxRows="20"
+                  formControlName="descriptionCtrl"
+                ></textarea>
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Nombre del registro </mat-label>
+                <input matInput formControlName="authorNameCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+
+              <div fxLayout="row" fxLayoutAlign="end center">
+                <div>
+                  <app-generic-button-secondary
+                    type="button"
+                    (click)="stepper.previous()"
+                    name="general.back"
+                  ></app-generic-button-secondary>
+                </div>
+                <div>
+                  <app-generic-button [disabled]="reportForm.invalid" name="reportData.submitReport">
+                  </app-generic-button>
+                  <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
+                </div>
+              </div>
+            </mat-step>
+          </mat-vertical-stepper>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

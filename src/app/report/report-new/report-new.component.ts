@@ -86,13 +86,6 @@ export class ReportNewComponent implements OnInit {
 
   private buildForm() {
     const payload: ReportDataPayload = {
-      name: this.reportForm.value['formArray'][0].name,
-      description: this.reportForm.value['formArray'][0].dataReportsAnalysisCtrl,
-      source: this.reportForm.value['formArray'][0].informationSourcesCtrl,
-      //source_file: this.reportForm.value['formArray'][0].file,
-      data_type: this.reportForm.value['formArray'][0].dataTypeCtrl,
-      other_data_type: this.reportForm.value['formArray'][0].thematicCategorizationCtrl,
-      classifier: this.reportForm.value['formArray'][0].sinameccClassifiersCtrl,
       other_classifier: '',
       report_information: this.reportForm.value['formArray'][1].whatInformationReportedCtrl,
       have_line_base: this.reportForm.value['formArray'][1].isBaselineCtrl,
@@ -115,14 +108,24 @@ export class ReportNewComponent implements OnInit {
       },
     };
 
-    console.log(payload, 'payload');
-
     return payload;
   }
 
   private createForm() {
     this.reportForm = this.formBuilder.group({
       formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          whatInformationReportedCtrl: ['', Validators.required],
+          isBaselineCtrl: [false, Validators.compose([Validators.maxLength(500)])],
+          isBaselineValueCtrlFile: [''], // new Field
+          isBaselineValueCtrlValue: [''], // new Field
+          qualityPreItemsCtrl: ['', Validators.required],
+          qualityPreItemsValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
+          agreementTransferSINAMECCCtrl: ['', Validators.required],
+          agreementTransferSINAMECCValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
+          reportDataCtrlFile: [''], // new Field
+          reportDataCtrlValue: [''], // new Field
+        }),
         this.formBuilder.group({
           name: ['', Validators.required],
           file: [{ value: undefined, disabled: false }, []],
@@ -131,21 +134,6 @@ export class ReportNewComponent implements OnInit {
           thematicCategorizationCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(500)])],
           dataTypeCtrl: ['', Validators.required],
           sinameccClassifiersCtrl: ['', Validators.required],
-        }),
-        this.formBuilder.group({
-          whatInformationReportedCtrl: ['', Validators.required],
-          isBaselineCtrl: [false, Validators.compose([Validators.maxLength(500)])],
-          qualityPreItemsCtrl: ['', Validators.required],
-          qualityPreItemsValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
-          agreementTransferSINAMECCCtrl: ['', Validators.required],
-          agreementTransferSINAMECCValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
-        }),
-        this.formBuilder.group({
-          nameCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(40)])],
-          positionCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(40)])],
-          emailCtrl: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(40)])],
-          phoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-          logsCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(500)])],
         }),
       ]),
     });

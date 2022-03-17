@@ -1,11 +1,4 @@
 export interface ReportDataPayload {
-  name: string;
-  description: string;
-  source: string;
-  source_file?: any;
-  data_type: string;
-  other_data_type: string;
-  classifier: string;
   other_classifier: string;
   report_information: string;
   have_line_base: boolean;
@@ -13,8 +6,8 @@ export interface ReportDataPayload {
   quality_element_description: string;
   transfer_data_with_sinamecc: string;
   transfer_data_with_sinamecc_description: string;
-  contact: ReportDataContact;
-  report_data_change_log: ReportDataChangeLog;
+  contact?: ReportDataContact;
+  report_data_change_log?: ReportDataChangeLog;
 }
 
 export interface ReportDataChangeLog {
