@@ -47,6 +47,7 @@ export class GeneralRegisterComponent implements OnInit {
     return this.formBuilder.array([
       this.formBuilder.group({
         reportingEntityTypeCtrl: ['', Validators.required],
+        reportingEntityTypeOtherCtrl: [''],
         entityResponsibleReportingCtrl: ['', [Validators.required, Validators.maxLength(250)]],
         legalIdentificationCtrl: ['', [Validators.required, Validators.maxLength(10)]],
         reportPreparationDateCtrl: ['', Validators.required],
@@ -81,6 +82,7 @@ export class GeneralRegisterComponent implements OnInit {
       elaboration_date: this.datePipe.transform(this.form.value.formArray[0].reportPreparationDateCtrl, 'yyyy-MM-dd'),
       entity_address: this.form.value.formArray[0].entityAddress,
       report_organization_type: this.form.value.formArray[0].reportingEntityTypeCtrl,
+      // reportingEntityTypeOtherCtrl missing BE
     };
     return context;
   }

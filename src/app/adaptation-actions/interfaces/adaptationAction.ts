@@ -82,7 +82,6 @@ export interface Indicator {
   unit: string;
   methodological_detail: string;
   reporting_periodicity: string;
-  available_time_start_date: string;
   geographic_coverage: string;
   other_geographic_coverage: string;
   disaggregation: string;
@@ -114,7 +113,6 @@ export interface ActionImpact {
   gender_equality_description: string;
   unwanted_action: string;
   unwanted_action_description: string;
-  general_impact: number;
   temporality_impact: number[];
   ods: number[];
 }

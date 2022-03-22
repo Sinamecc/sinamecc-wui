@@ -3,73 +3,80 @@
     <mat-vertical-stepper #stepper linear formArrayName="formArray">
       <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
         <ng-template matStepLabel>
-          <span translate>Información de registro</span>
+          <span translate>adaptationAction.form2.registerInfo</span>
+          <mat-icon
+            (click)="goToLink('https://drive.google.com/file/d/1m74UIubAhJdOlfRSSPNgv-j86rQY1rUk/view?usp=sharing')"
+            [matTooltip]="'adaptationAction.form2.registerInfoTooltip' | translate"
+            >info</mat-icon
+          >
         </ng-template>
 
-        <span translate>Tipo de acción de adaptación</span>
+        <label translate>adaptationAction.form2.AAType</label>
         <mat-radio-group
           #reportingEntityTypeControl="matRadioGroup"
           formControlName="adaptationActionTypeCtrl"
           class="custom-radio-group"
         >
-          <mat-radio-button [matTooltip]="typesTooltipTxt[0]">
+          <mat-radio-button [matTooltip]="typesTooltipTxt[0]" value="1">
             <label translate>Tipo A - Instrumentos de políticas y planes </label>
           </mat-radio-button>
           <mat-radio-button [matTooltip]="typesTooltipTxt[1]" value="2">
-            <label translate>Tipo B - Proyecto y programas</label>
+            <label translate>Tipo B - Proyectos y programas</label>
           </mat-radio-button>
           <mat-radio-button [matTooltip]="typesTooltipTxt[2]" value="3">
-            <label translate>Tipo C - Actividad</label>
+            <label translate>Tipo C - Actividades</label>
           </mat-radio-button>
         </mat-radio-group>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Nombre de la acción de adaptación</mat-label>
+          <mat-label translate>adaptationAction.form2.AAName</mat-label>
           <input type="text" matInput formControlName="adaptationActionNameCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Objetivo de la acción de adaptación</mat-label>
+          <mat-label translate>adaptationAction.form2.AAObjective</mat-label>
           <input type="text" matInput formControlName="adaptationActionTargetCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Descripción de la acción de adaptación</mat-label>
+          <mat-label translate>adaptationAction.form2.AADescription</mat-label>
           <input type="text" matInput formControlName="adaptationActionDescriptionCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Meta de la acción</mat-label>
+          <mat-label translate>adaptationAction.form2.AAGoal</mat-label>
           <input type="text" matInput formControlName="adaptationActionGoalCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn" appearance="fill">
-          <mat-label translate
-            >Identificación preliminar de los Objetivos de Desarrollo Sostenible (ODS) impactados</mat-label
-          >
+          <mat-label translate>adaptationAction.form2.AAODS</mat-label>
           <mat-select formControlName="adaptationActionODSCtrl" multiple>
             <mat-option *ngFor="let element of ods" [value]="element.code">
-              <label translate>{{ element.name }}</label>
+              <label translate>{{ element.code }} - {{ element.name }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-          <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+          <app-generic-button
+            [disabled]="formArray?.get([0]).invalid"
+            (click)="stepper.next()"
+            name="general.next"
+          ></app-generic-button>
         </div>
       </mat-step>
 
       <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
         <ng-template matStepLabel>
-          <span translate>Ubicación geográfica</span>
+          <span translate>general.GeographicLocation</span>
         </ng-template>
 
         <mat-form-field class="field-ppcn" appearance="fill">
-          <mat-label translate>Provincia donde se ejecuta la acción</mat-label>
+          <mat-label translate>adaptationAction.form2.AAProvince</mat-label>
           <mat-select formControlName="adaptationActionProvinceCtrl" multiple>
             <mat-option [value]="1">
               <label translate>Alajuela</label>
@@ -102,7 +109,7 @@
         </mat-form-field>
 
         <mat-form-field class="field-ppcn" appearance="fill">
-          <mat-label translate>Cantón donde se ejecuta la acción</mat-label>
+          <mat-label translate>adaptationAction.form2.AACanton</mat-label>
           <mat-select formControlName="adaptationActionCantonCtrl" multiple>
             <mat-option [value]="1">
               <label translate>Option 1</label>
@@ -119,7 +126,7 @@
         </mat-form-field>
 
         <mat-form-field class="field-ppcn" appearance="fill">
-          <mat-label translate>Distrito donde se ejecuta la acción</mat-label>
+          <mat-label translate>adaptationAction.form2.AADistrict</mat-label>
           <mat-select formControlName="adaptationActionDistritCtrl" multiple>
             <mat-option [value]="1">
               <label translate>Option 1</label>
@@ -136,31 +143,47 @@
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Descripción narrativa localización donde se desarrolla la acción</mat-label>
+          <mat-label translate>adaptationAction.form2.narrativeActionPlace</mat-label>
           <input type="text" matInput formControlName="adaptationActionDescriptionNarrativeCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="field-ppcn">
-          <mat-label translate>Localización geográfica de la acción</mat-label>
-          <input type="text" matInput formControlName="adaptationActionLocationCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
-        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign=" center">
+          <mat-form-field class="field-ppcn">
+            <mat-label translate>adaptationAction.form2.attachGeographicalLocation</mat-label>
+            <input type="text" matInput formControlName="adaptationActionLocationCtrl" />
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+          </mat-form-field>
+          <input formControlName="adaptationActionLocationOtherCtrl" type="file" />
+        </div>
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
           <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
           </app-generic-button-secondary>
-          <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+          <app-generic-button
+            [disabled]="formArray?.get([1]).invalid"
+            (click)="stepper.next()"
+            name="general.next"
+          ></app-generic-button>
         </div>
       </mat-step>
 
       <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
         <ng-template matStepLabel>
-          <span translate>Categorización con instrumentos nacionales</span>
+          <span translate>adaptationAction.form2.categorizationNationalIntruments</span>
+          <mat-icon
+            (click)="
+              goToLink(
+                'https://docs.google.com/spreadsheets/d/1fDSEUgkJgE8Xq1sLggu4ds4aS2EmxedW/edit?usp=sharing&ouid=110424914348129594837&rtpof=true&sd=true'
+              )
+            "
+            [matTooltip]="'adaptationAction.form2.categorizationNationalIntrumentsTooltip' | translate"
+            >info</mat-icon
+          >
         </ng-template>
 
         <mat-form-field class="field-ppcn" appearance="fill">
-          <mat-label translate>Seleccione el tema al que pertenece la acción</mat-label>
+          <mat-label translate>adaptationAction.form2.selectTopic</mat-label>
           <mat-select (selectionChange)="changeSubTopics($event.value)" formControlName="adaptationActionThemeCtrl">
             <mat-option *ngFor="let topic of topics" [value]="topic.code">
               <label translate>{{ topic.name }}</label>
@@ -169,7 +192,7 @@
         </mat-form-field>
 
         <mat-form-field class="field-ppcn" appearance="fill">
-          <mat-label translate>Seleccione la tipología de acción </mat-label>
+          <mat-label translate>adaptationAction.form2.selectSubtopic</mat-label>
           <mat-select formControlName="adaptationActionTypologyCtrl">
             <mat-option *ngFor="let subTopic of subTopicsToShow" [value]="subTopic.code">
               <label translate>{{ subTopic.name }}</label>
@@ -177,22 +200,33 @@
           </mat-select>
         </mat-form-field>
 
+        <mat-form-field class="field-ppcn" appearance="fill">
+          <mat-label translate>adaptationAction.form2.selectActionType </mat-label>
+          <mat-select formControlName="adaptationActionTypeCtrl">
+            <mat-option [value]="1">
+              <label translate>Option1 </label>
+            </mat-option>
+
+            <mat-option [value]="2">
+              <label translate>Option2 </label>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Relación con las metas de la NDC</mat-label>
+          <mat-label translate>adaptationAction.form2.relationNDC</mat-label>
           <input type="text" matInput formControlName="adaptationActionGoalRelationCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Relación con Política Nacional de Adaptación al que pertenece la acción (Eje)</mat-label>
+          <mat-label translate>adaptationAction.form2.relationshipAxis</mat-label>
           <input type="text" matInput formControlName="adaptationActionEjeRelationCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate
-            >Relación con Política Nacional de Adaptación al que pertenece la acción (Lineamiento)</mat-label
-          >
+          <mat-label translate>adaptationAction.form2.relationshipGuideline</mat-label>
           <input type="text" matInput formControlName="adaptationActionLinealRelationCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
@@ -200,25 +234,27 @@
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
           <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
           </app-generic-button-secondary>
-          <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+          <app-generic-button
+            [disabled]="formArray?.get([2]).invalid"
+            (click)="stepper.next()"
+            name="general.next"
+          ></app-generic-button>
         </div>
       </mat-step>
 
       <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
         <ng-template matStepLabel>
-          <span translate>Relación con otros instrumentos</span>
+          <span translate>adaptationAction.form2.relationshipInstruments</span>
         </ng-template>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate
-            >En caso de aplicar, indique el nombre de instrumento al que pertenece la acción</mat-label
-          >
+          <mat-label translate>adaptationAction.form2.namePlanningInstrument</mat-label>
           <input type="text" matInput formControlName="adaptationActionInstrumentCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Descripción cómo se ha integrado la adaptación dentro del instrumento</mat-label>
+          <mat-label translate>adaptationAction.form2.adaptationIntegrated</mat-label>
           <input type="text" matInput formControlName="adaptationActionDescriptionInstrumentCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
@@ -226,17 +262,21 @@
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
           <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
           </app-generic-button-secondary>
-          <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+          <app-generic-button
+            [disabled]="formArray?.get([3]).invalid"
+            (click)="stepper.next()"
+            name="general.next"
+          ></app-generic-button>
         </div>
       </mat-step>
 
       <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
         <ng-template matStepLabel>
-          <span translate>Amenaza climática relacionada</span>
+          <span translate>adaptationAction.form2.climateRelatedHazard</span>
         </ng-template>
 
         <mat-form-field class="field-ppcn" appearance="fill">
-          <mat-label translate>Amenaza climática relacionada</mat-label>
+          <mat-label translate>adaptationAction.form2.relatedClimateThreat</mat-label>
           <mat-select #climateValue formControlName="adaptationActionClimateThreatCtrl">
             <mat-option [value]="1">
               <label translate>Deslizamiento</label>
@@ -265,14 +305,14 @@
         </mat-form-field>
 
         <mat-form-field *ngIf="climateValue.value === 6" class="field-ppcn">
-          <mat-label translate>Amenaza climática relacionada (otro)</mat-label>
+          <mat-label translate>adaptationAction.form2.relatedClimateThreatOther</mat-label>
           <input type="text" matInput formControlName="adaptationActionClimateThreatOtherCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
         <div fxLayout="row" fxLayoutAlign=" center">
           <mat-form-field class="field-ppcn">
-            <mat-label translate>Fuente de información sobre la amenaza climática</mat-label>
+            <mat-label translate>adaptationAction.form2.descriptionRelatedClimateThreat</mat-label>
             <input matInput formControlName="adaptationActionInfoSourceCtrl" />
             <mat-error translate>errorLabel.fieldRequired</mat-error>
           </mat-form-field>
@@ -283,17 +323,21 @@
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
           <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
           </app-generic-button-secondary>
-          <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+          <app-generic-button
+            [disabled]="formArray?.get([4]).invalid"
+            (click)="stepper.next()"
+            name="general.next"
+          ></app-generic-button>
         </div>
       </mat-step>
 
       <mat-step formGroupName="5" [stepControl]="formArray?.get([5])">
         <ng-template matStepLabel>
-          <span translate>Implementación</span>
+          <span translate>adaptationAction.form2.implementation</span>
         </ng-template>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Inicio de la implementación</mat-label>
+          <mat-label translate>adaptationAction.form2.startImplementation</mat-label>
           <input
             matInput
             [placeholder]="'Choose a date' | translate"
@@ -308,7 +352,7 @@
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Finalización de la implementación</mat-label>
+          <mat-label translate>adaptationAction.form2.endImplementation</mat-label>
           <input
             matInput
             [placeholder]="'Choose a date' | translate"
@@ -323,25 +367,25 @@
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Tiempo de duración de la acción (meses)</mat-label>
+          <mat-label translate>adaptationAction.form2.durationAction</mat-label>
           <input type="text" matInput formControlName="adaptationActionDurationTimeCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Entidad responsable de ejecución de la acción de adaptación</mat-label>
+          <mat-label translate>adaptationAction.form2.responsibleExecuting</mat-label>
           <input type="text" matInput formControlName="adaptationActionEntityCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Otras entidades involucradas en la acción de adaptación</mat-label>
+          <mat-label translate>adaptationAction.form2.otherEntitiesInvolved</mat-label>
           <input type="text" matInput formControlName="adaptationActionEntityOthersCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Código de la acción</mat-label>
+          <mat-label translate>adaptationAction.form2.actionCode</mat-label>
           <input type="text" matInput formControlName="adaptationActionCodeCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
@@ -349,7 +393,11 @@
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
           <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
           </app-generic-button-secondary>
-          <app-generic-button (click)="submitForm()" name="general.next"></app-generic-button>
+          <app-generic-button
+            [disabled]="formArray?.get([5]).invalid"
+            (click)="submitForm()"
+            name="general.next"
+          ></app-generic-button>
         </div>
       </mat-step>
     </mat-vertical-stepper>

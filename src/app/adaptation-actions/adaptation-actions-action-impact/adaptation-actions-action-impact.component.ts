@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
-import { TemporalityImpact } from '../interfaces/catalogs';
+import { ODS, TemporalityImpact } from '../interfaces/catalogs';
 
 @Component({
   selector: 'app-adaptation-actions-action-impact',
@@ -17,6 +17,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   adaptationAction: AdaptationAction;
   temporalityImpact: TemporalityImpact[] = [];
   generalImpact: TemporalityImpact[] = [];
+  ods: ODS[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +34,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     this.getGeneralImpact();
     this.getTemporallyInpacts();
     this.createForm();
+    this.loadODS();
   }
 
   get formArray(): AbstractControl | null {
@@ -43,6 +45,17 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     this.form = this.formBuilder.group({
       formArray: this.buildRegisterForm(),
     });
+  }
+
+  loadODS() {
+    this.service.loadODS().subscribe(
+      (ods) => {
+        this.ods = ods;
+      },
+      (error) => {
+        this.ods = [];
+      }
+    );
   }
 
   getTemporallyInpacts() {
@@ -70,13 +83,13 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   buildRegisterForm() {
     return this.formBuilder.array([
       this.formBuilder.group({
-        generalImpactCtrl: ['', Validators.required],
         adaptationTemporalityImpactCtrl: ['', Validators.required],
         impactsAccordingIndicatorsCtrl: [''],
         genderEquityElementsCtrl: ['', Validators.required],
         genderEquityElementsQuestionCtrl: ['', Validators.required],
         actionNegativeImpactCtrl: ['', Validators.required],
         AnnexSupportingInformationCtrl: ['', Validators.required],
+        objectivesCtrl: ['', Validators.required], // new field
       }),
     ]);
   }
@@ -122,7 +135,6 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
         gender_equality_description: this.form.value.formArray[0].genderEquityElementsQuestionCtrl,
         unwanted_action: this.form.value.formArray[0].impactsAccordingIndicatorsCtrl,
         unwanted_action_description: this.form.value.formArray[0].actionNegativeImpactCtrl,
-        general_impact: this.form.value.formArray[0].generalImpactCtrl,
         temporality_impact: this.form.value.formArray[0].adaptationTemporalityImpactCtrl,
         ods: [1], //this.form.value.formArray[0].AnnexSupportingInformationCtrl
       },

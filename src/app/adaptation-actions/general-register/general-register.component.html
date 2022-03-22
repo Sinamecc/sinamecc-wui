@@ -3,40 +3,52 @@
   <br />
   <br />
   <form fxLayout="column" fxLayoutAlign="space-around start" [formGroup]="formArray?.get([0])">
-    <span translate>Tipo de entidad que reporta</span>
+    <span translate>adaptationAction.form1.reportingEntityType</span>
     <mat-radio-group
       #reportingEntityTypeControl="matRadioGroup"
       formControlName="reportingEntityTypeCtrl"
       class="custom-radio-group"
     >
-      <mat-radio-button value="1">
+      <mat-radio-button [value]="1">
         <label translate>Entidad pública</label>
       </mat-radio-button>
-      <mat-radio-button value="2">
+      <mat-radio-button [value]="2">
         <label translate>Entidad privada</label>
       </mat-radio-button>
-      <mat-radio-button value="3">
+      <mat-radio-button [value]="3">
         <label translate>Municipalidad</label>
       </mat-radio-button>
-      <mat-radio-button value="4">
+      <mat-radio-button [value]="4">
         <label translate>ONG</label>
+      </mat-radio-button>
+      <mat-radio-button [value]="5">
+        <label translate>general.other</label>
       </mat-radio-button>
     </mat-radio-group>
 
+    <mat-form-field *ngIf="reportingEntityTypeControl.value === 5" class="field-ppcn">
+      <mat-label translate
+        ><span translate>adaptationAction.form1.reportingEntityType</span> (<span translate>general.other</span
+        >)</mat-label
+      >
+      <input matInput formControlName="reportingEntityTypeOtherCtrl" />
+      <mat-error translate>errorLabel.fieldRequired</mat-error>
+    </mat-form-field>
+
     <mat-form-field class="field-ppcn">
-      <mat-label translate>Entidad responsable de reporte</mat-label>
+      <mat-label translate>adaptationAction.form1.responsibleReportingEntity</mat-label>
       <input matInput formControlName="entityResponsibleReportingCtrl" />
       <mat-error translate>errorLabel.fieldRequired</mat-error>
     </mat-form-field>
 
     <mat-form-field class="field-ppcn">
-      <mat-label translate>Cédula jurídica (en caso de ser una empresa u organización)</mat-label>
-      <input matInput type="number" formControlName="legalIdentificationCtrl" />
+      <mat-label translate>adaptationAction.form1.legalID</mat-label>
+      <input matInput type="txt" formControlName="legalIdentificationCtrl" />
       <mat-error translate>errorLabel.fieldRequired</mat-error>
     </mat-form-field>
 
     <mat-form-field class="field-ppcn">
-      <mat-label translate>Fecha de elaboración del reporte</mat-label>
+      <mat-label translate>adaptationAction.form1.reportData</mat-label>
       <input
         matInput
         [placeholder]="'Choose a date' | translate"
@@ -51,19 +63,19 @@
     </mat-form-field>
 
     <mat-form-field class="field-ppcn">
-      <mat-label translate>Nombre de la persona de contacto</mat-label>
+      <mat-label translate>ppcn.nameContactPerson</mat-label>
       <input matInput formControlName="nameContactPersonCtrl" />
       <mat-error translate>errorLabel.fieldRequired</mat-error>
     </mat-form-field>
 
     <mat-form-field class="field-ppcn">
-      <mat-label translate>Cargo de la persona responsable de reporte</mat-label>
+      <mat-label translate>adaptationAction.form1.positionResponsiblePerson</mat-label>
       <input matInput formControlName="titleResponsibleReportingCtrl" />
       <mat-error translate>errorLabel.fieldRequired</mat-error>
     </mat-form-field>
 
     <mat-form-field class="field-ppcn">
-      <mat-label translate>Correo electrónico</mat-label>
+      <mat-label translate>info.emailAddress</mat-label>
       <input matInput type="email" formControlName="emailCtrl" />
       <mat-error translate>errorLabel.fieldRequired</mat-error>
     </mat-form-field>
@@ -76,13 +88,13 @@
     </mat-form-field>
 
     <mat-form-field class="field-ppcn">
-      <mat-label translate>Dirección de la entidad </mat-label>
+      <mat-label translate>adaptationAction.form1.entityAddress </mat-label>
       <input matInput formControlName="entityAddress" />
       <mat-error translate>errorLabel.fieldRequired</mat-error>
     </mat-form-field>
 
     <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-      <app-generic-button (click)="submitForm()" name="general.done"> </app-generic-button>
+      <app-generic-button [disabled]="form.invalid" (click)="submitForm()" name="general.done"> </app-generic-button>
     </div>
   </form>
 </div>

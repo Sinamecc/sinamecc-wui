@@ -15,8 +15,10 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
   @Input() mainStepper: any;
   durationInSeconds = 3;
   adaptationAction: AdaptationAction;
-  indicatorToolTipTxt =
+  typeIndicatorToolTipTxt =
     'Los indicadores pueden ser del tipo Gestión: permiten medir la cantidad de bienes y servicios generados, así como el grado de avance de acciones climáticas a nivel de insumos, actividades y productos, centrándose en aspectos relevantes y evitar medir aspectos rutinarios y operativos o Resultados: se refiere a la medición de efectos e impactos logrados por alguna intervención, o bien, por causa de la crisis climática';
+  indicatorToolTipTxt =
+    'Un indicador es una expresión cualitativa o cuantitativa, que es observable y permite describir las características de la realidad, a través de la evolución de una variable';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,24 +48,27 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
   buildRegisterForm() {
     return this.formBuilder.array([
       this.formBuilder.group({
-        adaptationActionIndicatorNameCtrl: ['', [Validators.required, Validators.maxLength(100)]],
-        adaptationActionIndicatorDescriptionCtrl: ['', [Validators.required, Validators.maxLength(300)]],
-        adaptationActionIndicatorUnitCtrl: ['', [Validators.required, Validators.maxLength(50)]],
-        adaptationActionIndicatorMetodologyCtrl: ['', [Validators.required, Validators.maxLength(250)]],
+        adaptationActionIndicatorNameCtrl: ['', [Validators.required, Validators.maxLength(250)]],
+        adaptationActionIndicatorDescriptionCtrl: ['', [Validators.required, Validators.maxLength(500)]],
+        adaptationActionIndicatorUnitCtrl: ['', [Validators.required, Validators.maxLength(100)]],
+        adaptationActionIndicatorMetodologyCtrl: ['', [Validators.required, Validators.maxLength(500)]],
+        adaptationActionIndicatorUnitFileCtrl: [''], // new field
         adaptationActionIndicatorFrecuenceCtrl: ['', [Validators.required]],
-        adaptationActionIndicatorStartDateCtrl: ['', [Validators.required]],
-        adaptationActionIndicatorEndDateCtrl: ['', [Validators.required]],
+        adaptationActionIndicatorFrecuenceOtherCtrl: [''], // new field
         adaptationActionIndicatorTimeCtrl: ['', [Validators.required]],
+        timeSeriesAvailableEndCtrl: ['', [Validators.required]], // new field
         adaptationActionIndicatorCoverageCtrl: ['', [Validators.required]],
-        adaptationActionIndicatorDisintegrationCtrl: ['', [Validators.required, Validators.maxLength(150)]],
-        adaptationActionIndicatorLimitCtrl: ['', [Validators.required, Validators.maxLength(500)]],
-        adaptationActionIndicatorMeasurementCtrl: ['', [Validators.required, Validators.maxLength(300)]],
-        adaptationActionIndicatorDetailsCtrl: ['', [Validators.required, Validators.maxLength(300)]],
+        adaptationActionIndicatorCoverageOtherCtrl: [''], // new field
+        adaptationActionIndicatorDisintegrationCtrl: ['', [Validators.maxLength(1000)]],
+        adaptationActionIndicatorLimitCtrl: ['', [Validators.maxLength(1000)]],
+        adaptationActionIndicatorMeasurementCtrl: ['', [Validators.maxLength(1000)]],
+        adaptationActionIndicatorDetailsCtrl: ['', [Validators.maxLength(1000)]],
       }),
       this.formBuilder.group({
         adaptationActionIndicatorResponsibleInstitutionCtrl: ['', [Validators.required, Validators.maxLength(300)]],
         adaptationActionIndicatorSourceTypeCtrl: ['', [Validators.required]],
-        adaptationActionIndicatorOperationNameCtrl: ['', [Validators.required, Validators.maxLength(300)]],
+        adaptationActionIndicatorSourceTypeOtherCtrl: [''], // new field
+        adaptationActionIndicatorOperationNameCtrl: ['', [Validators.maxLength(300)]],
       }),
       this.formBuilder.group({
         adaptationActionIndicatorSourceDataCtrl: ['', [Validators.required]],
@@ -78,7 +83,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         adaptationActionIndicatorContactEmailCtrl: ['', [Validators.required, Validators.email]],
         adaptationActionIndicatorContactPhoneCtrl: [
           '',
-          [Validators.required, Validators.maxLength(6), Validators.minLength(6)],
+          [Validators.required, Validators.maxLength(8), Validators.minLength(8)],
         ],
       }),
     ]);
@@ -116,10 +121,6 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         unit: this.form.value.formArray[0].adaptationActionIndicatorUnitCtrl,
         methodological_detail: this.form.value.formArray[0].adaptationActionIndicatorMetodologyCtrl,
         reporting_periodicity: this.form.value.formArray[0].adaptationActionIndicatorFrecuenceCtrl,
-        available_time_start_date: this.datePipe.transform(
-          this.form.value.formArray[0].adaptationActionIndicatorStartDateCtrl,
-          'yyyy-MM-dd'
-        ),
 
         geographic_coverage: this.form.value.formArray[0].adaptationActionIndicatorCoverageCtrl,
         other_geographic_coverage: '',

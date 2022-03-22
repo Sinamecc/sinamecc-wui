@@ -113,11 +113,13 @@ export class AdaptationActionsReportComponent implements OnInit {
         adaptationActionCantonCtrl: ['', Validators.required],
         adaptationActionDistritCtrl: ['', Validators.required],
         adaptationActionDescriptionNarrativeCtrl: ['', [Validators.required, Validators.maxLength(3000)]],
-        adaptationActionLocationCtrl: ['', Validators.required],
+        adaptationActionLocationCtrl: [''],
+        adaptationActionLocationOtherCtrl: [''],
       }),
       this.formBuilder.group({
         adaptationActionThemeCtrl: ['', Validators.required],
         adaptationActionTypologyCtrl: ['', Validators.required],
+        adaptationActionTypeCtrl: ['', Validators.required], // new field
         adaptationActionGoalRelationCtrl: ['', Validators.required],
         adaptationActionEjeRelationCtrl: ['', Validators.required],
         adaptationActionLinealRelationCtrl: ['', Validators.required],
@@ -135,7 +137,7 @@ export class AdaptationActionsReportComponent implements OnInit {
         adaptationActionStartDateCtrl: ['', Validators.required],
         adaptationActionEndDateCtrl: ['', Validators.required],
         adaptationActionDurationTimeCtrl: ['', [Validators.required, Validators.maxLength(20)]],
-        adaptationActionEntityCtrl: ['', [Validators.required, Validators.maxLength(49)]],
+        adaptationActionEntityCtrl: ['', [Validators.required, Validators.maxLength(250)]],
         adaptationActionEntityOthersCtrl: ['', [Validators.required, Validators.maxLength(250)]],
         adaptationActionCodeCtrl: ['AA1', [Validators.required, Validators.maxLength(50)]],
       }),
@@ -216,5 +218,9 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
     };
     return context;
+  }
+
+  public goToLink(url: string) {
+    window.open(url, '_blank');
   }
 }

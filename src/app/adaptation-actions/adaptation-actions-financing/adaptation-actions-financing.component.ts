@@ -52,6 +52,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
         adaptationActionFinancingManagementCtrl: [''],
         adaptationActionFinancingSourceDetailCtrl: ['', Validators.required],
         adaptationActionFinancingDetailInstrumentCtrl: ['', Validators.required],
+        adaptationActionFinancingDetailInstrumentOtherCtrl: [''], // new field
         adaptationActionFinancingBufgetCtrl: [''],
         adaptationActionFinancingBufgetValueCtrl: ['', Validators.required],
         adaptationActionFinancingBufgetStarDateCtrl: ['', Validators.required],

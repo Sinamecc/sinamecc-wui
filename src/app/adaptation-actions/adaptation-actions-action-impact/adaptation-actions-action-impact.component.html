@@ -3,25 +3,12 @@
     <mat-vertical-stepper #stepper linear formArrayName="formArray">
       <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
         <ng-template matStepLabel>
-          <span translate>Registro de avances de monitoreo</span>
+          <span translate>adaptationAction.form6.actionImpact</span>
         </ng-template>
 
-        <span translate>Seleccione el impacto general de la acción de adaptación reportada</span>
-        <mat-radio-group
-          #generalImpactControl="matRadioGroup"
-          formControlName="generalImpactCtrl"
-          class="custom-radio-group"
-        >
-          <mat-radio-button *ngFor="let element of generalImpact" [value]="element.code">
-            <label translate>{{ element.name }}</label>
-          </mat-radio-button>
-        </mat-radio-group>
-        <br />
-        <br />
-
         <mat-form-field class="field-ppcn" appearance="fill">
-          <mat-label translate>Temporalidad del impacto en adaptación de la acción</mat-label>
-          <mat-select formControlName="adaptationTemporalityImpactCtrl" multiple>
+          <mat-label translate>adaptationAction.form6.temporalityImpact</mat-label>
+          <mat-select formControlName="adaptationTemporalityImpactCtrl">
             <mat-option *ngFor="let element of temporalityImpact" [value]="element.code">
               <label translate>{{ element.name }}</label>
             </mat-option>
@@ -29,19 +16,19 @@
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>Impactos de la acción según otros indicadores o mediciones</mat-label>
+          <mat-label translate>adaptationAction.form6.impactsAction</mat-label>
           <input matInput formControlName="impactsAccordingIndicatorsCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
-        <span translate>La acción incorporó elementos de equidad de género</span>
+        <span translate>adaptationAction.form6.genderEquity</span>
         <mat-radio-group
           #genderEquityElementsControl="matRadioGroup"
           formControlName="genderEquityElementsCtrl"
           class="custom-radio-group"
         >
           <mat-radio-button [value]="1">
-            <label translate>Si </label>
+            <label translate>Sí </label>
           </mat-radio-button>
           <mat-radio-button [value]="2">
             <label translate>No</label>
@@ -50,23 +37,29 @@
         <br />
 
         <mat-form-field class="field-ppcn" *ngIf="genderEquityElementsControl.value === 1">
-          <mat-label translate
-            >En caso positivo describa como la acción aporta a la equidad de género frente al cambio
-            climático</mat-label
-          >
+          <mat-label translate>adaptationAction.form6.contributesGenderEquity</mat-label>
           <input matInput formControlName="genderEquityElementsQuestionCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
+        <mat-form-field class="field-ppcn" appearance="fill">
+          <mat-label translate>adaptationAction.form6.sustainableDevelopment</mat-label>
+          <mat-select multiple formControlName="objectivesCtrl">
+            <mat-option *ngFor="let element of ods" [value]="element.code">
+              <label translate>{{ element.code }} - {{ element.name }}</label>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <mat-form-field class="field-ppcn" *ngIf="genderEquityElementsControl.value === 1">
-          <mat-label translate>¿La acción ha generado algún impacto no deseado/inesperado/negativo?</mat-label>
+          <mat-label translate>adaptationAction.form6.generatedImpact</mat-label>
           <input matInput formControlName="actionNegativeImpactCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
         <div fxLayout="row" fxLayoutAlign=" center">
           <mat-form-field class="field-ppcn">
-            <mat-label translate>Anexo información de soporte asociada al impacto de la acción reportada</mat-label>
+            <mat-label translate>adaptationAction.form6.annexSupporting</mat-label>
             <input matInput formControlName="AnnexSupportingInformationCtrl" />
             <mat-error translate>errorLabel.fieldRequired</mat-error>
           </mat-form-field>
@@ -75,7 +68,8 @@
         </div>
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-          <app-generic-button (click)="submitForm()" name="general.done"> </app-generic-button>
+          <app-generic-button [disabled]="formArray?.get([0]).invalid" (click)="submitForm()" name="general.done">
+          </app-generic-button>
         </div>
       </mat-step>
     </mat-vertical-stepper>
