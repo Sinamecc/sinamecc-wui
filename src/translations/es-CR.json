@@ -189,7 +189,7 @@
     "ppcnUpdateSuccess": "El formulario PPCN se actualizó correctamente",
     "emailContacPerson": "Email of the contact person",
     "tittleContacPerson": "Title of the contact person",
-    "nameContactPerson": "Name of the contact person",
+    "nameContactPerson": "Nombre de la persona de contacto",
     "mayorEmail": "Correo electrónico del alcalde",
     "totalRemovals": "Total remociones",
     "removalProjectDetail": "Detalle de Proyecto Remoción",
@@ -607,7 +607,10 @@
 
   "adaptationAction": {
     "form1": {
+      "title": "Registro general",
+      "subtitle": "En esta sección le invitamos a completar los datos generales de identificación para iniciar con el reporte de su acción",
       "reportingEntityType": "Tipo de entidad que reporta",
+      "dataRegister": "Registro de datos",
       "responsibleReportingEntity": "Entidad responsable de reporte",
       "legalID": "Cédula jurídica (en caso de ser una empresa u organización)",
       "reportData": "Fecha de elaboración del reporte",
@@ -615,6 +618,7 @@
       "entityAddress": "Dirección de la entidad"
     },
     "form2": {
+      "title": "Reporte de Acciones de Adaptación",
       "registerInfo": "Información de registro",
       "registerInfoTooltip": "Para detalles conceptuales sobre Acciones de Adaptación",
       "AAType": "Tipo de acción de adaptación",

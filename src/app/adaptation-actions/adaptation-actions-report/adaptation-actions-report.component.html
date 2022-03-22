@@ -1,4 +1,7 @@
 <div class="container">
+  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+    <h2 translate>adaptationAction.form2.title</h2>
+  </div>
   <form [formGroup]="form">
     <mat-vertical-stepper #stepper linear formArrayName="formArray">
       <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">

@@ -14,14 +14,14 @@
       <mat-horizontal-stepper formArrayName="formArray" #stepper>
         <mat-step [stepControl]="formArray?.get([0])">
           <ng-template matStepLabel>
-            <span translate>Registro general</span>
+            <span translate>adaptationAction.form1.title</span>
           </ng-template>
           <app-general-register [mainStepper]="stepper"></app-general-register>
         </mat-step>
 
         <mat-step [stepControl]="formArray?.get([1])">
           <ng-template matStepLabel>
-            <span translate>Reporte de Acciones de Adaptación</span>
+            <span translate>adaptationAction.form2.title</span>
           </ng-template>
           <app-adaptation-actions-report [mainStepper]="stepper"></app-adaptation-actions-report>
         </mat-step>
