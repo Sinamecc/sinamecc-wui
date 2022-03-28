@@ -20,6 +20,7 @@ export class MethodoloficalSheetComponent implements OnInit {
   error: string;
   isLoading = false;
   @Input() mainStepper: any;
+  report: ReportDataPayload;
 
   constructor(
     private router: Router,
@@ -29,7 +30,11 @@ export class MethodoloficalSheetComponent implements OnInit {
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
     private datePipe: DatePipe
-  ) {}
+  ) {
+    this.reportService.currentReport.subscribe((message) => {
+      this.report = message;
+    });
+  }
 
   ngOnInit(): void {
     this.createForm();
@@ -47,6 +52,7 @@ export class MethodoloficalSheetComponent implements OnInit {
   submitForm() {
     this.isLoading = true;
     const payload = this.buildForm();
+    this.reportService.updateCurrentReport(Object.assign(this.report, payload));
     this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
       this.snackBar.open(res, null, { duration: 3000 });
       this.mainStepper.next();

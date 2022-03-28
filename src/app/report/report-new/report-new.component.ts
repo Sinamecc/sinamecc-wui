@@ -1,17 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 
 import { Logger } from '@core';
-import { I18nService } from '@app/i18n';
-import { environment } from '@env/environment';
-import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { finalize } from 'rxjs/operators';
-
-import { ReportService, Report } from '@app/report/report.service';
-import { ReportDataCatalog } from '../interfaces/report-data';
-import { ReportDataPayload } from '../interfaces/report-data-payload';
 import { ReportFormDataComponent } from '../report-form-data/report-form-data.component';
 import { MethodoloficalSheetComponent } from '../methodolofical-sheet/methodolofical-sheet.component';
 import { DataUpdateComponent } from '../data-update/data-update.component';
@@ -37,10 +27,14 @@ export class ReportNewComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  get formArray(): AbstractControl | null {
+    return this.mainGroup.get('formArray');
+  }
+
   createForm() {
     this.mainGroup = this.formBuilder.group({
       // this.formBuilder.array([])
-      formArray: this.formBuilder.array([this.reportFormData, this.methodologicalSheet, this.dataUpdate]),
+      formArray: this.formBuilder.array([this.reportFormDataFrm, this.methodologicalSheetFrm, this.dataUpdateFrm]),
     });
   }
 

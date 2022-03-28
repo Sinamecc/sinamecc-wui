@@ -57,34 +57,11 @@ export class ReportFormDataComponent implements OnInit {
     this.reportForm.value.methodological = this.methodological.toString();
     this.isLoading = true;
     const payload = this.buildForm();
+    this.reportService.updateCurrentReport(payload);
     this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
       this.snackBar.open(res, null, { duration: 3000 });
       this.mainStepper.next();
     });
-
-    /*
-    this.reportService
-      .submitReport(payload)
-      .pipe(
-        finalize(() => {
-          this.reportForm.markAsPristine();
-          this.isLoading = false;
-        })
-      )
-      .subscribe(
-        (response) => {
-          this.router.navigate(['/report'], { replaceUrl: true });
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
-          log.debug(`${response.statusCode} status code received from form`);
-        },
-        (error) => {
-          log.debug(`Report File error: ${error}`);
-          this.error = error;
-        }
-      );
-      */
   }
 
   private buildForm() {
@@ -146,17 +123,14 @@ export class ReportFormDataComponent implements OnInit {
         this.formBuilder.group({
           whatInformationReportedCtrl: ['', Validators.required],
           isBaselineCtrl: [false, Validators.compose([Validators.maxLength(500), Validators.required])],
-          isBaselineValueCtrlFile: [''], // new Field
-          isBaselineValueCtrlValue: [''], // new Field
+          isBaselineValueCtrlFile: [''],
+          isBaselineValueCtrlValue: [''],
           qualityPreItemsCtrl: ['', Validators.required],
-          qualityPreItemsValueCtrl: ['', Validators.compose([Validators.maxLength(500), Validators.required])],
+          qualityPreItemsValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
           agreementTransferSINAMECCCtrl: ['', Validators.required],
-          agreementTransferSINAMECCValueCtrl: [
-            '',
-            Validators.compose([Validators.maxLength(500), Validators.required]),
-          ],
-          reportDataCtrlFile: [''], // new Field
-          reportDataCtrlValue: [''], // new Field
+          agreementTransferSINAMECCValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
+          reportDataCtrlFile: [''],
+          reportDataCtrlValue: [''],
         }),
       ]),
     });

@@ -9,27 +9,27 @@
     <mat-divider class="divider-custom"></mat-divider>
   </h3>
   <div>
-    <form>
+    <form [formGroup]="mainGroup">
       <div fxLayout="column">
         <div class="report-error" [hidden]="!error || isLoading" translate>
           <span translate>errorLabel.errorSubmittingForm</span>
         </div>
-        <mat-horizontal-stepper linear #stepper>
-          <mat-step>
+        <mat-horizontal-stepper formArrayName="formArray" linear #stepper>
+          <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
               <span translate>Datos para reportes y análisis </span>
             </ng-template>
             <app-report-form-data [mainStepper]="stepper"></app-report-form-data>
           </mat-step>
 
-          <mat-step>
+          <mat-step formGroupName="0" [stepControl]="formArray?.get([1])">
             <ng-template matStepLabel>
               <span translate>Hoja Metodológica </span>
             </ng-template>
             <app-methodolofical-sheet [mainStepper]="stepper"></app-methodolofical-sheet>
           </mat-step>
 
-          <mat-step>
+          <mat-step formGroupName="0" [stepControl]="formArray?.get([2])">
             <ng-template matStepLabel>
               <span translate>Actualización de datos </span>
             </ng-template>
