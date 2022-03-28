@@ -25,7 +25,7 @@ export class ReportComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private reportService: ReportService, private datePipe: DatePipe) {}
+  constructor(private reportService: ReportService, public datePipe: DatePipe) {}
 
   ngOnInit(): void {
     this.loadReportData();

@@ -11,9 +11,6 @@
   <div>
     <form [formGroup]="mainGroup">
       <div fxLayout="column">
-        <div class="report-error" [hidden]="!error || isLoading" translate>
-          <span translate>errorLabel.errorSubmittingForm</span>
-        </div>
         <mat-horizontal-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
