@@ -96,10 +96,9 @@ export class ReportFormDataComponent implements OnInit {
       quality_element_description: this.reportForm.value['formArray'][0].qualityPreItemsValueCtrl,
       transfer_data_with_sinamecc: this.reportForm.value['formArray'][0].agreementTransferSINAMECCCtrl,
       transfer_data_with_sinamecc_description: this.reportForm.value['formArray'][0].agreementTransferSINAMECCValueCtrl,
-      // isBaselineValueCtrlFile: this.reportForm.value['formArray'][0].isBaselineValueCtrlFile,
-      // isBaselineValueCtrlValue: this.reportForm.value['formArray'][0].isBaselineValueCtrlValue,
+      base_line_report: this.reportForm.value['formArray'][0].isBaselineValueCtrlValue,
+      individual_report_data: this.reportForm.value['formArray'][0].reportDataCtrlValue,
       // reportDataCtrlFile: this.reportForm.value['formArray'][0].reportDataCtrlFile,
-      // reportDataCtrlValue: this.reportForm.value['formArray'][0].reportDataCtrlValue,
     };
 
     return payload;

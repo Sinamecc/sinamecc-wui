@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
 import { TranslateService } from '@ngx-translate/core';
+import { ReportDataPayload } from '../interfaces/report-data-payload';
 import { ReportService } from '../report.service';
 
 @Component({
@@ -37,12 +38,23 @@ export class DataUpdateComponent implements OnInit {
     this.reportForm = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
-          authorNameCtrl: ['', Validators.compose([Validators.maxLength(350), Validators.required])],
+          authorNameCtrl: ['', Validators.compose([Validators.maxLength(350), Validators.required])], // miss this
           lastUpdateCtrl: ['', Validators.required],
-          lastUpdateChangeCtrl: ['', Validators.compose([Validators.maxLength(500), Validators.required])],
+          lastUpdateChangeCtrl: ['', Validators.compose([Validators.maxLength(500), Validators.required])], // miss this
           descriptionCtrl: ['', Validators.compose([Validators.maxLength(500), Validators.required])],
         }),
       ]),
     });
+  }
+
+  private buildForm() {
+    const payload: ReportDataPayload = {
+      report_data_change_log: {
+        changes: this.reportForm.value['formArray'][0].lastUpdateChangeCtrl,
+        change_description: this.reportForm.value['formArray'][0].descriptionCtrl,
+      },
+    };
+
+    return payload;
   }
 }

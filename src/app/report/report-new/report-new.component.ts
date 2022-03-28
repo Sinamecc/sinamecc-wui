@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
@@ -12,6 +12,9 @@ import { finalize } from 'rxjs/operators';
 import { ReportService, Report } from '@app/report/report.service';
 import { ReportDataCatalog } from '../interfaces/report-data';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
+import { ReportFormDataComponent } from '../report-form-data/report-form-data.component';
+import { MethodoloficalSheetComponent } from '../methodolofical-sheet/methodolofical-sheet.component';
+import { DataUpdateComponent } from '../data-update/data-update.component';
 
 const log = new Logger('Report');
 
@@ -21,121 +24,40 @@ const log = new Logger('Report');
   styleUrls: ['./report-new.component.scss'],
 })
 export class ReportNewComponent implements OnInit {
-  transferMethodToInstitutions = 'example: email, web page, REST API Call, SFTP, FTP, WeTransfer, other.';
-  version: string = environment.version;
-  error: string;
-  reportForm: FormGroup;
   isLoading = false;
-  methodological = false;
-  catalogs: ReportDataCatalog = undefined;
+  mainGroup: FormGroup;
 
-  constructor(
-    private router: Router,
-    private formBuilder: FormBuilder,
-    private i18nService: I18nService,
-    private reportService: ReportService,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar
-  ) {
+  @ViewChild(ReportFormDataComponent) reportFormData: ReportFormDataComponent;
+  @ViewChild(MethodoloficalSheetComponent) methodologicalSheet: MethodoloficalSheetComponent;
+  @ViewChild(DataUpdateComponent) dataUpdate: DataUpdateComponent;
+
+  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef) {
     this.createForm();
-    this.getCatalogs();
   }
 
   ngOnInit(): void {}
 
-  checkCheckBoxvalue(value: boolean) {
-    this.methodological = value;
-  }
-
-  get formArray(): AbstractControl | null {
-    return this.reportForm.get('formArray');
-  }
-
-  async getCatalogs() {
-    this.catalogs = await this.reportService.getReportCatalogs().toPromise();
-    console.log(this.catalogs, 'catalogssss');
-  }
-
-  submitForm() {
-    this.reportForm.value.methodological = this.methodological.toString();
-    this.isLoading = true;
-    const payload = this.buildForm();
-
-    this.reportService
-      .submitReport(payload)
-      .pipe(
-        finalize(() => {
-          this.reportForm.markAsPristine();
-          this.isLoading = false;
-        })
-      )
-      .subscribe(
-        (response) => {
-          this.router.navigate(['/report'], { replaceUrl: true });
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
-          log.debug(`${response.statusCode} status code received from form`);
-        },
-        (error) => {
-          log.debug(`Report File error: ${error}`);
-          this.error = error;
-        }
-      );
-  }
-
-  private buildForm() {
-    const payload: ReportDataPayload = {
-      other_classifier: '',
-      report_information: this.reportForm.value['formArray'][1].whatInformationReportedCtrl,
-      have_line_base: this.reportForm.value['formArray'][1].isBaselineCtrl,
-      have_quality_element: this.reportForm.value['formArray'][1].qualityPreItemsCtrl,
-      quality_element_description: this.reportForm.value['formArray'][1].qualityPreItemsValueCtrl,
-      transfer_data_with_sinamecc: this.reportForm.value['formArray'][1].agreementTransferSINAMECCCtrl,
-      transfer_data_with_sinamecc_description: this.reportForm.value['formArray'][1].agreementTransferSINAMECCValueCtrl,
-      contact: {
-        //institution: 'institution test',
-        full_name: this.reportForm.value['formArray'][2].nameCtrl,
-        job_title: this.reportForm.value['formArray'][2].positionCtrl,
-        email: this.reportForm.value['formArray'][2].emailCtrl,
-        phone: this.reportForm.value['formArray'][2].phoneCtrl,
-        //"user": 1
-      },
-      // waiting for BE support Fields
-      report_data_change_log: {
-        changes: '',
-        change_description: '',
-      },
-    };
-
-    return payload;
-  }
-
-  private createForm() {
-    this.reportForm = this.formBuilder.group({
-      formArray: this.formBuilder.array([
-        this.formBuilder.group({
-          whatInformationReportedCtrl: ['', Validators.required],
-          isBaselineCtrl: [false, Validators.compose([Validators.maxLength(500)])],
-          isBaselineValueCtrlFile: [''], // new Field
-          isBaselineValueCtrlValue: [''], // new Field
-          qualityPreItemsCtrl: ['', Validators.required],
-          qualityPreItemsValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
-          agreementTransferSINAMECCCtrl: ['', Validators.required],
-          agreementTransferSINAMECCValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
-          reportDataCtrlFile: [''], // new Field
-          reportDataCtrlValue: [''], // new Field
-        }),
-        this.formBuilder.group({
-          name: ['', Validators.required],
-          file: [{ value: undefined, disabled: false }, []],
-          dataReportsAnalysisCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(500)])],
-          informationSourcesCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(350)])],
-          thematicCategorizationCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(500)])],
-          dataTypeCtrl: ['', Validators.required],
-          sinameccClassifiersCtrl: ['', Validators.required],
-        }),
-      ]),
+  createForm() {
+    this.mainGroup = this.formBuilder.group({
+      // this.formBuilder.array([])
+      formArray: this.formBuilder.array([this.reportFormData, this.methodologicalSheet, this.dataUpdate]),
     });
+  }
+
+  get reportFormDataFrm() {
+    return this.reportFormData ? this.reportFormData.reportForm : null;
+  }
+
+  get methodologicalSheetFrm() {
+    return this.methodologicalSheet ? this.methodologicalSheet.reportForm : null;
+  }
+
+  get dataUpdateFrm() {
+    return this.dataUpdate ? this.dataUpdate.reportForm : null;
+  }
+
+  ngAfterViewInit() {
+    this.cdRef.detectChanges();
+    setTimeout(() => this.createForm(), 0);
   }
 }

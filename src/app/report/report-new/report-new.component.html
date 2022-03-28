@@ -14,7 +14,7 @@
         <div class="report-error" [hidden]="!error || isLoading" translate>
           <span translate>errorLabel.errorSubmittingForm</span>
         </div>
-        <mat-horizontal-stepper #stepper>
+        <mat-horizontal-stepper linear #stepper>
           <mat-step>
             <ng-template matStepLabel>
               <span translate>Datos para reportes y análisis </span>
