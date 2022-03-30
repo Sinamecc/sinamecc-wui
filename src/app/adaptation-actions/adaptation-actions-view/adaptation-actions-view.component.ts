@@ -41,7 +41,6 @@ export class AdaptationActionsViewComponent implements OnInit {
     this.service.loadAdaptationActions().subscribe(
       (response) => {
         this.adaptationAction = response.find((element) => element.id == this.id);
-        console.log(this.adaptationAction);
       },
       (error) => {
         this.adaptationAction = {};

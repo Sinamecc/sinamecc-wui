@@ -74,7 +74,6 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     const payload: AdaptationAction = this.buildPayload();
 
     this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
-    console.log('submit');
     this.mainStepper.next();
   }
 

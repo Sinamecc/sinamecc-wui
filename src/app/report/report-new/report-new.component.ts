@@ -51,7 +51,6 @@ export class ReportNewComponent implements OnInit {
 
   async getCatalogs() {
     this.catalogs = await this.reportService.getReportCatalogs().toPromise();
-    console.log(this.catalogs, 'catalogssss');
   }
 
   submitForm() {

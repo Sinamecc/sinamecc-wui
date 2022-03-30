@@ -37,7 +37,6 @@ export class MitigationActionComponent implements OnInit {
         })
       )
       .subscribe((response: MitigationAction) => {
-        console.log(response);
         this.mitigationAction = response;
       });
   }
