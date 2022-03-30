@@ -44,6 +44,7 @@
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
           <app-generic-button
+            (change)="changeMonitoring($event.value)"
             [disabled]="formArray?.get([0]).invalid"
             (click)="clickNext(stepper, progressMonitoringRecordedClimateActionsControl.value)"
             name="general.next"

@@ -52,16 +52,16 @@ export class AdaptationActionsFinancingComponent implements OnInit {
         adaptationActionFinancingManagementCtrl: [''],
         adaptationActionFinancingSourceDetailCtrl: ['', Validators.required],
         adaptationActionFinancingDetailInstrumentCtrl: ['', Validators.required],
-        adaptationActionFinancingDetailInstrumentOtherCtrl: [''], // new field
+        adaptationActionFinancingDetailInstrumentOtherCtrl: [''],
         adaptationActionFinancingBufgetCtrl: [''],
         adaptationActionFinancingBufgetValueCtrl: ['', Validators.required],
         adaptationActionFinancingBufgetStarDateCtrl: ['', Validators.required],
         adaptationActionFinancingBufgetOtherCtrl: [''],
       }),
       this.formBuilder.group({
-        adaptationActionFinancingRegisterMIDEPLANCtrl: ['', Validators.required],
-        adaptationActionFinancingRegisterNameMIDEPLANCtrl: ['', [Validators.maxLength(300)]],
-        adaptationActionFinancingRegisterEntityMIDEPLANCtrl: ['', [Validators.required, Validators.maxLength(200)]],
+        adaptationActionFinancingRegisterMIDEPLANCtrl: [''],
+        adaptationActionFinancingRegisterNameMIDEPLANCtrl: [''],
+        adaptationActionFinancingRegisterEntityMIDEPLANCtrl: [''],
       }),
     ]);
   }
@@ -103,5 +103,54 @@ export class AdaptationActionsFinancingComponent implements OnInit {
     };
 
     return context;
+  }
+
+  public selectSourceFinancing(value: number[]) {
+    const hasValue = value.includes(3);
+
+    if (hasValue) {
+      this.form
+        .get('formArray')
+        .get([1])
+        .get('adaptationActionFinancingRegisterMIDEPLANCtrl')
+        .setValidators(Validators.required);
+      this.form
+        .get('formArray')
+        .get([1])
+        .get('adaptationActionFinancingRegisterNameMIDEPLANCtrl')
+        .setValidators(Validators.required);
+      this.form
+        .get('formArray')
+        .get([1])
+        .get('adaptationActionFinancingRegisterEntityMIDEPLANCtrl')
+        .setValidators(Validators.required);
+    } else {
+      this.form.get('formArray').get([1]).get('adaptationActionFinancingRegisterMIDEPLANCtrl').setValidators(null);
+      this.form.get('formArray').get([1]).get('adaptationActionFinancingRegisterNameMIDEPLANCtrl').setValidators(null);
+      this.form
+        .get('formArray')
+        .get([1])
+        .get('adaptationActionFinancingRegisterEntityMIDEPLANCtrl')
+        .setValidators(null);
+    }
+    this.form.get('formArray').get([1]).get('adaptationActionFinancingRegisterMIDEPLANCtrl').updateValueAndValidity();
+    this.form
+      .get('formArray')
+      .get([1])
+      .get('adaptationActionFinancingRegisterNameMIDEPLANCtrl')
+      .updateValueAndValidity();
+    this.form
+      .get('formArray')
+      .get([1])
+      .get('adaptationActionFinancingRegisterEntityMIDEPLANCtrl')
+      .updateValueAndValidity();
+  }
+
+  public clickNext(stepper: any, submitForm: boolean) {
+    if (!submitForm) {
+      this.submitForm();
+    } else {
+      stepper.next();
+    }
   }
 }

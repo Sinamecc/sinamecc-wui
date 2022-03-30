@@ -135,8 +135,8 @@ export class AdaptationActionsReportComponent implements OnInit {
         adaptationActionLinealRelationCtrl: ['', Validators.required],
       }),
       this.formBuilder.group({
-        adaptationActionInstrumentCtrl: ['', [Validators.maxLength(250)]],
-        adaptationActionDescriptionInstrumentCtrl: ['', [Validators.maxLength(3000)]],
+        adaptationActionInstrumentCtrl: ['', [Validators.required, Validators.maxLength(250)]],
+        adaptationActionDescriptionInstrumentCtrl: ['', [Validators.required, Validators.maxLength(3000)]],
       }),
       this.formBuilder.group({
         adaptationActionClimateThreatCtrl: ['', Validators.required],
@@ -257,6 +257,34 @@ export class AdaptationActionsReportComponent implements OnInit {
     this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').updateValueAndValidity();
     this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').updateValueAndValidity();
     this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').updateValueAndValidity();
-    // console.log(id, this.form.get('formArray').get([0]).get('adaptationActionProvinceCtrl').clearValidators());
+  }
+
+  public changeAdaptationType(id: string) {
+    if (parseInt(id) === 1) {
+      this.form
+        .get('formArray')
+        .get([3])
+        .get('adaptationActionDescriptionInstrumentCtrl')
+        .setValidators([Validators.maxLength(3000)]);
+      this.form
+        .get('formArray')
+        .get([3])
+        .get('adaptationActionInstrumentCtrl')
+        .setValidators([Validators.maxLength(250)]);
+    } else {
+      this.form
+        .get('formArray')
+        .get([3])
+        .get('adaptationActionDescriptionInstrumentCtrl')
+        .setValidators([Validators.required, Validators.maxLength(3000)]);
+      this.form
+        .get('formArray')
+        .get([3])
+        .get('adaptationActionInstrumentCtrl')
+        .setValidators([Validators.required, Validators.maxLength(250)]);
+    }
+
+    this.form.get('formArray').get([3]).get('adaptationActionDescriptionInstrumentCtrl').updateValueAndValidity();
+    this.form.get('formArray').get([3]).get('adaptationActionInstrumentCtrl').updateValueAndValidity();
   }
 }

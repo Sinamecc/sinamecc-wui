@@ -16,6 +16,7 @@
 
         <label translate>adaptationAction.form2.AAType</label>
         <mat-radio-group
+          (change)="changeAdaptationType($event.value)"
           #reportingEntityTypeControl="matRadioGroup"
           formControlName="adaptationActionTypeCtrl"
           class="custom-radio-group"
