@@ -12,6 +12,9 @@ import { ReportService } from '@app/report/report.service';
 import { ReportNewComponent } from './report-new/report-new.component';
 import { ReportVersionsComponent } from './report-versions/report-versions.component';
 import { ReportVersionsNewComponent } from './report-versions-new/report-versions-new.component';
+import { ReportFormDataComponent } from './report-form-data/report-form-data.component';
+import { MethodoloficalSheetComponent } from './methodolofical-sheet/methodolofical-sheet.component';
+import { DataUpdateComponent } from './data-update/data-update.component';
 
 @NgModule({
   imports: [
@@ -24,7 +27,15 @@ import { ReportVersionsNewComponent } from './report-versions-new/report-version
     MaterialModule,
     ReportRoutingModule,
   ],
-  declarations: [ReportComponent, ReportNewComponent, ReportVersionsComponent, ReportVersionsNewComponent],
+  declarations: [
+    ReportComponent,
+    ReportNewComponent,
+    ReportVersionsComponent,
+    ReportVersionsNewComponent,
+    ReportFormDataComponent,
+    MethodoloficalSheetComponent,
+    DataUpdateComponent,
+  ],
   providers: [ReportService],
 })
 export class ReportModule {}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
@@ -45,7 +45,14 @@ const routes = {
   providedIn: 'root',
 })
 export class ReportService {
+  private reportSource = new BehaviorSubject(null);
+  currentReport = this.reportSource.asObservable();
+
   constructor(private httpClient: HttpClient, private credentialsService: CredentialsService, private s3: S3Service) {}
+
+  updateCurrentReport(newReport: ReportDataPayload) {
+    this.reportSource.next(newReport);
+  }
 
   /**
    * Submit Report Forms.
