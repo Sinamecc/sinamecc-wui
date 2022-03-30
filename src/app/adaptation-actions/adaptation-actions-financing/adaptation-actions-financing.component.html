@@ -31,7 +31,12 @@
 
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form3.sourceFinancing</mat-label>
-          <mat-select #climateValueSource formControlName="adaptationActionFinancingSourceDetailCtrl" multiple>
+          <mat-select
+            (selectionChange)="selectSourceFinancing($event.value)"
+            #climateValueSource
+            formControlName="adaptationActionFinancingSourceDetailCtrl"
+            multiple
+          >
             <mat-option [value]="1">
               <label translate>Presupuesto público nacional</label>
             </mat-option>
@@ -78,7 +83,7 @@
           class="ppcn-field"
         >
           <mat-label translate>adaptationAction.form3.nameInstrument</mat-label>
-          <input matInput formControlName="adaptationActionFinancingDetailInstrumentOtherCtrl" required />
+          <input matInput formControlName="adaptationActionFinancingDetailInstrumentOtherCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
@@ -127,8 +132,8 @@
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
           <app-generic-button
+            (click)="clickNext(stepper, climateValueSource?.value?.includes(3))"
             [disabled]="formArray?.get([0]).invalid"
-            (click)="stepper.next()"
             name="general.next"
           ></app-generic-button>
         </div>

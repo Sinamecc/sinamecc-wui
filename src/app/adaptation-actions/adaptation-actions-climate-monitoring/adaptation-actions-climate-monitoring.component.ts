@@ -108,4 +108,80 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
 
     return context;
   }
+
+  setGeneralReportFiels(validations: boolean) {
+    if (validations) {
+      this.form.get('formArray').get([2]).get('reportPeriodStart2Ctrl').setValidators(Validators.required);
+
+      this.form.get('formArray').get([2]).get('reportPeriodEndt2Ctrl').setValidators(Validators.required);
+
+      this.form
+        .get('formArray')
+        .get([2])
+        .get('advanceDescriptionCtrl')
+        .setValidators([Validators.required, Validators.maxLength(3000)]);
+    } else {
+      this.form.get('formArray').get([2]).get('reportPeriodStart2Ctrl').setValidators(null);
+
+      this.form.get('formArray').get([2]).get('reportPeriodEndt2Ctrl').setValidators(null);
+
+      this.form.get('formArray').get([2]).get('advanceDescriptionCtrl').setValidators(null);
+    }
+
+    this.form.get('formArray').get([2]).get('reportPeriodStart2Ctrl').updateValueAndValidity();
+
+    this.form.get('formArray').get([2]).get('reportPeriodEndt2Ctrl').updateValueAndValidity();
+
+    this.form.get('formArray').get([2]).get('advanceDescriptionCtrl').updateValueAndValidity();
+  }
+
+  setIndicatorMonitoringFields(validations: boolean) {
+    if (validations) {
+      this.form.get('formArray').get([1]).get('indicatorsCtrl').setValidators(Validators.required);
+
+      this.form.get('formArray').get([1]).get('reportPeriodStartCtrl').setValidators(Validators.required);
+
+      this.form.get('formArray').get([1]).get('reportPeriodEndtCtrl').setValidators(Validators.required);
+
+      this.form.get('formArray').get([1]).get('indicatorDataUpdateDateCtrl').setValidators(Validators.required);
+
+      this.form.get('formArray').get([1]).get('indicatorVerificationSourceCtrl').setValidators(Validators.required);
+
+      this.form.get('formArray').get([1]).get('attachSupportingInformationCtrl').setValidators(Validators.required);
+    } else {
+      this.form.get('formArray').get([1]).get('indicatorsCtrl').setValidators(null);
+
+      this.form.get('formArray').get([1]).get('reportPeriodStartCtrl').setValidators(null);
+
+      this.form.get('formArray').get([1]).get('reportPeriodEndtCtrl').setValidators(null);
+
+      this.form.get('formArray').get([1]).get('indicatorDataUpdateDateCtrl').setValidators(null);
+
+      this.form.get('formArray').get([1]).get('indicatorVerificationSourceCtrl').setValidators(null);
+
+      this.form.get('formArray').get([1]).get('attachSupportingInformationCtrl').setValidators(null);
+    }
+
+    this.form.get('formArray').get([1]).get('indicatorsCtrl').updateValueAndValidity();
+
+    this.form.get('formArray').get([1]).get('reportPeriodStartCtrl').updateValueAndValidity();
+
+    this.form.get('formArray').get([1]).get('reportPeriodEndtCtrl').updateValueAndValidity();
+
+    this.form.get('formArray').get([1]).get('indicatorDataUpdateDateCtrl').updateValueAndValidity();
+
+    this.form.get('formArray').get([1]).get('indicatorVerificationSourceCtrl').updateValueAndValidity();
+
+    this.form.get('formArray').get([1]).get('attachSupportingInformationCtrl').updateValueAndValidity();
+  }
+
+  changeMonitoring(id: string) {
+    if (parseInt(id) === 1) {
+      this.setGeneralReportFiels(true);
+      this.setIndicatorMonitoringFields(true);
+    } else {
+      this.setGeneralReportFiels(false);
+      this.setIndicatorMonitoringFields(false);
+    }
+  }
 }
