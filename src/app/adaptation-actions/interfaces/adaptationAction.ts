@@ -18,7 +18,7 @@ export interface AdaptationActionInformation {
   objective: string;
   description: string;
   meta: string;
-  adaptation_action_type: string;
+  adaptation_action_type: string | string[];
   ods: number[];
 }
 
@@ -93,6 +93,8 @@ export interface Indicator {
   other_type_of_data: string;
   classifier: number[];
   other_classifier: string;
+  available_time_start_date?: string;
+  general_report?: GeneralReport;
 }
 
 export interface ProgressLog {
@@ -114,6 +116,7 @@ export interface ActionImpact {
   unwanted_action: string;
   unwanted_action_description: string;
   temporality_impact: number[];
+  general_impact: string;
   ods: number[];
 }
 
@@ -121,6 +124,12 @@ export interface State {
   state: string;
   label: string;
   required_comments?: Boolean;
+}
+
+export interface GeneralReport {
+  start_date: string;
+  end_date: string;
+  description: string;
 }
 
 export interface AdaptationAction {
@@ -141,4 +150,38 @@ export interface AdaptationAction {
   updated?: string;
   next_state?: State[];
   fsm_state?: State;
+}
+
+export interface Province {
+  id: number;
+  code: string;
+  name: string;
+  created: string;
+  updated: string;
+}
+
+export interface Canton {
+  id: number;
+  code: string;
+  name: string;
+  province: Province;
+  created: string;
+  updated: string;
+}
+
+export interface District {
+  id: number;
+  code: string;
+  name: string;
+  canton: Canton;
+  created: string;
+  updated: string;
+}
+
+export interface ClimateThreatCatalog {
+  id: number;
+  code: string;
+  name: string;
+  created: string;
+  updated: string;
 }

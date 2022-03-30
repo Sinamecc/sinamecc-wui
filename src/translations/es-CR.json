@@ -619,6 +619,7 @@
     },
     "form2": {
       "title": "Reporte de Acciones de Adaptación",
+      "appScale": "Escala de aplicación",
       "registerInfo": "Información de registro",
       "registerInfoTooltip": "Para detalles conceptuales sobre Acciones de Adaptación",
       "AAType": "Tipo de acción de adaptación",
@@ -656,6 +657,7 @@
       "actionCode": "Código de la acción"
     },
     "form3": {
+      "title": "Financiamiento",
       "financingInfo": "Información general del financiamiento",
       "status": "Estado de financiación",
       "stepsFinancing": "¿Qué gestiones está realizando para acceder al financiamiento?",
@@ -668,6 +670,7 @@
       "executingEntity": "Entidad Ejecutora del proyecto"
     },
     "form4": {
+      "title": "Registro de indicadores",
       "RegisterIindicators": "Registro de indicadores",
       "indicatorName": "Nombre del indicador",
       "indicatorDescription": "Descripción del indicador",
@@ -684,7 +687,12 @@
       "attachSupportMonitoring": "Por favor, anexe la información de soporte para el proceso de monitoreo y seguimiento",
       "descriptiveWay": "A modo descriptivo ¿cuál ha sido el avance de su acción en el periodo?"
     },
+    "form5": {
+      "selectIndicador": "Seleccione de indicador",
+      "title": "Monitoreo y seguimiento de acciones climáticas a través del SINAMECC"
+    },
     "form6": {
+      "title": "Impacto de la acción",
       "actionImpact": "Impacto de la Acción",
       "temporalityImpact": "Temporalidad del impacto en adaptación de la acción",
       "impactsAction": "Impactos de la acción según los indicadores definidos",

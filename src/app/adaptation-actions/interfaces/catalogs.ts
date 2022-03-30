@@ -10,7 +10,7 @@ export interface SubTopics {
   id?: number;
   code: string;
   name: string;
-  topic: number;
+  topic: Topic;
   created?: string;
   updated?: string;
 }

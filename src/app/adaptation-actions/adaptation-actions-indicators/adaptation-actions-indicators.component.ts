@@ -97,20 +97,8 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
 
   submitForm() {
     const payload: AdaptationAction = this.buildPayload();
-
     this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
-
     this.mainStepper.next();
-
-    /*
-		this.service
-			.updateNewAdaptationAction(payload, this.adaptationAction.id)
-			.subscribe(_ => {
-				this.openSnackBar("Formulario creado correctamente", "");
-				this.mainStepper.next();
-			});
-
-			*/
   }
 
   buildPayload() {
@@ -121,18 +109,20 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         unit: this.form.value.formArray[0].adaptationActionIndicatorUnitCtrl,
         methodological_detail: this.form.value.formArray[0].adaptationActionIndicatorMetodologyCtrl,
         reporting_periodicity: this.form.value.formArray[0].adaptationActionIndicatorFrecuenceCtrl,
-
         geographic_coverage: this.form.value.formArray[0].adaptationActionIndicatorCoverageCtrl,
-        other_geographic_coverage: '',
+        other_geographic_coverage: this.form.value.formArray[0].adaptationActionIndicatorCoverageOtherCtrl,
         disaggregation: this.form.value.formArray[0].adaptationActionIndicatorDisintegrationCtrl,
         limitation: this.form.value.formArray[0].adaptationActionIndicatorLimitCtrl,
         additional_information: this.form.value.formArray[0].adaptationActionIndicatorMeasurementCtrl,
         comments: this.form.value.formArray[0].adaptationActionIndicatorDetailsCtrl,
-
+        available_time_start_date: this.datePipe.transform(
+          this.form.value.formArray[0].adaptationActionIndicatorTimeCtrl,
+          'yyyy-MM-dd'
+        ),
         information_source: {
           responsible_institution: this.form.value.formArray[1].adaptationActionIndicatorResponsibleInstitutionCtrl,
           type_information: this.form.value.formArray[1].adaptationActionIndicatorSourceTypeCtrl,
-          Other_type: '',
+          Other_type: this.form.value.formArray[1].adaptationActionIndicatorSourceTypeOtherCtrl,
           statistical_operation: this.form.value.formArray[1].adaptationActionIndicatorOperationNameCtrl,
         },
         type_of_data: this.form.value.formArray[2].adaptationActionIndicatorSourceDataCtrl,

@@ -1,4 +1,7 @@
 <div class="container">
+  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+    <h2 translate>adaptationAction.form4.title</h2>
+  </div>
   <form [formGroup]="form">
     <mat-vertical-stepper #stepper linear formArrayName="formArray">
       <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
@@ -188,12 +191,24 @@
             </mat-option>
 
             <mat-option [value]="5">
+              <label translate>Registro administrativo</label>
+            </mat-option>
+
+            <mat-option [value]="6">
+              <label translate>Sistema de Monitoreo</label>
+            </mat-option>
+
+            <mat-option [value]="7">
+              <label translate> Estimación directa</label>
+            </mat-option>
+
+            <mat-option [value]="8">
               <label translate>Otro</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="indicatorSource?.value?.includes(5)" class="field-ppcn">
+        <mat-form-field *ngIf="indicatorSource?.value?.includes(8)" class="field-ppcn">
           <mat-label translate>adaptationAction.form4.sourceTypeDetail </mat-label>
           <input matInput formControlName="adaptationActionIndicatorSourceTypeOtherCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>

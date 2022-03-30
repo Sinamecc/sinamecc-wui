@@ -3,7 +3,7 @@
     <h2 translate>adaptationAction.form2.title</h2>
   </div>
   <form [formGroup]="form">
-    <mat-vertical-stepper #stepper linear formArrayName="formArray">
+    <mat-vertical-stepper #stepper formArrayName="formArray">
       <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
         <ng-template matStepLabel>
           <span translate>adaptationAction.form2.registerInfo</span>
@@ -78,69 +78,59 @@
           <span translate>general.GeographicLocation</span>
         </ng-template>
 
-        <mat-form-field class="field-ppcn" appearance="fill">
+        <label translate>adaptationAction.form2.appScale</label>
+        <mat-radio-group
+          (change)="changeLocationValidations($event.value)"
+          #appScaleControl="matRadioGroup"
+          formControlName="appScaleCtrl"
+          class="custom-radio-group"
+        >
+          <mat-radio-button [matTooltip]="typesTooltipTxt[0]" [value]="1">
+            <label translate>Nacional </label>
+          </mat-radio-button>
+          <mat-radio-button [matTooltip]="typesTooltipTxt[1]" [value]="2">
+            <label translate>Regional</label>
+          </mat-radio-button>
+          <mat-radio-button [matTooltip]="typesTooltipTxt[2]" [value]="3">
+            <label translate>Local</label>
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field
+          *ngIf="appScaleControl.value == 2 || appScaleControl.value == 3"
+          class="field-ppcn"
+          appearance="fill"
+        >
           <mat-label translate>adaptationAction.form2.AAProvince</mat-label>
-          <mat-select formControlName="adaptationActionProvinceCtrl" multiple>
-            <mat-option [value]="1">
-              <label translate>Alajuela</label>
-            </mat-option>
-
-            <mat-option [value]="2">
-              <label translate>San José</label>
-            </mat-option>
-
-            <mat-option [value]="3">
-              <label translate>Limón</label>
-            </mat-option>
-
-            <mat-option [value]="4">
-              <label translate>Puntarenas</label>
-            </mat-option>
-
-            <mat-option [value]="5">
-              <label translate>Guanacaste</label>
-            </mat-option>
-
-            <mat-option [value]="6">
-              <label translate>Cartago</label>
-            </mat-option>
-
-            <mat-option [value]="7">
-              <label translate>Heredia</label>
+          <mat-select (selectionChange)="selectProvince($event.value)" formControlName="adaptationActionProvinceCtrl">
+            <mat-option *ngFor="let province of provinces" [value]="province.id">
+              <label translate>{{ province.name }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="field-ppcn" appearance="fill">
+        <mat-form-field
+          *ngIf="appScaleControl.value == 2 || appScaleControl.value == 3"
+          class="field-ppcn"
+          appearance="fill"
+        >
           <mat-label translate>adaptationAction.form2.AACanton</mat-label>
-          <mat-select formControlName="adaptationActionCantonCtrl" multiple>
-            <mat-option [value]="1">
-              <label translate>Option 1</label>
-            </mat-option>
-
-            <mat-option [value]="2">
-              <label translate>Option 2</label>
-            </mat-option>
-
-            <mat-option [value]="3">
-              <label translate>Option 3</label>
+          <mat-select (selectionChange)="selectCanton($event.value)" formControlName="adaptationActionCantonCtrl">
+            <mat-option *ngFor="let element of canton" [value]="element.id">
+              <label translate>{{ element.name }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="field-ppcn" appearance="fill">
+        <mat-form-field
+          *ngIf="appScaleControl.value == 2 || appScaleControl.value == 3"
+          class="field-ppcn"
+          appearance="fill"
+        >
           <mat-label translate>adaptationAction.form2.AADistrict</mat-label>
-          <mat-select formControlName="adaptationActionDistritCtrl" multiple>
-            <mat-option [value]="1">
-              <label translate>Option 1</label>
-            </mat-option>
-
-            <mat-option [value]="2">
-              <label translate>Option 2</label>
-            </mat-option>
-
-            <mat-option [value]="3">
-              <label translate>Option 3</label>
+          <mat-select formControlName="adaptationActionDistritCtrl">
+            <mat-option *ngFor="let district of districts" [value]="district.id">
+              <label translate>{{ district.name }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -281,33 +271,13 @@
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form2.relatedClimateThreat</mat-label>
           <mat-select #climateValue formControlName="adaptationActionClimateThreatCtrl">
-            <mat-option [value]="1">
-              <label translate>Deslizamiento</label>
-            </mat-option>
-
-            <mat-option [value]="2">
-              <label translate>inundación</label>
-            </mat-option>
-
-            <mat-option [value]="3">
-              <label translate>avenida torrencial</label>
-            </mat-option>
-
-            <mat-option [value]="4">
-              <label translate>ola de calor</label>
-            </mat-option>
-
-            <mat-option [value]="5">
-              <label translate>sequía</label>
-            </mat-option>
-
-            <mat-option [value]="6">
-              <label translate>Otro</label>
+            <mat-option *ngFor="let climate of climateThreat" [value]="climate.id">
+              <label translate>{{ climate.name }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="climateValue.value === 6" class="field-ppcn">
+        <mat-form-field *ngIf="climateValue.value === climateThreat.length" class="field-ppcn">
           <mat-label translate>adaptationAction.form2.relatedClimateThreatOther</mat-label>
           <input type="text" matInput formControlName="adaptationActionClimateThreatOtherCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -389,7 +359,7 @@
 
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.actionCode</mat-label>
-          <input type="text" matInput formControlName="adaptationActionCodeCtrl" />
+          <input disabled type="text" matInput [value]="'AA' + reportingEntityTypeControl.value + '0001'" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 

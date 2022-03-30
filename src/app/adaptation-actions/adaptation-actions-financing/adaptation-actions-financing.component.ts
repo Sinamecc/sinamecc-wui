@@ -90,7 +90,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
         budget: this.form.value.formArray[0].adaptationActionFinancingBufgetValueCtrl,
         status: {
           code: this.form.value.formArray[0].adaptationActionFinancingStatusCtrl,
-          name: 'Test status finance',
+          name: '-',
         },
         mideplan: {
           registry: this.form.value.formArray[1].adaptationActionFinancingRegisterMIDEPLANCtrl,

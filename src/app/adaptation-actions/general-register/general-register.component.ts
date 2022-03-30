@@ -49,7 +49,7 @@ export class GeneralRegisterComponent implements OnInit {
         reportingEntityTypeCtrl: ['', Validators.required],
         reportingEntityTypeOtherCtrl: [''],
         entityResponsibleReportingCtrl: ['', [Validators.required, Validators.maxLength(250)]],
-        legalIdentificationCtrl: ['', [Validators.required, Validators.maxLength(10)]],
+        legalIdentificationCtrl: ['', [Validators.maxLength(10)]],
         reportPreparationDateCtrl: ['', Validators.required],
         nameContactPersonCtrl: ['', [Validators.required, Validators.maxLength(250)]],
         titleResponsibleReportingCtrl: ['', [Validators.required, Validators.maxLength(250)]],

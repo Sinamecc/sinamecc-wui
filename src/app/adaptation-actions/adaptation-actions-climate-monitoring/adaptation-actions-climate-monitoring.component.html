@@ -1,4 +1,7 @@
 <div class="container">
+  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+    <h2 translate>adaptationAction.form5.title</h2>
+  </div>
   <form [formGroup]="form">
     <mat-vertical-stepper #stepper linear formArrayName="formArray">
       <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
@@ -42,7 +45,7 @@
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
           <app-generic-button
             [disabled]="formArray?.get([0]).invalid"
-            (click)="stepper.next()"
+            (click)="clickNext(stepper, progressMonitoringRecordedClimateActionsControl.value)"
             name="general.next"
           ></app-generic-button>
         </div>
@@ -56,6 +59,17 @@
         <ng-template matStepLabel>
           <span translate>mitigationAction.indicatorMonitoring</span>
         </ng-template>
+
+        <mat-form-field class="field-ppcn">
+          <mat-select
+            formControlName="indicatorsCtrl"
+            [placeholder]="'adaptationAction.form5.selectIndicador' | translate"
+          >
+            <mat-option [value]="1">
+              {{ adaptationAction?.indicator?.name ? adaptationAction.indicator.name : 'N/A' }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
         <mat-label translate>mitigationAction.reportingPeriod </mat-label>
         <div fxLayout="row" fxLayoutAlign="start center">

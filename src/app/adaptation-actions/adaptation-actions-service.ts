@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AdaptationAction } from './interfaces/adaptationAction';
+import {
+  AdaptationAction,
+  Canton,
+  ClimateThreat,
+  ClimateThreatCatalog,
+  District,
+  Province,
+} from './interfaces/adaptationAction';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { ODS, SubTopics, TemporalityImpact, Topic } from './interfaces/catalogs';
@@ -13,6 +20,10 @@ const routes = {
   ods: () => `/v1/adaptation-action/get_ods/`,
   temporalityImpact: () => `/v1/adaptation-action/get_temporality_impact/`,
   generalImpact: () => `/v1/adaptation-action/get_general_impact/`,
+  getProvince: () => `/v1/general/province/`,
+  getCanton: () => `/v1/general/canton/`,
+  getDistricts: () => `/v1/general/district/`,
+  getClimateThreat: () => `/v1/adaptation-action/type_climate_threat/`,
 };
 
 @Injectable()
@@ -97,6 +108,38 @@ export class AdaptationActionService {
   public loadGeneralImpact() {
     return this.httpClient.get(routes.generalImpact()).pipe(
       map((body: TemporalityImpact[]) => {
+        return body;
+      })
+    );
+  }
+
+  public loadProvince() {
+    return this.httpClient.get(routes.getProvince()).pipe(
+      map((body: Province[]) => {
+        return body;
+      })
+    );
+  }
+
+  public loadCanton(id: number) {
+    return this.httpClient.get(routes.getCanton()).pipe(
+      map((body: Canton[]) => {
+        return body.filter((x) => x.province.id === id);
+      })
+    );
+  }
+
+  public loadDistrict(idCanton: number, idProvince: number) {
+    return this.httpClient.get(routes.getDistricts()).pipe(
+      map((body: District[]) => {
+        return body.filter((x) => x.canton.id === idCanton && x.canton.province.id === idProvince);
+      })
+    );
+  }
+
+  public loadClimateThreat() {
+    return this.httpClient.get(routes.getClimateThreat()).pipe(
+      map((body: ClimateThreatCatalog[]) => {
         return body;
       })
     );

@@ -28,21 +28,21 @@
 
         <mat-step [stepControl]="formArray?.get([2])">
           <ng-template matStepLabel>
-            <span translate>Financiamiento</span>
+            <span translate>adaptationAction.form3.title</span>
           </ng-template>
           <app-adaptation-actions-financing [mainStepper]="stepper"></app-adaptation-actions-financing>
         </mat-step>
 
         <mat-step [stepControl]="formArray?.get([3])">
           <ng-template matStepLabel>
-            <span translate>Registro de indicadores</span>
+            <span translate>adaptationAction.form4.title</span>
           </ng-template>
           <app-adaptation-actions-indicators [mainStepper]="stepper"></app-adaptation-actions-indicators>
         </mat-step>
 
         <mat-step [stepControl]="formArray?.get([4])">
           <ng-template matStepLabel>
-            <span translate>Monitoreo y seguimiento de acciones climáticas a través del SINAMECC</span>
+            <span translate>adaptationAction.form5.title</span>
           </ng-template>
           <app-adaptation-actions-climate-monitoring
             [mainStepper]="stepper"
@@ -51,7 +51,7 @@
 
         <mat-step [stepControl]="formArray?.get([5])">
           <ng-template matStepLabel>
-            <span translate>Impacto de la acción</span>
+            <span translate>adaptationAction.form6.title</span>
           </ng-template>
           <app-adaptation-actions-action-impact></app-adaptation-actions-action-impact>
         </mat-step>

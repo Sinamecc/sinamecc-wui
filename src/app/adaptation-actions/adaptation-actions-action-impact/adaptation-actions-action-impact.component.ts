@@ -86,7 +86,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
         adaptationTemporalityImpactCtrl: ['', Validators.required],
         impactsAccordingIndicatorsCtrl: [''],
         genderEquityElementsCtrl: ['', Validators.required],
-        genderEquityElementsQuestionCtrl: ['', Validators.required],
+        genderEquityElementsQuestionCtrl: [''],
         actionNegativeImpactCtrl: ['', Validators.required],
         AnnexSupportingInformationCtrl: ['', Validators.required],
         objectivesCtrl: ['', Validators.required], // new field
@@ -116,16 +116,6 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
         this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
       }
     );
-
-    /*
-		this.service
-			.updateNewAdaptationAction(payload, this.adaptationAction.id)
-			.subscribe(_ => {
-				this.openSnackBar("Formulario creado correctamente", "");
-				this.mainStepper.next();
-			});
-
-			*/
   }
 
   buildPayload() {
@@ -135,8 +125,9 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
         gender_equality_description: this.form.value.formArray[0].genderEquityElementsQuestionCtrl,
         unwanted_action: this.form.value.formArray[0].impactsAccordingIndicatorsCtrl,
         unwanted_action_description: this.form.value.formArray[0].actionNegativeImpactCtrl,
-        temporality_impact: this.form.value.formArray[0].adaptationTemporalityImpactCtrl,
-        ods: [1], //this.form.value.formArray[0].AnnexSupportingInformationCtrl
+        temporality_impact: [this.form.value.formArray[0].adaptationTemporalityImpactCtrl],
+        general_impact: this.form.value.formArray[0].adaptationTemporalityImpactCtrl,
+        ods: this.form.value.formArray[0].objectivesCtrl, //this.form.value.formArray[0].AnnexSupportingInformationCtrl
       },
     };
 

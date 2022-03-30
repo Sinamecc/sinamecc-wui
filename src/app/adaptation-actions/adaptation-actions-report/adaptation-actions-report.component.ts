@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdaptationActionService } from '../adaptation-actions-service';
-import { AdaptationAction } from '../interfaces/adaptationAction';
+import { AdaptationAction, Canton, ClimateThreatCatalog, District, Province } from '../interfaces/adaptationAction';
 import { ODS, SubTopics, Topic } from '../interfaces/catalogs';
 
 @Component({
@@ -20,6 +20,12 @@ export class AdaptationActionsReportComponent implements OnInit {
   adaptationAction: AdaptationAction;
   @Input() mainStepper: any;
   durationInSeconds = 3;
+  actualProvince = 0;
+
+  provinces: Province[] = [];
+  canton: Canton[] = [];
+  districts: District[] = [];
+  climateThreat: ClimateThreatCatalog[] = [];
 
   typesTooltipTxt = [
     'Tipo A - Instrumentos de políticas y planes: acciones que plantean esquemas que buscan reducir la vulnerabilidad antes los efectos del cambio climático a través de instrumentos de política, usualmente con alcance nacional o sectorial. Pueden tener la forma de ley, política, reglamentos, planes, estrategias, entre otros. Las políticas son el conjunto de decisiones, principios y normas que orientan a la acción, definiendo objetivos y metas precisas a legitimar y ejercer el poder y la autoridad que conduzcan a satisfacer determinadas necesidades de un país, sector, etc. Los planes son un esquema general de acción que define las prioridades, los lineamientos básicos de una gestión y el alcance de las funciones, para un lapso temporal determinado.',
@@ -42,6 +48,8 @@ export class AdaptationActionsReportComponent implements OnInit {
     this.loadODS();
     this.loadTopics();
     this.loadSubTopics();
+    this.loadProvinces();
+    this.loadClimateThreat();
     this.createForm();
   }
 
@@ -89,7 +97,8 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   changeSubTopics(idTopic: string) {
-    this.subTopicsToShow = this.subTopics.filter((subTopic) => subTopic.topic.toString() == idTopic.toString());
+    console.log('ássadd', idTopic);
+    this.subTopicsToShow = this.subTopics.filter((subTopic) => subTopic.topic.id.toString() == idTopic.toString());
   }
 
   openSnackBar(message: string, action: string = '') {
@@ -109,9 +118,10 @@ export class AdaptationActionsReportComponent implements OnInit {
         adaptationActionODSCtrl: ['', Validators.required],
       }),
       this.formBuilder.group({
-        adaptationActionProvinceCtrl: ['', Validators.required],
-        adaptationActionCantonCtrl: ['', Validators.required],
-        adaptationActionDistritCtrl: ['', Validators.required],
+        appScaleCtrl: ['', Validators.required],
+        adaptationActionProvinceCtrl: [''],
+        adaptationActionCantonCtrl: [''],
+        adaptationActionDistritCtrl: [''],
         adaptationActionDescriptionNarrativeCtrl: ['', [Validators.required, Validators.maxLength(3000)]],
         adaptationActionLocationCtrl: [''],
         adaptationActionLocationOtherCtrl: [''],
@@ -139,25 +149,15 @@ export class AdaptationActionsReportComponent implements OnInit {
         adaptationActionDurationTimeCtrl: ['', [Validators.required, Validators.maxLength(20)]],
         adaptationActionEntityCtrl: ['', [Validators.required, Validators.maxLength(250)]],
         adaptationActionEntityOthersCtrl: ['', [Validators.required, Validators.maxLength(250)]],
-        adaptationActionCodeCtrl: ['AA1', [Validators.required, Validators.maxLength(50)]],
+        adaptationActionCodeCtrl: ['AA0', [Validators.required, Validators.maxLength(50)]],
       }),
     ]);
   }
 
   submitForm() {
     const payload: AdaptationAction = this.buildPayload();
-
     this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
     this.mainStepper.next();
-
-    /*
-		this.service
-			.createNewAdaptationAction(Object.assign(this.adaptationAction, payload))
-			.subscribe(_ => {
-				this.openSnackBar("Formulario creado correctamente", "");
-				this.mainStepper.next();
-			});
-		*/
   }
 
   buildPayload() {
@@ -170,17 +170,10 @@ export class AdaptationActionsReportComponent implements OnInit {
         adaptation_action_type: this.form.value.formArray[0].adaptationActionTypeCtrl,
         ods: this.form.value.formArray[0].adaptationActionODSCtrl,
       },
-
       address: {
-        /*adaptationActionProvinceCtrl: this.form.value.formArray[1]
-				.adaptationActionProvinceCtrl,
-			adaptationActionCantonCtrl: this.form.value.formArray[1]
-				.adaptationActionCantonCtrl,
-			adaptationActionDistritCtrl: this.form.value.formArray[1]
-				.adaptationActionDistritCtrl,*/
         description: this.form.value.formArray[1].adaptationActionDescriptionNarrativeCtrl,
         GIS: this.form.value.formArray[1].adaptationActionLocationCtrl,
-        district: '',
+        district: this.form.value.formArray[1].adaptationActionDistritCtrl,
       },
 
       activity: {
@@ -200,12 +193,6 @@ export class AdaptationActionsReportComponent implements OnInit {
 
       climate_threat: {
         type_climated_threat: this.form.value.formArray[3].adaptationActionInstrumentCtrl,
-        /*
-				adaptationActionClimateThreatOtherCtrl: this.form.value.formArray[3]
-				.adaptationActionClimateThreatOtherCtrl,
-			adaptationActionInfoSourceCtrl: this.form.value.formArray[3]
-				.adaptationActionInfoSourceCtrl,
-				*/
       },
 
       implementation: {
@@ -222,5 +209,54 @@ export class AdaptationActionsReportComponent implements OnInit {
 
   public goToLink(url: string) {
     window.open(url, '_blank');
+  }
+
+  selectProvince(id: string) {
+    this.actualProvince = parseInt(id);
+    this.loadCanton(parseInt(id));
+  }
+
+  public selectCanton(id: string) {
+    this.loadDistrict(parseInt(id));
+  }
+
+  public loadProvinces() {
+    this.service.loadProvince().subscribe((response) => {
+      this.provinces = response;
+    });
+  }
+
+  public loadCanton(provinceID: number) {
+    this.service.loadCanton(provinceID).subscribe((response) => {
+      this.canton = response;
+    });
+  }
+
+  public loadDistrict(cantonID: number) {
+    this.service.loadDistrict(cantonID, this.actualProvince).subscribe((response) => {
+      this.districts = response;
+    });
+  }
+
+  public loadClimateThreat() {
+    this.service.loadClimateThreat().subscribe((response) => {
+      this.climateThreat = response;
+    });
+  }
+
+  public changeLocationValidations(id: number) {
+    if (id === 1) {
+      this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').setValidators(null);
+      this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').setValidators(null);
+      this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').setValidators(null);
+    } else {
+      this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').setValidators(Validators.required);
+      this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').setValidators(Validators.required);
+      this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').setValidators(Validators.required);
+    }
+    this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').updateValueAndValidity();
+    this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').updateValueAndValidity();
+    this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').updateValueAndValidity();
+    // console.log(id, this.form.get('formArray').get([0]).get('adaptationActionProvinceCtrl').clearValidators());
   }
 }
