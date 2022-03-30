@@ -4,7 +4,8 @@ export interface ReportOrganization {
   elaboration_date: string;
   entity_address: string;
   report_organization_type: string;
-  //ontact: any; // todo define type
+  other_report_organization_type: string;
+  contact: string;
 }
 
 export interface Adress {

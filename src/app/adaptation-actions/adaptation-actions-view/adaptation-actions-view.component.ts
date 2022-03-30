@@ -20,7 +20,7 @@ import {
 })
 export class AdaptationActionsViewComponent implements OnInit {
   id = '';
-  adaptationAction: AdaptationAction = {};
+  adaptationAction: any = {};
   reportingEntityType = reportingEntityTypeMap;
   adaptationsActionsType = adaptationsActionsTypeMap;
   provinciaType = provinciaMap;
@@ -40,7 +40,8 @@ export class AdaptationActionsViewComponent implements OnInit {
   loadAdaptationAction() {
     this.service.loadAdaptationActions().subscribe(
       (response) => {
-        this.adaptationAction = response.find((element) => element.id == this.id);
+        this.adaptationAction = response.find((element: any) => element.id == this.id);
+        console.log(this.adaptationAction);
       },
       (error) => {
         this.adaptationAction = {};
