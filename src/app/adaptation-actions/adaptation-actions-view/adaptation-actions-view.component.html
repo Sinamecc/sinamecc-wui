@@ -176,7 +176,7 @@
             <div fxLayout="column">
               <h3 class="mat-h3" translate>adaptationAction.form2.relationshipAxis</h3>
               <h3 class="mat-h3">
-                {{ adaptationAction?.activity?.adaptation_axis_guideline.adaptation_axis.description }}
+                {{ adaptationAction?.activity?.adaptation_axis_guideline?.adaptation_axis?.description }}
               </h3>
             </div>
 
@@ -184,7 +184,7 @@
               <h3 class="mat-h3" translate>
                 adaptationAction.form2.relationshipGuideline
               </h3>
-              <h3 class="mat-h3">{{ (adaptationAction?.activity?.ndc_contribution)[0].description }}</h3>
+              <h3 class="mat-h3">{{ (adaptationAction?.activity?.ndc_contribution)[0]?.description }}</h3>
             </div>
           </div>
 
@@ -535,7 +535,7 @@
               <h3 class="mat-h3" translate>mitigationAction.SINAMECCClassifiers</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ (adaptationAction?.indicator?.classifier)[0].name }}
+                {{ (adaptationAction?.indicator?.classifier)[0]?.name }}
               </h3>
             </div>
 
@@ -584,7 +584,7 @@
               <h3 class="mat-h3" translate>adaptationAction.form5.selectIndicador</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ adaptationAction?.indicator_monitoring?.indicator.name }}
+                {{ adaptationAction?.indicator_monitoring?.indicator?.name }}
               </h3>
             </div>
 
@@ -608,7 +608,7 @@
               <h3 class="mat-h3" translate>adaptationAction.form4.indicatorVerificationSource</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ (adaptationAction?.indicator_monitoring?.indicator_source)[0].name }}
+                {{ (adaptationAction?.indicator_monitoring?.indicator_source)[0]?.name }}
               </h3>
             </div>
 
@@ -663,7 +663,7 @@
               <h3 class="mat-h3" translate>adaptationAction.form6.temporalityImpact</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ (adaptationAction?.action_impact?.temporality_impact)[0].name }}
+                {{ (adaptationAction?.action_impact?.temporality_impact)[0]?.name }}
               </h3>
             </div>
 

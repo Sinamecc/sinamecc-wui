@@ -44,4 +44,10 @@ export class AdaptationActionsListComponent implements OnInit {
       }
     );
   }
+
+  addReview(uuid: string) {
+    this.router.navigate([`adaptation/actions/${uuid}/reviews/new`], {
+      replaceUrl: true,
+    });
+  }
 }

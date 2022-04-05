@@ -266,6 +266,7 @@
   },
 
   "general": {
+    "currencyType": "Tipo de Moneda",
     "positionPerson": "Cargo",
     "results": "Resultados",
     "until": "Hasta",
@@ -606,6 +607,7 @@
   },
 
   "adaptationAction": {
+    "newButton": "Nuevo reporte Acción de Adaptación",
     "form1": {
       "title": "Registro general",
       "subtitle": "En esta sección le invitamos a completar los datos generales de identificación para iniciar con el reporte de su acción",
@@ -642,7 +644,7 @@
       "relationshipAxis": "Relación con la Política Nacional de Adaptación (Eje)",
       "relationshipGuideline": "Relación con la Política Nacional de Adaptación (Lineamiento)",
       "relationshipInstruments": "Relación con otros instrumentos",
-      "namePlanningInstrument": "En su caso, indicar el nombre del instrumento de planificación al que pertenece la actuación",
+      "namePlanningInstrument": "En caso de aplicar, indique el nombre del instrumento de planificación al que pertenece la acción'",
       "adaptationIntegrated": "Descripción cómo se ha integrado la adaptación dentro del instrumento",
       "climateRelatedHazard": "Amenaza asociada al clima relacionada",
       "relatedClimateThreat": "Amenaza climática relacionada",
@@ -671,6 +673,7 @@
     },
     "form4": {
       "title": "Registro de indicadores",
+      "dataWantUpdate": "Ingrese el dato que desea actualizar",
       "RegisterIindicators": "Registro de indicadores",
       "indicatorName": "Nombre del indicador",
       "indicatorDescription": "Descripción del indicador",

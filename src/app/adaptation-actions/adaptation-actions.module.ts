@@ -16,6 +16,7 @@ import { AdaptationActionService } from './adaptation-actions-service';
 import { AdaptationActionsListComponent } from './adaptation-actions-list/adaptation-actions-list.component';
 import { AdaptationActionsViewComponent } from './adaptation-actions-view/adaptation-actions-view.component';
 import { SharedModule } from '@app/@shared';
+import { AdaptationActionReviewComponent } from './adaptation-action-review/adaptation-action-review.component';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { SharedModule } from '@app/@shared';
     AdaptationActionsActionImpactComponent,
     AdaptationActionsListComponent,
     AdaptationActionsViewComponent,
+    AdaptationActionReviewComponent,
   ],
   providers: [AdaptationActionService],
 })

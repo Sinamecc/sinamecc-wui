@@ -86,16 +86,24 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   buildPayload() {
     const context: AdaptationAction = {
       finance: {
-        administration: this.form.value.formArray[0].adaptationActionFinancingManagementCtrl,
+        administration: this.form.value.formArray[0].adaptationActionFinancingManagementCtrl
+          ? this.form.value.formArray[0].adaptationActionFinancingManagementCtrl
+          : null,
         budget: this.form.value.formArray[0].adaptationActionFinancingBufgetValueCtrl,
         status: {
           code: this.form.value.formArray[0].adaptationActionFinancingStatusCtrl,
           name: '-',
         },
         mideplan: {
-          registry: this.form.value.formArray[1].adaptationActionFinancingRegisterMIDEPLANCtrl,
-          name: this.form.value.formArray[1].adaptationActionFinancingRegisterNameMIDEPLANCtrl,
-          entity: this.form.value.formArray[1].adaptationActionFinancingRegisterEntityMIDEPLANCtrl,
+          registry: this.form.value.formArray[1].adaptationActionFinancingRegisterMIDEPLANCtrl
+            ? this.form.value.formArray[1].adaptationActionFinancingRegisterMIDEPLANCtrl
+            : null,
+          name: this.form.value.formArray[1].adaptationActionFinancingRegisterNameMIDEPLANCtrl
+            ? this.form.value.formArray[1].adaptationActionFinancingRegisterNameMIDEPLANCtrl
+            : null,
+          entity: this.form.value.formArray[1].adaptationActionFinancingRegisterEntityMIDEPLANCtrl
+            ? this.form.value.formArray[1].adaptationActionFinancingRegisterEntityMIDEPLANCtrl
+            : null,
         },
         source: [1, 2],
         finance_instrument: this.form.value.formArray[0].adaptationActionFinancingDetailInstrumentCtrl,

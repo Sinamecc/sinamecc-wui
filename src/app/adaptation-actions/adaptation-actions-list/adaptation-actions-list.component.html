@@ -45,15 +45,9 @@
         <button (click)="view(element.id)" mat-icon-button color="primary">
           <mat-icon color="white">visibility</mat-icon>
         </button>
-        <button mat-icon-button color="warn">
-          <mat-icon color="white">delete</mat-icon>
-        </button>
         <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
         <button mat-icon-button color="primary">
           <mat-icon color="white">navigate_next</mat-icon>
-        </button>
-        <button mat-icon-button color="primary">
-          <mat-icon color="white">history</mat-icon>
         </button>
         <!-- <button mat-icon-button color="primary" (click)="uploadProposal(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button> -->
       </mat-cell>
@@ -67,8 +61,5 @@
   </mat-paginator>
 </div>
 <div class="box-button button-container">
-  <app-generic-button
-    routerLink="/adaptation/actions/new"
-    name="Crear nueva acción de adaptaciópn"
-  ></app-generic-button>
+  <app-generic-button routerLink="/adaptation/actions/new" name="adaptationAction.newButton"></app-generic-button>
 </div>

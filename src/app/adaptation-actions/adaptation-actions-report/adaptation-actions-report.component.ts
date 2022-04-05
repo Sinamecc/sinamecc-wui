@@ -27,11 +27,20 @@ export class AdaptationActionsReportComponent implements OnInit {
   districts: District[] = [];
   climateThreat: ClimateThreatCatalog[] = [];
 
+  adaptationActionMap = {
+    '1': 'A',
+    '2': 'B',
+    '3': 'C',
+  };
+
   typesTooltipTxt = [
     'Tipo A - Instrumentos de políticas y planes: acciones que plantean esquemas que buscan reducir la vulnerabilidad antes los efectos del cambio climático a través de instrumentos de política, usualmente con alcance nacional o sectorial. Pueden tener la forma de ley, política, reglamentos, planes, estrategias, entre otros. Las políticas son el conjunto de decisiones, principios y normas que orientan a la acción, definiendo objetivos y metas precisas a legitimar y ejercer el poder y la autoridad que conduzcan a satisfacer determinadas necesidades de un país, sector, etc. Los planes son un esquema general de acción que define las prioridades, los lineamientos básicos de una gestión y el alcance de las funciones, para un lapso temporal determinado.',
     'Tipo B - Proyectos y programas : Los programas son un conjunto organizado, coherente e integrado de actividades, servicios o procesos expresados en agrupaciones de proyectos que se relacionan entre sí y se desarrollan en forma simultánea o sucesiva, con los recursos necesarios y con la finalidad de alcanzar los objetivos de reducción de vulnerabilidad determinados, todo esto configurado desde un plan y con un alcance, escala y duración delimitada.',
     'Tipo C - Actividades: conjunto de operaciones o tareas enfocadas en la reducción de la vulnerabilidad que tienen alcance, escala y duración delimitada. Pueden ser parte de un proyecto, programa, de un instrumento de política, o bien, ocurrir de manera aislada.',
   ];
+
+  adaptationActions = 0;
+  adaptationActionsExtension = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,6 +59,7 @@ export class AdaptationActionsReportComponent implements OnInit {
     this.loadSubTopics();
     this.loadProvinces();
     this.loadClimateThreat();
+    this.loadAdaptationActions();
     this.createForm();
   }
 
@@ -60,6 +70,18 @@ export class AdaptationActionsReportComponent implements OnInit {
   private createForm() {
     this.form = this.formBuilder.group({
       formArray: this.buildRegisterForm(),
+    });
+  }
+
+  loadAdaptationActions() {
+    this.service.loadAdaptationActions().subscribe((response) => {
+      this.adaptationActions = response.length;
+      this.adaptationActionsExtension = '';
+      const charLength = this.adaptationActionsExtension.toString().length;
+      new Array(4 - charLength).fill(0).forEach((_) => {
+        this.adaptationActionsExtension += '0';
+      });
+      this.adaptationActionsExtension += this.adaptationActions;
     });
   }
 
@@ -173,7 +195,9 @@ export class AdaptationActionsReportComponent implements OnInit {
       address: {
         description: this.form.value.formArray[1].adaptationActionDescriptionNarrativeCtrl,
         GIS: this.form.value.formArray[1].adaptationActionLocationCtrl,
-        district: this.form.value.formArray[1].adaptationActionDistritCtrl,
+        district: this.form.value.formArray[1].adaptationActionDistritCtrl
+          ? this.form.value.formArray[1].adaptationActionDistritCtrl
+          : null,
       },
 
       activity: {

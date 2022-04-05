@@ -266,6 +266,7 @@
   },
 
   "general": {
+    "currencyType": "Currency type",
     "positionPerson": "Position",
     "results": "Results",
     "until": "Until",
@@ -611,6 +612,7 @@
   },
 
   "adaptationAction": {
+    "newButton": "New Adaptation Action report",
     "form1": {
       "title": "General Registration",
       "subtitle": "In this section we invite you to complete the general identification data to start with the report of your action",
@@ -676,6 +678,7 @@
     },
     "form4": {
       "title": "Indicators register",
+      "dataWantUpdate": "Enter the data you want to update",
       "RegisterIindicators": "Register of indicators",
       "indicatorName": "Indicator name",
       "indicatorDescription": "Indicator description",

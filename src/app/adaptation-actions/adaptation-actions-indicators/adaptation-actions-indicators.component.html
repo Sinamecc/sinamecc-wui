@@ -288,11 +288,19 @@
           </mat-radio-button>
 
           <mat-radio-button [value]="5">
+            <label translate>Finanzas Climáticas</label>
+          </mat-radio-button>
+
+          <mat-radio-button [value]="6">
+            <label translate>Impactos</label>
+          </mat-radio-button>
+
+          <mat-radio-button [value]="7">
             <label translate>Otro</label>
           </mat-radio-button>
         </mat-radio-group>
 
-        <mat-form-field *ngIf="adaptationActionIndicatorClassifiers.value == 5" class="field-ppcn">
+        <mat-form-field *ngIf="adaptationActionIndicatorClassifiers.value == 7" class="field-ppcn">
           <mat-label
             ><span translate>mitigationAction.SINAMECCClassifiers</span> (<span translate>general.other</span>)
           </mat-label>

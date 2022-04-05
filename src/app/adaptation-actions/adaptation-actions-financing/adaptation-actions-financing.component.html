@@ -71,13 +71,37 @@
             </mat-option>
 
             <mat-option [value]="4">
+              <label translate>Fondos</label>
+            </mat-option>
+
+            <mat-option [value]="5">
+              <label translate>Préstamos tradicionales</label>
+            </mat-option>
+
+            <mat-option [value]="6">
+              <label translate>Préstamos concesionales</label>
+            </mat-option>
+
+            <mat-option [value]="7">
+              <label translate>Subsidios</label>
+            </mat-option>
+
+            <mat-option [value]="8">
+              <label translate>Garantías</label>
+            </mat-option>
+
+            <mat-option [value]="9">
+              <label translate>Subsidios</label>
+            </mat-option>
+
+            <mat-option [value]="10">
               <label translate>Otros</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field
-          *ngIf="climateValue?.value?.includes(4)"
+          *ngIf="climateValue?.value?.includes(10)"
           [style.margin-right]="'10px'"
           [style.width.%]="100"
           class="ppcn-field"
@@ -102,7 +126,7 @@
             [style.width.%]="100"
             class="ppcn-field"
           >
-            <mat-label translate>general.other</mat-label>
+            <mat-label translate>general.currencyType</mat-label>
             <input formControlName="adaptationActionFinancingBufgetOtherCtrl" type="text" matInput required />
             <mat-error translate>errorLabel.fieldRequired</mat-error>
           </mat-form-field>

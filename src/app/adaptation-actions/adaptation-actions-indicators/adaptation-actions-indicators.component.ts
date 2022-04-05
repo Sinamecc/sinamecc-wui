@@ -110,7 +110,9 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         methodological_detail: this.form.value.formArray[0].adaptationActionIndicatorMetodologyCtrl,
         reporting_periodicity: this.form.value.formArray[0].adaptationActionIndicatorFrecuenceCtrl,
         geographic_coverage: this.form.value.formArray[0].adaptationActionIndicatorCoverageCtrl,
-        other_geographic_coverage: this.form.value.formArray[0].adaptationActionIndicatorCoverageOtherCtrl,
+        other_geographic_coverage: this.form.value.formArray[0].adaptationActionIndicatorCoverageOtherCtrl
+          ? this.form.value.formArray[0].adaptationActionIndicatorCoverageOtherCtrl
+          : null,
         disaggregation: this.form.value.formArray[0].adaptationActionIndicatorDisintegrationCtrl,
         limitation: this.form.value.formArray[0].adaptationActionIndicatorLimitCtrl,
         additional_information: this.form.value.formArray[0].adaptationActionIndicatorMeasurementCtrl,
@@ -122,13 +124,19 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         information_source: {
           responsible_institution: this.form.value.formArray[1].adaptationActionIndicatorResponsibleInstitutionCtrl,
           type_information: this.form.value.formArray[1].adaptationActionIndicatorSourceTypeCtrl,
-          Other_type: this.form.value.formArray[1].adaptationActionIndicatorSourceTypeOtherCtrl,
+          Other_type: this.form.value.formArray[1].adaptationActionIndicatorSourceTypeOtherCtrl
+            ? this.form.value.formArray[1].adaptationActionIndicatorSourceTypeOtherCtrl
+            : null,
           statistical_operation: this.form.value.formArray[1].adaptationActionIndicatorOperationNameCtrl,
         },
         type_of_data: this.form.value.formArray[2].adaptationActionIndicatorSourceDataCtrl,
-        other_type_of_data: this.form.value.formArray[2].adaptationActionIndicatorSourceDataOtherCtrl,
+        other_type_of_data: this.form.value.formArray[2].adaptationActionIndicatorSourceDataOtherCtrl
+          ? this.form.value.formArray[2].adaptationActionIndicatorSourceDataOtherCtrl
+          : null,
         classifier: [this.form.value.formArray[2].adaptationActionIndicatorClassifiersCtrl],
-        other_classifier: this.form.value.formArray[2].adaptationActionIndicatorClassifiersOtherCtrl,
+        other_classifier: this.form.value.formArray[2].adaptationActionIndicatorClassifiersOtherCtrl
+          ? this.form.value.formArray[2].adaptationActionIndicatorClassifiersOtherCtrl
+          : null,
       },
     };
 

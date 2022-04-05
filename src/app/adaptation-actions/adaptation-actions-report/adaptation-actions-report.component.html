@@ -360,7 +360,16 @@
 
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.actionCode</mat-label>
-          <input disabled type="text" matInput [value]="'AA' + reportingEntityTypeControl.value + '0001'" />
+          <input
+            disabled
+            type="text"
+            matInput
+            [value]="
+              'AA' +
+              adaptationActionMap[reportingEntityTypeControl.value ? reportingEntityTypeControl.value : 0] +
+              adaptationActionsExtension
+            "
+          />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 

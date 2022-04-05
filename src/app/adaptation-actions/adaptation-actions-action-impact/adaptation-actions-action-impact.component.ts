@@ -122,7 +122,9 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     const context = {
       action_impact: {
         gender_equality: this.form.value.formArray[0].genderEquityElementsCtrl,
-        gender_equality_description: this.form.value.formArray[0].genderEquityElementsQuestionCtrl,
+        gender_equality_description: this.form.value.formArray[0].genderEquityElementsQuestionCtrl
+          ? this.form.value.formArray[0].genderEquityElementsQuestionCtrl
+          : null,
         unwanted_action: this.form.value.formArray[0].impactsAccordingIndicatorsCtrl,
         unwanted_action_description: this.form.value.formArray[0].actionNegativeImpactCtrl,
         temporality_impact: [this.form.value.formArray[0].adaptationTemporalityImpactCtrl],

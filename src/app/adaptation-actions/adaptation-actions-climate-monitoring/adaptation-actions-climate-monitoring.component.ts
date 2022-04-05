@@ -57,6 +57,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
         indicatorsCtrl: ['', Validators.required],
         reportPeriodStartCtrl: ['', Validators.required],
         reportPeriodEndtCtrl: ['', Validators.required],
+        dataWantUpdateCtrl: ['', Validators.required],
         indicatorDataUpdateDateCtrl: ['', Validators.required],
         indicatorVerificationSourceCtrl: ['', Validators.required],
         indicatorVerificationSourceOtherCtrl: [''],
@@ -92,17 +93,31 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
         progress_monitoring: this.form.value.formArray[0].progressMonitoringRecordedClimateActionsCtrl,
       },
       indicator_monitoring: {
-        indicator: this.form.value.formArray[1].indicatorsCtrl,
-        start_date: this.datePipe.transform(this.form.value.formArray[1].reportPeriodStartCtrl, 'yyyy-MM-dd'),
-        end_date: this.datePipe.transform(this.form.value.formArray[1].reportPeriodEndtCtrl, 'yyyy-MM-dd'),
-        update_date: this.datePipe.transform(this.form.value.formArray[1].indicatorDataUpdateDateCtrl, 'yyyy-MM-dd'),
+        indicator: this.form.value.formArray[1].indicatorsCtrl ? this.form.value.formArray[1].indicatorsCtrl : null,
+        start_date: this.form.value.formArray[1].reportPeriodStartCtrl
+          ? this.datePipe.transform(this.form.value.formArray[1].reportPeriodStartCtrl, 'yyyy-MM-dd')
+          : null,
+        end_date: this.form.value.formArray[1].reportPeriodEndtCtrl
+          ? this.datePipe.transform(this.form.value.formArray[1].reportPeriodEndtCtrl, 'yyyy-MM-dd')
+          : null,
+        update_date: this.form.value.formArray[1].indicatorDataUpdateDateCtrl
+          ? this.datePipe.transform(this.form.value.formArray[1].indicatorDataUpdateDateCtrl, 'yyyy-MM-dd')
+          : null,
         data_to_update: '-',
-        indicator_source: [this.form.value.formArray[1].indicatorVerificationSourceCtrl],
+        indicator_source: this.form.value.formArray[1].indicatorVerificationSourceCtrl
+          ? [this.form.value.formArray[1].indicatorVerificationSourceCtrl]
+          : null,
       },
       general_report: {
-        start_date: this.datePipe.transform(this.form.value.formArray[2].reportPeriodStart2Ctrl, 'yyyy-MM-dd'),
-        end_date: this.datePipe.transform(this.form.value.formArray[2].reportPeriodEndt2Ctrl, 'yyyy-MM-dd'),
-        description: this.form.value.formArray[2].advanceDescriptionCtrl,
+        start_date: this.form.value.formArray[2].reportPeriodStart2Ctrl
+          ? this.datePipe.transform(this.form.value.formArray[2].reportPeriodStart2Ctrl, 'yyyy-MM-dd')
+          : null,
+        end_date: this.form.value.formArray[2].reportPeriodEndt2Ctrl
+          ? this.datePipe.transform(this.form.value.formArray[2].reportPeriodEndt2Ctrl, 'yyyy-MM-dd')
+          : null,
+        description: this.form.value.formArray[2].advanceDescriptionCtrl
+          ? this.form.value.formArray[2].advanceDescriptionCtrl
+          : null,
       },
     };
 

@@ -82,7 +82,9 @@ export class GeneralRegisterComponent implements OnInit {
       elaboration_date: this.datePipe.transform(this.form.value.formArray[0].reportPreparationDateCtrl, 'yyyy-MM-dd'),
       entity_address: this.form.value.formArray[0].entityAddress,
       report_organization_type: this.form.value.formArray[0].reportingEntityTypeCtrl,
-      other_report_organization_type: this.form.value.formArray[0].reportingEntityTypeOtherCtrl,
+      other_report_organization_type: this.form.value.formArray[0].reportingEntityTypeOtherCtrl
+        ? this.form.value.formArray[0].reportingEntityTypeOtherCtrl
+        : null,
       contact: this.form.value.formArray[0].nameContactPersonCtrl,
     };
     return context;
