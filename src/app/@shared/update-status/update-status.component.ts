@@ -82,7 +82,6 @@ export class UpdateStatusComponent implements OnInit {
       comments: this.moduleRef ? this.moduleRef.instance.buildFormatComments(this.moduleRef.instance.comments) : [],
     };
     this.formSubmitted.emit(context);
-
     this.service
       .updateStatus(context, this.formSubmitRoute)
       .pipe(

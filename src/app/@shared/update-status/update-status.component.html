@@ -21,7 +21,7 @@
         <br />
         <div fxLayout="column">
           <h3 translate>general.currentStatus</h3>
-          <span>{{ entity.fsm_state }}</span>
+          <span>{{ entity.fsm_state?.label }}</span>
           <hr />
           <mat-form-field>
             <mat-select
@@ -30,7 +30,7 @@
               [compareWith]="compareIds"
             >
               <mat-option *ngFor="let status of statuses" [value]="status">
-                {{ status }}
+                {{ status?.label }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -62,7 +62,6 @@
           </button>
           <br />
           <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">
-            <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
             <span translate>specificLabel.submitReview</span>
           </button>
         </div>

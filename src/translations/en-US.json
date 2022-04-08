@@ -612,6 +612,7 @@
   },
 
   "adaptationAction": {
+    "addReview": "Add a new review for this adaptation action",
     "newButton": "New Adaptation Action report",
     "form1": {
       "title": "General Registration",

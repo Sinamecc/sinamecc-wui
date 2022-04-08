@@ -29,7 +29,6 @@ export class ReportComponent implements OnInit {
   loadReportData() {
     this.reportService.reports().subscribe((reports: Report[]) => {
       const reportList = reports;
-      console.log(reports, 'reports');
       this.dataSource = new MatTableDataSource<Report>(reportList);
       this.dataSource.paginator = this.paginator;
     });

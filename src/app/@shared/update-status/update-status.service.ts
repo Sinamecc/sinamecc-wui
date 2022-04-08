@@ -15,7 +15,7 @@ export class UpdateStatusService {
 
   updateStatus(context: any, routeToUpload: string): Observable<Response> {
     const form = {
-      fsm_state: context.context.statusCtrl,
+      fsm_state: context.context.statusCtrl.state,
       comments: context.comments,
     };
 

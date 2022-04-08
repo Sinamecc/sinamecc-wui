@@ -119,7 +119,6 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   changeSubTopics(idTopic: string) {
-    console.log('ássadd', idTopic);
     this.subTopicsToShow = this.subTopics.filter((subTopic) => subTopic.topic.id.toString() == idTopic.toString());
   }
 

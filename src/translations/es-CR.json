@@ -607,6 +607,7 @@
   },
 
   "adaptationAction": {
+    "addReview": "Agregar una nueva revisión para esta acción de adaptación",
     "newButton": "Nuevo reporte Acción de Adaptación",
     "form1": {
       "title": "Registro general",
