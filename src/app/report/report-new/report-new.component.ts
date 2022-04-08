@@ -53,7 +53,6 @@ export class ReportNewComponent implements OnInit {
 
   async getCatalogs() {
     this.catalogs = await this.reportService.getReportCatalogs().toPromise();
-    console.log(this.catalogs, 'catalogssss');
   }
 
   submitForm() {
@@ -114,8 +113,6 @@ export class ReportNewComponent implements OnInit {
         change_description: '',
       },
     };
-
-    console.log(payload, 'payload');
 
     return payload;
   }

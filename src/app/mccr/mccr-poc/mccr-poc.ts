@@ -11,3 +11,18 @@ export interface MccrPoc {
   buyer_account: BuyerAccount;
   cancellation_account: Number;
 }
+
+export interface VerifyDetails {
+  metadata_id: string;
+  block_address: any;
+  document_hash: string;
+  revision_verified: boolean;
+  block_verified: boolean;
+}
+
+export interface VerifyResponse {
+  ucc_code: string;
+  verified_blocks: boolean;
+  verified_revisions: boolean;
+  details: VerifyDetails[];
+}

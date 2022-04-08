@@ -44,7 +44,8 @@
     <mat-card-content>
       <mat-card-title class="section-heading" translate>{{ 'mccrPoc.POCDetail' | translate }}</mat-card-title>
       <mat-divider class="divider-custom"></mat-divider>
-      <mat-card-subtitle>
+      <br />
+      <mat-card-subtitle class="marginTop">
         <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
       </mat-card-subtitle>
 
@@ -62,24 +63,38 @@
         >: {{ mccr_poc?.reserve_account }} <br />
         <strong *ngIf="mccr_poc.cancellation_account != null" translate>Cancellation Account:</strong
         >{{ mccr_poc?.cancellation_account }} <br />
-        <button
-          mat-icon-button
-          color="primary"
-          matTooltip="{{ 'general.viewDetails' | translate }}"
-          *ngIf="mccr_poc != null"
-          (click)="view(idUcc.value)"
-        >
-          <mat-icon color="white">visibility</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          color="black"
-          matTooltip="{{ 'mccrPoc.cancelUCC' | translate }}"
-          *ngIf="mccr_poc != null && mccr_poc.generation_account != 0"
-          (click)="openDeleteConfirmationDialog(idUcc.value)"
-        >
-          <mat-icon color="white">remove_circle</mat-icon>
-        </button>
+        <div *ngIf="!verifyingState">
+          <button
+            mat-icon-button
+            color="primary"
+            matTooltip="{{ 'general.viewDetails' | translate }}"
+            *ngIf="mccr_poc != null"
+            (click)="view(idUcc.value)"
+          >
+            <mat-icon color="white">visibility</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="primary"
+            matTooltip="{{ 'mccrPoc.verify' | translate }}"
+            *ngIf="mccr_poc != null"
+            (click)="verify(idUcc.value)"
+          >
+            <mat-icon color="white">done</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="black"
+            matTooltip="{{ 'mccrPoc.cancelUCC' | translate }}"
+            *ngIf="mccr_poc != null && mccr_poc.generation_account != 0"
+            (click)="openDeleteConfirmationDialog(idUcc.value)"
+          >
+            <mat-icon color="white">remove_circle</mat-icon>
+          </button>
+        </div>
+        <div *ngIf="verifyingState">
+          <app-loader message="general.loading" [isLoading]="verifyingState" size="1.5"></app-loader>
+        </div>
       </div>
     </mat-card-content>
   </mat-card>

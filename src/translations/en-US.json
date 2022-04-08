@@ -265,6 +265,7 @@
   },
 
   "general": {
+    "loading": "Cargando...",
     "positionPerson": "Position",
     "results": "Results",
     "until": "Until",
@@ -373,6 +374,9 @@
   },
 
   "mccrPoc": {
+    "verifiedReviews": "Verified reviews",
+    "blocksVerify": "Verified blocks",
+    "verifyData": "Verify Data",
     "addDAC": "Add new developer account",
     "addBAC": "Add new buyer account",
     "addUCC": "Add new UCC",
@@ -389,10 +393,10 @@
     "buyerCurrentDebitBalance": "Buyer Current Debit Balance",
     "buyerCurrentCreditBalance": "Buyer Current Credit Balance",
     "buyerFinalBalance": "Buyer Final Balance",
-    "addPOC": "Add a new POC",
+    "addPOC": "Add a new UCC",
     "UCCBatchBase": "UCC Batch Base",
     "UCCBatchSize": "UCC Batch Size",
-    "POCDetail": "MMCR POC Detail",
+    "POCDetail": "MMCR UCC Detail",
     "searchUCC": "Search UCC",
     "addBuyerAccount": "Add Buyer account",
     "AddDevAccount": "Add Developer account",
@@ -403,7 +407,8 @@
     "numberUCCTransfer": "Number UCC to transfer",
     "cancelUCC": "Cancel UCC",
     "accountNumber": "Account number",
-    "addBuyerTransfer": "Add a new Buyer transfer"
+    "addBuyerTransfer": "Add a new Buyer transfer",
+    "verify": "Verify UCC"
   },
 
   "errorLabel": {

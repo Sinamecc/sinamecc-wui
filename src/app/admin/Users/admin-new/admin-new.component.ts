@@ -275,7 +275,6 @@ export class AdminNewComponent implements OnInit {
             this.snackBar.open(res, null, { duration: 3000 });
           });
           log.debug(`${response.statusCode} status code received from form`);
-          console.log(response);
           this.router.navigate([`/home`], { replaceUrl: true });
         },
         (error) => {

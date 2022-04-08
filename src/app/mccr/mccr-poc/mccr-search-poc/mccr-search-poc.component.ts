@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MccrPoc } from '@app/mccr/mccr-poc/mccr-poc';
+import { MccrPoc, VerifyResponse } from '@app/mccr/mccr-poc/mccr-poc';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
 import { MccrPocService } from '@app/mccr/mccr-poc/mccr-poc.service';
@@ -10,6 +10,7 @@ import { finalize } from 'rxjs/operators';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 import { MccrPocNewDeveloperAccountComponent } from '@app/mccr/mccr-poc/mccr-poc-new-developer-account/mccr-poc-new-developer-account.component';
 import { MccrPocNewBuyerAccountComponent } from '@app/mccr/mccr-poc/mccr-poc-new-buyer-account/mccr-poc-new-buyer-account.component';
+import { UccVerifyDataComponent } from '../ucc-verify-data/ucc-verify-data.component';
 
 @Component({
   selector: 'app-mccr-search-poc',
@@ -21,6 +22,7 @@ export class MccrSearchPocComponent implements OnInit {
   mccr_poc: MccrPoc;
   isLoading: boolean;
   id: string;
+  verifyingState = false;
 
   constructor(
     private router: Router,
@@ -37,17 +39,25 @@ export class MccrSearchPocComponent implements OnInit {
   ngOnInit(): void {}
 
   openDialogDeveloper(): void {
-    const dialogRef = this.dialog.open(MccrPocNewDeveloperAccountComponent, {
+    this.dialog.open(MccrPocNewDeveloperAccountComponent, {
       width: '70%',
     });
   }
 
   openDialogBuyer(): void {
-    const dialogRef = this.dialog.open(MccrPocNewBuyerAccountComponent, {
+    this.dialog.open(MccrPocNewBuyerAccountComponent, {
       width: '70%',
     });
   }
 
+  openVerifyDialog(data: VerifyResponse) {
+    this.dialog.open(UccVerifyDataComponent, {
+      width: '70%',
+      data: {
+        verifyResponse: data,
+      },
+    });
+  }
   search(value: string) {
     this.isLoading = true;
     this.service
@@ -57,13 +67,39 @@ export class MccrSearchPocComponent implements OnInit {
           this.isLoading = false;
         })
       )
-      .subscribe((response: MccrPoc) => {
-        this.mccr_poc = response;
-      });
+      .subscribe(
+        (response: MccrPoc) => {
+          this.mccr_poc = response;
+        },
+        (error) => {
+          this.snackBar.open(error.error.message, null, { duration: 3000 });
+        }
+      );
   }
 
   view(uuid: string) {
     this.router.navigate([`/mccr/poc/detail/${uuid}`], { replaceUrl: true });
+  }
+
+  verify(uuid: string) {
+    this.verifyingState = true;
+    this.service
+      .verifyUCC(uuid.trim())
+      .pipe(
+        finalize(() => {
+          this.verifyingState = false;
+        })
+      )
+      .subscribe(
+        (response) => {
+          this.openVerifyDialog(response);
+        },
+        (error) => {
+          this.translateService.get('errorLabel.error400').subscribe((res: string) => {
+            this.snackBar.open(res, null, { duration: 3000 });
+          });
+        }
+      );
   }
 
   cancel(uuid: string) {
