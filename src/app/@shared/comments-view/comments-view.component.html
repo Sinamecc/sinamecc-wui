@@ -21,7 +21,7 @@
       </p>
     </div>
     <div fxLayout="row" fxLayoutAlign="end center">
-      <button (click)="deleteComment(i)" mat-button color="warn">Eliminar</button>
+      <button *ngIf="edit" (click)="deleteComment(i)" mat-button color="warn">Eliminar</button>
     </div>
     <mat-divider style="width: 100%;"></mat-divider>
   </div>
