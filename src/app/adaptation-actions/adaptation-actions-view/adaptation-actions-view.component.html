@@ -3,8 +3,15 @@
     <mat-tab-group class="custom-tabs">
       <mat-tab [label]="'adaptationAction.form1.title' | translate">
         <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>adaptationAction.form1.dataRegister</label>
+            <button
+              *ngIf="adaptationAction.comments || edit"
+              (click)="openCommentsModal(commentsModule1, 0)"
+              mat-icon-button
+            >
+              <mat-icon>comment</mat-icon>
+            </button>
           </div>
 
           <div fxLayout="column" fxLayoutAlign="space-around start">
@@ -54,8 +61,15 @@
       </mat-tab>
       <mat-tab [label]="'adaptationAction.form2.title' | translate">
         <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>adaptationAction.form2.registerInfo</label>
+            <button
+              *ngIf="adaptationAction.comments || edit"
+              (click)="openCommentsModal(commentsModule2, 1)"
+              mat-icon-button
+            >
+              <mat-icon>comment</mat-icon>
+            </button>
           </div>
 
           <div fxLayout="column" fxLayoutAlign="space-around start">
@@ -107,7 +121,7 @@
 
           <mat-divider style="width: 100%;"></mat-divider>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>general.GeographicLocation</label>
           </div>
 
@@ -151,7 +165,7 @@
 
           <mat-divider style="width: 100%;"></mat-divider>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>adaptationAction.form2.categorizationNationalIntruments</label>
           </div>
 
@@ -190,7 +204,7 @@
 
           <mat-divider style="width: 100%;"></mat-divider>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>adaptationAction.form2.relationshipInstruments</label>
           </div>
 
@@ -210,7 +224,7 @@
 
           <mat-divider style="width: 100%;"></mat-divider>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>adaptationAction.form2.climateRelatedHazard</label>
           </div>
 
@@ -236,7 +250,7 @@
 
           <mat-divider style="width: 100%;"></mat-divider>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>adaptationAction.form2.implementation</label>
           </div>
 
@@ -281,8 +295,15 @@
       </mat-tab>
       <mat-tab [label]="'adaptationAction.form3.title' | translate">
         <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>adaptationAction.form3.financingInfo</label>
+            <button
+              *ngIf="adaptationAction.comments || edit"
+              (click)="openCommentsModal(commentsModule3, 2)"
+              mat-icon-button
+            >
+              <mat-icon>comment</mat-icon>
+            </button>
           </div>
 
           <div fxLayout="column" fxLayoutAlign="space-around start">
@@ -336,7 +357,7 @@
             </div>
           </div>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate> adaptationAction.form3.actionsfinancedInternationalSources</label>
           </div>
 
@@ -379,8 +400,15 @@
       </mat-tab>
       <mat-tab [label]="'adaptationAction.form4.title' | translate">
         <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>adaptationAction.form4.RegisterIindicators</label>
+            <button
+              *ngIf="adaptationAction.comments || edit"
+              (click)="openCommentsModal(commentsModule4, 3)"
+              mat-icon-button
+            >
+              <mat-icon>comment</mat-icon>
+            </button>
           </div>
 
           <div fxLayout="column" fxLayoutAlign="space-around start">
@@ -553,8 +581,15 @@
       </mat-tab>
       <mat-tab [label]="'adaptationAction.form5.title' | translate">
         <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>mitigationAction.monitoringProgressLog</label>
+            <button
+              *ngIf="adaptationAction.comments || edit"
+              (click)="openCommentsModal(commentsModule5, 4)"
+              mat-icon-button
+            >
+              <mat-icon>comment</mat-icon>
+            </button>
           </div>
 
           <div fxLayout="column" fxLayoutAlign="space-around start">
@@ -575,7 +610,7 @@
             </div>
           </div>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>mitigationAction.indicatorMonitoring</label>
           </div>
 
@@ -621,7 +656,7 @@
             </div>
           </div>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>mitigationAction.generalProgressReportClimateAction</label>
           </div>
 
@@ -654,8 +689,15 @@
       </mat-tab>
       <mat-tab [label]="'adaptationAction.form6.title' | translate">
         <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>adaptationAction.form6.actionImpact</label>
+            <button
+              *ngIf="adaptationAction.comments || edit"
+              (click)="openCommentsModal(commentsModule6, 5)"
+              mat-icon-button
+            >
+              <mat-icon>comment</mat-icon>
+            </button>
           </div>
 
           <div fxLayout="column" fxLayoutAlign="space-around start">

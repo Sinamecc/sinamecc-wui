@@ -1,0 +1,38 @@
+<div>
+  <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+    <label class="mat-h1" translate>Nuevo comentario</label>
+    <button mat-dialog-close mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="comment-container">
+    <mat-form-field class="comment-container" appearance="fill">
+      <mat-label>Módulo</mat-label>
+      <mat-select (selectionChange)="loadSubModules($event.value)" fxFlex="100" [(ngModel)]="comment.module">
+        <mat-option *ngFor="let module of fields" translate [value]="module.module">
+          <span translate>{{ module.module }}</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="comment.module" class="comment-container" appearance="fill">
+      <mat-label>Campo</mat-label>
+      <mat-select fxFlex="100" [(ngModel)]="comment.subModule">
+        <mat-option *ngFor="let subField of subFields" [value]="subField">
+          <span translate>{{ subField }}</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="comment.subModule" class="comment-container" appearance="fill">
+      <mat-label>Comentario</mat-label>
+      <textarea [(ngModel)]="comment.comment" matInput></textarea>
+    </mat-form-field>
+  </div>
+  <div class="comment-container">
+    <button mat-dialog-close mat-raised-button>Cancelar</button>
+    <button [mat-dialog-close]="comment" [disabled]="!comment.comment" mat-raised-button color="primary">
+      Comentar
+    </button>
+  </div>
+</div>
