@@ -266,6 +266,8 @@
   },
 
   "general": {
+    "newComment": "New comment",
+    "comments": "Comments",
     "currencyType": "Currency type",
     "positionPerson": "Position",
     "results": "Results",

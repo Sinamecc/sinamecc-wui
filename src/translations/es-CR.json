@@ -266,6 +266,8 @@
   },
 
   "general": {
+    "newComment": "Nuevo comentario",
+    "comments": "Comentarios",
     "currencyType": "Tipo de Moneda",
     "positionPerson": "Cargo",
     "results": "Resultados",
