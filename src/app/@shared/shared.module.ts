@@ -21,6 +21,8 @@ import { UpdateStatusService } from './update-status/update-status.service';
 import { UploadProposalService } from './upload-proposal/upload-proposal.service';
 import { ViewPdfService } from './view-pdf/view-pdf.service';
 import { S3Service } from './s3.service';
+import { CommentsViewComponent } from './comments-view/comments-view.component';
+import { CommentsAddComponent } from './comments-add/comments-add.component';
 @NgModule({
   imports: [FlexLayoutModule, MaterialModule, CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
   declarations: [
@@ -35,6 +37,8 @@ import { S3Service } from './s3.service';
     CustomSearchBarComponent,
     ErrorReportingComponent,
     ViewPdfComponent,
+    CommentsViewComponent,
+    CommentsAddComponent,
   ],
   providers: [UploadProposalService, UpdateStatusService, ViewPdfService, S3Service],
   exports: [
@@ -49,6 +53,8 @@ import { S3Service } from './s3.service';
     CustomSearchBarComponent,
     ErrorReportingComponent,
     ViewPdfComponent,
+    CommentsViewComponent,
+    CommentsAddComponent,
   ],
 })
 export class SharedModule {}

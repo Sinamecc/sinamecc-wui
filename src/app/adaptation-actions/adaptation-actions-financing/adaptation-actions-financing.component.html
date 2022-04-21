@@ -1,0 +1,209 @@
+<div class="container">
+  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+    <h2 translate>adaptationAction.form3.title</h2>
+  </div>
+  <form [formGroup]="form">
+    <mat-vertical-stepper #stepper linear formArrayName="formArray">
+      <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+        <ng-template matStepLabel>
+          <span translate>adaptationAction.form3.financingInfo</span>
+        </ng-template>
+
+        <span translate>adaptationAction.form3.status</span>
+        <mat-radio-group
+          #adaptationActionFinancingStatus="matRadioGroup"
+          formControlName="adaptationActionFinancingStatusCtrl"
+          class="custom-radio-group"
+        >
+          <mat-radio-button value="1">
+            <label translate>Asegurado</label>
+          </mat-radio-button>
+          <mat-radio-button value="2">
+            <label translate>Por obtener</label>
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field *ngIf="adaptationActionFinancingStatus.value == 2" class="field-ppcn">
+          <mat-label translate>adaptationAction.form3.stepsFinancing</mat-label>
+          <input matInput formControlName="adaptationActionFinancingManagementCtrl" />
+          <mat-error translate>errorLabel.fieldRequired</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field-ppcn" appearance="fill">
+          <mat-label translate>adaptationAction.form3.sourceFinancing</mat-label>
+          <mat-select
+            (selectionChange)="selectSourceFinancing($event.value)"
+            #climateValueSource
+            formControlName="adaptationActionFinancingSourceDetailCtrl"
+            multiple
+          >
+            <mat-option [value]="1">
+              <label translate>Presupuesto público nacional</label>
+            </mat-option>
+
+            <mat-option [value]="2">
+              <label translate>Presupuesto privado nacional</label>
+            </mat-option>
+
+            <mat-option [value]="3">
+              <label translate>Cooperación internacional</label>
+            </mat-option>
+
+            <mat-option [value]="4">
+              <label translate>Por definir</label>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="field-ppcn" appearance="fill">
+          <mat-label translate>adaptationAction.form3.financingInstrument</mat-label>
+          <mat-select #climateValue formControlName="adaptationActionFinancingDetailInstrumentCtrl" multiple>
+            <mat-option [value]="1">
+              <label translate>Bonos</label>
+            </mat-option>
+
+            <mat-option [value]="2">
+              <label translate>Fideicomisos</label>
+            </mat-option>
+
+            <mat-option [value]="3">
+              <label translate>Canjes de deuda</label>
+            </mat-option>
+
+            <mat-option [value]="4">
+              <label translate>Fondos</label>
+            </mat-option>
+
+            <mat-option [value]="5">
+              <label translate>Préstamos tradicionales</label>
+            </mat-option>
+
+            <mat-option [value]="6">
+              <label translate>Préstamos concesionales</label>
+            </mat-option>
+
+            <mat-option [value]="7">
+              <label translate>Subsidios</label>
+            </mat-option>
+
+            <mat-option [value]="8">
+              <label translate>Garantías</label>
+            </mat-option>
+
+            <mat-option [value]="9">
+              <label translate>Subsidios</label>
+            </mat-option>
+
+            <mat-option [value]="10">
+              <label translate>Otros</label>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          *ngIf="climateValue?.value?.includes(10)"
+          [style.margin-right]="'10px'"
+          [style.width.%]="100"
+          class="ppcn-field"
+        >
+          <mat-label translate>adaptationAction.form3.nameInstrument</mat-label>
+          <input matInput formControlName="adaptationActionFinancingDetailInstrumentOtherCtrl" />
+          <mat-error translate>errorLabel.fieldRequired</mat-error>
+        </mat-form-field>
+
+        <div fxLayout="row">
+          <div [style.margin-right]="'10px'">
+            <mat-button-toggle-group #budgetCtrlgroup="matButtonToggleGroup" value="CRC">
+              <mat-button-toggle value="CRC">CRC</mat-button-toggle>
+              <mat-button-toggle value="USD">USD</mat-button-toggle>
+              <mat-button-toggle value="other"><span translate>general.other</span></mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+
+          <mat-form-field
+            *ngIf="budgetCtrlgroup.value == 'other'"
+            [style.margin-right]="'10px'"
+            [style.width.%]="100"
+            class="ppcn-field"
+          >
+            <mat-label translate>general.currencyType</mat-label>
+            <input formControlName="adaptationActionFinancingBufgetOtherCtrl" type="text" matInput required />
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+          </mat-form-field>
+
+          <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
+            <mat-label translate>Presupuesto</mat-label>
+            <input type="number" matInput formControlName="adaptationActionFinancingBufgetValueCtrl" required />
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+          </mat-form-field>
+
+          <mat-form-field [style.width.%]="100" class="ppcn-field">
+            <mat-label translate>mitigationAction.referenceYear</mat-label>
+
+            <input
+              matInput
+              [placeholder]="'Choose a date' | translate"
+              [matDatepicker]="adaptationActionFinancingBufgetStarDate"
+              formControlName="adaptationActionFinancingBufgetStarDateCtrl"
+            />
+
+            <mat-datepicker-toggle matSuffix [for]="adaptationActionFinancingBufgetStarDate"></mat-datepicker-toggle>
+            <mat-datepicker #adaptationActionFinancingBufgetStarDate startView="year"></mat-datepicker>
+
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+          <app-generic-button
+            (click)="clickNext(stepper, climateValueSource?.value?.includes(3))"
+            [disabled]="formArray?.get([0]).invalid"
+            name="general.next"
+          ></app-generic-button>
+        </div>
+      </mat-step>
+
+      <mat-step *ngIf="climateValueSource?.value?.includes(3)" formGroupName="1" [stepControl]="formArray?.get([1])">
+        <ng-template matStepLabel>
+          <span translate>adaptationAction.form3.actionsfinancedInternationalSources</span>
+        </ng-template>
+
+        <span translate>adaptationAction.form3.mideplanRegistes</span>
+        <mat-radio-group
+          #adaptationActionFinancingRegisterMIDEPLANC="matRadioGroup"
+          formControlName="adaptationActionFinancingRegisterMIDEPLANCtrl"
+          class="custom-radio-group"
+        >
+          <mat-radio-button [value]="1">
+            <label translate>Si</label>
+          </mat-radio-button>
+          <mat-radio-button [value]="2">
+            <label translate>No</label>
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field *ngIf="adaptationActionFinancingRegisterMIDEPLANC.value == 1" class="field-ppcn">
+          <mat-label translate>adaptationAction.form3.projectNameRegistered</mat-label>
+          <input matInput formControlName="adaptationActionFinancingRegisterNameMIDEPLANCtrl" />
+          <mat-error translate>errorLabel.fieldRequired</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field-ppcn">
+          <mat-label translate>adaptationAction.form3.executingEntity</mat-label>
+          <input matInput formControlName="adaptationActionFinancingRegisterEntityMIDEPLANCtrl" />
+          <mat-error translate>errorLabel.fieldRequired</mat-error>
+        </mat-form-field>
+
+        <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+          <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
+          </app-generic-button-secondary>
+          <app-generic-button
+            [disabled]="formArray?.get([1]).invalid"
+            (click)="submitForm()"
+            name="general.next"
+          ></app-generic-button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </form>
+</div>

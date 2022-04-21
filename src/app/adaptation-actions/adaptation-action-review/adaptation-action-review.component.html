@@ -1,0 +1,12 @@
+<app-update-status
+  *ngIf="adaptationAction"
+  [title]="title"
+  [nextRoute]="nextRoute"
+  [entity]="adaptationAction"
+  [formData]="formData"
+  [formSubmitRoute]="formSubmitRoute"
+  [statuses]="statuses"
+  [shouldDisplayComment]="shouldDisplayComment"
+  (formSubmitted)="onSubmission($event)"
+  module="aa"
+></app-update-status>

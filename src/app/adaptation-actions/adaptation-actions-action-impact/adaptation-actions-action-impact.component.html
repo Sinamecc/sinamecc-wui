@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+    <h2 translate>adaptationAction.form6.title</h2>
+  </div>
+  <form [formGroup]="form">
+    <mat-vertical-stepper #stepper linear formArrayName="formArray">
+      <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+        <ng-template matStepLabel>
+          <span translate>adaptationAction.form6.actionImpact</span>
+        </ng-template>
+
+        <mat-form-field class="field-ppcn" appearance="fill">
+          <mat-label translate>adaptationAction.form6.temporalityImpact</mat-label>
+          <mat-select formControlName="adaptationTemporalityImpactCtrl">
+            <mat-option *ngFor="let element of temporalityImpact" [value]="element.code">
+              <label translate>{{ element.name }}</label>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="field-ppcn">
+          <mat-label translate>adaptationAction.form6.impactsAction</mat-label>
+          <input matInput formControlName="impactsAccordingIndicatorsCtrl" />
+          <mat-error translate>errorLabel.fieldRequired</mat-error>
+        </mat-form-field>
+
+        <span translate>adaptationAction.form6.genderEquity</span>
+        <mat-radio-group
+          #genderEquityElementsControl="matRadioGroup"
+          formControlName="genderEquityElementsCtrl"
+          class="custom-radio-group"
+        >
+          <mat-radio-button [value]="1">
+            <label translate>Sí </label>
+          </mat-radio-button>
+          <mat-radio-button [value]="2">
+            <label translate>No</label>
+          </mat-radio-button>
+        </mat-radio-group>
+        <br />
+
+        <mat-form-field class="field-ppcn" *ngIf="genderEquityElementsControl.value === 1">
+          <mat-label translate>adaptationAction.form6.contributesGenderEquity</mat-label>
+          <input matInput formControlName="genderEquityElementsQuestionCtrl" />
+          <mat-error translate>errorLabel.fieldRequired</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field-ppcn" appearance="fill">
+          <mat-label translate>adaptationAction.form6.sustainableDevelopment</mat-label>
+          <mat-select multiple formControlName="objectivesCtrl">
+            <mat-option *ngFor="let element of ods" [value]="element.code">
+              <label translate>{{ element.code }} - {{ element.name }}</label>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="field-ppcn">
+          <mat-label translate>adaptationAction.form6.generatedImpact</mat-label>
+          <input matInput formControlName="actionNegativeImpactCtrl" />
+          <mat-error translate>errorLabel.fieldRequired</mat-error>
+        </mat-form-field>
+
+        <div fxLayout="row" fxLayoutAlign=" center">
+          <mat-form-field class="field-ppcn">
+            <mat-label translate>adaptationAction.form6.annexSupporting</mat-label>
+            <input matInput formControlName="AnnexSupportingInformationCtrl" />
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+          </mat-form-field>
+          <input type="file" name="filename2" />
+          <br />
+        </div>
+
+        <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+          <app-generic-button [disabled]="formArray?.get([0]).invalid" (click)="submitForm()" name="general.done">
+          </app-generic-button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </form>
+</div>
