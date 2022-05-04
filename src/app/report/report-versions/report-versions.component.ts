@@ -5,7 +5,7 @@ import { Logger } from '@core';
 import { I18nService } from '@app/i18n';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
-import { ReportService, Report, Version } from '@app/report/report.service';
+import { ReportService, Version } from '@app/report/report.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 const log = new Logger('Report');
