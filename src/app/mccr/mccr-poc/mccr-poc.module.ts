@@ -15,6 +15,7 @@ import { MccrPocNewBuyerAccountComponent } from './mccr-poc-new-buyer-account/mc
 import { MccrPocAddBuyerComponent } from './mccr-poc-add-buyer/mccr-poc-add-buyer.component';
 import { MccrPocAddDeveloperComponent } from './mccr-poc-add-developer/mccr-poc-add-developer.component';
 import { MccrPocAddPocComponent } from './mccr-poc-add-poc/mccr-poc-add-poc.component';
+import { UccVerifyDataComponent } from './ucc-verify-data/ucc-verify-data.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MccrPocAddPocComponent } from './mccr-poc-add-poc/mccr-poc-add-poc.comp
     MccrPocAddBuyerComponent,
     MccrPocAddDeveloperComponent,
     MccrPocAddPocComponent,
+    UccVerifyDataComponent,
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,7 @@ import { MccrPocAddPocComponent } from './mccr-poc-add-poc/mccr-poc-add-poc.comp
     ReactiveFormsModule,
     FormsModule,
   ],
-  entryComponents: [MccrPocNewDeveloperAccountComponent, MccrPocNewBuyerAccountComponent],
+  entryComponents: [MccrPocNewDeveloperAccountComponent, MccrPocNewBuyerAccountComponent, UccVerifyDataComponent],
   providers: [MccrPocService],
 })
 export class MccrPocModule {}

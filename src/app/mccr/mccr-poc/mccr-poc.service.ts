@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { MccrPoc } from '@app/mccr/mccr-poc/mccr-poc';
+import { MccrPoc, VerifyResponse } from '@app/mccr/mccr-poc/mccr-poc';
 import { map } from 'rxjs/operators';
 
 const routes = {
@@ -12,6 +12,7 @@ const routes = {
   submitNewUcc: () => '/v1/ucc',
   submitNewDeveloperAccount: () => '/v1/account/developer',
   submitNewBuyerAccount: () => '/v1/account/buyer',
+  verifyUCC: (uuid: string) => `/v1/ucc/${uuid}/verify`,
 };
 
 export interface Response {
@@ -188,6 +189,20 @@ export class MccrPocService {
           message: 'Form submitted correctly',
         };
         return response;
+      })
+    );
+  }
+
+  verifyUCC(uuid: string) {
+    const httpOptions = {
+      params: {
+        remoteUrl: '/carbonmarket',
+      },
+    };
+
+    return this.httpClient.get(routes.verifyUCC(uuid), httpOptions).pipe(
+      map((body: VerifyResponse) => {
+        return body;
       })
     );
   }

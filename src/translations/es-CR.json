@@ -295,6 +295,7 @@
   },
 
   "general": {
+    "loading": "Cargando...",
     "newComment": "Nuevo comentario",
     "comments": "Comentarios",
     "currencyType": "Tipo de Moneda",
@@ -405,6 +406,9 @@
   },
 
   "mccrPoc": {
+    "verifiedReviews": "Revisiones verificadas",
+    "blocksVerify": "Bloques verificados",
+    "verifyData": "Datos",
     "addDAC": "Anadir nueva cuenta de desarrollador",
     "addBAC": "Anadir nueva cuenta de comprador",
     "addUCC": "Añadir nueva UCC",
@@ -421,10 +425,10 @@
     "buyerCurrentDebitBalance": "Balance de débito actual del comprador",
     "buyerCurrentCreditBalance": "Balance de crédito actual del comprador",
     "buyerFinalBalance": "Balance Final del Desarrollador",
-    "addPOC": "Agregar Nuevo POC",
+    "addPOC": "Agregar Nueva UCC",
     "UCCBatchBase": "Base de lotes UCC",
     "UCCBatchSize": "Tamaño de lote UCC",
-    "POCDetail": "MMCR POC Detalle",
+    "POCDetail": "MMCR UCC Detalle",
     "searchUCC": "Buscar UCC",
     "addBuyerAccount": "Añadir cuenta de comprador",
     "AddDevAccount": "Añadir cuenta de desarrollador",
@@ -435,7 +439,8 @@
     "numberUCCTransfer": "Número UCC a transferir",
     "cancelUCC": "Cancelar UCC",
     "accountNumber": "Número de cuenta",
-    "addBuyerTransfer": "Agregar una nueva transferencia de comprador"
+    "addBuyerTransfer": "Agregar una nueva transferencia de comprador",
+    "verify": "Verificar UCC"
   },
 
   "errorLabel": {
