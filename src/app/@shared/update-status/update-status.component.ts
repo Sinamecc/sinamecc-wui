@@ -16,6 +16,7 @@ import { finalize } from 'rxjs/operators';
 import { PpcnComponent } from '@app/ppcn/ppcn/ppcn.component';
 import { UpdateStatusService } from './update-status.service';
 import { Logger } from '@core/logger.service';
+import { AdaptationActionsViewComponent } from '@app/adaptation-actions/adaptation-actions-view/adaptation-actions-view.component';
 
 const log = new Logger('UploadProposal');
 
@@ -36,6 +37,7 @@ export class UpdateStatusComponent implements OnInit {
   @Input() module: string;
 
   @ViewChild('commentContainer', { read: ViewContainerRef }) container: any;
+
   moduleRef: any;
 
   error: string;
@@ -50,7 +52,9 @@ export class UpdateStatusComponent implements OnInit {
     private translateService: TranslateService,
     private service: UpdateStatusService,
     private resolver: ComponentFactoryResolver
-  ) {}
+  ) {
+    this.loadComponent();
+  }
 
   ngOnInit() {
     this.createForm();
@@ -60,10 +64,20 @@ export class UpdateStatusComponent implements OnInit {
     if (this.module === 'ppcn') {
       this.loadPPCNCommentComponent();
     }
+
+    if (this.module === 'aa') {
+      this.loadAAComponent();
+    }
   }
 
   loadPPCNCommentComponent() {
     const siglePostFactory = this.resolver.resolveComponentFactory(PpcnComponent);
+    this.moduleRef = this.container.createComponent(siglePostFactory);
+    this.moduleRef.instance.edit = true;
+  }
+
+  loadAAComponent() {
+    const siglePostFactory = this.resolver.resolveComponentFactory(AdaptationActionsViewComponent);
     this.moduleRef = this.container.createComponent(siglePostFactory);
     this.moduleRef.instance.edit = true;
   }
@@ -81,8 +95,8 @@ export class UpdateStatusComponent implements OnInit {
       context: this.form.value,
       comments: this.moduleRef ? this.moduleRef.instance.buildFormatComments(this.moduleRef.instance.comments) : [],
     };
-    this.formSubmitted.emit(context);
 
+    this.formSubmitted.emit(context);
     this.service
       .updateStatus(context, this.formSubmitRoute)
       .pipe(

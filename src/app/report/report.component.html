@@ -22,6 +22,26 @@
       <mat-cell *matCellDef="let element"> {{ element.contact.email }} </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="contact_name">
+      <mat-header-cell *matHeaderCellDef translate> Persona de contacto </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.contact.full_name }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef translate> Estado </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.fsm_state }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="last_updated">
+      <mat-header-cell *matHeaderCellDef translate> Última actualización </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ datePipe.transform(element.updated, 'yyyy-MM-dd') }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="created">
+      <mat-header-cell *matHeaderCellDef translate> Creado </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ datePipe.transform(element.created, 'yyyy-MM-dd') }} </mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>

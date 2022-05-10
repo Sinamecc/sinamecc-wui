@@ -1,0 +1,157 @@
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="reportForm">
+        <div fxLayout="column">
+          <div class="report-error" [hidden]="!error || isLoading" translate>
+            <span translate>errorLabel.errorSubmittingForm</span>
+          </div>
+          <mat-vertical-stepper formArrayName="formArray" #stepper>
+            <mat-step
+              fxLayout="column"
+              fxLayoutAlign="start start"
+              formGroupName="0"
+              [stepControl]="formArray?.get([0])"
+            >
+              <ng-template matStepLabel>
+                <span translate>reportData.dataReport </span>
+              </ng-template>
+
+              <!-- Waiting for BE Catalog -->
+              <div fxLayout="column" fxLayoutAlign="start start">
+                <span translate>reportData.whatInformationReported</span>
+                <mat-radio-group
+                  #whatInformationReported="matRadioGroup"
+                  formControlName="whatInformationReportedCtrl"
+                  class="custom-radio-group"
+                >
+                  <mat-radio-button [style.margin.px]="5" [value]="'statistics_or_variable'">
+                    <label translate>Una variable o estadística </label>
+                  </mat-radio-button>
+                  <mat-radio-button [style.margin.px]="5" [value]="'indicator'">
+                    <label translate>Indicador</label>
+                  </mat-radio-button>
+                  <mat-radio-button [style.margin.px]="5" [value]="'data_base'">
+                    <label translate>Base de datos</label>
+                  </mat-radio-button>
+                </mat-radio-group>
+                <br />
+              </div>
+              <div fxLayout="column" fxLayoutAlign="start start" *ngIf="whatInformationReported.value == 'indicator'">
+                <span translate>reportData.isBaseline</span>
+                <mat-radio-group
+                  #isBaseline="matRadioGroup"
+                  formControlName="isBaselineCtrl"
+                  class="custom-radio-group"
+                >
+                  <mat-radio-button [style.margin.px]="5" [value]="true">
+                    <label translate>general.yes </label>
+                  </mat-radio-button>
+                  <mat-radio-button [style.margin.px]="5" [value]="false">
+                    <label translate>No</label>
+                  </mat-radio-button>
+                </mat-radio-group>
+
+                <div *ngIf="isBaseline.value" [style.width.%]="100" fxLayout="column" fxLayoutAlign="start start">
+                  <span translate>¿Cómo se desea reportar la línea base del indicador?</span>
+                  <div [style.width.%]="100" fxLayout="row" fxLayoutAlign=" center">
+                    <mat-form-field class="field-ppcn">
+                      <mat-label translate>Carga de documentos: en los formatos Zip, rar, pdf, excel y word</mat-label>
+                      <input matInput formControlName="isBaselineValueCtrlFile" />
+                      <mat-error translate>errorLabel.fieldRequired</mat-error>
+                    </mat-form-field>
+                    <input type="file" name="filename" />
+                  </div>
+                  <br />
+
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate>Reporte de valor individual o Conexión con API o Webservice</mat-label>
+                    <input matInput formControlName="isBaselineValueCtrlValue" />
+                    <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <br />
+
+              <div fxLayout="column" fxLayoutAlign="start start">
+                <span translate>reportData.qualityPreItems</span>
+                <mat-radio-group
+                  #qualityPreItems="matRadioGroup"
+                  formControlName="qualityPreItemsCtrl"
+                  class="custom-radio-group"
+                >
+                  <mat-radio-button [style.margin.px]="5" [value]="true">
+                    <label translate>general.yes </label>
+                  </mat-radio-button>
+                  <mat-radio-button [style.margin.px]="5" [value]="false">
+                    <label translate>No</label>
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+
+              <mat-form-field *ngIf="qualityPreItems.value" class="field-ppcn">
+                <mat-label translate>Describa los elementos previos de calidad</mat-label>
+                <input matInput formControlName="qualityPreItemsValueCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+
+              <div fxLayout="column" fxLayoutAlign="start start">
+                <span translate>reportData.agreementTransferSINAMECC</span>
+                <mat-radio-group
+                  #agreementTransferSINAMECC="matRadioGroup"
+                  formControlName="agreementTransferSINAMECCCtrl"
+                  class="custom-radio-group"
+                >
+                  <mat-radio-button [style.margin.px]="5" [value]="true">
+                    <label translate>general.yes </label>
+                  </mat-radio-button>
+                  <mat-radio-button [style.margin.px]="5" [value]="false">
+                    <label translate>No</label>
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+
+              <mat-form-field *ngIf="agreementTransferSINAMECC.value" class="field-ppcn">
+                <mat-label translate>Describa los acuerdos para transferir los datos</mat-label>
+                <input matInput formControlName="agreementTransferSINAMECCValueCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+
+              <div [style.width.%]="100" fxLayout="column" fxLayoutAlign="start start">
+                <span translate>¿Cómo se desean reportar los datos?</span>
+                <div [style.width.%]="100" fxLayout="row" fxLayoutAlign=" center">
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate>Carga de documentos: en los formatos Zip, rar, pdf, excel y word</mat-label>
+                    <input matInput formControlName="reportDataCtrlFile" />
+                    <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
+                  <input type="file" name="filename" />
+                  <br />
+                </div>
+
+                <mat-form-field class="field-ppcn">
+                  <mat-label translate>Reporte de valor individual o Conexión con API o Webservice</mat-label>
+                  <input matInput formControlName="reportDataCtrlValue" />
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+              </div>
+
+              <br />
+
+              <div fxLayout="row" fxLayoutAlign="end center">
+                <div>
+                  <app-generic-button
+                    [disabled]="!validOptions()"
+                    (click)="submitForm()"
+                    name="Enviar"
+                  ></app-generic-button>
+                </div>
+              </div>
+            </mat-step>
+          </mat-vertical-stepper>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

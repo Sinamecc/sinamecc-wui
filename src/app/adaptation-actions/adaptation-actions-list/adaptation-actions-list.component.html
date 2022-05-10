@@ -1,0 +1,65 @@
+<mat-toolbar fxLayout="row" fxLayoutAlign="center center" class="toolbar-title">
+  <div [style.width]="'auto'" translate class="section-heading">Acciones de adaptación</div>
+</mat-toolbar>
+<mat-divider class="divider-custom"></mat-divider>
+<mat-divider class="divider-custom"></mat-divider>
+
+<div class="container mat-elevation-z8 table-sinamecc">
+  <mat-table #table [dataSource]="dataSource">
+    <!-- Name Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef translate> ID</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>
+    </ng-container>
+
+    <!-- Strategy Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef translate> Nombre</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.adaptation_action_information.name ? element.adaptation_action_information.name : '-' }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Objective Column -->
+    <ng-container matColumnDef="adaptation_action_type">
+      <mat-header-cell *matHeaderCellDef translate>Tipo</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{
+          element.adaptation_action_information.adaptation_action_type
+            ? typesMap[element.adaptation_action_information.adaptation_action_type]
+            : '-'
+        }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="fms_state">
+      <mat-header-cell *matHeaderCellDef translate>Estado</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.fsm_state.label }} </mat-cell>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="login-box">
+        <button (click)="view(element.id)" mat-icon-button color="primary">
+          <mat-icon color="white">visibility</mat-icon>
+        </button>
+        <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
+        <button (click)="addReview(element.id)" mat-icon-button color="primary">
+          <mat-icon color="white">navigate_next</mat-icon>
+        </button>
+        <!-- <button mat-icon-button color="primary" (click)="uploadProposal(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button> -->
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="headers"></mat-header-row>
+    <mat-row [ngClass]="row.fsm_state" *matRowDef="let row; columns: headers"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+  </mat-paginator>
+</div>
+<div class="box-button button-container">
+  <app-generic-button routerLink="/adaptation/actions/new" name="adaptationAction.newButton"></app-generic-button>
+</div>

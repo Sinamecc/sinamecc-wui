@@ -27,6 +27,7 @@ import { ErrorComponent } from '@app/error/error.component';
 import { PpcnModule } from '@app/ppcn/ppcn.module';
 import { MccrRegistriesModule } from '@app/mccr/mccr-registries/mccr-registries.module';
 import { MccrPocModule } from '@app/mccr/mccr-poc/mccr-poc.module';
+import { AdaptationActionsModule } from './adaptation-actions/adaptation-actions.module';
 
 @NgModule({
   imports: [
@@ -50,6 +51,7 @@ import { MccrPocModule } from '@app/mccr/mccr-poc/mccr-poc.module';
     PpcnModule,
     MccrRegistriesModule,
     MccrPocModule,
+    AdaptationActionsModule,
     Angulartics2Module.forRoot(),
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],

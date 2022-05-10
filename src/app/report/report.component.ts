@@ -1,13 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from '@env/environment';
-import { Logger } from '@core';
-
-const log = new Logger('Report');
-
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-
 import { ReportService, Report } from '@app/report/report.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-report',
@@ -19,15 +15,15 @@ export class ReportComponent implements OnInit {
   error: string;
   isLoading = false;
   dataSource: MatTableDataSource<Report>;
-  displayedColumns = ['name', 'email'];
+  displayedColumns = ['name', 'email', 'contact_name', 'status', 'last_updated', 'created'];
   fieldsToSearch: string[][] = [['name'], ['email']];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private reportService: ReportService) {}
+  constructor(private reportService: ReportService, public datePipe: DatePipe) {}
 
   ngOnInit(): void {
-    this.loadReportData();
+    // this.loadReportData();
   }
 
   loadReportData() {

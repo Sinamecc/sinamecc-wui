@@ -35,7 +35,7 @@ export interface MitigationAction {
   files: Files[];
   status_information: StatusInformation;
   geographic_location: GeographicLocation;
-  CategorizationNationalInstruments: any; //waiting BE have this data
+  categorization: any; //waiting BE have this data
   ghg_information: GHGInformation;
   impact_documentation: any;
 }
