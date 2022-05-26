@@ -91,13 +91,12 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
       })
     );
     this.isUpdating = this.action === 'update';
-    this.isLinear = !this.isUpdating;
+    this.isLinear = true;
     this.isLoading = false;
   }
 
   createForm() {
     this.mainGroup = this._formBuilder.group({
-      // this.formBuilder.array([])
       formArray: this._formBuilder.array([
         this.initiativeFrm,
         this.basicInformationFrm,

@@ -87,24 +87,7 @@ export class BasicInformationFormComponent implements OnInit {
   }
 
   private updateFormData() {
-    this.form = this.formBuilder.group({
-      formArray: this.formBuilder.array([
-        this.formBuilder.group({
-          programCtrl: [this.mitigationAction.strategy_name, Validators.required],
-          nameCtrl: [this.mitigationAction.name, Validators.required],
-          entityCtrl: [this.mitigationAction.institution.id, Validators.required],
-        }),
-        this.formBuilder.group({
-          contactNameCtrl: [this.mitigationAction.contact.full_name, Validators.required],
-          positionCtrl: [this.mitigationAction.contact.job_title, Validators.required],
-          emailFormCtrl: [this.mitigationAction.contact.email, Validators.email],
-          phoneCtrl: [
-            this.mitigationAction.contact.phone,
-            Validators.compose([Validators.required, Validators.minLength(8)]),
-          ],
-        }),
-      ]),
-    });
+    this.createForm();
 
     this.isLoading = false;
   }

@@ -39,10 +39,14 @@ export class InitiativeFormComponent implements OnInit {
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
   @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
+  @Input() action: string;
 
   ndcList: Object[] = [];
 
   ejeList: Object[] = [];
+
+  section5TooltipTxt =
+    'Se sugiere revisar el siguiente link para obtener detalle sobre las relación con la categorización que debe hacer en esta subsección https://docs.google.com/spreadsheets/d/17rrTYpiLsargiTnARd29HLoSOaRUYtXd/edit?usp=sharing&ouid=100093507902776240980&rtpof=true&sd=true';
 
   temasList = [
     {
@@ -87,7 +91,7 @@ export class InitiativeFormComponent implements OnInit {
   ) {
     // this.formData = new FormData();
     this.isLoading = true;
-    // this.isUpdating = this.action === 'update';
+    this.isUpdating = this.action === 'update';
     this.displayFinancialSource = false;
     this.createForm();
   }
@@ -117,15 +121,13 @@ export class InitiativeFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
-          // initiativeRegisterTypeCtrl: ['', Validators.required],
           initiativeTypeCtrl: ['', Validators.required],
           initiativeNameCtrl: ['', [Validators.required, Validators.maxLength(200)]],
-          initiativeObjectiveCtrl: ['', [Validators.required, Validators.maxLength(500)]],
+          initiativeObjectiveCtrl: ['', [Validators.required, Validators.maxLength(100)]],
           initiativeDescriptionCtrl: ['', [Validators.required, Validators.maxLength(1000)]],
           initiativeGoalCtrl: ['', [Validators.required, Validators.maxLength(500)]],
         }),
         this.formBuilder.group({
-          // initiativeContactCtrl: ['', Validators.required],
           entityReportingCtrl: ['', [Validators.required, Validators.maxLength(50)]],
           initiativeContactNameCtrl: ['', [Validators.required, Validators.maxLength(40)]],
           initiativePositionCtrl: ['', [Validators.required, Validators.maxLength(100)]],
@@ -160,36 +162,76 @@ export class InitiativeFormComponent implements OnInit {
   }
 
   private updateFormData() {
+    this.initiativeGoalList.concat(this.mitigationAction.initiative.goal.map((x: { goal: any }) => x.goal));
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
-          // initiativeRegisterTypeCtrl: ['', Validators.required],
           initiativeTypeCtrl: [this.mitigationAction.initiative.initiative_type.id, Validators.required],
-          initiativeNameCtrl: [this.mitigationAction.initiative.name, Validators.required],
-          entityIniativeResponsibleCtrl: [this.mitigationAction.initiative.entity_responsible, Validators.required],
-          initiativeObjectiveCtrl: [this.mitigationAction.initiative.objective, Validators.required],
-          initiativeDescriptionCtrl: [this.mitigationAction.initiative.description, Validators.required],
-          initiativeGoalCtrl: [this.mitigationAction.initiative.goal, Validators.required],
-          initiativeStatusCtrl: [this.mitigationAction.initiative.status.id, Validators.required],
-        }),
-        this.formBuilder.group({
-          initiativeFinancingStatusCtrl: [this.mitigationAction.initiative.finance.status.id, Validators.required],
-          initiativeFinancingStatusTypeCtrl: [
-            this.mitigationAction.initiative.finance.finance_source_type.id,
-            Validators.required,
+          initiativeNameCtrl: [this.mitigationAction.initiative.name, [Validators.required, Validators.maxLength(200)]],
+          initiativeObjectiveCtrl: [
+            this.mitigationAction.initiative.objective,
+            [Validators.required, Validators.maxLength(100)],
           ],
-          initiatveFinancingSourceCtrl: this.mitigationAction.initiative.finance.source,
-          initiativeBudgetCtrl: [this.mitigationAction.initiative.budget, Validators.required],
+          initiativeDescriptionCtrl: [
+            this.mitigationAction.initiative.description,
+            [Validators.required, Validators.maxLength(1000)],
+          ],
+          initiativeGoalCtrl: [
+            this.mitigationAction.initiative.goal[0].goal,
+            [Validators.required, Validators.maxLength(500)],
+          ],
         }),
         this.formBuilder.group({
-          // initiativeContactCtrl: ['', Validators.required],
-          initiativeContactNameCtrl: [this.mitigationAction.initiative.contact.full_name, Validators.required],
-          initiativePositionCtrl: [this.mitigationAction.initiative.contact.job_title, Validators.required],
-          initiativeEmailFormCtrl: [this.mitigationAction.initiative.contact.email, Validators.email],
+          entityReportingCtrl: [
+            this.mitigationAction.contact.institution,
+            [Validators.required, Validators.maxLength(50)],
+          ],
+          initiativeContactNameCtrl: [
+            this.mitigationAction.contact.full_name,
+            [Validators.required, Validators.maxLength(40)],
+          ],
+          initiativePositionCtrl: [
+            this.mitigationAction.contact.job_title,
+            [Validators.required, Validators.maxLength(100)],
+          ],
+          initiativeEmailFormCtrl: [this.mitigationAction.contact.email, Validators.email],
           initiativePhoneCtrl: [
-            this.mitigationAction.initiative.contact.phone,
+            this.mitigationAction.contact.phone,
             Validators.compose([Validators.required, Validators.minLength(8)]),
           ],
+        }),
+        this.formBuilder.group({
+          deploymentCompletionIdCtrl: ['', Validators.required],
+          deploymentCompletionDateCtrl: [this.mitigationAction.status_information.end_date],
+          deploymentCompletionOtherCtrl: [
+            this.mitigationAction.status_information.other_end_date
+              ? this.mitigationAction.status_information.other_end_date
+              : '',
+          ],
+          initiativeStatusCtrl: [this.mitigationAction.status_information.status.id, Validators.required],
+          startImplementationCtrl: [this.mitigationAction.status_information.start_date, Validators.required],
+          deploymentCompletionCtrl: [''],
+          entityResponsibleMitigationActionCtrl: [
+            this.mitigationAction.status_information.institution,
+            [Validators.required, Validators.minLength(1)],
+          ],
+          entitiesInvolvedMitigationActionCtrl: [
+            this.mitigationAction.status_information.other_institution,
+            [Validators.required, Validators.minLength(1)],
+          ],
+        }),
+        this.formBuilder.group({
+          geographicScaleCtrl: [this.mitigationAction.geographic_location.geographic_scale.id, Validators.required],
+          locationActionCtrl: [this.mitigationAction.geographic_location.location, Validators.minLength(1)],
+        }),
+        this.formBuilder.group({
+          relationshipNDCCtrl: ['', Validators.required],
+          relationshipNDCTopicCtrl: ['', Validators.required],
+          relationshipDecarbonizationPlanCtrl: ['', Validators.required],
+          relationshipDecarbonizationTopicPlanCtrl: ['', Validators.required],
+          impactCategoryCtrl: ['', Validators.required],
+          descriptionRelationshipMitigationActionOthersQuestionCtrl: ['', Validators.required],
+          descriptionRelationshipMitigationActionOthersCtrl: [''],
         }),
       ]),
     });

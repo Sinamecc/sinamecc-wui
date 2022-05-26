@@ -102,28 +102,7 @@ export class KeyAspectsFormComponent implements OnInit {
   }
 
   private updateFormData() {
-    this.form = this.formBuilder.group({
-      formArray: this.formBuilder.array([
-        this.formBuilder.group({
-          actionObjectiveCtrl: [this.mitigationAction.purpose, Validators.required],
-          actionStatusCtrl: [this.mitigationAction.status.id, Validators.required],
-          implementationInitialDateCtrl: [this.mitigationAction.start_date, Validators.required],
-          implementationEndDateCtrl: [this.mitigationAction.end_date, Validators.required],
-        }),
-        this.formBuilder.group({
-          geographicScaleCtrl: [this.mitigationAction.geographic_scale.id, Validators.required],
-        }),
-        this.formBuilder.group({
-          locationNameCtrl: [this.mitigationAction.location.geographical_site, Validators.required],
-          gisAnnexedCtrl: [String(+this.mitigationAction.location.is_gis_annexed), Validators.required],
-        }),
-        this.formBuilder.group({
-          financingStatusCtrl: [this.mitigationAction.finance.status.id, Validators.required],
-          financingSourceCtrl: [this.mitigationAction.finance.source],
-          gasInventoryCtrl: [this.mitigationAction.gas_inventory],
-        }),
-      ]),
-    });
+    this.createForm();
 
     this.isLoading = false;
     // this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];

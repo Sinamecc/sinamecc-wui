@@ -122,7 +122,7 @@ export interface Initiative {
   description: string;
   entity_responsible: string;
   finance: Finance;
-  goal: string;
+  goal: any;
   id: string;
   initiative_type: InitiativeType;
   objective: string;

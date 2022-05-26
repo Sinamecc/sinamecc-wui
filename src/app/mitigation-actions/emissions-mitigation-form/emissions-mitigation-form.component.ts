@@ -94,20 +94,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   private updateFormData() {
-    this.form = this.formBuilder.group({
-      formArray: this.formBuilder.array([
-        this.formBuilder.group({
-          ingeiComplianceCtrl: [
-            this.mitigationAction['ingei_compliances'].map((elem: any) => elem.id),
-            Validators.required,
-          ],
-        }),
-        this.formBuilder.group({
-          emissionSourceCtrl: [this.mitigationAction.emissions_source, Validators.required],
-          carbonSinksCtrl: [this.mitigationAction.carbon_sinks, Validators.required],
-        }),
-      ]),
-    });
+    this.createForm();
 
     this.isLoading = false;
     // this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];

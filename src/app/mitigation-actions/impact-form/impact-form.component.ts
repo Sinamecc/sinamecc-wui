@@ -138,17 +138,7 @@ export class ImpactFormComponent implements OnInit {
   }
 
   private updateFormData() {
-    this.form = this.formBuilder.group({
-      formArray: this.formBuilder.array([
-        this.formBuilder.group({
-          mitigationActionImpactCtrl: [this.mitigationAction.impact_plan, Validators.required],
-          emissionImpactCtrl: [this.mitigationAction.impact, Validators.required],
-          calculationMethodologyCtrl: [this.mitigationAction.calculation_methodology, Validators.required],
-          internationalParticipationCtrl: [String(+this.mitigationAction.is_international), Validators.required],
-          internationalParticipationDetailCtrl: this.mitigationAction.international_participation,
-        }),
-      ]),
-    });
+    this.createForm();
 
     this.isLoading = false;
     // this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
