@@ -7,16 +7,12 @@ import { CredentialsService } from '@app/auth';
 import { ReportDataCatalog } from './interfaces/report-data';
 import { ReportDataPayload } from './interfaces/report-data-payload';
 import { S3Service, S3File } from '@app/@shared';
+import { Report } from './interfaces/report';
 
 export interface Response {
   // Customize received credentials here
   statusCode: number;
   message: string;
-}
-export interface Report {
-  name: string;
-  created: string;
-  updated: string;
 }
 
 export interface Version {
@@ -36,7 +32,7 @@ export interface ReportContext {
 const routes = {
   submitReport: () => `/v1/report-data/report/`,
   submitVersion: (id: number) => `/v1/report_file/${id}`,
-  reports: () => `/v1/report-data/report/`,
+  reports: (id: string = '') => `/v1/report-data/report/${id ? id + '/' : id}`,
   versions: (id: number) => `/v1/report_file/${id}/versions`,
   reportDataCatalogs: () => `/v1/report-data/data/`,
 };
@@ -108,6 +104,14 @@ export class ReportService {
 
   reports(): Observable<Report[]> {
     return this.httpClient.get(routes.reports(), {}).pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
+  }
+
+  report(id: string): Observable<Report> {
+    return this.httpClient.get(routes.reports(id), {}).pipe(
       map((body: any) => {
         return body;
       })

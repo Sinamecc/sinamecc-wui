@@ -132,6 +132,35 @@
   },
 
   "reportData": {
+    "form1": {
+      "title": "Data for reporting and analysis",
+      "reportBaselineIndicator": "How do you want to report the baseline of the indicator?",
+      "individualValueReport": "Individual value report or Connection with API or Webservice",
+      "previousElementQuality": "Describa los elementos previos de calidad",
+      "agreementsTransfer": "Describe the agreements to transfer the data",
+      "howReportData": "How do you want to report the data?",
+      "individualValue": "Individual value report or Connection with API or Webservice",
+      "frecuency": "Measurement frequency",
+      "frecuencyOther": "Measurement frequency (other)"
+    },
+    "form2": {
+      "title": "Methodological Sheet",
+      "technicalInfo": "Technical information",
+      "recordName": "Record Name",
+      "description": "Descripción (Texto breve, relevante, medible, alcanzable y de tiempo limitado, de la información que el dato proporciona)",
+      "unit": "Units of measure (Example, kilograms, percentage, quantity, average, rate, index.)",
+      "calculationMethodology": "Calculation methodology (Process by which the data is obtained)",
+      "disaggregation": "Disaggregation (Example: gender, age groups, socioeconomic level, type of disasters)",
+      "limitations": "Limitations (Aspects, dimensions and dynamics cannot be captured by the indicator)",
+      "sustainabilityEnsured": "How is sustainability ensured in the measurement of the indicator? (Actions carried out that ensure the availability of information for monitoring)",
+      "observations": "Observations and comments",
+      "informationSources": "Information sources",
+      "responsibleInstitution": "Institución responsable"
+    },
+    "form3": {
+      "title": "Data update",
+      "description": "Description of the reason for the changes"
+    },
     "additionalAnnotations": "Additional annotations",
     "agreementTransferSINAMECC": "Is there an agreement to transfer this data with SINAMECC?",
     "qualityPreItems": "Do you have quality pre-items?",

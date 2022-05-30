@@ -2,8 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from '@env/environment';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { ReportService, Report } from '@app/report/report.service';
+import { ReportService } from '@app/report/report.service';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
+import { Report } from './interfaces/report';
 
 @Component({
   selector: 'app-report',
@@ -15,15 +17,15 @@ export class ReportComponent implements OnInit {
   error: string;
   isLoading = false;
   dataSource: MatTableDataSource<Report>;
-  displayedColumns = ['name', 'email', 'contact_name', 'status', 'last_updated', 'created'];
+  displayedColumns = ['name', 'email', 'contact_name', 'status', 'last_updated', 'created', 'actions'];
   fieldsToSearch: string[][] = [['name'], ['email']];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private reportService: ReportService, public datePipe: DatePipe) {}
+  constructor(private reportService: ReportService, public datePipe: DatePipe, private router: Router) {}
 
   ngOnInit(): void {
-    // this.loadReportData();
+    this.loadReportData();
   }
 
   loadReportData() {
@@ -31,6 +33,18 @@ export class ReportComponent implements OnInit {
       const reportList = reports;
       this.dataSource = new MatTableDataSource<Report>(reportList);
       this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  view(uuid: string) {
+    this.router.navigate([`/report/view/${uuid}`], {
+      replaceUrl: true,
+    });
+  }
+
+  addReview(uuid: string) {
+    this.router.navigate([`/report/reviews/${uuid}/new`], {
+      replaceUrl: true,
     });
   }
 }

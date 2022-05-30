@@ -29,7 +29,7 @@
 
     <ng-container matColumnDef="status">
       <mat-header-cell *matHeaderCellDef translate> Estado </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.fsm_state }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.fsm_state.label }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="last_updated">
@@ -40,6 +40,20 @@
     <ng-container matColumnDef="created">
       <mat-header-cell *matHeaderCellDef translate> Creado </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ datePipe.transform(element.created, 'yyyy-MM-dd') }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="login-box">
+        <button (click)="view(element.id)" mat-icon-button color="primary">
+          <mat-icon color="white">visibility</mat-icon>
+        </button>
+
+        <button (click)="addReview(element.id)" mat-icon-button color="primary">
+          <mat-icon color="white">navigate_next</mat-icon>
+        </button>
+        <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
