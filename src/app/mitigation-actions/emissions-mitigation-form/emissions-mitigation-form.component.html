@@ -12,7 +12,7 @@
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
-              <span translate>specificLabel.documentationImpactEstimate</span>
+              <span>4.1 - </span><span translate>specificLabel.documentationImpactEstimate</span>
             </ng-template>
 
             <h3>
@@ -20,21 +20,26 @@
             </h3>
             <br />
             <mat-form-field class="field-ppcn">
-              <mat-label translate>specificLabel.exAnteEmissionReductions</mat-label>
+              <mat-label translate>4.1.1 - <span translate>specificLabel.exAnteEmissionReductions</span></mat-label>
               <input matInput formControlName="exAnteEmissionReductionsCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>mitigationAction.periodPotentialEmissionReductionEstimated</mat-label>
+              <mat-label translate
+                >4.1.1.1 - <span translate>mitigationAction.periodPotentialEmissionReductionEstimated</span></mat-label
+              >
               <input matInput formControlName="periodPotentialEmissionReductionEstimatedCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
+              <mat-label translate
+                >4.1.2 - <span translate>mitigationAction.sourcesEmissionsGasesCovered</span></mat-label
+              >
               <mat-select
-                [placeholder]="'mitigationAction.sourcesEmissionsGasesCovered' | translate"
+                #isourcesEmissionsGasesCoveredValue
                 formControlName="isourcesEmissionsGasesCoveredCtrl"
                 multiple
               >
@@ -43,13 +48,17 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+
+            <mat-form-field *ngIf="isourcesEmissionsGasesCoveredValue?.value?.includes('Otro')" class="field-ppcn">
+              <mat-label translate>4.1.3 - <span translate>mitigationAction.coveredGas</span></mat-label>
+              <input matInput formControlName="periodPotentialEmissionReductionEstimatedOtherCtrl" />
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
             <br />
             <mat-form-field class="field-ppcn">
-              <mat-select
-                [placeholder]="'mitigationAction.carbonSinksReservoirs' | translate"
-                formControlName="carbonSinksReservoirsCtrl"
-                multiple
-              >
+              <mat-label translate>4.1.4 - <span translate>mitigationAction.carbonSinksReservoirs</span></mat-label>
+              <mat-select formControlName="carbonSinksReservoirsCtrl" multiple>
                 <!-- This options will remplace for a catalog, waiting BE-->
                 <mat-option
                   *ngFor="let carbonDeposit of processedNewFormData?.carbon_deposit"
@@ -61,13 +70,16 @@
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
-              <mat-label translate>mitigationAction.definitionBaseline</mat-label>
+              <mat-label translate>4.1.5 - <span translate>mitigationAction.definitionBaseline</span></mat-label>
               <input matInput formControlName="definitionBaselineCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
             <mat-form-field class="field-ppcn">
-              <mat-label translate>mitigationAction.methodologyExantePotentialReductionEmissionsCO2</mat-label>
+              <mat-label translate
+                >4.1.6 -
+                <span translate>mitigationAction.methodologyExantePotentialReductionEmissionsCO2</span></mat-label
+              >
               <input matInput formControlName="methodologyExantePotentialReductionEmissionsCO2Ctrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
@@ -75,7 +87,12 @@
 
             <div fxLayout="row" fxLayoutAlign=" center">
               <mat-form-field class="field-ppcn">
-                <mat-label translate>mitigationAction.documentationCalculationsEstimateReductionEmissionsCO2</mat-label>
+                <mat-label translate
+                  >4.1.7 -
+                  <span translate
+                    >mitigationAction.documentationCalculationsEstimateReductionEmissionsCO2</span
+                  ></mat-label
+                >
                 <input matInput formControlName="documentationCalculationsEstimateReductionEmissionsCO2Ctrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
@@ -84,15 +101,16 @@
             </div>
 
             <mat-form-field class="field-ppcn">
-              <mat-select
-                [placeholder]="'mitigationAction.isCurrentlyReflectedInventory' | translate"
-                formControlName="isCurrentlyReflectedInventoryCtrl"
+              <mat-label translate
+                >4.1.8 - <span translate>mitigationAction.isCurrentlyReflectedInventory</span></mat-label
               >
+              <mat-select formControlName="isCurrentlyReflectedInventoryCtrl">
                 <mat-option [value]="1">
                   <label translate>general.yes</label>
                 </mat-option>
 
                 <mat-option [value]="2"> No</mat-option>
+                <mat-option [value]="3"> No está seguro</mat-option>
               </mat-select>
             </mat-form-field>
             <br />

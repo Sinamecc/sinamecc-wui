@@ -73,8 +73,8 @@ export class BasicInformationFormComponent implements OnInit {
           programCtrl: ['', Validators.required],
           stepsTakingToFinancingCtrl: [''],
           detailfinancingSourceCtrl: ['', Validators.required],
-          financingSourceApplyingCtrl: ['', Validators.required],
-          mitigationActionBudgetCtrl: ['', Validators.required],
+          mitigationActionDescriptionCtrl: ['', [Validators.required, Validators.maxLength(300)]], // new field
+          mitigationActionAmounttCtrl: ['', [Validators.required, Validators.maxLength(50)]], // new field
           referenceYearCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
@@ -87,7 +87,33 @@ export class BasicInformationFormComponent implements OnInit {
   }
 
   private updateFormData() {
-    this.createForm();
+    // this.createForm();
+
+    this.form = this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          programCtrl: [this.mitigationAction.finance.status, Validators.required],
+          stepsTakingToFinancingCtrl: [
+            this.mitigationAction.finance.administration ? this.mitigationAction.finance.administration : '',
+          ],
+          detailfinancingSourceCtrl: [this.mitigationAction.finance.source, Validators.required],
+          mitigationActionDescriptionCtrl: ['', [Validators.required, Validators.maxLength(300)]], // new field
+          mitigationActionAmounttCtrl: [
+            this.mitigationAction.finance.budget,
+            [Validators.required, Validators.maxLength(50)],
+          ], // new field
+          referenceYearCtrl: [this.mitigationAction.finance.reference_year, Validators.required],
+        }),
+        this.formBuilder.group({
+          registeredNonReimbursableCooperationMideplanCtrl: [
+            this.mitigationAction.finance.mideplan_registered ? 1 : 2,
+            Validators.required,
+          ],
+          entityProjectCtrl: [this.mitigationAction.finance.executing_entity, Validators.required],
+          registeredNonReimbursableCooperationMideplanDetailCtrl: [this.mitigationAction.finance.mideplan_project],
+        }),
+      ]),
+    });
 
     this.isLoading = false;
   }
@@ -99,9 +125,9 @@ export class BasicInformationFormComponent implements OnInit {
         ? this.form.value.formArray[0].stepsTakingToFinancingCtrl
         : 'empty field',
       source: this.form.value.formArray[0].detailfinancingSourceCtrl,
-      source_description: this.form.value.formArray[0].financingSourceApplyingCtrl,
+      //source_description: this.form.value.formArray[0].financingSourceApplyingCtrl,
       reference_year: this.datePipe.transform(this.form.value.formArray[0].referenceYearCtrl, 'yyyy'),
-      budget: this.form.value.formArray[0].mitigationActionBudgetCtrl,
+      budget: this.form.value.formArray[0].mitigationActionAmounttCtrl,
       currency: this.mitigationActionBudgeValuetCtrl,
       mideplan_registered:
         this.form.value.formArray[1].registeredNonReimbursableCooperationMideplanCtrl === 1 ? true : false,
@@ -163,5 +189,14 @@ export class BasicInformationFormComponent implements OnInit {
           this.wasSubmittedSuccessfully = false;
         }
       );
+  }
+
+  public setSection2Validations(validations: number) {
+    if (validations === 1) {
+      this.form.get('formArray').get([1]).get('entityProjectCtrl').setValidators(Validators.required);
+    } else {
+      this.form.get('formArray').get([1]).get('entityProjectCtrl').setValidators(null);
+    }
+    this.form.get('formArray').get([1]).get('entityProjectCtrl').updateValueAndValidity();
   }
 }

@@ -66,12 +66,13 @@ export class EmissionsMitigationFormComponent implements OnInit {
         this.formBuilder.group({
           exAnteEmissionReductionsCtrl: ['', Validators.required],
           periodPotentialEmissionReductionEstimatedCtrl: ['', Validators.required],
+          periodPotentialEmissionReductionEstimatedOtherCtrl: [''], // new field
           isourcesEmissionsGasesCoveredCtrl: ['', Validators.required],
           carbonSinksReservoirsCtrl: ['', Validators.required],
           definitionBaselineCtrl: ['', Validators.required],
           methodologyExantePotentialReductionEmissionsCO2Ctrl: ['', Validators.required],
           documentationCalculationsEstimateReductionEmissionsCO2Ctrl: ['', Validators.required],
-          isCurrentlyReflectedInventoryCtrl: ['', Validators.required],
+          isCurrentlyReflectedInventoryCtrl: ['', Validators.required], // not true or false field
         }),
         this.formBuilder.group({
           standardizedCalculationMethodologyUsedCtrl: [''],
@@ -94,7 +95,56 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   private updateFormData() {
-    this.createForm();
+    console.log(this.mitigationAction.impact_documentation);
+    this.form = this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          exAnteEmissionReductionsCtrl: [
+            this.mitigationAction.impact_documentation.estimate_reduction_co2,
+            Validators.required,
+          ],
+          periodPotentialEmissionReductionEstimatedCtrl: [
+            this.mitigationAction.impact_documentation.period_potential_reduction,
+            Validators.required,
+          ],
+          periodPotentialEmissionReductionEstimatedOtherCtrl: [''], // new field
+          isourcesEmissionsGasesCoveredCtrl: ['', Validators.required],
+          carbonSinksReservoirsCtrl: ['', Validators.required],
+          definitionBaselineCtrl: [
+            this.mitigationAction.impact_documentation.base_line_definition,
+            Validators.required,
+          ],
+          methodologyExantePotentialReductionEmissionsCO2Ctrl: [
+            this.mitigationAction.impact_documentation.calculation_methodology,
+            Validators.required,
+          ],
+          documentationCalculationsEstimateReductionEmissionsCO2Ctrl: [
+            this.mitigationAction.impact_documentation.estimate_calculation_documentation,
+            Validators.required,
+          ],
+          isCurrentlyReflectedInventoryCtrl: [
+            this.mitigationAction.impact_documentation.mitigation_action_in_inventory ? 1 : 2,
+            Validators.required,
+          ],
+        }),
+        this.formBuilder.group({
+          standardizedCalculationMethodologyUsedCtrl: [''],
+          standardizedCalculationMethodologyUsedDetailCtrl: ['', Validators.required],
+          calculationsDocumentedCtrl: [''],
+          calculationsDocumentedDetailCtrl: ['', Validators.required],
+          emissionFactorsUsedCalculationDocumentedCtrl: [''],
+          emissionFactorsUsedCalculationDocumentedDetailCtrl: ['', Validators.required],
+          assumptionsDocumentedCtrl: [''],
+          assumptionsDocumentedDetailCtrl: ['', Validators.required],
+        }),
+        this.formBuilder.group({
+          intendParticipateInternationalCarbonMarketsCtrl: ['', Validators.required],
+          mechanismStandardApplyCtrl: ['', Validators.required],
+          methodologyExantePotentialReductionEmissionsCO2OtherCtrl: [''],
+          methodologyUsedCtrl: ['', Validators.required],
+        }),
+      ]),
+    });
 
     this.isLoading = false;
     // this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];

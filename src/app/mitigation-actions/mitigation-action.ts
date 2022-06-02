@@ -3,6 +3,7 @@ import { NextState } from '@shared/next-state';
 
 export interface MitigationAction {
   initiative: Initiative;
+  code: string;
   name: string;
   id: string;
   strategy_name: string;
@@ -62,10 +63,24 @@ export interface ImpactDocumentation {
   question: ImpacDocumentationQuestion[];
 }
 
+export interface ImpactEmission {
+  id: number;
+  code: string;
+  name: string;
+}
+
+export interface Goals {
+  code: string;
+  description: string;
+  id: number;
+}
+
 export interface GHGInformation {
   graphic_description: string;
   id: number;
   impact_emission: string;
+  goals: Goals[];
+  impact_sector?: ImpactEmission[] | string;
   sectorsGEIInventoryImpacted: string; //waiting BE have this data
   preliminaryIdentificationSustainableDevelopmentGoals: string; //waiting BE have this data
 }
@@ -175,6 +190,7 @@ export interface Finance {
   mideplan_registered?: string;
   nameRegisteredMideplan?: string;
   executing_entity?: string;
+  mideplan_project?: string;
 }
 
 export interface InitiativeType {

@@ -1,4 +1,6 @@
 <div class="container">
+  <h1>{{ mitigationAction?.code }}</h1>
+  <mat-divider></mat-divider>
   <mat-card-content>
     <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
       <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
@@ -12,7 +14,7 @@
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
-              <span translate>mitigationAction.overviewImpactEmissionsRemovals</span>
+              <span>3.1 - </span><span translate>mitigationAction.overviewImpactEmissionsRemovals</span>
             </ng-template>
 
             <h3>
@@ -20,15 +22,25 @@
             </h3>
 
             <mat-form-field class="field-ppcn">
-              <mat-label translate>mitigationAction.overviewImpactEmissionsRemovals</mat-label>
+              <mat-label translate
+                >3.1.1 - <span translate>mitigationAction.overviewImpactEmissionsRemovals</span></mat-label
+              >
               <input matInput formControlName="overviewImpactEmissionsRemovalsCtrl" />
             </mat-form-field>
             <br />
 
             <div fxLayout="row" fxLayoutAlign=" center">
               <mat-form-field class="field-ppcn">
-                <mat-label translate>mitigationAction.graphicLogicImpactEmissionsRemovals</mat-label>
+                <mat-label translate
+                  >3.1.2 - <span translate>mitigationAction.graphicLogicImpactEmissionsRemovals</span></mat-label
+                >
                 <input matInput formControlName="graphicLogicImpactEmissionsRemovalsCtrl" />
+                <mat-hint
+                  ><span translate>mitigationAction.graphicLogicImpactEmissionsRemovalsHint</span>
+                  <a target="_blank" href="https://docs.google.com/document/d/1FBA9rjHHTbVotT2b4EmhdoKHuDC9mtgZ/edit"
+                    >Link</a
+                  ></mat-hint
+                >
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
@@ -38,8 +50,10 @@
             <br />
 
             <mat-form-field class="field-ppcn" appearance="fill">
-              <mat-label translate>mitigationAction.sectorsGEIInventoryImpacted</mat-label>
-              <mat-select multiple>
+              <mat-label translate
+                >3.1.3 - <span translate>mitigationAction.sectorsGEIInventoryImpacted</span></mat-label
+              >
+              <mat-select formControlName="impactSectorCtrl" multiple>
                 <mat-option *ngFor="let option of processedNewFormData?.ghg_impact_sector" [value]="option.id">
                   {{ option.name }}
                 </mat-option>
@@ -49,13 +63,16 @@
             <br />
 
             <mat-form-field class="field-ppcn" appearance="fill">
-              <mat-label translate>mitigationAction.preliminaryIdentificationSustainableDevelopmentGoals</mat-label>
-              <mat-select multiple>
+              <mat-label translate
+                >3.1.4 -
+                <span translate>mitigationAction.preliminaryIdentificationSustainableDevelopmentGoals</span></mat-label
+              >
+              <mat-select formControlName="goalsCtrl" multiple>
                 <mat-option
                   *ngFor="let option of processedNewFormData?.sustainable_development_goals"
                   [value]="option.id"
                 >
-                  {{ option.description }}
+                  {{ option.code }} - {{ option.description }}
                 </mat-option>
               </mat-select>
             </mat-form-field>

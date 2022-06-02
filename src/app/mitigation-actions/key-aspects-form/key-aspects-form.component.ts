@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MitigationAction } from '../mitigation-action';
+import { ImpactEmission, MitigationAction } from '../mitigation-action';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 import * as _moment from 'moment';
@@ -96,16 +96,34 @@ export class KeyAspectsFormComponent implements OnInit {
         this.formBuilder.group({
           overviewImpactEmissionsRemovalsCtrl: ['', Validators.required],
           graphicLogicImpactEmissionsRemovalsCtrl: ['', Validators.required],
+          impactSectorCtrl: ['', Validators.required],
+          goalsCtrl: ['', Validators.required],
         }),
       ]),
     });
   }
 
   private updateFormData() {
-    this.createForm();
+    const impactSector = this.mitigationAction.ghg_information.impact_sector as ImpactEmission[];
+
+    this.form = this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          overviewImpactEmissionsRemovalsCtrl: [
+            this.mitigationAction.ghg_information.impact_emission,
+            Validators.required,
+          ],
+          graphicLogicImpactEmissionsRemovalsCtrl: [
+            this.mitigationAction.ghg_information.graphic_description,
+            Validators.required,
+          ],
+          impactSectorCtrl: [impactSector.map((x) => x.id), Validators.required],
+          goalsCtrl: [this.mitigationAction.ghg_information.goals.map((x) => x.id), Validators.required],
+        }),
+      ]),
+    });
 
     this.isLoading = false;
-    // this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
   }
 
   buildPayload() {
@@ -113,6 +131,8 @@ export class KeyAspectsFormComponent implements OnInit {
       ghg_information: {
         impact_emission: this.form.value.formArray[0].overviewImpactEmissionsRemovalsCtrl,
         graphic_description: this.form.value.formArray[0].graphicLogicImpactEmissionsRemovalsCtrl,
+        impact_sector: this.form.value.formArray[0].impactSectorCtrl,
+        goals: this.form.value.formArray[0].goalsCtrl,
       },
     };
 
