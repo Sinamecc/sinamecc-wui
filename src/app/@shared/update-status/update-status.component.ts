@@ -17,6 +17,7 @@ import { PpcnComponent } from '@app/ppcn/ppcn/ppcn.component';
 import { UpdateStatusService } from './update-status.service';
 import { Logger } from '@core/logger.service';
 import { AdaptationActionsViewComponent } from '@app/adaptation-actions/adaptation-actions-view/adaptation-actions-view.component';
+import { ReportViewComponent } from '@app/report/report-view/report-view.component';
 
 const log = new Logger('UploadProposal');
 
@@ -68,6 +69,10 @@ export class UpdateStatusComponent implements OnInit {
     if (this.module === 'aa') {
       this.loadAAComponent();
     }
+
+    if (this.module === 'report') {
+      this.loaReportComponent();
+    }
   }
 
   loadPPCNCommentComponent() {
@@ -78,6 +83,12 @@ export class UpdateStatusComponent implements OnInit {
 
   loadAAComponent() {
     const siglePostFactory = this.resolver.resolveComponentFactory(AdaptationActionsViewComponent);
+    this.moduleRef = this.container.createComponent(siglePostFactory);
+    this.moduleRef.instance.edit = true;
+  }
+
+  loaReportComponent() {
+    const siglePostFactory = this.resolver.resolveComponentFactory(ReportViewComponent);
     this.moduleRef = this.container.createComponent(siglePostFactory);
     this.moduleRef.instance.edit = true;
   }

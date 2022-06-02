@@ -8,7 +8,7 @@ import { environment } from '@env/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ReportService, Report } from '@app/report/report.service';
+import { ReportService } from '@app/report/report.service';
 import { ReportDataCatalog } from '../interfaces/report-data';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
 

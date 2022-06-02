@@ -15,6 +15,8 @@ import { ReportVersionsNewComponent } from './report-versions-new/report-version
 import { ReportFormDataComponent } from './report-form-data/report-form-data.component';
 import { MethodoloficalSheetComponent } from './methodolofical-sheet/methodolofical-sheet.component';
 import { DataUpdateComponent } from './data-update/data-update.component';
+import { ReportViewComponent } from './report-view/report-view.component';
+import { ReportReviewComponent } from './report-review/report-review.component';
 
 @NgModule({
   imports: [
@@ -35,6 +37,8 @@ import { DataUpdateComponent } from './data-update/data-update.component';
     ReportFormDataComponent,
     MethodoloficalSheetComponent,
     DataUpdateComponent,
+    ReportViewComponent,
+    ReportReviewComponent,
   ],
   providers: [ReportService],
 })

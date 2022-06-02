@@ -1,0 +1,368 @@
+<div class="main-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
+  <div fxFill>
+    <mat-tab-group class="custom-tabs">
+      <mat-tab [label]="'reportData.form1.title' | translate">
+        <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+            <label class="mat-h1" translate>reportData.dataReport</label>
+            <button *ngIf="report?.comments || edit" (click)="openCommentsModal(commentsModule1, 0)" mat-icon-button>
+              <mat-icon>comment</mat-icon>
+            </button>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="space-around start">
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.whatInformationReported</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.report_information }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.isBaseline</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.have_line_base }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.form1.reportBaselineIndicator</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ '-' }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.form1.individualValueReport</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.base_line_report }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.qualityPreItems</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.have_quality_element }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.form1.previousElementQuality</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.quality_element_description }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.agreementTransferSINAMECC</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.transfer_data_with_sinamecc }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.form1.agreementsTransfer</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.transfer_data_with_sinamecc_description }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.form1.howReportData</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ '-' }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.form1.individualValue</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.individual_report_data }}
+              </h3>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab [label]="'reportData.form2.title' | translate">
+        <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+            <label class="mat-h1" translate>reportData.form2.technicalInfo</label>
+            <button *ngIf="report?.comments || edit" (click)="openCommentsModal(commentsModule2, 1)" mat-icon-button>
+              <mat-icon>comment</mat-icon>
+            </button>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="space-around start">
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.form2.recordName</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.name }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>
+                reportData.form2.description
+              </h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.description }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>
+                reportData.form2.unit
+              </h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.unit }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.form2.calculationMethodology</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.calculation_methodology }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.form2.frecuency</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.measurement_frequency }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.form2.frecuencyOther</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ '-' }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>mitigationAction.timeSeriesAvailable</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.from_date }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>general.until</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.to_date }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>mitigationAction.geographicCoverage</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.geographic_coverage }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>general.other</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ '-' }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>
+                reportData.form2.disaggregation
+              </h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.disaggregation }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>
+                reportData.form2.limitations
+              </h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.limitation }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>
+                reportData.form2.sustainabilityEnsured
+              </h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ '-' }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.form2.observations</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.additional_information }}
+              </h3>
+            </div>
+          </div>
+
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+            <label class="mat-h1" translate>reportData.form2.informationSources</label>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="space-around start">
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.form2.responsibleInstitution</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ '-' }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>adaptationAction.form4.sourceType</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.information_source }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>mitigationAction.statisticalOperationName</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.statistical_operation }}
+              </h3>
+            </div>
+          </div>
+
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+            <label class="mat-h1" translate>info.contactInfo</label>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="space-around start">
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>info.name</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.contact?.full_name }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>general.positionPerson</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.contact?.job_title }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>info.emailAddress</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.contact?.email }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>info.phone</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.contact?.phone }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.additionalAnnotations</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.contact_annotation }}
+              </h3>
+            </div>
+          </div>
+
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+            <label class="mat-h1" translate>Categorización temática</label>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="space-around start">
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>mitigationAction.datatype</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.data_type }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>mitigationAction.SINAMECCClassifiers</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.classifier }}
+              </h3>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab [label]="'reportData.form3.title' | translate">
+        <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
+          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+            <label class="mat-h1" translate>reportData.form3.title</label>
+            <button *ngIf="report?.comments || edit" (click)="openCommentsModal(commentsModule3, 2)" mat-icon-button>
+              <mat-icon>comment</mat-icon>
+            </button>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="space-around start">
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>mitigationAction.dateLastUpdate</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ '-' }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>mitigationAction.changesLastupdate</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ (report?.report_data_change_log)[0]?.changes }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.form3.description</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ (report?.report_data_change_log)[0]?.change_description }}
+              </h3>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

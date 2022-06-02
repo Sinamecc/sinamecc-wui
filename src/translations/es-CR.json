@@ -136,6 +136,35 @@
   },
 
   "reportData": {
+    "form1": {
+      "title": "Datos para reportes y análisis",
+      "reportBaselineIndicator": "¿Cómo se desea reportar la línea base del indicador?",
+      "individualValueReport": "Reporte de valor individual o Conexión con API o Webservice",
+      "previousElementQuality": "Describa los elementos anteriores de la calidad.",
+      "agreementsTransfer": "Describa los acuerdos para transferir los datos",
+      "howReportData": "¿Cómo se deben reportar los datos?",
+      "individualValue": "Reporte de valor individual o Conexión con API o Webservice"
+    },
+    "form2": {
+      "title": "Hoja Metodológica",
+      "technicalInfo": "Información técnica",
+      "recordName": "Nombre del registro",
+      "description": "Description (Brief, relevant, measurable, achievable and time-limited text of the information that the data provides)",
+      "unit": "Unidades de medida (Ejemplo, kilogramos, porcentaje, cantidad, promedio, tasa, índice.)",
+      "calculationMethodology": "Metodología de cálculo (Proceso mediante el cual se obtine el dato)",
+      "frecuency": "Frecuencia de la medición",
+      "frecuencyOther": "Frecuencia de la medición (otro)",
+      "disaggregation": "Desagregación (Ejemplo: género, grupos de edad, nivel socioeconómico, tipo de desastres)",
+      "limitations": "Limitaciones (Aspectos, dimensiones y dinámicas no pueden ser capturados por el indicador)",
+      "sustainabilityEnsured": "¿Cómo se asegura la sostenibilidad en la medición del indicador? (Acciones realizadas que aseguran la  disponibilidad de la información para el monitoreo)",
+      "observations": "Observaciones y comentarios",
+      "informationSources": "Fuentes de información",
+      "responsibleInstitution": "Responsible Institution"
+    },
+    "form3": {
+      "title": "Actualización de datos",
+      "description": "Descripción de la razón de los cambios"
+    },
     "additionalAnnotations": "Anotaciones adicionales",
     "agreementTransferSINAMECC": "¿Se cuenta con un acuerdo para transferir estos datos con el SINAMECC?",
     "qualityPreItems": "¿Tiene elementos previos de calidad?",

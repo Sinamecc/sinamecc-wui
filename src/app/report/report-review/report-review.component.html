@@ -1,0 +1,12 @@
+<app-update-status
+  *ngIf="report"
+  [title]="title"
+  [nextRoute]="nextRoute"
+  [entity]="report"
+  [formData]="formData"
+  [formSubmitRoute]="formSubmitRoute"
+  [statuses]="statuses"
+  [shouldDisplayComment]="shouldDisplayComment"
+  (formSubmitted)="onSubmission($event)"
+  module="report"
+></app-update-status>
