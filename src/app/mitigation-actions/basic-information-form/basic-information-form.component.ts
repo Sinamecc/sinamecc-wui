@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
@@ -73,8 +73,7 @@ export class BasicInformationFormComponent implements OnInit {
           programCtrl: ['', Validators.required],
           stepsTakingToFinancingCtrl: [''],
           detailfinancingSourceCtrl: ['', Validators.required],
-          mitigationActionDescriptionCtrl: ['', [Validators.required, Validators.maxLength(300)]], // new field
-          mitigationActionAmounttCtrl: ['', [Validators.required, Validators.maxLength(50)]], // new field
+          financeFrmCtrl: this.formBuilder.array([this.createFinanceForm()]),
           referenceYearCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
@@ -87,8 +86,6 @@ export class BasicInformationFormComponent implements OnInit {
   }
 
   private updateFormData() {
-    // this.createForm();
-
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
@@ -97,11 +94,7 @@ export class BasicInformationFormComponent implements OnInit {
             this.mitigationAction.finance.administration ? this.mitigationAction.finance.administration : '',
           ],
           detailfinancingSourceCtrl: [this.mitigationAction.finance.source, Validators.required],
-          mitigationActionDescriptionCtrl: ['', [Validators.required, Validators.maxLength(300)]], // new field
-          mitigationActionAmounttCtrl: [
-            this.mitigationAction.finance.budget,
-            [Validators.required, Validators.maxLength(50)],
-          ], // new field
+          financeFrmCtrl: this.createUpdateFinanceForm(),
           referenceYearCtrl: [this.mitigationAction.finance.reference_year, Validators.required],
         }),
         this.formBuilder.group({
@@ -118,6 +111,41 @@ export class BasicInformationFormComponent implements OnInit {
     this.isLoading = false;
   }
 
+  private createFinanceForm() {
+    return this.formBuilder.group({
+      mitigationActionDescriptionCtrl: ['', [Validators.required, Validators.maxLength(300)]],
+      currencyValueCtrl: ['CRC'],
+      mitigationActionAmounttCtrl: ['', Validators.required, Validators.maxLength(50)],
+    });
+  }
+
+  private createUpdateFinanceForm() {
+    const financeList: FormGroup[] = [];
+    // const mapCurrency = ['CRC', 'USD', 'EUR'];
+
+    for (const element of this.mitigationAction.finance.finance_information) {
+      const form = this.formBuilder.group({
+        id: [element.id],
+        mitigationActionDescriptionCtrl: [element.source_description, [Validators.required, Validators.maxLength(300)]],
+        currencyValueCtrl: [element.currency],
+        mitigationActionAmounttCtrl: [element.budget, [Validators.required, Validators.maxLength(50)]],
+      });
+      financeList.push(form);
+    }
+
+    return this.formBuilder.array(financeList);
+  }
+
+  public addFinanceItem() {
+    const control = <FormArray>this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'].controls;
+    control.push(this.createFinanceForm());
+  }
+
+  public removeFinanceItem(index: number) {
+    const control = <FormArray>this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'];
+    control.removeAt(index);
+  }
+
   buildPayload() {
     const context = {
       status: this.form.value.formArray[0].programCtrl,
@@ -126,7 +154,7 @@ export class BasicInformationFormComponent implements OnInit {
         : 'empty field',
       source: this.form.value.formArray[0].detailfinancingSourceCtrl,
       //source_description: this.form.value.formArray[0].financingSourceApplyingCtrl,
-      reference_year: this.datePipe.transform(this.form.value.formArray[0].referenceYearCtrl, 'yyyy'),
+      reference_year: this.datePipe.transform(this.form.value.formArray[0].referenceYearCtrl, 'yyyy-MM-dd'),
       budget: this.form.value.formArray[0].mitigationActionAmounttCtrl,
       currency: this.mitigationActionBudgeValuetCtrl,
       mideplan_registered:
@@ -134,6 +162,23 @@ export class BasicInformationFormComponent implements OnInit {
 
       executing_entity: this.form.value.formArray[1].entityProjectCtrl,
     };
+
+    const financeInformation = [];
+
+    for (const element of this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'].controls) {
+      const financeinfo = {
+        source_description: element.value.mitigationActionDescriptionCtrl,
+        currency: element.value.currencyValueCtrl,
+        budget: element.value.mitigationActionAmounttCtrl,
+      };
+      if (this.isUpdating) {
+        financeinfo['id'] = element.value.id;
+      }
+
+      financeInformation.push(financeinfo);
+    }
+
+    context['finance_information'] = financeInformation;
 
     if (this.form.value.formArray[1].registeredNonReimbursableCooperationMideplanCtrl === 1) {
       context['mideplan_project'] = this.form.value.formArray[1].registeredNonReimbursableCooperationMideplanDetailCtrl;
@@ -144,7 +189,6 @@ export class BasicInformationFormComponent implements OnInit {
   submitForm() {
     const context = { finance: this.buildPayload() };
     this.isLoading = true;
-
     /*
 		const context = {
 			contact: {
@@ -163,7 +207,8 @@ export class BasicInformationFormComponent implements OnInit {
 			context.contact["id"] = this.mitigationAction.contact.id;
 		}
 
-		*/
+     	*/
+
     this.service
       .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
       .pipe(

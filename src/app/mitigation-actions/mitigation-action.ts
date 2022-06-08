@@ -191,6 +191,15 @@ export interface Finance {
   nameRegisteredMideplan?: string;
   executing_entity?: string;
   mideplan_project?: string;
+  finance_information?: FinanceInformation[];
+}
+
+export interface FinanceInformation {
+  budget: string;
+  currency: string;
+  finance?: number;
+  id?: number;
+  source_description: string;
 }
 
 export interface InitiativeType {

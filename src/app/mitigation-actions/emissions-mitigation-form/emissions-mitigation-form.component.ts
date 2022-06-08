@@ -95,7 +95,6 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   private updateFormData() {
-    console.log(this.mitigationAction.impact_documentation);
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
