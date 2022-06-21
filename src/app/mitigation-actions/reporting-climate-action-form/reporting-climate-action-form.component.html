@@ -1,25 +1,32 @@
 <div class="container">
+  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+    <h2 translate>mitigationAction.monitoringReportingClimateActions</h2>
+  </div>
   <mat-card-content>
     <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
       <div fxLayout="column">
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
-              <span translate>mitigationAction.monitoringProgressLog</span>
+              <span>6.1 - </span><span translate>mitigationAction.monitoringProgressLog</span>
             </ng-template>
 
-            <span translate>mitigationAction.anyProgressMonitoringRecordedClimateActions</span><br /><br />
-            <mat-radio-group
-              class="custom-radio-group"
-              formControlName="anyProgressMonitoringRecordedClimateActionsCtrl"
-            >
-              <mat-radio-button [style.margin.px]="5" [value]="1">
-                <label translate>general.yes</label>
-              </mat-radio-button>
-              <mat-radio-button [style.margin.px]="5" [value]="2">
-                <label translate>No</label>
-              </mat-radio-button>
-            </mat-radio-group>
+            <div>
+              <label class="radio-grup-label" translate
+                >6.1.1 - <span translate>mitigationAction.anyProgressMonitoringRecordedClimateActions</span></label
+              >
+              <mat-radio-group
+                class="custom-radio-group"
+                formControlName="anyProgressMonitoringRecordedClimateActionsCtrl"
+              >
+                <mat-radio-button [style.margin.px]="5" [value]="true">
+                  <label translate>general.yes</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5" [value]="false">
+                  <label translate>No</label>
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
             <br />
 
             <div class="box-button">
@@ -28,26 +35,30 @@
           </mat-step>
 
           <mat-step
-            *ngIf="form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl === 1"
+            *ngIf="form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl"
             formGroupName="1"
             [stepControl]="formArray?.get([1])"
           >
             <ng-template matStepLabel>
-              <span translate>mitigationAction.indicatorMonitoring</span>
+              <span>6.2 - </span><span translate>mitigationAction.indicatorMonitoring</span>
             </ng-template>
 
-            <span translate>mitigationAction.indicatorSelection</span><br /><br />
-            <mat-radio-group class="custom-radio-group" formControlName="indicatorSelectionCtrl">
-              <mat-radio-button *ngFor="let item of indicator" [style.margin.px]="5" [value]="item.id">
-                <label translate>{{ item.name }}</label>
-              </mat-radio-button>
-            </mat-radio-group>
+            <div>
+              <label class="radio-grup-label" translate
+                >6.2.1 - <span translate>mitigationAction.indicatorSelection</span></label
+              ><br />
+              <mat-hint>Haga click en el indicador de interés para reportar su avance'</mat-hint>
+              <mat-radio-group class="custom-radio-group" formControlName="indicatorSelectionCtrl">
+                <mat-radio-button *ngFor="let item of indicator" [style.margin.px]="5" [value]="item.id">
+                  <label translate>{{ item.name }}</label>
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
             <br />
 
             <div fxLayout="row" fxLayoutAlign="start center">
               <mat-form-field [style.width.%]="100" class="ppcn-field">
-                <mat-label translate>mitigationAction.reportingPeriod</mat-label>
-
+                <mat-label translate>6.2.1.1 - <span translate>mitigationAction.reportingPeriod</span></mat-label>
                 <input
                   matInput
                   [placeholder]="'Choose a date' | translate"
@@ -63,7 +74,6 @@
 
               <mat-form-field [style.width.%]="100" class="ppcn-field">
                 <mat-label translate>general.until</mat-label>
-
                 <input
                   matInput
                   [placeholder]="'Choose a date' | translate"
@@ -80,8 +90,7 @@
             <br />
 
             <mat-form-field [style.width.%]="100" class="ppcn-field">
-              <mat-label translate>mitigationAction.indicatorDataUpdateDate</mat-label>
-
+              <mat-label translate>6.2.1.2 - <span translate>mitigationAction.indicatorDataUpdateDate</span></mat-label>
               <input
                 matInput
                 [placeholder]="'Choose a date' | translate"
@@ -96,24 +105,28 @@
             </mat-form-field>
             <br />
 
-            <span translate>mitigationAction.sourceType</span><br /><br />
-            <mat-radio-group #informationToUpdate="matRadioGroup" class="custom-radio-group">
-              <mat-radio-button [style.margin.px]="5" [value]="1">
-                <label translate>Línea de texto para el reporte</label>
-              </mat-radio-button>
-              <mat-radio-button [style.margin.px]="5" [value]="2">
-                <label translate>Carga de documento</label>
-              </mat-radio-button>
-              <mat-radio-button [style.margin.px]="5" [value]="3">
-                <label translate>Conexión con webservice: brindar detalles de la conexión </label>
-              </mat-radio-button>
-            </mat-radio-group>
+            <div>
+              <label class="radio-grup-label" translate
+                >6.2.1.3 - <span translate>mitigationAction.sourceType</span></label
+              ><br />
+              <mat-radio-group #informationToUpdate="matRadioGroup" class="custom-radio-group">
+                <mat-radio-button [style.margin.px]="5" [value]="1">
+                  <label translate>Línea de texto para el reporte</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5" [value]="2">
+                  <label translate>Carga de documento</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5" [value]="3">
+                  <label translate>Conexión con webservice: brindar detalles de la conexión </label>
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
             <br />
 
             <div *ngIf="informationToUpdate.value === 1 || informationToUpdate.value === 3">
               <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
                 <mat-label translate
-                  ><span translate>mitigationAction.sourceType</span>
+                  >6.2.1.3 - <span translate>mitigationAction.sourceType</span>
                   {{ informationToUpdate.value === 3 ? '- Webservice' : '' }}
                 </mat-label>
                 <input type="text" matInput formControlName="informationToUpdateCtrl" required />
@@ -123,7 +136,7 @@
 
             <div *ngIf="informationToUpdate.value === 2">
               <div fxLayout="row" fxLayoutAlign=" center">
-                <mat-label translate>mitigationAction.informationToUpdate</mat-label>
+                <mat-label translate>6.2.1.3 - <span translate>mitigationAction.informationToUpdate</span></mat-label>
                 <input type="file" name="filename" />
                 <br />
               </div>
@@ -137,17 +150,16 @@
           </mat-step>
 
           <mat-step
-            *ngIf="form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl === 1"
+            *ngIf="form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl"
             formGroupName="2"
             [stepControl]="formArray?.get([2])"
           >
             <ng-template matStepLabel>
-              <span translate>mitigationAction.generalProgressReportClimateAction</span>
+              <span>6.3 - </span><span translate>mitigationAction.generalProgressReportClimateAction</span>
             </ng-template>
 
             <mat-form-field [style.width.%]="100" class="ppcn-field">
-              <mat-label translate>mitigationAction.reportingPeriod</mat-label>
-
+              <mat-label translate>6.3.1 - <span translate>mitigationAction.reportingPeriod</span></mat-label>
               <input
                 matInput
                 [placeholder]="'Choose a date' | translate"
@@ -162,7 +174,7 @@
             </mat-form-field>
 
             <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
-              <mat-label translate>mitigationAction.beenProgressActionPeriod</mat-label>
+              <mat-label translate>6.3.2 - <span translate>mitigationAction.beenProgressActionPeriod</span></mat-label>
               <input type="text" matInput formControlName="beenProgressActionPeriodCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>

@@ -46,7 +46,11 @@ export class ReportingClimateActionFormComponent implements OnInit {
     this.createForm();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (!this.isUpdating) {
+      this.openStartMessages();
+    }
+  }
 
   get formArray(): AbstractControl | null {
     return this.form.get('formArray');
@@ -152,5 +156,14 @@ export class ReportingClimateActionFormComponent implements OnInit {
         }),
       ]),
     });
+  }
+
+  public openStartMessages() {
+    this.translateService.get('mitigationAction.mesage1').subscribe((res: string) => {
+      this.snackBar.open(res, 'Cerrar');
+    });
+    // this.translateService.get('mitigationAction.mesage2').subscribe((res: string) => {
+    // this.snackBar.open(res, 'Cerrar');
+    //});
   }
 }

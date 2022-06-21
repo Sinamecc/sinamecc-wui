@@ -1,4 +1,7 @@
 <div class="container">
+  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+    <h2 translate>specificLabel.mitigationEmissions</h2>
+  </div>
   <mat-card-content>
     <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
       <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
@@ -122,13 +125,25 @@
 
           <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
             <ng-template matStepLabel>
-              <span translate>mitigationAction.QA/QCEestimate</span>
+              <span>4.2 - </span><span translate>mitigationAction.QA/QCEestimate</span>
             </ng-template>
             <br />
 
             <div fxLayout="row">
+              <mat-form-field>
+                <mat-label translate
+                  >4.2.1 - <span translate>mitigationAction.standardizedCalculationMethodologyUsed</span></mat-label
+                >
+                <mat-select formControlName="standardizedCalculationMethodologyUsedCtrl">
+                  <mat-option [value]="true" translate><span translate>general.yes</span></mat-option>
+                  <mat-option [value]="false">No</mat-option>
+                </mat-select>
+              </mat-form-field>
               <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
-                <mat-label translate>mitigationAction.standardizedCalculationMethodologyUsed</mat-label>
+                <mat-label translate>
+                  4.2.1 - <span translate>mitigationAction.standardizedCalculationMethodologyUsed</span> -
+                  <span translate>general.details</span></mat-label
+                >
                 <input
                   type="text"
                   matInput
@@ -140,16 +155,34 @@
             </div>
             <br />
             <div fxLayout="row">
+              <mat-form-field>
+                <mat-label translate>4.2.2 - <span translate>mitigationAction.calculationsDocumented</span></mat-label>
+                <mat-select formControlName="calculationsDocumentedCtrl">
+                  <mat-option [value]="true" translate><span translate>general.yes</span></mat-option>
+                  <mat-option [value]="false">No</mat-option>
+                </mat-select>
+              </mat-form-field>
               <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
-                <mat-label translate>mitigationAction.calculationsDocumented</mat-label>
+                <mat-label translate>4.2.2 - <span translate>mitigationAction.calculationsDocumented</span></mat-label>
                 <input type="text" matInput formControlName="calculationsDocumentedDetailCtrl" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
             </div>
             <br />
             <div fxLayout="row">
+              <mat-form-field>
+                <mat-label translate
+                  >4.2.3 - <span translate>mitigationAction.emissionFactorsUsedCalculationDocumented</span></mat-label
+                >
+                <mat-select formControlName="emissionFactorsUsedCalculationDocumentedCtrl">
+                  <mat-option [value]="true" translate><span translate>general.yes</span></mat-option>
+                  <mat-option [value]="false">No</mat-option>
+                </mat-select>
+              </mat-form-field>
               <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
-                <mat-label translate>mitigationAction.emissionFactorsUsedCalculationDocumented</mat-label>
+                <mat-label translate
+                  >4.2.3 - <span translate>mitigationAction.emissionFactorsUsedCalculationDocumented</span></mat-label
+                >
                 <input
                   type="text"
                   matInput
@@ -161,8 +194,15 @@
             </div>
             <br />
             <div fxLayout="row">
+              <mat-form-field>
+                <mat-label translate>4.2.4 - <span translate>mitigationAction.assumptionsDocumented</span></mat-label>
+                <mat-select formControlName="assumptionsDocumentedCtrl">
+                  <mat-option [value]="true" translate><span translate>general.yes</span></mat-option>
+                  <mat-option [value]="false">No</mat-option>
+                </mat-select>
+              </mat-form-field>
               <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
-                <mat-label translate>mitigationAction.assumptionsDocumented</mat-label>
+                <mat-label translate>4.2.4 - <span translate>mitigationAction.assumptionsDocumented</span></mat-label>
                 <input type="text" matInput formControlName="assumptionsDocumentedDetailCtrl" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
@@ -176,15 +216,18 @@
 
           <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
             <ng-template matStepLabel>
-              <span translate>mitigationAction.marketParticipation</span>
+              <span>4.3 - </span><span translate>mitigationAction.marketParticipation</span>
             </ng-template>
             <br />
 
             <mat-form-field class="field-ppcn">
+              <mat-label translate
+                >4.3.1 - <span translate>mitigationAction.intendParticipateInternationalCarbonMarkets</span></mat-label
+              >
               <mat-select
                 [(ngModel)]="intendParticipateInternationalCarbonMarketsModel"
-                [placeholder]="'mitigationAction.intendParticipateInternationalCarbonMarkets' | translate"
                 formControlName="intendParticipateInternationalCarbonMarketsCtrl"
+                (selectionChange)="setLastSectionValidations($event.value)"
               >
                 <mat-option [value]="1">
                   <label translate>general.yes</label>
@@ -197,11 +240,10 @@
             <br />
             <div *ngIf="intendParticipateInternationalCarbonMarketsModel === 1">
               <mat-form-field class="field-ppcn">
-                <mat-select
-                  [(ngModel)]="mechanismStandardApplyModel"
-                  [placeholder]="'mitigationAction.mechanismStandardApply' | translate"
-                  formControlName="mechanismStandardApplyCtrl"
+                <mat-label translate
+                  >4.3.1.1 - <span translate>mitigationAction.mechanismStandardApply</span></mat-label
                 >
+                <mat-select [(ngModel)]="mechanismStandardApplyModel" formControlName="mechanismStandardApplyCtrl">
                   <!-- This options will remplace for a catalog, waiting BE-->
                   <mat-option [value]="1">
                     Mecanismo de Desarrollo Limpio (MDL)
@@ -229,7 +271,7 @@
               <br />
               <div *ngIf="mechanismStandardApplyModel === 6">
                 <mat-form-field class="field-ppcn">
-                  <mat-label translate>general.other</mat-label>
+                  <mat-label translate>4.3.1.1 - <span translate>general.other</span></mat-label>
                   <input matInput formControlName="methodologyExantePotentialReductionEmissionsCO2OtherCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
@@ -237,9 +279,16 @@
               </div>
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>mitigationAction.methodologyUsed</mat-label>
+                <mat-label translate>4.3.1.2 - <span translate>mitigationAction.methodologyUsed</span></mat-label>
                 <input matInput formControlName="methodologyUsedCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
+                <mat-hint
+                  >Se recomienda consultar el siguiente documento con referencias de metodologías estándar del Mecanismo
+                  de Desarrollo Limpio,
+                  <a target="_blank" href="https://drive.google.com/drive/folders/1MiwoYKE7xQH0hoH5yuhyPdun8ZLYqKs6"
+                    >Link</a
+                  >
+                </mat-hint>
               </mat-form-field>
               <br />
             </div>

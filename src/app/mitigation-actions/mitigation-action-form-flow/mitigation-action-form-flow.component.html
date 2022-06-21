@@ -17,6 +17,7 @@
             [newFormData]="newFormData"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
+            [stepper]="stepper"
             [action]="action"
           ></app-initiative-form>
           <div class="align-right">
@@ -32,6 +33,7 @@
           <ng-template matStepLabel><span translate>info.financingInformation</span></ng-template>
           <app-basic-information-form
             [newFormData]="newFormData"
+            [stepper]="stepper"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
           >
@@ -59,6 +61,7 @@
         <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
           <ng-template matStepLabel><span translate>general.keyAspects</span></ng-template>
           <app-key-aspects-form
+            [stepper]="stepper"
             [newFormData]="newFormData"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
@@ -90,6 +93,7 @@
             [newFormData]="newFormData"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
+            [stepper]="stepper"
           >
           </app-emissions-mitigation-form>
 
@@ -121,6 +125,7 @@
             [newFormData]="newFormData"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
+            [stepper]="stepper"
           >
           </app-impact-form>
 

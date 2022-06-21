@@ -34,6 +34,7 @@ export class InitiativeFormComponent implements OnInit {
   mitigationAction: MitigationAction;
   initiativeGoalList: string[] = [];
 
+  @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   // @Input() action: string;
   @Input() processedNewFormData: MitigationActionNewFormData;
@@ -365,6 +366,7 @@ export class InitiativeFormComponent implements OnInit {
               this.snackBar.open(res, null, { duration: 3000 });
             });
             this.wasSubmittedSuccessfully = true;
+            this.stepper.next();
           },
           (error) => {
             this.translateService.get('Error submitting form').subscribe((res: string) => {

@@ -30,6 +30,7 @@ export class ImpactFormComponent implements OnInit {
   startDate = new Date();
   mitigationAction: MitigationAction;
 
+  @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
@@ -91,23 +92,21 @@ export class ImpactFormComponent implements OnInit {
   buildForm() {
     return this.formBuilder.array([
       this.formBuilder.group({
-        responsibleInstitutionCtrl: ['', Validators.required],
+        responsibleInstitutionCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
         howSustainabilityIndicatorCtrl: ['', Validators.required],
         indicatorNameCtrl: [''],
         indicatorDescriptionCtrl: ['', Validators.required],
         indicatorUnitCtrl: ['', Validators.required],
-        methodologicalDetailIndicatorCtrl: ['', Validators.required],
+        methodologicalDetailIndicatorCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(1000)])],
         indicatorReportingPeriodicityOtherCtrl: [''],
         indicatorReportingPeriodicityCtrl: ['', Validators.required],
-        additionalInformationCtrl: ['', Validators.required],
         timeSeriesAvailableStartCtrl: ['', Validators.required],
         timeSeriesAvailableEndCtrl: ['', Validators.required],
         geographicCoverageCtrl: ['', Validators.required],
         geographicCoverageOtherCtrl: [''],
         disintegrationCtrl: ['', Validators.required],
         dataSourceCtrl: ['', Validators.required],
-        sinameccClassifiersCtrl: ['', Validators.required],
-        observationsCommentsCtrl: ['', Validators.required],
+        observationsCommentsCtrl: [''],
       }),
       this.formBuilder.group({
         responsibleInstitutionCtrl: ['', Validators.required],
@@ -138,10 +137,69 @@ export class ImpactFormComponent implements OnInit {
   }
 
   private updateFormData() {
-    this.createForm();
+    //this.createForm();
+    let index = 0;
+    for (const indicator of this.mitigationAction.monitoring_information.indicator) {
+      const form = this.formBuilder.array([
+        this.formBuilder.group({
+          responsibleInstitutionCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
+          howSustainabilityIndicatorCtrl: ['', Validators.required],
+          indicatorNameCtrl: [''],
+          indicatorDescriptionCtrl: [indicator.description, Validators.required],
+          indicatorUnitCtrl: [indicator.unit, Validators.required],
+          methodologicalDetailIndicatorCtrl: [
+            indicator.methodological_detail,
+            Validators.compose([Validators.required, Validators.maxLength(1000)]),
+          ],
+          indicatorReportingPeriodicityOtherCtrl: [''],
+          indicatorReportingPeriodicityCtrl: [indicator.reporting_periodicity, Validators.required],
+          timeSeriesAvailableStartCtrl: [indicator.available_time_start_date, Validators.required],
+          timeSeriesAvailableEndCtrl: [indicator.available_time_end_date, Validators.required],
+          geographicCoverageCtrl: [indicator.geographic_coverage, Validators.required],
+          geographicCoverageOtherCtrl: [indicator.other_geographic_coverage],
+          disintegrationCtrl: [indicator.disaggregation, Validators.required],
+          dataSourceCtrl: [indicator.limitation, Validators.required],
+          observationsCommentsCtrl: [indicator.comments],
+        }),
+        this.formBuilder.group({
+          responsibleInstitutionCtrl: [indicator.information_source.responsible_institution, Validators.required],
+          sourceTypeCtrl: [indicator.information_source.type, Validators.required],
+          sourceTypeOtherCtrl: [indicator.information_source.other_type],
+          statisticalOperationNameCtrl: [indicator.information_source.statistical_operation, Validators.required],
+        }),
+        this.formBuilder.group({
+          datatypeCtrl: [indicator.type_of_data, Validators.required],
+          datatypeOtherCtrl: [indicator.other_type_of_data],
+          sinameccClassifiersCtrl: [indicator.classifier, Validators.required],
+          sinameccClassifiersOtherCtrl: [indicator.other_classifier],
+        }),
+        this.formBuilder.group({
+          namePersonResponsibleCtrl: [indicator.contact.full_name, Validators.required],
+          institutionCtrl: [indicator.contact.institution, Validators.required],
+          contactPersonTitleCtrl: [indicator.contact.job_title, Validators.required],
+          emailAddressCtrl: [indicator.contact.email, Validators.email],
+          phoneCtrl: [indicator.contact.phone, Validators.compose([Validators.required, Validators.minLength(8)])],
+        }),
+        this.formBuilder.group({
+          dateLastUpdateCtrl: [indicator.change_log[0].update_date, Validators.required],
+          changesLastupdateCtrl: [indicator.change_log[0].changes, Validators.required],
+          descriptionChangesCtrl: [indicator.change_log[0].changes_description, Validators.required],
+          authorLastUpdateCtrl: [indicator.change_log[0].author, Validators.required],
+        }),
+      ]);
+
+      if (index === 0) {
+        this.form = this.formBuilder.group({
+          formArray: form,
+        });
+      } else {
+        this.form.controls['formArray' + index] = form;
+      }
+
+      index += 1;
+    }
 
     this.isLoading = false;
-    // this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
   }
 
   buildPayload() {
@@ -154,7 +212,6 @@ export class ImpactFormComponent implements OnInit {
         unit: actualForm[0].indicatorUnitCtrl,
         methodological_detail: actualForm[0].methodologicalDetailIndicatorCtrl,
         reporting_periodicity: actualForm[0].indicatorReportingPeriodicityCtrl,
-        additional_information: actualForm[0].additionalInformationCtrl,
         available_time_start_date: this.datePipe.transform(actualForm[0].timeSeriesAvailableStartCtrl, 'yyyy-MM-dd'),
         available_time_end_date: this.datePipe.transform(actualForm[0].timeSeriesAvailableEndCtrl, 'yyyy-MM-dd'),
         geographic_coverage: actualForm[0].geographicCoverageCtrl,
@@ -202,13 +259,6 @@ export class ImpactFormComponent implements OnInit {
   submitForm() {
     this.isLoading = true;
     const context = this.buildPayload();
-    /*
-		if (this.isUpdating) {
-			context["update_existing_mitigation_action"] = true;
-		} else {
-			context["update_new_mitigation_action"] = true;
-		}
-		*/
 
     this.service
       .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
@@ -224,6 +274,7 @@ export class ImpactFormComponent implements OnInit {
             this.snackBar.open(res, null, { duration: 3000 });
           });
           this.wasSubmittedSuccessfully = true;
+          this.stepper.next();
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {

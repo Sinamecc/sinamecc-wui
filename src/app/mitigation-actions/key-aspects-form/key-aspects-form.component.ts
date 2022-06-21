@@ -57,6 +57,7 @@ export class KeyAspectsFormComponent implements OnInit {
 
   mitigationAction: MitigationAction;
 
+  @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
@@ -143,14 +144,6 @@ export class KeyAspectsFormComponent implements OnInit {
     this.isLoading = true;
     const context = this.buildPayload();
 
-    /*
-		if (this.isUpdating) {
-			context.finance["id"] = this.mitigationAction.finance.id;
-			context.location["id"] = this.mitigationAction.location.id;
-			// context['update_existing_mitigation_action'] = true;
-		}
-		*/
-
     this.service
       .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
       .pipe(
@@ -164,7 +157,7 @@ export class KeyAspectsFormComponent implements OnInit {
           this.translateService.get('Sucessfully submitted form').subscribe((res: string) => {
             this.snackBar.open(res, null, { duration: 3000 });
           });
-
+          this.stepper.next();
           this.wasSubmittedSuccessfully = true;
         },
         (error) => {

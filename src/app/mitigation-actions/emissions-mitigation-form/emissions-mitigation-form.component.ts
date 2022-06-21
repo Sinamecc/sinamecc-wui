@@ -23,6 +23,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
   form: FormGroup;
+
+  @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
@@ -127,20 +129,35 @@ export class EmissionsMitigationFormComponent implements OnInit {
           ],
         }),
         this.formBuilder.group({
-          standardizedCalculationMethodologyUsedCtrl: [''],
-          standardizedCalculationMethodologyUsedDetailCtrl: ['', Validators.required],
-          calculationsDocumentedCtrl: [''],
-          calculationsDocumentedDetailCtrl: ['', Validators.required],
-          emissionFactorsUsedCalculationDocumentedCtrl: [''],
-          emissionFactorsUsedCalculationDocumentedDetailCtrl: ['', Validators.required],
-          assumptionsDocumentedCtrl: [''],
-          assumptionsDocumentedDetailCtrl: ['', Validators.required],
+          standardizedCalculationMethodologyUsedCtrl: [this.mitigationAction.impact_documentation.question[0].check],
+          standardizedCalculationMethodologyUsedDetailCtrl: [
+            this.mitigationAction.impact_documentation.question[0].detail,
+            Validators.required,
+          ],
+          calculationsDocumentedCtrl: [this.mitigationAction.impact_documentation.question[1].check],
+          calculationsDocumentedDetailCtrl: [
+            this.mitigationAction.impact_documentation.question[1].detail,
+            Validators.required,
+          ],
+          emissionFactorsUsedCalculationDocumentedCtrl: [this.mitigationAction.impact_documentation.question[2].check],
+          emissionFactorsUsedCalculationDocumentedDetailCtrl: [
+            this.mitigationAction.impact_documentation.question[2].detail,
+            Validators.required,
+          ],
+          assumptionsDocumentedCtrl: [this.mitigationAction.impact_documentation.question[3].check],
+          assumptionsDocumentedDetailCtrl: [
+            this.mitigationAction.impact_documentation.question[3].detail,
+            Validators.required,
+          ],
         }),
         this.formBuilder.group({
-          intendParticipateInternationalCarbonMarketsCtrl: ['', Validators.required],
+          intendParticipateInternationalCarbonMarketsCtrl: [
+            this.mitigationAction.impact_documentation.carbon_international_commerce,
+            Validators.required,
+          ],
           mechanismStandardApplyCtrl: ['', Validators.required],
           methodologyExantePotentialReductionEmissionsCO2OtherCtrl: [''],
-          methodologyUsedCtrl: ['', Validators.required],
+          methodologyUsedCtrl: [this.mitigationAction.impact_documentation.methodologies_to_use, Validators.required],
         }),
       ]),
     });
@@ -158,34 +175,32 @@ export class EmissionsMitigationFormComponent implements OnInit {
         calculation_methodology: this.form.value.formArray[0].methodologyExantePotentialReductionEmissionsCO2Ctrl,
         estimate_calculation_documentation: this.form.value.formArray[0]
           .documentationCalculationsEstimateReductionEmissionsCO2Ctrl,
-        mitigation_action_in_inventory:
-          this.form.value.formArray[0].isCurrentlyReflectedInventoryCtrl === 1 ? true : false,
-
+        mitigation_action_in_inventory: this.form.value.formArray[0].isCurrentlyReflectedInventoryCtrl,
         carbon_international_commerce: this.form.value.formArray[2].intendParticipateInternationalCarbonMarketsCtrl,
         methodologies_to_use: this.form.value.formArray[2].methodologyUsedCtrl,
         question: [
           {
             code: 'Q1',
             question: 'mitigationAction.standardizedCalculationMethodologyUsed',
-            check: this.form.value.formArray[1].standardizedCalculationMethodologyUsedCtrl === '1' ? true : false,
+            check: this.form.value.formArray[1].standardizedCalculationMethodologyUsedCtrl,
             detail: this.form.value.formArray[1].standardizedCalculationMethodologyUsedDetailCtrl,
           },
           {
             code: 'Q2',
             question: 'mitigationAction.calculationsDocumented',
-            check: this.form.value.formArray[1].calculationsDocumentedCtrl === '1' ? true : false,
+            check: this.form.value.formArray[1].calculationsDocumentedCtrl,
             detail: this.form.value.formArray[1].calculationsDocumentedDetailCtrl,
           },
           {
             code: 'Q3',
             question: 'mitigationAction.emissionFactorsUsedCalculationDocumented',
-            check: this.form.value.formArray[1].emissionFactorsUsedCalculationDocumentedCtrl === '1' ? true : false,
+            check: this.form.value.formArray[1].emissionFactorsUsedCalculationDocumentedCtrl,
             detail: this.form.value.formArray[1].emissionFactorsUsedCalculationDocumentedDetailCtrl,
           },
           {
             code: 'Q4',
             question: 'mitigationAction.assumptionsDocumented',
-            check: this.form.value.formArray[1].assumptionsDocumentedCtrl === '1' ? true : false,
+            check: this.form.value.formArray[1].assumptionsDocumentedCtrl,
             detail: this.form.value.formArray[1].assumptionsDocumentedDetailCtrl,
           },
         ],
@@ -213,6 +228,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
             this.snackBar.open(res, null, { duration: 3000 });
           });
           this.wasSubmittedSuccessfully = true;
+          this.stepper.next();
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -224,5 +240,18 @@ export class EmissionsMitigationFormComponent implements OnInit {
           this.wasSubmittedSuccessfully = false;
         }
       );
+  }
+
+  public setLastSectionValidations(validation: number) {
+    if (validation === 1) {
+      this.form.get('formArray').get([2]).get('mechanismStandardApplyCtrl').setValidators(Validators.required);
+      this.form.get('formArray').get([2]).get('methodologyUsedCtrl').setValidators(Validators.required);
+    } else {
+      this.form.get('formArray').get([2]).get('mechanismStandardApplyCtrl').setValidators(null);
+      this.form.get('formArray').get([2]).get('methodologyUsedCtrl').setValidators(null);
+    }
+
+    this.form.get('formArray').get([2]).get('mechanismStandardApplyCtrl').updateValueAndValidity();
+    this.form.get('formArray').get([2]).get('methodologyUsedCtrl').updateValueAndValidity();
   }
 }

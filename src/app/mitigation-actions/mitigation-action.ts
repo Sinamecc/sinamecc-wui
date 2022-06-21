@@ -39,6 +39,13 @@ export interface MitigationAction {
   categorization: any; //waiting BE have this data
   ghg_information: GHGInformation;
   impact_documentation: any;
+  monitoring_information: MonitoringInformation;
+}
+
+export interface MonitoringInformation {
+  code: string;
+  id: string;
+  indicator: any[];
 }
 
 export interface ImpacDocumentationQuestion {

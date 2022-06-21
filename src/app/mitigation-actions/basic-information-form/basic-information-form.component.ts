@@ -31,6 +31,7 @@ export class BasicInformationFormComponent implements OnInit {
   startDate = new Date();
   selectedFood = '';
 
+  @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
@@ -115,7 +116,7 @@ export class BasicInformationFormComponent implements OnInit {
     return this.formBuilder.group({
       mitigationActionDescriptionCtrl: ['', [Validators.required, Validators.maxLength(300)]],
       currencyValueCtrl: ['CRC'],
-      mitigationActionAmounttCtrl: ['', Validators.required, Validators.maxLength(50)],
+      mitigationActionAmounttCtrl: ['', [Validators.required, Validators.maxLength(50)]],
     });
   }
 
@@ -189,25 +190,6 @@ export class BasicInformationFormComponent implements OnInit {
   submitForm() {
     const context = { finance: this.buildPayload() };
     this.isLoading = true;
-    /*
-		const context = {
-			contact: {
-				full_name: this.form.value.formArray[1].contactNameCtrl,
-				job_title: this.form.value.formArray[1].positionCtrl,
-				email: this.form.value.formArray[1].emailFormCtrl,
-				phone: this.form.value.formArray[1].phoneCtrl
-			},
-			strategy_name: this.form.value.formArray[0].programCtrl,
-			name: this.form.value.formArray[0].nameCtrl,
-			institution: this.form.value.formArray[0].entityCtrl,
-			user: String(this.authenticationService.credentials.id),
-			registration_type: this.processedNewFormData.initiative_type[0].id
-		};
-		if (this.isUpdating) {
-			context.contact["id"] = this.mitigationAction.contact.id;
-		}
-
-     	*/
 
     this.service
       .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
@@ -223,6 +205,7 @@ export class BasicInformationFormComponent implements OnInit {
             this.snackBar.open(res, null, { duration: 3000 });
           });
           this.wasSubmittedSuccessfully = true;
+          this.stepper.next();
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
