@@ -3,9 +3,25 @@ export interface ReportOrganization {
   legal_identification: string;
   elaboration_date: string;
   entity_address: string;
-  report_organization_type: string;
+  report_organization_type: any;
   other_report_organization_type: string;
-  contact: string;
+  contact: Contact;
+}
+
+export interface Contact {
+  contact_name: string;
+  contact_position: string;
+  address: string;
+  email: string;
+  phone: string;
+}
+
+export interface ContactIndicator {
+  institution: string;
+  full_name: string;
+  job_title: string;
+  email: string;
+  phone: string;
 }
 
 export interface Adress {
@@ -19,8 +35,8 @@ export interface AdaptationActionInformation {
   objective: string;
   description: string;
   meta: string;
-  adaptation_action_type: string | string[];
-  ods: number[];
+  adaptation_action_type: any;
+  ods: number[] | any;
 }
 
 export interface Activity {
@@ -38,13 +54,17 @@ export interface Instrument {
 
 export interface ClimateThreat {
   type_climated_threat: string;
+  other_type_climate_threat: string;
+  description_climate_threat: string;
+  vulnerability_climate_threat: string;
+  exposed_elements: string;
 }
 
 export interface Implementation {
   id?: string;
   start_date: string;
   end_date: string;
-  duration: string;
+
   responsible_entity: string;
   other_entity: string;
   action_code: string;
@@ -96,6 +116,7 @@ export interface Indicator {
   other_classifier: string;
   available_time_start_date?: string;
   general_report?: GeneralReport;
+  contact: ContactIndicator;
 }
 
 export interface ProgressLog {

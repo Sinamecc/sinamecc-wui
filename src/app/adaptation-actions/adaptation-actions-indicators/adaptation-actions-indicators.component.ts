@@ -45,6 +45,23 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     });
   }
 
+  addNewForm() {
+    const index = Object.keys(this.form.controls).length + 1;
+    this.form.controls['formArray' + index] = this.buildRegisterForm();
+  }
+
+  removeForm(key: string) {
+    delete this.form.controls[key];
+  }
+
+  getFormKeys() {
+    return Object.keys(this.form.controls);
+  }
+
+  getFormObject(key: string) {
+    return this.form.get(key);
+  }
+
   buildRegisterForm() {
     return this.formBuilder.array([
       this.formBuilder.group({
@@ -137,6 +154,14 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         other_classifier: this.form.value.formArray[2].adaptationActionIndicatorClassifiersOtherCtrl
           ? this.form.value.formArray[2].adaptationActionIndicatorClassifiersOtherCtrl
           : null,
+
+        contact: {
+          institution: this.form.value.formArray[3].adaptationActionIndicatorContactInstitutionCtrl,
+          full_name: this.form.value.formArray[3].adaptationActionIndicatorContactNameCtrl,
+          job_title: this.form.value.formArray[3].adaptationActionIndicatorContactDepartmentCtrl,
+          email: this.form.value.formArray[3].adaptationActionIndicatorContactEmailCtrl,
+          phone: this.form.value.formArray[3].adaptationActionIndicatorContactPhoneCtrl,
+        },
       },
     };
 

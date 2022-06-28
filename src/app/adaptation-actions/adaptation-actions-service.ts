@@ -73,6 +73,14 @@ export class AdaptationActionService {
     );
   }
 
+  public loadOneAdaptationActions(id: string) {
+    return this.httpClient.get(routes.adaptationActionUpdate(id)).pipe(
+      map((body: AdaptationAction) => {
+        return body;
+      })
+    );
+  }
+
   public loadTopics() {
     return this.httpClient.get(routes.topics()).pipe(
       map((body: Topic[]) => {

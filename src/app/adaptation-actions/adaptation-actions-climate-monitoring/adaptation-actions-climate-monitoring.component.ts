@@ -64,14 +64,13 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
         attachSupportingInformationCtrl: ['', Validators.required],
       }),
       this.formBuilder.group({
-        reportPeriodStart2Ctrl: ['', Validators.required],
-        reportPeriodEndt2Ctrl: ['', Validators.required],
         advanceDescriptionCtrl: ['', [Validators.required, Validators.maxLength(3000)]],
       }),
     ]);
   }
 
   submitForm() {
+    // here que need to call the EP
     const payload: AdaptationAction = this.buildPayload();
 
     this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
@@ -198,5 +197,19 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
       this.setGeneralReportFiels(false);
       this.setIndicatorMonitoringFields(false);
     }
+  }
+
+  actionStatusChange(value: string) {
+    if (value === '3') {
+      // progressMonitoringRecordedClimateActionsCtrl
+      this.form.get('formArray').get([0]).get('progressMonitoringRecordedClimateActionsCtrl').setValidators(null);
+    } else {
+      this.form
+        .get('formArray')
+        .get([0])
+        .get('progressMonitoringRecordedClimateActionsCtrl')
+        .setValidators(Validators.required);
+    }
+    this.form.get('formArray').get([0]).get('progressMonitoringRecordedClimateActionsCtrl').updateValueAndValidity();
   }
 }

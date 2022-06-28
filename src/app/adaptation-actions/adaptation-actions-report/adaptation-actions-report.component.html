@@ -60,7 +60,7 @@
           <mat-label translate>adaptationAction.form2.AAODS</mat-label>
           <mat-select formControlName="adaptationActionODSCtrl" multiple>
             <mat-option *ngFor="let element of ods" [value]="element.code">
-              <label translate>{{ element.code }} - {{ element.name }}</label>
+              <label translate>{{ element.name }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -86,13 +86,13 @@
           formControlName="appScaleCtrl"
           class="custom-radio-group"
         >
-          <mat-radio-button [matTooltip]="typesTooltipTxt[0]" [value]="1">
+          <mat-radio-button [value]="1">
             <label translate>Nacional </label>
           </mat-radio-button>
-          <mat-radio-button [matTooltip]="typesTooltipTxt[1]" [value]="2">
+          <mat-radio-button [value]="2">
             <label translate>Regional</label>
           </mat-radio-button>
-          <mat-radio-button [matTooltip]="typesTooltipTxt[2]" [value]="3">
+          <mat-radio-button [value]="3">
             <label translate>Local</label>
           </mat-radio-button>
         </mat-radio-group>
@@ -271,14 +271,14 @@
 
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form2.relatedClimateThreat</mat-label>
-          <mat-select #climateValue formControlName="adaptationActionClimateThreatCtrl">
+          <mat-select multiple #climateValue formControlName="adaptationActionClimateThreatCtrl">
             <mat-option *ngFor="let climate of climateThreat" [value]="climate.id">
               <label translate>{{ climate.name }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="climateValue.value === climateThreat.length" class="field-ppcn">
+        <mat-form-field *ngIf="climateValue?.value?.includes(climateThreat.length)" class="field-ppcn">
           <mat-label translate>adaptationAction.form2.relatedClimateThreatOther</mat-label>
           <input type="text" matInput formControlName="adaptationActionClimateThreatOtherCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -291,6 +291,26 @@
             <mat-error translate>errorLabel.fieldRequired</mat-error>
           </mat-form-field>
           <input type="file" name="filename2" />
+          <br />
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign=" center">
+          <mat-form-field class="field-ppcn">
+            <mat-label translate>adaptationAction.form2.descriptionVulnerability</mat-label>
+            <input matInput formControlName="descriptionVulnerabilityCtrl" />
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+          </mat-form-field>
+          <input type="file" name="filename3" />
+          <br />
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign=" center">
+          <mat-form-field class="field-ppcn">
+            <mat-label translate>adaptationAction.form2.descriptionElementsExposed</mat-label>
+            <input matInput formControlName="descriptionElementsExposedCtrl" />
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+          </mat-form-field>
+          <input type="file" name="filename3" />
           <br />
         </div>
 
@@ -337,12 +357,6 @@
           <mat-datepicker-toggle matSuffix [for]="adaptationActionEndDate"></mat-datepicker-toggle>
           <mat-datepicker #adaptationActionEndDate startView="year"></mat-datepicker>
 
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="field-ppcn">
-          <mat-label translate>adaptationAction.form2.durationAction</mat-label>
-          <input type="text" matInput formControlName="adaptationActionDurationTimeCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 

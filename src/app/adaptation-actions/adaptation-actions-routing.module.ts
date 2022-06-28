@@ -30,6 +30,11 @@ const routes: Routes = [
       component: AdaptationActionReviewComponent,
       data: { id: extract('id') },
     },
+    {
+      path: 'adaptation/actions/:id/update',
+      component: AdaptationActionsNewComponent,
+      data: { id: extract('id') },
+    },
   ]),
 ];
 

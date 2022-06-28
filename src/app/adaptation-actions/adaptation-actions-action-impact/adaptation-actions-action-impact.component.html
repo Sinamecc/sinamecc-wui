@@ -49,7 +49,7 @@
           <mat-label translate>adaptationAction.form6.sustainableDevelopment</mat-label>
           <mat-select multiple formControlName="objectivesCtrl">
             <mat-option *ngFor="let element of ods" [value]="element.code">
-              <label translate>{{ element.code }} - {{ element.name }}</label>
+              <label translate>{{ element.name }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>

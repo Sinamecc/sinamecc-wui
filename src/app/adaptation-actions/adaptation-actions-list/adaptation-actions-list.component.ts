@@ -31,6 +31,10 @@ export class AdaptationActionsListComponent implements OnInit {
     });
   }
 
+  edit(uuid: string) {
+    this.router.navigate([`adaptation/actions/${uuid}/update`], { replaceUrl: true });
+  }
+
   loadData() {
     this.loading = true;
     this.service.loadAdaptationActions().subscribe(
