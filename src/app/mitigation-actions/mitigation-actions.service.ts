@@ -25,6 +25,7 @@ const routes = {
   getIndicator: (code: string) => `/v1/mitigation-action/${code}/indicator/`,
   getCatalogs: (id: string, parentCatalog: string, catalog: string) =>
     `/v1/mitigation-action/data/${parentCatalog}/${id}/${catalog}/`,
+  getComments: (id: string = '') => `/v1/mitigation-action/${id}/comments/`,
 };
 
 export interface Response {
@@ -52,6 +53,14 @@ export class MitigationActionsService {
 
   loadCatalogs(id: string, parentCatalog: string, catalog: string) {
     return this.httpClient.get(routes.getCatalogs(id, parentCatalog, catalog), {}).pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
+  }
+
+  getComments(id: string) {
+    return this.httpClient.get(routes.getComments(id)).pipe(
       map((body: any) => {
         return body;
       })
