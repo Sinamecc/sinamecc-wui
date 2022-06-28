@@ -103,10 +103,9 @@ export class UpdateStatusComponent implements OnInit {
   submitForm() {
     this.isLoading = true;
     const context = {
-      context: this.form.value,
+      fsm_state: this.form.value.statusCtrl,
       comments: this.moduleRef ? this.moduleRef.instance.buildFormatComments(this.moduleRef.instance.comments) : [],
     };
-
     this.formSubmitted.emit(context);
     this.service
       .updateStatus(context, this.formSubmitRoute)

@@ -29,7 +29,7 @@ export interface MitigationAction {
   sustainability: string;
   location: Location;
   progress_indicator: ProgressIndicator;
-  next_state: NextState;
+  next_state: NextState[];
   created: string;
   updated: string;
   fsm_state: string;
