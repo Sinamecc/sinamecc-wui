@@ -16,7 +16,7 @@ const routes = {
   adaptationAction: () => `/v1/adaptation-action/`,
   adaptationActionUpdate: (id: string) => `/v1/adaptation-action/${id}/`,
   topics: () => `/v1/adaptation-action/get_topics/`,
-  subTopics: (id = '') => `/v1/adaptation-action/get_subtopics/${id ? id + '/' : '/'}`,
+  subTopics: (id: string) => `/v1/adaptation-action/get_subtopics/${id}`,
   getActivities: (id: string) => `/v1/adaptation-action/get_activities/${id}/`,
   ods: () => `/v1/adaptation-action/get_ods/`,
   temporalityImpact: () => `/v1/adaptation-action/get_temporality_impact/`,
@@ -91,7 +91,8 @@ export class AdaptationActionService {
   }
 
   public loadSubTopics(id: string = '') {
-    return this.httpClient.get(routes.subTopics(id)).pipe(
+    const ID = id !== '' ? `${id}/` : id;
+    return this.httpClient.get(routes.subTopics(ID)).pipe(
       map((body: SubTopics[]) => {
         return body;
       })

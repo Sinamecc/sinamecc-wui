@@ -27,6 +27,14 @@
               </h3>
             </div>
 
+            <div *ngIf="adaptationAction?.report_organization?.other_report_organization_type" fxLayout="row">
+              <h3 class="mat-h3" translate>
+                <span translate>adaptationAction.form1.reportingEntityType</span> (<span translate>general.other</span>)
+              </h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.report_organization?.other_report_organization_type }}</h3>
+            </div>
+
             <div fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form1.responsibleReportingEntity</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
@@ -49,6 +57,30 @@
               <h3 class="mat-h3" translate>ppcn.nameContactPerson</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.report_organization?.contact }}</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>adaptationAction.form1.positionResponsiblePerson</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">-</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>info.emailAddress</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">-</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>info.phone</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">-</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>info.phone</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">-</h3>
             </div>
 
             <div fxLayout="row">
@@ -132,19 +164,19 @@
               <h3 class="mat-h3">{{ '-' }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div *ngIf="adaptationAction?.address?.district" fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form2.AAProvince</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.address?.district?.canton?.province?.name }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div *ngIf="adaptationAction?.address?.district" fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form2.AACanton</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.address?.district?.canton?.name }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div *ngIf="adaptationAction?.address?.district" fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form2.AADistrict</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.address?.district?.name }}</h3>
@@ -173,17 +205,35 @@
             <div fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form2.selectTopic</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">{{ adaptationAction?.activity?.code }}</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.activity?.sub_topic?.topic?.description }}</h3>
             </div>
 
             <div fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form2.selectSubtopic</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">{{ adaptationAction?.activity?.sub_topic?.name }}</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.activity?.sub_topic?.description }}</h3>
             </div>
 
             <div fxLayout="column">
               <h3 class="mat-h3" translate>adaptationAction.form2.relationNDC</h3>
+              <div>
+                <mat-list>
+                  <mat-list-item *ngFor="let element of adaptationAction?.activity?.ndc_contribution">
+                    {{ element.ndc_area.description }}</mat-list-item
+                  >
+                </mat-list>
+              </div>
+            </div>
+
+            <div fxLayout="column">
+              <h3 class="mat-h3" translate>adaptationAction.form2.relationGoalNDC</h3>
+              <div>
+                <mat-list>
+                  <mat-list-item *ngFor="let element of adaptationAction?.activity?.ndc_contribution">
+                    {{ element.description }}</mat-list-item
+                  >
+                </mat-list>
+              </div>
               <h3 class="mat-h3">{{ adaptationAction?.activity?.sub_topic?.description }}</h3>
             </div>
 
@@ -230,21 +280,33 @@
 
           <div fxLayout="column" fxLayoutAlign="space-around start">
             <div fxLayout="row">
-              <h3 class="mat-h3" translate>daptationAction.form2.relatedClimateThreat</h3>
+              <h3 class="mat-h3" translate>adaptationAction.form2.relatedClimateThreat</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.type_climate_threat?.name }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div *ngIf="adaptationAction?.climate_threat?.other_type_climate_threat" fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form2.relatedClimateThreatOther</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">{{ '-' }}</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.other_type_climate_threat }}</h3>
             </div>
 
             <div fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form2.descriptionRelatedClimateThreat</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">{{ '-' }}</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.description_climate_threat }}</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>adaptationAction.form2.descriptionVulnerability</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.vulnerability_climate_threat }}</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>adaptationAction.form2.descriptionElementsExposed</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.exposed_elements }}</h3>
             </div>
           </div>
 
@@ -265,12 +327,6 @@
               <h3 class="mat-h3" translate>adaptationAction.form2.endImplementation</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.implementation?.end_date }}</h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>adaptationAction.form2.durationAction</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">{{ adaptationAction?.implementation?.duration }}</h3>
             </div>
 
             <div fxLayout="row">
@@ -319,7 +375,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div *ngIf="adaptationAction?.finance?.administration" fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form3.stepsFinancing</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
