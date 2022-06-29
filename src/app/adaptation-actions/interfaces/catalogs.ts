@@ -15,6 +15,17 @@ export interface SubTopics {
   updated?: string;
 }
 
+export interface Activities {
+  id?: number;
+  code: string;
+  description: string;
+  sub_topic: any;
+  ndc_contribution: any;
+  adaptation_axis_guideline: any;
+  created: string;
+  updated: string;
+}
+
 export interface ODS {
   id?: number;
   code: string;

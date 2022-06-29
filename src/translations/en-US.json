@@ -684,6 +684,7 @@
       "selectTopic": "Select the topic to which the action belongs",
       "selectSubtopic": "Select the subtopic to which the action belongs",
       "selectActionType": "Select the type of action",
+      "relationGoalNDC": "Relationship with the NDC Goals",
       "relationNDC": "Relationship with the NDC (Contribution)",
       "relationshipAxis": "Relationship with the National Adaptation Policy (Axis)",
       "relationshipGuideline": "Relationship with the National Adaptation Policy (Guideline)",

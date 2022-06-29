@@ -10,9 +10,11 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if (this.credentialsService?.credentials?.token && request.url !== '/api/v1/user/admin') {
       const userToken = this.credentialsService.credentials.token;
-      const modifiedReq = request.clone({
-        headers: request.headers.set('Authorization', `${userToken}`),
+      const headers = new HttpHeaders({
+        Authorization: `${userToken}`,
+        'Accept-Language': 'es', // TODO: define leng selector
       });
+      const modifiedReq = request.clone({ headers });
       return next.handle(modifiedReq);
     }
     return next.handle(request);
