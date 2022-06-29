@@ -11,9 +11,17 @@ import { AdaptationAction } from '../interfaces/adaptationAction';
 })
 export class AdaptationActionsFinancingComponent implements OnInit {
   form: FormGroup;
-  @Input() mainStepper: any;
+
   durationInSeconds = 3;
   adaptationAction: AdaptationAction;
+
+  baseYearSlect = 1950;
+  lastValidYear = new Date().getFullYear();
+  yearsArray = [...Array(this.lastValidYear - this.baseYearSlect).keys()];
+
+  @Input() mainStepper: any;
+  @Input() adaptationActionUpdated: AdaptationAction;
+  @Input() edit: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,7 +43,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
 
   private createForm() {
     this.form = this.formBuilder.group({
-      formArray: this.buildRegisterForm(),
+      formArray: !this.edit ? this.buildRegisterForm() : this.buildUpdateRegisterForm(),
     });
   }
 
@@ -62,6 +70,30 @@ export class AdaptationActionsFinancingComponent implements OnInit {
         adaptationActionFinancingRegisterMIDEPLANCtrl: [''],
         adaptationActionFinancingRegisterNameMIDEPLANCtrl: [''],
         adaptationActionFinancingRegisterEntityMIDEPLANCtrl: [''],
+      }),
+    ]);
+  }
+
+  buildUpdateRegisterForm() {
+    return this.formBuilder.array([
+      this.formBuilder.group({
+        adaptationActionFinancingStatusCtrl: [this.adaptationActionUpdated.finance.status.code, Validators.required],
+        adaptationActionFinancingManagementCtrl: [this.adaptationActionUpdated.finance.administration],
+        adaptationActionFinancingSourceDetailCtrl: ['', Validators.required],
+        adaptationActionFinancingDetailInstrumentCtrl: [
+          this.adaptationActionUpdated.finance.finance_instrument.map((x: any) => parseInt(x.code)),
+          Validators.required,
+        ],
+        adaptationActionFinancingDetailInstrumentOtherCtrl: [''],
+        adaptationActionFinancingBufgetCtrl: [''],
+        adaptationActionFinancingBufgetValueCtrl: [this.adaptationActionUpdated.finance.budget, Validators.required],
+        adaptationActionFinancingBufgetStarDateCtrl: ['', Validators.required],
+        adaptationActionFinancingBufgetOtherCtrl: [''],
+      }),
+      this.formBuilder.group({
+        adaptationActionFinancingRegisterMIDEPLANCtrl: [this.adaptationActionUpdated.finance.mideplan.registry],
+        adaptationActionFinancingRegisterNameMIDEPLANCtrl: [this.adaptationActionUpdated.finance.mideplan.name],
+        adaptationActionFinancingRegisterEntityMIDEPLANCtrl: [this.adaptationActionUpdated.finance.mideplan.entity],
       }),
     ]);
   }
@@ -94,6 +126,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
           code: this.form.value.formArray[0].adaptationActionFinancingStatusCtrl,
           name: '-',
         },
+        source: this.form.value.formArray[0].adaptationActionFinancingSourceDetailCtrl,
         mideplan: {
           registry: this.form.value.formArray[1].adaptationActionFinancingRegisterMIDEPLANCtrl
             ? this.form.value.formArray[1].adaptationActionFinancingRegisterMIDEPLANCtrl
@@ -105,7 +138,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
             ? this.form.value.formArray[1].adaptationActionFinancingRegisterEntityMIDEPLANCtrl
             : null,
         },
-        source: [1, 2],
+
         finance_instrument: this.form.value.formArray[0].adaptationActionFinancingDetailInstrumentCtrl,
       },
     };
@@ -160,5 +193,39 @@ export class AdaptationActionsFinancingComponent implements OnInit {
     } else {
       stepper.next();
     }
+  }
+
+  public financeChange(value: number) {
+    if (value === 1) {
+      this.form
+        .get('formArray')
+        .get([1])
+        .get('adaptationActionFinancingRegisterNameMIDEPLANCtrl')
+        .setValidators(Validators.required);
+      this.form
+        .get('formArray')
+        .get([1])
+        .get('adaptationActionFinancingRegisterEntityMIDEPLANCtrl')
+        .setValidators(Validators.required);
+    } else {
+      this.form.get('formArray').get([1]).get('adaptationActionFinancingRegisterNameMIDEPLANCtrl').setValidators(null);
+      this.form
+        .get('formArray')
+        .get([1])
+        .get('adaptationActionFinancingRegisterEntityMIDEPLANCtrl')
+        .setValidators(null);
+    }
+
+    this.form
+      .get('formArray')
+      .get([1])
+      .get('adaptationActionFinancingRegisterEntityMIDEPLANCtrl')
+      .updateValueAndValidity();
+
+    this.form
+      .get('formArray')
+      .get([1])
+      .get('adaptationActionFinancingRegisterNameMIDEPLANCtrl')
+      .updateValueAndValidity();
   }
 }

@@ -11,6 +11,7 @@
 
         <span translate>adaptationAction.form4.statusReportingPeriod</span>
         <mat-radio-group
+          (change)="actionStatusChange($event.value)"
           #actionStatusCorrespondingReportingPeriodControl="matRadioGroup"
           formControlName="actionStatusCorrespondingReportingPeriodCtrl"
           class="custom-radio-group"
@@ -28,19 +29,28 @@
         <br />
         <br />
 
-        <span translate>adaptationAction.form4.progressMonitoringClimateAction</span>
-        <mat-radio-group
-          #progressMonitoringRecordedClimateActionsControl="matRadioGroup"
-          formControlName="progressMonitoringRecordedClimateActionsCtrl"
-          class="custom-radio-group"
+        <div
+          [class]="
+            actionStatusCorrespondingReportingPeriodControl.value == '1' ||
+            actionStatusCorrespondingReportingPeriodControl.value == '2'
+              ? 'show'
+              : 'hide'
+          "
         >
-          <mat-radio-button [value]="1">
-            <label translate>general.yes</label>
-          </mat-radio-button>
-          <mat-radio-button [value]="2">
-            <label translate>No</label>
-          </mat-radio-button>
-        </mat-radio-group>
+          <span translate>adaptationAction.form4.progressMonitoringClimateAction</span>
+          <mat-radio-group
+            #progressMonitoringRecordedClimateActionsControl="matRadioGroup"
+            formControlName="progressMonitoringRecordedClimateActionsCtrl"
+            class="custom-radio-group"
+          >
+            <mat-radio-button [value]="1">
+              <label translate>general.yes</label>
+            </mat-radio-button>
+            <mat-radio-button [value]="2">
+              <label translate>No</label>
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
           <app-generic-button
@@ -201,39 +211,6 @@
         <ng-template matStepLabel>
           <span translate>mitigationAction.generalProgressReportClimateAction</span>
         </ng-template>
-
-        <mat-label translate>mitigationAction.reportingPeriod </mat-label>
-        <div fxLayout="row" fxLayoutAlign="start center">
-          <mat-form-field class="field-ppcn">
-            <mat-label translate>Desde</mat-label>
-            <input
-              matInput
-              [placeholder]="'Choose a date' | translate"
-              [matDatepicker]="reportPeriodStart2"
-              formControlName="reportPeriodStart2Ctrl"
-            />
-
-            <mat-datepicker-toggle matSuffix [for]="reportPeriodStart2"></mat-datepicker-toggle>
-            <mat-datepicker #reportPeriodStart2 startView="year"></mat-datepicker>
-
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="field-ppcn">
-            <mat-label translate>general.until</mat-label>
-            <input
-              matInput
-              [placeholder]="'Choose a date' | translate"
-              [matDatepicker]="reportPeriodEndt2"
-              formControlName="reportPeriodEndt2Ctrl"
-            />
-
-            <mat-datepicker-toggle matSuffix [for]="reportPeriodEndt2"></mat-datepicker-toggle>
-            <mat-datepicker #reportPeriodEndt2 startView="year"></mat-datepicker>
-
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
-          </mat-form-field>
-        </div>
 
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form4.descriptiveWay</mat-label>

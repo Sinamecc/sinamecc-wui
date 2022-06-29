@@ -10,13 +10,14 @@ import {
 } from './interfaces/adaptationAction';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { ODS, SubTopics, TemporalityImpact, Topic } from './interfaces/catalogs';
+import { Activities, ODS, SubTopics, TemporalityImpact, Topic } from './interfaces/catalogs';
 
 const routes = {
   adaptationAction: () => `/v1/adaptation-action/`,
   adaptationActionUpdate: (id: string) => `/v1/adaptation-action/${id}/`,
   topics: () => `/v1/adaptation-action/get_topics/`,
-  subTopics: () => `/v1/adaptation-action/get_subtopics/`,
+  subTopics: (id = '') => `/v1/adaptation-action/get_subtopics/${id ? id + '/' : '/'}`,
+  getActivities: (id: string) => `/v1/adaptation-action/get_activities/${id}/`,
   ods: () => `/v1/adaptation-action/get_ods/`,
   temporalityImpact: () => `/v1/adaptation-action/get_temporality_impact/`,
   generalImpact: () => `/v1/adaptation-action/get_general_impact/`,
@@ -73,6 +74,14 @@ export class AdaptationActionService {
     );
   }
 
+  public loadOneAdaptationActions(id: string) {
+    return this.httpClient.get(routes.adaptationActionUpdate(id)).pipe(
+      map((body: AdaptationAction) => {
+        return body;
+      })
+    );
+  }
+
   public loadTopics() {
     return this.httpClient.get(routes.topics()).pipe(
       map((body: Topic[]) => {
@@ -81,9 +90,17 @@ export class AdaptationActionService {
     );
   }
 
-  public loadSubTopics() {
-    return this.httpClient.get(routes.subTopics()).pipe(
+  public loadSubTopics(id: string = '') {
+    return this.httpClient.get(routes.subTopics(id)).pipe(
       map((body: SubTopics[]) => {
+        return body;
+      })
+    );
+  }
+
+  public loadActivities(id: string) {
+    return this.httpClient.get(routes.getActivities(id)).pipe(
+      map((body: Activities[]) => {
         return body;
       })
     );

@@ -3,14 +3,14 @@
     <h3>
       <mat-card-title>
         <span class="section-heading" translate>
-          Nueva acción de adaptación
+          {{ edit ? 'Actualizar acción de adaptación' : ' Nueva acción de adaptación' }}
         </span>
         <mat-divider class="divider-custom"></mat-divider>
         <mat-divider class="divider-custom"></mat-divider>
       </mat-card-title>
     </h3>
 
-    <form [formGroup]="mainGroup">
+    <form *ngIf="!loading" [formGroup]="mainGroup">
       <mat-horizontal-stepper formArrayName="formArray" linear #stepper>
         <mat-step [stepControl]="formArray?.get([0])">
           <ng-template matStepLabel>
@@ -23,14 +23,22 @@
           <ng-template matStepLabel>
             <span translate>adaptationAction.form2.title</span>
           </ng-template>
-          <app-adaptation-actions-report [mainStepper]="stepper"></app-adaptation-actions-report>
+          <app-adaptation-actions-report
+            [adaptationActionUpdated]="adaptationAction"
+            [edit]="edit"
+            [mainStepper]="stepper"
+          ></app-adaptation-actions-report>
         </mat-step>
 
         <mat-step [stepControl]="formArray?.get([2])">
           <ng-template matStepLabel>
             <span translate>adaptationAction.form3.title</span>
           </ng-template>
-          <app-adaptation-actions-financing [mainStepper]="stepper"></app-adaptation-actions-financing>
+          <app-adaptation-actions-financing
+            [edit]="edit"
+            [adaptationActionUpdated]="adaptationAction"
+            [mainStepper]="stepper"
+          ></app-adaptation-actions-financing>
         </mat-step>
 
         <mat-step [stepControl]="formArray?.get([3])">
@@ -57,5 +65,10 @@
         </mat-step>
       </mat-horizontal-stepper>
     </form>
+
+    <div fxFill fxLayout="column" fxLayoutAlign="center center" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+      <h1>Cargando</h1>
+    </div>
   </mat-card>
 </div>
