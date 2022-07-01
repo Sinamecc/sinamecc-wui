@@ -14,6 +14,8 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   form: FormGroup;
   adaptationAction: AdaptationAction;
   @Input() mainStepper: any;
+  @Input() adaptationActionUpdated: AdaptationAction;
+  @Input() edit: boolean;
   durationInSeconds = 3;
 
   constructor(
@@ -37,7 +39,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
 
   private createForm() {
     this.form = this.formBuilder.group({
-      formArray: this.buildRegisterForm(),
+      formArray: !this.edit ? this.buildRegisterForm() : this.buildUpdateRegisterForm(),
     });
   }
 
@@ -45,6 +47,44 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: this.durationInSeconds * 1000,
     });
+  }
+
+  buildUpdateRegisterForm() {
+    return this.formBuilder.array([
+      this.formBuilder.group({
+        actionStatusCorrespondingReportingPeriodCtrl: [
+          this.adaptationActionUpdated.progress_log.action_status,
+          Validators.required,
+        ],
+        progressMonitoringRecordedClimateActionsCtrl: [
+          parseInt(this.adaptationActionUpdated.progress_log.progress_monitoring),
+          Validators.required,
+        ],
+      }),
+      this.formBuilder.group({
+        indicatorsCtrl: [1, Validators.required],
+        reportPeriodStartCtrl: [this.adaptationActionUpdated.indicator_monitoring.start_date, Validators.required],
+        reportPeriodEndtCtrl: [this.adaptationActionUpdated.indicator_monitoring.end_date, Validators.required],
+        dataWantUpdateCtrl: [this.adaptationActionUpdated.indicator_monitoring.data_to_update, Validators.required],
+        indicatorDataUpdateDateCtrl: [
+          this.adaptationActionUpdated.indicator_monitoring.update_date,
+          Validators.required,
+        ],
+        indicatorVerificationSourceCtrl: [
+          this.adaptationActionUpdated.indicator_monitoring.indicator_source[0].id,
+          Validators.required,
+        ],
+        indicatorVerificationSourceOtherCtrl: [''],
+        attachSupportingInformationCtrl: ['', Validators.required],
+      }),
+
+      this.formBuilder.group({
+        advanceDescriptionCtrl: [
+          this.adaptationActionUpdated.general_report.description,
+          [Validators.required, Validators.maxLength(3000)],
+        ],
+      }),
+    ]);
   }
 
   buildRegisterForm() {
@@ -102,7 +142,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
         update_date: this.form.value.formArray[1].indicatorDataUpdateDateCtrl
           ? this.datePipe.transform(this.form.value.formArray[1].indicatorDataUpdateDateCtrl, 'yyyy-MM-dd')
           : null,
-        data_to_update: '-',
+        data_to_update: this.form.value.formArray[1].data_to_update,
         indicator_source: this.form.value.formArray[1].indicatorVerificationSourceCtrl
           ? [this.form.value.formArray[1].indicatorVerificationSourceCtrl]
           : null,

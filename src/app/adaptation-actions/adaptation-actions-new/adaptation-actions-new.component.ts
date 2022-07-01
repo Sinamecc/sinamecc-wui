@@ -67,7 +67,6 @@ export class AdaptationActionsNewComponent implements OnInit {
   loadAdaptationActions(id: string) {
     this.service.loadOneAdaptationActions(id).subscribe((response) => {
       this.adaptationAction = response;
-
       this.loading = false;
     });
   }

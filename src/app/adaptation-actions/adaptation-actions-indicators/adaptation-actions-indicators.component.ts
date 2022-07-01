@@ -13,6 +13,8 @@ import { AdaptationAction } from '../interfaces/adaptationAction';
 export class AdaptationActionsIndicatorsComponent implements OnInit {
   form: FormGroup;
   @Input() mainStepper: any;
+  @Input() adaptationActionUpdated: AdaptationAction;
+  @Input() edit: boolean;
   durationInSeconds = 3;
   adaptationAction: AdaptationAction;
   typeIndicatorToolTipTxt =
@@ -41,7 +43,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
 
   private createForm() {
     this.form = this.formBuilder.group({
-      formArray: this.buildRegisterForm(),
+      formArray: !this.edit ? this.buildRegisterForm() : this.buildUpdateRegisterForm(),
     });
   }
 
@@ -60,6 +62,115 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
 
   getFormObject(key: string) {
     return this.form.get(key);
+  }
+
+  buildUpdateRegisterForm() {
+    return this.formBuilder.array([
+      this.formBuilder.group({
+        adaptationActionIndicatorNameCtrl: [
+          this.adaptationActionUpdated.indicator.name,
+          [Validators.required, Validators.maxLength(250)],
+        ],
+        adaptationActionIndicatorDescriptionCtrl: [
+          this.adaptationActionUpdated.indicator.description,
+          [Validators.required, Validators.maxLength(500)],
+        ],
+        adaptationActionIndicatorUnitCtrl: [
+          this.adaptationActionUpdated.indicator.unit,
+          [Validators.required, Validators.maxLength(100)],
+        ],
+        adaptationActionIndicatorMetodologyCtrl: [
+          this.adaptationActionUpdated.indicator.methodological_detail,
+          [Validators.required, Validators.maxLength(500)],
+        ],
+        adaptationActionIndicatorUnitFileCtrl: [''], // new field
+        adaptationActionIndicatorFrecuenceCtrl: [
+          this.adaptationActionUpdated.indicator.reporting_periodicity,
+          [Validators.required],
+        ],
+        adaptationActionIndicatorFrecuenceOtherCtrl: [''], // new field
+        adaptationActionIndicatorTimeCtrl: [
+          this.adaptationActionUpdated.indicator.available_time_start_date,
+          [Validators.required],
+        ],
+        timeSeriesAvailableEndCtrl: [
+          this.adaptationActionUpdated.indicator.available_time_end_date,
+          [Validators.required],
+        ], // new field
+        adaptationActionIndicatorCoverageCtrl: [
+          this.adaptationActionUpdated.indicator.geographic_coverage,
+          [Validators.required],
+        ],
+        adaptationActionIndicatorCoverageOtherCtrl: [''], // new field
+        adaptationActionIndicatorDisintegrationCtrl: [
+          this.adaptationActionUpdated.indicator.disaggregation,
+          [Validators.maxLength(1000)],
+        ],
+        adaptationActionIndicatorLimitCtrl: [
+          this.adaptationActionUpdated.indicator.limitation,
+          [Validators.maxLength(1000)],
+        ],
+        adaptationActionIndicatorMeasurementCtrl: [
+          this.adaptationActionUpdated.indicator.additional_information,
+          [Validators.maxLength(1000)],
+        ],
+        adaptationActionIndicatorDetailsCtrl: [
+          this.adaptationActionUpdated.indicator.comments,
+          [Validators.maxLength(1000)],
+        ],
+      }),
+      this.formBuilder.group({
+        adaptationActionIndicatorResponsibleInstitutionCtrl: [
+          this.adaptationActionUpdated.indicator.information_source.responsible_institution,
+          [Validators.required, Validators.maxLength(300)],
+        ],
+        adaptationActionIndicatorSourceTypeCtrl: [
+          this.adaptationActionUpdated.indicator.information_source.type_information,
+          [Validators.required],
+        ],
+        adaptationActionIndicatorSourceTypeOtherCtrl: [
+          this.adaptationActionUpdated.indicator.information_source.Other_type,
+        ], // new field
+        adaptationActionIndicatorOperationNameCtrl: [
+          this.adaptationActionUpdated.indicator.information_source.statistical_operation,
+          [Validators.maxLength(300)],
+        ],
+      }),
+      this.formBuilder.group({
+        adaptationActionIndicatorSourceDataCtrl: [
+          this.adaptationActionUpdated.indicator.type_of_data.id,
+          [Validators.required],
+        ],
+        adaptationActionIndicatorSourceDataOtherCtrl: [this.adaptationActionUpdated.indicator.other_type_of_data],
+        adaptationActionIndicatorClassifiersCtrl: [
+          this.adaptationActionUpdated.indicator.classifier[0].id,
+          [Validators.required],
+        ],
+        adaptationActionIndicatorClassifiersOtherCtrl: [this.adaptationActionUpdated.indicator.other_classifier],
+      }),
+      this.formBuilder.group({
+        adaptationActionIndicatorContactNameCtrl: [
+          this.adaptationActionUpdated.indicator.contact.full_name,
+          [Validators.required],
+        ],
+        adaptationActionIndicatorContactInstitutionCtrl: [
+          this.adaptationActionUpdated.indicator.contact.institution,
+          [Validators.required],
+        ],
+        adaptationActionIndicatorContactDepartmentCtrl: [
+          this.adaptationActionUpdated.indicator.contact.job_title,
+          [Validators.required],
+        ],
+        adaptationActionIndicatorContactEmailCtrl: [
+          this.adaptationActionUpdated.indicator.contact.email,
+          [Validators.required, Validators.email],
+        ],
+        adaptationActionIndicatorContactPhoneCtrl: [
+          this.adaptationActionUpdated.indicator.contact.phone,
+          [Validators.required, Validators.maxLength(8), Validators.minLength(8)],
+        ],
+      }),
+    ]);
   }
 
   buildRegisterForm() {
@@ -126,6 +237,10 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         unit: this.form.value.formArray[0].adaptationActionIndicatorUnitCtrl,
         methodological_detail: this.form.value.formArray[0].adaptationActionIndicatorMetodologyCtrl,
         reporting_periodicity: this.form.value.formArray[0].adaptationActionIndicatorFrecuenceCtrl,
+        available_time_end_date: this.datePipe.transform(
+          this.form.value.formArray[0].timeSeriesAvailableEndCtrl,
+          'yyyy-MM-dd'
+        ),
         geographic_coverage: this.form.value.formArray[0].adaptationActionIndicatorCoverageCtrl,
         other_geographic_coverage: this.form.value.formArray[0].adaptationActionIndicatorCoverageOtherCtrl
           ? this.form.value.formArray[0].adaptationActionIndicatorCoverageOtherCtrl

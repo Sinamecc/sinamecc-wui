@@ -80,12 +80,18 @@ export class GeneralRegisterComponent implements OnInit {
         ],
         reportPreparationDateCtrl: [this.adaptationAction.report_organization.elaboration_date, [Validators.required]],
         nameContactPersonCtrl: [
-          this.adaptationAction.report_organization.contact,
+          this.adaptationAction.report_organization.contact.contact_name,
           [Validators.required, Validators.maxLength(250)],
         ],
-        titleResponsibleReportingCtrl: ['', [Validators.required, Validators.maxLength(250)]],
-        emailCtrl: ['', [Validators.required, Validators.email]],
-        phoneCtrl: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
+        titleResponsibleReportingCtrl: [
+          this.adaptationAction.report_organization.contact.contact_position,
+          [Validators.required, Validators.maxLength(250)],
+        ],
+        emailCtrl: [this.adaptationAction.report_organization.contact.email, [Validators.required, Validators.email]],
+        phoneCtrl: [
+          this.adaptationAction.report_organization.contact.phone,
+          [Validators.required, Validators.minLength(8), Validators.maxLength(8)],
+        ],
         entityAddress: [
           this.adaptationAction.report_organization.entity_address,
           [Validators.required, Validators.maxLength(250)],
