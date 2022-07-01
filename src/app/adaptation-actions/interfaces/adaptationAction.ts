@@ -27,7 +27,8 @@ export interface ContactIndicator {
 export interface Adress {
   description: string;
   GIS: string;
-  district: string;
+  district: any;
+  app_scale: string;
 }
 
 export interface AdaptationActionInformation {
@@ -41,10 +42,11 @@ export interface AdaptationActionInformation {
 
 export interface Activity {
   code: string;
+  id?: string;
   description: string;
-  sub_topic: number;
-  ndc_contribution: number[];
-  adaptation_axis_guideline: number;
+  sub_topic: any;
+  ndc_contribution: any;
+  adaptation_axis_guideline: any;
 }
 
 export interface Instrument {
@@ -86,7 +88,7 @@ export interface Finance {
   budget: string;
   status: Status;
   mideplan: Mideplan;
-  source: number[];
+  source: any[];
   finance_instrument: number[];
 }
 
@@ -110,13 +112,14 @@ export interface Indicator {
   additional_information: string;
   comments: string;
   information_source: InformationSource;
-  type_of_data: string;
+  type_of_data: any;
   other_type_of_data: string;
-  classifier: number[];
+  classifier: any[];
   other_classifier: string;
   available_time_start_date?: string;
   general_report?: GeneralReport;
   contact: ContactIndicator;
+  available_time_end_date: string;
 }
 
 export interface ProgressLog {
@@ -129,7 +132,7 @@ export interface IndicatorMonitoring {
   end_date: string;
   update_date: string;
   data_to_update: string;
-  indicator_source: number[];
+  indicator_source: any[];
 }
 
 export interface ActionImpact {
@@ -137,9 +140,9 @@ export interface ActionImpact {
   gender_equality_description: string;
   unwanted_action: string;
   unwanted_action_description: string;
-  temporality_impact: number[];
+  temporality_impact: any[];
   general_impact: string;
-  ods: number[];
+  ods: any[];
 }
 
 export interface State {
@@ -172,6 +175,7 @@ export interface AdaptationAction {
   updated?: string;
   next_state?: State[];
   fsm_state?: State;
+  general_report: any;
 }
 
 export interface Province {

@@ -243,6 +243,23 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   buildUpdatedRegisterForm() {
+    this.selectProvince(this.adaptationActionUpdated.address.district.canton.province.id);
+    this.selectCanton(this.adaptationActionUpdated.address.district.canton.id);
+    this.changeSubTopics(this.adaptationActionUpdated?.activity?.sub_topic?.topic?.id);
+    this.loadActivities(this.adaptationActionUpdated?.activity?.sub_topic?.id);
+
+    const data = this.adaptationActionUpdated?.activity;
+
+    let adaptationActionRelationValue = '';
+    let adaptationActionGoalRelationValue = '';
+    const adaptationActionEjeRelationValue = data.adaptation_axis_guideline.adaptation_axis.description;
+    const adaptationActionLinealRelationValue = data.adaptation_axis_guideline.description;
+
+    for (const element of data.ndc_contribution) {
+      adaptationActionRelationValue += element.ndc_area.description;
+      adaptationActionGoalRelationValue += element.description;
+    }
+
     return this.formBuilder.array([
       this.formBuilder.group({
         adaptationActionTypeCtrl: [
@@ -271,10 +288,10 @@ export class AdaptationActionsReportComponent implements OnInit {
         ],
       }),
       this.formBuilder.group({
-        appScaleCtrl: ['', Validators.required],
-        adaptationActionProvinceCtrl: [''],
-        adaptationActionCantonCtrl: [''],
-        adaptationActionDistritCtrl: [''],
+        appScaleCtrl: [parseInt(this.adaptationActionUpdated.address.app_scale), Validators.required],
+        adaptationActionProvinceCtrl: [this.adaptationActionUpdated.address.district.canton.province.id],
+        adaptationActionCantonCtrl: [this.adaptationActionUpdated.address.district.canton.id],
+        adaptationActionDistritCtrl: [this.adaptationActionUpdated.address.district.id],
         adaptationActionDescriptionNarrativeCtrl: [
           this.adaptationActionUpdated.address.description,
           [Validators.required, Validators.maxLength(3000)],
@@ -283,24 +300,36 @@ export class AdaptationActionsReportComponent implements OnInit {
         adaptationActionLocationOtherCtrl: [''],
       }),
       this.formBuilder.group({
-        adaptationActionThemeCtrl: [this.adaptationActionUpdated.activity.code, Validators.required],
-        adaptationActionTypologyCtrl: [this.adaptationActionUpdated.activity.code, Validators.required],
-        adaptationActionTypeCtrl: ['', Validators.required], // new field
-        adaptationActionRelationCtrl: ['', Validators.required],
-        adaptationActionGoalRelationCtrl: [this.adaptationActionUpdated.activity.description, Validators.required],
-        adaptationActionEjeRelationCtrl: ['', Validators.required],
-        adaptationActionLinealRelationCtrl: ['', Validators.required],
+        adaptationActionThemeCtrl: [this.adaptationActionUpdated?.activity?.sub_topic?.topic?.id, Validators.required],
+        adaptationActionTypologyCtrl: [this.adaptationActionUpdated?.activity?.sub_topic?.id, Validators.required],
+        adaptationActionTypeCtrl: [this.adaptationActionUpdated?.activity?.id, Validators.required], // new field
+        adaptationActionRelationCtrl: [adaptationActionRelationValue, Validators.required],
+        adaptationActionGoalRelationCtrl: [adaptationActionGoalRelationValue, Validators.required],
+        adaptationActionEjeRelationCtrl: [adaptationActionEjeRelationValue, Validators.required],
+        adaptationActionLinealRelationCtrl: [adaptationActionLinealRelationValue, Validators.required],
       }),
       this.formBuilder.group({
         adaptationActionInstrumentCtrl: [this.adaptationActionUpdated.instrument.name],
         adaptationActionDescriptionInstrumentCtrl: [this.adaptationActionUpdated.instrument.description],
       }),
       this.formBuilder.group({
-        adaptationActionClimateThreatCtrl: ['', Validators.required],
-        adaptationActionClimateThreatOtherCtrl: [''],
-        adaptationActionInfoSourceCtrl: ['', Validators.required],
-        descriptionVulnerabilityCtrl: ['', [Validators.required, Validators.maxLength(1000)]], // new field
-        descriptionElementsExposedCtrl: ['', [Validators.required, Validators.maxLength(1000)]], // new field
+        adaptationActionClimateThreatCtrl: [
+          this.adaptationActionUpdated.climate_threat.type_climated_threat,
+          Validators.required,
+        ],
+        adaptationActionClimateThreatOtherCtrl: [this.adaptationActionUpdated.climate_threat.other_type_climate_threat],
+        adaptationActionInfoSourceCtrl: [
+          this.adaptationActionUpdated.climate_threat.description_climate_threat,
+          Validators.required,
+        ],
+        descriptionVulnerabilityCtrl: [
+          this.adaptationActionUpdated.climate_threat.vulnerability_climate_threat,
+          [Validators.required, Validators.maxLength(1000)],
+        ], // new field
+        descriptionElementsExposedCtrl: [
+          this.adaptationActionUpdated.climate_threat.exposed_elements,
+          [Validators.required, Validators.maxLength(1000)],
+        ], // new field
       }),
       this.formBuilder.group({
         adaptationActionStartDateCtrl: [this.adaptationActionUpdated.implementation.start_date, Validators.required],
@@ -338,6 +367,7 @@ export class AdaptationActionsReportComponent implements OnInit {
         ods: this.form.value.formArray[0].adaptationActionODSCtrl,
       },
       address: {
+        app_scale: this.form.value.formArray[1].appScaleCtrl,
         description: this.form.value.formArray[1].adaptationActionDescriptionNarrativeCtrl,
         GIS: this.form.value.formArray[1].adaptationActionLocationCtrl,
         district: this.form.value.formArray[1].adaptationActionDistritCtrl

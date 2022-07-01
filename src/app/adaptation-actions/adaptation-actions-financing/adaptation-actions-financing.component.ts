@@ -79,7 +79,10 @@ export class AdaptationActionsFinancingComponent implements OnInit {
       this.formBuilder.group({
         adaptationActionFinancingStatusCtrl: [this.adaptationActionUpdated.finance.status.code, Validators.required],
         adaptationActionFinancingManagementCtrl: [this.adaptationActionUpdated.finance.administration],
-        adaptationActionFinancingSourceDetailCtrl: ['', Validators.required],
+        adaptationActionFinancingSourceDetailCtrl: [
+          this.adaptationActionUpdated.finance.source.map((x) => parseInt(x.id)),
+          Validators.required,
+        ],
         adaptationActionFinancingDetailInstrumentCtrl: [
           this.adaptationActionUpdated.finance.finance_instrument.map((x: any) => parseInt(x.code)),
           Validators.required,

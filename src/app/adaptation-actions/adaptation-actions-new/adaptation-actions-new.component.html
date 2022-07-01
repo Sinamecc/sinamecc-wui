@@ -45,7 +45,11 @@
           <ng-template matStepLabel>
             <span translate>adaptationAction.form4.title</span>
           </ng-template>
-          <app-adaptation-actions-indicators [mainStepper]="stepper"></app-adaptation-actions-indicators>
+          <app-adaptation-actions-indicators
+            [edit]="edit"
+            [adaptationActionUpdated]="adaptationAction"
+            [mainStepper]="stepper"
+          ></app-adaptation-actions-indicators>
         </mat-step>
 
         <mat-step [stepControl]="formArray?.get([4])">
@@ -54,6 +58,8 @@
           </ng-template>
           <app-adaptation-actions-climate-monitoring
             [mainStepper]="stepper"
+            [edit]="edit"
+            [adaptationActionUpdated]="adaptationAction"
           ></app-adaptation-actions-climate-monitoring>
         </mat-step>
 
@@ -61,7 +67,10 @@
           <ng-template matStepLabel>
             <span translate>adaptationAction.form6.title</span>
           </ng-template>
-          <app-adaptation-actions-action-impact></app-adaptation-actions-action-impact>
+          <app-adaptation-actions-action-impact
+            [edit]="edit"
+            [adaptationActionUpdated]="adaptationAction"
+          ></app-adaptation-actions-action-impact>
         </mat-step>
       </mat-horizontal-stepper>
     </form>
