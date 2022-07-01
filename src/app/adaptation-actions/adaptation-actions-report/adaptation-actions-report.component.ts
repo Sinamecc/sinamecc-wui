@@ -169,6 +169,11 @@ export class AdaptationActionsReportComponent implements OnInit {
       .get([2])
       .get('adaptationActionLinealRelationCtrl')
       .setValue(adaptationActionLinealRelationValue);
+
+    this.form.get('formArray').get([2]).get('adaptationActionRelationCtrl').disable();
+    this.form.get('formArray').get([2]).get('adaptationActionGoalRelationCtrl').disable();
+    this.form.get('formArray').get([2]).get('adaptationActionEjeRelationCtrl').disable();
+    this.form.get('formArray').get([2]).get('adaptationActionLinealRelationCtrl').disable();
   }
 
   changeSubTopics(idTopic: string) {

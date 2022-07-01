@@ -383,13 +383,15 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div fxLayout="column">
               <h3 class="mat-h3" translate>adaptationAction.form3.sourceFinancing</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <br />
-              <h3 class="mat-h3">
-                {{ '-' }}
-              </h3>
+              <div>
+                <mat-list>
+                  <mat-list-item *ngFor="let element of adaptationAction?.finance?.source">
+                    {{ element.name }}</mat-list-item
+                  >
+                </mat-list>
+              </div>
             </div>
 
             <div fxLayout="row">
@@ -632,6 +634,50 @@
                 {{ '-' }}
               </h3>
             </div>
+
+            <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+              <label class="mat-h1" translate>adaptationAction.form4.contactInfo</label>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>adaptationAction.form4.contactName</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                -
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.institution</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                -
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.department</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                -
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>admin.email</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                -
+              </h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>info.telephone</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                -
+              </h3>
+            </div>
           </div>
         </div>
       </mat-tab>
@@ -717,22 +763,6 @@
           </div>
 
           <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>Desde</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.general_report?.start_date }}
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>general.until</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.general_report?.end_date }}
-              </h3>
-            </div>
-
             <div fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form4.descriptiveWay</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
