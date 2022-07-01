@@ -21,16 +21,6 @@
     </ng-container>
 
     <!-- Objective Column -->
-    <ng-container matColumnDef="adaptation_action_type">
-      <mat-header-cell *matHeaderCellDef translate>Tipo</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{
-          element.adaptation_action_information.adaptation_action_type
-            ? typesMap[element.adaptation_action_information.adaptation_action_type]
-            : '-'
-        }}
-      </mat-cell>
-    </ng-container>
 
     <!-- Status Column -->
     <ng-container matColumnDef="fms_state">
@@ -42,11 +32,6 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
       <mat-cell *matCellDef="let element" class="login-box">
-        <!--
-        <button mat-icon-button color="primary" (click)="edit(element.id)">
-          <mat-icon color="white">edit</mat-icon>
-        </button>
-      -->
         <button (click)="view(element.id)" mat-icon-button color="primary">
           <mat-icon color="white">visibility</mat-icon>
         </button>
