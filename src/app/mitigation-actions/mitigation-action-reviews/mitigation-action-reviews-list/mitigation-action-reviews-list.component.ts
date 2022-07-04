@@ -30,6 +30,7 @@ export class MitigationActionReviewsListComponent implements OnInit {
   version: string = environment.version;
   error: string;
   isLoading = false;
+  reviews: any[];
   dataSource = new MitigationActionReviewSource(this.service, this.route.snapshot.paramMap.get('id'));
   displayedColumns = ['date', 'current_status', 'previous_state'];
 
@@ -37,5 +38,13 @@ export class MitigationActionReviewsListComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadReviews();
+  }
+
+  loadReviews() {
+    this.service.mitigationActionReviews(this.id).subscribe((response) => {
+      this.reviews = response;
+    });
+  }
 }

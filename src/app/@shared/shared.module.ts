@@ -23,6 +23,7 @@ import { ViewPdfService } from './view-pdf/view-pdf.service';
 import { S3Service } from './s3.service';
 import { CommentsViewComponent } from './comments-view/comments-view.component';
 import { CommentsAddComponent } from './comments-add/comments-add.component';
+import { ChangeLogViewComponent } from './change-log-view/change-log-view.component';
 @NgModule({
   imports: [FlexLayoutModule, MaterialModule, CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
   declarations: [
@@ -39,6 +40,7 @@ import { CommentsAddComponent } from './comments-add/comments-add.component';
     ViewPdfComponent,
     CommentsViewComponent,
     CommentsAddComponent,
+    ChangeLogViewComponent,
   ],
   providers: [UploadProposalService, UpdateStatusService, ViewPdfService, S3Service],
   exports: [
@@ -55,6 +57,7 @@ import { CommentsAddComponent } from './comments-add/comments-add.component';
     ViewPdfComponent,
     CommentsViewComponent,
     CommentsAddComponent,
+    ChangeLogViewComponent,
   ],
 })
 export class SharedModule {}

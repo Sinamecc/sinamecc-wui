@@ -63,7 +63,6 @@ export class UpdateStatusComponent implements OnInit {
   }
 
   loadComponent() {
-    console.log(this.module);
     if (this.module === 'ppcn') {
       this.loadPPCNCommentComponent();
     }

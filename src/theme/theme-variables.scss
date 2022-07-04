@@ -25,6 +25,8 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 // Material design icons font path
 $material-design-icons-font-directory-path: "~material-design-icons-iconfont/dist/fonts/";
 
+$gray-color: #c4c4c4;
+
 .login-box {
   $alternate-primary: mat-palette($mat-light-blue);
   $alternate-accent: mat-palette($mat-yellow, 400);
@@ -197,4 +199,10 @@ $material-design-icons-font-directory-path: "~material-design-icons-iconfont/dis
 .login-label .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
 .login-label .mat-form-field-empty.mat-form-field-label {
   font-weight: 800 !important;
+}
+
+.sinamecc-container {
+  border: solid 1px $gray-color;
+  border-radius: 5px;
+  padding: 1.3em;
 }

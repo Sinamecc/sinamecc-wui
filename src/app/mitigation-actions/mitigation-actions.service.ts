@@ -16,7 +16,7 @@ const routes = {
   submitNewMitigationAction: (id: string = '') => `/v1/mitigation-action/${id}`,
   submitUpdateMitigationAction: (uuid: string, lang: string) => `/v1/mitigations/${lang}/${uuid}`,
   mitigationActions: (lang: string) => `/v1/mitigation-action/`,
-  mitigationActionReviews: (uuid: string) => `/v1/mitigations/changelog/${uuid}`,
+  mitigationActionReviews: (uuid: string) => `/v1/mitigation-action/${uuid}/change-log/`,
   deleteMitigationAction: (uuid: string) => `/v1/mitigation-action/${uuid}`,
   getMitigationAction: (uuid: string, lang: string) => `/v1/mitigation-action/${uuid}/`,
   mitigationActionAvailableStatuses: () => `/v1/workflow/status`,

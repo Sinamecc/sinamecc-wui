@@ -117,7 +117,7 @@ export interface Indicator {
   classifier: any[];
   other_classifier: string;
   available_time_start_date?: string;
-  general_report?: GeneralReport;
+  general_report?: any; //GeneralReport;
   contact: ContactIndicator;
   available_time_end_date: string;
 }
@@ -175,7 +175,7 @@ export interface AdaptationAction {
   updated?: string;
   next_state?: State[];
   fsm_state?: State;
-  general_report: any;
+  general_report?: any;
 }
 
 export interface Province {

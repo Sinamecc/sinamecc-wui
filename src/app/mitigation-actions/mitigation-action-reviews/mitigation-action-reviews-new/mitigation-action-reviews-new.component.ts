@@ -55,7 +55,6 @@ export class MitigationActionReviewsNewComponent implements OnInit {
       .pipe(
         tap((mitigationAction: MitigationAction) => {
           this.mitigationAction = mitigationAction;
-          console.log(this.mitigationAction, mitigationAction);
           if (mitigationAction.next_state) {
             this.statuses = mitigationAction.next_state.map((x) => x);
             this.shouldDisplayComment = true;
