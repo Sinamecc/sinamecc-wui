@@ -11,7 +11,9 @@ export class ChangeLogViewComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.actualReview = this.reviews[0];
-    this.reviews.shift();
+    if (this.reviews.length > 0) {
+      this.actualReview = this.reviews[0];
+      this.reviews.shift();
+    }
   }
 }
