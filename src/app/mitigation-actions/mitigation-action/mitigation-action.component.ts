@@ -9,6 +9,18 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Logger } from '@app/@core';
 import { AuthenticationService, Credentials } from '@app/auth';
 import { I18nService } from '@app/i18n';
+import {
+  commentsStructureModule1,
+  commentsStructureModule2,
+  commentsStructureModule3,
+  commentsStructureModule4,
+  commentsStructureModule5,
+  commentsStructureModule6,
+} from '../comments-structure';
+import { async } from '@angular/core/testing';
+import { CommentsStructure, Comments } from '@app/@shared/comment';
+import { CommentsViewComponent } from '@app/@shared/comments-view/comments-view.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-mitigation-action',
@@ -20,213 +32,15 @@ export class MitigationActionComponent implements OnInit {
   isLoading: boolean;
   id: string;
   @Input() edit = false;
-  userImage: string | SafeUrl = 'assets/default_user_image.png';
-  usernameComment = '';
-  actualDate = new Date();
-  addComment = false;
-  showComments = false;
-  commentSchema = [
-    {
-      module: 'specificLabel.initiative',
-      subModules: [
-        {
-          name: 'specificLabel.initiative',
-          fields: [
-            'specificLabel.initiativeType',
-            'specificLabel.initiativeName',
-            'specificLabel.initiativeDescription',
-            'specificLabel.initiativeGoal',
-          ],
-        },
-        {
-          name: 'specificLabel.initiativeContactInfo',
-          fields: [
-            'mitigationAction.entityReporting',
-            'info.contactName',
-            'general.position',
-            'info.emailAddress',
-            'info.emailAddress',
-          ],
-        },
-        {
-          name: 'mitigationAction.statusMitigationAction',
-          fields: [
-            'mitigationAction.initiativeStatus',
-            'mitigationAction.startImplementation',
-            'mitigationAction.deploymentCompletion',
-            'general.other',
-            'mitigationAction.entitiesInvolvedMitigationActionCtrl',
-            'mitigationAction.entitiesInvolvedMitigationActionCtrl',
-          ],
-        },
-        {
-          name: 'general.GeographicLocation',
-          fields: ['general.geographicScale', 'general.locationAction'],
-        },
-        {
-          name: 'mitigationAction.CategorizationNationalInstruments',
-          fields: [
-            'mitigationAction.relationshipNDC',
-            'mitigationAction.relationshipDecarbonizationPlan',
-            'mitigationAction.impactCategory',
-            'mitigationAction.relationshipNDC',
-          ],
-        },
-      ],
-    },
-    {
-      module: 'info.financingInformation',
-      subModules: [
-        {
-          name: 'info.financingInformation',
-          fields: [
-            'mitigationAction.financingStatus',
-            'mitigationAction.stepsTakingToFinancing',
-            'mitigationAction.detailfinancingSource',
-            'mitigationAction.financingSourceApplying',
-            'mitigationAction.mitigationActionBudget',
-            'mitigationAction.referenceYear',
-          ],
-        },
-        {
-          name: 'mitigationAction.financedSourcesInternationalCooperation',
-          fields: [
-            'mitigationAction.registeredNonReimbursableCooperationMideplan',
-            'mitigationAction.nameRegisteredMideplan',
-            'mitigationAction.entityProject',
-          ],
-        },
-      ],
-    },
-    {
-      module: 'general.keyAspects',
-      subModules: [
-        {
-          name: 'mitigationAction.overviewImpactEmissionsRemovals',
-          fields: [
-            'mitigationAction.overviewImpactEmissionsRemovals',
-            'mitigationAction.graphicLogicImpactEmissionsRemovals',
-            'mitigationAction.sectorsGEIInventoryImpacted',
-            'mitigationAction.preliminaryIdentificationSustainableDevelopmentGoals',
-          ],
-        },
-      ],
-    },
-    {
-      module: 'specificLabel.mitigationEmissions',
-      subModules: [
-        {
-          name: 'specificLabel.documentationImpactEstimate',
-          fields: [
-            'specificLabel.exAnteEmissionReductions',
-            'mitigationAction.periodPotentialEmissionReductionEstimated',
-            'mitigationAction.sourcesEmissionsGasesCovered',
-            'mitigationAction.carbonSinksReservoirs',
-            'mitigationAction.definitionBaseline',
-            'mitigationAction.methodologyExantePotentialReductionEmissionsCO2',
-            'mitigationAction.documentationCalculationsEstimateReductionEmissionsCO2',
-            'mitigationAction.isCurrentlyReflectedInventory',
-          ],
-        },
-        {
-          name: 'mitigationAction.QA/QCEestimate',
-          fields: [
-            'mitigationAction.standardizedCalculationMethodologyUsed',
-            'mitigationAction.calculationsDocumented',
-            'mitigationAction.emissionFactorsUsedCalculationDocumented',
-            'mitigationAction.assumptionsDocumented',
-          ],
-        },
-      ],
-    },
-    {
-      module: 'specificLabel.informationMonitoring',
-      subModules: [
-        {
-          name: 'specificLabel.monitoringDetail',
-          fields: [
-            'mitigationAction.indicatorName',
-            'mitigationAction.indicatorDescription',
-            'mitigationAction.indicatorUnit',
-            'mitigationAction.methodologicalDetailIndicator',
-            'mitigationAction.indicatorReportingPeriodicity',
-            'mitigationAction.timeSeriesAvailable',
-            'general.until',
-            'mitigationAction.geographicCoverage',
-            'general.other',
-            'mitigationAction.disintegration',
-            'mitigationAction.dataSource',
-            'mitigationAction.howSustainabilityIndicator',
-            'mitigationAction.sinameccClassifiers',
-            'mitigationAction.observationsComments',
-            'mitigationAction.additionalInformation',
-          ],
-        },
-        {
-          name: 'mitigationAction.indicatorDataSource',
-          fields: [
-            'mitigationAction.responsibleInstitution',
-            'mitigationAction.sourceType',
-            'general.other',
-            'mitigationAction.statisticalOperationName',
-          ],
-        },
-        {
-          name: 'mitigationAction.thematicCategorization',
-          fields: [
-            'mitigationAction.datatype',
-            'general.other',
-            'mitigationAction.SINAMECCClassifiers',
-            'general.other',
-          ],
-        },
-        {
-          name: 'mitigationAction.contactInformation',
-          fields: [
-            'mitigationAction.namePersonResponsible',
-            'reportData.institution',
-            'mitigationAction.contactPersonTitle',
-            'info.emailAddress',
-            'info.phone',
-          ],
-        },
-        {
-          name: 'mitigationAction.changeLog',
-          fields: [
-            'mitigationAction.dateLastUpdate',
-            'mitigationAction.changesLastupdate',
-            'mitigationAction.descriptionChanges',
-            'mitigationAction.authorLastUpdate',
-          ],
-        },
-      ],
-    },
-    {
-      module: 'mitigationAction.monitoringReportingClimateActions',
-      subModules: [
-        {
-          name: 'mitigationAction.monitoringProgressLog',
-          fields: ['mitigationAction.anyProgressMonitoringRecordedClimateActions'],
-        },
-        {
-          name: 'mitigationAction.indicatorMonitoring',
-          fields: [
-            'mitigationAction.indicatorSelection',
-            'mitigationAction.reportingPeriod',
-            'general.until',
-            'mitigationAction.indicatorDataUpdateDate',
-            'mitigationAction.sourceType',
-          ],
-        },
-        {
-          name: 'mitigationAction.generalProgressReportClimateAction',
-          fields: ['mitigationAction.beenProgressActionPeriod'],
-        },
-      ],
-    },
-  ];
 
-  comments: any[] = [];
+  commentsModule1 = commentsStructureModule1;
+  commentsModule2 = commentsStructureModule2;
+  commentsModule3 = commentsStructureModule3;
+  commentsModule4 = commentsStructureModule4;
+  commentsModule5 = commentsStructureModule5;
+  commentsModule6 = commentsStructureModule6;
+  commentsByModule = {};
+  reviews: any;
 
   constructor(
     private router: Router,
@@ -234,20 +48,10 @@ export class MitigationActionComponent implements OnInit {
     private service: MitigationActionsService,
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public dialog: MatDialog
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
-  }
-
-  comment(module: string, subModule: string, fields: string[], comment: string) {
-    const newComment = {
-      module: module,
-      subModule: subModule,
-      fields: fields,
-      comment: comment,
-    };
-
-    this.comments.push(newComment);
   }
 
   findQuestion(id: string) {
@@ -259,8 +63,46 @@ export class MitigationActionComponent implements OnInit {
     return '';
   }
 
+  openCommentsModal(commentStructure: CommentsStructure[], moduleIndex: number) {
+    const commentList: Comments[] = this.buildCommentList(moduleIndex);
+    const dialogRef = this.dialog.open(CommentsViewComponent, {
+      width: '60%',
+      disableClose: true,
+      data: {
+        edit: this.edit,
+        moduleIndex: moduleIndex,
+        comments: commentStructure,
+        commentPayload: !this.edit
+          ? commentList
+          : this.commentsByModule[moduleIndex]
+          ? this.commentsByModule[moduleIndex]
+          : [],
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result: Comments[]) => {
+      if (result) {
+        this.commentsByModule[moduleIndex] = result;
+      }
+    });
+  }
+
+  buildCommentList(moduleIndex: number) {
+    const commentList: Comments[] = [];
+
+    this.mitigationAction.comments.map((x: any) => {
+      const module = x.form_section.split('-');
+
+      if (module[0] === moduleIndex.toString()) {
+        commentList.push({ moduleIndex: moduleIndex, module: module[1], subModule: x.field, comment: x.comment });
+      }
+    });
+    return commentList;
+  }
+
   ngOnInit() {
     this.isLoading = true;
+    this.loadReviews();
     this.service
       .getMitigationAction(this.id, this.i18nService.language.split('-')[0])
       .pipe(
@@ -269,92 +111,35 @@ export class MitigationActionComponent implements OnInit {
         })
       )
       .subscribe((response: MitigationAction) => {
+        console.log(response);
         this.mitigationAction = response;
-        if (!this.edit) {
-          this.getComments(response.id);
-        }
       });
-
-    if (this.edit) {
-      this.getUserPhoto();
-    }
   }
 
-  getComments(id: string) {
-    this.service.getComments(id).subscribe((response: any) => {
-      this.buildCommentsToShow(response);
-      this.showComments = response.length > 0 ? true : false;
+  loadReviews() {
+    this.service.mitigationActionReviews(this.id).subscribe((response) => {
+      this.reviews = response;
     });
   }
 
-  buildCommentsToShow(comments: any) {
-    for (const comment of comments) {
-      const modules = comment.form_section.split(',');
-      const newComment = {
-        module: modules[0],
-        subModule: modules[1],
-        fields: comment.field.split(','),
-        comment: comment.comment,
-      };
-      this.comments.push(newComment);
-    }
-  }
+  buildFormatComments() {
+    let commentList: any = [];
 
-  getCurrentPhoto(photoList: any[]) {
-    for (const photo of photoList) {
-      if (photo.current) {
-        return photo;
-      }
-    }
-    return undefined;
-  }
+    const commentsKeys = Object.keys(this.commentsByModule);
 
-  getUserPhoto() {
-    this.usernameComment = '';
-    const userPhoto = '';
-  }
+    for (const element of commentsKeys) {
+      const comments: Comments[] = this.commentsByModule[element];
 
-  createImageFromBlob(image: Blob) {
-    return URL.createObjectURL(image);
-  }
-
-  review(uuid: string) {
-    this.router.navigate([`mitigation/actions/${uuid}/reviews`], {
-      replaceUrl: true,
-    });
-  }
-
-  async download(file: string) {
-    this.isLoading = true;
-    const blob = await this.service.downloadResource(file);
-    const url = window.URL.createObjectURL(blob.data);
-    const a = document.createElement('a');
-    document.body.appendChild(a);
-    a.setAttribute('style', 'display: none');
-    a.href = url;
-    a.download = blob.filename;
-    a.click();
-    window.URL.revokeObjectURL(url);
-    a.remove(); // remove the element
-    this.isLoading = false;
-  }
-
-  isValidComment(module: string, subModule: string, fields: string[], comment: string) {
-    return module !== '' && subModule !== '' && comment !== '' && fields.length > 0;
-  }
-
-  buildFormatComments(comments: any[]) {
-    const formatComments = [];
-
-    for (const comment of comments) {
-      const tempComment = {
-        form_section: `${comment.module},${comment.subModule}`,
-        field: comment.fields.toString(),
-        comment: comment.comment,
-      };
-      formatComments.push(tempComment);
+      const formatComments = comments.map((x) => {
+        return {
+          form_section: `${x.moduleIndex}-${x.module}`,
+          comment: x.comment,
+          field: x.subModule,
+        };
+      });
+      commentList = commentList.concat(formatComments);
     }
 
-    return formatComments;
+    return commentList;
   }
 }

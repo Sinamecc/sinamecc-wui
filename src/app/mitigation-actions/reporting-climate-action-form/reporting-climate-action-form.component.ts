@@ -27,6 +27,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
+  @Input() action: string;
 
   @Input() mitigationActionToUpdate?: any;
   @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
@@ -41,14 +42,21 @@ export class ReportingClimateActionFormComponent implements OnInit {
   ) {
     this.service.currentMitigationAction.subscribe((message) => {
       this.mitigationAction = message;
-      this.getIndicators();
     });
+    this.isUpdating = this.action === 'update';
     this.createForm();
   }
 
   ngOnInit() {
     if (!this.isUpdating) {
       this.openStartMessages();
+    }
+
+    if (this.isUpdating) {
+      this.service.currentMitigationAction.subscribe((message) => {
+        this.mitigationAction = message;
+        this.updateFormData();
+      });
     }
   }
 
@@ -117,7 +125,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.translateService.get('Sucessfully submitted form').subscribe((res: string) => {
+          this.translateService.get('specificLabel.sucessfullySubmittedForm').subscribe((res: string) => {
             this.snackBar.open(res, null, { duration: 3000 });
           });
           this.wasSubmittedSuccessfully = true;
@@ -153,6 +161,46 @@ export class ReportingClimateActionFormComponent implements OnInit {
         this.formBuilder.group({
           reportingPeriodCtrl: ['', Validators.required],
           beenProgressActionPeriodCtrl: ['', Validators.required],
+        }),
+      ]),
+    });
+  }
+
+  private updateFormData() {
+    this.form = this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          anyProgressMonitoringRecordedClimateActionsCtrl: [
+            this.mitigationAction.monitoring_reporting_indicator.progress_in_monitoring,
+            Validators.required,
+          ],
+        }),
+        this.formBuilder.group({
+          indicatorSelectionCtrl: [this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator.indicator],
+          indicatorDataUpdateDateCtrl: [
+            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator.data_updated_date,
+            Validators.required,
+          ],
+          reportingPeriodStartCtrl: [
+            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator.initial_date_report_period,
+            Validators.required,
+          ],
+          reportingPeriodEndCtrl: [
+            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator.final_date_report_period,
+            Validators.required,
+          ],
+          informationToUpdateCtrl: [
+            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator.updated_data,
+            Validators.required,
+          ],
+        }),
+
+        this.formBuilder.group({
+          reportingPeriodCtrl: ['', Validators.required],
+          beenProgressActionPeriodCtrl: [
+            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator.progress_report,
+            Validators.required,
+          ],
         }),
       ]),
     });

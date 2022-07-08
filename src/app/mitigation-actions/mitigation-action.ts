@@ -40,6 +40,7 @@ export interface MitigationAction {
   ghg_information: GHGInformation;
   impact_documentation: any;
   monitoring_information: MonitoringInformation;
+  monitoring_reporting_indicator: any;
 }
 
 export interface MonitoringInformation {

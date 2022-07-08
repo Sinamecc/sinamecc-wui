@@ -301,6 +301,7 @@
   },
 
   "general": {
+    "addOther": "Agregar otro",
     "amount": "Monto",
     "loading": "Cargando...",
     "newComment": "Nuevo comentario",
@@ -584,7 +585,8 @@
     "documentationImpactEstimate": "Documentación de la estimación de impactos",
     "exAnteEmissionReductions": "Estimación ex-ante de las reducciones de emisiones potenciales en CO2eq",
     "ingeiCompliance": "Conformidad Ingei",
-    "sucessfullySubmittedForm": "Formulario enviado exitosamente",
+    "sucessfullySubmittedForm": "Su acción de mitigación ha sido enviada para revisión",
+    "saveInformation": "Información guardada",
     "sucessfullyDeletedElement": "Elemento borrado exitosamente",
     "validationVerificationBody": "Organismo Verificador Validador",
     "conceptualProposalIntegration": "Propuesta Conceptual de Integración",

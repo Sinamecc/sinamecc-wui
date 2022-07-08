@@ -14,6 +14,13 @@ export interface MitigationActionNewFormData {
   descarbonization_axis: DescarbonizationAxis[];
   sustainable_development_goals: SustainableDevelopmentGoals[];
   ghg_impact_sector: GhgImpactSector[];
+  topics: Topics[];
+}
+
+export interface Topics {
+  code: string;
+  id: number;
+  name: string;
 }
 
 export interface MonitoringReportingIndicator {

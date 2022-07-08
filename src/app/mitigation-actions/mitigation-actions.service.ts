@@ -26,6 +26,7 @@ const routes = {
   getCatalogs: (id: string, parentCatalog: string, catalog: string) =>
     `/v1/mitigation-action/data/${parentCatalog}/${id}/${catalog}/`,
   getComments: (id: string = '') => `/v1/mitigation-action/${id}/comments/`,
+  loadSubTopics: (id: string) => `/v1/mitigation-action/data/topics/${id}/sub-topics/`,
 };
 
 export interface Response {
@@ -76,6 +77,14 @@ export class MitigationActionsService {
           message: 'Form submitted correctly',
         };
         return response;
+      })
+    );
+  }
+
+  loadSubTopics(id: string) {
+    return this.httpClient.get(routes.loadSubTopics(id)).pipe(
+      map((body: any[]) => {
+        return body;
       })
     );
   }

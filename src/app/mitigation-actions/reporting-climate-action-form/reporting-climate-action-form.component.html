@@ -2,6 +2,7 @@
   <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
     <h2 translate>mitigationAction.monitoringReportingClimateActions</h2>
   </div>
+  <h1>{{ mitigationAction?.code }}</h1>
   <mat-card-content>
     <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
       <div fxLayout="column">
@@ -30,7 +31,9 @@
             <br />
 
             <div class="box-button">
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -49,8 +52,12 @@
               ><br />
               <mat-hint>Haga click en el indicador de interés para reportar su avance'</mat-hint>
               <mat-radio-group class="custom-radio-group" formControlName="indicatorSelectionCtrl">
-                <mat-radio-button *ngFor="let item of indicator" [style.margin.px]="5" [value]="item.id">
-                  <label translate>{{ item.name }}</label>
+                <mat-radio-button
+                  *ngFor="let item of mitigationAction.monitoring_reporting_indicator.monitoring_indicator"
+                  [style.margin.px]="5"
+                  [value]="item.id"
+                >
+                  <label translate>{{ item.id }}</label>
                 </mat-radio-button>
               </mat-radio-group>
             </div>
@@ -145,7 +152,9 @@
             <div class="box-button">
               <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
               </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -182,7 +191,9 @@
             <div class="box-button">
               <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
               </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -193,8 +204,9 @@
 
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <app-generic-button type="submit" [disabled]="wasSubmittedSuccessfully" name="general.done">
-              </app-generic-button>
+              <button [disabled]="wasSubmittedSuccessfully" type="submit" matRipple class="primary-button">
+                <span translate>general.done</span>
+              </button>
             </div>
           </mat-step>
         </mat-vertical-stepper>

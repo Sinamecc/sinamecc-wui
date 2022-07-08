@@ -33,3 +33,22 @@ mat-divider {
 .add-comment-container {
   background-color: rgb(245, 245, 245);
 }
+
+/////
+.custom-tabs {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.header-container {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  width: 100%;
+
+  label {
+    margin: 0;
+  }
+}
+
+.main-container {
+  padding: 1em;
+}

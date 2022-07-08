@@ -74,3 +74,12 @@ body {
   text-transform: uppercase;
   padding-top: 8px;
 }
+
+.primary-button {
+  border-radius: 5px;
+  color: white;
+  background-color: $primary-color;
+  padding: 0.8em 1.3em;
+  border: none;
+  cursor: pointer;
+}

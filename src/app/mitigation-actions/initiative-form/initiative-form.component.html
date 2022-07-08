@@ -10,7 +10,7 @@
       </div>
       <br />
       <div fxLayout="column">
-        <mat-vertical-stepper formArrayName="formArray" linear #stepper>
+        <mat-vertical-stepper formArrayName="formArray" #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel> <span>1.1 - </span><span translate>specificLabel.initiative</span> </ng-template>
 
@@ -98,16 +98,11 @@
               </div>
             </div>
             <br />
-            <!-- <div class="margin-20">
-              <div>step details:-</div>
-              <pre>Is formArray?.get([0]) valid?: <br />{{formArray?.get([0]).valid | json}}</pre>
-              <pre>formArray?.get([0]) value: <br />{{formArray?.get([0]).value | json}}</pre>
-              <pre>formArray?.get([0]) : <br />{{formArray?.get([0]) | json }}</pre>
-              <pre>first step valid? : <br />{{formArray?.get([0]).valid | json}}</pre>
 
-            </div> -->
             <div class="box-button">
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -151,7 +146,9 @@
             <div class="box-button">
               <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
               </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -273,7 +270,9 @@
             <div class="box-button">
               <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
               </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -313,7 +312,9 @@
             <div class="box-button">
               <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
               </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -323,60 +324,215 @@
               <mat-icon [matTooltip]="section5TooltipTxt">info</mat-icon>
             </ng-template>
 
-            <mat-form-field class="field-ppcn last-section-mat-select" appearance="fill">
-              <mat-label translate>1.5.1 - <span translate>mitigationAction.relationshipNDC</span></mat-label>
-              <mat-select formControlName="relationshipNDCCtrl" (selectionChange)="loadSubNDCcatalogs($event.value)">
-                <mat-option *ngFor="let element of processedNewFormData?.action_areas" [value]="element.id">
-                  {{ element.name }}
-                </mat-option>
-              </mat-select>
-              <mat-hint>Selecciones las áreas de acción de la NDC relacionadas con su acción de mitigación</mat-hint>
-            </mat-form-field>
-            <br />
-            <mat-form-field *ngIf="ndcList.length > 0" class="field-ppcn last-section-mat-select" appearance="fill">
-              <mat-label translate>1.5.1 - <span translate>mitigationAction.relationshipNDC</span></mat-label>
-              <mat-select formControlName="relationshipNDCTopicCtrl" multiple>
-                <mat-option *ngFor="let option of ndcList" [value]="option.code">
-                  {{ option.area }}.{{ option.code }} - {{ option.goal }}
-                </mat-option>
-              </mat-select>
-              <mat-hint translate>mitigationAction.relationshipNDCHint</mat-hint>
-            </mat-form-field>
-            <br />
-
-            <mat-form-field class="field-ppcn last-section-mat-select" appearance="fill">
-              <mat-label translate
-                >1.5.2 - <span translate>mitigationAction.relationshipDecarbonizationPlan</span></mat-label
+            <div
+              class="finance-container"
+              fxLayout="column"
+              fxLayoutAlign="start start"
+              formArrayName="relationshipCtrl"
+            >
+              <div
+                class="max-container"
+                *ngFor="
+                  let element of form.controls.formArray['controls'][4].controls['relationshipCtrl'].controls;
+                  let i = index
+                "
               >
-              <mat-select
-                formControlName="relationshipDecarbonizationPlanCtrl"
-                (selectionChange)="loadSubDescarbonizatiocatalogs($event.value)"
+                <mat-card fxLayout="column" fxLayoutAlign="start start" class="finance-container" [formGroupName]="i">
+                  <mat-form-field class="field-ppcn last-section-mat-select" appearance="fill">
+                    <mat-label translate>1.5.1 - <span translate>mitigationAction.relationshipNDC</span></mat-label>
+                    <mat-select
+                      formControlName="relationshipNDCCtrl"
+                      (selectionChange)="loadSubNDCcatalogs($event.value, i)"
+                    >
+                      <mat-option *ngFor="let element of processedNewFormData?.action_areas" [value]="element.id">
+                        {{ element.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint
+                      >Selecciones las áreas de acción de la NDC relacionadas con su acción de mitigación</mat-hint
+                    >
+                  </mat-form-field>
+                  <br />
+                  <mat-form-field *ngIf="ndcList[i]" class="field-ppcn last-section-mat-select" appearance="fill">
+                    <mat-label translate>1.5.1 - <span translate>mitigationAction.relationshipNDC</span></mat-label>
+                    <mat-select formControlName="relationshipNDCTopicCtrl" multiple>
+                      <mat-option *ngFor="let option of ndcList[i]" [value]="option.code">
+                        {{ option.area }}.{{ option.code }} - {{ option.goal }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint translate>mitigationAction.relationshipNDCHint</mat-hint>
+                  </mat-form-field>
+                  <br />
+                  <div class="box-button">
+                    <button
+                      mat-mini-fab
+                      color="warn"
+                      *ngIf="form.controls.formArray['controls'][4].controls['relationshipCtrl'].controls.length > 1"
+                      (click)="removeNDCItem(i)"
+                      type="button"
+                    >
+                      <mat-icon>delete forever</mat-icon>
+                    </button>
+                  </div>
+                </mat-card>
+              </div>
+              <div class="box-button">
+                <button
+                  [disabled]="wasSubmittedSuccessfully"
+                  (click)="addNDCItem()"
+                  type="button"
+                  matRipple
+                  class="primary-button"
+                >
+                  <span translate>general.addOther</span>
+                </button>
+              </div>
+            </div>
+
+            <hr class="custom-divider" />
+
+            <div
+              class="finance-container"
+              fxLayout="column"
+              fxLayoutAlign="start start"
+              formArrayName="relationshipDecarbonizationCtrl"
+            >
+              <div
+                class="max-container"
+                *ngFor="
+                  let element of form.controls.formArray['controls'][4].controls['relationshipDecarbonizationCtrl']
+                    .controls;
+                  let i = index
+                "
               >
-                <mat-option *ngFor="let element of processedNewFormData?.descarbonization_axis" [value]="element.id">
-                  {{ element.description }}
-                </mat-option>
-              </mat-select>
-              <mat-hint translate>mitigationAction.relationshipNDCHint</mat-hint>
-            </mat-form-field>
-            <br />
+                <mat-card class="finance-container" [formGroupName]="i">
+                  <mat-form-field class="field-ppcn last-section-mat-select" appearance="fill">
+                    <mat-label translate
+                      >1.5.2 - <span translate>mitigationAction.relationshipDecarbonizationPlan</span></mat-label
+                    >
+                    <mat-select
+                      formControlName="relationshipDecarbonizationPlanCtrl"
+                      (selectionChange)="loadSubDescarbonizatiocatalogs($event.value, i)"
+                    >
+                      <mat-option
+                        *ngFor="let element of processedNewFormData?.descarbonization_axis"
+                        [value]="element.id"
+                      >
+                        {{ element.description }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint translate>mitigationAction.relationshipNDCHint</mat-hint>
+                  </mat-form-field>
+                  <br />
 
-            <mat-form-field *ngIf="ejeList.length > 0" class="field-ppcn last-section-mat-select" appearance="fill">
-              <mat-label translate
-                >1.5.2 - <span translate>mitigationAction.relationshipDecarbonizationPlan</span></mat-label
+                  <mat-form-field *ngIf="ejeList[i]" class="field-ppcn last-section-mat-select" appearance="fill">
+                    <mat-label translate
+                      >1.5.2 - <span translate>mitigationAction.relationshipDecarbonizationPlan</span></mat-label
+                    >
+                    <mat-select formControlName="relationshipDecarbonizationTopicPlanCtrl" multiple>
+                      <mat-option *ngFor="let option of ejeList[i]" [value]="option.id">
+                        VT - {{ option.axis }}.{{ option.code }} - {{ option.description }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint translate>mitigationAction.relationshipNDCHint</mat-hint>
+                  </mat-form-field>
+                  <br />
+                  <div class="box-button">
+                    <button
+                      mat-mini-fab
+                      color="warn"
+                      *ngIf="
+                        form.controls.formArray['controls'][4].controls['relationshipDecarbonizationCtrl'].controls
+                          .length > 1
+                      "
+                      (click)="removeDecarbonizationItem(i)"
+                      type="button"
+                    >
+                      <mat-icon>delete forever</mat-icon>
+                    </button>
+                  </div>
+                </mat-card>
+              </div>
+              <div class="box-button">
+                <button
+                  [disabled]="wasSubmittedSuccessfully"
+                  (click)="addDecarbonizationtem()"
+                  type="button"
+                  matRipple
+                  class="primary-button"
+                >
+                  <span translate>general.addOther</span>
+                </button>
+              </div>
+            </div>
+
+            <hr class="custom-divider" />
+
+            <div class="finance-container" fxLayout="column" fxLayoutAlign="start start" formArrayName="topicsFrmCtrl">
+              <div
+                class="max-container"
+                *ngFor="
+                  let element of form.controls.formArray['controls'][4].controls['topicsFrmCtrl'].controls;
+                  let i = index
+                "
               >
-              <mat-select formControlName="relationshipDecarbonizationTopicPlanCtrl" multiple>
-                <mat-option *ngFor="let option of ejeList" [value]="option.id">
-                  VT - {{ option.axis }}.{{ option.code }} - {{ option.description }}
-                </mat-option>
-              </mat-select>
-              <mat-hint translate>mitigationAction.relationshipNDCHint</mat-hint>
-            </mat-form-field>
+                <mat-card fxLayout="column" fxLayoutAlign="start start" class="finance-container" [formGroupName]="i">
+                  <mat-form-field class="field-ppcn last-section-mat-select" appearance="fill">
+                    <mat-label translate
+                      >1.5.3 -
+                      <span translate>Clasificación por temas y subtemas de la acción climática</span></mat-label
+                    >
+                    <mat-select formControlName="topicCtrl" (selectionChange)="loadSubtopics($event.value, i)">
+                      <mat-option *ngFor="let element of processedNewFormData?.topics" [value]="element.id">
+                        {{ element.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint translate>mitigationAction.relationshipNDCHint</mat-hint>
+                  </mat-form-field>
 
-            <br />
+                  <mat-form-field *ngIf="subTopics[i]" class="field-ppcn last-section-mat-select" appearance="fill">
+                    <mat-label translate
+                      >1.5.3 -
+                      <span translate>Clasificación por temas y subtemas de la acción climática</span></mat-label
+                    >
+                    <mat-select multiple formControlName="subTopicPlanCtrl">
+                      <mat-option *ngFor="let element of subTopics[i]" [value]="element.id">
+                        {{ element.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint translate>mitigationAction.relationshipNDCHint</mat-hint>
+                  </mat-form-field>
 
+                  <div class="box-button">
+                    <button
+                      mat-mini-fab
+                      color="warn"
+                      *ngIf="form.controls.formArray['controls'][4].controls['topicsFrmCtrl'].controls.length > 1"
+                      (click)="removeTopicItem(i)"
+                      type="button"
+                    >
+                      <mat-icon>delete forever</mat-icon>
+                    </button>
+                  </div>
+                </mat-card>
+              </div>
+              <div class="box-button">
+                <button
+                  [disabled]="wasSubmittedSuccessfully"
+                  (click)="addTopicItem()"
+                  type="button"
+                  matRipple
+                  class="primary-button"
+                >
+                  <span translate>general.addOther</span>
+                </button>
+              </div>
+            </div>
+
+            <hr class="custom-divider" />
             <div>
               <label class="radio-grup-label" translate
-                >1.5.3 - <span translate>mitigationAction.impactCategory</span></label
+                >1.5.4 - <span translate>mitigationAction.impactCategory</span></label
               >
               <mat-radio-group formControlName="impactCategoryCtrl" class="custom-radio-group">
                 <mat-radio-button [style.margin.px]="5" value="1">
@@ -396,7 +552,7 @@
 
             <div>
               <label class="radio-grup-label" translate
-                >1.5.4 -
+                >1.5.5 -
                 <span translate>¿La acción de mitigación que está registrando forma parte de otra?</span></label
               >
               <mat-radio-group
@@ -425,7 +581,9 @@
             <div class="box-button">
               <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
               </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -436,20 +594,12 @@
 
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <app-generic-button type="submit" [disabled]="wasSubmittedSuccessfully" name="general.done">
-              </app-generic-button>
+              <button [disabled]="wasSubmittedSuccessfully" type="submit" matRipple class="primary-button">
+                <span translate>general.done</span>
+              </button>
             </div>
           </mat-step>
         </mat-vertical-stepper>
-
-        <!-- <div class="margin-20">
-            <div>form details:-</div>
-            <pre>Is myForm valid?: <br />{{form.valid | json}}</pre>
-            <pre>form value: <br />{{form.value | json}}</pre>
-            <pre>formArray?.get([0]) : <br />{{formArray?.get([0]) | json }}</pre>
-            <pre>first step valid? : <br />{{formArray?.get([0]).valid | json}}</pre>
-
-          </div> -->
       </div>
     </form>
   </mat-card-content>

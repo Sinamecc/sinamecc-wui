@@ -270,7 +270,7 @@ export class ImpactFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.translateService.get('Sucessfully submitted form').subscribe((res: string) => {
+          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
             this.snackBar.open(res, null, { duration: 3000 });
           });
           this.wasSubmittedSuccessfully = true;

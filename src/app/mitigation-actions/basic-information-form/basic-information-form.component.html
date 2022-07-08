@@ -19,10 +19,6 @@
               <span>2.1 - </span><span translate>info.financingInformation</span>
             </ng-template>
 
-            <h3>
-              <span translate>info.code</span>:<span>{{ mitigationAction?.id }}</span>
-            </h3>
-
             <div>
               <label class="radio-grup-label" translate
                 >2.1.1 - <span translate>mitigationAction.financingStatus</span></label
@@ -140,7 +136,15 @@
               </div>
 
               <div class="box-button">
-                <app-generic-button (click)="addFinanceItem()" name="Agregar otro"></app-generic-button>
+                <button
+                  [disabled]="wasSubmittedSuccessfully"
+                  (click)="addFinanceItem()"
+                  type="button"
+                  matRipple
+                  class="primary-button"
+                >
+                  <span translate>general.addOther</span>
+                </button>
               </div>
             </div>
 
@@ -163,7 +167,9 @@
 
             <br />
             <div class="box-button">
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -210,7 +216,9 @@
             <div class="box-button">
               <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
               </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -221,8 +229,15 @@
 
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <app-generic-button type="submit" [disabled]="wasSubmittedSuccessfully" name="general.done">
-              </app-generic-button>
+              <button
+                type="submit"
+                [disabled]="wasSubmittedSuccessfully"
+                matRipple
+                (click)="stepper.next()"
+                class="primary-button"
+              >
+                <span translate>general.done</span>
+              </button>
             </div>
           </mat-step>
         </mat-vertical-stepper>

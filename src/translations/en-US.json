@@ -301,6 +301,7 @@
   },
 
   "general": {
+    "addOther": "Add other",
     "amount": "Amount",
     "loading": "Cargando...",
     "newComment": "New comment",
@@ -588,6 +589,7 @@
     "documentationImpactEstimate": "Documentación de la estimación de impactos",
     "ingeiCompliance": "Ingei Compliance",
     "sucessfullySubmittedForm": "Sucessfully submitted form",
+    "saveInformation": "saved information",
     "sucessfullySubmittedImage": "Sucessfully submitted image",
     "sucessfullyDeletedElement": "Sucessfully deleted element",
     "validationVerificationBody": "Validation Verification Body",
