@@ -132,7 +132,7 @@ export class InitiativeFormComponent implements OnInit {
         this.formBuilder.group({
           initiativeTypeCtrl: ['', Validators.required],
           initiativeNameCtrl: ['', [Validators.required, Validators.maxLength(200)]],
-          initiativeObjectiveCtrl: ['', [Validators.required, Validators.maxLength(100)]],
+          initiativeObjectiveCtrl: ['', [Validators.required, Validators.maxLength(1000)]],
           initiativeDescriptionCtrl: ['', [Validators.required, Validators.maxLength(1000)]],
           initiativeGoalCtrl: ['', [Validators.required, Validators.maxLength(500)]],
         }),
@@ -280,7 +280,7 @@ export class InitiativeFormComponent implements OnInit {
           initiativeNameCtrl: [this.mitigationAction.initiative.name, [Validators.required, Validators.maxLength(200)]],
           initiativeObjectiveCtrl: [
             this.mitigationAction.initiative.objective,
-            [Validators.required, Validators.maxLength(100)],
+            [Validators.required, Validators.maxLength(1000)],
           ],
           initiativeDescriptionCtrl: [
             this.mitigationAction.initiative.description,
@@ -531,5 +531,11 @@ export class InitiativeFormComponent implements OnInit {
   wordCounter(text: string) {
     const words = text ? text.split(/\s+/) : 0;
     return words ? words.length : 0;
+  }
+
+  loadUrl() {
+    window.open(
+      'https://docs.google.com/spreadsheets/d/17rrTYpiLsargiTnARd29HLoSOaRUYtXd/edit?usp=sharing&ouid=100093507902776240980&rtpof=true&sd=true'
+    );
   }
 }

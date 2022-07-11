@@ -63,8 +63,13 @@
     "enablingMeasure": "Enabling measure",
     "directImpactGEI": "Direct impact on GEI",
     "impactCategory": "Impact Category",
+    "subTopics": "Select the subtopics related to your mitigation action",
+    "classificationTopicsHint": "Select the climate action topic that relates to your mitigation action",
+    "classificationTopics": "Classification by themes and sub-themes of climate action",
     "relationshipDecarbonizationPlan": "Relationship with the National Decarbonization Plan",
+    "relationshipDecarbonizationPlan2": "Select the transformational visions related to the selected axis in which your mitigation action affects",
     "relationshipDecarbonizationPlanHint": "Select the axes related to your mitigation action",
+    "NDCGoals": "Select NDC targets",
     "relationshipNDC": "Relationship with the NDC",
     "relationshipNDCHint": "Select the NDC action areas related to your mitigation action",
     "newIndicator": "Add new indicator",
@@ -301,6 +306,7 @@
   },
 
   "general": {
+    "addRelationships": "Add additional relationships",
     "addOther": "Add other",
     "amount": "Amount",
     "loading": "Cargando...",
