@@ -18,6 +18,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   temporalityImpact: TemporalityImpact[] = [];
   generalImpact: TemporalityImpact[] = [];
   ods: ODS[];
+  annexSupportingFile: any;
   @Input() edit: boolean;
   @Input() adaptationActionUpdated: AdaptationAction;
 
@@ -96,7 +97,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
           this.adaptationActionUpdated.action_impact.unwanted_action_description,
           Validators.required,
         ],
-        AnnexSupportingInformationCtrl: ['', Validators.required],
+        AnnexSupportingInformationCtrl: [''],
         objectivesCtrl: [
           this.adaptationActionUpdated.action_impact.ods.map((x) => parseInt(x.id)),
           Validators.required,
@@ -113,7 +114,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
         genderEquityElementsCtrl: ['', Validators.required],
         genderEquityElementsQuestionCtrl: [''],
         actionNegativeImpactCtrl: ['', Validators.required],
-        AnnexSupportingInformationCtrl: ['', Validators.required],
+        AnnexSupportingInformationCtrl: [''],
         objectivesCtrl: ['', Validators.required], // new field
       }),
     ]);
@@ -175,5 +176,9 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     };
 
     return context;
+  }
+
+  uploadFile(event: any) {
+    this.annexSupportingFile = event;
   }
 }

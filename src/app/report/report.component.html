@@ -44,7 +44,7 @@
 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
-      <mat-cell *matCellDef="let element" class="login-box">
+      <mat-cell *matCellDef="let element">
         <button (click)="view(element.id)" mat-icon-button color="primary">
           <mat-icon color="white">visibility</mat-icon>
         </button>

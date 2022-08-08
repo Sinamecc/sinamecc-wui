@@ -56,31 +56,25 @@
             <div fxLayout="row">
               <h3 class="mat-h3" translate>ppcn.nameContactPerson</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">{{ adaptationAction?.report_organization?.contact }}</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.report_organization?.contact?.contact_name }}</h3>
             </div>
 
             <div fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form1.positionResponsiblePerson</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">-</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.report_organization?.contact?.contact_position }}</h3>
             </div>
 
             <div fxLayout="row">
               <h3 class="mat-h3" translate>info.emailAddress</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">-</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.report_organization?.contact?.email }}</h3>
             </div>
 
             <div fxLayout="row">
               <h3 class="mat-h3" translate>info.phone</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">-</h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>info.phone</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">-</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.report_organization?.contact?.phone }}</h3>
             </div>
 
             <div fxLayout="row">
@@ -167,19 +161,19 @@
             <div *ngIf="adaptationAction?.address?.district" fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form2.AAProvince</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">{{ adaptationAction?.address?.district?.canton?.province?.name }}</h3>
+              <h3 class="mat-h3">{{ (adaptationAction?.address?.district)[0]?.canton?.province?.name }}</h3>
             </div>
 
             <div *ngIf="adaptationAction?.address?.district" fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form2.AACanton</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">{{ adaptationAction?.address?.district?.canton?.name }}</h3>
+              <h3 class="mat-h3">{{ (adaptationAction?.address?.district)[0]?.canton?.name }}</h3>
             </div>
 
             <div *ngIf="adaptationAction?.address?.district" fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form2.AADistrict</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">{{ adaptationAction?.address?.district?.name }}</h3>
+              <h3 class="mat-h3">{{ (adaptationAction?.address?.district)[0]?.name }}</h3>
             </div>
 
             <div fxLayout="row">
@@ -201,6 +195,63 @@
             <label class="mat-h1" translate>adaptationAction.form2.categorizationNationalIntruments</label>
           </div>
 
+          <mat-card
+            fxLayout="column"
+            fxLayoutAlign="space-around start"
+            *ngFor="let activity of adaptationAction?.activity"
+            class="custom-card"
+          >
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>adaptationAction.form2.selectTopic</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ activity?.sub_topic?.topic?.description }}</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3" translate>adaptationAction.form2.selectSubtopic</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ activity?.sub_topic?.description }}</h3>
+            </div>
+
+            <div fxLayout="column">
+              <h3 class="mat-h3" translate>adaptationAction.form2.relationNDC</h3>
+              <div>
+                <mat-list>
+                  <mat-list-item *ngFor="let element of activity?.ndc_contribution">
+                    {{ element.ndc_area.description }}</mat-list-item
+                  >
+                </mat-list>
+              </div>
+            </div>
+
+            <div fxLayout="column">
+              <h3 class="mat-h3" translate>adaptationAction.form2.relationGoalNDC</h3>
+              <div>
+                <mat-list>
+                  <mat-list-item *ngFor="let element of activity?.ndc_contribution">
+                    {{ element.description }}</mat-list-item
+                  >
+                </mat-list>
+              </div>
+              <h3 class="mat-h3">{{ activity?.sub_topic?.description }}</h3>
+            </div>
+
+            <div fxLayout="column">
+              <h3 class="mat-h3" translate>adaptationAction.form2.relationshipAxis</h3>
+              <h3 class="mat-h3">
+                {{ activity?.adaptation_axis_guideline?.adaptation_axis?.description }}
+              </h3>
+            </div>
+
+            <div fxLayout="column">
+              <h3 class="mat-h3" translate>
+                adaptationAction.form2.relationshipGuideline
+              </h3>
+              <h3 class="mat-h3">{{ (activity?.ndc_contribution)[0]?.description }}</h3>
+            </div>
+          </mat-card>
+
+          <!--
           <div fxLayout="column" fxLayoutAlign="space-around start">
             <div fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form2.selectTopic</h3>
@@ -251,6 +302,8 @@
               <h3 class="mat-h3">{{ (adaptationAction?.activity?.ndc_contribution)[0]?.description }}</h3>
             </div>
           </div>
+
+          -->
 
           <mat-divider style="width: 100%;"></mat-divider>
 

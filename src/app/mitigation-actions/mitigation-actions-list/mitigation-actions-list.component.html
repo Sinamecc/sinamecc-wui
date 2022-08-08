@@ -49,12 +49,20 @@
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
-      <mat-cell *matCellDef="let element" class="login-box">
-        <button mat-icon-button color="primary" (click)="edit(element.id)">
-          <mat-icon color="white">edit</mat-icon>
+      <mat-cell *matCellDef="let element">
+        <button mat-icon-button color="accent" (click)="edit(element.id)">
+          <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="primary" (click)="view(element.id)">
-          <mat-icon color="white">visibility</mat-icon>
+        <button mat-icon-button color="accent" (click)="view(element.id)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+
+        <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
+        <button mat-icon-button color="accent" *ngIf="canChangeState(element)" (click)="addReview(element.id)">
+          <mat-icon>navigate_next</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" (click)="changelog(element.id)">
+          <mat-icon color="white">history</mat-icon>
         </button>
         <button
           *ngIf="hasPermProvider()"
@@ -62,14 +70,7 @@
           color="warn"
           (click)="openDeleteConfirmationDialog(element.id)"
         >
-          <mat-icon color="white">delete</mat-icon>
-        </button>
-        <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
-        <button mat-icon-button color="primary" *ngIf="canChangeState(element)" (click)="addReview(element.id)">
-          <mat-icon color="white">navigate_next</mat-icon>
-        </button>
-        <button mat-icon-button color="primary" (click)="changelog(element.id)">
-          <mat-icon color="white">history</mat-icon>
+          <mat-icon>delete</mat-icon>
         </button>
         <!-- <button mat-icon-button color="primary" (click)="uploadProposal(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button> -->
       </mat-cell>
@@ -84,5 +85,7 @@
 </div>
 <br />
 <div class="box-button" *ngIf="hasPermProvider()">
-  <app-generic-button routerLink="/mitigation/actions/new" name="mitigationAction.addMA"></app-generic-button>
+  <button mat-raised-button color="primary" type="button" routerLink="/mitigation/actions/new">
+    <span translate>mitigationAction.addMA</span>
+  </button>
 </div>

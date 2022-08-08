@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
+import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction, Canton, ClimateThreatCatalog, District, Province } from '../interfaces/adaptationAction';
@@ -13,9 +14,9 @@ import { Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
 })
 export class AdaptationActionsReportComponent implements OnInit {
   form: FormGroup;
-  topics: Topic[] = [];
+  topics: Topic[][] = [];
   subTopics: SubTopics[] = [];
-  subTopicsToShow: SubTopics[] = [];
+  subTopicsToShow: SubTopics[][] = [];
   ods: ODS[];
   adaptationAction: AdaptationAction;
   @Input() adaptationActionUpdated: AdaptationAction;
@@ -28,7 +29,7 @@ export class AdaptationActionsReportComponent implements OnInit {
   canton: Canton[] = [];
   districts: District[] = [];
   climateThreat: ClimateThreatCatalog[] = [];
-  activities: Activities[];
+  activities: Activities[][] = [];
 
   adaptationActionMap = {
     '1': 'A',
@@ -101,10 +102,10 @@ export class AdaptationActionsReportComponent implements OnInit {
     );
   }
 
-  loadTopics() {
+  loadTopics(index = 0) {
     this.service.loadTopics().subscribe(
       (topics) => {
-        this.topics = topics;
+        this.topics[index] = topics;
       },
       (error) => {
         this.topics = [];
@@ -134,14 +135,14 @@ export class AdaptationActionsReportComponent implements OnInit {
     );
   }
 
-  loadActivities(id: string) {
+  loadActivities(id: string, index: number) {
     this.service.loadActivities(id).subscribe((response) => {
-      this.activities = response;
+      this.activities[index] = response;
     });
   }
 
-  fillActivitiesFields(id: any) {
-    const data = this.activities.find((x) => x.id === id);
+  fillActivitiesFields(id: any, index: number) {
+    const data = this.activities[index].find((x) => x.id === id);
 
     let adaptationActionRelationValue = '';
     let adaptationActionGoalRelationValue = '';
@@ -153,33 +154,51 @@ export class AdaptationActionsReportComponent implements OnInit {
       adaptationActionGoalRelationValue += element.description;
     }
 
-    this.form.get('formArray').get([2]).get('adaptationActionRelationCtrl').setValue(adaptationActionRelationValue);
     this.form
       .get('formArray')
       .get([2])
+      .get('themeCtrl')
+      .get([index])
+      .get('adaptationActionRelationCtrl')
+      .setValue(adaptationActionRelationValue);
+    this.form
+      .get('formArray')
+      .get([2])
+      .get('themeCtrl')
+      .get([index])
       .get('adaptationActionGoalRelationCtrl')
       .setValue(adaptationActionGoalRelationValue);
     this.form
       .get('formArray')
       .get([2])
+      .get('themeCtrl')
+      .get([index])
       .get('adaptationActionEjeRelationCtrl')
       .setValue(adaptationActionEjeRelationValue);
     this.form
       .get('formArray')
       .get([2])
+      .get('themeCtrl')
+      .get([index])
       .get('adaptationActionLinealRelationCtrl')
       .setValue(adaptationActionLinealRelationValue);
 
-    this.form.get('formArray').get([2]).get('adaptationActionRelationCtrl').disable();
-    this.form.get('formArray').get([2]).get('adaptationActionGoalRelationCtrl').disable();
-    this.form.get('formArray').get([2]).get('adaptationActionEjeRelationCtrl').disable();
-    this.form.get('formArray').get([2]).get('adaptationActionLinealRelationCtrl').disable();
+    this.form.get('formArray').get([2]).get('themeCtrl').get([index]).get('adaptationActionRelationCtrl').disable();
+    this.form.get('formArray').get([2]).get('themeCtrl').get([index]).get('adaptationActionGoalRelationCtrl').disable();
+    this.form.get('formArray').get([2]).get('themeCtrl').get([index]).get('adaptationActionEjeRelationCtrl').disable();
+    this.form
+      .get('formArray')
+      .get([2])
+      .get('themeCtrl')
+      .get([index])
+      .get('adaptationActionLinealRelationCtrl')
+      .disable();
   }
 
-  changeSubTopics(idTopic: string) {
+  changeSubTopics(idTopic: string, index: number) {
     this.service.loadSubTopics(idTopic).subscribe(
       (subTopics) => {
-        this.subTopicsToShow = subTopics;
+        this.subTopicsToShow[index] = subTopics;
       },
       (error) => {
         this.subTopics = [];
@@ -213,13 +232,7 @@ export class AdaptationActionsReportComponent implements OnInit {
         adaptationActionLocationOtherCtrl: [''],
       }),
       this.formBuilder.group({
-        adaptationActionThemeCtrl: ['', Validators.required],
-        adaptationActionTypologyCtrl: ['', Validators.required],
-        adaptationActionTypeCtrl: ['', Validators.required], // new field
-        adaptationActionRelationCtrl: ['', Validators.required],
-        adaptationActionGoalRelationCtrl: ['', Validators.required],
-        adaptationActionEjeRelationCtrl: ['', Validators.required],
-        adaptationActionLinealRelationCtrl: ['', Validators.required],
+        themeCtrl: this.formBuilder.array([this.createThemesCtrl()]),
       }),
       this.formBuilder.group({
         adaptationActionInstrumentCtrl: [''],
@@ -242,23 +255,67 @@ export class AdaptationActionsReportComponent implements OnInit {
     ]);
   }
 
-  buildUpdatedRegisterForm() {
-    this.selectProvince(this.adaptationActionUpdated.address.district.canton.province.id);
-    this.selectCanton(this.adaptationActionUpdated.address.district.canton.id);
-    this.changeSubTopics(this.adaptationActionUpdated?.activity?.sub_topic?.topic?.id);
-    this.loadActivities(this.adaptationActionUpdated?.activity?.sub_topic?.id);
+  createThemesCtrl(activities: any = null) {
+    if (activities) {
+      const list: any[] = [];
+      let index = 0;
 
-    const data = this.adaptationActionUpdated?.activity;
+      for (const element of activities) {
+        this.loadTopics(index);
+        this.changeSubTopics(element?.sub_topic?.topic?.id, index);
+        this.loadActivities(element?.sub_topic?.id, index);
 
-    let adaptationActionRelationValue = '';
-    let adaptationActionGoalRelationValue = '';
-    const adaptationActionEjeRelationValue = data.adaptation_axis_guideline.adaptation_axis.description;
-    const adaptationActionLinealRelationValue = data.adaptation_axis_guideline.description;
+        let adaptationActionRelationValue = '';
+        let adaptationActionGoalRelationValue = '';
+        const adaptationActionEjeRelationValue = element.adaptation_axis_guideline.adaptation_axis.description;
+        const adaptationActionLinealRelationValue = element.adaptation_axis_guideline.description;
 
-    for (const element of data.ndc_contribution) {
-      adaptationActionRelationValue += element.ndc_area.description;
-      adaptationActionGoalRelationValue += element.description;
+        for (const option of element.ndc_contribution) {
+          adaptationActionRelationValue += option.ndc_area.description;
+          adaptationActionGoalRelationValue += option.description;
+        }
+
+        list.push(
+          this.formBuilder.group({
+            adaptationActionThemeCtrl: [element?.sub_topic?.topic?.id, Validators.required],
+            adaptationActionTypologyCtrl: [element?.sub_topic?.id, Validators.required],
+            adaptationActionTypeCtrl: [element?.id, Validators.required], // new field
+            adaptationActionRelationCtrl: [adaptationActionRelationValue, Validators.required],
+            adaptationActionGoalRelationCtrl: [adaptationActionGoalRelationValue, Validators.required],
+            adaptationActionEjeRelationCtrl: [adaptationActionEjeRelationValue, Validators.required],
+            adaptationActionLinealRelationCtrl: [adaptationActionLinealRelationValue, Validators.required],
+          })
+        );
+        index = +1;
+      }
+      return this.formBuilder.array(list);
+    } else {
+      return this.formBuilder.group({
+        adaptationActionThemeCtrl: ['', Validators.required],
+        adaptationActionTypologyCtrl: ['', Validators.required],
+        adaptationActionTypeCtrl: ['', Validators.required], // new field
+        adaptationActionRelationCtrl: ['', Validators.required],
+        adaptationActionGoalRelationCtrl: ['', Validators.required],
+        adaptationActionEjeRelationCtrl: ['', Validators.required],
+        adaptationActionLinealRelationCtrl: ['', Validators.required],
+      });
     }
+  }
+
+  removeThemeCtrl(index: number) {
+    const control = <FormArray>this.form.controls.formArray['controls'][2].controls['themeCtrl'];
+    control.removeAt(index);
+  }
+
+  addThemeCtrl(index: number) {
+    const control = <FormArray>this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls;
+    control.push(this.createThemesCtrl());
+    this.loadTopics(index);
+  }
+
+  buildUpdatedRegisterForm() {
+    this.selectProvince(this.adaptationActionUpdated.address.district[0].canton.province.id);
+    this.selectCanton(this.adaptationActionUpdated.address.district[0].canton.id);
 
     return this.formBuilder.array([
       this.formBuilder.group({
@@ -289,9 +346,9 @@ export class AdaptationActionsReportComponent implements OnInit {
       }),
       this.formBuilder.group({
         appScaleCtrl: [parseInt(this.adaptationActionUpdated.address.app_scale), Validators.required],
-        adaptationActionProvinceCtrl: [this.adaptationActionUpdated.address.district.canton.province.id],
-        adaptationActionCantonCtrl: [this.adaptationActionUpdated.address.district.canton.id],
-        adaptationActionDistritCtrl: [this.adaptationActionUpdated.address.district.id],
+        adaptationActionProvinceCtrl: [this.adaptationActionUpdated.address.district[0].canton.province.id],
+        adaptationActionCantonCtrl: [this.adaptationActionUpdated.address.district[0].canton.id],
+        adaptationActionDistritCtrl: [this.adaptationActionUpdated.address.district[0].id],
         adaptationActionDescriptionNarrativeCtrl: [
           this.adaptationActionUpdated.address.description,
           [Validators.required, Validators.maxLength(3000)],
@@ -300,13 +357,7 @@ export class AdaptationActionsReportComponent implements OnInit {
         adaptationActionLocationOtherCtrl: [''],
       }),
       this.formBuilder.group({
-        adaptationActionThemeCtrl: [this.adaptationActionUpdated?.activity?.sub_topic?.topic?.id, Validators.required],
-        adaptationActionTypologyCtrl: [this.adaptationActionUpdated?.activity?.sub_topic?.id, Validators.required],
-        adaptationActionTypeCtrl: [this.adaptationActionUpdated?.activity?.id, Validators.required], // new field
-        adaptationActionRelationCtrl: [adaptationActionRelationValue, Validators.required],
-        adaptationActionGoalRelationCtrl: [adaptationActionGoalRelationValue, Validators.required],
-        adaptationActionEjeRelationCtrl: [adaptationActionEjeRelationValue, Validators.required],
-        adaptationActionLinealRelationCtrl: [adaptationActionLinealRelationValue, Validators.required],
+        themeCtrl: this.createThemesCtrl(this.adaptationActionUpdated?.activity),
       }),
       this.formBuilder.group({
         adaptationActionInstrumentCtrl: [this.adaptationActionUpdated.instrument.name],
@@ -371,11 +422,13 @@ export class AdaptationActionsReportComponent implements OnInit {
         description: this.form.value.formArray[1].adaptationActionDescriptionNarrativeCtrl,
         GIS: this.form.value.formArray[1].adaptationActionLocationCtrl,
         district: this.form.value.formArray[1].adaptationActionDistritCtrl
-          ? this.form.value.formArray[1].adaptationActionDistritCtrl
-          : null,
+          ? [this.form.value.formArray[1].adaptationActionDistritCtrl]
+          : [],
       },
 
-      activity: this.form.value.formArray[2].adaptationActionTypeCtrl,
+      activity: this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls.map(
+        (x: { value: { adaptationActionTypeCtrl: number } }) => x.value.adaptationActionTypeCtrl
+      ),
 
       instrument: {
         name: this.form.value.formArray[3].adaptationActionInstrumentCtrl,

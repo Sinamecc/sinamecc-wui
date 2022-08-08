@@ -9,24 +9,40 @@
 // for more insight about Angular Material theming.
 
 @import "~@angular/material/theming";
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue.
-// rgb(139,196,68)
+@import "./variales.scss";
+
 $app-primary: mat-palette($mat-blue, 500);
-
 $app-accent: mat-palette($mat-orange, 500, a200, a700);
-
-// The warn palette is optional (defaults to red).
 $app-warn: mat-palette($mat-red);
-// Create the theme object (a Sass map containing all of the palettes).
-$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+$global-typography: mat-typography-config(
+  $font-family: "Mulish",
+);
+
+$theme-primary: mat-palette($primary, 500);
+$theme-secondary: mat-palette($secondary);
+$theme-tertiary: mat-palette($tertiary);
+
+$custom-theme: mat-light-theme($theme-primary, $theme-secondary, $app-warn);
+
+$custom-typography: mat-typography-config(
+  $font-family: "Mulish",
+  $headline: mat-typography-level(25.5pt, 2.75em, 400, 0.015625em),
+  $title: mat-typography-level(18pt, 2.125em, 300, 0),
+  $subheading-1: mat-typography-level(12pt, 4em, 400, 0.009375em),
+  $subheading-2: mat-typography-level(10.5pt, 1.5em, 600, 0.015625em),
+  $body-1: mat-typography-level(12pt, 1.625em, 400, 0.03125em),
+  $body-2: mat-typography-level(10.5pt, 1.5em, 400, 0.015625em),
+  $button: mat-typography-level(10.5pt, auto, 600, 0.078125em),
+  $caption: mat-typography-level(9pt, auto, 400, 0.025em),
+);
+
+/////
 
 // Material design icons font path
 $material-design-icons-font-directory-path: "~material-design-icons-iconfont/dist/fonts/";
 
 $gray-color: #c4c4c4;
-
 $primary-color: #2a658a;
 
 .login-box {
@@ -133,7 +149,6 @@ $primary-color: #2a658a;
 }
 
 .mat-table > .mat-header-row > .mat-header-cell {
-  color: #2aa7d9;
   font-weight: bold;
 }
 

@@ -16,6 +16,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   @Input() mainStepper: any;
   @Input() adaptationActionUpdated: AdaptationAction;
   @Input() edit: boolean;
+  attachSupportMonitoringFile: any;
   durationInSeconds = 3;
 
   constructor(
@@ -75,7 +76,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
           Validators.required,
         ],
         indicatorVerificationSourceOtherCtrl: [''],
-        attachSupportingInformationCtrl: ['', Validators.required],
+        attachSupportingInformationCtrl: [''],
       }),
 
       this.formBuilder.group({
@@ -101,7 +102,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
         indicatorDataUpdateDateCtrl: ['', Validators.required],
         indicatorVerificationSourceCtrl: ['', Validators.required],
         indicatorVerificationSourceOtherCtrl: [''],
-        attachSupportingInformationCtrl: ['', Validators.required],
+        attachSupportingInformationCtrl: [''],
       }),
       this.formBuilder.group({
         advanceDescriptionCtrl: ['', [Validators.required, Validators.maxLength(3000)]],
@@ -144,7 +145,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
           : null,
         data_to_update: this.form.value.formArray[1].data_to_update,
         indicator_source: this.form.value.formArray[1].indicatorVerificationSourceCtrl
-          ? [this.form.value.formArray[1].indicatorVerificationSourceCtrl]
+          ? this.form.value.formArray[1].indicatorVerificationSourceCtrl
           : null,
       },
       general_report: {
@@ -226,7 +227,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
 
     this.form.get('formArray').get([1]).get('indicatorVerificationSourceCtrl').updateValueAndValidity();
 
-    this.form.get('formArray').get([1]).get('attachSupportingInformationCtrl').updateValueAndValidity();
+    //this.form.get('formArray').get([1]).get('attachSupportingInformationCtrl').updateValueAndValidity();
   }
 
   changeMonitoring(id: string) {
@@ -251,5 +252,9 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
         .setValidators(Validators.required);
     }
     this.form.get('formArray').get([0]).get('progressMonitoringRecordedClimateActionsCtrl').updateValueAndValidity();
+  }
+
+  uploadFile(event: any) {
+    this.attachSupportMonitoringFile = event;
   }
 }
