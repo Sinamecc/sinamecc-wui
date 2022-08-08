@@ -91,7 +91,10 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
           Validators.required,
         ],
         impactsAccordingIndicatorsCtrl: [this.adaptationActionUpdated.action_impact.unwanted_action],
-        genderEquityElementsCtrl: [this.adaptationActionUpdated.action_impact.gender_equality, Validators.required],
+        genderEquityElementsCtrl: [
+          parseInt(this.adaptationActionUpdated.action_impact.gender_equality),
+          Validators.required,
+        ],
         genderEquityElementsQuestionCtrl: [this.adaptationActionUpdated.action_impact.gender_equality_description],
         actionNegativeImpactCtrl: [
           this.adaptationActionUpdated.action_impact.unwanted_action_description,

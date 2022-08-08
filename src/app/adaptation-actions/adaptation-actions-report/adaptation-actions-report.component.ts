@@ -51,7 +51,9 @@ export class AdaptationActionsReportComponent implements OnInit {
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private service: AdaptationActionService
-  ) {}
+  ) {
+    this.createForm();
+  }
 
   ngOnInit() {
     this.service.currentAdaptationActionSource.subscribe((message) => {
@@ -65,8 +67,6 @@ export class AdaptationActionsReportComponent implements OnInit {
     this.loadClimateThreat();
     this.loadAdaptationActions();
     this.createForm();
-
-    //this.createForm();
   }
 
   get formArray(): AbstractControl | null {
@@ -314,8 +314,11 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   buildUpdatedRegisterForm() {
-    this.selectProvince(this.adaptationActionUpdated.address.district[0].canton.province.id);
-    this.selectCanton(this.adaptationActionUpdated.address.district[0].canton.id);
+    console.log(this.adaptationActionUpdated);
+    if (this.adaptationActionUpdated.address.district.length > 0) {
+      this.selectProvince(this.adaptationActionUpdated.address.district[0].canton.province.id);
+      this.selectCanton(this.adaptationActionUpdated.address.district[0].canton.id);
+    }
 
     return this.formBuilder.array([
       this.formBuilder.group({
@@ -346,9 +349,21 @@ export class AdaptationActionsReportComponent implements OnInit {
       }),
       this.formBuilder.group({
         appScaleCtrl: [parseInt(this.adaptationActionUpdated.address.app_scale), Validators.required],
-        adaptationActionProvinceCtrl: [this.adaptationActionUpdated.address.district[0].canton.province.id],
-        adaptationActionCantonCtrl: [this.adaptationActionUpdated.address.district[0].canton.id],
-        adaptationActionDistritCtrl: [this.adaptationActionUpdated.address.district[0].id],
+        adaptationActionProvinceCtrl: [
+          this.adaptationActionUpdated.address.district.length > 0
+            ? this.adaptationActionUpdated.address.district[0].canton.province.id
+            : '',
+        ],
+        adaptationActionCantonCtrl: [
+          this.adaptationActionUpdated.address.district.length > 0
+            ? this.adaptationActionUpdated.address.district[0].canton.id
+            : '',
+        ],
+        adaptationActionDistritCtrl: [
+          this.adaptationActionUpdated.address.district.length > 0
+            ? this.adaptationActionUpdated.address.district[0].id
+            : '',
+        ],
         adaptationActionDescriptionNarrativeCtrl: [
           this.adaptationActionUpdated.address.description,
           [Validators.required, Validators.maxLength(3000)],
