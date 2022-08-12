@@ -221,7 +221,7 @@ export class ImpactFormComponent implements OnInit {
         comments: actualForm[0].observationsCommentsCtrl,
         information_source: {
           responsible_institution: actualForm[1].responsibleInstitutionCtrl,
-          type: actualForm[1].sourceTypeCtrl,
+          type: actualForm[1].sourceTypeCtrl[0],
           other_type: actualForm[1].sourceTypeOtherCtrl,
           statistical_operation: actualForm[1].statisticalOperationNameCtrl,
         },
