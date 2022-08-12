@@ -314,7 +314,6 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   buildUpdatedRegisterForm() {
-    console.log(this.adaptationActionUpdated);
     if (this.adaptationActionUpdated.address.district.length > 0) {
       this.selectProvince(this.adaptationActionUpdated.address.district[0].canton.province.id);
       this.selectCanton(this.adaptationActionUpdated.address.district[0].canton.id);

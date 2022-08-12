@@ -207,7 +207,7 @@
     "methodologicalFile": "Archivo metodológico",
     "updatePeriod": "Periodo de actualización",
     "exampleToSend": "ejemplo: correo, página web, REST API Call, SFTP, FTP, WeTransfer, otro.",
-    "reportsM": "REPORTES",
+    "reportsM": "Reportes",
     "workflowFiles": "Archivos de flujo de trabajo",
     "submitNewFileVersion": "Enviar una nueva versión del archivo de informe"
   },

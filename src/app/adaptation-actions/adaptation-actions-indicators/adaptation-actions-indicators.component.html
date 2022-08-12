@@ -163,11 +163,15 @@
             </mat-form-field>
 
             <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-              <app-generic-button
+              <button
+                mat-raised-button
+                color="primary"
+                type="button"
                 [disabled]="formArray?.get([0]).invalid"
                 (click)="stepper.next()"
-                name="general.next"
-              ></app-generic-button>
+              >
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -232,13 +236,16 @@
             </mat-form-field>
 
             <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-              <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-              </app-generic-button-secondary>
-              <app-generic-button
+              <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
+              <button
+                mat-raised-button
+                color="primary"
+                type="button"
                 [disabled]="formArray?.get([1]).invalid"
                 (click)="stepper.next()"
-                name="general.next"
-              ></app-generic-button>
+              >
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -320,13 +327,16 @@
             </mat-form-field>
 
             <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-              <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-              </app-generic-button-secondary>
-              <app-generic-button
+              <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
+              <button
+                mat-raised-button
+                color="primary"
+                type="button"
                 [disabled]="formArray?.get([2]).invalid"
                 (click)="stepper.next()"
-                name="general.next"
-              ></app-generic-button>
+              >
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -382,7 +392,9 @@
 
       <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
         <br />
-        <app-generic-button (click)="submitForm()" name="general.next"></app-generic-button>
+        <button mat-raised-button color="primary" type="button" (click)="submitForm()">
+          <span translate>general.next</span>
+        </button>
       </div>
     </div>
   </form>

@@ -1,23 +1,41 @@
-<div fxFlex>
-  <app-header [sidenav]="sidenav"></app-header>
-  <mat-sidenav-container fxFill>
-    <mat-sidenav #sidenav mode="over" ngClass.gt-sm="has-border">
-      <nav>
-        <mat-list>
-          <mat-divider></mat-divider>
-          <a mat-list-item routerLink="/home" routerLinkActive="active" (click)="sidenav.close()">
-            <span translate>Home</span>
-          </a>
-          <mat-divider></mat-divider>
-          <a mat-list-item routerLink="/about" routerLinkActive="active" (click)="sidenav.close()">
-            <span translate>About</span>
-          </a>
-          <mat-divider></mat-divider>
-        </mat-list>
-      </nav>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+<div class="main-container">
+  <mat-drawer-container fxFlex>
+    <mat-drawer fxLayout="column" fxLayoutAlign="start start" class="side-menu" mode="side" opened>
+      <div fxLayout="row" fxLayoutAlign="center center" class="logo-container">
+        <img class="logo" [src]="logoSINAMECC" />
+      </div>
+      <div class="option-container" fxLayout="column" fxLayoutAlign="start stretch">
+        <div
+          [routerLink]="item.url"
+          *ngFor="let item of modules; index as i"
+          (click)="selectItem(i)"
+          [class]="item.selected ? 'option-selected' : 'option'"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+        >
+          <button class="icon-button" mat-icon-button color="primary">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <label translate class="mat-h3">{{ item.name }}</label>
+          </button>
+        </div>
+      </div>
+      <hr />
+      <div>
+        <button class="icon-button" mat-icon-button [matMenuTriggerFor]="languageMenu">
+          <mat-icon>language</mat-icon>
+        </button>
+        <mat-menu #languageMenu="matMenu">
+          <button mat-menu-item *ngFor="let language of languages" (click)="setLanguage(language)">
+            {{ language }}
+          </button>
+        </mat-menu>
+        <div class="user-data">
+          <h3 class="mat-h3 no-margin">{{ fullName }}</h3>
+          <h3 class="mat-h3">{{ email }}</h3>
+          <button (click)="logout()" mat-button><span translate>credentialsSection.logout</span></button>
+        </div>
+      </div>
+    </mat-drawer>
+    <mat-drawer-content class="side-content"> <router-outlet></router-outlet></mat-drawer-content>
+  </mat-drawer-container>
 </div>

@@ -161,7 +161,9 @@ export class BasicInformationFormComponent implements OnInit {
       mideplan_registered:
         this.form.value.formArray[1].registeredNonReimbursableCooperationMideplanCtrl === 1 ? true : false,
 
-      executing_entity: this.form.value.formArray[1].entityProjectCtrl,
+      executing_entity: this.form.value.formArray[1].entityProjectCtrl
+        ? this.form.value.formArray[1].entityProjectCtrl
+        : null,
     };
 
     const financeInformation = [];

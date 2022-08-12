@@ -71,12 +71,15 @@
         </div>
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-          <app-generic-button
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
             [disabled]="formArray?.get([0]).invalid || !annexSupportingFile"
             (click)="submitForm()"
-            name="general.done"
           >
-          </app-generic-button>
+            <span translate>general.done</span>
+          </button>
         </div>
       </mat-step>
     </mat-vertical-stepper>

@@ -177,7 +177,9 @@ export class EmissionsMitigationFormComponent implements OnInit {
           .documentationCalculationsEstimateReductionEmissionsCO2Ctrl,
         mitigation_action_in_inventory: this.form.value.formArray[0].isCurrentlyReflectedInventoryCtrl,
         carbon_international_commerce: this.form.value.formArray[2].intendParticipateInternationalCarbonMarketsCtrl,
-        methodologies_to_use: this.form.value.formArray[2].methodologyUsedCtrl,
+        methodologies_to_use: this.form.value.formArray[2].methodologyUsedCtrl
+          ? this.form.value.formArray[2].methodologyUsedCtrl
+          : null,
         question: [
           {
             code: 'Q1',

@@ -51,7 +51,7 @@ $primary-color: #2a658a;
 
   $login-box: mat-light-theme($alternate-primary, $alternate-accent);
 
-  @include angular-material-theme($login-box);
+  // @include angular-material-theme($login-box);
 }
 
 // Toolbar
@@ -216,6 +216,7 @@ $primary-color: #2a658a;
 .login-label .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
 .login-label .mat-form-field-empty.mat-form-field-label {
   font-weight: 800 !important;
+  color: black;
 }
 
 .sinamecc-container {

@@ -231,16 +231,16 @@
                 formControlName="intendParticipateInternationalCarbonMarketsCtrl"
                 (selectionChange)="setLastSectionValidations($event.value)"
               >
-                <mat-option [value]="1">
+                <mat-option [value]="true">
                   <label translate>general.yes</label>
                 </mat-option>
 
-                <mat-option [value]="2"> No</mat-option>
+                <mat-option [value]="false"> No</mat-option>
               </mat-select>
             </mat-form-field>
 
             <br />
-            <div *ngIf="intendParticipateInternationalCarbonMarketsModel === 1">
+            <div *ngIf="intendParticipateInternationalCarbonMarketsModel">
               <mat-form-field class="field-ppcn">
                 <mat-label translate
                   >4.3.1.1 - <span translate>mitigationAction.mechanismStandardApply</span></mat-label

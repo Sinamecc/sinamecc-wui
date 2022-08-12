@@ -22,36 +22,86 @@ import { Permissions } from '@app/@core/permissions';
   ],
 })
 export class HomeComponent implements OnInit {
-  dataImage = [
+  data = [
     {
-      image: 'url(assets/ppcn_image.jpg)',
-      name: 'PPCN',
-      url: '/ppcn/registries',
-      moduleName: 'ppcn',
+      name: 'Acciones de mitigación',
+      urlNew: '/mitigation/actions/new',
+      cards: [
+        {
+          name: 'Solicutudes pendientes de revisión',
+          value: '2',
+          icon: '',
+        },
+        {
+          name: 'Solicitud en revisión',
+          value: '',
+          icon: 'schedule',
+        },
+      ],
     },
     {
-      image: 'url(assets/report_image.jpg)',
-      name: 'Report',
-      url: '/report',
-      moduleName: '',
+      name: 'Acciones de adaptación',
+      urlNew: '/adaptation/actions/new',
+      cards: [
+        {
+          name: 'Solicutudes pendientes de revisión',
+          value: '2',
+          icon: '',
+        },
+        {
+          name: 'Solicitud en revisión',
+          value: '',
+          icon: 'schedule',
+        },
+      ],
     },
     {
-      image: 'url(assets/ma_image.jpg)',
-      name: 'AM',
-      url: '/mitigation/actions',
-      moduleName: 'ma',
+      name: 'Reportes de datos',
+      urlNew: '/report/new',
+      cards: [
+        {
+          name: 'Solicutudes pendientes de revisión',
+          value: '2',
+          icon: '',
+        },
+        {
+          name: 'Solicitud en revisión',
+          value: '',
+          icon: 'schedule',
+        },
+      ],
     },
     {
-      image: 'url(assets/mccr_image.jpg)',
+      name: 'Registro PPCN',
+      urlNew: '/ppcn/registries/new',
+      cards: [
+        {
+          name: 'Solicutudes pendientes de revisión',
+          value: '2',
+          icon: '',
+        },
+        {
+          name: 'Solicitud en revisión',
+          value: '',
+          icon: 'schedule',
+        },
+      ],
+    },
+    {
       name: 'MCCR',
-      url: '/mccr/registries',
-      moduleName: 'mccr',
-    },
-    {
-      image: 'url(assets/admin_image.jpg)',
-      name: 'ADMIN',
-      url: '/admin/users',
-      moduleName: 'admin',
+      urlNew: '/mccr/registries/new',
+      cards: [
+        {
+          name: 'Solicutudes pendientes de revisión',
+          value: '2',
+          icon: '',
+        },
+        {
+          name: 'Solicitud en revisión',
+          value: '',
+          icon: 'schedule',
+        },
+      ],
     },
   ];
 
