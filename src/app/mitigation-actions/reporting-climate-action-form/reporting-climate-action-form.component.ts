@@ -101,8 +101,12 @@ export class ReportingClimateActionFormComponent implements OnInit {
               'yyyy-MM-dd'
             ),
 
-            updated_data: this.form.value.formArray[1].informationToUpdateCtrl,
-            progress_report: this.form.value.formArray[2].beenProgressActionPeriodCtrl,
+            updated_data: this.form.value.formArray[1].informationToUpdateCtrl
+              ? this.form.value.formArray[1].informationToUpdateCtrl
+              : null,
+            progress_report: this.form.value.formArray[2].beenProgressActionPeriodCtrl
+              ? this.form.value.formArray[2].beenProgressActionPeriodCtrl
+              : null,
             indicator: this.form.value.formArray[1].indicatorSelectionCtrl,
           },
         ],

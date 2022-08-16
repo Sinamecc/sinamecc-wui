@@ -245,10 +245,18 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         other_geographic_coverage: this.form.value.formArray[0].adaptationActionIndicatorCoverageOtherCtrl
           ? this.form.value.formArray[0].adaptationActionIndicatorCoverageOtherCtrl
           : null,
-        disaggregation: this.form.value.formArray[0].adaptationActionIndicatorDisintegrationCtrl,
-        limitation: this.form.value.formArray[0].adaptationActionIndicatorLimitCtrl,
-        additional_information: this.form.value.formArray[0].adaptationActionIndicatorMeasurementCtrl,
-        comments: this.form.value.formArray[0].adaptationActionIndicatorDetailsCtrl,
+        disaggregation: this.form.value.formArray[0].adaptationActionIndicatorDisintegrationCtrl
+          ? this.form.value.formArray[0].adaptationActionIndicatorDisintegrationCtrl
+          : null,
+        limitation: this.form.value.formArray[0].adaptationActionIndicatorLimitCtrl
+          ? this.form.value.formArray[0].adaptationActionIndicatorLimitCtrl
+          : null,
+        additional_information: this.form.value.formArray[0].adaptationActionIndicatorMeasurementCtrl
+          ? this.form.value.formArray[0].adaptationActionIndicatorMeasurementCtrl
+          : null,
+        comments: this.form.value.formArray[0].adaptationActionIndicatorDetailsCtrl
+          ? this.form.value.formArray[0].adaptationActionIndicatorDetailsCtrl
+          : null,
         available_time_start_date: this.datePipe.transform(
           this.form.value.formArray[0].adaptationActionIndicatorTimeCtrl,
           'yyyy-MM-dd'

@@ -141,7 +141,9 @@ export class GeneralRegisterComponent implements OnInit {
   buildPayload() {
     const context = {
       responsible_entity: this.form.value.formArray[0].entityResponsibleReportingCtrl,
-      legal_identification: this.form.value.formArray[0].legalIdentificationCtrl,
+      legal_identification: this.form.value.formArray[0].legalIdentificationCtrl
+        ? this.form.value.formArray[0].legalIdentificationCtrl
+        : null,
       elaboration_date: this.datePipe.transform(this.form.value.formArray[0].reportPreparationDateCtrl, 'yyyy-MM-dd'),
       entity_address: this.form.value.formArray[0].entityAddress,
       report_organization_type: this.form.value.formArray[0].reportingEntityTypeCtrl,

@@ -189,7 +189,9 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
         update_date: this.form.value.formArray[1].indicatorDataUpdateDateCtrl
           ? this.datePipe.transform(this.form.value.formArray[1].indicatorDataUpdateDateCtrl, 'yyyy-MM-dd')
           : null,
-        data_to_update: this.form.value.formArray[1].dataWantUpdateCtrl,
+        data_to_update: this.form.value.formArray[1].dataWantUpdateCtrl
+          ? this.form.value.formArray[1].dataWantUpdateCtrl
+          : null,
         indicator_source: this.form.value.formArray[1].indicatorVerificationSourceCtrl
           ? this.form.value.formArray[1].indicatorVerificationSourceCtrl
           : [],

@@ -53,11 +53,11 @@
               <mat-hint>Haga click en el indicador de interés para reportar su avance'</mat-hint>
               <mat-radio-group class="custom-radio-group" formControlName="indicatorSelectionCtrl">
                 <mat-radio-button
-                  *ngFor="let item of mitigationAction.monitoring_reporting_indicator.monitoring_indicator"
+                  *ngFor="let item of mitigationAction?.monitoring_information?.indicator"
                   [style.margin.px]="5"
                   [value]="item.id"
                 >
-                  <label translate>{{ item.id }}</label>
+                  <label translate>{{ item.id }} - {{ item.description }}</label>
                 </mat-radio-button>
               </mat-radio-group>
             </div>
