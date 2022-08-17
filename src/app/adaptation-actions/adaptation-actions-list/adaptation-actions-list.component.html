@@ -32,7 +32,7 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
       <mat-cell *matCellDef="let element" class="login-box">
-        <button mat-icon-button color="primary" (click)="edit(element.id)">
+        <button disabled mat-icon-button color="primary" (click)="edit(element.id)">
           <mat-icon color="white">edit</mat-icon>
         </button>
 
