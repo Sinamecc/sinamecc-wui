@@ -134,33 +134,17 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
 
     this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
 
-    if (this.edit) {
-      this.service
-        .updateNewAdaptationAction(Object.assign(this.adaptationAction, payload), this.adaptationActionUpdated.id)
-        .subscribe(
-          (_) => {
-            this.openSnackBar('Formulario creado correctamente', '');
-            this.router.navigate([`/adaptation/actions`], {
-              replaceUrl: true,
-            });
-          },
-          (error) => {
-            this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-          }
-        );
-    } else {
-      this.service.createNewAdaptationAction(Object.assign(this.adaptationAction, payload)).subscribe(
-        (_) => {
-          this.openSnackBar('Formulario creado correctamente', '');
-          this.router.navigate([`/adaptation/actions`], {
-            replaceUrl: true,
-          });
-        },
-        (error) => {
-          this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-        }
-      );
-    }
+    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
+      (_) => {
+        this.openSnackBar('Formulario creado correctamente', '');
+        this.router.navigate([`/adaptation/actions`], {
+          replaceUrl: true,
+        });
+      },
+      (error) => {
+        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+      }
+    );
   }
 
   buildPayload() {

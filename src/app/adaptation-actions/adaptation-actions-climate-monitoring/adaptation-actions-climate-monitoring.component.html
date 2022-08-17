@@ -74,137 +74,173 @@
           <span translate>mitigationAction.indicatorMonitoring</span>
         </ng-template>
 
-        <mat-form-field class="field-ppcn">
-          <mat-select
-            formControlName="indicatorsCtrl"
-            [placeholder]="'adaptationAction.form5.selectIndicador' | translate"
+        <div class="indicator-container" fxLayout="column" fxLayoutAlign="start start" formArrayName="indicatorCtrl">
+          <div
+            class="indicator-container"
+            *ngFor="
+              let element of form.controls.formArray['controls'][1].controls['indicatorCtrl'].controls;
+              let i = index
+            "
           >
-            <mat-option [value]="1">
-              {{ adaptationAction?.indicator?.name ? adaptationAction.indicator.name : 'N/A' }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+            <mat-card fxLayout="column" fxLayoutAlign="start start" class="indicator-container" [formGroupName]="i">
+              <mat-form-field class="field-ppcn">
+                <mat-select
+                  formControlName="indicatorsCtrl"
+                  [placeholder]="'adaptationAction.form5.selectIndicador' | translate"
+                >
+                  <mat-option *ngFor="let indicator of adaptationAction?.indicatorList; index as i" [value]="i">
+                    {{ indicator?.indicator?.name ? indicator?.indicator?.name : 'N/A' }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
 
-        <mat-label translate>mitigationAction.reportingPeriod </mat-label>
-        <div fxLayout="row" fxLayoutAlign="start center">
-          <mat-form-field class="field-ppcn">
-            <mat-label translate>Desde</mat-label>
-            <input
-              matInput
-              [placeholder]="'Choose a date' | translate"
-              [matDatepicker]="reportPeriodStart"
-              formControlName="reportPeriodStartCtrl"
-            />
+              <mat-label translate>mitigationAction.reportingPeriod </mat-label>
+              <div class="indicator-container" fxLayout="row" fxLayoutAlign="start center">
+                <mat-form-field class="field-ppcn">
+                  <mat-label translate>Desde</mat-label>
+                  <input
+                    matInput
+                    [placeholder]="'Choose a date' | translate"
+                    [matDatepicker]="reportPeriodStart"
+                    formControlName="reportPeriodStartCtrl"
+                  />
 
-            <mat-datepicker-toggle matSuffix [for]="reportPeriodStart"></mat-datepicker-toggle>
-            <mat-datepicker #reportPeriodStart startView="year"></mat-datepicker>
+                  <mat-datepicker-toggle matSuffix [for]="reportPeriodStart"></mat-datepicker-toggle>
+                  <mat-datepicker #reportPeriodStart startView="year"></mat-datepicker>
 
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
-          </mat-form-field>
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
 
-          <mat-form-field class="field-ppcn">
-            <mat-label translate>general.until</mat-label>
-            <input
-              matInput
-              [placeholder]="'Choose a date' | translate"
-              [matDatepicker]="reportPeriodEndt"
-              formControlName="reportPeriodEndtCtrl"
-            />
+                <mat-form-field class="field-ppcn">
+                  <mat-label translate>general.until</mat-label>
+                  <input
+                    matInput
+                    [placeholder]="'Choose a date' | translate"
+                    [matDatepicker]="reportPeriodEndt"
+                    formControlName="reportPeriodEndtCtrl"
+                  />
 
-            <mat-datepicker-toggle matSuffix [for]="reportPeriodEndt"></mat-datepicker-toggle>
-            <mat-datepicker #reportPeriodEndt startView="year"></mat-datepicker>
+                  <mat-datepicker-toggle matSuffix [for]="reportPeriodEndt"></mat-datepicker-toggle>
+                  <mat-datepicker #reportPeriodEndt startView="year"></mat-datepicker>
 
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
-          </mat-form-field>
-        </div>
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+              </div>
 
-        <mat-form-field class="field-ppcn">
-          <mat-label translate>mitigationAction.indicatorDataUpdateDate </mat-label>
-          <input
-            matInput
-            [placeholder]="'Choose a date' | translate"
-            [matDatepicker]="indicatorDataUpdateDate"
-            formControlName="indicatorDataUpdateDateCtrl"
-          />
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>mitigationAction.indicatorDataUpdateDate </mat-label>
+                <input
+                  matInput
+                  [placeholder]="'Choose a date' | translate"
+                  [matDatepicker]="indicatorDataUpdateDate"
+                  formControlName="indicatorDataUpdateDateCtrl"
+                />
 
-          <mat-datepicker-toggle matSuffix [for]="indicatorDataUpdateDate"></mat-datepicker-toggle>
-          <mat-datepicker #indicatorDataUpdateDate startView="year"></mat-datepicker>
+                <mat-datepicker-toggle matSuffix [for]="indicatorDataUpdateDate"></mat-datepicker-toggle>
+                <mat-datepicker #indicatorDataUpdateDate startView="year"></mat-datepicker>
 
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
-        </mat-form-field>
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
 
-        <mat-form-field class="field-ppcn">
-          <mat-label translate>adaptationAction.form4.dataWantUpdate</mat-label>
-          <input matInput formControlName="dataWantUpdateCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
-        </mat-form-field>
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>adaptationAction.form4.dataWantUpdate</mat-label>
+                <input matInput formControlName="dataWantUpdateCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
 
-        <mat-form-field class="field-ppcn" appearance="fill">
-          <mat-label translate>adaptationAction.form4.indicatorVerificationSource</mat-label>
-          <mat-select multiple #indicatorVerificationSource formControlName="indicatorVerificationSourceCtrl">
-            <mat-option [value]="1">
-              <label translate>Censos</label>
-            </mat-option>
+              <mat-form-field class="field-ppcn" appearance="fill">
+                <mat-label translate>adaptationAction.form4.indicatorVerificationSource</mat-label>
+                <mat-select multiple #indicatorVerificationSource formControlName="indicatorVerificationSourceCtrl">
+                  <mat-option [value]="1">
+                    <label translate>Censos</label>
+                  </mat-option>
 
-            <mat-option [value]="2">
-              <label translate>Encuesta por muestreo</label>
-            </mat-option>
+                  <mat-option [value]="2">
+                    <label translate>Encuesta por muestreo</label>
+                  </mat-option>
 
-            <mat-option [value]="3">
-              <label translate>Combinación de censo y muestreo</label>
-            </mat-option>
+                  <mat-option [value]="3">
+                    <label translate>Combinación de censo y muestreo</label>
+                  </mat-option>
 
-            <mat-option [value]="4">
-              <label translate>Sondeos de opinión</label>
-            </mat-option>
+                  <mat-option [value]="4">
+                    <label translate>Sondeos de opinión</label>
+                  </mat-option>
 
-            <mat-option [value]="5">
-              <label translate>Registro administrativo</label>
-            </mat-option>
+                  <mat-option [value]="5">
+                    <label translate>Registro administrativo</label>
+                  </mat-option>
 
-            <mat-option [value]="6">
-              <label translate>Sistema de Monitoreo</label>
-            </mat-option>
+                  <mat-option [value]="6">
+                    <label translate>Sistema de Monitoreo</label>
+                  </mat-option>
 
-            <mat-option [value]="7">
-              <label translate>Estimación directa</label>
-            </mat-option>
+                  <mat-option [value]="7">
+                    <label translate>Estimación directa</label>
+                  </mat-option>
 
-            <mat-option [value]="8">
-              <label translate>Actas</label>
-            </mat-option>
+                  <mat-option [value]="8">
+                    <label translate>Actas</label>
+                  </mat-option>
 
-            <mat-option [value]="9">
-              <label translate>Lista asistencia</label>
-            </mat-option>
+                  <mat-option [value]="9">
+                    <label translate>Lista asistencia</label>
+                  </mat-option>
 
-            <mat-option [value]="10">
-              <label translate>Mapas</label>
-            </mat-option>
+                  <mat-option [value]="10">
+                    <label translate>Mapas</label>
+                  </mat-option>
 
-            <mat-option [value]="11">
-              <label translate>Otro</label>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+                  <mat-option [value]="11">
+                    <label translate>Otro</label>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
 
-        <mat-form-field class="field-ppcn" *ngIf="indicatorVerificationSource?.value?.includes(11)">
-          <mat-label translate
-            ><span translate>adaptationAction.form4.indicatorVerificationSource</span> -
-            <span translate>general.other</span>
-          </mat-label>
-          <input matInput formControlName="indicatorVerificationSourceOtherCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
-        </mat-form-field>
+              <mat-form-field class="field-ppcn" *ngIf="indicatorVerificationSource?.value?.includes(11)">
+                <mat-label translate
+                  ><span translate>adaptationAction.form4.indicatorVerificationSource</span> -
+                  <span translate>general.other</span>
+                </mat-label>
+                <input matInput formControlName="indicatorVerificationSourceOtherCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
 
-        <div fxLayout="row" fxLayoutAlign=" center">
-          <mat-form-field class="field-ppcn">
-            <mat-label translate>adaptationAction.form4.attachSupportMonitoring</mat-label>
-            <input matInput formControlName="attachSupportingInformationCtrl" />
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
-          </mat-form-field>
-          <input (change)="uploadFile($event)" type="file" name="attachSupportMonitoring" />
-          <br />
+              <div class="indicator-container" fxLayout="row" fxLayoutAlign=" center">
+                <mat-form-field class="field-ppcn">
+                  <mat-label translate>adaptationAction.form4.attachSupportMonitoring</mat-label>
+                  <input matInput formControlName="attachSupportingInformationCtrl" />
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+                <input (change)="uploadFile($event)" type="file" name="attachSupportMonitoring" />
+                <br />
+              </div>
+
+              <div class="box-button">
+                <button
+                  mat-mini-fab
+                  color="warn"
+                  *ngIf="form.controls.formArray['controls'][1].controls['indicatorCtrl'].controls.length > 1"
+                  (click)="removeIndicatorCtrl(i)"
+                  type="button"
+                >
+                  <mat-icon>delete forever</mat-icon>
+                </button>
+              </div>
+            </mat-card>
+          </div>
+          <div class="box-button">
+            <button
+              (click)="
+                addIndicatorCtrl(form.controls.formArray['controls'][1].controls['indicatorCtrl'].controls.length)
+              "
+              type="button"
+              matRipple
+              class="primary-button"
+            >
+              <span translate>Agregar otro</span>
+            </button>
+          </div>
         </div>
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
@@ -243,7 +279,7 @@
             color="primary"
             type="button"
             [disabled]="formArray?.get([2]).invalid"
-            (click)="submitForm()"
+            (click)="sendForm()"
           >
             <span translate>general.done</span>
           </button>

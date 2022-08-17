@@ -3,6 +3,7 @@ import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction, Canton, ClimateThreatCatalog, District, Province } from '../interfaces/adaptationAction';
 import { Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
@@ -50,7 +51,8 @@ export class AdaptationActionsReportComponent implements OnInit {
     private formBuilder: FormBuilder,
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
-    private service: AdaptationActionService
+    private service: AdaptationActionService,
+    private translateService: TranslateService
   ) {
     this.createForm();
   }
@@ -417,8 +419,21 @@ export class AdaptationActionsReportComponent implements OnInit {
 
   submitForm() {
     const payload: AdaptationAction = this.buildPayload();
-    this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
-    this.mainStepper.next();
+
+    this.service
+      .updateNewAdaptationAction(Object.assign(this.adaptationAction, payload), this.adaptationAction.id)
+      .subscribe(
+        (_) => {
+          this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
+          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+            this.snackBar.open(res, null, { duration: 3000 });
+            this.mainStepper.next();
+          });
+        },
+        (error) => {
+          this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+        }
+      );
   }
 
   buildPayload() {
@@ -434,7 +449,9 @@ export class AdaptationActionsReportComponent implements OnInit {
       address: {
         app_scale: this.form.value.formArray[1].appScaleCtrl,
         description: this.form.value.formArray[1].adaptationActionDescriptionNarrativeCtrl,
-        GIS: this.form.value.formArray[1].adaptationActionLocationCtrl,
+        GIS: this.form.value.formArray[1].adaptationActionLocationCtrl
+          ? this.form.value.formArray[1].adaptationActionLocationCtrl
+          : null,
         district: this.form.value.formArray[1].adaptationActionDistritCtrl
           ? [this.form.value.formArray[1].adaptationActionDistritCtrl]
           : [],

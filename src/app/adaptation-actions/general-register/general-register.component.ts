@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 
@@ -24,7 +25,8 @@ export class GeneralRegisterComponent implements OnInit {
     public snackBar: MatSnackBar,
     private service: AdaptationActionService,
     private datePipe: DatePipe,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private translateService: TranslateService
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.createForm();
@@ -128,8 +130,36 @@ export class GeneralRegisterComponent implements OnInit {
       report_organization: this.buildPayload(),
     };
 
-    this.service.updateCurrentAdaptationAction(payload);
-    this.mainStepper.next();
+    if (this.id) {
+      this.service.updateNewAdaptationAction(payload, this.id).subscribe(
+        (res) => {
+          payload.id = this.id;
+          this.service.updateCurrentAdaptationAction(payload);
+          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+            this.snackBar.open(res, null, { duration: 3000 });
+            this.mainStepper.next();
+          });
+        },
+        (error) => {
+          this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+        }
+      );
+    } else {
+      this.service.createNewAdaptationAction(payload).subscribe(
+        (res) => {
+          payload.id = res.body.id;
+          this.service.updateCurrentAdaptationAction(payload);
+          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+            this.snackBar.open(res, null, { duration: 3000 });
+            this.mainStepper.next();
+          });
+        },
+        (error) => {
+          this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+        }
+      );
+    }
+
     /*
 		this.service.createNewAdaptationAction(payload).subscribe(_ => {
 			this.openSnackBar("Formulario creado correctamente", "");

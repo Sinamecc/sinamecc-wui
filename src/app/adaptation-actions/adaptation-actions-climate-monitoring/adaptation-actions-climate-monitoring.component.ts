@@ -1,8 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 
@@ -25,7 +26,8 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private service: AdaptationActionService,
-    private router: Router
+    private router: Router,
+    private translateService: TranslateService
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
@@ -65,20 +67,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
         ],
       }),
       this.formBuilder.group({
-        indicatorsCtrl: [1, Validators.required],
-        reportPeriodStartCtrl: [this.adaptationActionUpdated.indicator_monitoring.start_date, Validators.required],
-        reportPeriodEndtCtrl: [this.adaptationActionUpdated.indicator_monitoring.end_date, Validators.required],
-        dataWantUpdateCtrl: [this.adaptationActionUpdated.indicator_monitoring.data_to_update, Validators.required],
-        indicatorDataUpdateDateCtrl: [
-          this.adaptationActionUpdated.indicator_monitoring.update_date,
-          Validators.required,
-        ],
-        indicatorVerificationSourceCtrl: [
-          this.adaptationActionUpdated.indicator_monitoring.indicator_source.map((x) => x.id),
-          Validators.required,
-        ],
-        indicatorVerificationSourceOtherCtrl: [''],
-        attachSupportingInformationCtrl: [''],
+        indicatorCtrl: this.formBuilder.array([this.indicatorCtrl()]),
       }),
 
       this.formBuilder.group({
@@ -90,6 +79,29 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     ]);
   }
 
+  removeIndicatorCtrl(index: number) {
+    const control = <FormArray>this.form.controls.formArray['controls'][1].controls['indicatorCtrl'];
+    control.removeAt(index);
+  }
+
+  addIndicatorCtrl(index: number) {
+    const control = <FormArray>this.form.controls.formArray['controls'][1].controls['indicatorCtrl'].controls;
+    control.push(this.indicatorCtrl());
+  }
+
+  indicatorCtrl() {
+    return this.formBuilder.group({
+      indicatorsCtrl: ['', Validators.required],
+      reportPeriodStartCtrl: ['', Validators.required],
+      reportPeriodEndtCtrl: ['', Validators.required],
+      dataWantUpdateCtrl: ['', Validators.required],
+      indicatorDataUpdateDateCtrl: ['', Validators.required],
+      indicatorVerificationSourceCtrl: ['', Validators.required],
+      indicatorVerificationSourceOtherCtrl: [''],
+      attachSupportingInformationCtrl: [''],
+    });
+  }
+
   buildRegisterForm() {
     return this.formBuilder.array([
       this.formBuilder.group({
@@ -97,14 +109,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
         progressMonitoringRecordedClimateActionsCtrl: ['', Validators.required],
       }),
       this.formBuilder.group({
-        indicatorsCtrl: ['', Validators.required],
-        reportPeriodStartCtrl: ['', Validators.required],
-        reportPeriodEndtCtrl: ['', Validators.required],
-        dataWantUpdateCtrl: ['', Validators.required],
-        indicatorDataUpdateDateCtrl: ['', Validators.required],
-        indicatorVerificationSourceCtrl: ['', Validators.required],
-        indicatorVerificationSourceOtherCtrl: [''],
-        attachSupportingInformationCtrl: [''],
+        indicatorCtrl: this.formBuilder.array([this.indicatorCtrl()]),
       }),
       this.formBuilder.group({
         advanceDescriptionCtrl: ['', [Validators.required, Validators.maxLength(3000)]],
@@ -117,7 +122,18 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     const payload: AdaptationAction = this.buildPayload();
 
     this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
-    this.mainStepper.next();
+
+    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
+      (_) => {
+        this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+          this.snackBar.open(res, null, { duration: 3000 });
+          this.mainStepper.next();
+        });
+      },
+      (error) => {
+        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+      }
+    );
   }
 
   sendForm() {
@@ -125,33 +141,17 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
 
     this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
 
-    if (this.edit) {
-      this.service
-        .updateNewAdaptationAction(Object.assign(this.adaptationAction, payload), this.adaptationActionUpdated.id)
-        .subscribe(
-          (_) => {
-            this.openSnackBar('Formulario creado correctamente', '');
-            this.router.navigate([`/adaptation/actions`], {
-              replaceUrl: true,
-            });
-          },
-          (error) => {
-            this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-          }
-        );
-    } else {
-      this.service.createNewAdaptationAction(Object.assign(this.adaptationAction, payload)).subscribe(
-        (_) => {
-          this.openSnackBar('Formulario creado correctamente', '');
-          this.router.navigate([`/adaptation/actions`], {
-            replaceUrl: true,
-          });
-        },
-        (error) => {
-          this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-        }
-      );
-    }
+    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
+      (_) => {
+        this.openSnackBar('Formulario creado correctamente', '');
+        this.router.navigate([`/adaptation/actions`], {
+          replaceUrl: true,
+        });
+      },
+      (error) => {
+        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+      }
+    );
   }
 
   clickNext(stteper: any, value: number, monitoringAdvance: string) {
@@ -292,12 +292,16 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     if (value === '3' || value === '1') {
       // progressMonitoringRecordedClimateActionsCtrl
       this.form.get('formArray').get([0]).get('progressMonitoringRecordedClimateActionsCtrl').setValidators(null);
+
+      this.form.get('formArray').get([0]).get('progressMonitoringRecordedClimateActionsCtrl').setValue(2);
     } else {
       this.form
         .get('formArray')
         .get([0])
         .get('progressMonitoringRecordedClimateActionsCtrl')
         .setValidators(Validators.required);
+
+      this.form.get('formArray').get([0]).get('progressMonitoringRecordedClimateActionsCtrl').setValue('');
     }
     this.form.get('formArray').get([0]).get('progressMonitoringRecordedClimateActionsCtrl').updateValueAndValidity();
   }

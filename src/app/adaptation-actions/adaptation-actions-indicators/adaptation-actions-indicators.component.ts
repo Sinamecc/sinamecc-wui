@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 
@@ -26,7 +27,8 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     private formBuilder: FormBuilder,
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
-    private service: AdaptationActionService
+    private service: AdaptationActionService,
+    private translateService: TranslateService
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
@@ -225,12 +227,80 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
 
   submitForm() {
     const payload: AdaptationAction = this.buildPayload();
-    this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
-    this.mainStepper.next();
+
+    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
+      (_) => {
+        this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
+        this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+          this.snackBar.open(res, null, { duration: 3000 });
+          this.mainStepper.next();
+        });
+      },
+      (error) => {
+        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+      }
+    );
   }
 
   buildPayload() {
+    const indicatorList = [];
+    const keys = this.getFormKeys();
+
+    for (const key of keys) {
+      const form = this.getFormObject(key).value;
+
+      const indicator = {
+        indicator: {
+          name: form[0].adaptationActionIndicatorNameCtrl,
+          description: form[0].adaptationActionIndicatorDescriptionCtrl,
+          unit: form[0].adaptationActionIndicatorUnitCtrl,
+          methodological_detail: form[0].adaptationActionIndicatorMetodologyCtrl,
+          reporting_periodicity: form[0].adaptationActionIndicatorFrecuenceCtrl,
+          available_time_end_date: this.datePipe.transform(form[0].timeSeriesAvailableEndCtrl, 'yyyy-MM-dd'),
+          geographic_coverage: form[0].adaptationActionIndicatorCoverageCtrl,
+          other_geographic_coverage: form[0].adaptationActionIndicatorCoverageOtherCtrl
+            ? form[0].adaptationActionIndicatorCoverageOtherCtrl
+            : null,
+          disaggregation: form[0].adaptationActionIndicatorDisintegrationCtrl
+            ? form[0].adaptationActionIndicatorDisintegrationCtrl
+            : null,
+          limitation: form[0].adaptationActionIndicatorLimitCtrl ? form[0].adaptationActionIndicatorLimitCtrl : null,
+          additional_information: form[0].adaptationActionIndicatorMeasurementCtrl
+            ? form[0].adaptationActionIndicatorMeasurementCtrl
+            : null,
+          comments: form[0].adaptationActionIndicatorDetailsCtrl ? form[0].adaptationActionIndicatorDetailsCtrl : null,
+          available_time_start_date: this.datePipe.transform(form[0].adaptationActionIndicatorTimeCtrl, 'yyyy-MM-dd'),
+          information_source: {
+            responsible_institution: form[1].adaptationActionIndicatorResponsibleInstitutionCtrl,
+            type_information: form[1].adaptationActionIndicatorSourceTypeCtrl,
+            Other_type: form[1].adaptationActionIndicatorSourceTypeOtherCtrl
+              ? form[1].adaptationActionIndicatorSourceTypeOtherCtrl
+              : null,
+            statistical_operation: form[1].adaptationActionIndicatorOperationNameCtrl,
+          },
+          type_of_data: form[2].adaptationActionIndicatorSourceDataCtrl,
+          other_type_of_data: form[2].adaptationActionIndicatorSourceDataOtherCtrl
+            ? form[2].adaptationActionIndicatorSourceDataOtherCtrl
+            : null,
+          classifier: [form[2].adaptationActionIndicatorClassifiersCtrl],
+          other_classifier: form[2].adaptationActionIndicatorClassifiersOtherCtrl
+            ? form[2].adaptationActionIndicatorClassifiersOtherCtrl
+            : null,
+
+          contact: {
+            institution: form[3].adaptationActionIndicatorContactInstitutionCtrl,
+            full_name: form[3].adaptationActionIndicatorContactNameCtrl,
+            job_title: form[3].adaptationActionIndicatorContactDepartmentCtrl,
+            email: form[3].adaptationActionIndicatorContactEmailCtrl,
+            phone: form[3].adaptationActionIndicatorContactPhoneCtrl,
+          },
+        },
+      };
+      indicatorList.push(indicator);
+    }
+
     const context = {
+      indicatorList: indicatorList,
       indicator: {
         name: this.form.value.formArray[0].adaptationActionIndicatorNameCtrl,
         description: this.form.value.formArray[0].adaptationActionIndicatorDescriptionCtrl,

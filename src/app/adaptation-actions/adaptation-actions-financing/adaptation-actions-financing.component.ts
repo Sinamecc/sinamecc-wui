@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 
@@ -26,7 +27,8 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public snackBar: MatSnackBar,
-    private service: AdaptationActionService
+    private service: AdaptationActionService,
+    private translateService: TranslateService
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
@@ -103,19 +105,21 @@ export class AdaptationActionsFinancingComponent implements OnInit {
 
   submitForm() {
     const payload: AdaptationAction = this.buildPayload();
+    //this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
+    // this.mainStepper.next();
 
-    this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
-
-    this.mainStepper.next();
-    /*
-		this.service
-			.updateNewAdaptationAction(payload, this.adaptationAction.id)
-			.subscribe(_ => {
-				this.openSnackBar("Formulario creado correctamente", "");
-				this.mainStepper.next();
-			});
-
-			*/
+    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
+      (_) => {
+        this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
+        this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+          this.snackBar.open(res, null, { duration: 3000 });
+          this.mainStepper.next();
+        });
+      },
+      (error) => {
+        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+      }
+    );
   }
 
   buildPayload() {
