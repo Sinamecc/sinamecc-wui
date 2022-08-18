@@ -122,12 +122,11 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     const payload: AdaptationAction = this.buildPayload();
 
     this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
-
     this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
       (_) => {
+        this.mainStepper.next();
         this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
           this.snackBar.open(res, null, { duration: 3000 });
-          this.mainStepper.next();
         });
       },
       (error) => {
@@ -138,9 +137,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
 
   sendForm() {
     const payload: any = this.buildPayload();
-
     this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
-
     this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
       (_) => {
         this.openSnackBar('Formulario creado correctamente', '');
