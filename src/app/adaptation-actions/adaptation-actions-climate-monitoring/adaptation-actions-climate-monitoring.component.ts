@@ -1,3 +1,4 @@
+import { I } from '@angular/cdk/keycodes';
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -159,6 +160,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
         this.submitForm();
       } else {
         if (value === 1) {
+          this.setGeneralReportFiels(true);
           stteper.next();
         } else {
           this.sendForm();
@@ -211,28 +213,148 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
 
   setGeneralReportFiels(validations: boolean) {
     if (validations) {
-      this.form.get('formArray').get([2]).get('reportPeriodStart2Ctrl').setValidators(Validators.required);
-
-      this.form.get('formArray').get([2]).get('reportPeriodEndt2Ctrl').setValidators(Validators.required);
-
       this.form
         .get('formArray')
         .get([2])
         .get('advanceDescriptionCtrl')
         .setValidators([Validators.required, Validators.maxLength(3000)]);
+
+      for (let i = 0; i < this.form.controls.formArray['controls'][1].controls['indicatorCtrl'].controls.length; i++) {
+        this.form
+          .get('formArray')
+          .get([1])
+          .get('indicatorCtrl')
+          .get([i])
+          .get('indicatorsCtrl')
+          .setValidators(Validators.required);
+
+        this.form
+          .get('formArray')
+          .get([1])
+          .get('indicatorCtrl')
+          .get([i])
+          .get('reportPeriodStartCtrl')
+          .setValidators(Validators.required);
+
+        this.form
+          .get('formArray')
+          .get([1])
+          .get('indicatorCtrl')
+          .get([i])
+          .get('reportPeriodEndtCtrl')
+          .setValidators(Validators.required);
+
+        this.form
+          .get('formArray')
+          .get([1])
+          .get('indicatorCtrl')
+          .get([i])
+          .get('dataWantUpdateCtrl')
+          .setValidators(Validators.required);
+
+        this.form
+          .get('formArray')
+          .get([1])
+          .get('indicatorCtrl')
+          .get([i])
+          .get('indicatorDataUpdateDateCtrl')
+          .setValidators(Validators.required);
+
+        this.form
+          .get('formArray')
+          .get([1])
+          .get('indicatorCtrl')
+          .get([i])
+          .get('indicatorVerificationSourceCtrl')
+          .setValidators(Validators.required);
+      }
     } else {
-      this.form.get('formArray').get([2]).get('reportPeriodStart2Ctrl').setValidators(null);
-
-      this.form.get('formArray').get([2]).get('reportPeriodEndt2Ctrl').setValidators(null);
-
       this.form.get('formArray').get([2]).get('advanceDescriptionCtrl').setValidators(null);
+
+      for (let i = 0; i < this.form.controls.formArray['controls'][1].controls['indicatorCtrl'].controls.length; i++) {
+        this.form.get('formArray').get([1]).get('indicatorCtrl').get([i]).get('indicatorsCtrl').setValidators(null);
+
+        this.form
+          .get('formArray')
+          .get([1])
+          .get('indicatorCtrl')
+          .get([i])
+          .get('reportPeriodStartCtrl')
+          .setValidators(null);
+
+        this.form
+          .get('formArray')
+          .get([1])
+          .get('indicatorCtrl')
+          .get([i])
+          .get('reportPeriodEndtCtrl')
+          .setValidators(null);
+
+        this.form.get('formArray').get([1]).get('indicatorCtrl').get([i]).get('dataWantUpdateCtrl').setValidators(null);
+
+        this.form
+          .get('formArray')
+          .get([1])
+          .get('indicatorCtrl')
+          .get([i])
+          .get('indicatorDataUpdateDateCtrl')
+          .setValidators(null);
+
+        this.form
+          .get('formArray')
+          .get([1])
+          .get('indicatorCtrl')
+          .get([i])
+          .get('indicatorVerificationSourceCtrl')
+          .setValidators(null);
+      }
     }
 
-    this.form.get('formArray').get([2]).get('reportPeriodStart2Ctrl').updateValueAndValidity();
-
-    this.form.get('formArray').get([2]).get('reportPeriodEndt2Ctrl').updateValueAndValidity();
-
     this.form.get('formArray').get([2]).get('advanceDescriptionCtrl').updateValueAndValidity();
+
+    for (let i = 0; i < this.form.controls.formArray['controls'][1].controls['indicatorCtrl'].controls.length; i++) {
+      this.form.get('formArray').get([1]).get('indicatorCtrl').get([i]).get('indicatorsCtrl').updateValueAndValidity();
+
+      this.form
+        .get('formArray')
+        .get([1])
+        .get('indicatorCtrl')
+        .get([i])
+        .get('reportPeriodStartCtrl')
+        .updateValueAndValidity();
+
+      this.form
+        .get('formArray')
+        .get([1])
+        .get('indicatorCtrl')
+        .get([i])
+        .get('reportPeriodEndtCtrl')
+        .updateValueAndValidity();
+
+      this.form
+        .get('formArray')
+        .get([1])
+        .get('indicatorCtrl')
+        .get([i])
+        .get('dataWantUpdateCtrl')
+        .updateValueAndValidity();
+
+      this.form
+        .get('formArray')
+        .get([1])
+        .get('indicatorCtrl')
+        .get([i])
+        .get('indicatorDataUpdateDateCtrl')
+        .updateValueAndValidity();
+
+      this.form
+        .get('formArray')
+        .get([1])
+        .get('indicatorCtrl')
+        .get([i])
+        .get('indicatorVerificationSourceCtrl')
+        .updateValueAndValidity();
+    }
   }
 
   setIndicatorMonitoringFields(validations: boolean) {
@@ -287,10 +409,9 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
 
   actionStatusChange(value: string) {
     if (value === '3' || value === '1') {
-      // progressMonitoringRecordedClimateActionsCtrl
       this.form.get('formArray').get([0]).get('progressMonitoringRecordedClimateActionsCtrl').setValidators(null);
-
       this.form.get('formArray').get([0]).get('progressMonitoringRecordedClimateActionsCtrl').setValue(2);
+      this.setGeneralReportFiels(false);
     } else {
       this.form
         .get('formArray')
