@@ -68,7 +68,9 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
         ],
       }),
       this.formBuilder.group({
-        indicatorCtrl: this.formBuilder.array([this.indicatorCtrl()]),
+        indicatorCtrl: this.formBuilder.array(
+          this.updatedIndicatorCtrl(this.adaptationActionUpdated.indicator_monitoring_list)
+        ),
       }),
 
       this.formBuilder.group({
@@ -88,6 +90,28 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   addIndicatorCtrl(index: number) {
     const control = <FormArray>this.form.controls.formArray['controls'][1].controls['indicatorCtrl'].controls;
     control.push(this.indicatorCtrl());
+  }
+
+  updatedIndicatorCtrl(indicatorMonitoringList: any[]) {
+    const indicatorList = [];
+    this.attachSupportMonitoringFile = 'file';
+    for (const indicator of indicatorMonitoringList) {
+      const form = this.formBuilder.group({
+        indicatorsCtrl: [indicator.indicator.id, Validators.required],
+        reportPeriodStartCtrl: [indicator.start_date, Validators.required],
+        reportPeriodEndtCtrl: [indicator.end_date, Validators.required],
+        dataWantUpdateCtrl: [indicator.data_to_update, Validators.required],
+        indicatorDataUpdateDateCtrl: [indicator.update_date, Validators.required],
+        indicatorVerificationSourceCtrl: [
+          indicator.indicator_source.map((x: { id: any }) => x.id),
+          Validators.required,
+        ],
+        indicatorVerificationSourceOtherCtrl: [''],
+        attachSupportingInformationCtrl: [''],
+      });
+      indicatorList.push(form);
+    }
+    return indicatorList;
   }
 
   indicatorCtrl() {
@@ -170,6 +194,27 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   }
 
   buildPayload() {
+    const indicatorMonitoringList = [];
+
+    for (const form of this.form.controls.formArray['controls'][1].controls['indicatorCtrl'].controls) {
+      const indicatorMonitoringElement = {
+        indicator: form.value.indicatorsCtrl,
+        start_date: form.value.reportPeriodStartCtrl
+          ? this.datePipe.transform(form.value.reportPeriodStartCtrl, 'yyyy-MM-dd')
+          : null,
+        end_date: form.value.reportPeriodEndtCtrl
+          ? this.datePipe.transform(form.value.reportPeriodEndtCtrl, 'yyyy-MM-dd')
+          : null,
+        update_date: form.value.indicatorDataUpdateDateCtrl
+          ? this.datePipe.transform(form.value.indicatorDataUpdateDateCtrl, 'yyyy-MM-dd')
+          : null,
+        data_to_update: form.value.dataWantUpdateCtrl ? form.value.dataWantUpdateCtrl : null,
+        indicator_source: form.value.indicatorVerificationSourceCtrl ? form.value.indicatorVerificationSourceCtrl : [],
+      };
+
+      indicatorMonitoringList.push(indicatorMonitoringElement);
+    }
+
     const context = {
       progress_log: {
         action_status: this.form.value.formArray[0].actionStatusCorrespondingReportingPeriodCtrl,
@@ -177,24 +222,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
           ? this.form.value.formArray[0].progressMonitoringRecordedClimateActionsCtrl
           : null,
       },
-      indicator_monitoring: {
-        indicator: this.form.value.formArray[1].indicatorsCtrl ? this.form.value.formArray[1].indicatorsCtrl : null,
-        start_date: this.form.value.formArray[1].reportPeriodStartCtrl
-          ? this.datePipe.transform(this.form.value.formArray[1].reportPeriodStartCtrl, 'yyyy-MM-dd')
-          : null,
-        end_date: this.form.value.formArray[1].reportPeriodEndtCtrl
-          ? this.datePipe.transform(this.form.value.formArray[1].reportPeriodEndtCtrl, 'yyyy-MM-dd')
-          : null,
-        update_date: this.form.value.formArray[1].indicatorDataUpdateDateCtrl
-          ? this.datePipe.transform(this.form.value.formArray[1].indicatorDataUpdateDateCtrl, 'yyyy-MM-dd')
-          : null,
-        data_to_update: this.form.value.formArray[1].dataWantUpdateCtrl
-          ? this.form.value.formArray[1].dataWantUpdateCtrl
-          : null,
-        indicator_source: this.form.value.formArray[1].indicatorVerificationSourceCtrl
-          ? this.form.value.formArray[1].indicatorVerificationSourceCtrl
-          : [],
-      },
+      indicator_monitoring_list: indicatorMonitoringList,
       general_report: {
         start_date: this.form.value.formArray[2].reportPeriodStart2Ctrl
           ? this.datePipe.transform(this.form.value.formArray[2].reportPeriodStart2Ctrl, 'yyyy-MM-dd')

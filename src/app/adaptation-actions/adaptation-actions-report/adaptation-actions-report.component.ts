@@ -320,11 +320,12 @@ export class AdaptationActionsReportComponent implements OnInit {
       this.selectProvince(this.adaptationActionUpdated.address.district[0].canton.province.id);
       this.selectCanton(this.adaptationActionUpdated.address.district[0].canton.id);
     }
-
     return this.formBuilder.array([
       this.formBuilder.group({
         adaptationActionTypeCtrl: [
-          this.adaptationActionUpdated.adaptation_action_information.adaptation_action_type.id.toString(),
+          this.adaptationActionUpdated.adaptation_action_information.adaptation_action_type
+            ? this.adaptationActionUpdated.adaptation_action_information.adaptation_action_type.id.toString()
+            : '',
           Validators.required,
         ],
         adaptationActionNameCtrl: [
@@ -381,7 +382,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       }),
       this.formBuilder.group({
         adaptationActionClimateThreatCtrl: [
-          this.adaptationActionUpdated.climate_threat.type_climated_threat,
+          this.adaptationActionUpdated.climate_threat.type_climate_threat.map((x: { id: any }) => x.id),
           Validators.required,
         ],
         adaptationActionClimateThreatOtherCtrl: [this.adaptationActionUpdated.climate_threat.other_type_climate_threat],
@@ -410,7 +411,9 @@ export class AdaptationActionsReportComponent implements OnInit {
           [Validators.required, Validators.maxLength(250)],
         ],
         adaptationActionCodeCtrl: [
-          this.adaptationActionUpdated.implementation.action_code,
+          this.adaptationActionUpdated.implementation.action_code
+            ? this.adaptationActionUpdated.implementation.action_code
+            : 'AA0',
           [Validators.required, Validators.maxLength(50)],
         ],
       }),
@@ -420,20 +423,18 @@ export class AdaptationActionsReportComponent implements OnInit {
   submitForm() {
     const payload: AdaptationAction = this.buildPayload();
 
-    this.service
-      .updateNewAdaptationAction(Object.assign(this.adaptationAction, payload), this.adaptationAction.id)
-      .subscribe(
-        (_) => {
-          this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
-          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-            this.mainStepper.next();
-          });
-        },
-        (error) => {
-          this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-        }
-      );
+    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
+      (_) => {
+        this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
+        this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+          this.snackBar.open(res, null, { duration: 3000 });
+          this.mainStepper.next();
+        });
+      },
+      (error) => {
+        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+      }
+    );
   }
 
   buildPayload() {
@@ -467,7 +468,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
 
       climate_threat: {
-        type_climated_threat: this.form.value.formArray[4].adaptationActionClimateThreatCtrl,
+        type_climate_threat: this.form.value.formArray[4].adaptationActionClimateThreatCtrl,
         other_type_climate_threat: this.form.value.formArray[4].adaptationActionClimateThreatOtherCtrl
           ? this.form.value.formArray[4].adaptationActionClimateThreatOtherCtrl
           : null,

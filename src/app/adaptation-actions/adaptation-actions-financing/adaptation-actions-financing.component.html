@@ -140,7 +140,7 @@
           <mat-form-field class="field-ppcn" appearance="fill">
             <mat-label translate>mitigationAction.referenceYear</mat-label>
             <mat-select formControlName="adaptationActionFinancingBufgetStarDateCtrl">
-              <mat-option *ngFor="let element of yearsArray" [value]="element">
+              <mat-option *ngFor="let element of yearsArray" [value]="lastValidYear - element">
                 <label translate>{{ lastValidYear - element }}</label>
               </mat-option>
             </mat-select>

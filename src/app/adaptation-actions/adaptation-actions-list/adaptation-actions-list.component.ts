@@ -37,16 +37,21 @@ export class AdaptationActionsListComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-    this.service.loadAdaptationActions().subscribe(
-      (response) => {
-        this.dataSource = new MatTableDataSource<AdaptationAction>(response);
-        this.dataSource.paginator = this.paginator;
+    this.service
+      .loadAdaptationActions()
+      .subscribe(
+        (response) => {
+          this.dataSource = new MatTableDataSource<AdaptationAction>(response);
+          this.dataSource.paginator = this.paginator;
+          this.loading = false;
+        },
+        (error) => {
+          this.loading = false;
+        }
+      )
+      .add(() => {
         this.loading = false;
-      },
-      (error) => {
-        this.loading = false;
-      }
-    );
+      });
   }
 
   addReview(uuid: string) {

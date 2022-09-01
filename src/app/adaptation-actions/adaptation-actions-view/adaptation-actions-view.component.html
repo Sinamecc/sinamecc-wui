@@ -1,4 +1,9 @@
-<div class="main-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
+<div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center" class="loading-component">
+  <mat-spinner color="accent"></mat-spinner>
+  <h1 class="mat-h1" translate>general.loading</h1>
+</div>
+
+<div *ngIf="!loading" class="main-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
   <div fxFill>
     <mat-tab-group class="custom-tabs">
       <mat-tab [label]="'adaptationAction.form1.title' | translate">
@@ -512,7 +517,7 @@
       <mat-tab [label]="'adaptationAction.form4.title' | translate">
         <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
           <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
-            <label class="mat-h1" translate>adaptationAction.form4.RegisterIindicators</label>
+            <label class="mat-h1" translate>adaptationAction.form4.title</label>
             <button
               *ngIf="adaptationAction.comments || edit"
               (click)="openCommentsModal(commentsModule4, 3)"
@@ -521,217 +526,230 @@
               <mat-icon>comment</mat-icon>
             </button>
           </div>
-
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>adaptationAction.form4.indicatorName</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.indicator?.name }}
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>adaptationAction.form4.indicatorDescription</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.indicator?.description }}
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>mitigationAction.indicatorUnit</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.indicator?.unit }}
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>adaptationAction.form4.calculationMethodology</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.indicator?.methodological_detail }}
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>mitigationAction.indicatorReportingPeriodicity</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.indicator?.reporting_periodicity }}
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>mitigationAction.timeSeriesAvailable</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.indicator?.available_time_start_date }}
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>mitigationAction.geographicCoverage</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.indicator?.geographic_coverage }}
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>mitigationAction.disintegration</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.indicator?.disaggregation }}
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>mitigationAction.dataSource</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.indicator?.limitation }}
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>mitigationAction.howSustainabilityIndicator</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.indicator?.additional_information }}
-              </h3>
-            </div>
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>mitigationAction.observationsComments</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.indicator?.comments }}
-              </h3>
-            </div>
-
-            <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
-              <label class="mat-h1" translate> mitigationAction.indicatorDataSource</label>
-            </div>
-
-            <div fxLayout="column" fxLayoutAlign="space-around start">
-              <div fxLayout="row">
-                <h3 class="mat-h3" translate>mitigationAction.responsibleInstitution</h3>
-                <h3 class="mat-h3 txt-separator">:</h3>
-                <h3 class="mat-h3">
-                  {{ adaptationAction?.indicator?.information_source?.responsible_institution }}
-                </h3>
+          <mat-accordion class="custom-card">
+            <mat-expansion-panel *ngFor="let indicator of adaptationAction.indicator_list">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ indicator.name }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+                <label class="mat-h1" translate>adaptationAction.form4.RegisterIindicators</label>
               </div>
 
-              <div fxLayout="row">
-                <h3 class="mat-h3" translate>adaptationAction.form4.sourceType</h3>
-                <h3 class="mat-h3 txt-separator">:</h3>
-                <h3 class="mat-h3">
-                  {{ adaptationAction?.indicator?.information_source?.type_information }}
-                </h3>
+              <div fxLayout="column" fxLayoutAlign="space-around start">
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>adaptationAction.form4.indicatorName</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ indicator?.name }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>adaptationAction.form4.indicatorDescription</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ indicator?.description }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>mitigationAction.indicatorUnit</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ indicator?.unit }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>adaptationAction.form4.calculationMethodology</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ indicator?.methodological_detail }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>mitigationAction.indicatorReportingPeriodicity</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ indicator?.reporting_periodicity }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>mitigationAction.timeSeriesAvailable</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ indicator?.available_time_start_date }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>mitigationAction.geographicCoverage</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ indicator?.geographic_coverage }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>mitigationAction.disintegration</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ indicator?.disaggregation }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>mitigationAction.dataSource</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ indicator?.limitation }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>mitigationAction.howSustainabilityIndicator</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ indicator?.additional_information }}
+                  </h3>
+                </div>
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>mitigationAction.observationsComments</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ indicator?.comments }}
+                  </h3>
+                </div>
+
+                <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+                  <label class="mat-h1" translate> mitigationAction.indicatorDataSource</label>
+                </div>
+
+                <div fxLayout="column" fxLayoutAlign="space-around start">
+                  <div fxLayout="row">
+                    <h3 class="mat-h3" translate>mitigationAction.responsibleInstitution</h3>
+                    <h3 class="mat-h3 txt-separator">:</h3>
+                    <h3 class="mat-h3">
+                      {{ indicator?.information_source?.responsible_institution }}
+                    </h3>
+                  </div>
+
+                  <div fxLayout="row">
+                    <h3 class="mat-h3" translate>adaptationAction.form4.sourceType</h3>
+                    <h3 class="mat-h3 txt-separator">:</h3>
+
+                    <h3 *ngFor="let element of indicator?.information_source?.type_information" class="mat-h3">
+                      {{ element.name }},
+                    </h3>
+                  </div>
+
+                  <div fxLayout="row">
+                    <h3 class="mat-h3" translate>adaptationAction.form4.sourceTypeDetail</h3>
+                    <h3 class="mat-h3 txt-separator">:</h3>
+                    <h3 class="mat-h3">
+                      {{ indicator?.information_source?.Other_type }}
+                    </h3>
+                  </div>
+
+                  <div fxLayout="row">
+                    <h3 class="mat-h3" translate>mitigationAction.statisticalOperationName</h3>
+                    <h3 class="mat-h3 txt-separator">:</h3>
+                    <h3 class="mat-h3">
+                      {{ indicator?.information_source?.statistical_operation }}
+                    </h3>
+                  </div>
+                </div>
+
+                <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+                  <label class="mat-h1" translate>reportData.thematicCategorization</label>
+                </div>
+
+                <div fxLayout="column" fxLayoutAlign="space-around start">
+                  <div fxLayout="row">
+                    <h3 class="mat-h3" translate>mitigationAction.datatype</h3>
+                    <h3 class="mat-h3 txt-separator">:</h3>
+                    <h3 class="mat-h3">
+                      {{ indicator?.type_of_data?.name }}
+                    </h3>
+                  </div>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>mitigationAction.datatypeDetail</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ '-' }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>mitigationAction.SINAMECCClassifiers</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ (indicator?.classifier)[0]?.name }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>
+                    <span translate>mitigationAction.SINAMECCClassifiers</span> (<span translate>general.other</span>)
+                  </h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ '-' }}
+                  </h3>
+                </div>
+
+                <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+                  <label class="mat-h1" translate>adaptationAction.form4.contactInfo</label>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>adaptationAction.form4.contactName</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    -
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>reportData.institution</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    -
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>reportData.department</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    -
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>admin.email</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    -
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>info.telephone</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    -
+                  </h3>
+                </div>
               </div>
-
-              <div fxLayout="row">
-                <h3 class="mat-h3" translate>adaptationAction.form4.sourceTypeDetail</h3>
-                <h3 class="mat-h3 txt-separator">:</h3>
-                <h3 class="mat-h3">
-                  {{ adaptationAction?.indicator?.information_source?.Other_type }}
-                </h3>
-              </div>
-
-              <div fxLayout="row">
-                <h3 class="mat-h3" translate>mitigationAction.statisticalOperationName</h3>
-                <h3 class="mat-h3 txt-separator">:</h3>
-                <h3 class="mat-h3">
-                  {{ adaptationAction?.indicator?.information_source?.statistical_operation }}
-                </h3>
-              </div>
-            </div>
-
-            <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
-              <label class="mat-h1" translate>reportData.thematicCategorization</label>
-            </div>
-
-            <div fxLayout="column" fxLayoutAlign="space-around start">
-              <div fxLayout="row">
-                <h3 class="mat-h3" translate>mitigationAction.datatype</h3>
-                <h3 class="mat-h3 txt-separator">:</h3>
-                <h3 class="mat-h3">
-                  {{ adaptationAction?.indicator?.type_of_data?.name }}
-                </h3>
-              </div>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>mitigationAction.datatypeDetail</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ '-' }}
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>mitigationAction.SINAMECCClassifiers</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ (adaptationAction?.indicator?.classifier)[0]?.name }}
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>
-                <span translate>mitigationAction.SINAMECCClassifiers</span> (<span translate>general.other</span>)
-              </h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ '-' }}
-              </h3>
-            </div>
-
-            <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
-              <label class="mat-h1" translate>adaptationAction.form4.contactInfo</label>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>adaptationAction.form4.contactName</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                -
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>reportData.institution</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                -
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>reportData.department</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                -
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>admin.email</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                -
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>info.telephone</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                -
-              </h3>
-            </div>
-          </div>
+            </mat-expansion-panel>
+          </mat-accordion>
         </div>
       </mat-tab>
       <mat-tab [label]="'adaptationAction.form5.title' | translate">
@@ -768,48 +786,57 @@
           <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>mitigationAction.indicatorMonitoring</label>
           </div>
+          <mat-accordion class="custom-card">
+            <mat-expansion-panel *ngFor="let element of adaptationAction?.indicator_monitoring_list">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ element.indicator.name }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>adaptationAction.form5.selectIndicador</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.indicator_monitoring?.indicator?.name }}
-              </h3>
-            </div>
+              <div fxLayout="column" fxLayoutAlign="space-around start">
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>adaptationAction.form5.selectIndicador</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ element?.indicator?.name }}
+                  </h3>
+                </div>
 
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>mitigationAction.reportingPeriod</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.indicator_monitoring?.start_date }}
-              </h3>
-            </div>
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>mitigationAction.reportingPeriod</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ element?.start_date }}
+                  </h3>
+                </div>
 
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>mitigationAction.indicatorDataUpdateDate</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ adaptationAction?.indicator_monitoring?.update_date }}
-              </h3>
-            </div>
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>mitigationAction.indicatorDataUpdateDate</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ element?.update_date }}
+                  </h3>
+                </div>
 
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>adaptationAction.form4.indicatorVerificationSource</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ (adaptationAction?.indicator_monitoring?.indicator_source)[0]?.name }}
-              </h3>
-            </div>
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>adaptationAction.form4.indicatorVerificationSource</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ (element?.indicator_source)[0]?.name }}
+                  </h3>
+                </div>
 
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>adaptationAction.form4.attachSupportMonitoring</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ '-' }}
-              </h3>
-            </div>
-          </div>
+                <div fxLayout="row">
+                  <h3 class="mat-h3" translate>adaptationAction.form4.attachSupportMonitoring</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ '-' }}
+                  </h3>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
 
           <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
             <label class="mat-h1" translate>mitigationAction.generalProgressReportClimateAction</label>

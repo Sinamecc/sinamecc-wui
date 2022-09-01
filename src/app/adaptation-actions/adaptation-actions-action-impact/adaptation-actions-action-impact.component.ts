@@ -84,10 +84,13 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   }
 
   buildUpdateRegisterForm() {
+    this.annexSupportingFile = 'file';
     return this.formBuilder.array([
       this.formBuilder.group({
         adaptationTemporalityImpactCtrl: [
-          parseInt(this.adaptationActionUpdated.action_impact.temporality_impact[0].id),
+          this.adaptationActionUpdated.action_impact.temporality_impact.length > 0
+            ? parseInt(this.adaptationActionUpdated.action_impact.temporality_impact[0].id)
+            : '',
           Validators.required,
         ],
         impactsAccordingIndicatorsCtrl: [this.adaptationActionUpdated.action_impact.unwanted_action],

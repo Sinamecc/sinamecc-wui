@@ -87,8 +87,11 @@
                   formControlName="indicatorsCtrl"
                   [placeholder]="'adaptationAction.form5.selectIndicador' | translate"
                 >
-                  <mat-option *ngFor="let indicator of adaptationAction?.indicatorList; index as i" [value]="i">
-                    {{ indicator?.indicator?.name ? indicator?.indicator?.name : 'N/A' }}
+                  <mat-option
+                    *ngFor="let indicator of adaptationAction?.indicator_list; index as i"
+                    [value]="indicator.id"
+                  >
+                    {{ indicator?.name ? indicator.name : 'N/A' }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>

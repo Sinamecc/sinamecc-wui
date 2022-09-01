@@ -49,6 +49,8 @@ export class AdaptationActionsViewComponent implements OnInit {
   commentsModule5 = commentsStructureModule5;
   commentsModule6 = commentsStructureModule6;
 
+  loading = false;
+
   commentsByModule = {};
 
   constructor(private route: ActivatedRoute, private service: AdaptationActionService, public dialog: MatDialog) {}
@@ -59,14 +61,18 @@ export class AdaptationActionsViewComponent implements OnInit {
   }
 
   loadAdaptationAction() {
-    this.service.loadAdaptationActions().subscribe(
-      (response) => {
-        this.adaptationAction = response.find((element: any) => element.id == this.id);
-      },
-      (error) => {
-        this.adaptationAction = {};
-      }
-    );
+    this.loading = true;
+    this.service
+      .loadAdaptationActions()
+      .subscribe(
+        (response) => {
+          this.adaptationAction = response.find((element: any) => element.id == this.id);
+        },
+        (error) => {
+          this.adaptationAction = {};
+        }
+      )
+      .add(() => (this.loading = false));
   }
 
   buildCommentList(moduleIndex: number) {

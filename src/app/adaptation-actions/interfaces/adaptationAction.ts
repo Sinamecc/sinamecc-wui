@@ -18,8 +18,8 @@ export interface Contact {
 
 export interface ContactIndicator {
   institution: string;
-  full_name: string;
-  job_title: string;
+  contact_name: string;
+  contact_position: string;
   email: string;
   phone: string;
 }
@@ -55,7 +55,7 @@ export interface Instrument {
 }
 
 export interface ClimateThreat {
-  type_climated_threat: string;
+  type_climate_threat: any;
   other_type_climate_threat: string;
   description_climate_threat: string;
   vulnerability_climate_threat: string;
@@ -89,18 +89,20 @@ export interface Finance {
   status: Status;
   mideplan: Mideplan;
   source: any[];
+  year?: string;
   finance_instrument: number[];
 }
 
 export interface InformationSource {
   responsible_institution: string;
-  type_information: string;
-  Other_type: string;
+  type_information: any;
+  other_type: string;
   statistical_operation: string;
 }
 
 export interface Indicator {
   name: string;
+  id?: string;
   description: string;
   unit: string;
   methodological_detail: string;
@@ -170,7 +172,8 @@ export interface AdaptationAction {
   finance?: Finance;
   indicator?: Indicator;
   progress_log?: ProgressLog;
-  indicator_monitoring?: IndicatorMonitoring;
+  indicator_list?: Indicator[];
+  indicator_monitoring_list?: IndicatorMonitoring[];
   action_impact?: ActionImpact;
   created?: string;
   updated?: string;

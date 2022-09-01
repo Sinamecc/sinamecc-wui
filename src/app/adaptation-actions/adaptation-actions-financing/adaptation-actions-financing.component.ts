@@ -79,7 +79,10 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   buildUpdateRegisterForm() {
     return this.formBuilder.array([
       this.formBuilder.group({
-        adaptationActionFinancingStatusCtrl: [this.adaptationActionUpdated.finance.status.code, Validators.required],
+        adaptationActionFinancingStatusCtrl: [
+          this.adaptationActionUpdated.finance.status ? this.adaptationActionUpdated.finance.status.code : '',
+          Validators.required,
+        ],
         adaptationActionFinancingManagementCtrl: [this.adaptationActionUpdated.finance.administration],
         adaptationActionFinancingSourceDetailCtrl: [
           this.adaptationActionUpdated.finance.source.map((x) => parseInt(x.id)),
@@ -92,13 +95,22 @@ export class AdaptationActionsFinancingComponent implements OnInit {
         adaptationActionFinancingDetailInstrumentOtherCtrl: [''],
         adaptationActionFinancingBufgetCtrl: [''],
         adaptationActionFinancingBufgetValueCtrl: [this.adaptationActionUpdated.finance.budget, Validators.required],
-        adaptationActionFinancingBufgetStarDateCtrl: ['', Validators.required],
+        adaptationActionFinancingBufgetStarDateCtrl: [
+          parseInt(this.adaptationActionUpdated.finance.year),
+          Validators.required,
+        ],
         adaptationActionFinancingBufgetOtherCtrl: [''],
       }),
       this.formBuilder.group({
-        adaptationActionFinancingRegisterMIDEPLANCtrl: [this.adaptationActionUpdated.finance.mideplan.registry],
-        adaptationActionFinancingRegisterNameMIDEPLANCtrl: [this.adaptationActionUpdated.finance.mideplan.name],
-        adaptationActionFinancingRegisterEntityMIDEPLANCtrl: [this.adaptationActionUpdated.finance.mideplan.entity],
+        adaptationActionFinancingRegisterMIDEPLANCtrl: [
+          this.adaptationActionUpdated.finance.mideplan ? this.adaptationActionUpdated.finance.mideplan.registry : '',
+        ],
+        adaptationActionFinancingRegisterNameMIDEPLANCtrl: [
+          this.adaptationActionUpdated.finance.mideplan ? this.adaptationActionUpdated.finance.mideplan.name : '',
+        ],
+        adaptationActionFinancingRegisterEntityMIDEPLANCtrl: [
+          this.adaptationActionUpdated.finance.mideplan ? this.adaptationActionUpdated.finance.mideplan.entity : '',
+        ],
       }),
     ]);
   }
@@ -145,7 +157,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
             ? this.form.value.formArray[1].adaptationActionFinancingRegisterEntityMIDEPLANCtrl
             : null,
         },
-
+        year: this.form.value.formArray[0].adaptationActionFinancingBufgetStarDateCtrl,
         finance_instrument: this.form.value.formArray[0].adaptationActionFinancingDetailInstrumentCtrl,
       },
     };
