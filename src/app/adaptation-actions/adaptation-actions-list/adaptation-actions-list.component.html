@@ -4,6 +4,10 @@
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
 
+<div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center" class="loading-component">
+  <mat-spinner color="accent"></mat-spinner>
+  <h1 class="mat-h1" translate>general.loading</h1>
+</div>
 <div class="container mat-elevation-z8 table-sinamecc">
   <mat-table #table [dataSource]="dataSource">
     <!-- Name Column -->
@@ -21,16 +25,6 @@
     </ng-container>
 
     <!-- Objective Column -->
-    <ng-container matColumnDef="adaptation_action_type">
-      <mat-header-cell *matHeaderCellDef translate>Tipo</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{
-          element.adaptation_action_information.adaptation_action_type
-            ? typesMap[element.adaptation_action_information.adaptation_action_type]
-            : '-'
-        }}
-      </mat-cell>
-    </ng-container>
 
     <!-- Status Column -->
     <ng-container matColumnDef="fms_state">
@@ -42,11 +36,16 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
       <mat-cell *matCellDef="let element" class="login-box">
-        <button (click)="view(element.id)" mat-icon-button color="primary">
+        <button *ngIf="hasPermProvider()" mat-icon-button color="accent" (click)="edit(element.id)">
+          <mat-icon color="white">edit</mat-icon>
+        </button>
+
+        <button (click)="view(element.id)" mat-icon-button color="accent">
           <mat-icon color="white">visibility</mat-icon>
         </button>
+
         <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
-        <button (click)="addReview(element.id)" mat-icon-button color="primary">
+        <button *ngIf="hasPermReviewer()" (click)="addReview(element.id)" mat-icon-button color="accent">
           <mat-icon color="white">navigate_next</mat-icon>
         </button>
         <!-- <button mat-icon-button color="primary" (click)="uploadProposal(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button> -->
@@ -60,6 +59,14 @@
   <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
   </mat-paginator>
 </div>
-<div class="box-button button-container">
-  <app-generic-button routerLink="/adaptation/actions/new" name="adaptationAction.newButton"></app-generic-button>
+<div *ngIf="!loading" class="box-button button-container">
+  <button
+    *ngIf="hasPermProvider()"
+    routerLink="/adaptation/actions/new"
+    mat-raised-button
+    color="primary"
+    type="button"
+  >
+    <span translate>adaptationAction.newButton</span>
+  </button>
 </div>

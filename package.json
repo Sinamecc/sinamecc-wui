@@ -8,8 +8,8 @@
   "scripts": {
     "ng": "ng",
     "build": "npm run env -s && ng build --prod",
-    "start": "npm run env -s && ng serve --configuration=local --proxy-config proxy.conf.js --port 4201",
-    "serve:sw": "npm run build -s && npx http-server ./dist -p 4201",
+    "start": "npm run env -s && ng serve --configuration=local --proxy-config proxy.conf.js --port 4200",
+    "serve:sw": "npm run build -s && npx http-server ./dist -p 4200",
     "lint": "ng lint && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
     "test": "npm run env -s && ng test",
     "test:ci": "npm run env -s && npm run lint -s && ng test --configuration=ci",
@@ -91,12 +91,14 @@
   },
   "prettier": {
     "singleQuote": true,
-    "overrides": [{
-      "files": "*.scss",
-      "options": {
-        "singleQuote": false
+    "overrides": [
+      {
+        "files": "*.scss",
+        "options": {
+          "singleQuote": false
+        }
       }
-    }]
+    ]
   },
   "husky": {
     "hooks": {

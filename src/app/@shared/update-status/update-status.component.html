@@ -29,7 +29,7 @@
               [placeholder]="'specificLabel.nextStatus' | translate"
               [compareWith]="compareIds"
             >
-              <mat-option *ngFor="let status of statuses" [value]="status">
+              <mat-option *ngFor="let status of statuses" [value]="status.state">
                 {{ status?.label }}
               </mat-option>
             </mat-select>

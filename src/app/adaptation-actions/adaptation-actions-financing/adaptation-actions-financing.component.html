@@ -91,7 +91,7 @@
             </mat-option>
 
             <mat-option [value]="9">
-              <label translate>Subsidios</label>
+              <label translate>Por definir</label>
             </mat-option>
 
             <mat-option [value]="10">
@@ -133,33 +133,30 @@
 
           <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
             <mat-label translate>Presupuesto</mat-label>
-            <input type="number" matInput formControlName="adaptationActionFinancingBufgetValueCtrl" required />
+            <input type="text" matInput formControlName="adaptationActionFinancingBufgetValueCtrl" required />
             <mat-error translate>errorLabel.fieldRequired</mat-error>
           </mat-form-field>
 
-          <mat-form-field [style.width.%]="100" class="ppcn-field">
+          <mat-form-field class="field-ppcn" appearance="fill">
             <mat-label translate>mitigationAction.referenceYear</mat-label>
-
-            <input
-              matInput
-              [placeholder]="'Choose a date' | translate"
-              [matDatepicker]="adaptationActionFinancingBufgetStarDate"
-              formControlName="adaptationActionFinancingBufgetStarDateCtrl"
-            />
-
-            <mat-datepicker-toggle matSuffix [for]="adaptationActionFinancingBufgetStarDate"></mat-datepicker-toggle>
-            <mat-datepicker #adaptationActionFinancingBufgetStarDate startView="year"></mat-datepicker>
-
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
+            <mat-select formControlName="adaptationActionFinancingBufgetStarDateCtrl">
+              <mat-option *ngFor="let element of yearsArray" [value]="lastValidYear - element">
+                <label translate>{{ lastValidYear - element }}</label>
+              </mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-          <app-generic-button
-            (click)="clickNext(stepper, climateValueSource?.value?.includes(3))"
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
             [disabled]="formArray?.get([0]).invalid"
-            name="general.next"
-          ></app-generic-button>
+            (click)="clickNext(stepper, climateValueSource?.value?.includes(3))"
+          >
+            <span translate>general.next</span>
+          </button>
         </div>
       </mat-step>
 
@@ -170,6 +167,7 @@
 
         <span translate>adaptationAction.form3.mideplanRegistes</span>
         <mat-radio-group
+          (change)="financeChange($event.value)"
           #adaptationActionFinancingRegisterMIDEPLANC="matRadioGroup"
           formControlName="adaptationActionFinancingRegisterMIDEPLANCtrl"
           class="custom-radio-group"
@@ -188,20 +186,23 @@
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="field-ppcn">
+        <mat-form-field *ngIf="adaptationActionFinancingRegisterMIDEPLANC.value == 1" class="field-ppcn">
           <mat-label translate>adaptationAction.form3.executingEntity</mat-label>
           <input matInput formControlName="adaptationActionFinancingRegisterEntityMIDEPLANCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-          <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-          </app-generic-button-secondary>
-          <app-generic-button
+          <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
             [disabled]="formArray?.get([1]).invalid"
             (click)="submitForm()"
-            name="general.next"
-          ></app-generic-button>
+          >
+            <span translate>general.next</span>
+          </button>
         </div>
       </mat-step>
     </mat-vertical-stepper>

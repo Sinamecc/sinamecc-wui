@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
@@ -34,15 +34,22 @@ export class InitiativeFormComponent implements OnInit {
   mitigationAction: MitigationAction;
   initiativeGoalList: string[] = [];
 
+  @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   // @Input() action: string;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
   @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
+  @Input() action: string;
 
-  ndcList: Object[] = [];
+  ndcList: any = [];
 
-  ejeList: Object[] = [];
+  ejeList: any = [];
+
+  subTopics: any = [];
+
+  section5TooltipTxt =
+    'Se sugiere revisar el siguiente link para obtener detalle sobre las relación con la categorización que debe hacer en esta subsección https://docs.google.com/spreadsheets/d/17rrTYpiLsargiTnARd29HLoSOaRUYtXd/edit?usp=sharing&ouid=100093507902776240980&rtpof=true&sd=true';
 
   temasList = [
     {
@@ -87,20 +94,26 @@ export class InitiativeFormComponent implements OnInit {
   ) {
     // this.formData = new FormData();
     this.isLoading = true;
-    // this.isUpdating = this.action === 'update';
+    this.isUpdating = this.action === 'update';
     this.displayFinancialSource = false;
     this.createForm();
   }
 
-  loadSubNDCcatalogs(id: string) {
+  loadSubNDCcatalogs(id: string, index: number) {
     this.service.loadCatalogs(id, 'action-areas', 'action-goal').subscribe((response) => {
-      this.ndcList = response;
+      this.ndcList[index] = response;
     });
   }
 
-  loadSubDescarbonizatiocatalogs(id: string) {
+  loadSubtopics(id: string, index: number) {
+    this.service.loadSubTopics(id).subscribe((response) => {
+      this.subTopics[index] = response;
+    });
+  }
+
+  loadSubDescarbonizatiocatalogs(id: string, index: number) {
     this.service.loadCatalogs(id, 'descarbonization-axis', 'transformational-visions').subscribe((response) => {
-      this.ejeList = response;
+      this.ejeList[index] = response;
     });
   }
 
@@ -117,15 +130,13 @@ export class InitiativeFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
-          // initiativeRegisterTypeCtrl: ['', Validators.required],
           initiativeTypeCtrl: ['', Validators.required],
           initiativeNameCtrl: ['', [Validators.required, Validators.maxLength(200)]],
-          initiativeObjectiveCtrl: ['', [Validators.required, Validators.maxLength(500)]],
+          initiativeObjectiveCtrl: ['', [Validators.required, Validators.maxLength(1000)]],
           initiativeDescriptionCtrl: ['', [Validators.required, Validators.maxLength(1000)]],
           initiativeGoalCtrl: ['', [Validators.required, Validators.maxLength(500)]],
         }),
         this.formBuilder.group({
-          // initiativeContactCtrl: ['', Validators.required],
           entityReportingCtrl: ['', [Validators.required, Validators.maxLength(50)]],
           initiativeContactNameCtrl: ['', [Validators.required, Validators.maxLength(40)]],
           initiativePositionCtrl: ['', [Validators.required, Validators.maxLength(100)]],
@@ -147,10 +158,9 @@ export class InitiativeFormComponent implements OnInit {
           locationActionCtrl: ['', Validators.minLength(1)],
         }),
         this.formBuilder.group({
-          relationshipNDCCtrl: ['', Validators.required],
-          relationshipNDCTopicCtrl: ['', Validators.required],
-          relationshipDecarbonizationPlanCtrl: ['', Validators.required],
-          relationshipDecarbonizationTopicPlanCtrl: ['', Validators.required],
+          relationshipCtrl: this.formBuilder.array([this.createNDCctrl()]),
+          relationshipDecarbonizationCtrl: this.formBuilder.array([this.createDecarbonizationCtrl()]),
+          topicsFrmCtrl: this.formBuilder.array([this.createTopicCtrl()]),
           impactCategoryCtrl: ['', Validators.required],
           descriptionRelationshipMitigationActionOthersQuestionCtrl: ['', Validators.required],
           descriptionRelationshipMitigationActionOthersCtrl: [''],
@@ -159,36 +169,187 @@ export class InitiativeFormComponent implements OnInit {
     });
   }
 
+  private createNDCctrl(data: any = null) {
+    if (data) {
+      const list = [];
+      let index = 0;
+      for (const element of data) {
+        this.loadSubNDCcatalogs(element.area, index);
+        list.push(
+          this.formBuilder.group({
+            relationshipNDCCtrl: [element.area, Validators.required],
+            relationshipNDCTopicCtrl: [element.goals.map((x: number) => x.toString()), Validators.required],
+          })
+        );
+
+        index = +1;
+      }
+      return this.formBuilder.array(list);
+    }
+    return this.formBuilder.group({
+      relationshipNDCCtrl: ['', Validators.required],
+      relationshipNDCTopicCtrl: ['', Validators.required],
+    });
+  }
+
+  private createDecarbonizationCtrl(data: any = null) {
+    if (data) {
+      const list = [];
+      let index = 0;
+
+      for (const element of data) {
+        this.loadSubDescarbonizatiocatalogs(element.descarbonization_axis, index);
+        list.push(
+          this.formBuilder.group({
+            relationshipDecarbonizationPlanCtrl: [element.descarbonization_axis, Validators.required],
+            relationshipDecarbonizationTopicPlanCtrl: [element.transformational_vision, Validators.required],
+          })
+        );
+
+        index = +1;
+      }
+      return this.formBuilder.array(list);
+    }
+    return this.formBuilder.group({
+      relationshipDecarbonizationPlanCtrl: ['', Validators.required],
+      relationshipDecarbonizationTopicPlanCtrl: ['', Validators.required],
+    });
+  }
+
+  private createTopicCtrl(data: any = null) {
+    if (data) {
+      const list = [];
+      let index = 0;
+      for (const element of data) {
+        this.loadSubtopics(element.topic, index);
+        list.push(
+          this.formBuilder.group({
+            topicCtrl: [element.topic, Validators.required],
+            subTopicPlanCtrl: [element.sub_topic, Validators.required],
+          })
+        );
+
+        index = +1;
+      }
+      return this.formBuilder.array(list);
+    }
+    return this.formBuilder.group({
+      topicCtrl: ['', Validators.required],
+      subTopicPlanCtrl: ['', Validators.required],
+    });
+  }
+
+  addNDCItem() {
+    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['relationshipCtrl'].controls;
+    control.push(this.createNDCctrl());
+  }
+
+  removeNDCItem(index: number) {
+    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['relationshipCtrl'];
+    control.removeAt(index);
+  }
+
+  removeDecarbonizationItem(index: number) {
+    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['relationshipDecarbonizationCtrl'];
+    control.removeAt(index);
+  }
+
+  addDecarbonizationtem() {
+    const control = <FormArray>(
+      this.form.controls.formArray['controls'][4].controls['relationshipDecarbonizationCtrl'].controls
+    );
+    control.push(this.createDecarbonizationCtrl());
+  }
+
+  removeTopicItem(index: number) {
+    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['topicsFrmCtrl'];
+    control.removeAt(index);
+  }
+
+  addTopicItem() {
+    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['topicsFrmCtrl'].controls;
+    control.push(this.createTopicCtrl());
+  }
+
   private updateFormData() {
+    this.initiativeGoalList.concat(this.mitigationAction.initiative.goal.map((x: { goal: any }) => x.goal));
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
-          // initiativeRegisterTypeCtrl: ['', Validators.required],
           initiativeTypeCtrl: [this.mitigationAction.initiative.initiative_type.id, Validators.required],
-          initiativeNameCtrl: [this.mitigationAction.initiative.name, Validators.required],
-          entityIniativeResponsibleCtrl: [this.mitigationAction.initiative.entity_responsible, Validators.required],
-          initiativeObjectiveCtrl: [this.mitigationAction.initiative.objective, Validators.required],
-          initiativeDescriptionCtrl: [this.mitigationAction.initiative.description, Validators.required],
-          initiativeGoalCtrl: [this.mitigationAction.initiative.goal, Validators.required],
-          initiativeStatusCtrl: [this.mitigationAction.initiative.status.id, Validators.required],
+          initiativeNameCtrl: [this.mitigationAction.initiative.name, [Validators.required, Validators.maxLength(200)]],
+          initiativeObjectiveCtrl: [
+            this.mitigationAction.initiative.objective,
+            [Validators.required, Validators.maxLength(1000)],
+          ],
+          initiativeDescriptionCtrl: [
+            this.mitigationAction.initiative.description,
+            [Validators.required, Validators.maxLength(1000)],
+          ],
+          initiativeGoalCtrl: [
+            this.mitigationAction.initiative.goal[0].goal,
+            [Validators.required, Validators.maxLength(500)],
+          ],
         }),
         this.formBuilder.group({
-          initiativeFinancingStatusCtrl: [this.mitigationAction.initiative.finance.status.id, Validators.required],
-          initiativeFinancingStatusTypeCtrl: [
-            this.mitigationAction.initiative.finance.finance_source_type.id,
+          entityReportingCtrl: [
+            this.mitigationAction.contact.institution,
+            [Validators.required, Validators.maxLength(50)],
+          ],
+          initiativeContactNameCtrl: [
+            this.mitigationAction.contact.full_name,
+            [Validators.required, Validators.maxLength(40)],
+          ],
+          initiativePositionCtrl: [
+            this.mitigationAction.contact.job_title,
+            [Validators.required, Validators.maxLength(100)],
+          ],
+          initiativeEmailFormCtrl: [this.mitigationAction.contact.email, Validators.email],
+          initiativePhoneCtrl: [
+            this.mitigationAction.contact.phone,
+            Validators.compose([Validators.required, Validators.minLength(8)]),
+          ],
+        }),
+        this.formBuilder.group({
+          deploymentCompletionIdCtrl: [
+            this.mitigationAction.status_information.other_end_date !== '' ? '2' : '1',
             Validators.required,
           ],
-          initiatveFinancingSourceCtrl: this.mitigationAction.initiative.finance.source,
-          initiativeBudgetCtrl: [this.mitigationAction.initiative.budget, Validators.required],
+          deploymentCompletionDateCtrl: [this.mitigationAction.status_information.end_date],
+          deploymentCompletionOtherCtrl: [
+            this.mitigationAction.status_information.other_end_date
+              ? this.mitigationAction.status_information.other_end_date
+              : '',
+          ],
+          initiativeStatusCtrl: [this.mitigationAction.status_information.status.id, Validators.required],
+          startImplementationCtrl: [this.mitigationAction.status_information.start_date, Validators.required],
+          deploymentCompletionCtrl: [''],
+          entityResponsibleMitigationActionCtrl: [
+            this.mitigationAction.status_information.institution,
+            [Validators.required, Validators.minLength(1)],
+          ],
+          entitiesInvolvedMitigationActionCtrl: [
+            this.mitigationAction.status_information.other_institution,
+            [Validators.required, Validators.minLength(1)],
+          ],
         }),
         this.formBuilder.group({
-          // initiativeContactCtrl: ['', Validators.required],
-          initiativeContactNameCtrl: [this.mitigationAction.initiative.contact.full_name, Validators.required],
-          initiativePositionCtrl: [this.mitigationAction.initiative.contact.job_title, Validators.required],
-          initiativeEmailFormCtrl: [this.mitigationAction.initiative.contact.email, Validators.email],
-          initiativePhoneCtrl: [
-            this.mitigationAction.initiative.contact.phone,
-            Validators.compose([Validators.required, Validators.minLength(8)]),
+          geographicScaleCtrl: [this.mitigationAction.geographic_location.geographic_scale.id, Validators.required],
+          locationActionCtrl: [this.mitigationAction.geographic_location.location, Validators.minLength(1)],
+        }),
+        this.formBuilder.group({
+          relationshipCtrl: this.createNDCctrl(this.mitigationAction.categorization.action_area_selection),
+          relationshipDecarbonizationCtrl: this.createDecarbonizationCtrl(
+            this.mitigationAction.categorization.descarbonization_axis_selection
+          ),
+          topicsFrmCtrl: this.createTopicCtrl(this.mitigationAction.categorization.topics_selection),
+          impactCategoryCtrl: ['1', Validators.required],
+          descriptionRelationshipMitigationActionOthersQuestionCtrl: [
+            this.mitigationAction.categorization.is_part_to_another_mitigation_action ? '1' : '2',
+            Validators.required,
+          ],
+          descriptionRelationshipMitigationActionOthersCtrl: [
+            this.mitigationAction.categorization.relation_description,
           ],
         }),
       ]),
@@ -242,20 +403,50 @@ export class InitiativeFormComponent implements OnInit {
         email: this.form.value.formArray[1].initiativeEmailFormCtrl,
         phone: this.form.value.formArray[1].initiativePhoneCtrl,
       },
-      categorization: {
-        action_goal: [this.form.value.formArray[4].relationshipDecarbonizationPlanCtrl],
-        transformational_vision: [this.form.value.formArray[4].relationshipNDCCtrl],
-        sub_topics: this.form.value.formArray[4].relationshipDecarbonizationTopicPlanCtrl,
-        activities: this.form.value.formArray[4].relationshipNDCTopicCtrl,
-        impact_categories:
-          this.form.value.formArray[4].impactCategoryCtrl === '3'
-            ? ['1', '2']
-            : [this.form.value.formArray[4].impactCategoryCtrl],
-        is_part_to_another_mitigation_action:
-          this.form.value.formArray[4].descriptionRelationshipMitigationActionOthersQuestionCtrl === '1' ? true : false,
-        relation_description: this.form.value.formArray[4].descriptionRelationshipMitigationActionOthersCtrl,
-      },
     };
+    const actionArea = [];
+
+    for (const element of this.form.controls.formArray['controls'][4].controls['relationshipCtrl'].controls) {
+      const newElement = {
+        area: element.value.relationshipNDCCtrl,
+        goals: element.value.relationshipNDCTopicCtrl,
+      };
+      actionArea.push(newElement);
+    }
+
+    const descarbonizationList = [];
+    for (const element of this.form.controls.formArray['controls'][4].controls['relationshipDecarbonizationCtrl']
+      .controls) {
+      const newElement = {
+        descarbonization_axis: element.value.relationshipDecarbonizationPlanCtrl,
+        transformational_vision: element.value.relationshipDecarbonizationTopicPlanCtrl,
+      };
+      descarbonizationList.push(newElement);
+    }
+
+    const topicList = [];
+
+    for (const element of this.form.controls.formArray['controls'][4].controls['topicsFrmCtrl'].controls) {
+      const newElement = {
+        topic: element.value.topicCtrl,
+        sub_topic: element.value.subTopicPlanCtrl,
+      };
+      topicList.push(newElement);
+    }
+
+    const categorization = {
+      action_area_selection: actionArea,
+      topics_selection: topicList,
+      descarbonization_axis_selection: descarbonizationList,
+      impact_categories:
+        this.form.value.formArray[4].impactCategoryCtrl === '3'
+          ? ['1', '2']
+          : [this.form.value.formArray[4].impactCategoryCtrl],
+      is_part_to_another_mitigation_action:
+        this.form.value.formArray[4].descriptionRelationshipMitigationActionOthersQuestionCtrl === '1' ? true : false,
+      relation_description: this.form.value.formArray[4].descriptionRelationshipMitigationActionOthersCtrl,
+    };
+    payload['categorization'] = categorization;
     return payload;
   }
 
@@ -263,51 +454,34 @@ export class InitiativeFormComponent implements OnInit {
     this.isLoading = true;
 
     const payload = this.buildPayload();
-
     if (this.isUpdating) {
-      /*
-			context.initiative["id"] = this.mitigationAction.initiative.id;
-			context.initiative.contact[
-				"id"
-			] = this.mitigationAction.initiative.contact.id;
-			context.initiative.finance[
-				"id"
-			] = this.mitigationAction.initiative.finance.id;
-			this.service
-				.submitMitigationActionUpdateForm(
-					context,
-					this.mitigationAction.id,
-					this.i18nService.language.split("-")[0]
-				)
-				.pipe(
-					finalize(() => {
-						this.form.markAsPristine();
-						this.isLoading = false;
-					})
-				)
-				.subscribe(
-					response => {
-						this.translateService
-							.get("Sucessfully submitted form")
-							.subscribe((res: string) => {
-								this.snackBar.open(res, null, { duration: 3000 });
-							});
-						this.wasSubmittedSuccessfully = true;
-					},
-					error => {
-						this.translateService
-							.get("Error submitting form")
-							.subscribe((res: string) => {
-								this.snackBar.open(res, null, { duration: 3000 });
-							});
-						log.debug(`New Mitigation Action Form error: ${error}`);
+      this.service
+        .submitMitigationActionUpdateForm(payload, this.mitigationAction.id)
+        .pipe(
+          finalize(() => {
+            this.form.markAsPristine();
+            this.isLoading = false;
+          })
+        )
+        .subscribe(
+          (response) => {
+            this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+              this.snackBar.open(res, null, { duration: 3000 });
+              this.stepper.next();
+            });
+            this.wasSubmittedSuccessfully = true;
+          },
+          (error) => {
+            this.translateService.get('Error submitting form').subscribe((res: string) => {
+              this.snackBar.open(res, null, { duration: 3000 });
+            });
+            log.debug(`New Mitigation Action Form error: ${error}`);
 
-						this.errorComponent.parseErrors(error);
-						this.error = error;
-						this.wasSubmittedSuccessfully = false;
-					}
-				);
-		*/
+            this.errorComponent.parseErrors(error);
+            this.error = error;
+            this.wasSubmittedSuccessfully = false;
+          }
+        );
     } else {
       this.service
         .submitMitigationActionNewForm(payload)
@@ -319,10 +493,11 @@ export class InitiativeFormComponent implements OnInit {
         )
         .subscribe(
           (response) => {
-            this.translateService.get('Sucessfully submitted form').subscribe((res: string) => {
+            this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
               this.snackBar.open(res, null, { duration: 3000 });
             });
             this.wasSubmittedSuccessfully = true;
+            this.stepper.next();
           },
           (error) => {
             this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -356,5 +531,11 @@ export class InitiativeFormComponent implements OnInit {
   wordCounter(text: string) {
     const words = text ? text.split(/\s+/) : 0;
     return words ? words.length : 0;
+  }
+
+  loadUrl() {
+    window.open(
+      'https://docs.google.com/spreadsheets/d/17rrTYpiLsargiTnARd29HLoSOaRUYtXd/edit?usp=sharing&ouid=100093507902776240980&rtpof=true&sd=true'
+    );
   }
 }

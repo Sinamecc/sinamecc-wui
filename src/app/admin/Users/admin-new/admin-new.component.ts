@@ -204,10 +204,16 @@ export class AdminNewComponent implements OnInit {
 
   editForm() {
     this.isLoading = true;
+    const roles = { ...this.createUserForm.value.roles };
+    const filteredRoles = Object.keys(pickBy(roles, identity));
 
     this.adminService
       .editUser(this.editData.id, this.createUserForm.value)
       .pipe(
+        map((body: any) => {
+          this.submitRoles(this.editData.id, filteredRoles);
+          return body;
+        }),
         finalize(() => {
           this.createUserForm.markAsPristine();
           this.isLoading = false;
@@ -379,6 +385,7 @@ export class AdminNewComponent implements OnInit {
 
   private createForm(roles: Array<Role>) {
     const rolesFormObj = {};
+
     roles.map((role) => {
       rolesFormObj[role.role] = new FormControl('');
     });
@@ -399,6 +406,10 @@ export class AdminNewComponent implements OnInit {
     const rolesFormObj = {};
     roles.map((role) => {
       rolesFormObj[role.role] = new FormControl('');
+      const findRole = this.editData.roles.find((x) => x.role === role.role);
+      if (findRole) {
+        rolesFormObj[role.role].setValue(true);
+      }
     });
 
     this.createUserForm = this.formBuilder.group({

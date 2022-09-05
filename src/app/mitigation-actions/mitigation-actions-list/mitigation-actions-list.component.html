@@ -12,25 +12,27 @@
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef translate> info.name</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.initiative.name }} </mat-cell>
     </ng-container>
 
     <!-- Strategy Name Column -->
     <ng-container matColumnDef="strategy_name">
       <mat-header-cell *matHeaderCellDef translate> mitigationAction.ProgramStrategyInitiative</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.strategy_name }} </mat-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.initiative.initiative_type.type }} - {{ element.initiative.initiative_type.name }}
+      </mat-cell>
     </ng-container>
 
     <!-- Objective Column -->
     <ng-container matColumnDef="purpose">
       <mat-header-cell *matHeaderCellDef translate> general.objective</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.purpose }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.initiative.goal[0].goal }} </mat-cell>
     </ng-container>
 
     <!-- Status Column -->
     <ng-container matColumnDef="fsm_state">
       <mat-header-cell *matHeaderCellDef translate> general.status</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.fsm_state }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.fsm_state.label }} </mat-cell>
     </ng-container>
     <!-- Updated Column -->
     <ng-container matColumnDef="updated">
@@ -47,9 +49,20 @@
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
-      <mat-cell *matCellDef="let element" class="login-box">
-        <button mat-icon-button color="primary" (click)="view(element.id)">
-          <mat-icon color="white">visibility</mat-icon>
+      <mat-cell *matCellDef="let element">
+        <button mat-icon-button color="accent" (click)="edit(element.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" (click)="view(element.id)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+
+        <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
+        <button mat-icon-button color="accent" *ngIf="canChangeState(element)" (click)="addReview(element.id)">
+          <mat-icon>navigate_next</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" (click)="changelog(element.id)">
+          <mat-icon color="white">history</mat-icon>
         </button>
         <button
           *ngIf="hasPermProvider()"
@@ -57,14 +70,7 @@
           color="warn"
           (click)="openDeleteConfirmationDialog(element.id)"
         >
-          <mat-icon color="white">delete</mat-icon>
-        </button>
-        <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
-        <button mat-icon-button color="primary" *ngIf="canChangeState(element)" (click)="addReview(element.id)">
-          <mat-icon color="white">navigate_next</mat-icon>
-        </button>
-        <button mat-icon-button color="primary" (click)="changelog(element.id)">
-          <mat-icon color="white">history</mat-icon>
+          <mat-icon>delete</mat-icon>
         </button>
         <!-- <button mat-icon-button color="primary" (click)="uploadProposal(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button> -->
       </mat-cell>
@@ -79,5 +85,7 @@
 </div>
 <br />
 <div class="box-button" *ngIf="hasPermProvider()">
-  <app-generic-button routerLink="/mitigation/actions/new" name="mitigationAction.addMA"></app-generic-button>
+  <button mat-raised-button color="primary" type="button" routerLink="/mitigation/actions/new">
+    <span translate>mitigationAction.addMA</span>
+  </button>
 </div>

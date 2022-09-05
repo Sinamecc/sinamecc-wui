@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
@@ -31,6 +31,7 @@ export class BasicInformationFormComponent implements OnInit {
   startDate = new Date();
   selectedFood = '';
 
+  @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
@@ -73,8 +74,7 @@ export class BasicInformationFormComponent implements OnInit {
           programCtrl: ['', Validators.required],
           stepsTakingToFinancingCtrl: [''],
           detailfinancingSourceCtrl: ['', Validators.required],
-          financingSourceApplyingCtrl: ['', Validators.required],
-          mitigationActionBudgetCtrl: ['', Validators.required],
+          financeFrmCtrl: this.formBuilder.array([this.createFinanceForm()]),
           referenceYearCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
@@ -90,23 +90,61 @@ export class BasicInformationFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
-          programCtrl: [this.mitigationAction.strategy_name, Validators.required],
-          nameCtrl: [this.mitigationAction.name, Validators.required],
-          entityCtrl: [this.mitigationAction.institution.id, Validators.required],
+          programCtrl: [this.mitigationAction.finance.status, Validators.required],
+          stepsTakingToFinancingCtrl: [
+            this.mitigationAction.finance.administration ? this.mitigationAction.finance.administration : '',
+          ],
+          detailfinancingSourceCtrl: [this.mitigationAction.finance.source, Validators.required],
+          financeFrmCtrl: this.createUpdateFinanceForm(),
+          referenceYearCtrl: [this.mitigationAction.finance.reference_year, Validators.required],
         }),
         this.formBuilder.group({
-          contactNameCtrl: [this.mitigationAction.contact.full_name, Validators.required],
-          positionCtrl: [this.mitigationAction.contact.job_title, Validators.required],
-          emailFormCtrl: [this.mitigationAction.contact.email, Validators.email],
-          phoneCtrl: [
-            this.mitigationAction.contact.phone,
-            Validators.compose([Validators.required, Validators.minLength(8)]),
+          registeredNonReimbursableCooperationMideplanCtrl: [
+            this.mitigationAction.finance.mideplan_registered ? 1 : 2,
+            Validators.required,
           ],
+          entityProjectCtrl: [this.mitigationAction.finance.executing_entity, Validators.required],
+          registeredNonReimbursableCooperationMideplanDetailCtrl: [this.mitigationAction.finance.mideplan_project],
         }),
       ]),
     });
 
     this.isLoading = false;
+  }
+
+  private createFinanceForm() {
+    return this.formBuilder.group({
+      mitigationActionDescriptionCtrl: ['', [Validators.required, Validators.maxLength(300)]],
+      currencyValueCtrl: ['CRC'],
+      mitigationActionAmounttCtrl: ['', [Validators.required, Validators.maxLength(50)]],
+    });
+  }
+
+  private createUpdateFinanceForm() {
+    const financeList: FormGroup[] = [];
+    // const mapCurrency = ['CRC', 'USD', 'EUR'];
+
+    for (const element of this.mitigationAction.finance.finance_information) {
+      const form = this.formBuilder.group({
+        id: [element.id],
+        mitigationActionDescriptionCtrl: [element.source_description, [Validators.required, Validators.maxLength(300)]],
+        currencyValueCtrl: [element.currency],
+        mitigationActionAmounttCtrl: [element.budget, [Validators.required, Validators.maxLength(50)]],
+      });
+      financeList.push(form);
+    }
+
+    return this.formBuilder.array(financeList);
+  }
+
+  public addFinanceItem() {
+    const control = <FormArray>this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'].controls;
+    control.push(this.createFinanceForm());
+  }
+
+  public removeFinanceItem(index: number) {
+    const control = <FormArray>this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'];
+    control.removeAt(index);
   }
 
   buildPayload() {
@@ -116,15 +154,34 @@ export class BasicInformationFormComponent implements OnInit {
         ? this.form.value.formArray[0].stepsTakingToFinancingCtrl
         : 'empty field',
       source: this.form.value.formArray[0].detailfinancingSourceCtrl,
-      source_description: this.form.value.formArray[0].financingSourceApplyingCtrl,
-      reference_year: this.datePipe.transform(this.form.value.formArray[0].referenceYearCtrl, 'yyyy'),
-      budget: this.form.value.formArray[0].mitigationActionBudgetCtrl,
+      //source_description: this.form.value.formArray[0].financingSourceApplyingCtrl,
+      reference_year: this.datePipe.transform(this.form.value.formArray[0].referenceYearCtrl, 'yyyy-MM-dd'),
+      budget: this.form.value.formArray[0].mitigationActionAmounttCtrl,
       currency: this.mitigationActionBudgeValuetCtrl,
       mideplan_registered:
         this.form.value.formArray[1].registeredNonReimbursableCooperationMideplanCtrl === 1 ? true : false,
 
-      executing_entity: this.form.value.formArray[1].entityProjectCtrl,
+      executing_entity: this.form.value.formArray[1].entityProjectCtrl
+        ? this.form.value.formArray[1].entityProjectCtrl
+        : null,
     };
+
+    const financeInformation = [];
+
+    for (const element of this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'].controls) {
+      const financeinfo = {
+        source_description: element.value.mitigationActionDescriptionCtrl,
+        currency: element.value.currencyValueCtrl,
+        budget: element.value.mitigationActionAmounttCtrl,
+      };
+      if (this.isUpdating) {
+        financeinfo['id'] = element.value.id;
+      }
+
+      financeInformation.push(financeinfo);
+    }
+
+    context['finance_information'] = financeInformation;
 
     if (this.form.value.formArray[1].registeredNonReimbursableCooperationMideplanCtrl === 1) {
       context['mideplan_project'] = this.form.value.formArray[1].registeredNonReimbursableCooperationMideplanDetailCtrl;
@@ -136,25 +193,6 @@ export class BasicInformationFormComponent implements OnInit {
     const context = { finance: this.buildPayload() };
     this.isLoading = true;
 
-    /*
-		const context = {
-			contact: {
-				full_name: this.form.value.formArray[1].contactNameCtrl,
-				job_title: this.form.value.formArray[1].positionCtrl,
-				email: this.form.value.formArray[1].emailFormCtrl,
-				phone: this.form.value.formArray[1].phoneCtrl
-			},
-			strategy_name: this.form.value.formArray[0].programCtrl,
-			name: this.form.value.formArray[0].nameCtrl,
-			institution: this.form.value.formArray[0].entityCtrl,
-			user: String(this.authenticationService.credentials.id),
-			registration_type: this.processedNewFormData.initiative_type[0].id
-		};
-		if (this.isUpdating) {
-			context.contact["id"] = this.mitigationAction.contact.id;
-		}
-
-		*/
     this.service
       .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
       .pipe(
@@ -165,10 +203,11 @@ export class BasicInformationFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.translateService.get('Sucessfully submitted form').subscribe((res: string) => {
+          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
             this.snackBar.open(res, null, { duration: 3000 });
           });
           this.wasSubmittedSuccessfully = true;
+          this.stepper.next();
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -180,5 +219,14 @@ export class BasicInformationFormComponent implements OnInit {
           this.wasSubmittedSuccessfully = false;
         }
       );
+  }
+
+  public setSection2Validations(validations: number) {
+    if (validations === 1) {
+      this.form.get('formArray').get([1]).get('entityProjectCtrl').setValidators(Validators.required);
+    } else {
+      this.form.get('formArray').get([1]).get('entityProjectCtrl').setValidators(null);
+    }
+    this.form.get('formArray').get([1]).get('entityProjectCtrl').updateValueAndValidity();
   }
 }

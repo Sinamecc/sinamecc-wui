@@ -1,22 +1,10 @@
 <div fxFill fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1.5rem" class="mat-typography">
-  <div class="login-box">
-    <img class="logo" src="assets/logo-white.png" alt="angular logo" />
-    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2rem">
-      <h4 class="version">v{{ version }}</h4>
-      <div class="language-selector">
-        <button mat-raised-button color="primary" [matMenuTriggerFor]="languageMenu">
-          {{ currentLanguage }}
-        </button>
-        <mat-menu #languageMenu="matMenu">
-          <button mat-menu-item *ngFor="let language of languages" (click)="setLanguage(language)">
-            {{ language }}
-          </button>
-        </mat-menu>
-      </div>
-    </div>
-  </div>
   <div class="login-container" fxLayout="row" fxLayoutAlign="center">
     <mat-card fxFlex="90%" fxFlex.sm="66%" fxFlex.md="50%" fxFlex.gt-md="33%" class="login-box">
+      <img class="logo" src="assets/SINAMECC-logo-color.svg" alt="angular logo" />
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2rem">
+        <h4 class="version">v{{ version }}</h4>
+      </div>
       <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
         <div class="login-error" [hidden]="!error || isLoading" translate>
           credentialsSection.credentialsError
@@ -48,10 +36,7 @@
               <span translate>credentialsSection.passwordRequired</span>
             </mat-error>
           </mat-form-field>
-          <mat-slide-toggle color="primary" formControlName="remember"
-            ><span translate>credentialsSection.remember</span></mat-slide-toggle
-          >
-          <br />
+
           <br />
           <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading">
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>

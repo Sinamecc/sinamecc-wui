@@ -54,7 +54,7 @@ export class NewReviewComponent implements OnInit {
       tap((ppcn: Ppcn) => {
         this.ppcn = ppcn;
         if (ppcn.next_state) {
-          this.statuses = ppcn.next_state.states;
+          this.statuses = ppcn.next_state as any;
           this.shouldDisplayComment = false;
         } else {
           this.statuses = this.service.commonstatuses(ppcn);

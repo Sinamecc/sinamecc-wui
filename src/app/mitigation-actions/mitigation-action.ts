@@ -3,6 +3,7 @@ import { NextState } from '@shared/next-state';
 
 export interface MitigationAction {
   initiative: Initiative;
+  code: string;
   name: string;
   id: string;
   strategy_name: string;
@@ -28,7 +29,7 @@ export interface MitigationAction {
   sustainability: string;
   location: Location;
   progress_indicator: ProgressIndicator;
-  next_state: NextState;
+  next_state: NextState[];
   created: string;
   updated: string;
   fsm_state: string;
@@ -38,6 +39,14 @@ export interface MitigationAction {
   categorization: any; //waiting BE have this data
   ghg_information: GHGInformation;
   impact_documentation: any;
+  monitoring_information: MonitoringInformation;
+  monitoring_reporting_indicator: any;
+}
+
+export interface MonitoringInformation {
+  code: string;
+  id: string;
+  indicator: any[];
 }
 
 export interface ImpacDocumentationQuestion {
@@ -62,10 +71,24 @@ export interface ImpactDocumentation {
   question: ImpacDocumentationQuestion[];
 }
 
+export interface ImpactEmission {
+  id: number;
+  code: string;
+  name: string;
+}
+
+export interface Goals {
+  code: string;
+  description: string;
+  id: number;
+}
+
 export interface GHGInformation {
   graphic_description: string;
   id: number;
   impact_emission: string;
+  goals: Goals[];
+  impact_sector?: ImpactEmission[] | string;
   sectorsGEIInventoryImpacted: string; //waiting BE have this data
   preliminaryIdentificationSustainableDevelopmentGoals: string; //waiting BE have this data
 }
@@ -122,7 +145,7 @@ export interface Initiative {
   description: string;
   entity_responsible: string;
   finance: Finance;
-  goal: string;
+  goal: any;
   id: string;
   initiative_type: InitiativeType;
   objective: string;
@@ -175,6 +198,16 @@ export interface Finance {
   mideplan_registered?: string;
   nameRegisteredMideplan?: string;
   executing_entity?: string;
+  mideplan_project?: string;
+  finance_information?: FinanceInformation[];
+}
+
+export interface FinanceInformation {
+  budget: string;
+  currency: string;
+  finance?: number;
+  id?: number;
+  source_description: string;
 }
 
 export interface InitiativeType {

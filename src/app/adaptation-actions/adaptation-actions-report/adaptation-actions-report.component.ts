@@ -1,10 +1,12 @@
 import { DatePipe } from '@angular/common';
+import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction, Canton, ClimateThreatCatalog, District, Province } from '../interfaces/adaptationAction';
-import { ODS, SubTopics, Topic } from '../interfaces/catalogs';
+import { Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
 
 @Component({
   selector: 'app-adaptation-actions-report',
@@ -13,12 +15,14 @@ import { ODS, SubTopics, Topic } from '../interfaces/catalogs';
 })
 export class AdaptationActionsReportComponent implements OnInit {
   form: FormGroup;
-  topics: Topic[] = [];
+  topics: Topic[][] = [];
   subTopics: SubTopics[] = [];
-  subTopicsToShow: SubTopics[] = [];
+  subTopicsToShow: SubTopics[][] = [];
   ods: ODS[];
   adaptationAction: AdaptationAction;
+  @Input() adaptationActionUpdated: AdaptationAction;
   @Input() mainStepper: any;
+  @Input() edit: boolean;
   durationInSeconds = 3;
   actualProvince = 0;
 
@@ -26,6 +30,7 @@ export class AdaptationActionsReportComponent implements OnInit {
   canton: Canton[] = [];
   districts: District[] = [];
   climateThreat: ClimateThreatCatalog[] = [];
+  activities: Activities[][] = [];
 
   adaptationActionMap = {
     '1': 'A',
@@ -46,14 +51,17 @@ export class AdaptationActionsReportComponent implements OnInit {
     private formBuilder: FormBuilder,
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
-    private service: AdaptationActionService
+    private service: AdaptationActionService,
+    private translateService: TranslateService
   ) {
-    this.service.currentAdaptationActionSource.subscribe((message) => {
-      this.adaptationAction = message;
-    });
+    this.createForm();
   }
 
   ngOnInit() {
+    this.service.currentAdaptationActionSource.subscribe((message) => {
+      this.adaptationAction = message;
+    });
+
     this.loadODS();
     this.loadTopics();
     this.loadSubTopics();
@@ -69,7 +77,7 @@ export class AdaptationActionsReportComponent implements OnInit {
 
   private createForm() {
     this.form = this.formBuilder.group({
-      formArray: this.buildRegisterForm(),
+      formArray: !this.edit ? this.buildRegisterForm() : this.buildUpdatedRegisterForm(),
     });
   }
 
@@ -96,10 +104,10 @@ export class AdaptationActionsReportComponent implements OnInit {
     );
   }
 
-  loadTopics() {
+  loadTopics(index = 0) {
     this.service.loadTopics().subscribe(
       (topics) => {
-        this.topics = topics;
+        this.topics[index] = topics;
       },
       (error) => {
         this.topics = [];
@@ -118,8 +126,86 @@ export class AdaptationActionsReportComponent implements OnInit {
     );
   }
 
-  changeSubTopics(idTopic: string) {
-    this.subTopicsToShow = this.subTopics.filter((subTopic) => subTopic.topic.id.toString() == idTopic.toString());
+  loadSubTopic(id: string) {
+    this.service.loadSubTopics(id).subscribe(
+      (subTopics) => {
+        this.subTopics = subTopics;
+      },
+      (error) => {
+        this.subTopics = [];
+      }
+    );
+  }
+
+  loadActivities(id: string, index: number) {
+    this.service.loadActivities(id).subscribe((response) => {
+      this.activities[index] = response;
+    });
+  }
+
+  fillActivitiesFields(id: any, index: number) {
+    const data = this.activities[index].find((x) => x.id === id);
+
+    let adaptationActionRelationValue = '';
+    let adaptationActionGoalRelationValue = '';
+    const adaptationActionEjeRelationValue = data.adaptation_axis_guideline.adaptation_axis.description;
+    const adaptationActionLinealRelationValue = data.adaptation_axis_guideline.description;
+
+    for (const element of data.ndc_contribution) {
+      adaptationActionRelationValue += element.ndc_area.description;
+      adaptationActionGoalRelationValue += element.description;
+    }
+
+    this.form
+      .get('formArray')
+      .get([2])
+      .get('themeCtrl')
+      .get([index])
+      .get('adaptationActionRelationCtrl')
+      .setValue(adaptationActionRelationValue);
+    this.form
+      .get('formArray')
+      .get([2])
+      .get('themeCtrl')
+      .get([index])
+      .get('adaptationActionGoalRelationCtrl')
+      .setValue(adaptationActionGoalRelationValue);
+    this.form
+      .get('formArray')
+      .get([2])
+      .get('themeCtrl')
+      .get([index])
+      .get('adaptationActionEjeRelationCtrl')
+      .setValue(adaptationActionEjeRelationValue);
+    this.form
+      .get('formArray')
+      .get([2])
+      .get('themeCtrl')
+      .get([index])
+      .get('adaptationActionLinealRelationCtrl')
+      .setValue(adaptationActionLinealRelationValue);
+
+    this.form.get('formArray').get([2]).get('themeCtrl').get([index]).get('adaptationActionRelationCtrl').disable();
+    this.form.get('formArray').get([2]).get('themeCtrl').get([index]).get('adaptationActionGoalRelationCtrl').disable();
+    this.form.get('formArray').get([2]).get('themeCtrl').get([index]).get('adaptationActionEjeRelationCtrl').disable();
+    this.form
+      .get('formArray')
+      .get([2])
+      .get('themeCtrl')
+      .get([index])
+      .get('adaptationActionLinealRelationCtrl')
+      .disable();
+  }
+
+  changeSubTopics(idTopic: string, index: number) {
+    this.service.loadSubTopics(idTopic).subscribe(
+      (subTopics) => {
+        this.subTopicsToShow[index] = subTopics;
+      },
+      (error) => {
+        this.subTopics = [];
+      }
+    );
   }
 
   openSnackBar(message: string, action: string = '') {
@@ -148,26 +234,22 @@ export class AdaptationActionsReportComponent implements OnInit {
         adaptationActionLocationOtherCtrl: [''],
       }),
       this.formBuilder.group({
-        adaptationActionThemeCtrl: ['', Validators.required],
-        adaptationActionTypologyCtrl: ['', Validators.required],
-        adaptationActionTypeCtrl: ['', Validators.required], // new field
-        adaptationActionGoalRelationCtrl: ['', Validators.required],
-        adaptationActionEjeRelationCtrl: ['', Validators.required],
-        adaptationActionLinealRelationCtrl: ['', Validators.required],
+        themeCtrl: this.formBuilder.array([this.createThemesCtrl()]),
       }),
       this.formBuilder.group({
-        adaptationActionInstrumentCtrl: ['', [Validators.required, Validators.maxLength(250)]],
-        adaptationActionDescriptionInstrumentCtrl: ['', [Validators.required, Validators.maxLength(3000)]],
+        adaptationActionInstrumentCtrl: [''],
+        adaptationActionDescriptionInstrumentCtrl: [''],
       }),
       this.formBuilder.group({
         adaptationActionClimateThreatCtrl: ['', Validators.required],
         adaptationActionClimateThreatOtherCtrl: [''],
         adaptationActionInfoSourceCtrl: ['', Validators.required],
+        descriptionVulnerabilityCtrl: ['', [Validators.required, Validators.maxLength(1000)]], // new field
+        descriptionElementsExposedCtrl: ['', [Validators.required, Validators.maxLength(1000)]], // new field
       }),
       this.formBuilder.group({
         adaptationActionStartDateCtrl: ['', Validators.required],
         adaptationActionEndDateCtrl: ['', Validators.required],
-        adaptationActionDurationTimeCtrl: ['', [Validators.required, Validators.maxLength(20)]],
         adaptationActionEntityCtrl: ['', [Validators.required, Validators.maxLength(250)]],
         adaptationActionEntityOthersCtrl: ['', [Validators.required, Validators.maxLength(250)]],
         adaptationActionCodeCtrl: ['AA0', [Validators.required, Validators.maxLength(50)]],
@@ -175,10 +257,184 @@ export class AdaptationActionsReportComponent implements OnInit {
     ]);
   }
 
+  createThemesCtrl(activities: any = null) {
+    if (activities) {
+      const list: any[] = [];
+      let index = 0;
+
+      for (const element of activities) {
+        this.loadTopics(index);
+        this.changeSubTopics(element?.sub_topic?.topic?.id, index);
+        this.loadActivities(element?.sub_topic?.id, index);
+
+        let adaptationActionRelationValue = '';
+        let adaptationActionGoalRelationValue = '';
+        const adaptationActionEjeRelationValue = element.adaptation_axis_guideline.adaptation_axis.description;
+        const adaptationActionLinealRelationValue = element.adaptation_axis_guideline.description;
+
+        for (const option of element.ndc_contribution) {
+          adaptationActionRelationValue += option.ndc_area.description;
+          adaptationActionGoalRelationValue += option.description;
+        }
+
+        list.push(
+          this.formBuilder.group({
+            adaptationActionThemeCtrl: [element?.sub_topic?.topic?.id, Validators.required],
+            adaptationActionTypologyCtrl: [element?.sub_topic?.id, Validators.required],
+            adaptationActionTypeCtrl: [element?.id, Validators.required], // new field
+            adaptationActionRelationCtrl: [adaptationActionRelationValue, Validators.required],
+            adaptationActionGoalRelationCtrl: [adaptationActionGoalRelationValue, Validators.required],
+            adaptationActionEjeRelationCtrl: [adaptationActionEjeRelationValue, Validators.required],
+            adaptationActionLinealRelationCtrl: [adaptationActionLinealRelationValue, Validators.required],
+          })
+        );
+        index = +1;
+      }
+      return this.formBuilder.array(list);
+    } else {
+      return this.formBuilder.group({
+        adaptationActionThemeCtrl: ['', Validators.required],
+        adaptationActionTypologyCtrl: ['', Validators.required],
+        adaptationActionTypeCtrl: ['', Validators.required], // new field
+        adaptationActionRelationCtrl: ['', Validators.required],
+        adaptationActionGoalRelationCtrl: ['', Validators.required],
+        adaptationActionEjeRelationCtrl: ['', Validators.required],
+        adaptationActionLinealRelationCtrl: ['', Validators.required],
+      });
+    }
+  }
+
+  removeThemeCtrl(index: number) {
+    const control = <FormArray>this.form.controls.formArray['controls'][2].controls['themeCtrl'];
+    control.removeAt(index);
+  }
+
+  addThemeCtrl(index: number) {
+    const control = <FormArray>this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls;
+    control.push(this.createThemesCtrl());
+    this.loadTopics(index);
+  }
+
+  buildUpdatedRegisterForm() {
+    if (this.adaptationActionUpdated.address.district.length > 0) {
+      this.selectProvince(this.adaptationActionUpdated.address.district[0].canton.province.id);
+      this.selectCanton(this.adaptationActionUpdated.address.district[0].canton.id);
+    }
+    return this.formBuilder.array([
+      this.formBuilder.group({
+        adaptationActionTypeCtrl: [
+          this.adaptationActionUpdated.adaptation_action_information.adaptation_action_type
+            ? this.adaptationActionUpdated.adaptation_action_information.adaptation_action_type.id.toString()
+            : '',
+          Validators.required,
+        ],
+        adaptationActionNameCtrl: [
+          this.adaptationActionUpdated.adaptation_action_information.name,
+          [Validators.required, Validators.maxLength(250)],
+        ],
+        adaptationActionTargetCtrl: [
+          this.adaptationActionUpdated.adaptation_action_information.objective,
+          [Validators.required, Validators.maxLength(3000)],
+        ],
+        adaptationActionDescriptionCtrl: [
+          this.adaptationActionUpdated.adaptation_action_information.description,
+          [Validators.required, Validators.maxLength(3000)],
+        ],
+        adaptationActionGoalCtrl: [
+          this.adaptationActionUpdated.adaptation_action_information.meta,
+          [Validators.required, Validators.maxLength(3000)],
+        ],
+        adaptationActionODSCtrl: [
+          this.adaptationActionUpdated.adaptation_action_information.ods.map((x: any) => x.code),
+          Validators.required,
+        ],
+      }),
+      this.formBuilder.group({
+        appScaleCtrl: [parseInt(this.adaptationActionUpdated.address.app_scale), Validators.required],
+        adaptationActionProvinceCtrl: [
+          this.adaptationActionUpdated.address.district.length > 0
+            ? this.adaptationActionUpdated.address.district[0].canton.province.id
+            : '',
+        ],
+        adaptationActionCantonCtrl: [
+          this.adaptationActionUpdated.address.district.length > 0
+            ? this.adaptationActionUpdated.address.district[0].canton.id
+            : '',
+        ],
+        adaptationActionDistritCtrl: [
+          this.adaptationActionUpdated.address.district.length > 0
+            ? this.adaptationActionUpdated.address.district[0].id
+            : '',
+        ],
+        adaptationActionDescriptionNarrativeCtrl: [
+          this.adaptationActionUpdated.address.description,
+          [Validators.required, Validators.maxLength(3000)],
+        ],
+        adaptationActionLocationCtrl: [this.adaptationActionUpdated.address.GIS],
+        adaptationActionLocationOtherCtrl: [''],
+      }),
+      this.formBuilder.group({
+        themeCtrl: this.createThemesCtrl(this.adaptationActionUpdated?.activity),
+      }),
+      this.formBuilder.group({
+        adaptationActionInstrumentCtrl: [this.adaptationActionUpdated.instrument.name],
+        adaptationActionDescriptionInstrumentCtrl: [this.adaptationActionUpdated.instrument.description],
+      }),
+      this.formBuilder.group({
+        adaptationActionClimateThreatCtrl: [
+          this.adaptationActionUpdated.climate_threat.type_climate_threat.map((x: { id: any }) => x.id),
+          Validators.required,
+        ],
+        adaptationActionClimateThreatOtherCtrl: [this.adaptationActionUpdated.climate_threat.other_type_climate_threat],
+        adaptationActionInfoSourceCtrl: [
+          this.adaptationActionUpdated.climate_threat.description_climate_threat,
+          Validators.required,
+        ],
+        descriptionVulnerabilityCtrl: [
+          this.adaptationActionUpdated.climate_threat.vulnerability_climate_threat,
+          [Validators.required, Validators.maxLength(1000)],
+        ], // new field
+        descriptionElementsExposedCtrl: [
+          this.adaptationActionUpdated.climate_threat.exposed_elements,
+          [Validators.required, Validators.maxLength(1000)],
+        ], // new field
+      }),
+      this.formBuilder.group({
+        adaptationActionStartDateCtrl: [this.adaptationActionUpdated.implementation.start_date, Validators.required],
+        adaptationActionEndDateCtrl: [this.adaptationActionUpdated.implementation.end_date, Validators.required],
+        adaptationActionEntityCtrl: [
+          this.adaptationActionUpdated.implementation.responsible_entity,
+          [Validators.required, Validators.maxLength(250)],
+        ],
+        adaptationActionEntityOthersCtrl: [
+          this.adaptationActionUpdated.implementation.other_entity,
+          [Validators.required, Validators.maxLength(250)],
+        ],
+        adaptationActionCodeCtrl: [
+          this.adaptationActionUpdated.implementation.action_code
+            ? this.adaptationActionUpdated.implementation.action_code
+            : 'AA0',
+          [Validators.required, Validators.maxLength(50)],
+        ],
+      }),
+    ]);
+  }
+
   submitForm() {
     const payload: AdaptationAction = this.buildPayload();
-    this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
-    this.mainStepper.next();
+
+    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
+      (_) => {
+        this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
+        this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+          this.snackBar.open(res, null, { duration: 3000 });
+          this.mainStepper.next();
+        });
+      },
+      (error) => {
+        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+      }
+    );
   }
 
   buildPayload() {
@@ -192,22 +448,19 @@ export class AdaptationActionsReportComponent implements OnInit {
         ods: this.form.value.formArray[0].adaptationActionODSCtrl,
       },
       address: {
+        app_scale: this.form.value.formArray[1].appScaleCtrl,
         description: this.form.value.formArray[1].adaptationActionDescriptionNarrativeCtrl,
-        GIS: this.form.value.formArray[1].adaptationActionLocationCtrl,
-        district: this.form.value.formArray[1].adaptationActionDistritCtrl
-          ? this.form.value.formArray[1].adaptationActionDistritCtrl
+        GIS: this.form.value.formArray[1].adaptationActionLocationCtrl
+          ? this.form.value.formArray[1].adaptationActionLocationCtrl
           : null,
+        district: this.form.value.formArray[1].adaptationActionDistritCtrl
+          ? [this.form.value.formArray[1].adaptationActionDistritCtrl]
+          : [],
       },
 
-      activity: {
-        code: this.form.value.formArray[2].adaptationActionThemeCtrl,
-        description: this.form.value.formArray[2].adaptationActionGoalRelationCtrl,
-        sub_topic: parseInt(this.form.value.formArray[2].adaptationActionTypologyCtrl),
-        ndc_contribution: [
-          1, //parseInt(this.form.value.formArray[2].adaptationActionEjeRelationCtrl)
-        ],
-        adaptation_axis_guideline: 1, //parseInt(this.form.value.formArray[2].adaptationActionLinealRelationCtrl)
-      },
+      activity: this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls.map(
+        (x: { value: { adaptationActionTypeCtrl: number } }) => x.value.adaptationActionTypeCtrl
+      ),
 
       instrument: {
         name: this.form.value.formArray[3].adaptationActionInstrumentCtrl,
@@ -215,13 +468,18 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
 
       climate_threat: {
-        type_climated_threat: this.form.value.formArray[3].adaptationActionInstrumentCtrl,
+        type_climate_threat: this.form.value.formArray[4].adaptationActionClimateThreatCtrl,
+        other_type_climate_threat: this.form.value.formArray[4].adaptationActionClimateThreatOtherCtrl
+          ? this.form.value.formArray[4].adaptationActionClimateThreatOtherCtrl
+          : null,
+        description_climate_threat: this.form.value.formArray[4].adaptationActionInfoSourceCtrl,
+        vulnerability_climate_threat: this.form.value.formArray[4].descriptionVulnerabilityCtrl,
+        exposed_elements: this.form.value.formArray[4].descriptionElementsExposedCtrl,
       },
 
       implementation: {
         start_date: this.datePipe.transform(this.form.value.formArray[5].adaptationActionStartDateCtrl, 'yyyy-MM-dd'),
         end_date: this.datePipe.transform(this.form.value.formArray[5].adaptationActionEndDateCtrl, 'yyyy-MM-dd'),
-        duration: this.form.value.formArray[5].adaptationActionDurationTimeCtrl,
         responsible_entity: this.form.value.formArray[5].adaptationActionEntityCtrl,
         other_entity: this.form.value.formArray[5].adaptationActionEntityOthersCtrl,
         action_code: this.form.value.formArray[5].adaptationActionCodeCtrl,

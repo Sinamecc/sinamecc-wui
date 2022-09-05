@@ -14,9 +14,11 @@ import {
 } from '../comments-structure';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import {
+  actionState,
   adaptationActionClimateThreaMap,
   adaptationActionFinanceStatusMap,
   adaptationsActionsTypeMap,
+  AppScale,
   classifiersSINAMECCMap,
   financeInstrumentMap,
   indicatorsTypeOfDataMap,
@@ -41,6 +43,8 @@ export class AdaptationActionsViewComponent implements OnInit {
   financeInstrumentType = financeInstrumentMap;
   indicatorsTypeOfDataType = indicatorsTypeOfDataMap;
   classifiersSINAMECCType = classifiersSINAMECCMap;
+  actionStateSinamecc = actionState;
+  AppScaleStructure = AppScale;
 
   commentsModule1 = commentsStructureModule1;
   commentsModule2 = commentsStructureModule2;
@@ -48,6 +52,8 @@ export class AdaptationActionsViewComponent implements OnInit {
   commentsModule4 = commentsStructureModule4;
   commentsModule5 = commentsStructureModule5;
   commentsModule6 = commentsStructureModule6;
+
+  loading = false;
 
   commentsByModule = {};
 
@@ -59,14 +65,18 @@ export class AdaptationActionsViewComponent implements OnInit {
   }
 
   loadAdaptationAction() {
-    this.service.loadAdaptationActions().subscribe(
-      (response) => {
-        this.adaptationAction = response.find((element: any) => element.id == this.id);
-      },
-      (error) => {
-        this.adaptationAction = {};
-      }
-    );
+    this.loading = true;
+    this.service
+      .loadAdaptationActions()
+      .subscribe(
+        (response) => {
+          this.adaptationAction = response.find((element: any) => element.id == this.id);
+        },
+        (error) => {
+          this.adaptationAction = {};
+        }
+      )
+      .add(() => (this.loading = false));
   }
 
   buildCommentList(moduleIndex: number) {

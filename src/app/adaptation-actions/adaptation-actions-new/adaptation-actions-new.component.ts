@@ -1,10 +1,14 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/internal/Observable';
+import { tap } from 'rxjs/operators';
 import { AdaptationActionsActionImpactComponent } from '../adaptation-actions-action-impact/adaptation-actions-action-impact.component';
 import { AdaptationActionsClimateMonitoringComponent } from '../adaptation-actions-climate-monitoring/adaptation-actions-climate-monitoring.component';
 import { AdaptationActionsFinancingComponent } from '../adaptation-actions-financing/adaptation-actions-financing.component';
 import { AdaptationActionsIndicatorsComponent } from '../adaptation-actions-indicators/adaptation-actions-indicators.component';
 import { AdaptationActionsReportComponent } from '../adaptation-actions-report/adaptation-actions-report.component';
+import { AdaptationActionService } from '../adaptation-actions-service';
 import { GeneralRegisterComponent } from '../general-register/general-register.component';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 
@@ -15,6 +19,7 @@ import { AdaptationAction } from '../interfaces/adaptationAction';
 })
 export class AdaptationActionsNewComponent implements OnInit {
   durationInSeconds = 3;
+  loading = false;
 
   @ViewChild(GeneralRegisterComponent)
   generalRegisterForm: GeneralRegisterComponent;
@@ -35,8 +40,21 @@ export class AdaptationActionsNewComponent implements OnInit {
   impactForm: AdaptationActionsActionImpactComponent;
 
   mainGroup: FormGroup;
+  adaptationAction: AdaptationAction;
+  edit: boolean;
 
-  constructor(private _formBuilder: FormBuilder, private cdRef: ChangeDetectorRef) {
+  constructor(
+    private _formBuilder: FormBuilder,
+    private cdRef: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private service: AdaptationActionService
+  ) {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.edit = id ? true : false;
+    if (this.edit) {
+      this.loading = true;
+      this.loadAdaptationActions(id);
+    }
     this.createForm();
   }
 
@@ -45,6 +63,13 @@ export class AdaptationActionsNewComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  loadAdaptationActions(id: string) {
+    this.service.loadOneAdaptationActions(id).subscribe((response) => {
+      this.adaptationAction = response;
+      this.loading = false;
+    });
+  }
 
   createForm() {
     this.mainGroup = this._formBuilder.group({

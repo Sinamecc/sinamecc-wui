@@ -1,52 +1,60 @@
 @import "src/theme/theme-variables";
 
-:host {
-  display: flex;
-  flex: 1;
-}
+.main-container {
+  width: 100wh;
+  height: 100vh;
 
-.mat-sidenav {
-  min-width: 270px;
-  max-width: 28%;
-}
+  .side-menu {
+    width: 20%;
+    height: 100%;
+    background-color: #0f375a;
+  }
 
-.has-border {
-  border-right: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-.mat-list {
-  padding-top: 0;
-}
-
-.mat-list-item {
-  text-decoration: none;
-
-  &:hover {
-    background: rgba(0, 0, 0, 0.05);
+  .side-content {
+    width: 80%;
+    height: 100%;
   }
 }
 
-.mat-drawer-container {
-  position: unset;
+.icon-button {
+  color: white;
 }
 
-.mat-sidenav,
-.mat-drawer-content,
-// Force style down to child components
-// See https://angular.io/guide/component-styles#deep
-:host ::ng-deep .mat-drawer-backdrop {
-  top: 64px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: auto;
-  position: absolute;
-}
+.logo-container {
+  padding: 1em;
 
-@media ($mat-xsmall) {
-  .mat-sidenav,
-  .mat-drawer-content,
-  :host ::ng-deep .mat-drawer-backdrop {
-    top: 56px;
+  .logo {
+    margin-left: 0.7em;
+    width: 80%;
+    height: auto;
   }
+}
+
+.option-container {
+  margin-top: 1em;
+
+  .option {
+    padding: 0.7em;
+    color: white;
+
+    &:hover {
+      background-color: #255d82;
+      cursor: pointer;
+    }
+  }
+
+  .option-selected {
+    background-color: #255d82;
+    padding: 0.7em;
+    color: white;
+  }
+}
+
+.user-data {
+  color: white;
+  padding: 0.5em;
+}
+
+.no-margin {
+  margin: 0;
 }

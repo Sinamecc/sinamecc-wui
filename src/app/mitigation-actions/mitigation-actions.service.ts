@@ -16,7 +16,7 @@ const routes = {
   submitNewMitigationAction: (id: string = '') => `/v1/mitigation-action/${id}`,
   submitUpdateMitigationAction: (uuid: string, lang: string) => `/v1/mitigations/${lang}/${uuid}`,
   mitigationActions: (lang: string) => `/v1/mitigation-action/`,
-  mitigationActionReviews: (uuid: string) => `/v1/mitigations/changelog/${uuid}`,
+  mitigationActionReviews: (uuid: string) => `/v1/mitigation-action/${uuid}/change-log/`,
   deleteMitigationAction: (uuid: string) => `/v1/mitigation-action/${uuid}`,
   getMitigationAction: (uuid: string, lang: string) => `/v1/mitigation-action/${uuid}/`,
   mitigationActionAvailableStatuses: () => `/v1/workflow/status`,
@@ -25,6 +25,8 @@ const routes = {
   getIndicator: (code: string) => `/v1/mitigation-action/${code}/indicator/`,
   getCatalogs: (id: string, parentCatalog: string, catalog: string) =>
     `/v1/mitigation-action/data/${parentCatalog}/${id}/${catalog}/`,
+  getComments: (id: string = '') => `/v1/mitigation-action/${id}/comments/`,
+  loadSubTopics: (id: string) => `/v1/mitigation-action/data/topics/${id}/sub-topics/`,
 };
 
 export interface Response {
@@ -58,6 +60,14 @@ export class MitigationActionsService {
     );
   }
 
+  getComments(id: string) {
+    return this.httpClient.get(routes.getComments(id)).pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
+  }
+
   submitMitigationActionNewForm(context: any): Observable<Response> {
     return this.httpClient.post(routes.submitNewMitigationAction(), context, {}).pipe(
       map((body: any) => {
@@ -67,6 +77,14 @@ export class MitigationActionsService {
           message: 'Form submitted correctly',
         };
         return response;
+      })
+    );
+  }
+
+  loadSubTopics(id: string) {
+    return this.httpClient.get(routes.loadSubTopics(id)).pipe(
+      map((body: any[]) => {
+        return body;
       })
     );
   }

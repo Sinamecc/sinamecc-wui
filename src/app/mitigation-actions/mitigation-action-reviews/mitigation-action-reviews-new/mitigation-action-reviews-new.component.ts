@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { MitigationActionReviewNewFormData } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
 import { I18nService } from '@app/i18n';
 import { CredentialsService } from '@app/auth';
+import { NextState } from '@app/@shared/next-state';
 
 const log = new Logger('Report');
 
@@ -30,7 +31,7 @@ export class MitigationActionReviewsNewComponent implements OnInit {
   nextRoute: string;
   formData: FormData;
   formSubmitRoute: string;
-  statuses: string[];
+  statuses: NextState[];
   shouldDisplayComment: boolean;
 
   processedMitigationActionsstatuses: MitigationActionReviewNewFormData;
@@ -46,7 +47,7 @@ export class MitigationActionReviewsNewComponent implements OnInit {
     this.title = 'mitigationAction.addReviewMA';
     this.nextRoute = `mitigation/actions`;
     this.formData = new FormData();
-    this.formSubmitRoute = `/v1/mitigations/${this.id}`;
+    this.formSubmitRoute = `/v1/mitigation-action/${this.id}/`;
     this.statuses = [];
 
     this.mitigationActionObservable = this.service
@@ -55,8 +56,8 @@ export class MitigationActionReviewsNewComponent implements OnInit {
         tap((mitigationAction: MitigationAction) => {
           this.mitigationAction = mitigationAction;
           if (mitigationAction.next_state) {
-            this.statuses = mitigationAction.next_state.states;
-            this.shouldDisplayComment = mitigationAction.next_state.required_comments;
+            this.statuses = mitigationAction.next_state.map((x) => x);
+            this.shouldDisplayComment = true;
           }
         })
       );

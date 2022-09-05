@@ -6,6 +6,7 @@ import { ReportService } from '@app/report/report.service';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { Report } from './interfaces/report';
+import { CredentialsService } from '@app/auth';
 
 @Component({
   selector: 'app-report',
@@ -22,7 +23,12 @@ export class ReportComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private reportService: ReportService, public datePipe: DatePipe, private router: Router) {}
+  constructor(
+    private reportService: ReportService,
+    public datePipe: DatePipe,
+    private router: Router,
+    private credentialsService: CredentialsService
+  ) {}
 
   ngOnInit(): void {
     this.loadReportData();
@@ -46,5 +52,17 @@ export class ReportComponent implements OnInit {
     this.router.navigate([`/report/reviews/${uuid}/new`], {
       replaceUrl: true,
     });
+  }
+
+  hasPermProvider() {
+    return Boolean(
+      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.rd.provider
+    );
+  }
+
+  hasPermReviewer() {
+    return Boolean(
+      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.rd.reviewer
+    );
   }
 }

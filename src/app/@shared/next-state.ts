@@ -1,4 +1,5 @@
 export interface NextState {
-  states: string[];
+  label: string;
   required_comments: boolean;
+  state: string;
 }

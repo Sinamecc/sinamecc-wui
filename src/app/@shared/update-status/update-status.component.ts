@@ -18,6 +18,7 @@ import { UpdateStatusService } from './update-status.service';
 import { Logger } from '@core/logger.service';
 import { AdaptationActionsViewComponent } from '@app/adaptation-actions/adaptation-actions-view/adaptation-actions-view.component';
 import { ReportViewComponent } from '@app/report/report-view/report-view.component';
+import { MitigationActionComponent } from '@app/mitigation-actions/mitigation-action/mitigation-action.component';
 
 const log = new Logger('UploadProposal');
 
@@ -73,6 +74,10 @@ export class UpdateStatusComponent implements OnInit {
     if (this.module === 'report') {
       this.loaReportComponent();
     }
+
+    if (this.module === 'ma') {
+      this.loadMAComponent();
+    }
   }
 
   loadPPCNCommentComponent() {
@@ -93,6 +98,12 @@ export class UpdateStatusComponent implements OnInit {
     this.moduleRef.instance.edit = true;
   }
 
+  loadMAComponent() {
+    const siglePostFactory = this.resolver.resolveComponentFactory(MitigationActionComponent);
+    this.moduleRef = this.container.createComponent(siglePostFactory);
+    this.moduleRef.instance.edit = true;
+  }
+
   private createForm() {
     this.form = this.formBuilder.group({
       statusCtrl: ['', Validators.required],
@@ -103,7 +114,7 @@ export class UpdateStatusComponent implements OnInit {
   submitForm() {
     this.isLoading = true;
     const context = {
-      context: this.form.value,
+      fsm_state: this.form.value.statusCtrl,
       comments: this.moduleRef ? this.moduleRef.instance.buildFormatComments(this.moduleRef.instance.comments) : [],
     };
 

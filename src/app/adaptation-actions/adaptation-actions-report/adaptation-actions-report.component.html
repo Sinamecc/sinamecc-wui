@@ -60,17 +60,21 @@
           <mat-label translate>adaptationAction.form2.AAODS</mat-label>
           <mat-select formControlName="adaptationActionODSCtrl" multiple>
             <mat-option *ngFor="let element of ods" [value]="element.code">
-              <label translate>{{ element.code }} - {{ element.name }}</label>
+              <label translate>{{ element.name }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-          <app-generic-button
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
             [disabled]="formArray?.get([0]).invalid"
             (click)="stepper.next()"
-            name="general.next"
-          ></app-generic-button>
+          >
+            <span translate>general.next</span>
+          </button>
         </div>
       </mat-step>
 
@@ -86,13 +90,13 @@
           formControlName="appScaleCtrl"
           class="custom-radio-group"
         >
-          <mat-radio-button [matTooltip]="typesTooltipTxt[0]" [value]="1">
+          <mat-radio-button [value]="1">
             <label translate>Nacional </label>
           </mat-radio-button>
-          <mat-radio-button [matTooltip]="typesTooltipTxt[1]" [value]="2">
+          <mat-radio-button [value]="2">
             <label translate>Regional</label>
           </mat-radio-button>
-          <mat-radio-button [matTooltip]="typesTooltipTxt[2]" [value]="3">
+          <mat-radio-button [value]="3">
             <label translate>Local</label>
           </mat-radio-button>
         </mat-radio-group>
@@ -152,13 +156,16 @@
         </div>
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-          <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-          </app-generic-button-secondary>
-          <app-generic-button
+          <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
             [disabled]="formArray?.get([1]).invalid"
             (click)="stepper.next()"
-            name="general.next"
-          ></app-generic-button>
+          >
+            <span translate>general.next</span>
+          </button>
         </div>
       </mat-step>
 
@@ -176,63 +183,107 @@
           >
         </ng-template>
 
-        <mat-form-field class="field-ppcn" appearance="fill">
-          <mat-label translate>adaptationAction.form2.selectTopic</mat-label>
-          <mat-select (selectionChange)="changeSubTopics($event.value)" formControlName="adaptationActionThemeCtrl">
-            <mat-option *ngFor="let topic of topics" [value]="topic.code">
-              <label translate>{{ topic.name }}</label>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="finance-container" fxLayout="column" fxLayoutAlign="start start" formArrayName="themeCtrl">
+          <div
+            class="max-container"
+            *ngFor="let element of form.controls.formArray['controls'][2].controls['themeCtrl'].controls; let i = index"
+          >
+            <mat-card fxLayout="column" fxLayoutAlign="start start" class="finance-container" [formGroupName]="i">
+              <mat-form-field class="field-ppcn" appearance="fill">
+                <mat-label translate>adaptationAction.form2.selectTopic</mat-label>
+                <mat-select
+                  (selectionChange)="changeSubTopics($event.value, i)"
+                  formControlName="adaptationActionThemeCtrl"
+                >
+                  <mat-option *ngFor="let topic of topics[i]" [value]="topic.id">
+                    <label translate>{{ topic.description }}</label>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
 
-        <mat-form-field class="field-ppcn" appearance="fill">
-          <mat-label translate>adaptationAction.form2.selectSubtopic</mat-label>
-          <mat-select formControlName="adaptationActionTypologyCtrl">
-            <mat-option *ngFor="let subTopic of subTopicsToShow" [value]="subTopic.code">
-              <label translate>{{ subTopic.name }}</label>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+              <mat-form-field class="field-ppcn" appearance="fill">
+                <mat-label translate>adaptationAction.form2.selectSubtopic</mat-label>
+                <mat-select
+                  (selectionChange)="loadActivities($event.value, i)"
+                  formControlName="adaptationActionTypologyCtrl"
+                >
+                  <mat-option *ngFor="let subTopic of subTopicsToShow[i]" [value]="subTopic.id">
+                    <label translate>{{ subTopic.description }}</label>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
 
-        <mat-form-field class="field-ppcn" appearance="fill">
-          <mat-label translate>adaptationAction.form2.selectActionType </mat-label>
-          <mat-select formControlName="adaptationActionTypeCtrl">
-            <mat-option [value]="1">
-              <label translate>Option1 </label>
-            </mat-option>
+              <mat-form-field class="field-ppcn" appearance="fill">
+                <mat-label translate>adaptationAction.form2.selectActionType </mat-label>
+                <mat-select
+                  (selectionChange)="fillActivitiesFields($event.value, i)"
+                  formControlName="adaptationActionTypeCtrl"
+                >
+                  <mat-option *ngFor="let element of activities[i]" [value]="element.id">
+                    <label translate>{{ element.description ? element.description : 'N/A' }} </label>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
 
-            <mat-option [value]="2">
-              <label translate>Option2 </label>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>adaptationAction.form2.relationNDC</mat-label>
+                <input type="text" matInput formControlName="adaptationActionRelationCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
 
-        <mat-form-field class="field-ppcn">
-          <mat-label translate>adaptationAction.form2.relationNDC</mat-label>
-          <input type="text" matInput formControlName="adaptationActionGoalRelationCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
-        </mat-form-field>
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>adaptationAction.form2.relationGoalNDC</mat-label>
+                <input type="text" matInput formControlName="adaptationActionGoalRelationCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
 
-        <mat-form-field class="field-ppcn">
-          <mat-label translate>adaptationAction.form2.relationshipAxis</mat-label>
-          <input type="text" matInput formControlName="adaptationActionEjeRelationCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
-        </mat-form-field>
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>adaptationAction.form2.relationshipAxis</mat-label>
+                <input type="text" matInput formControlName="adaptationActionEjeRelationCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
 
-        <mat-form-field class="field-ppcn">
-          <mat-label translate>adaptationAction.form2.relationshipGuideline</mat-label>
-          <input type="text" matInput formControlName="adaptationActionLinealRelationCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
-        </mat-form-field>
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>adaptationAction.form2.relationshipGuideline</mat-label>
+                <input type="text" matInput formControlName="adaptationActionLinealRelationCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <div class="box-button">
+                <button
+                  mat-mini-fab
+                  color="warn"
+                  *ngIf="form.controls.formArray['controls'][2].controls['themeCtrl'].controls.length > 1"
+                  (click)="removeThemeCtrl(i)"
+                  type="button"
+                >
+                  <mat-icon>delete forever</mat-icon>
+                </button>
+              </div>
+            </mat-card>
+          </div>
+          <div class="box-button">
+            <button
+              (click)="addThemeCtrl(form.controls.formArray['controls'][2].controls['themeCtrl'].controls.length)"
+              type="button"
+              matRipple
+              class="primary-button"
+            >
+              <span translate>general.addRelationships</span>
+            </button>
+          </div>
+        </div>
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-          <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-          </app-generic-button-secondary>
-          <app-generic-button
+          <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
             [disabled]="formArray?.get([2]).invalid"
             (click)="stepper.next()"
-            name="general.next"
-          ></app-generic-button>
+          >
+            <span translate>general.next</span>
+          </button>
         </div>
       </mat-step>
 
@@ -254,13 +305,16 @@
         </mat-form-field>
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-          <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-          </app-generic-button-secondary>
-          <app-generic-button
+          <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
             [disabled]="formArray?.get([3]).invalid"
             (click)="stepper.next()"
-            name="general.next"
-          ></app-generic-button>
+          >
+            <span translate>general.next</span>
+          </button>
         </div>
       </mat-step>
 
@@ -271,14 +325,14 @@
 
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form2.relatedClimateThreat</mat-label>
-          <mat-select #climateValue formControlName="adaptationActionClimateThreatCtrl">
+          <mat-select multiple #climateValue formControlName="adaptationActionClimateThreatCtrl">
             <mat-option *ngFor="let climate of climateThreat" [value]="climate.id">
               <label translate>{{ climate.name }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="climateValue.value === climateThreat.length" class="field-ppcn">
+        <mat-form-field *ngIf="climateValue?.value?.includes(climateThreat.length)" class="field-ppcn">
           <mat-label translate>adaptationAction.form2.relatedClimateThreatOther</mat-label>
           <input type="text" matInput formControlName="adaptationActionClimateThreatOtherCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -294,14 +348,37 @@
           <br />
         </div>
 
+        <div fxLayout="row" fxLayoutAlign=" center">
+          <mat-form-field class="field-ppcn">
+            <mat-label translate>adaptationAction.form2.descriptionVulnerability</mat-label>
+            <input matInput formControlName="descriptionVulnerabilityCtrl" />
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+          </mat-form-field>
+          <input type="file" name="filename3" />
+          <br />
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign=" center">
+          <mat-form-field class="field-ppcn">
+            <mat-label translate>adaptationAction.form2.descriptionElementsExposed</mat-label>
+            <input matInput formControlName="descriptionElementsExposedCtrl" />
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+          </mat-form-field>
+          <input type="file" name="filename3" />
+          <br />
+        </div>
+
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-          <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-          </app-generic-button-secondary>
-          <app-generic-button
+          <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
             [disabled]="formArray?.get([4]).invalid"
             (click)="stepper.next()"
-            name="general.next"
-          ></app-generic-button>
+          >
+            <span translate>general.next</span>
+          </button>
         </div>
       </mat-step>
 
@@ -341,12 +418,6 @@
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
-          <mat-label translate>adaptationAction.form2.durationAction</mat-label>
-          <input type="text" matInput formControlName="adaptationActionDurationTimeCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.responsibleExecuting</mat-label>
           <input type="text" matInput formControlName="adaptationActionEntityCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -374,13 +445,16 @@
         </mat-form-field>
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-          <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-          </app-generic-button-secondary>
-          <app-generic-button
+          <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
             [disabled]="formArray?.get([5]).invalid"
             (click)="submitForm()"
-            name="general.next"
-          ></app-generic-button>
+          >
+            <span translate>general.next</span>
+          </button>
         </div>
       </mat-step>
     </mat-vertical-stepper>

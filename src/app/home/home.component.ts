@@ -22,36 +22,96 @@ import { Permissions } from '@app/@core/permissions';
   ],
 })
 export class HomeComponent implements OnInit {
-  dataImage = [
+  data = [
     {
-      image: 'url(assets/ppcn_image.jpg)',
-      name: 'PPCN',
-      url: '/ppcn/registries',
-      moduleName: 'ppcn',
+      name: 'Acciones de mitigación',
+      module: 'ma',
+      urlNew: '/mitigation/actions/new',
+      urlView: '/mitigation/actions',
+      cards: [
+        {
+          name: 'Solicutudes pendientes de revisión',
+          value: '2',
+          icon: '',
+        },
+        {
+          name: 'Solicitud en revisión',
+          value: '',
+          icon: 'schedule',
+        },
+      ],
     },
     {
-      image: 'url(assets/report_image.jpg)',
-      name: 'Report',
-      url: '/report',
-      moduleName: '',
+      name: 'Acciones de adaptación',
+      module: 'aa',
+      urlNew: '/adaptation/actions/new',
+      urlView: '/adaptation/actions',
+      cards: [
+        {
+          name: 'Solicutudes pendientes de revisión',
+          value: '2',
+          icon: '',
+        },
+        {
+          name: 'Solicitud en revisión',
+          value: '',
+          icon: 'schedule',
+        },
+      ],
     },
     {
-      image: 'url(assets/ma_image.jpg)',
-      name: 'AM',
-      url: '/mitigation/actions',
-      moduleName: 'ma',
+      name: 'Reportes de datos',
+      module: 'rd',
+      urlNew: '/report/new',
+      urlView: '/report',
+      cards: [
+        {
+          name: 'Solicutudes pendientes de revisión',
+          value: '2',
+          icon: '',
+        },
+        {
+          name: 'Solicitud en revisión',
+          value: '',
+          icon: 'schedule',
+        },
+      ],
     },
     {
-      image: 'url(assets/mccr_image.jpg)',
+      name: 'Registro PPCN',
+      module: 'ppcn',
+      urlNew: '/ppcn/registries/new',
+      urlView: '/ppcn/registries',
+      cards: [
+        {
+          name: 'Solicutudes pendientes de revisión',
+          value: '2',
+          icon: '',
+        },
+        {
+          name: 'Solicitud en revisión',
+          value: '',
+          icon: 'schedule',
+        },
+      ],
+    },
+    {
       name: 'MCCR',
-      url: '/mccr/registries',
-      moduleName: 'mccr',
-    },
-    {
-      image: 'url(assets/admin_image.jpg)',
-      name: 'ADMIN',
-      url: '/admin/users',
-      moduleName: 'admin',
+      module: 'mccr',
+      urlNew: '/mccr/registries/new',
+      urlView: '/mccr/registries',
+      cards: [
+        {
+          name: 'Solicutudes pendientes de revisión',
+          value: '2',
+          icon: '',
+        },
+        {
+          name: 'Solicitud en revisión',
+          value: '',
+          icon: 'schedule',
+        },
+      ],
     },
   ];
 
@@ -72,10 +132,26 @@ export class HomeComponent implements OnInit {
   }
 
   showModule(permissions: Permissions, module: string) {
-    if (permissions.all) {
+    if (module) {
+      if (permissions.all) {
+        return true;
+      } else {
+        return Boolean(permissions[module]);
+      }
+    } else {
+      return true;
+    }
+  }
+
+  hasPermProvider(module: string) {
+    if (this.credentialsService.credentials.permissions.all) {
       return true;
     } else {
-      return Boolean(permissions[module]);
+      if (this.credentialsService.credentials.permissions[module]) {
+        return Boolean(this.credentialsService.credentials.permissions[module].provider);
+      } else {
+        return false;
+      }
     }
   }
 }

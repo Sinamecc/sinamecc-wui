@@ -1,3 +1,5 @@
+$COLOR_INPUT: #757575;
+
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
 }
@@ -9,4 +11,17 @@
 .custom-radio-group {
   display: flex;
   flex-direction: column;
+}
+
+.radio-grup-label {
+  color: $COLOR_INPUT;
+}
+
+.last-section-mat-select {
+  margin-bottom: 0.5em;
+}
+
+.finance-container {
+  margin-top: 2em;
+  margin-bottom: 2em;
 }

@@ -15,6 +15,17 @@ export interface SubTopics {
   updated?: string;
 }
 
+export interface Activities {
+  id?: number;
+  code: string;
+  description: string;
+  sub_topic: any;
+  ndc_contribution: any;
+  adaptation_axis_guideline: any;
+  created: string;
+  updated: string;
+}
+
 export interface ODS {
   id?: number;
   code: string;
@@ -88,4 +99,16 @@ export const classifiersSINAMECCMap = {
   3: 'INGEI',
   4: 'Reportes',
   5: 'Otro',
+};
+
+export const actionState = {
+  1: 'No iniciada',
+  2: 'Iniciada',
+  3: 'Finalizada',
+};
+
+export const AppScale = {
+  1: 'Nacional',
+  2: 'Regional',
+  3: 'Local',
 };

@@ -12,7 +12,7 @@
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form6.temporalityImpact</mat-label>
           <mat-select formControlName="adaptationTemporalityImpactCtrl">
-            <mat-option *ngFor="let element of temporalityImpact" [value]="element.code">
+            <mat-option *ngFor="let element of temporalityImpact" [value]="element.id">
               <label translate>{{ element.name }}</label>
             </mat-option>
           </mat-select>
@@ -48,8 +48,8 @@
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form6.sustainableDevelopment</mat-label>
           <mat-select multiple formControlName="objectivesCtrl">
-            <mat-option *ngFor="let element of ods" [value]="element.code">
-              <label translate>{{ element.code }} - {{ element.name }}</label>
+            <mat-option *ngFor="let element of ods" [value]="element.id">
+              <label translate>{{ element.name }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -66,13 +66,20 @@
             <input matInput formControlName="AnnexSupportingInformationCtrl" />
             <mat-error translate>errorLabel.fieldRequired</mat-error>
           </mat-form-field>
-          <input type="file" name="filename2" />
+          <input (change)="uploadFile($event)" type="file" name="annexSupporting" />
           <br />
         </div>
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-          <app-generic-button [disabled]="formArray?.get([0]).invalid" (click)="submitForm()" name="general.done">
-          </app-generic-button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            [disabled]="formArray?.get([0]).invalid || !annexSupportingFile"
+            (click)="submitForm()"
+          >
+            <span translate>general.done</span>
+          </button>
         </div>
       </mat-step>
     </mat-vertical-stepper>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -18,6 +18,9 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   temporalityImpact: TemporalityImpact[] = [];
   generalImpact: TemporalityImpact[] = [];
   ods: ODS[];
+  annexSupportingFile: any;
+  @Input() edit: boolean;
+  @Input() adaptationActionUpdated: AdaptationAction;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,7 +46,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
 
   private createForm() {
     this.form = this.formBuilder.group({
-      formArray: this.buildRegisterForm(),
+      formArray: !this.edit ? this.buildRegisterForm() : this.buildUpdateRegisterForm(),
     });
   }
 
@@ -80,6 +83,35 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     );
   }
 
+  buildUpdateRegisterForm() {
+    this.annexSupportingFile = 'file';
+    return this.formBuilder.array([
+      this.formBuilder.group({
+        adaptationTemporalityImpactCtrl: [
+          this.adaptationActionUpdated.action_impact.temporality_impact.length > 0
+            ? parseInt(this.adaptationActionUpdated.action_impact.temporality_impact[0].id)
+            : '',
+          Validators.required,
+        ],
+        impactsAccordingIndicatorsCtrl: [this.adaptationActionUpdated.action_impact.unwanted_action],
+        genderEquityElementsCtrl: [
+          parseInt(this.adaptationActionUpdated.action_impact.gender_equality),
+          Validators.required,
+        ],
+        genderEquityElementsQuestionCtrl: [this.adaptationActionUpdated.action_impact.gender_equality_description],
+        actionNegativeImpactCtrl: [
+          this.adaptationActionUpdated.action_impact.unwanted_action_description,
+          Validators.required,
+        ],
+        AnnexSupportingInformationCtrl: [''],
+        objectivesCtrl: [
+          this.adaptationActionUpdated.action_impact.ods.map((x) => parseInt(x.id)),
+          Validators.required,
+        ], // new field
+      }),
+    ]);
+  }
+
   buildRegisterForm() {
     return this.formBuilder.array([
       this.formBuilder.group({
@@ -88,7 +120,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
         genderEquityElementsCtrl: ['', Validators.required],
         genderEquityElementsQuestionCtrl: [''],
         actionNegativeImpactCtrl: ['', Validators.required],
-        AnnexSupportingInformationCtrl: ['', Validators.required],
+        AnnexSupportingInformationCtrl: [''],
         objectivesCtrl: ['', Validators.required], // new field
       }),
     ]);
@@ -101,11 +133,11 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   }
 
   submitForm() {
-    const payload: AdaptationAction = this.buildPayload();
+    const payload: any = this.buildPayload();
 
     this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
 
-    this.service.createNewAdaptationAction(Object.assign(this.adaptationAction, payload)).subscribe(
+    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
       (_) => {
         this.openSnackBar('Formulario creado correctamente', '');
         this.router.navigate([`/adaptation/actions`], {
@@ -134,5 +166,9 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     };
 
     return context;
+  }
+
+  uploadFile(event: any) {
+    this.annexSupportingFile = event;
   }
 }

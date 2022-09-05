@@ -10,19 +10,20 @@ import {
 } from './interfaces/adaptationAction';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { ODS, SubTopics, TemporalityImpact, Topic } from './interfaces/catalogs';
+import { Activities, ODS, SubTopics, TemporalityImpact, Topic } from './interfaces/catalogs';
 
 const routes = {
   adaptationAction: () => `/v1/adaptation-action/`,
   adaptationActionUpdate: (id: string) => `/v1/adaptation-action/${id}/`,
   topics: () => `/v1/adaptation-action/get_topics/`,
-  subTopics: () => `/v1/adaptation-action/get_subtopics/`,
+  subTopics: (id: string) => `/v1/adaptation-action/get_subtopics/${id}`,
+  getActivities: (id: string) => `/v1/adaptation-action/get_activities/${id}/`,
   ods: () => `/v1/adaptation-action/get_ods/`,
   temporalityImpact: () => `/v1/adaptation-action/get_temporality_impact/`,
   generalImpact: () => `/v1/adaptation-action/get_general_impact/`,
   getProvince: () => `/v1/general/province/`,
-  getCanton: () => `/v1/general/canton/`,
-  getDistricts: () => `/v1/general/district/`,
+  getCanton: (id: number) => `/v1/general/canton/${id}/`,
+  getDistricts: (id: number) => `/v1/general/district/${id}/`,
   getClimateThreat: () => `/v1/adaptation-action/type_climate_threat/`,
 };
 
@@ -73,6 +74,14 @@ export class AdaptationActionService {
     );
   }
 
+  public loadOneAdaptationActions(id: string) {
+    return this.httpClient.get(routes.adaptationActionUpdate(id)).pipe(
+      map((body: AdaptationAction) => {
+        return body;
+      })
+    );
+  }
+
   public loadTopics() {
     return this.httpClient.get(routes.topics()).pipe(
       map((body: Topic[]) => {
@@ -81,9 +90,18 @@ export class AdaptationActionService {
     );
   }
 
-  public loadSubTopics() {
-    return this.httpClient.get(routes.subTopics()).pipe(
+  public loadSubTopics(id: string = '') {
+    const ID = id !== '' ? `${id}/` : id;
+    return this.httpClient.get(routes.subTopics(ID)).pipe(
       map((body: SubTopics[]) => {
+        return body;
+      })
+    );
+  }
+
+  public loadActivities(id: string) {
+    return this.httpClient.get(routes.getActivities(id)).pipe(
+      map((body: Activities[]) => {
         return body;
       })
     );
@@ -122,17 +140,17 @@ export class AdaptationActionService {
   }
 
   public loadCanton(id: number) {
-    return this.httpClient.get(routes.getCanton()).pipe(
+    return this.httpClient.get(routes.getCanton(id)).pipe(
       map((body: Canton[]) => {
-        return body.filter((x) => x.province.id === id);
+        return body;
       })
     );
   }
 
   public loadDistrict(idCanton: number, idProvince: number) {
-    return this.httpClient.get(routes.getDistricts()).pipe(
+    return this.httpClient.get(routes.getDistricts(idCanton)).pipe(
       map((body: District[]) => {
-        return body.filter((x) => x.canton.id === idCanton && x.canton.province.id === idProvince);
+        return body;
       })
     );
   }

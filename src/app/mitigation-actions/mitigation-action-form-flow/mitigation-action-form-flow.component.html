@@ -10,27 +10,23 @@
 
     <form [formGroup]="mainGroup">
       <!-- {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}} -->
-      <mat-horizontal-stepper formArrayName="formArray" [linear]="isLinear" #stepper>
+      <mat-horizontal-stepper formArrayName="formArray" linear #stepper>
         <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
           <ng-template matStepLabel><span translate>specificLabel.registerInitiatives</span></ng-template>
           <app-initiative-form
             [newFormData]="newFormData"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
+            [stepper]="stepper"
+            [action]="action"
           ></app-initiative-form>
-          <div class="align-right">
-            <app-generic-button
-              [disabled]="!initiativeForm?.wasSubmittedSuccessfully"
-              (click)="stepper.next()"
-              name="general.next"
-            ></app-generic-button>
-          </div>
         </mat-step>
 
         <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
           <ng-template matStepLabel><span translate>info.financingInformation</span></ng-template>
           <app-basic-information-form
             [newFormData]="newFormData"
+            [stepper]="stepper"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
           >
@@ -46,11 +42,14 @@
               ></app-generic-button-secondary>
             </div>
             <div>
-              <app-generic-button
+              <button
                 [disabled]="!basicInfoForm?.wasSubmittedSuccessfully"
                 (click)="stepper.next()"
-                name="general.next"
-              ></app-generic-button>
+                matRipple
+                class="primary-button"
+              >
+                <span translate>general.next</span>
+              </button>
             </div>
           </div>
         </mat-step>
@@ -58,6 +57,7 @@
         <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
           <ng-template matStepLabel><span translate>general.keyAspects</span></ng-template>
           <app-key-aspects-form
+            [stepper]="stepper"
             [newFormData]="newFormData"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
@@ -74,11 +74,14 @@
               ></app-generic-button-secondary>
             </div>
             <div>
-              <app-generic-button
+              <button
                 [disabled]="!keyAspectsForm?.wasSubmittedSuccessfully"
                 (click)="stepper.next()"
-                name="general.next"
-              ></app-generic-button>
+                matRipple
+                class="primary-button"
+              >
+                <span translate>general.next</span>
+              </button>
             </div>
           </div>
         </mat-step>
@@ -89,6 +92,7 @@
             [newFormData]="newFormData"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
+            [stepper]="stepper"
           >
           </app-emissions-mitigation-form>
 
@@ -103,12 +107,14 @@
                 ></app-generic-button-secondary>
               </div>
               <div>
-                <app-generic-button
-                  (click)="stepper.next()"
+                <button
                   [disabled]="!emissionsMitigationForm?.wasSubmittedSuccessfully"
-                  name="general.next"
+                  (click)="stepper.next()"
+                  matRipple
+                  class="primary-button"
                 >
-                </app-generic-button>
+                  <span translate>general.next</span>
+                </button>
               </div>
             </div>
           </div>
@@ -120,15 +126,19 @@
             [newFormData]="newFormData"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
+            [stepper]="stepper"
           >
           </app-impact-form>
 
           <div class="align-right">
-            <app-generic-button
+            <button
+              [disabled]="!impactForm?.wasSubmittedSuccessfully"
               (click)="stepper.next()"
-              [disabled]="impactForm?.wasSubmittedSuccessfully"
-              name="general.next"
-            ></app-generic-button>
+              matRipple
+              class="primary-button"
+            >
+              <span translate>general.next</span>
+            </button>
           </div>
         </mat-step>
 

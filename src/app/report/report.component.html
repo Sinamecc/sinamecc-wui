@@ -44,12 +44,12 @@
 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
-      <mat-cell *matCellDef="let element" class="login-box">
-        <button (click)="view(element.id)" mat-icon-button color="primary">
+      <mat-cell *matCellDef="let element">
+        <button (click)="view(element.id)" mat-icon-button color="accent">
           <mat-icon color="white">visibility</mat-icon>
         </button>
 
-        <button (click)="addReview(element.id)" mat-icon-button color="primary">
+        <button *ngIf="hasPermReviewer()" (click)="addReview(element.id)" mat-icon-button color="accent">
           <mat-icon color="white">navigate_next</mat-icon>
         </button>
         <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
@@ -65,6 +65,6 @@
 </div>
 <br />
 
-<div class="box-button">
+<div *ngIf="hasPermProvider()" class="box-button">
   <app-generic-button routerLink="/report/new" name="reportData.addReport"></app-generic-button>
 </div>

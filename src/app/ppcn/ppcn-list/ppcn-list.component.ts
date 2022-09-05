@@ -153,4 +153,11 @@ export class PpcnListComponent implements OnInit {
         this.credentialsService.credentials.permissions.ppcn.provider
     );
   }
+
+  hasPermReviewer() {
+    return Boolean(
+      this.credentialsService.credentials.permissions.all ||
+        this.credentialsService.credentials.permissions.ppcn.reviewer
+    );
+  }
 }

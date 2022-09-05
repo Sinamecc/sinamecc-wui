@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MitigationAction } from '../mitigation-action';
+import { ImpactEmission, MitigationAction } from '../mitigation-action';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 import * as _moment from 'moment';
@@ -57,6 +57,7 @@ export class KeyAspectsFormComponent implements OnInit {
 
   mitigationAction: MitigationAction;
 
+  @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
@@ -96,37 +97,34 @@ export class KeyAspectsFormComponent implements OnInit {
         this.formBuilder.group({
           overviewImpactEmissionsRemovalsCtrl: ['', Validators.required],
           graphicLogicImpactEmissionsRemovalsCtrl: ['', Validators.required],
+          impactSectorCtrl: ['', Validators.required],
+          goalsCtrl: ['', Validators.required],
         }),
       ]),
     });
   }
 
   private updateFormData() {
+    const impactSector = this.mitigationAction.ghg_information.impact_sector as ImpactEmission[];
+
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
-          actionObjectiveCtrl: [this.mitigationAction.purpose, Validators.required],
-          actionStatusCtrl: [this.mitigationAction.status.id, Validators.required],
-          implementationInitialDateCtrl: [this.mitigationAction.start_date, Validators.required],
-          implementationEndDateCtrl: [this.mitigationAction.end_date, Validators.required],
-        }),
-        this.formBuilder.group({
-          geographicScaleCtrl: [this.mitigationAction.geographic_scale.id, Validators.required],
-        }),
-        this.formBuilder.group({
-          locationNameCtrl: [this.mitigationAction.location.geographical_site, Validators.required],
-          gisAnnexedCtrl: [String(+this.mitigationAction.location.is_gis_annexed), Validators.required],
-        }),
-        this.formBuilder.group({
-          financingStatusCtrl: [this.mitigationAction.finance.status.id, Validators.required],
-          financingSourceCtrl: [this.mitigationAction.finance.source],
-          gasInventoryCtrl: [this.mitigationAction.gas_inventory],
+          overviewImpactEmissionsRemovalsCtrl: [
+            this.mitigationAction.ghg_information.impact_emission,
+            Validators.required,
+          ],
+          graphicLogicImpactEmissionsRemovalsCtrl: [
+            this.mitigationAction.ghg_information.graphic_description,
+            Validators.required,
+          ],
+          impactSectorCtrl: [impactSector.map((x) => x.id), Validators.required],
+          goalsCtrl: [this.mitigationAction.ghg_information.goals.map((x) => x.id), Validators.required],
         }),
       ]),
     });
 
     this.isLoading = false;
-    // this.initiativeTypes = [{ id: 1, name: 'Proyect' }, { id: 2, name: 'Law' }, { id: 3, name: 'Goal' }];
   }
 
   buildPayload() {
@@ -134,6 +132,8 @@ export class KeyAspectsFormComponent implements OnInit {
       ghg_information: {
         impact_emission: this.form.value.formArray[0].overviewImpactEmissionsRemovalsCtrl,
         graphic_description: this.form.value.formArray[0].graphicLogicImpactEmissionsRemovalsCtrl,
+        impact_sector: this.form.value.formArray[0].impactSectorCtrl,
+        goals: this.form.value.formArray[0].goalsCtrl,
       },
     };
 
@@ -143,14 +143,6 @@ export class KeyAspectsFormComponent implements OnInit {
   submitForm() {
     this.isLoading = true;
     const context = this.buildPayload();
-
-    /*
-		if (this.isUpdating) {
-			context.finance["id"] = this.mitigationAction.finance.id;
-			context.location["id"] = this.mitigationAction.location.id;
-			// context['update_existing_mitigation_action'] = true;
-		}
-		*/
 
     this.service
       .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
@@ -162,10 +154,10 @@ export class KeyAspectsFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.translateService.get('Sucessfully submitted form').subscribe((res: string) => {
+          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
             this.snackBar.open(res, null, { duration: 3000 });
           });
-
+          this.stepper.next();
           this.wasSubmittedSuccessfully = true;
         },
         (error) => {

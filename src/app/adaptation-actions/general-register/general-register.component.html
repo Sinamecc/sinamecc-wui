@@ -100,7 +100,9 @@
     </mat-form-field>
 
     <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
-      <app-generic-button [disabled]="form.invalid" (click)="submitForm()" name="general.done"> </app-generic-button>
+      <button mat-raised-button color="primary" type="button" [disabled]="form.invalid" (click)="submitForm()">
+        <span translate>general.done</span>
+      </button>
     </div>
   </form>
 </div>

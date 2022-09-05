@@ -1,0 +1,31 @@
+.custom-divider {
+  width: 100%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.custom-vertical-divider {
+  color: #c4c4c4;
+  border: solid 1px;
+  min-height: 80px;
+  margin-right: 1em;
+  margin-left: 0.5em;
+}
+
+.custom-chip {
+  background-color: #ff9900;
+  padding: 0.7em;
+  border-radius: 15px;
+  color: white;
+}
+
+.custom-success-chip {
+  background-color: #16b14f;
+  padding: 0.7em;
+  border-radius: 15px;
+  color: white;
+}
+
+.comment-container {
+  margin-top: 1em;
+}

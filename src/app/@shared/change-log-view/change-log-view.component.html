@@ -1,0 +1,25 @@
+<div class="sinamecc-container" fxLayout="column" fxLayoutAlign="start start">
+  <h3 class="mat-h3">Estado actual</h3>
+  <div class="custom-chip">
+    {{ actualReview?.current_status }}
+  </div>
+  <mat-divider class="custom-divider"></mat-divider>
+  <div *ngIf="reviews.length > 0">
+    <h3 class="mat-h3">Historial</h3>
+    <div *ngFor="let review of reviews; let isLast = last">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon>done</mat-icon>
+        <mat-label style="margin-left: 1em;">{{ review?.date | date: 'medium' }}</mat-label>
+      </div>
+      <div class="comment-container" fxLayout="row" fxLayoutAlign="start center">
+        <mat-divider [vertical]="true" class="custom-vertical-divider"></mat-divider>
+        <div fxLayout="column" fxLayoutAlign="start center">
+          <div [class]="isLast ? 'custom-success-chip' : 'custom-chip'">
+            {{ review?.current_status }}
+          </div>
+          <label class="mat-h4">{{ review?.user }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

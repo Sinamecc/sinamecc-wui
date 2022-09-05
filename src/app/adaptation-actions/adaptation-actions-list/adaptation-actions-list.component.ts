@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { CredentialsService } from '@app/auth';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { adaptationsActionsTypeMap } from '../interfaces/catalogs';
@@ -14,12 +15,16 @@ import { adaptationsActionsTypeMap } from '../interfaces/catalogs';
 export class AdaptationActionsListComponent implements OnInit {
   adaptationsActions: AdaptationAction[] = [];
   dataSource: MatTableDataSource<AdaptationAction>;
-  headers = ['id', 'name', 'adaptation_action_type', 'fms_state', 'actions'];
+  headers = ['id', 'name', 'fms_state', 'actions'];
   loading = false;
   typesMap = adaptationsActionsTypeMap;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private service: AdaptationActionService, private router: Router) {}
+  constructor(
+    private service: AdaptationActionService,
+    private router: Router,
+    private credentialsService: CredentialsService
+  ) {}
 
   ngOnInit() {
     this.loadData();
@@ -31,18 +36,39 @@ export class AdaptationActionsListComponent implements OnInit {
     });
   }
 
+  edit(uuid: string) {
+    this.router.navigate([`adaptation/actions/${uuid}/update`], { replaceUrl: true });
+  }
+
+  hasPermProvider() {
+    return Boolean(
+      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.aa.provider
+    );
+  }
+
+  hasPermReviewer() {
+    return Boolean(
+      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.aa.reviewer
+    );
+  }
+
   loadData() {
     this.loading = true;
-    this.service.loadAdaptationActions().subscribe(
-      (response) => {
-        this.dataSource = new MatTableDataSource<AdaptationAction>(response);
-        this.dataSource.paginator = this.paginator;
+    this.service
+      .loadAdaptationActions()
+      .subscribe(
+        (response) => {
+          this.dataSource = new MatTableDataSource<AdaptationAction>(response);
+          this.dataSource.paginator = this.paginator;
+          this.loading = false;
+        },
+        (error) => {
+          this.loading = false;
+        }
+      )
+      .add(() => {
         this.loading = false;
-      },
-      (error) => {
-        this.loading = false;
-      }
-    );
+      });
   }
 
   addReview(uuid: string) {

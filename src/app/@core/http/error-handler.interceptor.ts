@@ -26,9 +26,6 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       if (401 === response.status) {
         this.router.navigate(['/login'], { replaceUrl: true });
       }
-      if (response.status === 404) {
-        this.router.navigate(['/error'], { replaceUrl: true });
-      }
     }
 
     if (!environment.production) {

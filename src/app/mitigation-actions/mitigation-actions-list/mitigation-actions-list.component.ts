@@ -67,6 +67,10 @@ export class MitigationActionsListComponent implements OnInit {
     this.router.navigate([`/mitigation/actions/${uuid}`], { replaceUrl: true });
   }
 
+  edit(uuid: string) {
+    this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
+  }
+
   update(uuid: string) {
     this.router.navigate([`mitigation/actions/${uuid}/edit`], {
       replaceUrl: true,
