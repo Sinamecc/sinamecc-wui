@@ -100,3 +100,15 @@ export const classifiersSINAMECCMap = {
   4: 'Reportes',
   5: 'Otro',
 };
+
+export const actionState = {
+  1: 'No iniciada',
+  2: 'Iniciada',
+  3: 'Finalizada',
+};
+
+export const AppScale = {
+  1: 'Nacional',
+  2: 'Regional',
+  3: 'Local',
+};

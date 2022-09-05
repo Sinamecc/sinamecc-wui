@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { CredentialsService } from '@app/auth';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { adaptationsActionsTypeMap } from '../interfaces/catalogs';
@@ -19,7 +20,11 @@ export class AdaptationActionsListComponent implements OnInit {
   typesMap = adaptationsActionsTypeMap;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private service: AdaptationActionService, private router: Router) {}
+  constructor(
+    private service: AdaptationActionService,
+    private router: Router,
+    private credentialsService: CredentialsService
+  ) {}
 
   ngOnInit() {
     this.loadData();
@@ -33,6 +38,18 @@ export class AdaptationActionsListComponent implements OnInit {
 
   edit(uuid: string) {
     this.router.navigate([`adaptation/actions/${uuid}/update`], { replaceUrl: true });
+  }
+
+  hasPermProvider() {
+    return Boolean(
+      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.aa.provider
+    );
+  }
+
+  hasPermReviewer() {
+    return Boolean(
+      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.aa.reviewer
+    );
   }
 
   loadData() {

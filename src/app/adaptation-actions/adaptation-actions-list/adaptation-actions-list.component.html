@@ -36,7 +36,7 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
       <mat-cell *matCellDef="let element" class="login-box">
-        <button mat-icon-button color="accent" (click)="edit(element.id)">
+        <button *ngIf="hasPermProvider()" mat-icon-button color="accent" (click)="edit(element.id)">
           <mat-icon color="white">edit</mat-icon>
         </button>
 
@@ -45,7 +45,7 @@
         </button>
 
         <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
-        <button (click)="addReview(element.id)" mat-icon-button color="accent">
+        <button *ngIf="hasPermReviewer()" (click)="addReview(element.id)" mat-icon-button color="accent">
           <mat-icon color="white">navigate_next</mat-icon>
         </button>
         <!-- <button mat-icon-button color="primary" (click)="uploadProposal(element.id)" > <mat-icon color="white">navigate_next</mat-icon></button> -->
@@ -60,7 +60,13 @@
   </mat-paginator>
 </div>
 <div *ngIf="!loading" class="box-button button-container">
-  <button routerLink="/adaptation/actions/new" mat-raised-button color="primary" type="button">
+  <button
+    *ngIf="hasPermProvider()"
+    routerLink="/adaptation/actions/new"
+    mat-raised-button
+    color="primary"
+    type="button"
+  >
     <span translate>adaptationAction.newButton</span>
   </button>
 </div>

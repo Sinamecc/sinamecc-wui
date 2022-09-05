@@ -22,42 +22,49 @@ export class ShellComponent implements OnInit, OnDestroy {
       url: '/',
       icon: 'home',
       selected: false,
+      module: '',
     },
     {
       name: 'PPCN',
       url: '/ppcn/registries',
       icon: 'group_work',
       selected: false,
+      module: 'ppcn',
     },
     {
       name: 'mitigationAction.MAs',
       url: '/mitigation/actions',
       icon: 'whatshot',
       selected: false,
+      module: 'ma',
     },
     {
       name: 'Acciones de Adaptación',
       url: '/adaptation/actions',
       icon: 'present_to_all',
       selected: false,
+      module: 'aa',
     },
     {
       name: 'reportData.reportsM',
       url: '/report',
       icon: 'present_to_all',
       selected: false,
+      module: 'rd',
     },
     {
       name: 'MCCR - UCC',
       url: '/mccr/poc',
       icon: 'settings_overscan',
       selected: false,
+      module: 'mccr',
     },
     {
       name: 'MCCR',
       url: '/mccr/registries',
       icon: 'schedule_send',
       selected: false,
+      module: 'mccr',
     },
   ];
 
@@ -93,10 +100,14 @@ export class ShellComponent implements OnInit, OnDestroy {
   }
 
   showModule(permissions: Permissions, module: string) {
-    if (permissions.all) {
-      return true;
+    if (module) {
+      if (permissions.all) {
+        return true;
+      } else {
+        return Boolean(permissions[module]);
+      }
     } else {
-      return Boolean(permissions[module]);
+      return true;
     }
   }
 

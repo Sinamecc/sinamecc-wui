@@ -5,18 +5,20 @@
         <img class="logo" [src]="logoSINAMECC" />
       </div>
       <div class="option-container" fxLayout="column" fxLayoutAlign="start stretch">
-        <div
-          [routerLink]="item.url"
-          *ngFor="let item of modules; index as i"
-          (click)="selectItem(i)"
-          [class]="item.selected ? 'option-selected' : 'option'"
-          fxLayout="row"
-          fxLayoutAlign="start center"
-        >
-          <button class="icon-button" mat-icon-button color="primary">
-            <mat-icon>{{ item.icon }}</mat-icon>
-            <label translate class="mat-h3">{{ item.name }}</label>
-          </button>
+        <div *ngFor="let item of modules; index as i">
+          <div
+            [routerLink]="item.url"
+            *ngIf="showModule(permissions, item.module)"
+            (click)="selectItem(i)"
+            [class]="item.selected ? 'option-selected' : 'option'"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
+            <button class="icon-button" mat-icon-button color="primary">
+              <mat-icon>{{ item.icon }}</mat-icon>
+              <label translate class="mat-h3">{{ item.name }}</label>
+            </button>
+          </div>
         </div>
       </div>
       <hr />

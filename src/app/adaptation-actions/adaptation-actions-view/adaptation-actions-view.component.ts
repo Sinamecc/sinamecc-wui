@@ -14,9 +14,11 @@ import {
 } from '../comments-structure';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import {
+  actionState,
   adaptationActionClimateThreaMap,
   adaptationActionFinanceStatusMap,
   adaptationsActionsTypeMap,
+  AppScale,
   classifiersSINAMECCMap,
   financeInstrumentMap,
   indicatorsTypeOfDataMap,
@@ -41,6 +43,8 @@ export class AdaptationActionsViewComponent implements OnInit {
   financeInstrumentType = financeInstrumentMap;
   indicatorsTypeOfDataType = indicatorsTypeOfDataMap;
   classifiersSINAMECCType = classifiersSINAMECCMap;
+  actionStateSinamecc = actionState;
+  AppScaleStructure = AppScale;
 
   commentsModule1 = commentsStructureModule1;
   commentsModule2 = commentsStructureModule2;

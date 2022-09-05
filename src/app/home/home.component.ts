@@ -25,7 +25,9 @@ export class HomeComponent implements OnInit {
   data = [
     {
       name: 'Acciones de mitigación',
+      module: 'ma',
       urlNew: '/mitigation/actions/new',
+      urlView: '/mitigation/actions',
       cards: [
         {
           name: 'Solicutudes pendientes de revisión',
@@ -41,7 +43,9 @@ export class HomeComponent implements OnInit {
     },
     {
       name: 'Acciones de adaptación',
+      module: 'aa',
       urlNew: '/adaptation/actions/new',
+      urlView: '/adaptation/actions',
       cards: [
         {
           name: 'Solicutudes pendientes de revisión',
@@ -57,7 +61,9 @@ export class HomeComponent implements OnInit {
     },
     {
       name: 'Reportes de datos',
+      module: 'rd',
       urlNew: '/report/new',
+      urlView: '/report',
       cards: [
         {
           name: 'Solicutudes pendientes de revisión',
@@ -73,7 +79,9 @@ export class HomeComponent implements OnInit {
     },
     {
       name: 'Registro PPCN',
+      module: 'ppcn',
       urlNew: '/ppcn/registries/new',
+      urlView: '/ppcn/registries',
       cards: [
         {
           name: 'Solicutudes pendientes de revisión',
@@ -89,7 +97,9 @@ export class HomeComponent implements OnInit {
     },
     {
       name: 'MCCR',
+      module: 'mccr',
       urlNew: '/mccr/registries/new',
+      urlView: '/mccr/registries',
       cards: [
         {
           name: 'Solicutudes pendientes de revisión',
@@ -122,10 +132,26 @@ export class HomeComponent implements OnInit {
   }
 
   showModule(permissions: Permissions, module: string) {
-    if (permissions.all) {
+    if (module) {
+      if (permissions.all) {
+        return true;
+      } else {
+        return Boolean(permissions[module]);
+      }
+    } else {
+      return true;
+    }
+  }
+
+  hasPermProvider(module: string) {
+    if (this.credentialsService.credentials.permissions.all) {
       return true;
     } else {
-      return Boolean(permissions[module]);
+      if (this.credentialsService.credentials.permissions[module]) {
+        return Boolean(this.credentialsService.credentials.permissions[module].provider);
+      } else {
+        return false;
+      }
     }
   }
 }

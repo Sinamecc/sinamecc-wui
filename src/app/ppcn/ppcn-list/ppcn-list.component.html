@@ -51,8 +51,19 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
       <mat-cell *matCellDef="let element" class="login-box">
-        <button mat-icon-button color="primary" (click)="view(element.id)">
+        <button mat-icon-button color="accent" (click)="view(element.id)">
           <mat-icon color="white">visibility</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="accent"
+          *ngIf="hasPermReviewer() && canChangeState(element)"
+          (click)="addReview(element.id)"
+        >
+          <mat-icon color="white">navigate_next</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" *ngIf="hasPermReviewer()" (click)="changelog(element.id)">
+          <mat-icon color="white">history</mat-icon>
         </button>
         <button
           *ngIf="hasPermProvider()"
@@ -61,12 +72,6 @@
           (click)="openDeleteConfirmationDialog(element.id)"
         >
           <mat-icon color="white">delete</mat-icon>
-        </button>
-        <button mat-icon-button color="primary" *ngIf="canChangeState(element)" (click)="addReview(element.id)">
-          <mat-icon color="white">navigate_next</mat-icon>
-        </button>
-        <button mat-icon-button color="primary" (click)="changelog(element.id)">
-          <mat-icon color="white">history</mat-icon>
         </button>
       </mat-cell>
     </ng-container>

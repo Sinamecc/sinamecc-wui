@@ -8,6 +8,10 @@ export interface Permissions {
     reviewer: boolean;
     provider: boolean;
   };
+  aa: {
+    reviewer: boolean;
+    provider: boolean;
+  };
   ppcn: {
     reviewer: boolean;
     provider: boolean;
@@ -16,7 +20,7 @@ export interface Permissions {
     reviewer: boolean;
     provider: boolean;
   };
-  report_data: {
+  rd: {
     reviewer: boolean;
     provider: boolean;
   };

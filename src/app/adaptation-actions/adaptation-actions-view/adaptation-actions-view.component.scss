@@ -16,6 +16,10 @@
   padding: 1em;
 }
 
+.txt-title {
+  font-weight: bolder;
+}
+
 .txt-separator {
   margin-right: 0.5em;
   margin-left: 0.5em;
@@ -36,4 +40,10 @@
   width: 100%;
   margin: 1em;
   height: 100%;
+}
+
+.custom-list-element {
+  padding: 0;
+  padding-right: 1em;
+  margin-bottom: 0.5em;
 }

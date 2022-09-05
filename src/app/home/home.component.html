@@ -1,19 +1,23 @@
 <div class="main-div" [@fadeInOut] fxLayout="column" fxLayoutAlign="start start">
-  <div *ngFor="let card of data" class="module-container">
-    <h2 class="mat-h2">{{ card.name }}</h2>
-    <hr />
-    <div fxLayout="row" fxLayoutAlign="start stretch">
-      <!--
+  <div class="module-container" *ngFor="let card of data">
+    <div *ngIf="showModule(permissions, card.module)" class="module-container">
+      <h2 class="mat-h2">{{ card.name }}</h2>
+      <hr />
+      <div fxLayout="row" fxLayoutAlign="start stretch">
+        <!--
       <mat-card *ngFor="let item of card.cards" class="card" fxLayout="column" fxLayoutAlign="start start">
         <h2 *ngIf="item.value" class="mat-h2 icon-card">2</h2>
         <mat-icon *ngIf="item.icon" class="icon-card">{{ item.icon }}</mat-icon>
         <h3 class="mat-h3">{{ item.name }}</h3>
       </mat-card>
       -->
-      <mat-card class="card" fxLayout="column" fxLayoutAlign="center center">
-        <mat-icon color="primary">add</mat-icon>
-        <button [routerLink]="card.urlNew" mat-button color="primary">Nueva solicitud</button>
-      </mat-card>
+        <mat-card class="card" fxLayout="column" fxLayoutAlign="center center">
+          <mat-icon color="primary"> {{ hasPermProvider(card.module) ? 'add' : 'visibility' }}</mat-icon>
+          <button [routerLink]="hasPermProvider(card.module) ? card.urlNew : card.urlView" mat-button color="primary">
+            {{ hasPermProvider(card.module) ? 'Nueva solicitud' : 'Ver solicitudes' }}
+          </button>
+        </mat-card>
+      </div>
     </div>
   </div>
 </div>
