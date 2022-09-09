@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,6 +19,8 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   baseYearSlect = 1950;
   lastValidYear = new Date().getFullYear();
   yearsArray = [...Array(this.lastValidYear - this.baseYearSlect).keys()];
+
+  climateValueSourceComponent: any;
 
   @Input() mainStepper: any;
   @Input() adaptationActionUpdated: AdaptationAction;
@@ -77,6 +79,8 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   }
 
   buildUpdateRegisterForm() {
+    const climateValueElements = this.adaptationActionUpdated.finance.source.map((x) => parseInt(x.id));
+    this.climateValueSourceComponent = climateValueElements;
     return this.formBuilder.array([
       this.formBuilder.group({
         adaptationActionFinancingStatusCtrl: [
@@ -84,10 +88,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
           Validators.required,
         ],
         adaptationActionFinancingManagementCtrl: [this.adaptationActionUpdated.finance.administration],
-        adaptationActionFinancingSourceDetailCtrl: [
-          this.adaptationActionUpdated.finance.source.map((x) => parseInt(x.id)),
-          Validators.required,
-        ],
+        adaptationActionFinancingSourceDetailCtrl: [climateValueElements, Validators.required],
         adaptationActionFinancingDetailInstrumentCtrl: [
           this.adaptationActionUpdated.finance.finance_instrument.map((x: any) => parseInt(x.code)),
           Validators.required,
@@ -103,7 +104,9 @@ export class AdaptationActionsFinancingComponent implements OnInit {
       }),
       this.formBuilder.group({
         adaptationActionFinancingRegisterMIDEPLANCtrl: [
-          this.adaptationActionUpdated.finance.mideplan ? this.adaptationActionUpdated.finance.mideplan.registry : '',
+          this.adaptationActionUpdated.finance.mideplan
+            ? parseInt(this.adaptationActionUpdated.finance.mideplan.registry)
+            : '',
         ],
         adaptationActionFinancingRegisterNameMIDEPLANCtrl: [
           this.adaptationActionUpdated.finance.mideplan ? this.adaptationActionUpdated.finance.mideplan.name : '',

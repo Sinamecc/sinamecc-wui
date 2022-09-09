@@ -28,6 +28,7 @@ export interface Adress {
   description: string;
   GIS: string;
   district: any;
+  canton: any;
   app_scale: string;
 }
 
@@ -51,7 +52,6 @@ export interface Activity {
 
 export interface Instrument {
   name: string;
-  description: string;
 }
 
 export interface ClimateThreat {

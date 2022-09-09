@@ -680,7 +680,7 @@
       "registerInfo": "Información de registro",
       "registerInfoTooltip": "Para detalles conceptuales sobre Acciones de Adaptación",
       "AAType": "Tipo de acción de adaptación",
-      "AAName": "Nombre de la acción de adaptación",
+      "AAName": "Nombre de la acción de adaptación (política, plan, proyecto, programa, actividad))",
       "AAObjective": "Objetivo de la acción de adaptación",
       "AADescription": "Descripción de la acción de adaptación",
       "AAGoal": "Meta de la acción (pueden ser cualitativas y/o cuantitativas)",

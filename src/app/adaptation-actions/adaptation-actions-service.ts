@@ -23,7 +23,9 @@ const routes = {
   generalImpact: () => `/v1/adaptation-action/get_general_impact/`,
   getProvince: () => `/v1/general/province/`,
   getCanton: (id: number) => `/v1/general/canton/${id}/`,
+  getCantones: () => `/v1/general/canton/`,
   getDistricts: (id: number) => `/v1/general/district/${id}/`,
+  districts: () => `/v1/general/district/`,
   getClimateThreat: () => `/v1/adaptation-action/type_climate_threat/`,
 };
 
@@ -147,8 +149,24 @@ export class AdaptationActionService {
     );
   }
 
+  public loadCantones() {
+    return this.httpClient.get(routes.getCantones()).pipe(
+      map((body: Canton[]) => {
+        return body;
+      })
+    );
+  }
+
   public loadDistrict(idCanton: number, idProvince: number) {
     return this.httpClient.get(routes.getDistricts(idCanton)).pipe(
+      map((body: District[]) => {
+        return body;
+      })
+    );
+  }
+
+  public loadDistricts() {
+    return this.httpClient.get(routes.districts()).pipe(
       map((body: District[]) => {
         return body;
       })

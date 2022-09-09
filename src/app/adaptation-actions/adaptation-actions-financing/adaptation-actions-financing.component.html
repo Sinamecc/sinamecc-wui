@@ -28,11 +28,11 @@
           <input matInput formControlName="adaptationActionFinancingManagementCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
-
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form3.sourceFinancing</mat-label>
           <mat-select
             (selectionChange)="selectSourceFinancing($event.value)"
+            [(ngModel)]="climateValueSourceComponent"
             #climateValueSource
             formControlName="adaptationActionFinancingSourceDetailCtrl"
             multiple
@@ -153,14 +153,14 @@
             color="primary"
             type="button"
             [disabled]="formArray?.get([0]).invalid"
-            (click)="clickNext(stepper, climateValueSource?.value?.includes(3))"
+            (click)="clickNext(stepper, climateValueSourceComponent?.includes(3))"
           >
             <span translate>general.next</span>
           </button>
         </div>
       </mat-step>
 
-      <mat-step *ngIf="climateValueSource?.value?.includes(3)" formGroupName="1" [stepControl]="formArray?.get([1])">
+      <mat-step *ngIf="climateValueSourceComponent?.includes(3)" formGroupName="1" [stepControl]="formArray?.get([1])">
         <ng-template matStepLabel>
           <span translate>adaptationAction.form3.actionsfinancedInternationalSources</span>
         </ng-template>
