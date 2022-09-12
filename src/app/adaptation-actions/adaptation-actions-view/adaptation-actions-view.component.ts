@@ -24,6 +24,7 @@ import {
   indicatorsTypeOfDataMap,
   provinciaMap,
   reportingEntityTypeMap,
+  ReportingPeriodicity,
 } from '../interfaces/catalogs';
 
 @Component({
@@ -45,6 +46,7 @@ export class AdaptationActionsViewComponent implements OnInit {
   classifiersSINAMECCType = classifiersSINAMECCMap;
   actionStateSinamecc = actionState;
   AppScaleStructure = AppScale;
+  reportingPeriodicityStructure = ReportingPeriodicity;
 
   commentsModule1 = commentsStructureModule1;
   commentsModule2 = commentsStructureModule2;

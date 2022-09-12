@@ -223,6 +223,12 @@
                 <h3 class="mat-h3">{{ activity?.sub_topic?.description }}</h3>
               </div>
 
+              <div fxLayout="row">
+                <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.selectActionType</h3>
+                <h3 class="mat-h3 txt-separator">:</h3>
+                <h3 class="mat-h3">{{ activity?.description }}</h3>
+              </div>
+
               <div fxLayout="column">
                 <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.relationNDC</h3>
                 <mat-list class="custom-list-element">
@@ -254,7 +260,7 @@
                 <h3 class="mat-h3 txt-title" translate>
                   adaptationAction.form2.relationshipGuideline
                 </h3>
-                <h3 class="mat-h3">{{ (activity?.ndc_contribution)[0]?.description }}</h3>
+                <h3 class="mat-h3">{{ activity?.adaptation_axis_guideline?.description }}</h3>
               </div>
             </mat-expansion-panel>
           </mat-accordion>
@@ -435,7 +441,7 @@
               </h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ adaptationAction?.finance?.mideplan?.registry }}
+                {{ adaptationAction?.finance?.mideplan?.registry === '1' ? 'Si' : 'No' }}
               </h3>
             </div>
           </div>
@@ -525,7 +531,11 @@
                   <h3 class="mat-h3 txt-title" translate>mitigationAction.indicatorReportingPeriodicity</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
-                    {{ indicator?.reporting_periodicity }}
+                    {{
+                      indicator?.reporting_periodicity
+                        ? reportingPeriodicityStructure[indicator?.reporting_periodicity]
+                        : ''
+                    }}
                   </h3>
                 </div>
 
@@ -771,6 +781,14 @@
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
                     {{ element?.start_date }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3 txt-title" translate>general.until</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ element?.end_date }}
                   </h3>
                 </div>
 

@@ -268,7 +268,6 @@ export class AdaptationActionsReportComponent implements OnInit {
     if (activities) {
       const list: any[] = [];
       let index = 0;
-
       for (const element of activities) {
         this.loadTopics(index);
         this.changeSubTopics(element?.sub_topic?.topic?.id, index);
@@ -350,6 +349,17 @@ export class AdaptationActionsReportComponent implements OnInit {
     let provinceList: Province[] = [];
     let cantonList: Canton[] = [];
     let districtList: District[] = [];
+
+    const adaptationActionStartDate = new Date(this.adaptationActionUpdated.implementation.start_date);
+    const adaptationActionEndDate = new Date(this.adaptationActionUpdated.implementation.end_date);
+
+    adaptationActionStartDate.setMinutes(
+      adaptationActionStartDate.getMinutes() + adaptationActionStartDate.getTimezoneOffset()
+    );
+
+    adaptationActionEndDate.setMinutes(
+      adaptationActionEndDate.getMinutes() + adaptationActionEndDate.getTimezoneOffset()
+    );
 
     if (this.adaptationActionUpdated.address.app_scale === '2') {
       provinceList = this.loadProvinceSByCantonSelected(this.adaptationActionUpdated.address.canton);
@@ -447,8 +457,8 @@ export class AdaptationActionsReportComponent implements OnInit {
         ], // new field
       }),
       this.formBuilder.group({
-        adaptationActionStartDateCtrl: [this.adaptationActionUpdated.implementation.start_date, Validators.required],
-        adaptationActionEndDateCtrl: [this.adaptationActionUpdated.implementation.end_date, Validators.required],
+        adaptationActionStartDateCtrl: [adaptationActionStartDate, Validators.required],
+        adaptationActionEndDateCtrl: [adaptationActionEndDate, Validators.required],
         adaptationActionEntityCtrl: [
           this.adaptationActionUpdated.implementation.responsible_entity,
           [Validators.required, Validators.maxLength(250)],
