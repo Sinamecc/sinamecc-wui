@@ -3,7 +3,7 @@
     <h2 translate>adaptationAction.form2.title</h2>
   </div>
   <form [formGroup]="form">
-    <mat-vertical-stepper #stepper formArrayName="formArray">
+    <mat-vertical-stepper #stepper linear formArrayName="formArray">
       <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
         <ng-template matStepLabel>
           <span translate>adaptationAction.form2.registerInfo</span>
