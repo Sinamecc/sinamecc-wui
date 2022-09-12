@@ -110,6 +110,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
       reportPeriodStart.setMinutes(reportPeriodStart.getMinutes() + reportPeriodStart.getTimezoneOffset());
 
       const form = this.formBuilder.group({
+        id: [indicator.id],
         indicatorsCtrl: [indicator.indicator.id, Validators.required],
         reportPeriodStartCtrl: [reportPeriodStart, Validators.required],
         reportPeriodEndtCtrl: [reportPeriodEnd, Validators.required],
@@ -224,7 +225,9 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
         data_to_update: form.value.dataWantUpdateCtrl ? form.value.dataWantUpdateCtrl : null,
         indicator_source: form.value.indicatorVerificationSourceCtrl ? form.value.indicatorVerificationSourceCtrl : [],
       };
-
+      if (form.value.id) {
+        indicatorMonitoringElement['id'] = form.value.id;
+      }
       indicatorMonitoringList.push(indicatorMonitoringElement);
     }
 
