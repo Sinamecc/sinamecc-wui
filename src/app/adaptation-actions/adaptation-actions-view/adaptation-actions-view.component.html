@@ -277,12 +277,6 @@
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.instrument?.name }}</h3>
             </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.adaptationIntegrated</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">{{ adaptationAction?.instrument?.description }}</h3>
-            </div>
           </div>
 
           <mat-divider style="width: 100%;"></mat-divider>
@@ -417,7 +411,7 @@
               <h3 class="mat-h3 txt-title">Presupuesto</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ adaptationAction?.finance?.budget }}
+                {{ adaptationAction?.finance?.currency }} - {{ adaptationAction?.finance?.budget }}
               </h3>
             </div>
 

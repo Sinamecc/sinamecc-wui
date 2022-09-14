@@ -216,3 +216,11 @@ export interface ClimateThreatCatalog {
   created: string;
   updated: string;
 }
+
+export interface InstrumentDetail {
+  id: number;
+  code: string;
+  name: string;
+  created: string;
+  updated: string;
+}

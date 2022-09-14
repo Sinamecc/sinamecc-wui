@@ -58,50 +58,14 @@
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form3.financingInstrument</mat-label>
           <mat-select #climateValue formControlName="adaptationActionFinancingDetailInstrumentCtrl" multiple>
-            <mat-option [value]="1">
-              <label translate>Bonos</label>
-            </mat-option>
-
-            <mat-option [value]="2">
-              <label translate>Fideicomisos</label>
-            </mat-option>
-
-            <mat-option [value]="3">
-              <label translate>Canjes de deuda</label>
-            </mat-option>
-
-            <mat-option [value]="4">
-              <label translate>Fondos</label>
-            </mat-option>
-
-            <mat-option [value]="5">
-              <label translate>Préstamos tradicionales</label>
-            </mat-option>
-
-            <mat-option [value]="6">
-              <label translate>Préstamos concesionales</label>
-            </mat-option>
-
-            <mat-option [value]="7">
-              <label translate>Subsidios</label>
-            </mat-option>
-
-            <mat-option [value]="8">
-              <label translate>Garantías</label>
-            </mat-option>
-
-            <mat-option [value]="9">
-              <label translate>Por definir</label>
-            </mat-option>
-
-            <mat-option [value]="10">
-              <label translate>Otros</label>
+            <mat-option *ngFor="let element of instrumentDeatils" [value]="element.id">
+              <label translate>{{ element.name }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field
-          *ngIf="climateValue?.value?.includes(10)"
+          *ngIf="climateValue?.value?.includes(instrumentDeatils[instrumentDeatils.length - 1].id)"
           [style.margin-right]="'10px'"
           [style.width.%]="100"
           class="ppcn-field"

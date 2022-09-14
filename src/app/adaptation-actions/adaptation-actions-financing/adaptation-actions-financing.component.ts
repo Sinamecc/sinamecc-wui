@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
-import { AdaptationAction } from '../interfaces/adaptationAction';
+import { AdaptationAction, InstrumentDetail } from '../interfaces/adaptationAction';
 
 @Component({
   selector: 'app-adaptation-actions-financing',
@@ -19,6 +19,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   baseYearSlect = 1950;
   lastValidYear = new Date().getFullYear();
   yearsArray = [...Array(this.lastValidYear - this.baseYearSlect).keys()];
+  instrumentDeatils: InstrumentDetail[] = [];
 
   climateValueSourceComponent: any;
   actualCurrency = 'CRC';
@@ -39,6 +40,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadInstrumentDetail();
     this.createForm();
   }
 
@@ -265,5 +267,11 @@ export class AdaptationActionsFinancingComponent implements OnInit {
       .get([1])
       .get('adaptationActionFinancingRegisterNameMIDEPLANCtrl')
       .updateValueAndValidity();
+  }
+
+  public loadInstrumentDetail() {
+    this.service.loadInstrumentDetail().subscribe((response) => {
+      this.instrumentDeatils = response;
+    });
   }
 }

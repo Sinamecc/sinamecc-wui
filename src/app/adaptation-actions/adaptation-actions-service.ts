@@ -6,6 +6,7 @@ import {
   ClimateThreat,
   ClimateThreatCatalog,
   District,
+  InstrumentDetail,
   Province,
 } from './interfaces/adaptationAction';
 import { map } from 'rxjs/operators';
@@ -27,6 +28,7 @@ const routes = {
   getDistricts: (id: number) => `/v1/general/district/${id}/`,
   districts: () => `/v1/general/district/`,
   getClimateThreat: () => `/v1/adaptation-action/type_climate_threat/`,
+  instrumentDetail: () => `/v1/adaptation-action/instrument_detail/`,
 };
 
 @Injectable()
@@ -176,6 +178,14 @@ export class AdaptationActionService {
   public loadClimateThreat() {
     return this.httpClient.get(routes.getClimateThreat()).pipe(
       map((body: ClimateThreatCatalog[]) => {
+        return body;
+      })
+    );
+  }
+
+  public loadInstrumentDetail() {
+    return this.httpClient.get(routes.instrumentDetail()).pipe(
+      map((body: InstrumentDetail[]) => {
         return body;
       })
     );
