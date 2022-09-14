@@ -121,7 +121,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
           Validators.required,
         ],
         indicatorVerificationSourceOtherCtrl: [''],
-        attachSupportingInformationCtrl: [''],
+        attachSupportingInformationCtrl: [indicator.support_information],
       });
       indicatorList.push(form);
     }
@@ -224,6 +224,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
           : null,
         data_to_update: form.value.dataWantUpdateCtrl ? form.value.dataWantUpdateCtrl : null,
         indicator_source: form.value.indicatorVerificationSourceCtrl ? form.value.indicatorVerificationSourceCtrl : [],
+        support_information: form.value.attachSupportingInformationCtrl,
       };
       if (form.value.id) {
         indicatorMonitoringElement['id'] = form.value.id;
