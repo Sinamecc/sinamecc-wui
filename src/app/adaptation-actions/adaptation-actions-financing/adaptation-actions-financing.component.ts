@@ -21,6 +21,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   yearsArray = [...Array(this.lastValidYear - this.baseYearSlect).keys()];
 
   climateValueSourceComponent: any;
+  actualCurrency = 'CRC';
 
   @Input() mainStepper: any;
   @Input() adaptationActionUpdated: AdaptationAction;
@@ -80,6 +81,11 @@ export class AdaptationActionsFinancingComponent implements OnInit {
 
   buildUpdateRegisterForm() {
     const climateValueElements = this.adaptationActionUpdated.finance.source.map((x) => parseInt(x.id));
+    const defaultCurrency =
+      this.adaptationActionUpdated.finance.currency !== 'USD' &&
+      this.adaptationActionUpdated.finance.currency !== 'CRC';
+    this.actualCurrency = defaultCurrency ? 'other' : this.adaptationActionUpdated.finance.currency;
+
     this.climateValueSourceComponent = climateValueElements;
     return this.formBuilder.array([
       this.formBuilder.group({
@@ -100,7 +106,9 @@ export class AdaptationActionsFinancingComponent implements OnInit {
           parseInt(this.adaptationActionUpdated.finance.year),
           Validators.required,
         ],
-        adaptationActionFinancingBufgetOtherCtrl: [''],
+        adaptationActionFinancingBufgetOtherCtrl: [
+          defaultCurrency ? this.adaptationActionUpdated.finance.currency : '',
+        ],
       }),
       this.formBuilder.group({
         adaptationActionFinancingRegisterMIDEPLANCtrl: [
@@ -140,6 +148,10 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   buildPayload() {
     const context: AdaptationAction = {
       finance: {
+        currency:
+          this.actualCurrency === 'other'
+            ? this.form.value.formArray[0].adaptationActionFinancingBufgetOtherCtrl
+            : this.actualCurrency,
         administration: this.form.value.formArray[0].adaptationActionFinancingManagementCtrl
           ? this.form.value.formArray[0].adaptationActionFinancingManagementCtrl
           : null,
@@ -166,6 +178,10 @@ export class AdaptationActionsFinancingComponent implements OnInit {
     };
 
     return context;
+  }
+
+  public changeCurrency(currency: string) {
+    this.actualCurrency = currency;
   }
 
   public selectSourceFinancing(value: number[]) {

@@ -113,7 +113,7 @@
 
         <div fxLayout="row">
           <div [style.margin-right]="'10px'">
-            <mat-button-toggle-group #budgetCtrlgroup="matButtonToggleGroup" value="CRC">
+            <mat-button-toggle-group (change)="changeCurrency($event.value)" [value]="actualCurrency">
               <mat-button-toggle value="CRC">CRC</mat-button-toggle>
               <mat-button-toggle value="USD">USD</mat-button-toggle>
               <mat-button-toggle value="other"><span translate>general.other</span></mat-button-toggle>
@@ -121,7 +121,7 @@
           </div>
 
           <mat-form-field
-            *ngIf="budgetCtrlgroup.value == 'other'"
+            *ngIf="actualCurrency == 'other'"
             [style.margin-right]="'10px'"
             [style.width.%]="100"
             class="ppcn-field"

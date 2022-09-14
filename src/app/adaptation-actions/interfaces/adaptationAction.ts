@@ -90,6 +90,7 @@ export interface Finance {
   mideplan: Mideplan;
   source: any[];
   year?: string;
+  currency?: string;
   finance_instrument: number[];
 }
 
