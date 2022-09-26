@@ -6,6 +6,7 @@ import {
   ClimateThreat,
   ClimateThreatCatalog,
   District,
+  InstrumentDetail,
   Province,
 } from './interfaces/adaptationAction';
 import { map } from 'rxjs/operators';
@@ -23,8 +24,11 @@ const routes = {
   generalImpact: () => `/v1/adaptation-action/get_general_impact/`,
   getProvince: () => `/v1/general/province/`,
   getCanton: (id: number) => `/v1/general/canton/${id}/`,
+  getCantones: () => `/v1/general/canton/`,
   getDistricts: (id: number) => `/v1/general/district/${id}/`,
+  districts: () => `/v1/general/district/`,
   getClimateThreat: () => `/v1/adaptation-action/type_climate_threat/`,
+  instrumentDetail: () => `/v1/adaptation-action/instrument_detail/`,
 };
 
 @Injectable()
@@ -147,8 +151,24 @@ export class AdaptationActionService {
     );
   }
 
+  public loadCantones() {
+    return this.httpClient.get(routes.getCantones()).pipe(
+      map((body: Canton[]) => {
+        return body;
+      })
+    );
+  }
+
   public loadDistrict(idCanton: number, idProvince: number) {
     return this.httpClient.get(routes.getDistricts(idCanton)).pipe(
+      map((body: District[]) => {
+        return body;
+      })
+    );
+  }
+
+  public loadDistricts() {
+    return this.httpClient.get(routes.districts()).pipe(
       map((body: District[]) => {
         return body;
       })
@@ -158,6 +178,14 @@ export class AdaptationActionService {
   public loadClimateThreat() {
     return this.httpClient.get(routes.getClimateThreat()).pipe(
       map((body: ClimateThreatCatalog[]) => {
+        return body;
+      })
+    );
+  }
+
+  public loadInstrumentDetail() {
+    return this.httpClient.get(routes.instrumentDetail()).pipe(
+      map((body: InstrumentDetail[]) => {
         return body;
       })
     );

@@ -32,6 +32,11 @@ export class AdaptationActionsReportComponent implements OnInit {
   climateThreat: ClimateThreatCatalog[] = [];
   activities: Activities[][] = [];
 
+  cantones: Canton[] = [];
+  cantonesToShow: any[] = [];
+  districtsList: District[] = [];
+  cdistrictsToShow: any[] = [];
+
   adaptationActionMap = {
     '1': 'A',
     '2': 'B',
@@ -57,15 +62,18 @@ export class AdaptationActionsReportComponent implements OnInit {
     this.createForm();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
     });
 
+    await this.loadProvinces();
+    await this.loadCantones();
+    await this.loadDistricts();
+
     this.loadODS();
     this.loadTopics();
     this.loadSubTopics();
-    this.loadProvinces();
     this.loadClimateThreat();
     this.loadAdaptationActions();
     this.createForm();
@@ -238,7 +246,6 @@ export class AdaptationActionsReportComponent implements OnInit {
       }),
       this.formBuilder.group({
         adaptationActionInstrumentCtrl: [''],
-        adaptationActionDescriptionInstrumentCtrl: [''],
       }),
       this.formBuilder.group({
         adaptationActionClimateThreatCtrl: ['', Validators.required],
@@ -261,7 +268,6 @@ export class AdaptationActionsReportComponent implements OnInit {
     if (activities) {
       const list: any[] = [];
       let index = 0;
-
       for (const element of activities) {
         this.loadTopics(index);
         this.changeSubTopics(element?.sub_topic?.topic?.id, index);
@@ -315,11 +321,61 @@ export class AdaptationActionsReportComponent implements OnInit {
     this.loadTopics(index);
   }
 
-  buildUpdatedRegisterForm() {
-    if (this.adaptationActionUpdated.address.district.length > 0) {
-      this.selectProvince(this.adaptationActionUpdated.address.district[0].canton.province.id);
-      this.selectCanton(this.adaptationActionUpdated.address.district[0].canton.id);
+  loadProvinceSByCantonSelected(cantons: Canton[]) {
+    const provinceList: Province[] = [];
+
+    for (const canton of cantons) {
+      const isInProvinceList = provinceList.find((x) => x.id === canton.province.id);
+      if (!isInProvinceList) {
+        provinceList.push(canton.province);
+      }
     }
+    return provinceList;
+  }
+
+  loadCantonByDistrictSelected(districts: District[]) {
+    const cantonList: Canton[] = [];
+    for (const district of districts) {
+      const isCantonInList = cantonList.find((x) => x.id === district.canton.id);
+      if (!isCantonInList) {
+        cantonList.push(district.canton);
+      }
+    }
+
+    return cantonList;
+  }
+
+  buildUpdatedRegisterForm() {
+    let provinceList: Province[] = [];
+    let cantonList: Canton[] = [];
+    let districtList: District[] = [];
+
+    const adaptationActionStartDate = new Date(this.adaptationActionUpdated.implementation.start_date);
+    const adaptationActionEndDate = new Date(this.adaptationActionUpdated.implementation.end_date);
+
+    adaptationActionStartDate.setMinutes(
+      adaptationActionStartDate.getMinutes() + adaptationActionStartDate.getTimezoneOffset()
+    );
+
+    adaptationActionEndDate.setMinutes(
+      adaptationActionEndDate.getMinutes() + adaptationActionEndDate.getTimezoneOffset()
+    );
+
+    if (this.adaptationActionUpdated.address.app_scale === '2') {
+      provinceList = this.loadProvinceSByCantonSelected(this.adaptationActionUpdated.address.canton);
+      cantonList = this.adaptationActionUpdated.address.canton;
+      this.selectProvince(provinceList.map((x) => x.id.toString()));
+      this.selectCanton(cantonList.map((x) => x.id.toString()));
+    }
+
+    if (this.adaptationActionUpdated.address.app_scale === '3') {
+      cantonList = this.loadCantonByDistrictSelected(this.adaptationActionUpdated.address.district);
+      provinceList = this.loadProvinceSByCantonSelected(cantonList);
+      districtList = this.adaptationActionUpdated.address.district;
+      this.selectProvince(provinceList.map((x) => x.id.toString()));
+      this.selectCanton(cantonList.map((x) => x.id.toString()));
+    }
+
     return this.formBuilder.array([
       this.formBuilder.group({
         adaptationActionTypeCtrl: [
@@ -352,19 +408,21 @@ export class AdaptationActionsReportComponent implements OnInit {
       this.formBuilder.group({
         appScaleCtrl: [parseInt(this.adaptationActionUpdated.address.app_scale), Validators.required],
         adaptationActionProvinceCtrl: [
-          this.adaptationActionUpdated.address.district.length > 0
-            ? this.adaptationActionUpdated.address.district[0].canton.province.id
-            : '',
+          this.adaptationActionUpdated.address.app_scale === '2' ||
+          this.adaptationActionUpdated.address.app_scale === '3'
+            ? provinceList.map((x) => x.id) // ? this.adaptationActionUpdated.address.district[0].canton.province.id
+            : [],
         ],
         adaptationActionCantonCtrl: [
-          this.adaptationActionUpdated.address.district.length > 0
-            ? this.adaptationActionUpdated.address.district[0].canton.id
-            : '',
+          this.adaptationActionUpdated.address.app_scale === '2' ||
+          this.adaptationActionUpdated.address.app_scale === '3'
+            ? cantonList.map((x) => x.id) // ? this.adaptationActionUpdated.address.district[0].canton.province.id
+            : [], //? this.adaptationActionUpdated.address.district[0].canton.id
         ],
         adaptationActionDistritCtrl: [
-          this.adaptationActionUpdated.address.district.length > 0
-            ? this.adaptationActionUpdated.address.district[0].id
-            : '',
+          this.adaptationActionUpdated.address.app_scale === '3'
+            ? districtList.map((x) => x.id) // ? this.adaptationActionUpdated.address.district[0].id
+            : [],
         ],
         adaptationActionDescriptionNarrativeCtrl: [
           this.adaptationActionUpdated.address.description,
@@ -378,7 +436,6 @@ export class AdaptationActionsReportComponent implements OnInit {
       }),
       this.formBuilder.group({
         adaptationActionInstrumentCtrl: [this.adaptationActionUpdated.instrument.name],
-        adaptationActionDescriptionInstrumentCtrl: [this.adaptationActionUpdated.instrument.description],
       }),
       this.formBuilder.group({
         adaptationActionClimateThreatCtrl: [
@@ -400,8 +457,8 @@ export class AdaptationActionsReportComponent implements OnInit {
         ], // new field
       }),
       this.formBuilder.group({
-        adaptationActionStartDateCtrl: [this.adaptationActionUpdated.implementation.start_date, Validators.required],
-        adaptationActionEndDateCtrl: [this.adaptationActionUpdated.implementation.end_date, Validators.required],
+        adaptationActionStartDateCtrl: [adaptationActionStartDate, Validators.required],
+        adaptationActionEndDateCtrl: [adaptationActionEndDate, Validators.required],
         adaptationActionEntityCtrl: [
           this.adaptationActionUpdated.implementation.responsible_entity,
           [Validators.required, Validators.maxLength(250)],
@@ -454,8 +511,12 @@ export class AdaptationActionsReportComponent implements OnInit {
           ? this.form.value.formArray[1].adaptationActionLocationCtrl
           : null,
         district: this.form.value.formArray[1].adaptationActionDistritCtrl
-          ? [this.form.value.formArray[1].adaptationActionDistritCtrl]
+          ? this.form.value.formArray[1].adaptationActionDistritCtrl
           : [],
+        canton:
+          this.form.value.formArray[1].appScaleCtrl === 2
+            ? this.form.value.formArray[1].adaptationActionCantonCtrl
+            : [],
       },
 
       activity: this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls.map(
@@ -464,7 +525,6 @@ export class AdaptationActionsReportComponent implements OnInit {
 
       instrument: {
         name: this.form.value.formArray[3].adaptationActionInstrumentCtrl,
-        description: this.form.value.formArray[3].adaptationActionDescriptionInstrumentCtrl,
       },
 
       climate_threat: {
@@ -492,25 +552,64 @@ export class AdaptationActionsReportComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  selectProvince(id: string) {
-    this.actualProvince = parseInt(id);
-    this.loadCanton(parseInt(id));
+  selectProvince(ids: string[]) {
+    const cantonListGroup = [];
+    for (const provinceId of ids) {
+      const province = this.provinces.find((x) => x.id === parseInt(provinceId));
+      const filterCantones = this.cantones.filter((x) => x.province.id === province.id);
+      const element = {
+        provinceName: province.name,
+        provinceID: province.id,
+        provinceCode: province.code,
+        cantones: filterCantones,
+      };
+
+      cantonListGroup.push(element);
+    }
+
+    this.cantonesToShow = cantonListGroup;
+
+    //this.actualProvince = parseInt(id);
+    //this.loadCanton(parseInt(id));
   }
 
-  public selectCanton(id: string) {
-    this.loadDistrict(parseInt(id));
+  public selectCanton(ids: string[]) {
+    const districListGroup = [];
+    for (const cantonID of ids) {
+      const canton = this.cantones.find((x) => x.id === parseInt(cantonID));
+      const filterDistrict = this.districtsList.filter((x) => x.canton.id === canton.id);
+      const element = {
+        cantonName: canton.name,
+        cantonID: canton.id,
+        cantonCode: canton.code,
+        districts: filterDistrict,
+      };
+
+      districListGroup.push(element);
+    }
+    this.cdistrictsToShow = districListGroup;
+    // this.loadDistrict(parseInt(id));
   }
 
-  public loadProvinces() {
-    this.service.loadProvince().subscribe((response) => {
-      this.provinces = response;
-    });
+  public async loadProvinces() {
+    const provinces = await this.service.loadProvince().toPromise();
+    this.provinces = provinces;
   }
 
   public loadCanton(provinceID: number) {
     this.service.loadCanton(provinceID).subscribe((response) => {
       this.canton = response;
     });
+  }
+
+  public async loadCantones() {
+    const cantones = await this.service.loadCantones().toPromise();
+    this.cantones = cantones;
+  }
+
+  public async loadDistricts() {
+    const districts = await this.service.loadDistricts().toPromise();
+    this.districtsList = districts;
   }
 
   public loadDistrict(cantonID: number) {
@@ -531,9 +630,15 @@ export class AdaptationActionsReportComponent implements OnInit {
       this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').setValidators(null);
       this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').setValidators(null);
     } else {
-      this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').setValidators(Validators.required);
-      this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').setValidators(Validators.required);
-      this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').setValidators(Validators.required);
+      if (id == 2) {
+        this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').setValidators(Validators.required);
+        this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').setValidators(Validators.required);
+        this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').setValidators(null);
+      } else {
+        this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').setValidators(Validators.required);
+        this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').setValidators(Validators.required);
+        this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').setValidators(Validators.required);
+      }
     }
     this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').updateValueAndValidity();
     this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').updateValueAndValidity();
@@ -545,27 +650,15 @@ export class AdaptationActionsReportComponent implements OnInit {
       this.form
         .get('formArray')
         .get([3])
-        .get('adaptationActionDescriptionInstrumentCtrl')
-        .setValidators([Validators.maxLength(3000)]);
-      this.form
-        .get('formArray')
-        .get([3])
         .get('adaptationActionInstrumentCtrl')
         .setValidators([Validators.maxLength(250)]);
     } else {
       this.form
         .get('formArray')
         .get([3])
-        .get('adaptationActionDescriptionInstrumentCtrl')
-        .setValidators([Validators.required, Validators.maxLength(3000)]);
-      this.form
-        .get('formArray')
-        .get([3])
         .get('adaptationActionInstrumentCtrl')
         .setValidators([Validators.required, Validators.maxLength(250)]);
     }
-
-    this.form.get('formArray').get([3]).get('adaptationActionDescriptionInstrumentCtrl').updateValueAndValidity();
     this.form.get('formArray').get([3]).get('adaptationActionInstrumentCtrl').updateValueAndValidity();
   }
 }

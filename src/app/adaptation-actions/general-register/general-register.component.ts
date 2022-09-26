@@ -61,6 +61,9 @@ export class GeneralRegisterComponent implements OnInit {
   }
 
   private buildUpdatedForm() {
+    const reportPreparationDate = new Date(this.adaptationAction.report_organization.elaboration_date);
+    reportPreparationDate.setMinutes(reportPreparationDate.getMinutes() + reportPreparationDate.getTimezoneOffset());
+
     return this.formBuilder.array([
       this.formBuilder.group({
         reportingEntityTypeCtrl: [
@@ -80,7 +83,7 @@ export class GeneralRegisterComponent implements OnInit {
           this.adaptationAction.report_organization.legal_identification,
           [Validators.maxLength(10)],
         ],
-        reportPreparationDateCtrl: [this.adaptationAction.report_organization.elaboration_date, [Validators.required]],
+        reportPreparationDateCtrl: [reportPreparationDate, [Validators.required]],
         nameContactPersonCtrl: [
           this.adaptationAction.report_organization.contact.contact_name,
           [Validators.required, Validators.maxLength(250)],

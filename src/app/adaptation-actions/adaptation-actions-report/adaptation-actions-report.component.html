@@ -107,7 +107,11 @@
           appearance="fill"
         >
           <mat-label translate>adaptationAction.form2.AAProvince</mat-label>
-          <mat-select (selectionChange)="selectProvince($event.value)" formControlName="adaptationActionProvinceCtrl">
+          <mat-select
+            (selectionChange)="selectProvince($event.value)"
+            multiple
+            formControlName="adaptationActionProvinceCtrl"
+          >
             <mat-option *ngFor="let province of provinces" [value]="province.id">
               <label translate>{{ province.name }}</label>
             </mat-option>
@@ -120,23 +124,27 @@
           appearance="fill"
         >
           <mat-label translate>adaptationAction.form2.AACanton</mat-label>
-          <mat-select (selectionChange)="selectCanton($event.value)" formControlName="adaptationActionCantonCtrl">
-            <mat-option *ngFor="let element of canton" [value]="element.id">
-              <label translate>{{ element.name }}</label>
-            </mat-option>
+          <mat-select
+            multiple
+            (selectionChange)="selectCanton($event.value)"
+            formControlName="adaptationActionCantonCtrl"
+          >
+            <mat-optgroup *ngFor="let group of cantonesToShow" [label]="group.provinceName">
+              <mat-option *ngFor="let canton of group.cantones" [value]="canton.id">
+                {{ canton.name }}
+              </mat-option>
+            </mat-optgroup>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field
-          *ngIf="appScaleControl.value == 2 || appScaleControl.value == 3"
-          class="field-ppcn"
-          appearance="fill"
-        >
+        <mat-form-field *ngIf="appScaleControl.value == 3" class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form2.AADistrict</mat-label>
-          <mat-select formControlName="adaptationActionDistritCtrl">
-            <mat-option *ngFor="let district of districts" [value]="district.id">
-              <label translate>{{ district.name }}</label>
-            </mat-option>
+          <mat-select multiple formControlName="adaptationActionDistritCtrl">
+            <mat-optgroup *ngFor="let group of cdistrictsToShow" [label]="group.cantonName">
+              <mat-option *ngFor="let district of group.districts" [value]="district.id">
+                {{ district.name }}
+              </mat-option>
+            </mat-optgroup>
           </mat-select>
         </mat-form-field>
 
@@ -225,29 +233,6 @@
                 </mat-select>
               </mat-form-field>
 
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>adaptationAction.form2.relationNDC</mat-label>
-                <input type="text" matInput formControlName="adaptationActionRelationCtrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>adaptationAction.form2.relationGoalNDC</mat-label>
-                <input type="text" matInput formControlName="adaptationActionGoalRelationCtrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>adaptationAction.form2.relationshipAxis</mat-label>
-                <input type="text" matInput formControlName="adaptationActionEjeRelationCtrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>adaptationAction.form2.relationshipGuideline</mat-label>
-                <input type="text" matInput formControlName="adaptationActionLinealRelationCtrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
               <div class="box-button">
                 <button
                   mat-mini-fab
@@ -295,12 +280,6 @@
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.namePlanningInstrument</mat-label>
           <input type="text" matInput formControlName="adaptationActionInstrumentCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="field-ppcn">
-          <mat-label translate>adaptationAction.form2.adaptationIntegrated</mat-label>
-          <input type="text" matInput formControlName="adaptationActionDescriptionInstrumentCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 

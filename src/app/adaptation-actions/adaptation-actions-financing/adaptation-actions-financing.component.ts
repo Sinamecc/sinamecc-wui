@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
-import { AdaptationAction } from '../interfaces/adaptationAction';
+import { AdaptationAction, InstrumentDetail } from '../interfaces/adaptationAction';
 
 @Component({
   selector: 'app-adaptation-actions-financing',
@@ -19,6 +19,10 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   baseYearSlect = 1950;
   lastValidYear = new Date().getFullYear();
   yearsArray = [...Array(this.lastValidYear - this.baseYearSlect).keys()];
+  instrumentDeatils: InstrumentDetail[] = [];
+
+  climateValueSourceComponent: any;
+  actualCurrency = 'CRC';
 
   @Input() mainStepper: any;
   @Input() adaptationActionUpdated: AdaptationAction;
@@ -36,6 +40,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadInstrumentDetail();
     this.createForm();
   }
 
@@ -77,6 +82,13 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   }
 
   buildUpdateRegisterForm() {
+    const climateValueElements = this.adaptationActionUpdated.finance.source.map((x) => parseInt(x.id));
+    const defaultCurrency =
+      this.adaptationActionUpdated.finance.currency !== 'USD' &&
+      this.adaptationActionUpdated.finance.currency !== 'CRC';
+    this.actualCurrency = defaultCurrency ? 'other' : this.adaptationActionUpdated.finance.currency;
+
+    this.climateValueSourceComponent = climateValueElements;
     return this.formBuilder.array([
       this.formBuilder.group({
         adaptationActionFinancingStatusCtrl: [
@@ -84,10 +96,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
           Validators.required,
         ],
         adaptationActionFinancingManagementCtrl: [this.adaptationActionUpdated.finance.administration],
-        adaptationActionFinancingSourceDetailCtrl: [
-          this.adaptationActionUpdated.finance.source.map((x) => parseInt(x.id)),
-          Validators.required,
-        ],
+        adaptationActionFinancingSourceDetailCtrl: [climateValueElements, Validators.required],
         adaptationActionFinancingDetailInstrumentCtrl: [
           this.adaptationActionUpdated.finance.finance_instrument.map((x: any) => parseInt(x.code)),
           Validators.required,
@@ -99,11 +108,15 @@ export class AdaptationActionsFinancingComponent implements OnInit {
           parseInt(this.adaptationActionUpdated.finance.year),
           Validators.required,
         ],
-        adaptationActionFinancingBufgetOtherCtrl: [''],
+        adaptationActionFinancingBufgetOtherCtrl: [
+          defaultCurrency ? this.adaptationActionUpdated.finance.currency : '',
+        ],
       }),
       this.formBuilder.group({
         adaptationActionFinancingRegisterMIDEPLANCtrl: [
-          this.adaptationActionUpdated.finance.mideplan ? this.adaptationActionUpdated.finance.mideplan.registry : '',
+          this.adaptationActionUpdated.finance.mideplan
+            ? parseInt(this.adaptationActionUpdated.finance.mideplan.registry)
+            : '',
         ],
         adaptationActionFinancingRegisterNameMIDEPLANCtrl: [
           this.adaptationActionUpdated.finance.mideplan ? this.adaptationActionUpdated.finance.mideplan.name : '',
@@ -137,6 +150,10 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   buildPayload() {
     const context: AdaptationAction = {
       finance: {
+        currency:
+          this.actualCurrency === 'other'
+            ? this.form.value.formArray[0].adaptationActionFinancingBufgetOtherCtrl
+            : this.actualCurrency,
         administration: this.form.value.formArray[0].adaptationActionFinancingManagementCtrl
           ? this.form.value.formArray[0].adaptationActionFinancingManagementCtrl
           : null,
@@ -163,6 +180,10 @@ export class AdaptationActionsFinancingComponent implements OnInit {
     };
 
     return context;
+  }
+
+  public changeCurrency(currency: string) {
+    this.actualCurrency = currency;
   }
 
   public selectSourceFinancing(value: number[]) {
@@ -246,5 +267,11 @@ export class AdaptationActionsFinancingComponent implements OnInit {
       .get([1])
       .get('adaptationActionFinancingRegisterNameMIDEPLANCtrl')
       .updateValueAndValidity();
+  }
+
+  public loadInstrumentDetail() {
+    this.service.loadInstrumentDetail().subscribe((response) => {
+      this.instrumentDeatils = response;
+    });
   }
 }

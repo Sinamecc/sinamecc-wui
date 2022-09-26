@@ -112,3 +112,10 @@ export const AppScale = {
   2: 'Regional',
   3: 'Local',
 };
+
+export const ReportingPeriodicity = {
+  YEARLY: 'Anual',
+  BIANNUAL: 'Semestral',
+  QUARTERLY: 'Trimestral',
+  OTHER: 'Otro',
+};

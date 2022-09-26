@@ -95,19 +95,33 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   updatedIndicatorCtrl(indicatorMonitoringList: any[]) {
     const indicatorList = [];
     this.attachSupportMonitoringFile = 'file';
+
     for (const indicator of indicatorMonitoringList) {
+      const indicatorDataUpdateDate = new Date(indicator.update_date);
+      const reportPeriodEnd = new Date(indicator.end_date);
+      const reportPeriodStart = new Date(indicator.start_date);
+
+      indicatorDataUpdateDate.setMinutes(
+        indicatorDataUpdateDate.getMinutes() + indicatorDataUpdateDate.getTimezoneOffset()
+      );
+
+      reportPeriodEnd.setMinutes(reportPeriodEnd.getMinutes() + reportPeriodEnd.getTimezoneOffset());
+
+      reportPeriodStart.setMinutes(reportPeriodStart.getMinutes() + reportPeriodStart.getTimezoneOffset());
+
       const form = this.formBuilder.group({
+        id: [indicator.id],
         indicatorsCtrl: [indicator.indicator.id, Validators.required],
-        reportPeriodStartCtrl: [indicator.start_date, Validators.required],
-        reportPeriodEndtCtrl: [indicator.end_date, Validators.required],
+        reportPeriodStartCtrl: [reportPeriodStart, Validators.required],
+        reportPeriodEndtCtrl: [reportPeriodEnd, Validators.required],
         dataWantUpdateCtrl: [indicator.data_to_update, Validators.required],
-        indicatorDataUpdateDateCtrl: [indicator.update_date, Validators.required],
+        indicatorDataUpdateDateCtrl: [indicatorDataUpdateDate, Validators.required],
         indicatorVerificationSourceCtrl: [
           indicator.indicator_source.map((x: { id: any }) => x.id),
           Validators.required,
         ],
         indicatorVerificationSourceOtherCtrl: [''],
-        attachSupportingInformationCtrl: [''],
+        attachSupportingInformationCtrl: [indicator.support_information],
       });
       indicatorList.push(form);
     }
@@ -210,8 +224,11 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
           : null,
         data_to_update: form.value.dataWantUpdateCtrl ? form.value.dataWantUpdateCtrl : null,
         indicator_source: form.value.indicatorVerificationSourceCtrl ? form.value.indicatorVerificationSourceCtrl : [],
+        support_information: form.value.attachSupportingInformationCtrl,
       };
-
+      if (form.value.id) {
+        indicatorMonitoringElement['id'] = form.value.id;
+      }
       indicatorMonitoringList.push(indicatorMonitoringElement);
     }
 

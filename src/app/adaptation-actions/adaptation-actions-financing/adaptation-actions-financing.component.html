@@ -28,11 +28,11 @@
           <input matInput formControlName="adaptationActionFinancingManagementCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
-
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form3.sourceFinancing</mat-label>
           <mat-select
             (selectionChange)="selectSourceFinancing($event.value)"
+            [(ngModel)]="climateValueSourceComponent"
             #climateValueSource
             formControlName="adaptationActionFinancingSourceDetailCtrl"
             multiple
@@ -58,50 +58,14 @@
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form3.financingInstrument</mat-label>
           <mat-select #climateValue formControlName="adaptationActionFinancingDetailInstrumentCtrl" multiple>
-            <mat-option [value]="1">
-              <label translate>Bonos</label>
-            </mat-option>
-
-            <mat-option [value]="2">
-              <label translate>Fideicomisos</label>
-            </mat-option>
-
-            <mat-option [value]="3">
-              <label translate>Canjes de deuda</label>
-            </mat-option>
-
-            <mat-option [value]="4">
-              <label translate>Fondos</label>
-            </mat-option>
-
-            <mat-option [value]="5">
-              <label translate>Préstamos tradicionales</label>
-            </mat-option>
-
-            <mat-option [value]="6">
-              <label translate>Préstamos concesionales</label>
-            </mat-option>
-
-            <mat-option [value]="7">
-              <label translate>Subsidios</label>
-            </mat-option>
-
-            <mat-option [value]="8">
-              <label translate>Garantías</label>
-            </mat-option>
-
-            <mat-option [value]="9">
-              <label translate>Por definir</label>
-            </mat-option>
-
-            <mat-option [value]="10">
-              <label translate>Otros</label>
+            <mat-option *ngFor="let element of instrumentDeatils" [value]="element.id">
+              <label translate>{{ element.name }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field
-          *ngIf="climateValue?.value?.includes(10)"
+          *ngIf="climateValue?.value?.includes(instrumentDeatils[instrumentDeatils.length - 1].id)"
           [style.margin-right]="'10px'"
           [style.width.%]="100"
           class="ppcn-field"
@@ -113,7 +77,7 @@
 
         <div fxLayout="row">
           <div [style.margin-right]="'10px'">
-            <mat-button-toggle-group #budgetCtrlgroup="matButtonToggleGroup" value="CRC">
+            <mat-button-toggle-group (change)="changeCurrency($event.value)" [value]="actualCurrency">
               <mat-button-toggle value="CRC">CRC</mat-button-toggle>
               <mat-button-toggle value="USD">USD</mat-button-toggle>
               <mat-button-toggle value="other"><span translate>general.other</span></mat-button-toggle>
@@ -121,7 +85,7 @@
           </div>
 
           <mat-form-field
-            *ngIf="budgetCtrlgroup.value == 'other'"
+            *ngIf="actualCurrency == 'other'"
             [style.margin-right]="'10px'"
             [style.width.%]="100"
             class="ppcn-field"
@@ -153,14 +117,14 @@
             color="primary"
             type="button"
             [disabled]="formArray?.get([0]).invalid"
-            (click)="clickNext(stepper, climateValueSource?.value?.includes(3))"
+            (click)="clickNext(stepper, climateValueSourceComponent?.includes(3))"
           >
             <span translate>general.next</span>
           </button>
         </div>
       </mat-step>
 
-      <mat-step *ngIf="climateValueSource?.value?.includes(3)" formGroupName="1" [stepControl]="formArray?.get([1])">
+      <mat-step *ngIf="climateValueSourceComponent?.includes(3)" formGroupName="1" [stepControl]="formArray?.get([1])">
         <ng-template matStepLabel>
           <span translate>adaptationAction.form3.actionsfinancedInternationalSources</span>
         </ng-template>

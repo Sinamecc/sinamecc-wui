@@ -76,6 +76,17 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     if (this.adaptationActionUpdated.indicator_list.length > 0) {
       let index = 0;
       for (const indicator of this.adaptationActionUpdated.indicator_list) {
+        const timeSeriesAvailableEnd = new Date(indicator.available_time_end_date);
+        const adaptationActionIndicatorTime = new Date(indicator.available_time_start_date);
+
+        timeSeriesAvailableEnd.setMinutes(
+          timeSeriesAvailableEnd.getMinutes() + timeSeriesAvailableEnd.getTimezoneOffset()
+        );
+
+        adaptationActionIndicatorTime.setMinutes(
+          adaptationActionIndicatorTime.getMinutes() + adaptationActionIndicatorTime.getTimezoneOffset()
+        );
+
         const form = this.formBuilder.array([
           this.formBuilder.group({
             id: [indicator.id ? indicator.id : ''],
@@ -92,8 +103,8 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
             adaptationActionIndicatorUnitFileCtrl: [''], // new field
             adaptationActionIndicatorFrecuenceCtrl: [indicator.reporting_periodicity, [Validators.required]],
             adaptationActionIndicatorFrecuenceOtherCtrl: [''], // new field
-            adaptationActionIndicatorTimeCtrl: [indicator.available_time_start_date, [Validators.required]],
-            timeSeriesAvailableEndCtrl: [indicator.available_time_end_date, [Validators.required]], // new field
+            adaptationActionIndicatorTimeCtrl: [adaptationActionIndicatorTime, [Validators.required]],
+            timeSeriesAvailableEndCtrl: [timeSeriesAvailableEnd, [Validators.required]], // new field
             adaptationActionIndicatorCoverageCtrl: [indicator.geographic_coverage, [Validators.required]],
             adaptationActionIndicatorCoverageOtherCtrl: [''], // new field
             adaptationActionIndicatorDisintegrationCtrl: [indicator.disaggregation, [Validators.maxLength(1000)]],
@@ -227,7 +238,6 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
 
     for (const key of keys) {
       const form = this.getFormObject(key).value;
-
       const indicator = {
         name: form[0].adaptationActionIndicatorNameCtrl,
         description: form[0].adaptationActionIndicatorDescriptionCtrl,
