@@ -35,25 +35,90 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
             <br />
-            <mat-form-field class="field-ppcn">
-              <mat-label translate
-                >4.1.2 - <span translate>mitigationAction.sourcesEmissionsGasesCovered</span></mat-label
+
+            <div
+              class="finance-container"
+              fxLayout="column"
+              fxLayoutAlign="start start"
+              formArrayName="sectorSourceFCtrl"
+            >
+              <div
+                class="max-container"
+                *ngFor="
+                  let element of form.controls.formArray['controls'][0].controls['sectorSourceFCtrl'].controls;
+                  let i = index
+                "
               >
+                <mat-card fxLayout="column" fxLayoutAlign="start start" class="sub-container" [formGroupName]="i">
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate
+                      >4.1.2.1 - <span translate>mitigationAction.sectorSourceEmissions</span></mat-label
+                    >
+                    <mat-select
+                      (selectionChange)="selectSectorCatalog($event.value, i)"
+                      formControlName="sectorSourceEmissionsCtrl"
+                    >
+                      <mat-option *ngFor="let sector of sectorCatalog" [value]="sector.id">
+                        {{ sector.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate
+                      >4.1.2.2 - <span translate>mitigationAction.emissionsSourceCategory</span></mat-label
+                    >
+                    <mat-select
+                      (selectionChange)="selectSectorIppcCatalog($event.value, i)"
+                      formControlName="emissionsSourceCategoryCtrl"
+                    >
+                      <mat-option *ngFor="let sector of sectorIppc2006[i]" [value]="sector.id">
+                        {{ sector.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate>4.1.2.3 - <span translate>mitigationAction.maincategories</span></mat-label>
+                    <mat-select formControlName="maincategoriesCtrl">
+                      <mat-option *ngFor="let category of categoryIppc2006[i]" [value]="category.id">
+                        {{ category.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <div class="box-button">
+                    <button
+                      mat-mini-fab
+                      color="warn"
+                      *ngIf="form.controls.formArray['controls'][0].controls['sectorSourceFCtrl'].controls.length > 1"
+                      (click)="removeSectorItem(i)"
+                      type="button"
+                    >
+                      <mat-icon>delete forever</mat-icon>
+                    </button>
+                  </div>
+                </mat-card>
+              </div>
+
+              <div class="box-button">
+                <button (click)="addSectorItem()" type="button" matRipple class="primary-button">
+                  <span translate>general.addRelationships</span>
+                </button>
+              </div>
+            </div>
+
+            <mat-form-field class="field-ppcn">
+              <mat-label translate>4.1.3 - <span translate>mitigationAction.coveredGas</span></mat-label>
               <mat-select
                 #isourcesEmissionsGasesCoveredValue
-                formControlName="isourcesEmissionsGasesCoveredCtrl"
+                formControlName="periodPotentialEmissionReductionEstimatedOtherCtrl"
                 multiple
               >
                 <mat-option *ngFor="let element of gasList" [value]="element">
                   {{ element }}
                 </mat-option>
               </mat-select>
-            </mat-form-field>
-
-            <mat-form-field *ngIf="isourcesEmissionsGasesCoveredValue?.value?.includes('Otro')" class="field-ppcn">
-              <mat-label translate>4.1.3 - <span translate>mitigationAction.coveredGas</span></mat-label>
-              <input matInput formControlName="periodPotentialEmissionReductionEstimatedOtherCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
             <br />
@@ -129,7 +194,7 @@
             </ng-template>
             <br />
 
-            <div fxLayout="row">
+            <div fxLayout="column">
               <mat-form-field>
                 <mat-label translate
                   >4.2.1 - <span translate>mitigationAction.standardizedCalculationMethodologyUsed</span></mat-label
@@ -140,10 +205,7 @@
                 </mat-select>
               </mat-form-field>
               <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
-                <mat-label translate>
-                  4.2.1 - <span translate>mitigationAction.standardizedCalculationMethodologyUsed</span> -
-                  <span translate>general.details</span></mat-label
-                >
+                <mat-label translate> 4.2.1 - <span translate>general.detail</span> </mat-label>
                 <input
                   type="text"
                   matInput
@@ -154,7 +216,7 @@
               </mat-form-field>
             </div>
             <br />
-            <div fxLayout="row">
+            <div fxLayout="column">
               <mat-form-field>
                 <mat-label translate>4.2.2 - <span translate>mitigationAction.calculationsDocumented</span></mat-label>
                 <mat-select formControlName="calculationsDocumentedCtrl">
@@ -163,13 +225,13 @@
                 </mat-select>
               </mat-form-field>
               <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
-                <mat-label translate>4.2.2 - <span translate>mitigationAction.calculationsDocumented</span></mat-label>
+                <mat-label translate>4.2.2 - <span translate>general.detail</span></mat-label>
                 <input type="text" matInput formControlName="calculationsDocumentedDetailCtrl" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
             </div>
             <br />
-            <div fxLayout="row">
+            <div fxLayout="column">
               <mat-form-field>
                 <mat-label translate
                   >4.2.3 - <span translate>mitigationAction.emissionFactorsUsedCalculationDocumented</span></mat-label
@@ -180,9 +242,7 @@
                 </mat-select>
               </mat-form-field>
               <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
-                <mat-label translate
-                  >4.2.3 - <span translate>mitigationAction.emissionFactorsUsedCalculationDocumented</span></mat-label
-                >
+                <mat-label translate>4.2.3 - <span translate>general.detail</span></mat-label>
                 <input
                   type="text"
                   matInput
@@ -193,7 +253,7 @@
               </mat-form-field>
             </div>
             <br />
-            <div fxLayout="row">
+            <div fxLayout="column">
               <mat-form-field>
                 <mat-label translate>4.2.4 - <span translate>mitigationAction.assumptionsDocumented</span></mat-label>
                 <mat-select formControlName="assumptionsDocumentedCtrl">
@@ -202,7 +262,7 @@
                 </mat-select>
               </mat-form-field>
               <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
-                <mat-label translate>4.2.4 - <span translate>mitigationAction.assumptionsDocumented</span></mat-label>
+                <mat-label translate>4.2.4 - <span translate>general.detail</span></mat-label>
                 <input type="text" matInput formControlName="assumptionsDocumentedDetailCtrl" required />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>

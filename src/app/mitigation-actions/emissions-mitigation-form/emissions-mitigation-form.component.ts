@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MitigationAction } from '../mitigation-action';
+import { CategoryIppc2006, MADataCatalogItem, MitigationAction, SectorIpcc2006 } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
 import { I18nService } from '@app/i18n';
 
@@ -35,6 +35,10 @@ export class EmissionsMitigationFormComponent implements OnInit {
   mitigationAction: MitigationAction;
   @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
 
+  sectorCatalog: MADataCatalogItem[] = [];
+  sectorIppc2006: SectorIpcc2006[][] = [];
+  categoryIppc2006: CategoryIppc2006[][] = [];
+
   gasList = ['CO2', 'CH4', 'N2O', 'HFC*', 'SF6', 'CO', 'NOx', 'NMVOC', 'SO2', 'C Negro', 'Otro'];
 
   get formArray(): AbstractControl | null {
@@ -51,6 +55,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
   ) {
     this.service.currentMitigationAction.subscribe((message) => (this.mitigationAction = message));
     this.createForm();
+    this.getSectorCatalog();
   }
 
   ngOnInit() {
@@ -68,8 +73,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
         this.formBuilder.group({
           exAnteEmissionReductionsCtrl: ['', Validators.required],
           periodPotentialEmissionReductionEstimatedCtrl: ['', Validators.required],
-          periodPotentialEmissionReductionEstimatedOtherCtrl: [''], // new field
-          isourcesEmissionsGasesCoveredCtrl: ['', Validators.required],
+          periodPotentialEmissionReductionEstimatedOtherCtrl: ['', Validators.required],
+          sectorSourceFCtrl: this.formBuilder.array([this.createSectorSourceForm()]),
           carbonSinksReservoirsCtrl: ['', Validators.required],
           definitionBaselineCtrl: ['', Validators.required],
           methodologyExantePotentialReductionEmissionsCO2Ctrl: ['', Validators.required],
@@ -96,6 +101,42 @@ export class EmissionsMitigationFormComponent implements OnInit {
     });
   }
 
+  private createSectorSourceForm() {
+    return this.formBuilder.group({
+      sectorSourceEmissionsCtrl: ['', Validators.required],
+      emissionsSourceCategoryCtrl: ['', Validators.required],
+      maincategoriesCtrl: ['', Validators.required],
+    });
+  }
+
+  private getSectorCatalog() {
+    this.service.getAllMAData().subscribe((response) => {
+      this.sectorCatalog = response.sector;
+    });
+  }
+
+  public selectSectorCatalog(id: string, index: number) {
+    this.service.getSectorIppc2006(id).subscribe((response) => {
+      this.sectorIppc2006[index] = response;
+    });
+  }
+
+  public selectSectorIppcCatalog(id: string, index: number) {
+    this.service.getCategoryIppc2006(id).subscribe((response) => {
+      this.categoryIppc2006[index] = response;
+    });
+  }
+
+  public removeSectorItem(index: number) {
+    const control = <FormArray>this.form.controls.formArray['controls'][0].controls['sectorSourceFCtrl'];
+    control.removeAt(index);
+  }
+
+  public addSectorItem() {
+    const control = <FormArray>this.form.controls.formArray['controls'][0].controls['sectorSourceFCtrl'].controls;
+    control.push(this.createSectorSourceForm());
+  }
+
   private updateFormData() {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
@@ -108,8 +149,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
             this.mitigationAction.impact_documentation.period_potential_reduction,
             Validators.required,
           ],
-          periodPotentialEmissionReductionEstimatedOtherCtrl: [''], // new field
-          isourcesEmissionsGasesCoveredCtrl: ['', Validators.required],
+          periodPotentialEmissionReductionEstimatedOtherCtrl: ['', Validators.required],
           carbonSinksReservoirsCtrl: ['', Validators.required],
           definitionBaselineCtrl: [
             this.mitigationAction.impact_documentation.base_line_definition,
@@ -167,6 +207,17 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   buildPayload() {
+    const sectorSourceList = [];
+    for (const element of this.form.controls.formArray['controls'][0].controls['sectorSourceFCtrl'].controls) {
+      const newElement = {
+        sector: element.value.sectorSourceEmissionsCtrl,
+        sector_ipcc_2006: element.value.emissionsSourceCategoryCtrl,
+        category_ipcc_2006: element.value.maincategoriesCtrl,
+        sub_category_ipcc_2006: [1], // check it later
+      };
+      sectorSourceList.push(newElement);
+    }
+
     const payload = {
       impact_documentation: {
         estimate_reduction_co2: this.form.value.formArray[0].exAnteEmissionReductionsCtrl,
@@ -180,6 +231,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
         methodologies_to_use: this.form.value.formArray[2].methodologyUsedCtrl
           ? this.form.value.formArray[2].methodologyUsedCtrl
           : null,
+        sector_selection: sectorSourceList,
         question: [
           {
             code: 'Q1',

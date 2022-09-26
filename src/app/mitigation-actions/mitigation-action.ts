@@ -229,3 +229,46 @@ export interface Files {
   name: string;
   file: string;
 }
+
+export interface MADataCatalogItem {
+  id: number;
+  code?: string;
+  name: string;
+  description?: string;
+  type?: string;
+  status?: string;
+}
+
+export interface SectorIpcc2006 {
+  id: number;
+  code: string;
+  name: string;
+  sector: number;
+}
+
+export interface CategoryIppc2006 {
+  id: number;
+  code: string;
+  name: string;
+  sector_ipcc_2006: number;
+}
+
+export interface MADataCatalogs {
+  initiative_type: MADataCatalogItem[];
+  status: MADataCatalogItem[];
+  finance_source_type: MADataCatalogItem[];
+  finance_status: MADataCatalogItem[];
+  geographic_scale: MADataCatalogItem[];
+  action_areas: MADataCatalogItem[];
+  descarbonization_axis: MADataCatalogItem[];
+  topics: MADataCatalogItem[];
+  impact_category: MADataCatalogItem[];
+  sustainable_development_goals: MADataCatalogItem[];
+  ghg_impact_sector: MADataCatalogItem[];
+  carbon_deposit: MADataCatalogItem[];
+  standard: MADataCatalogItem[];
+  classifier: MADataCatalogItem[];
+  information_source_type: MADataCatalogItem[];
+  thematic_categorization_type: MADataCatalogItem[];
+  sector: MADataCatalogItem[];
+}
