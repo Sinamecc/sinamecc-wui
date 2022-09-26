@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { MitigationAction, Indicator } from '@app/mitigation-actions/mitigation-action';
+import {
+  MitigationAction,
+  Indicator,
+  MADataCatalogs,
+  SectorIpcc2006,
+  CategoryIppc2006,
+} from '@app/mitigation-actions/mitigation-action';
 import { MitigationActionReview } from '@app/mitigation-actions/mitigation-action-review';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { MitigationActionReviewNewFormData } from '@app/mitigation-actions/mitigation-action-review-new-form-data';
@@ -27,6 +33,9 @@ const routes = {
     `/v1/mitigation-action/data/${parentCatalog}/${id}/${catalog}/`,
   getComments: (id: string = '') => `/v1/mitigation-action/${id}/comments/`,
   loadSubTopics: (id: string) => `/v1/mitigation-action/data/topics/${id}/sub-topics/`,
+  allData: () => `/v1/mitigation-action/data/`,
+  sectorIppc2006: (sectorID: string) => `/v1/mitigation-action/data/sector/${sectorID}/sector-ipcc/`,
+  categoryIppc2006: (CategoryId: string) => `/v1/mitigation-action/data/sector-ipcc/${CategoryId}/category-ipcc/`,
 };
 
 export interface Response {
@@ -175,6 +184,30 @@ export class MitigationActionsService {
           message: 'Form submitted correctly',
         };
         return response;
+      })
+    );
+  }
+
+  getAllMAData(): Observable<MADataCatalogs> {
+    return this.httpClient.get(routes.allData(), {}).pipe(
+      map((body: MADataCatalogs) => {
+        return body;
+      })
+    );
+  }
+
+  getSectorIppc2006(id: string) {
+    return this.httpClient.get(routes.sectorIppc2006(id), {}).pipe(
+      map((body: SectorIpcc2006[]) => {
+        return body;
+      })
+    );
+  }
+
+  getCategoryIppc2006(id: string) {
+    return this.httpClient.get(routes.categoryIppc2006(id), {}).pipe(
+      map((body: CategoryIppc2006[]) => {
+        return body;
       })
     );
   }
