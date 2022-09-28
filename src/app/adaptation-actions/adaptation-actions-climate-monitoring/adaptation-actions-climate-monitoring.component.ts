@@ -209,6 +209,10 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
 
   buildPayload() {
     const indicatorMonitoringList = [];
+    const isEmptyList = !(
+      this.form.value.formArray[0].actionStatusCorrespondingReportingPeriodCtrl === '2' &&
+      this.form.value.formArray[0].progressMonitoringRecordedClimateActionsCtrl === 1
+    );
 
     for (const form of this.form.controls.formArray['controls'][1].controls['indicatorCtrl'].controls) {
       const indicatorMonitoringElement = {
@@ -239,7 +243,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
           ? this.form.value.formArray[0].progressMonitoringRecordedClimateActionsCtrl
           : null,
       },
-      indicator_monitoring_list: indicatorMonitoringList,
+      indicator_monitoring_list: isEmptyList ? [] : indicatorMonitoringList,
       general_report: {
         start_date: this.form.value.formArray[2].reportPeriodStart2Ctrl
           ? this.datePipe.transform(this.form.value.formArray[2].reportPeriodStart2Ctrl, 'yyyy-MM-dd')
