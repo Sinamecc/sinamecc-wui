@@ -11,15 +11,15 @@
     </h3>
 
     <form *ngIf="!loading" [formGroup]="mainGroup">
-      <mat-horizontal-stepper formArrayName="formArray" #stepper>
-        <mat-step [stepControl]="formArray?.get([0])">
+      <mat-horizontal-stepper formArrayName="formArray" linear #stepper>
+        <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
           <ng-template matStepLabel>
             <span translate>adaptationAction.form1.title</span>
           </ng-template>
           <app-general-register [mainStepper]="stepper"></app-general-register>
         </mat-step>
 
-        <mat-step [stepControl]="formArray?.get([1])">
+        <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
           <ng-template matStepLabel>
             <span translate>adaptationAction.form2.title</span>
           </ng-template>

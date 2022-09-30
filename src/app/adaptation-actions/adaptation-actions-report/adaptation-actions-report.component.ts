@@ -76,7 +76,9 @@ export class AdaptationActionsReportComponent implements OnInit {
     this.loadSubTopics();
     this.loadClimateThreat();
     this.loadAdaptationActions();
-    this.createForm();
+    if (this.edit) {
+      this.createForm();
+    }
   }
 
   get formArray(): AbstractControl | null {
