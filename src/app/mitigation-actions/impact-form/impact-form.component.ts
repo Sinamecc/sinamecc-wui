@@ -207,7 +207,7 @@ export class ImpactFormComponent implements OnInit {
     for (const element of Object.keys(this.form.controls)) {
       const actualForm = this.form.get(element).value;
       const context = {
-        name: actualForm[0].indicatorNameCtrl ? actualForm[0].indicatorNameCtrl : '-', // this field nedd to be remove it
+        name: actualForm[0].responsibleInstitutionCtrl,
         description: actualForm[0].indicatorDescriptionCtrl,
         unit: actualForm[0].indicatorUnitCtrl,
         methodological_detail: actualForm[0].methodologicalDetailIndicatorCtrl,
