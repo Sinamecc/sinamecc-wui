@@ -125,7 +125,6 @@
             <mat-form-field class="field-ppcn">
               <mat-label translate>4.1.4 - <span translate>mitigationAction.carbonSinksReservoirs</span></mat-label>
               <mat-select formControlName="carbonSinksReservoirsCtrl" multiple>
-                <!-- This options will remplace for a catalog, waiting BE-->
                 <mat-option
                   *ngFor="let carbonDeposit of processedNewFormData?.carbon_deposit"
                   [value]="carbonDeposit.id"

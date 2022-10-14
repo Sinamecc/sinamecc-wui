@@ -17,7 +17,6 @@ import {
   commentsStructureModule5,
   commentsStructureModule6,
 } from '../comments-structure';
-import { async } from '@angular/core/testing';
 import { CommentsStructure, Comments } from '@app/@shared/comment';
 import { CommentsViewComponent } from '@app/@shared/comments-view/comments-view.component';
 import { MatDialog } from '@angular/material/dialog';

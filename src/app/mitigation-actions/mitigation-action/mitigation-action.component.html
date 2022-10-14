@@ -27,7 +27,12 @@
               <strong translate>specificLabel.initiativeDescription</strong>
               {{ mitigationAction?.initiative?.description }}
             </h3>
-            <h3 class="mat-h3"><strong translate>specificLabel.initiativeGoal</strong></h3>
+            <h3 class="mat-h3">
+              <strong translate>specificLabel.initiativeGoal</strong>
+              <label *ngFor="let element of mitigationAction?.initiative?.goal">
+                {{ element.goal }}
+              </label>
+            </h3>
           </div>
 
           <br />
@@ -100,44 +105,77 @@
           <br />
 
           <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
-            <!--
-            <h3 class="mat-h3">
-              <strong translate>mitigationAction?.relationshipNDC</strong>
-              {{ (mitigationAction?.categorization?.transformational_vision)[0]['description'] }}
-            </h3>
-            <h3 class="mat-h3">
-              <strong translate>mitigationAction.relationshipNDC</strong>
-              {{ mitigationAction?.CategorizationNationalInstruments }}
-            </h3>
-            <div fxLayout="column">
-              <h3 class="mat-h3" *ngFor="let element of mitigationAction?.categorization?.activities">
-                {{ element.description }}
-              </h3>
-            </div>
-            <h3 class="mat-h3">
-              <strong translate>mitigationAction.relationshipDecarbonizationPlan</strong>
-              {{ (mitigationAction?.categorization?.action_goal)[0]['goal'] }}
-            </h3>
-            <h3 class="mat-h3"><strong translate>mitigationAction.relationshipDecarbonizationPlan</strong></h3>
-            <div fxLayout="column">
-              <h3 class="mat-h3" *ngFor="let element of mitigationAction?.categorization?.sub_topics">
-                {{ element.name }}
-              </h3>
-            </div>
+            <mat-accordion>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <span translate>mitigationAction.relationshipNDC</span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div *ngFor="let element of mitigationAction?.categorization?.action_area_selection">
+                  <h3 class="mat-h3">
+                    <strong translate>mitigationAction.relationshipNDC</strong>
+                    {{ element.area.name }}
+                  </h3>
 
-            <h3 class="mat-h3"><strong translate>mitigationAction.impactCategory</strong></h3>
+                  <h3 class="mat-h3">
+                    <strong translate>mitigationAction.NDCGoals</strong>
+                  </h3>
+                  <ul>
+                    <li *ngFor="let goal of element.goals">{{ goal.goal }}</li>
+                  </ul>
+                </div>
+              </mat-expansion-panel>
 
-            <div fxLayout="column">
-              <h3 class="mat-h3" *ngFor="let element of mitigationAction?.categorization?.impact_categories">
-                {{ element.name }}
-              </h3>
-            </div>
--->
-            <div>
-              <h3 class="mat-h3">
-                <strong translate>mitigationAction.relationshipNDC</strong>
-              </h3>
-            </div>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <span translate>mitigationAction.relationshipDecarbonizationPlan</span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div *ngFor="let element of mitigationAction?.categorization?.descarbonization_axis_selection">
+                  <h3 class="mat-h3">
+                    <strong translate>mitigationAction.relationshipDecarbonizationPlan</strong>
+                    {{ element.descarbonization_axis.description }}
+                  </h3>
+
+                  <h3 class="mat-h3">
+                    <strong translate>mitigationAction.relationshipDecarbonizationPlan2</strong>
+                  </h3>
+                  <ul>
+                    <li *ngFor="let data of element.transformational_vision">{{ data.description }}</li>
+                  </ul>
+                </div>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <span translate>mitigationAction.classificationTopics</span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div *ngFor="let element of mitigationAction?.categorization?.topics_selection">
+                  <h3 class="mat-h3">
+                    <strong translate>mitigationAction.classificationTopics</strong>
+                    {{ element.topic.name }}
+                  </h3>
+
+                  <h3 class="mat-h3">
+                    <strong translate>mitigationAction.subTopics</strong>
+                  </h3>
+                  <ul>
+                    <li *ngFor="let data of element.sub_topic">{{ data.name }}</li>
+                  </ul>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+            <br />
+            <h3 class="mat-h3">
+              <strong translate>mitigationAction.impactCategory</strong>
+              <label translate>mitigationAction.directImpactGEI</label>
+            </h3>
 
             <h3 class="mat-h3">
               <strong translate> ¿La acción de mitigación que está registrando forma parte de otra?:</strong>
@@ -164,23 +202,38 @@
           <br />
           <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
-              <strong translate>mitigationAction.financingStatus</strong> {{ mitigationAction?.finance?.status }}
+              <strong translate>mitigationAction.financingStatus</strong> {{ mitigationAction?.finance?.status.name }}
             </h3>
             <h3 class="mat-h3">
-              <strong translate>mitigationAction.stepsTakingToFinancing</strong>
-              {{ mitigationAction?.finance?.administration }}
+              <strong translate>mitigationAction.detailfinancingSource</strong>
             </h3>
-            <h3 class="mat-h3">
-              <strong translate>mitigationAction.detailfinancingSource</strong> {{ mitigationAction?.finance?.source }}
-            </h3>
-            <h3 class="mat-h3">
-              <strong translate>mitigationAction.financingSourceApplying</strong>
-              {{ mitigationAction?.finance?.source_description }}
-            </h3>
-            <h3 class="mat-h3">
-              <strong translate>mitigationAction.mitigationActionBudget</strong>
-              {{ mitigationAction?.finance?.currency }} - {{ mitigationAction?.finance?.budget }}
-            </h3>
+            <div>
+              <ul>
+                <li *ngFor="let element of mitigationAction?.finance?.source">{{ element.name }}</li>
+              </ul>
+            </div>
+
+            <mat-accordion class="max-w">
+              <mat-expansion-panel class="max-w" *ngFor="let element of mitigationAction?.finance?.finance_information">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <span translate>mitigationAction.mitigationActionBudget</span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div>
+                  <h3 class="mat-h3">
+                    <strong translate>mitigationAction.mitigationActionBudget</strong>
+                    {{ element.source_description }}
+                  </h3>
+
+                  <h3 class="mat-h3">
+                    <strong translate>general.amount</strong>
+                    {{ element.currency }} - {{ element.budget }}
+                  </h3>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+
             <h3 class="mat-h3">
               <strong translate>mitigationAction.referenceYear</strong> {{ mitigationAction?.finance?.reference_year }}
             </h3>
@@ -193,11 +246,11 @@
           <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>mitigationAction.registeredNonReimbursableCooperationMideplan</strong>
-              {{ mitigationAction?.finance?.mideplan_registered }}
+              {{ mitigationAction?.finance?.mideplan_registered ? 'Si' : 'No' }}
             </h3>
             <h3 class="mat-h3">
               <strong translate>mitigationAction.nameRegisteredMideplan</strong>
-              {{ mitigationAction?.finance?.nameRegisteredMideplan }}
+              {{ mitigationAction?.finance?.mideplan_project }}
             </h3>
             <h3 class="mat-h3">
               <strong translate>mitigationAction.entityProject</strong>
@@ -261,18 +314,56 @@
               <strong translate>specificLabel.exAnteEmissionReductions</strong>
               {{ mitigationAction?.impact_documentation?.estimate_reduction_co2 }}
             </h3>
+
             <h3 class="mat-h3">
               <strong translate>mitigationAction.periodPotentialEmissionReductionEstimated</strong>
               {{ mitigationAction?.impact_documentation?.period_potential_reduction }}
             </h3>
+
             <h3 class="mat-h3">
-              <strong translate>mitigationAction.sourcesEmissionsGasesCovered</strong>
-              {{ mitigationAction?.impact_documentation?.sourcesEmissionsGasesCovered }}
+              <strong translate>mitigationAction.sectorSourceEmissions</strong>
             </h3>
+
+            <mat-accordion class="max-w">
+              <mat-expansion-panel
+                class="max-w"
+                *ngFor="let element of mitigationAction?.impact_documentation?.sector_selection"
+              >
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <span translate>{{ element.sector.name }}</span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div>
+                  <h3 class="mat-h3">
+                    <strong translate>mitigationAction.mitigationActionBudget</strong>
+                    {{ element.sector.name }}
+                  </h3>
+
+                  <h3 class="mat-h3">
+                    <strong translate>mitigationAction.emissionsSourceCategory</strong>
+                    {{ element.sector_ipcc_2006.name }}
+                  </h3>
+
+                  <h3 class="mat-h3">
+                    <strong translate>general.maincategories</strong>
+                    {{ element.category_ipcc_2006.name }}
+                  </h3>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+            <br />
             <h3 class="mat-h3">
               <strong translate>mitigationAction.carbonSinksReservoirs</strong>
-              {{ mitigationAction?.impact_documentation?.carbonSinksReservoirs }}
             </h3>
+            <div>
+              <ul>
+                <li *ngFor="let element of mitigationAction?.impact_documentation?.carbon_deposit">
+                  {{ element.name }}
+                </li>
+              </ul>
+            </div>
+
             <h3 class="mat-h3">
               <strong translate>mitigationAction.definitionBaseline</strong>
               {{ mitigationAction?.impact_documentation?.base_line_definition }}
@@ -287,7 +378,7 @@
             </h3>
             <h3 class="mat-h3">
               <strong translate>mitigationAction.isCurrentlyReflectedInventory</strong>
-              {{ mitigationAction?.impact_documentation?.mitigation_action_in_inventory }}
+              {{ mitigationAction?.impact_documentation?.mitigation_action_in_inventory === 1 ? 'Si' : 'No' }}
             </h3>
           </div>
           <br />
@@ -304,6 +395,26 @@
             <h3 class="mat-h3">{{ findQuestion('Q3') }}</h3>
             <strong translate>mitigationAction.assumptionsDocumented</strong>
             <h3 class="mat-h3">{{ findQuestion('Q4') }}</h3>
+          </div>
+
+          <strong translate>mitigationAction.marketParticipation</strong>
+          <mat-divider></mat-divider>
+          <br />
+          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+            <h3 class="mat-h3">
+              <strong translate>mitigationAction.intendParticipateInternationalCarbonMarkets</strong>
+              {{ mitigationAction?.impact_documentation.carbon_international_commerce ? 'Si' : 'No' }}
+            </h3>
+
+            <h3 class="mat-h3">
+              <strong translate>mitigationAction.mechanismStandardApply</strong>
+              {{ mitigationAction?.impact_documentation.standard.name }}
+            </h3>
+
+            <h3 class="mat-h3">
+              <strong translate>mitigationAction.methodologyUsed</strong>
+              {{ mitigationAction?.impact_documentation?.methodologies_to_use }}
+            </h3>
           </div>
         </div>
       </mat-tab>
@@ -355,11 +466,14 @@
                 <h3 class="mat-h3">{{ indicator['limitation'] }}</h3>
                 <strong translate>mitigationAction.howSustainabilityIndicator</strong>
                 <strong translate>mitigationAction.sinameccClassifiers</strong>
-                <h3 class="mat-h3">{{ indicator['classifier'] }}</h3>
+                <div>
+                  <ul>
+                    <li *ngFor="let element of indicator['classifier']">{{ element.name }}</li>
+                  </ul>
+                </div>
+
                 <strong translate>mitigationAction.observationsComments</strong>
                 <h3 class="mat-h3">{{ indicator['comments'] }}</h3>
-                <strong translate>mitigationAction.additionalInformation</strong>
-                <h3 class="mat-h3">{{ indicator['additional_information'] }}</h3>
               </div>
               <br />
 
@@ -370,7 +484,11 @@
                 <strong translate>mitigationAction.responsibleInstitution</strong>
                 <h3 class="mat-h3">{{ indicator?.information_source?.responsible_institution }}</h3>
                 <strong translate>mitigationAction.sourceType</strong>
-                <h3 class="mat-h3">{{ indicator?.information_source?.type }}</h3>
+                <div>
+                  <ul>
+                    <li *ngFor="let element of indicator?.information_source?.type">{{ element.name }}</li>
+                  </ul>
+                </div>
                 <strong translate>general.other</strong>
                 <h3 class="mat-h3">{{ indicator?.information_source?.other_type }}</h3>
                 <strong translate>mitigationAction.statisticalOperationName</strong>
@@ -387,7 +505,11 @@
                 <strong translate>general.other</strong>
                 <h3 class="mat-h3">{{ indicator['other_type_of_data'] }}</h3>
                 <strong translate>mitigationAction.SINAMECCClassifiers</strong>
-                <h3 class="mat-h3">{{ indicator['classifier'] }}</h3>
+                <div>
+                  <ul>
+                    <li *ngFor="let element of indicator['classifier']">{{ element.name }}</li>
+                  </ul>
+                </div>
                 <strong translate>general.other</strong>
                 <h3 class="mat-h3">{{ indicator['other_classifier'] }}</h3>
               </div>
@@ -447,7 +569,7 @@
           <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>mitigationAction.anyProgressMonitoringRecordedClimateActions</strong>
-              {{ mitigationAction?.monitoring_reporting_indicator?.progress_in_monitoring }}
+              {{ mitigationAction?.monitoring_reporting_indicator?.progress_in_monitoring ? 'Si' : 'No' }}
             </h3>
           </div>
           <br />
@@ -458,6 +580,7 @@
           <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>mitigationAction.indicatorSelection</strong>
+              ID:
               {{
                 mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator
                   ? (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.indicator

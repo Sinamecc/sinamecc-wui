@@ -174,11 +174,11 @@ export class InitiativeFormComponent implements OnInit {
       const list = [];
       let index = 0;
       for (const element of data) {
-        this.loadSubNDCcatalogs(element.area, index);
+        this.loadSubNDCcatalogs(element.area.id, index);
         list.push(
           this.formBuilder.group({
-            relationshipNDCCtrl: [element.area, Validators.required],
-            relationshipNDCTopicCtrl: [element.goals.map((x: number) => x.toString()), Validators.required],
+            relationshipNDCCtrl: [element.area.id, Validators.required],
+            relationshipNDCTopicCtrl: [element.goals.map((x: any) => x.id.toString()), Validators.required],
           })
         );
 
@@ -198,11 +198,14 @@ export class InitiativeFormComponent implements OnInit {
       let index = 0;
 
       for (const element of data) {
-        this.loadSubDescarbonizatiocatalogs(element.descarbonization_axis, index);
+        this.loadSubDescarbonizatiocatalogs(element.descarbonization_axis.id, index);
         list.push(
           this.formBuilder.group({
-            relationshipDecarbonizationPlanCtrl: [element.descarbonization_axis, Validators.required],
-            relationshipDecarbonizationTopicPlanCtrl: [element.transformational_vision, Validators.required],
+            relationshipDecarbonizationPlanCtrl: [element.descarbonization_axis.id, Validators.required],
+            relationshipDecarbonizationTopicPlanCtrl: [
+              element.transformational_vision.map((x: { id: { toString: () => any } }) => x.id),
+              Validators.required,
+            ],
           })
         );
 
@@ -221,11 +224,11 @@ export class InitiativeFormComponent implements OnInit {
       const list = [];
       let index = 0;
       for (const element of data) {
-        this.loadSubtopics(element.topic, index);
+        this.loadSubtopics(element.topic.id, index);
         list.push(
           this.formBuilder.group({
-            topicCtrl: [element.topic, Validators.required],
-            subTopicPlanCtrl: [element.sub_topic, Validators.required],
+            topicCtrl: [element.topic.id, Validators.required],
+            subTopicPlanCtrl: [element.sub_topic.map((x: { id: any }) => x.id), Validators.required],
           })
         );
 
