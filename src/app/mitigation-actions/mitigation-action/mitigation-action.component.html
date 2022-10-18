@@ -50,7 +50,7 @@
               <strong translate>general.position</strong> {{ mitigationAction?.contact?.job_title }}
             </h3>
             <h3 class="mat-h3"><strong translate>info.emailAddress</strong> {{ mitigationAction?.contact?.email }}</h3>
-            <h3 class="mat-h3"><strong translate>info.emailAddress</strong> {{ mitigationAction?.contact?.phone }}</h3>
+            <h3 class="mat-h3"><strong translate>info.phone</strong> {{ mitigationAction?.contact?.phone }}</h3>
           </div>
 
           <br />
@@ -74,7 +74,7 @@
               <strong translate>general.other</strong> {{ mitigationAction?.status_information?.other_end_date }}
             </h3>
             <h3 class="mat-h3">
-              <strong translate>mitigationAction.entitiesInvolvedMitigationActionCtrl</strong>
+              <strong translate>mitigationAction.entityResponsibleMitigationAction</strong>
               {{ mitigationAction?.status_information?.institution }}
             </h3>
             <h3 class="mat-h3">
@@ -292,7 +292,7 @@
             </h3>
             <div fxLayout="column">
               <h3 class="mat-h3" *ngFor="let element of mitigationAction?.ghg_information?.goals">
-                {{ element.description }}
+                {{ element.code }} - {{ element.description }}
               </h3>
             </div>
           </div>
@@ -388,12 +388,20 @@
           <br />
           <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
             <strong translate>mitigationAction.standardizedCalculationMethodologyUsed</strong>
+            <h3 class="mat-h3" translate>{{ findQuestion('Q1', true) }}</h3>
+            <strong translate>general.detail</strong>
             <h3 class="mat-h3">{{ findQuestion('Q1') }}</h3>
             <strong translate>mitigationAction.calculationsDocumented</strong>
+            <h3 class="mat-h3" translate>{{ findQuestion('Q2', true) }}</h3>
+            <strong translate>general.detail</strong>
             <h3 class="mat-h3">{{ findQuestion('Q2') }}</h3>
             <strong translate>mitigationAction.emissionFactorsUsedCalculationDocumented</strong>
+            <h3 class="mat-h3" translate>{{ findQuestion('Q3', true) }}</h3>
+            <strong translate>general.detail</strong>
             <h3 class="mat-h3">{{ findQuestion('Q3') }}</h3>
             <strong translate>mitigationAction.assumptionsDocumented</strong>
+            <h3 class="mat-h3" translate>{{ findQuestion('Q4', true) }}</h3>
+            <strong translate>general.detail</strong>
             <h3 class="mat-h3">{{ findQuestion('Q4') }}</h3>
           </div>
 
@@ -465,12 +473,7 @@
                 <strong translate>mitigationAction.dataSource</strong>
                 <h3 class="mat-h3">{{ indicator['limitation'] }}</h3>
                 <strong translate>mitigationAction.howSustainabilityIndicator</strong>
-                <strong translate>mitigationAction.sinameccClassifiers</strong>
-                <div>
-                  <ul>
-                    <li *ngFor="let element of indicator['classifier']">{{ element.name }}</li>
-                  </ul>
-                </div>
+                <h3 class="mat-h3">{{ indicator['ensure_sustainability'] }}</h3>
 
                 <strong translate>mitigationAction.observationsComments</strong>
                 <h3 class="mat-h3">{{ indicator['comments'] }}</h3>
@@ -501,7 +504,10 @@
               <br />
               <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
                 <strong translate>mitigationAction.datatype</strong>
-                <h3 class="mat-h3">{{ indicator['type_of_data'] }}</h3>
+                <h3 class="mat-h3">
+                  {{ indicator['type_of_data'] ? typeDataMapDict[indicator['type_of_data']] : '' }}
+                </h3>
+
                 <strong translate>general.other</strong>
                 <h3 class="mat-h3">{{ indicator['other_type_of_data'] }}</h3>
                 <strong translate>mitigationAction.SINAMECCClassifiers</strong>

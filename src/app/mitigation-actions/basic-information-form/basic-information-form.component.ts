@@ -27,9 +27,10 @@ export class BasicInformationFormComponent implements OnInit {
   isLoading = false;
   wasSubmittedSuccessfully = false;
   mitigationAction: MitigationAction;
-  mitigationActionBudgeValuetCtrl = 'CRC';
+  mitigationActionBudgeValuetCtrl: string[] = [];
   startDate = new Date();
   selectedFood = '';
+  budgetCtrlgroup: string;
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -63,8 +64,8 @@ export class BasicInformationFormComponent implements OnInit {
     }
   }
 
-  setmitigationActionBudgeValuetCtrl(value: string) {
-    this.mitigationActionBudgeValuetCtrl = value;
+  setmitigationActionBudgeValuetCtrl(value: string, index: number) {
+    this.mitigationActionBudgeValuetCtrl[index] = value;
   }
 
   private createForm() {
@@ -116,6 +117,7 @@ export class BasicInformationFormComponent implements OnInit {
   }
 
   private createFinanceForm() {
+    this.mitigationActionBudgeValuetCtrl.push('CRC');
     return this.formBuilder.group({
       mitigationActionDescriptionCtrl: ['', [Validators.required, Validators.maxLength(300)]],
       currencyValueCtrl: ['CRC'],
@@ -126,14 +128,16 @@ export class BasicInformationFormComponent implements OnInit {
   private createUpdateFinanceForm() {
     const financeList: FormGroup[] = [];
     // const mapCurrency = ['CRC', 'USD', 'EUR'];
-
+    let index = 0;
     for (const element of this.mitigationAction.finance.finance_information) {
+      this.mitigationActionBudgeValuetCtrl.push(element.currency);
       const form = this.formBuilder.group({
         id: [element.id],
         mitigationActionDescriptionCtrl: [element.source_description, [Validators.required, Validators.maxLength(300)]],
         currencyValueCtrl: [element.currency],
         mitigationActionAmounttCtrl: [element.budget, [Validators.required, Validators.maxLength(50)]],
       });
+      index += 1;
       financeList.push(form);
     }
 
@@ -170,11 +174,14 @@ export class BasicInformationFormComponent implements OnInit {
     };
 
     const financeInformation = [];
-
+    let index = 0;
     for (const element of this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'].controls) {
       const financeinfo = {
         source_description: element.value.mitigationActionDescriptionCtrl,
-        currency: element.value.currencyValueCtrl,
+        currency:
+          this.mitigationActionBudgeValuetCtrl[index] === 'other'
+            ? element.value.currencyValueCtrl
+            : this.mitigationActionBudgeValuetCtrl[index],
         budget: element.value.mitigationActionAmounttCtrl,
       };
       if (this.isUpdating) {
@@ -182,6 +189,7 @@ export class BasicInformationFormComponent implements OnInit {
       }
 
       financeInformation.push(financeinfo);
+      index += 1;
     }
 
     context['finance_information'] = financeInformation;
