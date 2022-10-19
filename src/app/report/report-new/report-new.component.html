@@ -1,39 +1,40 @@
 <div class="container">
-  <!--<h1>
-      <mat-card-title translate>APP_NAME</mat-card-title>
-      <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
-    </h1>-->
   <h3>
     <mat-card-title translate class="section-heading">reportData.createReport</mat-card-title>
     <mat-divider class="divider-custom"></mat-divider>
     <mat-divider class="divider-custom"></mat-divider>
   </h3>
   <div>
-    <form [formGroup]="mainGroup">
+    <form *ngIf="!isLoading" [formGroup]="mainGroup">
       <div fxLayout="column">
         <mat-horizontal-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
               <span translate>Datos para reportes y análisis </span>
             </ng-template>
-            <app-report-form-data [mainStepper]="stepper"></app-report-form-data>
+            <app-report-form-data [reportEdit]="reportEdit" [mainStepper]="stepper"></app-report-form-data>
           </mat-step>
 
           <mat-step formGroupName="0" [stepControl]="formArray?.get([1])">
             <ng-template matStepLabel>
               <span translate>Hoja Metodológica </span>
             </ng-template>
-            <app-methodolofical-sheet [mainStepper]="stepper"></app-methodolofical-sheet>
+            <app-methodolofical-sheet [reportEdit]="reportEdit" [mainStepper]="stepper"></app-methodolofical-sheet>
           </mat-step>
 
           <mat-step formGroupName="0" [stepControl]="formArray?.get([2])">
             <ng-template matStepLabel>
               <span translate>Actualización de datos </span>
             </ng-template>
-            <app-data-update></app-data-update>
+            <app-data-update [reportEdit]="reportEdit"></app-data-update>
           </mat-step>
         </mat-horizontal-stepper>
       </div>
     </form>
+  </div>
+
+  <div fxFill fxLayout="column" fxLayoutAlign="center center" *ngIf="isLoading">
+    <mat-spinner color="accent"></mat-spinner>
+    <h1>Cargando</h1>
   </div>
 </div>

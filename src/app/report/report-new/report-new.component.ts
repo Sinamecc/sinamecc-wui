@@ -5,6 +5,9 @@ import { Logger } from '@core';
 import { ReportFormDataComponent } from '../report-form-data/report-form-data.component';
 import { MethodoloficalSheetComponent } from '../methodolofical-sheet/methodolofical-sheet.component';
 import { DataUpdateComponent } from '../data-update/data-update.component';
+import { ActivatedRoute } from '@angular/router';
+import { Report } from '../interfaces/report';
+import { ReportService } from '../report.service';
 
 const log = new Logger('Report');
 
@@ -16,16 +19,27 @@ const log = new Logger('Report');
 export class ReportNewComponent implements OnInit {
   isLoading = false;
   mainGroup: FormGroup;
+  reportEdit: Report;
 
   @ViewChild(ReportFormDataComponent) reportFormData: ReportFormDataComponent;
   @ViewChild(MethodoloficalSheetComponent) methodologicalSheet: MethodoloficalSheetComponent;
   @ViewChild(DataUpdateComponent) dataUpdate: DataUpdateComponent;
 
-  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private cdRef: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private service: ReportService
+  ) {
     this.createForm();
   }
 
-  ngOnInit(): void {}
+  async ngOnInit(): Promise<void> {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.reportEdit = await this.loadReport(id).finally(() => (this.isLoading = false));
+    }
+  }
 
   get formArray(): AbstractControl | null {
     return this.mainGroup.get('formArray');
@@ -33,9 +47,13 @@ export class ReportNewComponent implements OnInit {
 
   createForm() {
     this.mainGroup = this.formBuilder.group({
-      // this.formBuilder.array([])
       formArray: this.formBuilder.array([this.reportFormDataFrm, this.methodologicalSheetFrm, this.dataUpdateFrm]),
     });
+  }
+
+  private async loadReport(id: string) {
+    this.isLoading = true;
+    return await this.service.report(id).toPromise();
   }
 
   get reportFormDataFrm() {

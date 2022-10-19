@@ -52,28 +52,22 @@
               </mat-form-field>
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>Nombre del registro </mat-label>
+                <mat-label translate>Autor de la última actualización</mat-label>
                 <input matInput formControlName="authorNameCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
               <div fxLayout="row" fxLayoutAlign="end center">
-                <div>
-                  <app-generic-button-secondary
-                    type="button"
-                    (click)="stepper.previous()"
-                    name="general.back"
-                  ></app-generic-button-secondary>
-                </div>
-                <div>
-                  <app-generic-button
-                    [disabled]="reportForm.invalid"
-                    (click)="submitForm()"
-                    name="reportData.submitReport"
-                  >
-                  </app-generic-button>
-                  <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
-                </div>
+                <button
+                  [disabled]="reportForm.invalid"
+                  mat-raised-button
+                  color="primary"
+                  type="button"
+                  (click)="submitForm()"
+                >
+                  <span translate>reportData.submitReport</span>
+                </button>
+                <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
               </div>
             </mat-step>
           </mat-vertical-stepper>

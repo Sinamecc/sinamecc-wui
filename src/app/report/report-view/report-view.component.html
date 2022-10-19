@@ -1,4 +1,8 @@
-<div class="main-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
+<div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center" class="loading-component">
+  <mat-spinner color="accent"></mat-spinner>
+  <h1 class="mat-h1" translate>general.loading</h1>
+</div>
+<div *ngIf="!loading" class="main-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
   <div fxFill>
     <mat-tab-group class="custom-tabs">
       <mat-tab [label]="'reportData.form1.title' | translate">
@@ -22,8 +26,8 @@
             <div fxLayout="row">
               <h3 class="mat-h3" translate>reportData.isBaseline</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ report?.have_line_base }}
+              <h3 class="mat-h3" translate>
+                {{ report?.have_base_line ? 'general.yes' : 'No' }}
               </h3>
             </div>
 
@@ -46,15 +50,15 @@
             <div fxLayout="row">
               <h3 class="mat-h3" translate>reportData.qualityPreItems</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ report?.have_quality_element }}
+              <h3 class="mat-h3" translate>
+                {{ report?.have_quality_element ? 'general.yes' : 'No' }}
               </h3>
             </div>
 
             <div fxLayout="row">
               <h3 class="mat-h3" translate>reportData.form1.previousElementQuality</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
+              <h3 class="mat-h3" translate>
                 {{ report?.quality_element_description }}
               </h3>
             </div>
@@ -62,15 +66,15 @@
             <div fxLayout="row">
               <h3 class="mat-h3" translate>reportData.agreementTransferSINAMECC</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ report?.transfer_data_with_sinamecc }}
+              <h3 class="mat-h3" translate>
+                {{ report?.transfer_data_with_sinamecc ? 'general.yes' : 'No' }}
               </h3>
             </div>
 
             <div fxLayout="row">
               <h3 class="mat-h3" translate>reportData.form1.agreementsTransfer</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
+              <h3 class="mat-h3" translate>
                 {{ report?.transfer_data_with_sinamecc_description }}
               </h3>
             </div>
@@ -242,10 +246,14 @@
 
             <div fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form4.sourceType</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ report?.information_source }}
-              </h3>
+              <div fxLayout="column">
+                <ul>
+                  <li *ngFor="let element of report?.information_source">
+                    {{ sourceTypeMapDict[element] }}
+                  </li>
+                </ul>
+              </div>
+              <br />
             </div>
 
             <div fxLayout="row">
@@ -341,7 +349,7 @@
               <h3 class="mat-h3" translate>mitigationAction.dateLastUpdate</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ '-' }}
+                {{ (report?.report_data_change_log)[0]?.updated | date: 'medium' }}
               </h3>
             </div>
 

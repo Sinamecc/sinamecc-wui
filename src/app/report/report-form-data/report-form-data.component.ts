@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReportService } from '@app/report/report.service';
 import { ReportDataCatalog } from '../interfaces/report-data';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
+import { Report } from '../interfaces/report';
 
 @Component({
   selector: 'app-report-form-data',
@@ -26,6 +27,7 @@ export class ReportFormDataComponent implements OnInit {
   methodological = false;
   catalogs: ReportDataCatalog = undefined;
   @Input() mainStepper: any;
+  @Input() reportEdit: Report;
 
   constructor(
     private router: Router,
@@ -39,7 +41,9 @@ export class ReportFormDataComponent implements OnInit {
     this.getCatalogs();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.createUpdatedForm();
+  }
 
   checkCheckBoxvalue(value: boolean) {
     this.methodological = value;
@@ -82,39 +86,43 @@ export class ReportFormDataComponent implements OnInit {
   }
 
   public validOptions() {
-    const isqualityPreItemsCtrl = this.reportForm.value['formArray'][0].qualityPreItemsCtrl;
-    const validqualityPreItemsCtrl = isqualityPreItemsCtrl
-      ? this.reportForm.value['formArray'][0].qualityPreItemsValueCtrl !== ''
-        ? true
-        : false
-      : true;
+    if (!this.reportEdit) {
+      const isqualityPreItemsCtrl = this.reportForm.value['formArray'][0].qualityPreItemsCtrl;
+      const validqualityPreItemsCtrl = isqualityPreItemsCtrl
+        ? this.reportForm.value['formArray'][0].qualityPreItemsValueCtrl !== ''
+          ? true
+          : false
+        : true;
 
-    const agreementTransferSINAMECCCtrl = this.reportForm.value['formArray'][0].agreementTransferSINAMECCCtrl;
-    const validAgreementTransferSINAMECCCtrl = agreementTransferSINAMECCCtrl
-      ? this.reportForm.value['formArray'][0].agreementTransferSINAMECCValueCtrl !== ''
-        ? true
-        : false
-      : true;
+      const agreementTransferSINAMECCCtrl = this.reportForm.value['formArray'][0].agreementTransferSINAMECCCtrl;
+      const validAgreementTransferSINAMECCCtrl = agreementTransferSINAMECCCtrl
+        ? this.reportForm.value['formArray'][0].agreementTransferSINAMECCValueCtrl !== ''
+          ? true
+          : false
+        : true;
 
-    const isBaselineCtrl = this.reportForm.value['formArray'][0].isBaselineCtrl;
-    const validIsBaselineCtrl = isBaselineCtrl
-      ? this.reportForm.value['formArray'][0].isBaselineValueCtrlFile !== '' ||
-        this.reportForm.value['formArray'][0].isBaselineValueCtrlValue !== ''
-      : true;
+      const isBaselineCtrl = this.reportForm.value['formArray'][0].isBaselineCtrl;
+      const validIsBaselineCtrl = isBaselineCtrl
+        ? this.reportForm.value['formArray'][0].isBaselineValueCtrlFile !== '' ||
+          this.reportForm.value['formArray'][0].isBaselineValueCtrlValue !== ''
+        : true;
 
-    const validReportData =
-      this.reportForm.value['formArray'][0].reportDataCtrlFile !== '' ||
-      this.reportForm.value['formArray'][0].reportDataCtrlValue !== ''
-        ? true
-        : false;
+      const validReportData =
+        this.reportForm.value['formArray'][0].reportDataCtrlFile !== '' ||
+        this.reportForm.value['formArray'][0].reportDataCtrlValue !== ''
+          ? true
+          : false;
 
-    return (
-      validIsBaselineCtrl &&
-      validReportData &&
-      validqualityPreItemsCtrl &&
-      validAgreementTransferSINAMECCCtrl &&
-      this.reportForm.valid
-    );
+      return (
+        validIsBaselineCtrl &&
+        validReportData &&
+        validqualityPreItemsCtrl &&
+        validAgreementTransferSINAMECCCtrl &&
+        this.reportForm.valid
+      );
+    } else {
+      return this.reportForm.valid;
+    }
   }
 
   private createForm() {
@@ -131,6 +139,34 @@ export class ReportFormDataComponent implements OnInit {
           agreementTransferSINAMECCValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
           reportDataCtrlFile: [''],
           reportDataCtrlValue: [''],
+        }),
+      ]),
+    });
+  }
+
+  private createUpdatedForm() {
+    this.reportForm = this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          whatInformationReportedCtrl: [this.reportEdit.report_information, Validators.required],
+          isBaselineCtrl: [
+            this.reportEdit.have_line_base,
+            Validators.compose([Validators.maxLength(500), Validators.required]),
+          ],
+          isBaselineValueCtrlFile: [''],
+          isBaselineValueCtrlValue: [this.reportEdit.base_line_report],
+          qualityPreItemsCtrl: [this.reportEdit.have_quality_element, Validators.required],
+          qualityPreItemsValueCtrl: [
+            this.reportEdit.quality_element_description,
+            Validators.compose([Validators.maxLength(500)]),
+          ],
+          agreementTransferSINAMECCCtrl: [this.reportEdit.transfer_data_with_sinamecc, Validators.required],
+          agreementTransferSINAMECCValueCtrl: [
+            this.reportEdit.transfer_data_with_sinamecc_description,
+            Validators.compose([Validators.maxLength(500)]),
+          ],
+          reportDataCtrlFile: [''],
+          reportDataCtrlValue: [this.reportEdit.individual_report_data],
         }),
       ]),
     });

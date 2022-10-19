@@ -141,11 +141,15 @@
 
               <div fxLayout="row" fxLayoutAlign="end center">
                 <div>
-                  <app-generic-button
+                  <button
                     [disabled]="!validOptions()"
+                    mat-raised-button
+                    color="primary"
+                    type="button"
                     (click)="submitForm()"
-                    name="Enviar"
-                  ></app-generic-button>
+                  >
+                    <span translate>general.next</span>
+                  </button>
                 </div>
               </div>
             </mat-step>

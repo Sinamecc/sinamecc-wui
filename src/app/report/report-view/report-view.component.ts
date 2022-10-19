@@ -7,6 +7,7 @@ import {
   commentsStructureModule1,
   commentsStructureModule2,
   commentsStructureModule3,
+  sourceTypeMap,
 } from '../interfaces/comments-structure';
 import { Report } from '../interfaces/report';
 import { ReportService } from '../report.service';
@@ -20,10 +21,12 @@ export class ReportViewComponent implements OnInit {
   report: Report;
   id: string = '';
   edit = false;
+  loading = false;
 
   commentsModule1 = commentsStructureModule1;
   commentsModule2 = commentsStructureModule2;
   commentsModule3 = commentsStructureModule3;
+  sourceTypeMapDict = sourceTypeMap;
   commentsByModule = {};
 
   constructor(private service: ReportService, private route: ActivatedRoute, public dialog: MatDialog) {}
@@ -93,8 +96,12 @@ export class ReportViewComponent implements OnInit {
   }
 
   private loadReport(id: string) {
-    this.service.report(id).subscribe((response) => {
-      this.report = response;
-    });
+    this.loading = true;
+    this.service
+      .report(id)
+      .subscribe((response) => {
+        this.report = response;
+      })
+      .add(() => (this.loading = false));
   }
 }

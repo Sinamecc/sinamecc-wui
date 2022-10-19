@@ -31,6 +31,7 @@ export interface ReportContext {
 
 const routes = {
   submitReport: () => `/v1/report-data/report/`,
+  submitEditReport: (id: string) => `/v1/report-data/report/${id}`,
   submitVersion: (id: number) => `/v1/report_file/${id}`,
   reports: (id: string = '') => `/v1/report-data/report/${id ? id + '/' : id}`,
   versions: (id: number) => `/v1/report_file/${id}/versions`,
@@ -59,6 +60,18 @@ export class ReportService {
     // Replace by proper api call, verify params in component
 
     return this.httpClient.post(routes.submitReport(), context).pipe(
+      map(() => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly',
+        };
+        return response;
+      })
+    );
+  }
+
+  submitEditReport(context: ReportDataPayload, id: string): Observable<Response> {
+    return this.httpClient.put(routes.submitEditReport(id), context).pipe(
       map(() => {
         const response = {
           statusCode: 200,

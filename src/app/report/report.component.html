@@ -4,10 +4,10 @@
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
 
-<br />
-<app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
-<br />
-
+<div *ngIf="isLoading" fxLayout="column" fxLayoutAlign="center center" class="loading-component">
+  <mat-spinner color="accent"></mat-spinner>
+  <h1 class="mat-h1" translate>general.loading</h1>
+</div>
 <div class="container mat-elevation-z8 table-sinamecc">
   <mat-table #table [dataSource]="dataSource">
     <!-- Name Column -->
@@ -25,6 +25,11 @@
     <ng-container matColumnDef="contact_name">
       <mat-header-cell *matHeaderCellDef translate> Persona de contacto </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.contact.full_name }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="sinamecc_classifier">
+      <mat-header-cell *matHeaderCellDef translate>mitigationAction.SINAMECCClassifiers </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.classifier }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="status">
@@ -45,6 +50,10 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
       <mat-cell *matCellDef="let element">
+        <button *ngIf="hasPermProvider()" mat-icon-button color="accent" (click)="edit(element.id)">
+          <mat-icon color="white">edit</mat-icon>
+        </button>
+
         <button (click)="view(element.id)" mat-icon-button color="accent">
           <mat-icon color="white">visibility</mat-icon>
         </button>
@@ -65,6 +74,8 @@
 </div>
 <br />
 
-<div *ngIf="hasPermProvider()" class="box-button">
-  <app-generic-button routerLink="/report/new" name="reportData.addReport"></app-generic-button>
+<div *ngIf="hasPermProvider() && !isLoading" class="box-button">
+  <button routerLink="/report/new" mat-raised-button color="primary" type="button">
+    <span translate>reportData.addReport</span>
+  </button>
 </div>
