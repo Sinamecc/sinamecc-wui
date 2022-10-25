@@ -59,6 +59,7 @@ export interface ImpacDocumentationQuestion {
 }
 
 export interface ImpactDocumentation {
+  gases?: string;
   base_line_definition: string;
   calculation_methodology: string;
   carbon_international_commerce: boolean;
