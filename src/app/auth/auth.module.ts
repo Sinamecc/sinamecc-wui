@@ -7,8 +7,8 @@ import { MaterialModule } from '@app/material.module';
 import { I18nModule } from '@app/i18n';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login.component';
-import { CredentialsService } from '.';
 import { SharedModule } from '@shared';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   imports: [
@@ -21,7 +21,7 @@ import { SharedModule } from '@shared';
     SharedModule,
     AuthRoutingModule,
   ],
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, SignupComponent],
   providers: [],
 })
 export class AuthModule {}

@@ -5,6 +5,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { map, flatMap } from 'rxjs/operators';
 
 import { Credentials, CredentialsService } from './credentials.service';
+import { SignUpPayload } from './signupInterfaces';
 
 export interface LoginContext {
   username: string;
@@ -16,7 +17,8 @@ const routes = {
   login: () => `/v1/token/`,
   userData: (username: string) => `/v1/user/${username}`,
   emailResetPassword: () => `/v1/user/change_password/`,
-  changePassword: (token: string, code: string) => `/v1/user/change_password/${code}/${token}`,
+  changePassword: (token: string, code: string) => `/v1/user/change_password/${code}/${token}/`,
+  signup: () => `/v1/user-self-management/`,
 };
 
 /**
@@ -83,6 +85,14 @@ export class AuthenticationService {
       password: context.password,
     };
     return this.httpClient.put(routes.changePassword(context.token, context.code), body);
+  }
+
+  createNewUser(payload: SignUpPayload) {
+    return this.httpClient.post(routes.signup(), payload).pipe(
+      map((res: SignUpPayload) => {
+        return res;
+      })
+    );
   }
 
   getUserPhoto(photoUrl: string) {

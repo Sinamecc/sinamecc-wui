@@ -1,0 +1,167 @@
+<div class="main-container" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="signup-container" fxLayout="row" fxLayoutAlign="center stretch">
+    <div class="container" fxLayout="column" fxLayoutAlign="start center">
+      <h1 class="title" translate>credentialsSection.signUp.title</h1>
+      <mat-horizontal-stepper class="stepper" [linear]="true" #stepper>
+        <mat-step [stepControl]="signupForm">
+          <form [formGroup]="signupForm">
+            <ng-template matStepLabel><span translate>credentialsSection.signUp.personalInfo</span></ng-template>
+
+            <mat-form-field class="custom-input" appearance="fill">
+              <mat-label translate>credentialsSection.signUp.form.name</mat-label>
+              <input
+                type="text"
+                matInput
+                [formControl]="signupForm.controls.name"
+                [errorStateMatcher]="matcher"
+                required
+              />
+              <mat-error translate *ngIf="signupForm.controls.name.hasError('pattern')">
+                credentialsSection.signUp.errors.name
+              </mat-error>
+
+              <mat-error translate *ngIf="signupForm.controls.name.hasError('required')">
+                credentialsSection.signUp.errors.fieldRequiered
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="custom-input" appearance="fill">
+              <mat-label translate>credentialsSection.signUp.form.lastname</mat-label>
+              <input
+                type="text"
+                matInput
+                [errorStateMatcher]="matcher"
+                [formControl]="signupForm.controls.lastname"
+                required
+              />
+              <mat-error translate *ngIf="signupForm.controls.lastname.hasError('pattern')">
+                credentialsSection.signUp.errors.lastname
+              </mat-error>
+
+              <mat-error translate *ngIf="signupForm.controls.lastname.hasError('required')">
+                credentialsSection.signUp.errors.fieldRequiered
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="custom-input" appearance="fill">
+              <mat-label translate>credentialsSection.signUp.form.email</mat-label>
+              <input
+                type="email"
+                matInput
+                [errorStateMatcher]="matcher"
+                [formControl]="signupForm.controls.email"
+                required
+              />
+
+              <mat-error translate *ngIf="signupForm.controls.email.hasError('email')">
+                credentialsSection.signUp.errors.email
+              </mat-error>
+              <mat-error translate *ngIf="signupForm.controls.email.hasError('required')">
+                credentialsSection.signUp.errors.fieldRequiered
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="custom-input" appearance="fill">
+              <mat-label translate>credentialsSection.signUp.form.institution</mat-label>
+              <input
+                type="text"
+                matInput
+                [errorStateMatcher]="matcher"
+                [formControl]="signupForm.controls.institution"
+                required
+              />
+              <mat-error translate *ngIf="signupForm.controls.institution.hasError('required')">
+                credentialsSection.signUp.errors.fieldRequiered
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="custom-input" appearance="fill">
+              <mat-label translate>credentialsSection.signUp.form.position</mat-label>
+              <input
+                type="text"
+                matInput
+                [errorStateMatcher]="matcher"
+                [formControl]="signupForm.controls.position"
+                required
+              />
+              <mat-error translate *ngIf="signupForm.controls.position.hasError('required')">
+                credentialsSection.signUp.errors.fieldRequiered
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="custom-input" appearance="fill">
+              <mat-label translate>credentialsSection.signUp.form.perm</mat-label>
+              <mat-select [errorStateMatcher]="matcher" [formControl]="signupForm.controls.permissions" multiple>
+                <mat-option *ngFor="let module of modules" [value]="module.code">{{ module.name }}</mat-option>
+              </mat-select>
+              <mat-error translate *ngIf="signupForm.controls.permissions.hasError('required')">
+                credentialsSection.signUp.errors.fieldRequiered
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="custom-input" appearance="fill">
+              <mat-label translate>credentialsSection.signUp.form.user</mat-label>
+              <input
+                type="text"
+                matInput
+                [errorStateMatcher]="matcher"
+                [formControl]="signupForm.controls.username"
+                required
+              />
+              <mat-error translate *ngIf="signupForm.controls.username.hasError('pattern')">
+                credentialsSection.signUp.errors.user
+              </mat-error>
+
+              <mat-error translate *ngIf="signupForm.controls.username.hasError('required')">
+                credentialsSection.signUp.errors.fieldRequiered
+              </mat-error>
+            </mat-form-field>
+
+            <div *ngIf="isLoading" class="custom-input" fxLayout="column" fxLayoutAlign="center center">
+              <mat-spinner></mat-spinner>
+            </div>
+            <button
+              type="button"
+              *ngIf="!isLoading"
+              [disabled]="!(signupForm.status == 'VALID')"
+              (click)="submitForm(stepper)"
+              class="custom-input"
+              mat-raised-button
+              color="primary"
+            >
+              <span translate>general.next</span>
+            </button>
+
+            <button
+              *ngIf="!isLoading"
+              routerLink="/login"
+              type="button"
+              class="custom-input custom-button"
+              mat-stroked-button
+              color="accent"
+            >
+              <span translate>credentialsSection.signUp.returnLogin</span>
+            </button>
+          </form>
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel><span translate>credentialsSection.signUp.confirm</span></ng-template>
+
+          <div class="info-container" fxLayout="column" fxLayoutAlign="center center">
+            <mat-icon class="custom-icon" color="accent">
+              check_circle
+            </mat-icon>
+
+            <h1 class="title" translate>general.done</h1>
+            <label translate>credentialsSection.signUp.thanks</label>
+            <label translate>credentialsSection.signUp.contactInfo</label>
+            <button routerLink="/login" class="custom-button" mat-raised-button color="accent">
+              <span translate>credentialsSection.signUp.returnLogin</span>
+            </button>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </mat-card>
+</div>
