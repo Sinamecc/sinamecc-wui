@@ -1,5 +1,6 @@
 {
   "credentialsSection": {
+    "signUpButton": "Do you want to be part of SINAMECC?",
     "changePassword": "Change password",
     "changeText": "Choose a new password to finish the process and log in",
     "newPassword": "New Password",
@@ -18,7 +19,33 @@
     "forgottenPassword": "have you forgotten your password?",
     "forgotPassword": "Forgot you password?",
     "recoveyPassword": "Enter you email address and we'll send you a link to reset you password",
-    "sendLink": "Send Link"
+    "sendLink": "Send Link",
+    "signUp": {
+      "returnLogin": "Back to login",
+      "confirm": "Confirmation",
+      "title": "Register in SINAMECC",
+      "personalInfo": "personal information",
+      "thanks": "Thank you for your request!",
+      "contactInfo": "We will review your profile and we will be contacting you.",
+      "form": {
+        "name": "Name",
+        "lastname": "Last name",
+        "email": "Email",
+        "position": "Position",
+        "institution": "Institution",
+        "perm": "Permissions",
+        "user": "Username",
+        "password": "Password"
+      },
+      "errors": {
+        "fieldRequiered": "This field is required",
+        "name": "The name must contain a length of 4-20 characters, without special characters",
+        "lastname": "The last name must contain a length of 4-20 characters, without special characters",
+        "email": "Please enter a valid email!",
+        "user": "Username must be 4-20 characters long, no special characters",
+        "password": "This field requires at least 5 characters"
+      }
+    }
   },
 
   "mitigationAction": {

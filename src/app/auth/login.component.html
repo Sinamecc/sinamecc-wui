@@ -1,7 +1,7 @@
 <div fxFill fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1.5rem" class="mat-typography">
   <div class="login-container" fxLayout="row" fxLayoutAlign="center">
     <mat-card fxFlex="90%" fxFlex.sm="66%" fxFlex.md="50%" fxFlex.gt-md="33%" class="login-box">
-      <img class="logo" src="assets/SINAMECC-logo-color.svg" alt="angular logo" />
+      <img class="logo" src="assets/SINAMECC-logo-color.svg" alt="SINAMECC logo" />
       <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2rem">
         <h4 class="version">v{{ version }}</h4>
       </div>
@@ -42,6 +42,8 @@
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
             <span translate>credentialsSection.login</span>
           </button>
+          <br />
+          <a mat-button href="/sign-up"><span translate>credentialsSection.signUpButton</span></a>
         </div>
       </form>
     </mat-card>
