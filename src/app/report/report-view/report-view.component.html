@@ -19,7 +19,7 @@
               <h3 class="mat-h3" translate>reportData.whatInformationReported</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ report?.report_information }}
+                {{ report?.report_information ? informationReportMapFields[report?.report_information] : '' }}
               </h3>
             </div>
 
@@ -148,7 +148,7 @@
               <h3 class="mat-h3" translate>reportData.form2.frecuency</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ report?.measurement_frequency }}
+                {{ report?.measurement_frequency ? reportingPeriodicityMap[report?.measurement_frequency] : '' }}
               </h3>
             </div>
 

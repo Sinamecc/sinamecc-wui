@@ -10,6 +10,7 @@ import {
   sourceTypeMap,
 } from '../interfaces/comments-structure';
 import { Report } from '../interfaces/report';
+import { formationReportedMap, reportingPeriodicity } from '../interfaces/report-data';
 import { ReportService } from '../report.service';
 
 @Component({
@@ -28,6 +29,8 @@ export class ReportViewComponent implements OnInit {
   commentsModule3 = commentsStructureModule3;
   sourceTypeMapDict = sourceTypeMap;
   commentsByModule = {};
+  informationReportMapFields = formationReportedMap;
+  reportingPeriodicityMap = reportingPeriodicity;
 
   constructor(private service: ReportService, private route: ActivatedRoute, public dialog: MatDialog) {}
 
