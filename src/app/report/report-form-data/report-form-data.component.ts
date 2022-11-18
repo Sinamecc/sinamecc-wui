@@ -79,7 +79,6 @@ export class ReportFormDataComponent implements OnInit {
       transfer_data_with_sinamecc_description: this.reportForm.value['formArray'][0].agreementTransferSINAMECCValueCtrl,
       base_line_report: this.reportForm.value['formArray'][0].isBaselineValueCtrlValue,
       individual_report_data: this.reportForm.value['formArray'][0].reportDataCtrlValue,
-      // reportDataCtrlFile: this.reportForm.value['formArray'][0].reportDataCtrlFile,
     };
 
     return payload;
@@ -107,11 +106,7 @@ export class ReportFormDataComponent implements OnInit {
           this.reportForm.value['formArray'][0].isBaselineValueCtrlValue !== ''
         : true;
 
-      const validReportData =
-        this.reportForm.value['formArray'][0].reportDataCtrlFile !== '' ||
-        this.reportForm.value['formArray'][0].reportDataCtrlValue !== ''
-          ? true
-          : false;
+      const validReportData = this.reportForm.value['formArray'][0].reportDataCtrlValue !== '' ? true : false;
 
       return (
         validIsBaselineCtrl &&
@@ -137,7 +132,6 @@ export class ReportFormDataComponent implements OnInit {
           qualityPreItemsValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
           agreementTransferSINAMECCCtrl: ['', Validators.required],
           agreementTransferSINAMECCValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
-          reportDataCtrlFile: [''],
           reportDataCtrlValue: [''],
         }),
       ]),
@@ -165,7 +159,6 @@ export class ReportFormDataComponent implements OnInit {
             this.reportEdit.transfer_data_with_sinamecc_description,
             Validators.compose([Validators.maxLength(500)]),
           ],
-          reportDataCtrlFile: [''],
           reportDataCtrlValue: [this.reportEdit.individual_report_data],
         }),
       ]),

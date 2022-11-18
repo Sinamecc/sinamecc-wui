@@ -122,19 +122,13 @@
                 <span translate>¿Cómo se desean reportar los datos?</span>
                 <div [style.width.%]="100" fxLayout="row" fxLayoutAlign=" center">
                   <mat-form-field class="field-ppcn">
-                    <mat-label translate>Carga de documentos: en los formatos Zip, rar, pdf, excel y word</mat-label>
-                    <input matInput formControlName="reportDataCtrlFile" />
+                    <mat-label translate>Reporte de valor individual o Conexión con API o Webservice</mat-label>
+                    <input matInput formControlName="reportDataCtrlValue" />
                     <mat-error translate>errorLabel.fieldRequired</mat-error>
                   </mat-form-field>
                   <input type="file" name="filename" />
                   <br />
                 </div>
-
-                <mat-form-field class="field-ppcn">
-                  <mat-label translate>Reporte de valor individual o Conexión con API o Webservice</mat-label>
-                  <input matInput formControlName="reportDataCtrlValue" />
-                  <mat-error translate>errorLabel.fieldRequired</mat-error>
-                </mat-form-field>
               </div>
 
               <br />

@@ -82,11 +82,14 @@ export class MethodoloficalSheetComponent implements OnInit {
       disaggregation: this.reportForm.value['formArray'][0].disaggregationCtrl,
       limitation: this.reportForm.value['formArray'][0].limitationsCtrl,
       additional_information: this.reportForm.value['formArray'][0].commentsCtrl,
+      sustainable: this.reportForm.value['formArray'][0].sustainableCtrl,
       information_source: this.reportForm.value['formArray'][1].sourceTypeCtrl,
       statistical_operation: this.reportForm.value['formArray'][1].operationNameCtrl,
+      responsible_institution: this.reportForm.value['formArray'][1].institutionCtrl,
       contact: {
         full_name: this.reportForm.value['formArray'][2].nameCtrl,
         job_title: this.reportForm.value['formArray'][2].positionCtrl,
+        institution: this.reportForm.value['formArray'][2].departmentCtrl,
         email: this.reportForm.value['formArray'][2].emailCtrl,
         phone: this.reportForm.value['formArray'][2].phoneCtrl,
       },
@@ -119,7 +122,6 @@ export class MethodoloficalSheetComponent implements OnInit {
         }),
         this.formBuilder.group({
           institutionCtrl: [
-            // miss this
             '',
             Validators.compose([Validators.required, Validators.maxLength(350), Validators.required]),
           ],
@@ -165,7 +167,7 @@ export class MethodoloficalSheetComponent implements OnInit {
           timeSeriesAvailableStartCtrl: [this.reportEdit.from_date, Validators.required],
           timeSeriesAvailableEndCtrl: [this.reportEdit.to_date, Validators.required],
           geographicCoverageCtrl: [this.reportEdit.geographic_coverage, Validators.required],
-          geographicCoverageOtherCtrl: [''], // miss this
+          geographicCoverageOtherCtrl: [''],
           disaggregationCtrl: [
             this.reportEdit.disaggregation,
             Validators.compose([Validators.maxLength(500), Validators.required]),
@@ -174,7 +176,10 @@ export class MethodoloficalSheetComponent implements OnInit {
             this.reportEdit.limitation,
             Validators.compose([Validators.maxLength(500), Validators.required]),
           ],
-          sustainableCtrl: ['', Validators.compose([Validators.maxLength(500), Validators.required])], // miss this
+          sustainableCtrl: [
+            this.reportEdit.sustainable,
+            Validators.compose([Validators.maxLength(500), Validators.required]),
+          ], // miss this
           commentsCtrl: [
             this.reportEdit.additional_information,
             Validators.compose([Validators.maxLength(500), Validators.required]),
@@ -182,11 +187,10 @@ export class MethodoloficalSheetComponent implements OnInit {
         }),
         this.formBuilder.group({
           institutionCtrl: [
-            // miss this
-            '',
+            this.reportEdit.responsible_institution,
             Validators.compose([Validators.required, Validators.maxLength(350), Validators.required]),
           ],
-          sourceTypeCtrl: [this.reportEdit.information_source, Validators.required],
+          sourceTypeCtrl: [this.reportEdit.information_source.map((x) => x.id), Validators.required],
           sourceTypeOtherCtrl: [''],
           operationNameCtrl: [
             this.reportEdit.statistical_operation,
@@ -202,7 +206,10 @@ export class MethodoloficalSheetComponent implements OnInit {
             this.reportEdit.contact.job_title,
             Validators.compose([Validators.required, Validators.maxLength(350)]),
           ],
-          departmentCtrl: ['', Validators.compose([Validators.maxLength(100), Validators.required])],
+          departmentCtrl: [
+            this.reportEdit.contact.institution,
+            Validators.compose([Validators.maxLength(100), Validators.required]),
+          ],
           emailCtrl: [
             this.reportEdit.contact.email,
             Validators.compose([Validators.required, Validators.email, Validators.maxLength(40)]),
@@ -217,8 +224,8 @@ export class MethodoloficalSheetComponent implements OnInit {
           ], // miss this
         }),
         this.formBuilder.group({
-          dataTypeCtrl: [this.reportEdit.data_type, Validators.required],
-          sinameccClassifiersCtrl: [this.reportEdit.classifier, Validators.required],
+          dataTypeCtrl: [this.reportEdit.data_type.id, Validators.required],
+          sinameccClassifiersCtrl: [this.reportEdit.classifier.map((x: { id: any }) => x.id), Validators.required],
         }),
       ]),
     });

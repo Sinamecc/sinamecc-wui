@@ -80,14 +80,6 @@
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3" translate>reportData.form1.howReportData</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ '-' }}
-              </h3>
-            </div>
-
-            <div fxLayout="row">
               <h3 class="mat-h3" translate>reportData.form1.individualValue</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -218,7 +210,7 @@
               </h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ '-' }}
+                {{ report?.sustainable }}
               </h3>
             </div>
 
@@ -240,7 +232,7 @@
               <h3 class="mat-h3" translate>reportData.form2.responsibleInstitution</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ '-' }}
+                {{ report?.responsible_institution }}
               </h3>
             </div>
 
@@ -249,7 +241,7 @@
               <div fxLayout="column">
                 <ul>
                   <li *ngFor="let element of report?.information_source">
-                    {{ sourceTypeMapDict[element] }}
+                    {{ element.name }}
                   </li>
                 </ul>
               </div>
@@ -295,6 +287,14 @@
             </div>
 
             <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.institution</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.contact?.institution }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
               <h3 class="mat-h3" translate>info.phone</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -320,16 +320,20 @@
               <h3 class="mat-h3" translate>mitigationAction.datatype</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ report?.data_type }}
+                {{ report?.data_type.name }}
               </h3>
             </div>
 
             <div fxLayout="row">
               <h3 class="mat-h3" translate>mitigationAction.SINAMECCClassifiers</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ report?.classifier }}
-              </h3>
+              <div fxLayout="column">
+                <ul>
+                  <li *ngFor="let element of report?.classifier">
+                    {{ element.name }}
+                  </li>
+                </ul>
+              </div>
+              <br />
             </div>
           </div>
         </div>

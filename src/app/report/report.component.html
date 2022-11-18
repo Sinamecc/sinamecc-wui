@@ -3,7 +3,7 @@
 </mat-toolbar>
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
-
+<br />
 <div *ngIf="isLoading" fxLayout="column" fxLayoutAlign="center center" class="loading-component">
   <mat-spinner color="accent"></mat-spinner>
   <h1 class="mat-h1" translate>general.loading</h1>
@@ -25,11 +25,6 @@
     <ng-container matColumnDef="contact_name">
       <mat-header-cell *matHeaderCellDef translate> Persona de contacto </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.contact.full_name }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="sinamecc_classifier">
-      <mat-header-cell *matHeaderCellDef translate>mitigationAction.SINAMECCClassifiers </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.classifier }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="status">
