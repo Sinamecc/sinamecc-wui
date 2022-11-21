@@ -116,7 +116,11 @@
               <label class="radio-grup-label" translate
                 >6.2.1.3 - <span translate>mitigationAction.sourceType</span></label
               ><br />
-              <mat-radio-group #informationToUpdate="matRadioGroup" class="custom-radio-group">
+              <mat-radio-group
+                formControlName="reportTypeCtrl"
+                #informationToUpdate="matRadioGroup"
+                class="custom-radio-group"
+              >
                 <mat-radio-button [style.margin.px]="5" [value]="1">
                   <label translate>Línea de texto para el reporte</label>
                 </mat-radio-button>

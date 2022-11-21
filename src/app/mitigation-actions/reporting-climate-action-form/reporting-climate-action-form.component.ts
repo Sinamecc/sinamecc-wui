@@ -97,10 +97,14 @@ export class ReportingClimateActionFormComponent implements OnInit {
             ),
 
             data_updated_date: this.datePipe.transform(
-              this.form.value.formArray[1].indicatordataUpdateDateCtrl,
+              this.form.value.formArray[1].indicatorDataUpdateDateCtrl,
               'yyyy-MM-dd'
             ),
-
+            report_type: this.form.value.formArray[1].reportTypeCtrl,
+            progress_report_period: this.datePipe.transform(
+              this.form.value.formArray[2].reportingPeriodCtrl,
+              'yyyy-MM-dd'
+            ),
             updated_data: this.form.value.formArray[1].informationToUpdateCtrl
               ? this.form.value.formArray[1].informationToUpdateCtrl
               : null,
@@ -113,6 +117,11 @@ export class ReportingClimateActionFormComponent implements OnInit {
       },
     };
 
+    if (this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'][0].id) {
+      context['monitoring_reporting_indicator']['monitoring_indicator'][
+        'id'
+      ] = this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'][0].id;
+    }
     return context;
   }
 
@@ -159,6 +168,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
           indicatorDataUpdateDateCtrl: ['', Validators.required],
           reportingPeriodStartCtrl: ['', Validators.required],
           reportingPeriodEndCtrl: ['', Validators.required],
+          reportTypeCtrl: ['', Validators.required],
           informationToUpdateCtrl: ['', Validators.required],
         }),
 
@@ -195,6 +205,10 @@ export class ReportingClimateActionFormComponent implements OnInit {
             this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].final_date_report_period,
             Validators.required,
           ],
+          reportTypeCtrl: [
+            parseInt(this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].report_type),
+            Validators.required,
+          ],
           informationToUpdateCtrl: [
             this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].updated_data,
             Validators.required,
@@ -202,7 +216,10 @@ export class ReportingClimateActionFormComponent implements OnInit {
         }),
 
         this.formBuilder.group({
-          reportingPeriodCtrl: ['', Validators.required],
+          reportingPeriodCtrl: [
+            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].progress_report_period,
+            Validators.required,
+          ],
           beenProgressActionPeriodCtrl: [
             this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].progress_report,
             Validators.required,

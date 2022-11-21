@@ -173,7 +173,9 @@ export class EmissionsMitigationFormComponent implements OnInit {
             Validators.required,
           ],
           periodPotentialEmissionReductionEstimatedOtherCtrl: [
-            this.mitigationAction.impact_documentation.gases.split(','),
+            this.mitigationAction.impact_documentation.gases
+              ? this.mitigationAction.impact_documentation.gases.split(',')
+              : '',
             Validators.required,
           ],
           sectorSourceFCtrl: this.formBuilder.array(this.createSectorSourceEditForm()),

@@ -113,6 +113,7 @@ export class BasicInformationFormComponent implements OnInit {
       ]),
     });
 
+    this.setSection2Validations(this.mitigationAction.finance.mideplan_registered ? 1 : 2);
     this.isLoading = false;
   }
 
