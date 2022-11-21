@@ -116,12 +116,15 @@ export class ReportingClimateActionFormComponent implements OnInit {
         ],
       },
     };
-
-    if (this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'][0].id) {
-      context['monitoring_reporting_indicator']['monitoring_indicator'][
-        'id'
-      ] = this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'][0].id;
+    console.log(this.mitigationAction.monitoring_reporting_indicator);
+    if (this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator']) {
+      if (this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'][0].id) {
+        context['monitoring_reporting_indicator']['monitoring_indicator'][
+          'id'
+        ] = this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'][0].id;
+      }
     }
+
     return context;
   }
 
