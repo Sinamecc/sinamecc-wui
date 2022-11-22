@@ -116,7 +116,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
         ],
       },
     };
-    console.log(this.mitigationAction.monitoring_reporting_indicator);
+
     if (this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator']) {
       if (this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'][0].id) {
         context['monitoring_reporting_indicator']['monitoring_indicator'][
