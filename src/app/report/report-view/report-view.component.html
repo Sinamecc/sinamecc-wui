@@ -31,12 +31,18 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div *ngIf="loadingFiles" fxLayout="column">
+              <mat-spinner [diameter]="30"></mat-spinner>
+              <h3 class="mat-h3" translate>general.loading</h3>
+            </div>
+
+            <div fxLayout="column" *ngIf="files['base_line_report']">
               <h3 class="mat-h3" translate>reportData.form1.reportBaselineIndicator</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ '-' }}
-              </h3>
+              <div fxLayout="row">
+                <button (click)="downloadFile('base_line_report')" mat-raised-button color="primary">
+                  {{ files['base_line_report'].filename }} <mat-icon>cloud_download</mat-icon>
+                </button>
+              </div>
             </div>
 
             <div fxLayout="row">
@@ -85,6 +91,20 @@
               <h3 class="mat-h3">
                 {{ report?.individual_report_data }}
               </h3>
+            </div>
+
+            <div *ngIf="loadingFiles" fxLayout="column">
+              <mat-spinner [diameter]="30"></mat-spinner>
+              <h3 class="mat-h3" translate>general.loading</h3>
+            </div>
+
+            <div fxLayout="column" *ngIf="files['report_file']">
+              <h3 class="mat-h3" translate>reportData.files</h3>
+              <div fxLayout="row">
+                <button (click)="downloadFile('report_file')" mat-raised-button color="primary">
+                  {{ files['report_file'].filename }} <mat-icon>cloud_download</mat-icon>
+                </button>
+              </div>
             </div>
           </div>
         </div>

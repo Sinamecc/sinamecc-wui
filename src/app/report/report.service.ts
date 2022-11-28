@@ -10,6 +10,7 @@ import { S3Service, S3File } from '@app/@shared';
 import { Report } from './interfaces/report';
 
 export interface Response {
+  id?: string;
   // Customize received credentials here
   statusCode: number;
   message: string;
@@ -36,6 +37,7 @@ const routes = {
   reports: (id: string = '') => `/v1/report-data/report/${id ? id + '/' : id}`,
   versions: (id: number) => `/v1/report_file/${id}/versions`,
   reportDataCatalogs: () => `/v1/report-data/data/`,
+  submitReportFile: (id: string) => `/v1/report-data/report/${id}/file/`,
 };
 
 @Injectable({
@@ -51,6 +53,17 @@ export class ReportService {
     this.reportSource.next(newReport);
   }
 
+  submitReportFile(key: string, file: File, id: string) {
+    const formData: FormData = new FormData();
+    formData.append(key, file);
+
+    return this.httpClient.post(routes.submitReportFile(id), formData, {}).pipe(
+      map((body: any) => {
+        return body;
+      })
+    );
+  }
+
   /**
    * Submit Report Forms.
    * @param {ReportContext} context The report form parameters.
@@ -60,8 +73,9 @@ export class ReportService {
     // Replace by proper api call, verify params in component
 
     return this.httpClient.post(routes.submitReport(), context).pipe(
-      map(() => {
+      map((body: any) => {
         const response = {
+          id: body.id,
           statusCode: 200,
           message: 'Form submitted correctly',
         };

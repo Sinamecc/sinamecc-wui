@@ -1,4 +1,5 @@
 export interface ReportDataPayload {
+  id?: string;
   other_classifier?: string;
   report_information?: string;
   have_line_base?: boolean;

@@ -90,6 +90,17 @@ export interface Report {
   created: string;
   updated: string;
   report_data_change_log: ChangeLog[];
-  files: any;
+  files: ReportFile[];
   next_action: NextState[];
 }
+
+export interface ReportFile {
+  id: number;
+  slug: string;
+  file: string;
+  report_data: number;
+  report_type: string;
+}
+
+export const baseLineFile = 'base_line_report';
+export const reportFile = 'report_file';

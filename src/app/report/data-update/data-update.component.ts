@@ -98,46 +98,24 @@ export class DataUpdateComponent implements OnInit {
     const reportData = Object.assign(this.report, payload);
     this.reportService.updateCurrentReport(reportData);
 
-    if (this.reportEdit) {
-      this.reportService
-        .submitEditReport(reportData, this.reportEdit.id.toString())
-        .pipe(
-          finalize(() => {
-            this.reportForm.markAsPristine();
-            this.isLoading = false;
-          })
-        )
-        .subscribe(
-          () => {
-            this.router.navigate(['/report'], { replaceUrl: true });
-            this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-              this.snackBar.open(res, null, { duration: 3000 });
-            });
-          },
-          (error) => {
-            this.error = error;
-          }
-        );
-    } else {
-      this.reportService
-        .submitReport(reportData)
-        .pipe(
-          finalize(() => {
-            this.reportForm.markAsPristine();
-            this.isLoading = false;
-          })
-        )
-        .subscribe(
-          () => {
-            this.router.navigate(['/report'], { replaceUrl: true });
-            this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-              this.snackBar.open(res, null, { duration: 3000 });
-            });
-          },
-          (error) => {
-            this.error = error;
-          }
-        );
-    }
+    this.reportService
+      .submitEditReport(payload, this.reportEdit ? this.reportEdit.id.toString() : this.report.id.toString())
+      .pipe(
+        finalize(() => {
+          this.reportForm.markAsPristine();
+          this.isLoading = false;
+        })
+      )
+      .subscribe(
+        () => {
+          this.router.navigate(['/report'], { replaceUrl: true });
+          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+            this.snackBar.open(res, null, { duration: 3000 });
+          });
+        },
+        (error) => {
+          this.error = error;
+        }
+      );
   }
 }

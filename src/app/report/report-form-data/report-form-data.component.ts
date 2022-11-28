@@ -12,6 +12,7 @@ import { ReportService } from '@app/report/report.service';
 import { ReportDataCatalog } from '../interfaces/report-data';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
 import { Report } from '../interfaces/report';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-report-form-data',
@@ -26,8 +27,13 @@ export class ReportFormDataComponent implements OnInit {
   isLoading = false;
   methodological = false;
   catalogs: ReportDataCatalog = undefined;
+  reportDataFile: File;
+  baseLineReportFile: File;
   @Input() mainStepper: any;
   @Input() reportEdit: Report;
+
+  loadingFiles = false;
+  files = {};
 
   constructor(
     private router: Router,
@@ -42,30 +48,9 @@ export class ReportFormDataComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createUpdatedForm();
-  }
-
-  checkCheckBoxvalue(value: boolean) {
-    this.methodological = value;
-  }
-
-  get formArray(): AbstractControl | null {
-    return this.reportForm.get('formArray');
-  }
-
-  async getCatalogs() {
-    this.catalogs = await this.reportService.getReportCatalogs().toPromise();
-  }
-
-  submitForm() {
-    this.reportForm.value.methodological = this.methodological.toString();
-    this.isLoading = true;
-    const payload = this.buildForm();
-    this.reportService.updateCurrentReport(payload);
-    this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-      this.snackBar.open(res, null, { duration: 3000 });
-      this.mainStepper.next();
-    });
+    if (this.reportEdit) {
+      this.createUpdatedForm();
+    }
   }
 
   private buildForm() {
@@ -82,6 +67,62 @@ export class ReportFormDataComponent implements OnInit {
     };
 
     return payload;
+  }
+
+  private createForm() {
+    this.reportForm = this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          whatInformationReportedCtrl: ['', Validators.required],
+          isBaselineCtrl: [false, Validators.compose([Validators.maxLength(500), Validators.required])],
+          isBaselineValueCtrlFile: [''],
+          isBaselineValueCtrlValue: [''],
+          qualityPreItemsCtrl: ['', Validators.required],
+          qualityPreItemsValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
+          agreementTransferSINAMECCCtrl: ['', Validators.required],
+          agreementTransferSINAMECCValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
+          reportDataCtrlValue: [''],
+          file: [''],
+        }),
+      ]),
+    });
+  }
+
+  async loadFile() {
+    this.loadingFiles = true;
+    for (const file of this.reportEdit.files) {
+      const s3File = await this.reportService.downloadResource(file.file.replace('/api', ''));
+      this.files[file.report_type] = s3File;
+    }
+    this.loadingFiles = false;
+  }
+
+  private createUpdatedForm() {
+    this.loadFile();
+    this.reportForm = this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          whatInformationReportedCtrl: [this.reportEdit.report_information, Validators.required],
+          isBaselineCtrl: [
+            this.reportEdit.have_line_base,
+            Validators.compose([Validators.maxLength(500), Validators.required]),
+          ],
+          isBaselineValueCtrlFile: [''],
+          isBaselineValueCtrlValue: [this.reportEdit.base_line_report],
+          qualityPreItemsCtrl: [this.reportEdit.have_quality_element, Validators.required],
+          qualityPreItemsValueCtrl: [
+            this.reportEdit.quality_element_description,
+            Validators.compose([Validators.maxLength(500)]),
+          ],
+          agreementTransferSINAMECCCtrl: [this.reportEdit.transfer_data_with_sinamecc, Validators.required],
+          agreementTransferSINAMECCValueCtrl: [
+            this.reportEdit.transfer_data_with_sinamecc_description,
+            Validators.compose([Validators.maxLength(500)]),
+          ],
+          reportDataCtrlValue: [this.reportEdit.individual_report_data],
+        }),
+      ]),
+    });
   }
 
   public validOptions() {
@@ -120,48 +161,101 @@ export class ReportFormDataComponent implements OnInit {
     }
   }
 
-  private createForm() {
-    this.reportForm = this.formBuilder.group({
-      formArray: this.formBuilder.array([
-        this.formBuilder.group({
-          whatInformationReportedCtrl: ['', Validators.required],
-          isBaselineCtrl: [false, Validators.compose([Validators.maxLength(500), Validators.required])],
-          isBaselineValueCtrlFile: [''],
-          isBaselineValueCtrlValue: [''],
-          qualityPreItemsCtrl: ['', Validators.required],
-          qualityPreItemsValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
-          agreementTransferSINAMECCCtrl: ['', Validators.required],
-          agreementTransferSINAMECCValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
-          reportDataCtrlValue: [''],
-        }),
-      ]),
+  uploadFile(event: Event, reportFile = true) {
+    const element = event.currentTarget as HTMLInputElement;
+    let fileList: FileList | null = element.files;
+    if (fileList) {
+      if (reportFile) {
+        this.reportDataFile = fileList[0];
+      } else {
+        this.baseLineReportFile = fileList[0];
+      }
+    }
+  }
+
+  checkCheckBoxvalue(value: boolean) {
+    this.methodological = value;
+  }
+
+  get formArray(): AbstractControl | null {
+    return this.reportForm.get('formArray');
+  }
+
+  async getCatalogs() {
+    this.catalogs = await this.reportService.getReportCatalogs().toPromise();
+  }
+
+  submitForm() {
+    this.reportForm.value.methodological = this.methodological.toString();
+    this.isLoading = true;
+    const payload = this.buildForm();
+
+    if (this.reportEdit) {
+      this.sendUpdatedForm(payload);
+    } else {
+      this.sendNewForm(payload);
+    }
+  }
+
+  sendNewForm(payload: ReportDataPayload) {
+    this.reportService
+      .submitReport(payload)
+      .pipe(
+        finalize(() => {
+          this.reportForm.markAsPristine();
+          this.isLoading = false;
+        })
+      )
+      .subscribe(
+        (response) => {
+          const newPayload = Object.assign(payload, { id: response.id });
+          this.reportService.updateCurrentReport(newPayload);
+          this.reportService.updateCurrentReport(payload);
+          this.successSendForm(response.id);
+        },
+        (error) => {
+          this.error = error;
+        }
+      );
+  }
+
+  sendUpdatedForm(payload: ReportDataPayload) {
+    this.reportService
+      .submitEditReport(payload, this.reportEdit.id.toString())
+      .pipe(
+        finalize(() => {
+          this.reportForm.markAsPristine();
+          this.isLoading = false;
+        })
+      )
+      .subscribe(
+        (response) => {
+          const newPayload = Object.assign(payload, { id: response.id });
+          this.reportService.updateCurrentReport(newPayload);
+          this.successSendForm(response.id);
+        },
+        (error) => {
+          this.error = error;
+        }
+      );
+  }
+
+  successSendForm(id: string) {
+    if (this.reportDataFile) {
+      this.submitFile(id, 'report_file', this.reportDataFile);
+    }
+
+    if (this.baseLineReportFile) {
+      this.submitFile(id, 'base_line_report', this.baseLineReportFile);
+    }
+
+    this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+      this.snackBar.open(res, null, { duration: 3000 });
+      this.mainStepper.next();
     });
   }
 
-  private createUpdatedForm() {
-    this.reportForm = this.formBuilder.group({
-      formArray: this.formBuilder.array([
-        this.formBuilder.group({
-          whatInformationReportedCtrl: [this.reportEdit.report_information, Validators.required],
-          isBaselineCtrl: [
-            this.reportEdit.have_line_base,
-            Validators.compose([Validators.maxLength(500), Validators.required]),
-          ],
-          isBaselineValueCtrlFile: [''],
-          isBaselineValueCtrlValue: [this.reportEdit.base_line_report],
-          qualityPreItemsCtrl: [this.reportEdit.have_quality_element, Validators.required],
-          qualityPreItemsValueCtrl: [
-            this.reportEdit.quality_element_description,
-            Validators.compose([Validators.maxLength(500)]),
-          ],
-          agreementTransferSINAMECCCtrl: [this.reportEdit.transfer_data_with_sinamecc, Validators.required],
-          agreementTransferSINAMECCValueCtrl: [
-            this.reportEdit.transfer_data_with_sinamecc_description,
-            Validators.compose([Validators.maxLength(500)]),
-          ],
-          reportDataCtrlValue: [this.reportEdit.individual_report_data],
-        }),
-      ]),
-    });
+  async submitFile(id: string, key: string, file: File) {
+    await this.reportService.submitReportFile(key, file, id).toPromise();
   }
 }

@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
 import { TranslateService } from '@ngx-translate/core';
+import { finalize } from 'rxjs/operators';
 import { Report } from '../interfaces/report';
 import { ReportDataCatalog } from '../interfaces/report-data';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
@@ -60,10 +61,25 @@ export class MethodoloficalSheetComponent implements OnInit {
     this.isLoading = true;
     const payload = this.buildForm();
     this.reportService.updateCurrentReport(Object.assign(this.report, payload));
-    this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-      this.snackBar.open(res, null, { duration: 3000 });
-      this.mainStepper.next();
-    });
+    this.reportService
+      .submitEditReport(payload, this.reportEdit ? this.reportEdit.id.toString() : this.report.id.toString())
+      .pipe(
+        finalize(() => {
+          this.reportForm.markAsPristine();
+          this.isLoading = false;
+        })
+      )
+      .subscribe(
+        () => {
+          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+            this.snackBar.open(res, null, { duration: 3000 });
+            this.mainStepper.next();
+          });
+        },
+        (error) => {
+          this.error = error;
+        }
+      );
   }
 
   private buildForm() {

@@ -60,7 +60,12 @@
                       <input matInput formControlName="isBaselineValueCtrlFile" />
                       <mat-error translate>errorLabel.fieldRequired</mat-error>
                     </mat-form-field>
-                    <input type="file" name="filename" />
+
+                    <div fxLayout="column">
+                      <input type="file" (change)="uploadFile($event, false)" name="filename" />
+                      <mat-spinner *ngIf="loadingFiles" [diameter]="30"></mat-spinner>
+                      <mat-hint *ngIf="files['base_line_report']">{{ files['base_line_report'].filename }}</mat-hint>
+                    </div>
                   </div>
                   <br />
 
@@ -126,7 +131,11 @@
                     <input matInput formControlName="reportDataCtrlValue" />
                     <mat-error translate>errorLabel.fieldRequired</mat-error>
                   </mat-form-field>
-                  <input type="file" name="filename" />
+                  <div fxLayout="column">
+                    <input (change)="uploadFile($event)" type="file" name="filename" />
+                    <mat-spinner *ngIf="loadingFiles" [diameter]="30"></mat-spinner>
+                    <mat-hint *ngIf="files['report_file']">{{ files['report_file'].filename }}</mat-hint>
+                  </div>
                   <br />
                 </div>
               </div>
@@ -135,7 +144,9 @@
 
               <div fxLayout="row" fxLayoutAlign="end center">
                 <div>
+                  <mat-spinner [diameter]="50" *ngIf="isLoading"></mat-spinner>
                   <button
+                    *ngIf="!isLoading"
                     [disabled]="!validOptions()"
                     mat-raised-button
                     color="primary"
