@@ -1,4 +1,5 @@
 export interface ReportDataPayload {
+  id?: string;
   other_classifier?: string;
   report_information?: string;
   have_line_base?: boolean;
@@ -9,6 +10,8 @@ export interface ReportDataPayload {
   contact?: ReportDataContact;
   report_data_change_log?: ReportDataChangeLog;
   base_line_report?: string;
+  sustainable?: string;
+  responsible_institution?: string;
   individual_report_data?: string;
   name?: string;
   description?: string;

@@ -5,6 +5,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
 import { TranslateService } from '@ngx-translate/core';
+import { finalize } from 'rxjs/operators';
+import { Report } from '../interfaces/report';
 import { ReportDataCatalog } from '../interfaces/report-data';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
 import { ReportService } from '../report.service';
@@ -20,6 +22,7 @@ export class MethodoloficalSheetComponent implements OnInit {
   error: string;
   isLoading = false;
   @Input() mainStepper: any;
+  @Input() reportEdit: Report;
   report: ReportDataPayload;
 
   constructor(
@@ -37,7 +40,12 @@ export class MethodoloficalSheetComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createForm();
+    if (this.reportEdit) {
+      this.createUpdatedForm();
+    } else {
+      this.createForm();
+    }
+
     this.getCatalogs();
   }
 
@@ -53,10 +61,25 @@ export class MethodoloficalSheetComponent implements OnInit {
     this.isLoading = true;
     const payload = this.buildForm();
     this.reportService.updateCurrentReport(Object.assign(this.report, payload));
-    this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-      this.snackBar.open(res, null, { duration: 3000 });
-      this.mainStepper.next();
-    });
+    this.reportService
+      .submitEditReport(payload, this.reportEdit ? this.reportEdit.id.toString() : this.report.id.toString())
+      .pipe(
+        finalize(() => {
+          this.reportForm.markAsPristine();
+          this.isLoading = false;
+        })
+      )
+      .subscribe(
+        () => {
+          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+            this.snackBar.open(res, null, { duration: 3000 });
+            this.mainStepper.next();
+          });
+        },
+        (error) => {
+          this.error = error;
+        }
+      );
   }
 
   private buildForm() {
@@ -75,11 +98,14 @@ export class MethodoloficalSheetComponent implements OnInit {
       disaggregation: this.reportForm.value['formArray'][0].disaggregationCtrl,
       limitation: this.reportForm.value['formArray'][0].limitationsCtrl,
       additional_information: this.reportForm.value['formArray'][0].commentsCtrl,
+      sustainable: this.reportForm.value['formArray'][0].sustainableCtrl,
       information_source: this.reportForm.value['formArray'][1].sourceTypeCtrl,
       statistical_operation: this.reportForm.value['formArray'][1].operationNameCtrl,
+      responsible_institution: this.reportForm.value['formArray'][1].institutionCtrl,
       contact: {
         full_name: this.reportForm.value['formArray'][2].nameCtrl,
         job_title: this.reportForm.value['formArray'][2].positionCtrl,
+        institution: this.reportForm.value['formArray'][2].departmentCtrl,
         email: this.reportForm.value['formArray'][2].emailCtrl,
         phone: this.reportForm.value['formArray'][2].phoneCtrl,
       },
@@ -112,29 +138,110 @@ export class MethodoloficalSheetComponent implements OnInit {
         }),
         this.formBuilder.group({
           institutionCtrl: [
-            // miss this
             '',
             Validators.compose([Validators.required, Validators.maxLength(350), Validators.required]),
           ],
           sourceTypeCtrl: ['', Validators.required],
+          sourceTypeOtherCtrl: [''],
           operationNameCtrl: [
             '',
             Validators.compose([Validators.required, Validators.maxLength(500), Validators.required]),
           ],
         }),
         this.formBuilder.group({
-          nameCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(40), Validators.required])],
-          positionCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(40), Validators.required])],
-          emailCtrl: [
-            '',
-            Validators.compose([Validators.required, Validators.email, Validators.maxLength(40), Validators.required]),
-          ],
-          phoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.required])],
-          logsCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(500), Validators.required])], // miss this
+          nameCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+          positionCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(350)])],
+          departmentCtrl: ['', Validators.compose([Validators.maxLength(100), Validators.required])],
+          emailCtrl: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(40)])],
+          phoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
+          logsCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(500)])], // miss this
         }),
         this.formBuilder.group({
           dataTypeCtrl: ['', Validators.required],
           sinameccClassifiersCtrl: ['', Validators.required],
+        }),
+      ]),
+    });
+  }
+
+  private createUpdatedForm() {
+    this.reportForm = this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          nameCtrl: [this.reportEdit.name, Validators.compose([Validators.maxLength(200), Validators.required])],
+          descriptionCtrl: [
+            this.reportEdit.description,
+            Validators.compose([Validators.maxLength(800), Validators.required]),
+          ],
+          unitCtrl: [this.reportEdit.unit, Validators.compose([Validators.maxLength(300), Validators.required])],
+          calculationMethodologyCtrl: [
+            this.reportEdit.calculation_methodology,
+            Validators.compose([Validators.maxLength(800), Validators.required]),
+          ],
+          measurementFrequencyCtrl: [this.reportEdit.measurement_frequency, Validators.required],
+          measurementFrequencyOtherCtrl: [this.reportEdit.measurement_frequency_other], // miss this
+          timeSeriesAvailableStartCtrl: [this.reportEdit.from_date, Validators.required],
+          timeSeriesAvailableEndCtrl: [this.reportEdit.to_date, Validators.required],
+          geographicCoverageCtrl: [this.reportEdit.geographic_coverage, Validators.required],
+          geographicCoverageOtherCtrl: [''],
+          disaggregationCtrl: [
+            this.reportEdit.disaggregation,
+            Validators.compose([Validators.maxLength(500), Validators.required]),
+          ],
+          limitationsCtrl: [
+            this.reportEdit.limitation,
+            Validators.compose([Validators.maxLength(500), Validators.required]),
+          ],
+          sustainableCtrl: [
+            this.reportEdit.sustainable,
+            Validators.compose([Validators.maxLength(500), Validators.required]),
+          ], // miss this
+          commentsCtrl: [
+            this.reportEdit.additional_information,
+            Validators.compose([Validators.maxLength(500), Validators.required]),
+          ],
+        }),
+        this.formBuilder.group({
+          institutionCtrl: [
+            this.reportEdit.responsible_institution,
+            Validators.compose([Validators.required, Validators.maxLength(350), Validators.required]),
+          ],
+          sourceTypeCtrl: [this.reportEdit.information_source.map((x) => x.id), Validators.required],
+          sourceTypeOtherCtrl: [''],
+          operationNameCtrl: [
+            this.reportEdit.statistical_operation,
+            Validators.compose([Validators.required, Validators.maxLength(500), Validators.required]),
+          ],
+        }),
+        this.formBuilder.group({
+          nameCtrl: [
+            this.reportEdit.contact.full_name,
+            Validators.compose([Validators.required, Validators.maxLength(100)]),
+          ],
+          positionCtrl: [
+            this.reportEdit.contact.job_title,
+            Validators.compose([Validators.required, Validators.maxLength(350)]),
+          ],
+          departmentCtrl: [
+            this.reportEdit.contact.institution,
+            Validators.compose([Validators.maxLength(100), Validators.required]),
+          ],
+          emailCtrl: [
+            this.reportEdit.contact.email,
+            Validators.compose([Validators.required, Validators.email, Validators.maxLength(40)]),
+          ],
+          phoneCtrl: [
+            this.reportEdit.contact.phone,
+            Validators.compose([Validators.required, Validators.minLength(8)]),
+          ],
+          logsCtrl: [
+            this.reportEdit.contact_annotation,
+            Validators.compose([Validators.required, Validators.maxLength(500)]),
+          ], // miss this
+        }),
+        this.formBuilder.group({
+          dataTypeCtrl: [this.reportEdit.data_type.id, Validators.required],
+          sinameccClassifiersCtrl: [this.reportEdit.classifier.map((x: { id: any }) => x.id), Validators.required],
         }),
       ]),
     });

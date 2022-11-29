@@ -1,4 +1,8 @@
-<div class="main-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
+<div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center" class="loading-component">
+  <mat-spinner color="accent"></mat-spinner>
+  <h1 class="mat-h1" translate>general.loading</h1>
+</div>
+<div *ngIf="!loading" class="main-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
   <div fxFill>
     <mat-tab-group class="custom-tabs">
       <mat-tab [label]="'reportData.form1.title' | translate">
@@ -15,24 +19,30 @@
               <h3 class="mat-h3" translate>reportData.whatInformationReported</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ report?.report_information }}
+                {{ report?.report_information ? informationReportMapFields[report?.report_information] : '' }}
               </h3>
             </div>
 
             <div fxLayout="row">
               <h3 class="mat-h3" translate>reportData.isBaseline</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ report?.have_line_base }}
+              <h3 class="mat-h3" translate>
+                {{ report?.have_base_line ? 'general.yes' : 'No' }}
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div *ngIf="loadingFiles" fxLayout="column">
+              <mat-spinner [diameter]="30"></mat-spinner>
+              <h3 class="mat-h3" translate>general.loading</h3>
+            </div>
+
+            <div fxLayout="column" *ngIf="files['base_line_report']">
               <h3 class="mat-h3" translate>reportData.form1.reportBaselineIndicator</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ '-' }}
-              </h3>
+              <div fxLayout="row">
+                <button (click)="downloadFile('base_line_report')" mat-raised-button color="primary">
+                  {{ files['base_line_report'].filename }} <mat-icon>cloud_download</mat-icon>
+                </button>
+              </div>
             </div>
 
             <div fxLayout="row">
@@ -46,15 +56,15 @@
             <div fxLayout="row">
               <h3 class="mat-h3" translate>reportData.qualityPreItems</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ report?.have_quality_element }}
+              <h3 class="mat-h3" translate>
+                {{ report?.have_quality_element ? 'general.yes' : 'No' }}
               </h3>
             </div>
 
             <div fxLayout="row">
               <h3 class="mat-h3" translate>reportData.form1.previousElementQuality</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
+              <h3 class="mat-h3" translate>
                 {{ report?.quality_element_description }}
               </h3>
             </div>
@@ -62,24 +72,16 @@
             <div fxLayout="row">
               <h3 class="mat-h3" translate>reportData.agreementTransferSINAMECC</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ report?.transfer_data_with_sinamecc }}
+              <h3 class="mat-h3" translate>
+                {{ report?.transfer_data_with_sinamecc ? 'general.yes' : 'No' }}
               </h3>
             </div>
 
             <div fxLayout="row">
               <h3 class="mat-h3" translate>reportData.form1.agreementsTransfer</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
+              <h3 class="mat-h3" translate>
                 {{ report?.transfer_data_with_sinamecc_description }}
-              </h3>
-            </div>
-
-            <div fxLayout="row">
-              <h3 class="mat-h3" translate>reportData.form1.howReportData</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ '-' }}
               </h3>
             </div>
 
@@ -89,6 +91,20 @@
               <h3 class="mat-h3">
                 {{ report?.individual_report_data }}
               </h3>
+            </div>
+
+            <div *ngIf="loadingFiles" fxLayout="column">
+              <mat-spinner [diameter]="30"></mat-spinner>
+              <h3 class="mat-h3" translate>general.loading</h3>
+            </div>
+
+            <div fxLayout="column" *ngIf="files['report_file']">
+              <h3 class="mat-h3" translate>reportData.files</h3>
+              <div fxLayout="row">
+                <button (click)="downloadFile('report_file')" mat-raised-button color="primary">
+                  {{ files['report_file'].filename }} <mat-icon>cloud_download</mat-icon>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -144,7 +160,7 @@
               <h3 class="mat-h3" translate>reportData.form2.frecuency</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ report?.measurement_frequency }}
+                {{ report?.measurement_frequency ? reportingPeriodicityMap[report?.measurement_frequency] : '' }}
               </h3>
             </div>
 
@@ -214,7 +230,7 @@
               </h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ '-' }}
+                {{ report?.sustainable }}
               </h3>
             </div>
 
@@ -236,16 +252,20 @@
               <h3 class="mat-h3" translate>reportData.form2.responsibleInstitution</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ '-' }}
+                {{ report?.responsible_institution }}
               </h3>
             </div>
 
             <div fxLayout="row">
               <h3 class="mat-h3" translate>adaptationAction.form4.sourceType</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ report?.information_source }}
-              </h3>
+              <div fxLayout="column">
+                <ul>
+                  <li *ngFor="let element of report?.information_source">
+                    {{ element.name }}
+                  </li>
+                </ul>
+              </div>
+              <br />
             </div>
 
             <div fxLayout="row">
@@ -287,6 +307,14 @@
             </div>
 
             <div fxLayout="row">
+              <h3 class="mat-h3" translate>reportData.institution</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{ report?.contact?.institution }}
+              </h3>
+            </div>
+
+            <div fxLayout="row">
               <h3 class="mat-h3" translate>info.phone</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -312,16 +340,20 @@
               <h3 class="mat-h3" translate>mitigationAction.datatype</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ report?.data_type }}
+                {{ report?.data_type.name }}
               </h3>
             </div>
 
             <div fxLayout="row">
               <h3 class="mat-h3" translate>mitigationAction.SINAMECCClassifiers</h3>
-              <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">
-                {{ report?.classifier }}
-              </h3>
+              <div fxLayout="column">
+                <ul>
+                  <li *ngFor="let element of report?.classifier">
+                    {{ element.name }}
+                  </li>
+                </ul>
+              </div>
+              <br />
             </div>
           </div>
         </div>
@@ -341,7 +373,7 @@
               <h3 class="mat-h3" translate>mitigationAction.dateLastUpdate</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ '-' }}
+                {{ (report?.report_data_change_log)[0]?.updated | date: 'medium' }}
               </h3>
             </div>
 

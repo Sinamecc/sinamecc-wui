@@ -64,3 +64,14 @@ export const commentsStructureModule3: CommentsStructure[] = [
     fields: ['mitigationAction.dateLastUpdate', 'mitigationAction.changesLastupdate', 'reportData.form3.description'],
   },
 ];
+
+export const sourceTypeMap = {
+  1: 'Censos',
+  2: 'Encuesta por muestreo',
+  3: 'Combinación de censo y muestreo',
+  4: 'Sondeos de opinión',
+  5: 'Registro administrativo',
+  6: 'Sistema de Monitoreo',
+  7: 'Estimación directa',
+  8: 'Otro',
+};

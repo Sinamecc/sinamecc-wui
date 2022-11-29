@@ -169,7 +169,8 @@
       "sustainabilityEnsured": "How is sustainability ensured in the measurement of the indicator? (Actions carried out that ensure the availability of information for monitoring)",
       "observations": "Observations and comments",
       "informationSources": "Information sources",
-      "responsibleInstitution": "Institución responsable"
+      "responsibleInstitution": "Institución responsable",
+      "reviewHint": "(Review the query resource in the next popup)"
     },
     "form3": {
       "title": "Data update",

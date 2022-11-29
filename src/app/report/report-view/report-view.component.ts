@@ -7,8 +7,10 @@ import {
   commentsStructureModule1,
   commentsStructureModule2,
   commentsStructureModule3,
+  sourceTypeMap,
 } from '../interfaces/comments-structure';
 import { Report } from '../interfaces/report';
+import { formationReportedMap, reportingPeriodicity } from '../interfaces/report-data';
 import { ReportService } from '../report.service';
 
 @Component({
@@ -20,11 +22,17 @@ export class ReportViewComponent implements OnInit {
   report: Report;
   id: string = '';
   edit = false;
+  loading = false;
+  files = {};
+  loadingFiles = false;
 
   commentsModule1 = commentsStructureModule1;
   commentsModule2 = commentsStructureModule2;
   commentsModule3 = commentsStructureModule3;
+  sourceTypeMapDict = sourceTypeMap;
   commentsByModule = {};
+  informationReportMapFields = formationReportedMap;
+  reportingPeriodicityMap = reportingPeriodicity;
 
   constructor(private service: ReportService, private route: ActivatedRoute, public dialog: MatDialog) {}
 
@@ -92,9 +100,37 @@ export class ReportViewComponent implements OnInit {
     return commentList;
   }
 
+  async loadFile() {
+    this.loadingFiles = true;
+    for (const file of this.report.files) {
+      const s3File = await this.service.downloadResource(file.file.replace('/api', ''));
+      this.files[file.report_type] = s3File;
+    }
+
+    this.loadingFiles = false;
+  }
+
+  downloadFile(key: string) {
+    const element = this.files[key];
+    const file = document.createElement('a');
+    const url = window.URL.createObjectURL(element.data);
+    file.href = url;
+    file.download = element.filename;
+
+    file.click();
+    window.URL.revokeObjectURL(url);
+  }
+
   private loadReport(id: string) {
-    this.service.report(id).subscribe((response) => {
-      this.report = response;
-    });
+    this.loading = true;
+    this.service
+      .report(id)
+      .subscribe(async (response) => {
+        this.report = response;
+        if (this.report.files.length > 0) {
+          await this.loadFile();
+        }
+      })
+      .add(() => (this.loading = false));
   }
 }

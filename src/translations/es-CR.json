@@ -169,6 +169,7 @@
       "sustainabilityEnsured": "¿Cómo se asegura la sostenibilidad en la medición del indicador? (Acciones realizadas que aseguran la  disponibilidad de la información para el monitoreo)",
       "observations": "Observaciones y comentarios",
       "informationSources": "Fuentes de información",
+      "reviewHint": "(Review the query resource in the next popup)",
       "responsibleInstitution": "Responsible Institution"
     },
     "form3": {

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
+import { Report } from '../interfaces/report';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
 import { ReportService } from '../report.service';
 
@@ -18,6 +19,7 @@ export class DataUpdateComponent implements OnInit {
   error: string;
   isLoading = false;
   report: ReportDataPayload;
+  @Input() reportEdit: Report;
 
   constructor(
     private router: Router,
@@ -33,7 +35,11 @@ export class DataUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createForm();
+    if (this.reportEdit) {
+      this.createUpdatedForm();
+    } else {
+      this.createForm();
+    }
   }
 
   get formArray(): AbstractControl | null {
@@ -48,6 +54,28 @@ export class DataUpdateComponent implements OnInit {
           lastUpdateCtrl: ['', Validators.required],
           lastUpdateChangeCtrl: ['', Validators.compose([Validators.maxLength(500), Validators.required])], // miss this
           descriptionCtrl: ['', Validators.compose([Validators.maxLength(500), Validators.required])],
+        }),
+      ]),
+    });
+  }
+
+  private createUpdatedForm() {
+    this.reportForm = this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          authorNameCtrl: [
+            this.reportEdit.report_data_change_log[0].author.first_name,
+            Validators.compose([Validators.maxLength(350), Validators.required]),
+          ], // miss this
+          lastUpdateCtrl: [this.reportEdit.report_data_change_log[0].updated, Validators.required],
+          lastUpdateChangeCtrl: [
+            this.reportEdit.report_data_change_log[0].changes,
+            Validators.compose([Validators.maxLength(500), Validators.required]),
+          ], // miss this
+          descriptionCtrl: [
+            this.reportEdit.report_data_change_log[0].change_description,
+            Validators.compose([Validators.maxLength(500), Validators.required]),
+          ],
         }),
       ]),
     });
@@ -69,8 +97,9 @@ export class DataUpdateComponent implements OnInit {
     const payload = this.buildForm();
     const reportData = Object.assign(this.report, payload);
     this.reportService.updateCurrentReport(reportData);
+
     this.reportService
-      .submitReport(reportData)
+      .submitEditReport(payload, this.reportEdit ? this.reportEdit.id.toString() : this.report.id.toString())
       .pipe(
         finalize(() => {
           this.reportForm.markAsPristine();
@@ -80,7 +109,7 @@ export class DataUpdateComponent implements OnInit {
       .subscribe(
         () => {
           this.router.navigate(['/report'], { replaceUrl: true });
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
+          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
             this.snackBar.open(res, null, { duration: 3000 });
           });
         },
