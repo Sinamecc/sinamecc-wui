@@ -67,13 +67,13 @@ export interface Report {
   additional_information: string;
   sustainable: null;
   responsible_institution: string;
-  information_source: number[];
+  information_source: any[];
   statistical_operation: string;
   contact: Contact;
   contact_annotation: string;
-  data_type: number;
+  data_type: any;
   other_data_type: string;
-  classifier: number[];
+  classifier: any[];
   other_classifier: string;
   report_information: string;
   have_base_line: boolean;
@@ -90,6 +90,17 @@ export interface Report {
   created: string;
   updated: string;
   report_data_change_log: ChangeLog[];
-  files: any;
+  files: ReportFile[];
   next_action: NextState[];
 }
+
+export interface ReportFile {
+  id: number;
+  slug: string;
+  file: string;
+  report_data: number;
+  report_type: string;
+}
+
+export const baseLineFile = 'base_line_report';
+export const reportFile = 'report_file';

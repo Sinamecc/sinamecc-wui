@@ -42,7 +42,7 @@
               </mat-form-field>
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>Metodología de cálculo (Proceso mediante el cual se obtine el dato) </mat-label>
+                <mat-label translate>Metodología de cálculo (Proceso mediante el cual se obtiene el dato) </mat-label>
                 <textarea
                   matInput
                   matTextareaAutosize
@@ -64,7 +64,7 @@
                     <label translate>Anual </label>
                   </mat-radio-button>
                   <mat-radio-button [style.margin.px]="5" [value]="'biannual'">
-                    <label translate>Smestral</label>
+                    <label translate>Semestral</label>
                   </mat-radio-button>
                   <mat-radio-button [style.margin.px]="5" [value]="'quartely'">
                     <label translate>Trimestral</label>
@@ -75,12 +75,13 @@
                 </mat-radio-group>
               </div>
 
-              <mat-form-field *ngIf="measurementFrequency.value == 4" class="field-ppcn">
+              <mat-form-field *ngIf="measurementFrequency.value == 'other'" class="field-ppcn">
                 <mat-label translate>Frecuencia de la medición (otro) </mat-label>
                 <input matInput formControlName="measurementFrequencyOtherCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
+              <br />
               <div fxLayout="row" fxLayoutAlign=" center">
                 <mat-label translate>mitigationAction.timeSeriesAvailable</mat-label>
                 <mat-form-field class="field-ppcn">
@@ -112,6 +113,7 @@
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
               </div>
+              <br />
 
               <div [style.width.%]="100" fxLayout="column" fxLayoutAlign="start start">
                 <span translate>mitigationAction.geographicCoverage</span><br /><br />
@@ -164,7 +166,7 @@
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate
-                  >Limitaciones (Aspectos, dimensiones y dinámicas no pueden ser capturados por el indicador)
+                  >Limitaciones (Aspectos, dimensiones y dinámicas que no pueden ser capturados por el indicador)
                 </mat-label>
                 <textarea
                   matInput
@@ -205,11 +207,15 @@
 
               <div fxLayout="row" fxLayoutAlign="end center">
                 <div>
-                  <app-generic-button
+                  <button
                     [disabled]="!formArray?.get([0]).valid"
+                    mat-raised-button
+                    color="primary"
+                    type="button"
                     (click)="stepper.next()"
-                    name="general.next"
-                  ></app-generic-button>
+                  >
+                    <span translate>general.next</span>
+                  </button>
                 </div>
               </div>
             </mat-step>
@@ -227,34 +233,49 @@
 
               <!-- Waiting Catalogs BE -->
               <mat-form-field class="field-ppcn">
-                <mat-select multiple formControlName="sourceTypeCtrl" [placeholder]="'Tipo de fuente' | translate">
+                <mat-select
+                  #sourceTypeValue
+                  multiple
+                  formControlName="sourceTypeCtrl"
+                  [placeholder]="'Tipo de fuente' | translate"
+                >
                   <mat-option [value]="1">
-                    Encuesta por muestreo
+                    Censos
                   </mat-option>
 
                   <mat-option [value]="2">
-                    Combinación de censo y muestreo
+                    Encuesta por muestreo
                   </mat-option>
 
                   <mat-option [value]="3">
-                    Sondeos de opinión
+                    Combinación de censo y muestreo
                   </mat-option>
 
                   <mat-option [value]="4">
-                    Registro administrativo
+                    Sondeos de opinión
                   </mat-option>
 
                   <mat-option [value]="5">
-                    Sistema de Monitoreo
+                    Registro administrativo
                   </mat-option>
 
                   <mat-option [value]="6">
+                    Sistema de Monitoreo
+                  </mat-option>
+
+                  <mat-option [value]="7">
                     Estimación directa
                   </mat-option>
-                  <mat-option [value]="7">
+                  <mat-option [value]="8">
                     Otro
                   </mat-option>
                 </mat-select>
+              </mat-form-field>
+
+              <mat-form-field *ngIf="sourceTypeValue?.value?.includes(8)" class="field-ppcn">
+                <mat-label translate>Tipo de fuente (otro)</mat-label>
+                <input matInput formControlName="sourceTypeOtherCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
               <mat-form-field class="field-ppcn">
@@ -265,14 +286,17 @@
 
               <div fxLayout="row" fxLayoutAlign="end center">
                 <div>
-                  <app-generic-button-secondary
+                  <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
+
+                  <button
+                    [disabled]="!formArray?.get([1]).valid"
+                    mat-raised-button
+                    color="primary"
                     type="button"
-                    (click)="stepper.previous()"
-                    name="general.back"
-                  ></app-generic-button-secondary>
-                </div>
-                <div>
-                  <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+                    (click)="stepper.next()"
+                  >
+                    <span translate>general.next</span>
+                  </button>
                 </div>
               </div>
             </mat-step>
@@ -283,14 +307,20 @@
               </ng-template>
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>info.name</mat-label>
+                <mat-label translate>Nombre del responsable del reporte</mat-label>
                 <input matInput formControlName="nameCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
               <mat-form-field class="field-ppcn">
-                <mat-label translate>general.positionPerson</mat-label>
+                <mat-label translate>Institución</mat-label>
                 <input matInput formControlName="positionCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>Departamento</mat-label>
+                <input matInput formControlName="departmentCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
@@ -313,16 +343,17 @@
               </mat-form-field>
 
               <div fxLayout="row" fxLayoutAlign="end center">
-                <div>
-                  <app-generic-button-secondary
-                    type="button"
-                    (click)="stepper.previous()"
-                    name="general.back"
-                  ></app-generic-button-secondary>
-                </div>
-                <div>
-                  <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
-                </div>
+                <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
+
+                <button
+                  [disabled]="!formArray?.get([2]).valid"
+                  mat-raised-button
+                  color="primary"
+                  type="button"
+                  (click)="stepper.next()"
+                >
+                  <span translate>general.next</span>
+                </button>
               </div>
             </mat-step>
 
@@ -347,6 +378,14 @@
                     <label translate>{{ element.name }}</label>
                   </mat-radio-button>
                 </mat-radio-group>
+                <mat-hint
+                  ><span translate>reportData.form2.reviewHint</span>
+                  <a
+                    target="_blank"
+                    href="https://docs.google.com/document/d/1inDEbl9HrIsB3oiOA9NRFctegRQI9sVHhrcezqAU480/edit?usp=sharing"
+                    >Link</a
+                  ></mat-hint
+                >
                 <br />
               </div>
 
@@ -357,6 +396,14 @@
                     {{ element.name }}
                   </mat-option>
                 </mat-select>
+                <mat-hint
+                  ><span translate>reportData.form2.reviewHint</span>
+                  <a
+                    target="_blank"
+                    href="https://docs.google.com/document/d/1inDEbl9HrIsB3oiOA9NRFctegRQI9sVHhrcezqAU480/edit?usp=sharing"
+                    >Link</a
+                  ></mat-hint
+                >
               </mat-form-field>
 
               <div fxLayout="row" fxLayoutAlign="end center">
@@ -368,12 +415,16 @@
                   ></app-generic-button-secondary>
                 </div>
                 <div>
-                  <app-generic-button
+                  <button
                     [disabled]="reportForm.invalid || isLoading"
-                    name="general.next"
+                    mat-raised-button
+                    color="primary"
+                    type="button"
                     (click)="submitForm()"
                   >
-                  </app-generic-button>
+                    <span translate>general.next</span>
+                  </button>
+
                   <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
                 </div>
               </div>

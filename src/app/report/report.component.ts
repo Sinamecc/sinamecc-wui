@@ -31,21 +31,29 @@ export class ReportComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.loadReportData();
   }
 
   loadReportData() {
-    this.reportService.reports().subscribe((reports: Report[]) => {
-      const reportList = reports;
-      this.dataSource = new MatTableDataSource<Report>(reportList);
-      this.dataSource.paginator = this.paginator;
-    });
+    this.reportService
+      .reports()
+      .subscribe((reports: Report[]) => {
+        const reportList = reports;
+        this.dataSource = new MatTableDataSource<Report>(reportList);
+        this.dataSource.paginator = this.paginator;
+      })
+      .add(() => (this.isLoading = false));
   }
 
   view(uuid: string) {
     this.router.navigate([`/report/view/${uuid}`], {
       replaceUrl: true,
     });
+  }
+
+  edit(uuid: string) {
+    this.router.navigate([`/report/edit/${uuid}`], { replaceUrl: true });
   }
 
   addReview(uuid: string) {

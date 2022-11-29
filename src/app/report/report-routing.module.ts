@@ -13,9 +13,10 @@ const routes: Routes = [
     component: ReportReviewComponent,
     data: { id: extract('id') },
   },
-  { path: '', component: ReportComponent, data: { title: extract('Report') } },
-  { path: 'new', component: ReportNewComponent, data: { title: extract('New') } },
-  { path: 'view/:id', component: ReportViewComponent, data: { title: extract('id') } },
+  { path: '', component: ReportComponent, data: { title: extract('Reportes') } },
+  { path: 'new', component: ReportNewComponent, data: { title: extract('Nuevo reporte') } },
+  { path: 'edit/:id', component: ReportNewComponent, data: { title: extract('Editar Reporte') } },
+  { path: 'view/:id', component: ReportViewComponent, data: { title: extract('Reporte') } },
 ];
 
 @NgModule({
