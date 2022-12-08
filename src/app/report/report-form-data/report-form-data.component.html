@@ -17,7 +17,6 @@
                 <span translate>reportData.dataReport </span>
               </ng-template>
 
-              <!-- Waiting for BE Catalog -->
               <div fxLayout="column" fxLayoutAlign="start start">
                 <span translate>reportData.whatInformationReported</span>
                 <mat-radio-group
@@ -54,26 +53,41 @@
 
                 <div *ngIf="isBaseline.value" [style.width.%]="100" fxLayout="column" fxLayoutAlign="start start">
                   <span translate>¿Cómo se desea reportar la línea base del indicador?</span>
-                  <div [style.width.%]="100" fxLayout="row" fxLayoutAlign=" center">
-                    <mat-form-field class="field-ppcn">
-                      <mat-label translate>Carga de documentos: en los formatos Zip, rar, pdf, excel y word</mat-label>
-                      <input matInput formControlName="isBaselineValueCtrlFile" />
-                      <mat-error translate>errorLabel.fieldRequired</mat-error>
-                    </mat-form-field>
+                  <mat-radio-group
+                    formControlName="reportUpdateCtrl"
+                    #howReportedInfo="matRadioGroup"
+                    class="custom-radio-group"
+                  >
+                    <mat-radio-button [style.margin.px]="5" [value]="1">
+                      <label translate>Carga de archivos </label>
+                    </mat-radio-button>
+                    <mat-radio-button [style.margin.px]="5" [value]="2">
+                      <label translate>Reporte de valor individual</label>
+                    </mat-radio-button>
+                    <mat-radio-button [style.margin.px]="5" [value]="3">
+                      <label translate>Conexión con API o web service</label>
+                    </mat-radio-button>
+                  </mat-radio-group>
 
-                    <div fxLayout="column">
-                      <input type="file" (change)="uploadFile($event, false)" name="filename" />
-                      <mat-spinner *ngIf="loadingFiles" [diameter]="30"></mat-spinner>
-                      <mat-hint *ngIf="files['base_line_report']">{{ files['base_line_report'].filename }}</mat-hint>
-                    </div>
+                  <span *ngIf="howReportedInfo?.value == 1" translate>Cargue los archivos seleccionados</span>
+                  <div *ngIf="howReportedInfo?.value == 1" [style.width.%]="100" fxLayout="row" fxLayoutAlign=" center">
+                    <input type="file" (change)="uploadFile($event, false)" name="filename" />
+                    <mat-spinner *ngIf="loadingFiles" [diameter]="30"></mat-spinner>
+                    <mat-hint *ngIf="files['base_line_report']">{{ files['base_line_report'].filename }}</mat-hint>
                   </div>
-                  <br />
 
-                  <mat-form-field class="field-ppcn">
-                    <mat-label translate>Reporte de valor individual o Conexión con API o Webservice</mat-label>
-                    <input matInput formControlName="isBaselineValueCtrlValue" />
+                  <mat-form-field *ngIf="howReportedInfo?.value == 2" class="field-ppcn">
+                    <mat-label translate>Describa el reporte de valor individual</mat-label>
+                    <input matInput formControlName="isBaselineValueCtrlFile" />
                     <mat-error translate>errorLabel.fieldRequired</mat-error>
                   </mat-form-field>
+
+                  <mat-form-field *ngIf="howReportedInfo?.value == 3" class="field-ppcn">
+                    <mat-label translate>Ingrese el enlace a API web service</mat-label>
+                    <input matInput formControlName="isBaselineValueCtrlFile" />
+                    <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
+                  <br />
                 </div>
               </div>
 
@@ -125,19 +139,39 @@
 
               <div [style.width.%]="100" fxLayout="column" fxLayoutAlign="start start">
                 <span translate>¿Cómo se desean reportar los datos?</span>
-                <div [style.width.%]="100" fxLayout="row" fxLayoutAlign=" center">
-                  <mat-form-field class="field-ppcn">
-                    <mat-label translate>Reporte de valor individual o Conexión con API o Webservice</mat-label>
-                    <input matInput formControlName="reportDataCtrlValue" />
-                    <mat-error translate>errorLabel.fieldRequired</mat-error>
-                  </mat-form-field>
-                  <div fxLayout="column">
-                    <input (change)="uploadFile($event)" type="file" name="filename" />
-                    <mat-spinner *ngIf="loadingFiles" [diameter]="30"></mat-spinner>
-                    <mat-hint *ngIf="files['report_file']">{{ files['report_file'].filename }}</mat-hint>
-                  </div>
-                  <br />
+                <mat-radio-group
+                  formControlName="howReportedDataCtrl"
+                  #howReportedData="matRadioGroup"
+                  class="custom-radio-group"
+                >
+                  <mat-radio-button [style.margin.px]="5" [value]="1">
+                    <label translate>Carga de archivos </label>
+                  </mat-radio-button>
+                  <mat-radio-button [style.margin.px]="5" [value]="2">
+                    <label translate>Reporte de valor individual</label>
+                  </mat-radio-button>
+                  <mat-radio-button [style.margin.px]="5" [value]="3">
+                    <label translate>Conexión con API o web service</label>
+                  </mat-radio-button>
+                </mat-radio-group>
+
+                <div *ngIf="howReportedData.value == 1" fxLayout="column">
+                  <input (change)="uploadFile($event)" type="file" name="filename" />
+                  <mat-spinner *ngIf="loadingFiles" [diameter]="30"></mat-spinner>
+                  <mat-hint *ngIf="files['report_file']">{{ files['report_file'].filename }}</mat-hint>
                 </div>
+
+                <mat-form-field *ngIf="howReportedData.value == 2" class="field-ppcn">
+                  <mat-label translate>Describa el reporte de valor individual</mat-label>
+                  <input matInput formControlName="reportDataCtrlValue" />
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="howReportedData.value == 3" class="field-ppcn">
+                  <mat-label translate>Ingrese el enlace a API web service</mat-label>
+                  <input matInput formControlName="reportDataCtrlValue" />
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
               </div>
 
               <br />
@@ -145,14 +179,7 @@
               <div fxLayout="row" fxLayoutAlign="end center">
                 <div>
                   <mat-spinner [diameter]="50" *ngIf="isLoading"></mat-spinner>
-                  <button
-                    *ngIf="!isLoading"
-                    [disabled]="!validOptions()"
-                    mat-raised-button
-                    color="primary"
-                    type="button"
-                    (click)="submitForm()"
-                  >
+                  <button *ngIf="!isLoading" mat-raised-button color="primary" type="button" (click)="submitForm()">
                     <span translate>general.next</span>
                   </button>
                 </div>

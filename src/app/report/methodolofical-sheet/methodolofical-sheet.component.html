@@ -82,36 +82,38 @@
               </mat-form-field>
 
               <br />
-              <div fxLayout="row" fxLayoutAlign=" center">
+              <div class="file-field" fxLayout="column" fxLayoutAlign="start start">
                 <mat-label translate>mitigationAction.timeSeriesAvailable</mat-label>
-                <mat-form-field class="field-ppcn">
-                  <input
-                    matInput
-                    [placeholder]="'Choose a date' | translate"
-                    [matDatepicker]="timeSeriesAvailableCtrl"
-                    formControlName="timeSeriesAvailableStartCtrl"
-                  />
+                <div class="file-field" fxLayout="row" fxLayoutAlign=" center">
+                  <mat-form-field class="field-ppcn custom-margin">
+                    <input
+                      matInput
+                      [placeholder]="'specificLabel.startDate' | translate"
+                      [matDatepicker]="timeSeriesAvailableCtrl"
+                      formControlName="timeSeriesAvailableStartCtrl"
+                    />
 
-                  <mat-datepicker-toggle matSuffix [for]="timeSeriesAvailableCtrl"></mat-datepicker-toggle>
-                  <mat-datepicker #timeSeriesAvailableCtrl startView="year"></mat-datepicker>
+                    <mat-datepicker-toggle matSuffix [for]="timeSeriesAvailableCtrl"></mat-datepicker-toggle>
+                    <mat-datepicker #timeSeriesAvailableCtrl startView="year"></mat-datepicker>
 
-                  <mat-error translate>errorLabel.fieldRequired</mat-error>
-                </mat-form-field>
+                    <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
 
-                <mat-form-field class="field-ppcn">
-                  <mat-label translate>general.until</mat-label>
-                  <input
-                    matInput
-                    [placeholder]="'Choose a date' | translate"
-                    [matDatepicker]="timeSeriesAvailableEndCtrl"
-                    formControlName="timeSeriesAvailableEndCtrl"
-                  />
+                  <mat-form-field class="field-ppcn custom-margin">
+                    <mat-label translate>general.until</mat-label>
+                    <input
+                      matInput
+                      [placeholder]="'Choose a date' | translate"
+                      [matDatepicker]="timeSeriesAvailableEndCtrl"
+                      formControlName="timeSeriesAvailableEndCtrl"
+                    />
 
-                  <mat-datepicker-toggle matSuffix [for]="timeSeriesAvailableEndCtrl"></mat-datepicker-toggle>
-                  <mat-datepicker #timeSeriesAvailableEndCtrl startView="year"></mat-datepicker>
+                    <mat-datepicker-toggle matSuffix [for]="timeSeriesAvailableEndCtrl"></mat-datepicker-toggle>
+                    <mat-datepicker #timeSeriesAvailableEndCtrl startView="year"></mat-datepicker>
 
-                  <mat-error translate>errorLabel.fieldRequired</mat-error>
-                </mat-form-field>
+                    <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
+                </div>
               </div>
               <br />
 
@@ -332,7 +334,8 @@
 
               <mat-form-field class="field-ppcn">
                 <mat-label translate>info.phone</mat-label>
-                <input type="number" matInput formControlName="phoneCtrl" />
+                <span matPrefix>+506 &nbsp;</span>
+                <input matInput type="number" formControlName="phoneCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
@@ -382,7 +385,7 @@
                   ><span translate>reportData.form2.reviewHint</span>
                   <a
                     target="_blank"
-                    href="https://docs.google.com/document/d/1inDEbl9HrIsB3oiOA9NRFctegRQI9sVHhrcezqAU480/edit?usp=sharing"
+                    href="https://docs.google.com/document/d/1lA7z9-BThtJ2TWowcEk_hY7pnEy2zCs_sZFEfEZ4gt4/edit?usp=sharing"
                     >Link</a
                   ></mat-hint
                 >

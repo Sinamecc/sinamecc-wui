@@ -2,7 +2,7 @@ export interface ReportDataPayload {
   id?: string;
   other_classifier?: string;
   report_information?: string;
-  have_line_base?: boolean;
+  have_base_line?: boolean;
   have_quality_element?: boolean;
   quality_element_description?: string;
   transfer_data_with_sinamecc?: string;
