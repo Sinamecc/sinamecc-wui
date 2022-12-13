@@ -9,7 +9,7 @@ import {
   commentsStructureModule3,
   sourceTypeMap,
 } from '../interfaces/comments-structure';
-import { Report } from '../interfaces/report';
+import { geographicCoverageMap, Report } from '../interfaces/report';
 import { formationReportedMap, reportingPeriodicity } from '../interfaces/report-data';
 import { ReportService } from '../report.service';
 
@@ -25,6 +25,7 @@ export class ReportViewComponent implements OnInit {
   loading = false;
   files = {};
   loadingFiles = false;
+  geographicCoverage = geographicCoverageMap;
 
   commentsModule1 = commentsStructureModule1;
   commentsModule2 = commentsStructureModule2;

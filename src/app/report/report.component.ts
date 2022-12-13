@@ -18,7 +18,7 @@ export class ReportComponent implements OnInit {
   error: string;
   isLoading = false;
   dataSource: MatTableDataSource<Report>;
-  displayedColumns = ['name', 'email', 'contact_name', 'status', 'last_updated', 'created', 'actions'];
+  displayedColumns = ['name', 'email', 'contact_name', 'sinameccClass', 'status', 'last_updated', 'actions'];
   fieldsToSearch: string[][] = [['name'], ['email']];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -44,6 +44,10 @@ export class ReportComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       })
       .add(() => (this.isLoading = false));
+  }
+
+  getSinameccClassifier(report: Report): string {
+    return report.classifier.map((x) => x.name).toString();
   }
 
   view(uuid: string) {

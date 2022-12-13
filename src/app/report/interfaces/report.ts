@@ -104,3 +104,11 @@ export interface ReportFile {
 
 export const baseLineFile = 'base_line_report';
 export const reportFile = 'report_file';
+
+export const geographicCoverageMap = {
+  NATIONAL: 'Nacional',
+  REGIONAL: 'Regional',
+  PROVINCIAL: 'Provincial',
+  CANTONAL: 'Cantonal',
+  OTHER: 'Otro',
+};

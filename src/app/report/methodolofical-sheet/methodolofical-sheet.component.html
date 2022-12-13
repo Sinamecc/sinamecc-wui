@@ -335,7 +335,7 @@
               <mat-form-field class="field-ppcn">
                 <mat-label translate>info.phone</mat-label>
                 <span matPrefix>+506 &nbsp;</span>
-                <input matInput type="number" formControlName="phoneCtrl" />
+                <input matInput minlength="8" maxlength="8" formControlName="phoneCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
