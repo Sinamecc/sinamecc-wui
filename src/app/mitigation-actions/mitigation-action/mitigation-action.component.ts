@@ -16,8 +16,8 @@ import {
   commentsStructureModule4,
   commentsStructureModule5,
   commentsStructureModule6,
+  TypeDataMap,
 } from '../comments-structure';
-import { async } from '@angular/core/testing';
 import { CommentsStructure, Comments } from '@app/@shared/comment';
 import { CommentsViewComponent } from '@app/@shared/comments-view/comments-view.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -41,6 +41,7 @@ export class MitigationActionComponent implements OnInit {
   commentsModule6 = commentsStructureModule6;
   commentsByModule = {};
   reviews: any;
+  typeDataMapDict = TypeDataMap;
 
   constructor(
     private router: Router,
@@ -54,10 +55,17 @@ export class MitigationActionComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 
-  findQuestion(id: string) {
+  findQuestion(id: string, check = false) {
     if (this.mitigationAction) {
       if (this.mitigationAction.impact_documentation.question) {
-        return this.mitigationAction.impact_documentation.question.find((x: { code: string }) => x.code === id).detail;
+        const element = this.mitigationAction.impact_documentation.question.find(
+          (x: { code: string }) => x.code === id
+        );
+
+        if (check) {
+          return element.check ? 'general.yes' : 'No';
+        }
+        return element.detail;
       }
     }
     return '';

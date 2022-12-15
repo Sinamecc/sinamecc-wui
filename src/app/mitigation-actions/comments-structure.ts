@@ -183,3 +183,9 @@ export const commentsStructureModule6: CommentsStructure[] = [
     fields: ['mitigationAction.beenProgressActionPeriod'],
   },
 ];
+
+export const TypeDataMap = {
+  1: 'Gestión',
+  2: 'Resultados',
+  3: 'general.other',
+};

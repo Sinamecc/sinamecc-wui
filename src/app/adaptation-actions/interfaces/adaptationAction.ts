@@ -170,6 +170,7 @@ export interface AdaptationAction {
   climate_threat?: ClimateThreat;
   implementation?: Implementation;
   id?: string;
+  code?: string;
   finance?: Finance;
   indicator?: Indicator;
   progress_log?: ProgressLog;

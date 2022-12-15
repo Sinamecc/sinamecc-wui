@@ -46,7 +46,7 @@
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3" translate>reportData.form1.individualValueReport</h3>
+              <h3 class="mat-h3" translate>¿Cómo se desea reportar la línea base del indicador?</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
                 {{ report?.base_line_report }}
@@ -86,7 +86,7 @@
             </div>
 
             <div fxLayout="row">
-              <h3 class="mat-h3" translate>reportData.form1.individualValue</h3>
+              <h3 class="mat-h3" translate>¿Cómo se deben reportar los datos?</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
                 {{ report?.individual_report_data }}
@@ -192,7 +192,7 @@
               <h3 class="mat-h3" translate>mitigationAction.geographicCoverage</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ report?.geographic_coverage }}
+                {{ report?.geographic_coverage ? geographicCoverage[eport?.geographic_coverage] : '-' }}
               </h3>
             </div>
 
@@ -249,7 +249,7 @@
 
           <div fxLayout="column" fxLayoutAlign="space-around start">
             <div fxLayout="row">
-              <h3 class="mat-h3" translate>reportData.form2.responsibleInstitution</h3>
+              <h3 class="mat-h3" translate>mitigationAction.responsibleInstitution</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
                 {{ report?.responsible_institution }}

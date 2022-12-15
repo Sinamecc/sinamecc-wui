@@ -93,8 +93,8 @@
                     >
                     <mat-button-toggle-group
                       #budgetCtrlgroup="matButtonToggleGroup"
-                      value="CRC"
-                      (change)="setmitigationActionBudgeValuetCtrl($event.value)"
+                      [value]="mitigationActionBudgeValuetCtrl[i]"
+                      (change)="setmitigationActionBudgeValuetCtrl($event.value, i)"
                       name="fontStyle"
                     >
                       <mat-button-toggle value="CRC">CRC</mat-button-toggle>

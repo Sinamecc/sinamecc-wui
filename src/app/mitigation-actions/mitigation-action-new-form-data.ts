@@ -51,7 +51,7 @@ export interface Status {
 export interface Finance {
   id: Number;
   name: String;
-  source: String;
+  source: any;
 }
 
 export interface IngeiCompliance {

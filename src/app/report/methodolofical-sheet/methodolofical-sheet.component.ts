@@ -60,7 +60,10 @@ export class MethodoloficalSheetComponent implements OnInit {
   submitForm() {
     this.isLoading = true;
     const payload = this.buildForm();
-    this.reportService.updateCurrentReport(Object.assign(this.report, payload));
+    if (this.report) {
+      this.reportService.updateCurrentReport(Object.assign(this.report, payload));
+    }
+
     this.reportService
       .submitEditReport(payload, this.reportEdit ? this.reportEdit.id.toString() : this.report.id.toString())
       .pipe(
@@ -153,8 +156,8 @@ export class MethodoloficalSheetComponent implements OnInit {
           positionCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(350)])],
           departmentCtrl: ['', Validators.compose([Validators.maxLength(100), Validators.required])],
           emailCtrl: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(40)])],
-          phoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-          logsCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(500)])], // miss this
+          phoneCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(8)])],
+          logsCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(500)])],
         }),
         this.formBuilder.group({
           dataTypeCtrl: ['', Validators.required],
@@ -232,7 +235,7 @@ export class MethodoloficalSheetComponent implements OnInit {
           ],
           phoneCtrl: [
             this.reportEdit.contact.phone,
-            Validators.compose([Validators.required, Validators.minLength(8)]),
+            Validators.compose([Validators.required, Validators.maxLength(8)]),
           ],
           logsCtrl: [
             this.reportEdit.contact_annotation,

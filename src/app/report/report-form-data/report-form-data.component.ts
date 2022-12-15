@@ -57,12 +57,12 @@ export class ReportFormDataComponent implements OnInit {
     const payload: ReportDataPayload = {
       other_classifier: '',
       report_information: this.reportForm.value['formArray'][0].whatInformationReportedCtrl,
-      have_line_base: this.reportForm.value['formArray'][0].isBaselineCtrl,
+      have_base_line: this.reportForm.value['formArray'][0].isBaselineCtrl,
       have_quality_element: this.reportForm.value['formArray'][0].qualityPreItemsCtrl,
       quality_element_description: this.reportForm.value['formArray'][0].qualityPreItemsValueCtrl,
       transfer_data_with_sinamecc: this.reportForm.value['formArray'][0].agreementTransferSINAMECCCtrl,
       transfer_data_with_sinamecc_description: this.reportForm.value['formArray'][0].agreementTransferSINAMECCValueCtrl,
-      base_line_report: this.reportForm.value['formArray'][0].isBaselineValueCtrlValue,
+      base_line_report: this.reportForm.value['formArray'][0].isBaselineValueCtrlFile,
       individual_report_data: this.reportForm.value['formArray'][0].reportDataCtrlValue,
     };
 
@@ -75,8 +75,10 @@ export class ReportFormDataComponent implements OnInit {
         this.formBuilder.group({
           whatInformationReportedCtrl: ['', Validators.required],
           isBaselineCtrl: [false, Validators.compose([Validators.maxLength(500), Validators.required])],
-          isBaselineValueCtrlFile: [''],
+          isBaselineValueCtrlFile: ['', Validators.compose([Validators.maxLength(500)])],
           isBaselineValueCtrlValue: [''],
+          reportUpdateCtrl: [''],
+          howReportedDataCtrl: [''],
           qualityPreItemsCtrl: ['', Validators.required],
           qualityPreItemsValueCtrl: ['', Validators.compose([Validators.maxLength(500)])],
           agreementTransferSINAMECCCtrl: ['', Validators.required],
@@ -97,18 +99,21 @@ export class ReportFormDataComponent implements OnInit {
     this.loadingFiles = false;
   }
 
-  private createUpdatedForm() {
-    this.loadFile();
+  private async createUpdatedForm() {
+    this.isLoading = true;
+    await this.loadFile();
     this.reportForm = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
           whatInformationReportedCtrl: [this.reportEdit.report_information, Validators.required],
           isBaselineCtrl: [
-            this.reportEdit.have_line_base,
+            this.reportEdit.have_base_line,
             Validators.compose([Validators.maxLength(500), Validators.required]),
           ],
-          isBaselineValueCtrlFile: [''],
+          isBaselineValueCtrlFile: [this.reportEdit.base_line_report, Validators.compose([Validators.maxLength(500)])],
           isBaselineValueCtrlValue: [this.reportEdit.base_line_report],
+          reportUpdateCtrl: [this.files['base_line_report'] ? 1 : 2],
+          howReportedDataCtrl: [this.files['report_file'] ? 1 : 2],
           qualityPreItemsCtrl: [this.reportEdit.have_quality_element, Validators.required],
           qualityPreItemsValueCtrl: [
             this.reportEdit.quality_element_description,
@@ -123,6 +128,8 @@ export class ReportFormDataComponent implements OnInit {
         }),
       ]),
     });
+
+    this.isLoading = false;
   }
 
   public validOptions() {

@@ -142,8 +142,12 @@ export class ImpactFormComponent implements OnInit {
     for (const indicator of this.mitigationAction.monitoring_information.indicator) {
       const form = this.formBuilder.array([
         this.formBuilder.group({
-          responsibleInstitutionCtrl: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
-          howSustainabilityIndicatorCtrl: ['', Validators.required],
+          id: indicator.id,
+          responsibleInstitutionCtrl: [
+            indicator.name,
+            Validators.compose([Validators.required, Validators.maxLength(200)]),
+          ],
+          howSustainabilityIndicatorCtrl: [indicator.ensure_sustainability, Validators.required],
           indicatorNameCtrl: [''],
           indicatorDescriptionCtrl: [indicator.description, Validators.required],
           indicatorUnitCtrl: [indicator.unit, Validators.required],
@@ -163,14 +167,14 @@ export class ImpactFormComponent implements OnInit {
         }),
         this.formBuilder.group({
           responsibleInstitutionCtrl: [indicator.information_source.responsible_institution, Validators.required],
-          sourceTypeCtrl: [indicator.information_source.type, Validators.required],
+          sourceTypeCtrl: [indicator.information_source.type.map((x: { id: any }) => x.id), Validators.required],
           sourceTypeOtherCtrl: [indicator.information_source.other_type],
           statisticalOperationNameCtrl: [indicator.information_source.statistical_operation, Validators.required],
         }),
         this.formBuilder.group({
           datatypeCtrl: [indicator.type_of_data, Validators.required],
           datatypeOtherCtrl: [indicator.other_type_of_data],
-          sinameccClassifiersCtrl: [indicator.classifier, Validators.required],
+          sinameccClassifiersCtrl: [indicator.classifier.map((x: { id: any }) => x.id), Validators.required],
           sinameccClassifiersOtherCtrl: [indicator.other_classifier],
         }),
         this.formBuilder.group({
@@ -218,16 +222,17 @@ export class ImpactFormComponent implements OnInit {
         other_geographic_coverage: actualForm[0].geographicCoverageOtherCtrl,
         disaggregation: actualForm[0].disintegrationCtrl,
         limitation: actualForm[0].dataSourceCtrl,
+        ensure_sustainability: actualForm[0].howSustainabilityIndicatorCtrl,
         comments: actualForm[0].observationsCommentsCtrl,
         information_source: {
           responsible_institution: actualForm[1].responsibleInstitutionCtrl,
-          type: actualForm[1].sourceTypeCtrl[0],
+          type: actualForm[1].sourceTypeCtrl,
           other_type: actualForm[1].sourceTypeOtherCtrl,
           statistical_operation: actualForm[1].statisticalOperationNameCtrl,
         },
         type_of_data: actualForm[2].datatypeCtrl,
         other_type_of_data: actualForm[2].datatypeOtherCtrl,
-        classifier: [actualForm[2].sinameccClassifiersCtrl],
+        classifier: actualForm[2].sinameccClassifiersCtrl,
         other_classifier: actualForm[2].sinameccClassifiersOtherCtrl,
         contact: {
           institution: actualForm[3].institutionCtrl,
@@ -243,6 +248,10 @@ export class ImpactFormComponent implements OnInit {
           author: actualForm[4].authorLastUpdateCtrl,
         },
       };
+
+      if (actualForm[0].id) {
+        context['id'] = actualForm[0].id;
+      }
       list.push(context);
     }
 
