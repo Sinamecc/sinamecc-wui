@@ -21,6 +21,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   annexSupportingFile: any;
   @Input() edit: boolean;
   @Input() adaptationActionUpdated: AdaptationAction;
+  stateLabel = 'submitted';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -164,6 +165,10 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
         ods: this.form.value.formArray[0].objectivesCtrl, //this.form.value.formArray[0].AnnexSupportingInformationCtrl
       },
     };
+
+    if (this.adaptationActionUpdated.next_state[0].state === this.stateLabel) {
+      context['is_complete'] = true;
+    }
 
     return context;
   }

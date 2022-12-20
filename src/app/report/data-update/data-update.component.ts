@@ -19,6 +19,7 @@ export class DataUpdateComponent implements OnInit {
   error: string;
   isLoading = false;
   report: ReportDataPayload;
+  stateLabel = 'submitted';
   @Input() reportEdit: Report;
 
   constructor(

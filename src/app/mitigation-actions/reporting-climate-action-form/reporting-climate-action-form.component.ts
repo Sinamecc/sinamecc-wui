@@ -24,6 +24,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
   isLoading = false;
   wasSubmittedSuccessfully = false;
   mitigationAction: MitigationAction;
+  stateLabel = 'submitted';
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
@@ -117,6 +118,9 @@ export class ReportingClimateActionFormComponent implements OnInit {
       },
     };
 
+    if (this.mitigationAction.next_state[0].state === this.stateLabel) {
+      context['is_complete'] = true;
+    }
     if (this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator']) {
       if (this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'][0].id) {
         context['monitoring_reporting_indicator']['monitoring_indicator'][
