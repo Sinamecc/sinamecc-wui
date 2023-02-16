@@ -1,4 +1,4 @@
-<div class="main-container" fxLayout="row" fxLayoutAlign="start start" fxFill>
+<div *ngIf="!isLoading" class="main-container" fxLayout="row" fxLayoutAlign="start start" fxFill>
   <div style="width: 75%;">
     <mat-tab-group class="custom-tabs">
       <mat-tab [label]="'specificLabel.initiative' | translate">
@@ -659,5 +659,18 @@
   </div>
   <div style="width: 25%; margin-left: 1em;" *ngIf="reviews && !edit">
     <app-change-log-view [reviews]="reviews"></app-change-log-view>
+    <div class="box">
+      <button mat-raised-button color="primary" (click)="onEdit(mitigationAction.id)">
+        <mat-icon>edit</mat-icon> <span translate>general.edit</span>
+      </button>
+      <button mat-raised-button color="accent" (click)="view(mitigationAction.id)">
+        <span translate>general.newReview</span> <mat-icon>navigate_next</mat-icon>
+      </button>
+    </div>
   </div>
+</div>
+
+<div *ngIf="isLoading" fxLayout="column" fxLayoutAlign="center center" class="loading-component">
+  <mat-spinner color="accent"></mat-spinner>
+  <h1 class="mat-h1" translate>general.loading</h1>
 </div>

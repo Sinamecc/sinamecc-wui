@@ -9,13 +9,13 @@
     <div *ngFor="let review of reviews; let isLast = last">
       <div fxLayout="row" fxLayoutAlign="start center">
         <mat-icon>done</mat-icon>
-        <mat-label style="margin-left: 1em;">{{ review?.date | date: 'medium' }}</mat-label>
+        <mat-label class="mat-h4" style="margin-left: 1em;">{{ review?.date | date: 'medium' }}</mat-label>
       </div>
       <div class="comment-container" fxLayout="row" fxLayoutAlign="start center">
         <mat-divider [vertical]="true" class="custom-vertical-divider"></mat-divider>
         <div fxLayout="column" fxLayoutAlign="start center">
           <div [class]="isLast ? 'custom-success-chip' : 'custom-chip'">
-            {{ review?.current_status }}
+            <label class="mat-h4">{{ review?.current_status }}</label>
           </div>
           <label class="mat-h4">{{ review?.user }}</label>
         </div>

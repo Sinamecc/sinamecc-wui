@@ -310,6 +310,7 @@
   },
 
   "general": {
+    "newReview": "Nueva revisión",
     "addRelationships": "Agregue relaciones adicionales",
     "addOther": "Agregar otro",
     "amount": "Monto",
