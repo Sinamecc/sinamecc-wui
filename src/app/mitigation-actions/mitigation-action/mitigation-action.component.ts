@@ -21,6 +21,7 @@ import {
 import { CommentsStructure, Comments } from '@app/@shared/comment';
 import { CommentsViewComponent } from '@app/@shared/comments-view/comments-view.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MitigationActionReview } from '../mitigation-action-review';
 
 @Component({
   selector: 'app-mitigation-action',
@@ -40,7 +41,7 @@ export class MitigationActionComponent implements OnInit {
   commentsModule5 = commentsStructureModule5;
   commentsModule6 = commentsStructureModule6;
   commentsByModule = {};
-  reviews: any;
+  reviews: MitigationActionReview[];
   typeDataMapDict = TypeDataMap;
 
   constructor(

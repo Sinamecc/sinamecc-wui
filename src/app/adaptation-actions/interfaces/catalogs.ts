@@ -119,3 +119,10 @@ export const ReportingPeriodicity = {
   QUARTERLY: 'Trimestral',
   OTHER: 'Otro',
 };
+
+export const geographicCoverageMap = {
+  NATIONAL: 'Nacional',
+  REGIONAL: 'Regional',
+  PROVINCIAL: 'Provincial',
+  CANTONAL: 'Cantonal',
+};

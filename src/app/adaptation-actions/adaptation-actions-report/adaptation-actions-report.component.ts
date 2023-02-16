@@ -233,6 +233,9 @@ export class AdaptationActionsReportComponent implements OnInit {
         adaptationActionDescriptionCtrl: ['', [Validators.required, Validators.maxLength(3000)]],
         adaptationActionGoalCtrl: ['', [Validators.required, Validators.maxLength(3000)]],
         adaptationActionODSCtrl: ['', Validators.required],
+        //expectedResultsCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field
+        //beneficiaryPopulationCtrl: ['', [Validators.required]], // new field,
+        //potentialCoBenefitsCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field,
       }),
       this.formBuilder.group({
         appScaleCtrl: ['', Validators.required],
@@ -253,8 +256,10 @@ export class AdaptationActionsReportComponent implements OnInit {
         adaptationActionClimateThreatCtrl: ['', Validators.required],
         adaptationActionClimateThreatOtherCtrl: [''],
         adaptationActionInfoSourceCtrl: ['', Validators.required],
-        descriptionVulnerabilityCtrl: ['', [Validators.required, Validators.maxLength(1000)]], // new field
-        descriptionElementsExposedCtrl: ['', [Validators.required, Validators.maxLength(1000)]], // new field
+        descriptionVulnerabilityCtrl: ['', [Validators.required, Validators.maxLength(1000)]],
+        descriptionElementsExposedCtrl: ['', [Validators.required, Validators.maxLength(1000)]],
+        //descriptionLossesDamagesCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field
+        //descriptionClimateRelatedRisksCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field
       }),
       this.formBuilder.group({
         adaptationActionStartDateCtrl: ['', Validators.required],
@@ -289,7 +294,7 @@ export class AdaptationActionsReportComponent implements OnInit {
           this.formBuilder.group({
             adaptationActionThemeCtrl: [element?.sub_topic?.topic?.id, Validators.required],
             adaptationActionTypologyCtrl: [element?.sub_topic?.id, Validators.required],
-            adaptationActionTypeCtrl: [element?.id, Validators.required], // new field
+            adaptationActionTypeCtrl: [element?.id, Validators.required],
             adaptationActionRelationCtrl: [adaptationActionRelationValue, Validators.required],
             adaptationActionGoalRelationCtrl: [adaptationActionGoalRelationValue, Validators.required],
             adaptationActionEjeRelationCtrl: [adaptationActionEjeRelationValue, Validators.required],
@@ -303,7 +308,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       return this.formBuilder.group({
         adaptationActionThemeCtrl: ['', Validators.required],
         adaptationActionTypologyCtrl: ['', Validators.required],
-        adaptationActionTypeCtrl: ['', Validators.required], // new field
+        adaptationActionTypeCtrl: ['', Validators.required],
         adaptationActionRelationCtrl: ['', Validators.required],
         adaptationActionGoalRelationCtrl: ['', Validators.required],
         adaptationActionEjeRelationCtrl: ['', Validators.required],
@@ -406,6 +411,9 @@ export class AdaptationActionsReportComponent implements OnInit {
           this.adaptationActionUpdated.adaptation_action_information.ods.map((x: any) => x.code),
           Validators.required,
         ],
+        //expectedResultsCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field,
+        //beneficiaryPopulationCtrl: ['', [Validators.required]], // new field,
+        //potentialCoBenefitsCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field,
       }),
       this.formBuilder.group({
         appScaleCtrl: [parseInt(this.adaptationActionUpdated.address.app_scale), Validators.required],
@@ -452,11 +460,13 @@ export class AdaptationActionsReportComponent implements OnInit {
         descriptionVulnerabilityCtrl: [
           this.adaptationActionUpdated.climate_threat.vulnerability_climate_threat,
           [Validators.required, Validators.maxLength(1000)],
-        ], // new field
+        ],
         descriptionElementsExposedCtrl: [
           this.adaptationActionUpdated.climate_threat.exposed_elements,
           [Validators.required, Validators.maxLength(1000)],
-        ], // new field
+        ],
+        //descriptionLossesDamagesCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field
+        //descriptionClimateRelatedRisksCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field
       }),
       this.formBuilder.group({
         adaptationActionStartDateCtrl: [adaptationActionStartDate, Validators.required],

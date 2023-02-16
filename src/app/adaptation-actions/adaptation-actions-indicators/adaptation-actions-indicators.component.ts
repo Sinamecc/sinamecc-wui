@@ -111,6 +111,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
             adaptationActionIndicatorLimitCtrl: [indicator.limitation, [Validators.maxLength(1000)]],
             adaptationActionIndicatorMeasurementCtrl: [indicator.additional_information, [Validators.maxLength(1000)]],
             adaptationActionIndicatorDetailsCtrl: [indicator.comments, [Validators.maxLength(1000)]],
+            //indicatorBaselineCtrl: ['', [Validators.maxLength(500)]], // new field
           }),
           this.formBuilder.group({
             adaptationActionIndicatorResponsibleInstitutionCtrl: [
@@ -182,6 +183,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         adaptationActionIndicatorLimitCtrl: ['', [Validators.maxLength(1000)]],
         adaptationActionIndicatorMeasurementCtrl: ['', [Validators.maxLength(1000)]],
         adaptationActionIndicatorDetailsCtrl: ['', [Validators.maxLength(1000)]],
+        //indicatorBaselineCtrl: ['', [Validators.maxLength(500)]], // new field
       }),
       this.formBuilder.group({
         adaptationActionIndicatorResponsibleInstitutionCtrl: ['', [Validators.required, Validators.maxLength(300)]],

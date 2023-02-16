@@ -671,6 +671,7 @@
   },
 
   "adaptationAction": {
+    "mesage1": "It is suggested to have on hand the Guide for the registration of climate actions with adaptation impacts in the National System of Metrics for Climate Change (SINAMECC) when completing this registration",
     "addReview": "Add a new review for this adaptation action",
     "newButton": "New Adaptation Action report",
     "form1": {
@@ -699,7 +700,7 @@
       "AACanton": "Canton where the action is executed",
       "AADistrict": "District where the action is executed",
       "narrativeActionPlace": "Narrative description location where the action takes place",
-      "attachGeographicalLocation": "Attach the geographical location of the action in case you have this",
+      "attachGeographicalLocation": "Attach the georeferenced location of the action in case you have this",
       "categorizationNationalIntruments": "Categorization with national instruments",
       "categorizationNationalIntrumentsTooltip": "For more information on categorization",
       "selectTopic": "Select the topic to which the action belongs",
@@ -715,16 +716,21 @@
       "climateRelatedHazard": "Climatic profile",
       "relatedClimateThreat": "Related climate threat",
       "relatedClimateThreatOther": "Weather Related Hazard (Other)",
-      "descriptionRelatedClimateThreat": "Description of the climate threat (You can attach additional information)",
-      "descriptionVulnerability": "Description of the vulnerability associated with the climate (you can attach additional information)",
-      "descriptionElementsExposed": "Description of the elements exposed to the threats associated with the climate to which the action responds (you can attach additional information)",
+      "descriptionRelatedClimateThreat": "Climate threat description and projections (attach supporting information)",
+      "descriptionVulnerability": "Description of vulnerability associated with climate (attach supporting information)",
+      "descriptionElementsExposed": "Description of the elements exposed to the threats associated with the climate to which the action responds (attach supporting information)",
+      "descriptionLossesDamages": "Description of the losses and damages to which the action responds (attach supporting information)",
+      "descriptionClimateRelatedRisks": "Description of climate-related risks (attach supporting information and methodology used)",
       "implementation": "Implementation",
       "startImplementation": "Start of implementation",
       "endImplementation": "End of implementation",
       "durationAction": "Duration of the action (months)",
       "responsibleExecuting": "Entity responsible for executing the adaptation action",
       "otherEntitiesInvolved": "Other entities involved in adaptation action",
-      "actionCode": "Action code"
+      "actionCode": "Action code",
+      "expectedResults": "Resultados esperados",
+      "beneficiaryPopulation": "Beneficiary population",
+      "potentialCoBenefits": "Potential co-benefits"
     },
     "form3": {
       "title": "Financing",
@@ -737,7 +743,7 @@
       "actionsfinancedInternationalSources": "Actions financed with international cooperation sources",
       "mideplanRegistes": "Is the action in Mideplan's register of non-reimbursable international cooperation projects?",
       "projectNameRegistered": "Under what name is the project registered in Mideplan?",
-      "executingEntity": "Executing Entity of the project"
+      "executingEntity": "Executing entity of the project"
     },
     "form4": {
       "title": "Indicators register",
@@ -755,8 +761,9 @@
       "statusReportingPeriod": "Status of the action corresponding to the reporting period",
       "progressMonitoringClimateAction": "Do you have any progress in monitoring your registered climate actions?",
       "indicatorVerificationSource": "Indicator Verification Source",
-      "attachSupportMonitoring": "Please attach the support information for the monitoring and follow-up process",
-      "descriptiveWay": "In a descriptive way, what has been the progress of your action in the period?"
+      "attachSupportMonitoring": "Attach the supporting information for the monitoring and follow-up process",
+      "descriptiveWay": "In a descriptive way, what has been the progress of your action in the period?",
+      "indicatorBaseline": "Indicator baseline (attach supporting information)"
     },
     "form5": {
       "title": "Monitoring and follow-up of climate actions through the SINAMECC",
@@ -768,10 +775,10 @@
       "temporalityImpact": "Temporality of the impact on adaptation of the action",
       "impactsAction": "Impacts of the action according to the defined indicators",
       "genderEquity": "The action incorporated elements of gender equity",
-      "contributesGenderEquity": "If yes, describe how the action contributes to gender equity in the face of climate change",
+      "contributesGenderEquity": "If so, describe how the action contributes to gender equity in the face of climate change",
       "sustainableDevelopment": "Select the sustainable development goals that most identify with the action",
       "generatedImpact": "Has the action generated any unwanted/unexpected/negative impact?",
-      "annexSupporting": "Annex supporting information associated with the impact of the reported action"
+      "annexSupporting": "Attach supporting information associated with the impact of the reported action"
     }
   },
 
