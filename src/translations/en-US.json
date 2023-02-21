@@ -22,6 +22,7 @@
   },
 
   "mitigationAction": {
+    "mitigationActionBudgetTitle": "Mitigation action budget",
     "mesage1": "It is suggested to have at hand the Guide for the registration of climate actions with mitigation impacts in the National System of Metrics for Climate Change (SINAMECC) when completing this registration",
     "mesage2": "Make sure that the form is in Spanish or in the language of your preference",
     "descriptionRelationshipMitigationActionOthers": "Description of the relationship of the mitigation action with others",
@@ -112,6 +113,7 @@
     "registeredNonReimbursableCooperationMideplan": "Is the action registered in the registry of non-reimbursable international cooperation projects of Mideplan?",
     "financedSourcesInternationalCooperation": "Acciones financiadas con fuentes de cooperación internacional",
     "referenceYear": "reference year",
+    "emissionSourceSector": "Emission source sector",
     "mitigationActionBudget": "Description of the funding source",
     "financingSourceApplying": "Describe the financing source to which you are applying",
     "detailfinancingSource": "Detail of the financing source",
@@ -375,6 +377,7 @@
     "yes": "Yes",
     "no": "No",
     "done": "Done",
+    "dondeReview": "Submit for review",
     "youSure": "Are you sure?",
     "status": "Status",
     "previousStatus": "Previous Status",

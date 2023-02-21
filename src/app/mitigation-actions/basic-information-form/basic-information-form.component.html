@@ -79,7 +79,13 @@
                 "
               >
                 <mat-card class="finance-container" [formGroupName]="i">
-                  <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
+                  <mat-label class="section-title" translate>mitigationAction.mitigationActionBudgetTitle</mat-label>
+                  <hr class="max-w section-title" />
+                  <mat-form-field
+                    [style.margin-right]="'10px'"
+                    [style.width.%]="100"
+                    class="ppcn-field last-section-mat-select"
+                  >
                     <mat-label translate
                       >2.1.3 - <span translate>mitigationAction.mitigationActionBudget</span></mat-label
                     >

@@ -22,6 +22,7 @@
   },
 
   "mitigationAction": {
+    "mitigationActionBudgetTitle": "Presupuesto de la acción de mitigación",
     "mesage1": "Se sugiere tener a mano la Guía para el registro de acciones climáticas con impactos en mitigación en el Sistema Nacional de Métrica para el Cambio Climático (SINAMECC) cuando esté completando este registro",
     "mesage2": "Asegurarse que el formulario está en español o en el idioma de su preferencia",
     "descriptionRelationshipMitigationActionOthers": "Descripción de la relación de la acción de mitigación con otras",
@@ -112,6 +113,7 @@
     "registeredNonReimbursableCooperationMideplan": "¿Se encuentra la acción registrada en el registro de proyectos de cooperación internacional no reembolsable de Mideplan?",
     "financedSourcesInternationalCooperation": "Acciones financiadas con fuentes de cooperación internacional",
     "referenceYear": "Año de refencia",
+    "emissionSourceSector": "Sector fuente de emisiones",
     "mitigationActionBudget": "Descripción de la fuente de financiamiento",
     "financingSourceApplying": "Describa la fuente financiamiento a la que está aplicando",
     "detailfinancingSource": "Detalle de la fuente de financiamiento",
@@ -333,7 +335,7 @@
     "detail": "Detalle",
     "locationAction": "Localización de la acción",
     "geographicScale": "Escala geográfica",
-    "GeographicLocation": "Ubicación geografica",
+    "GeographicLocation": "Ubicación geográfica",
     "maxWords": "La número de palabras aceptadas es de :",
     "errorLoadingFile": "Error al cargar el archivo",
     "loadingFile": "Cargando archivo",
@@ -375,6 +377,7 @@
     "yes": "Si",
     "no": "No",
     "done": "Listo",
+    "dondeReview": "Enviar para revisión",
     "youSure": "¿Esta seguro?",
     "status": "Estado",
     "previousStatus": "Estado Previo",
