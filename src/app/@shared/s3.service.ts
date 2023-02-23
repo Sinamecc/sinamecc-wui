@@ -20,9 +20,11 @@ export class S3Service {
 
     const regex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
     let matches;
+    console.log({ filePath });
     const file = await this.httpClient.get<any>(filePath, httpOptions).toPromise();
-
+    console.log('file', file);
     const str = file.headers.get('Content-Disposition');
+    console.log(str, 'str');
     matches = str.match(regex);
 
     return {
