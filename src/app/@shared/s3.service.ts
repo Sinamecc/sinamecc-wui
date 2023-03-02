@@ -17,11 +17,14 @@ export class S3Service {
       responseType: 'blob' as 'json',
       observe: 'response' as 'body',
     };
-    const regex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-    let matches;
     const file = await this.httpClient.get<any>(filePath, httpOptions).toPromise();
-    const str = file.headers.get('Content-Disposition');
-    matches = str.match(regex);
+    let matches = 'file';
+    if (!filename) {
+      const regex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+      let matches;
+      const str = file.headers.get('Content-Disposition');
+      matches = str.match(regex);
+    }
 
     return {
       filename: filename ? filename : matches[1].replace(/['"]+/g, ''),
