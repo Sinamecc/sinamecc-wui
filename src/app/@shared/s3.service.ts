@@ -18,16 +18,9 @@ export class S3Service {
       observe: 'response' as 'body',
     };
     const file = await this.httpClient.get<any>(filePath, httpOptions).toPromise();
-    let matches = 'file';
-    if (!filename) {
-      const regex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-      let matches;
-      const str = file.headers.get('Content-Disposition');
-      matches = str.match(regex);
-    }
 
     return {
-      filename: filename ? filename : matches[1].replace(/['"]+/g, ''),
+      filename: filename ? filename : 'file',
       data: file.body,
     };
   }
