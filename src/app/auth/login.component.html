@@ -6,9 +6,7 @@
         <h4 class="version">v{{ version }}</h4>
       </div>
       <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
-        <div class="login-error" [hidden]="!error || isLoading" translate>
-          credentialsSection.credentialsError
-        </div>
+        <div class="login-error" [hidden]="!error || isLoading" translate>credentialsSection.credentialsError</div>
         <br />
         <div fxLayout="column">
           <mat-form-field class="login-label">

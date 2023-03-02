@@ -31,7 +31,6 @@ export class BasicInformationFormComponent implements OnInit {
   startDate = new Date();
   selectedFood = '';
   budgetCtrlgroup: string;
-
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;

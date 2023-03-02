@@ -103,10 +103,8 @@ export class ReportViewComponent implements OnInit {
 
   async loadFile() {
     this.loadingFiles = true;
-    console.log(this.report.files);
     for (const file of this.report.files) {
-      console.log('Dowloading resource');
-      const s3File = await this.service.downloadResource(file.file.replace('/api', ''));
+      const s3File = await this.service.downloadResource(file.file.replace('/api', ''), file.filename);
       this.files[file.report_type] = s3File;
     }
 

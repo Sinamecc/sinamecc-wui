@@ -134,7 +134,6 @@ export class MitigationActionComponent implements OnInit {
   }
 
   view(uuid: string) {
-    console.log(123);
     this.router.navigate([`/mitigation/actions/${uuid}/reviews/new`], { replaceUrl: true });
   }
 
