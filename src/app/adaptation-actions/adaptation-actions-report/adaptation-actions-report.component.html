@@ -3,7 +3,7 @@
     <h2 translate>adaptationAction.form2.title</h2>
   </div>
   <form [formGroup]="form">
-    <mat-vertical-stepper #stepper linear formArrayName="formArray">
+    <mat-vertical-stepper linear #stepper formArrayName="formArray">
       <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
         <ng-template matStepLabel>
           <span translate>adaptationAction.form2.registerInfo</span>
@@ -59,7 +59,6 @@
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
-        <!--
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.expectedResults</mat-label>
           <input type="text" matInput formControlName="expectedResultsCtrl" />
@@ -69,26 +68,17 @@
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form2.beneficiaryPopulation</mat-label>
           <mat-select formControlName="beneficiaryPopulationCtrl" multiple>
-            <mat-option [value]="1">
-              <label translate>Todos</label>
-            </mat-option>
-            <mat-option [value]="2">
-              <label translate>Mujeres</label>
-            </mat-option>
-            <mat-option [value]="3">
-              <label translate> Niñez (menores de 12 años)</label>
+            <mat-option *ngFor="let benefied of benefiedPopulation" [value]="benefied.id">
+              <label translate>{{ benefied.name }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>
-       
 
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.potentialCoBenefits</mat-label>
           <input type="text" matInput formControlName="potentialCoBenefitsCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
-
-         -->
 
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form2.AAODS</mat-label>
@@ -381,7 +371,6 @@
           <br />
         </div>
 
-        <!--
         <div fxLayout="row" fxLayoutAlign=" center">
           <mat-form-field class="field-ppcn">
             <mat-label translate>adaptationAction.form2.descriptionLossesDamages</mat-label>
@@ -392,8 +381,6 @@
           <br />
         </div>
 
-        
-
         <div fxLayout="row" fxLayoutAlign=" center">
           <mat-form-field class="field-ppcn">
             <mat-label translate>adaptationAction.form2.descriptionClimateRelatedRisks</mat-label>
@@ -403,8 +390,6 @@
           <input type="file" name="filename4" />
           <br />
         </div>
-
-        -->
 
         <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
           <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>

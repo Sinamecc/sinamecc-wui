@@ -136,10 +136,45 @@
               <h3 class="mat-h3">{{ adaptationAction?.adaptation_action_information?.meta }}</h3>
             </div>
 
-            <div fxLayout="column">
-              <h3 class="mat-h3 txt-title">
-                Identificación preliminar de los Objetivos de Desarrollo Sostenible (ODS) impactados
+            <div fxLayout="row">
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.expectedResults</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{
+                  adaptationAction?.adaptation_action_information?.expected_result
+                    ? adaptationAction?.adaptation_action_information?.expected_result
+                    : '-'
+                }}
               </h3>
+            </div>
+
+            <div fxLayout="column">
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.beneficiaryPopulation</h3>
+              <div>
+                <mat-list class="custom-list-element">
+                  <mat-list-item
+                    *ngFor="let element of adaptationAction?.adaptation_action_information?.benefited_population"
+                  >
+                    {{ element.name }}</mat-list-item
+                  >
+                </mat-list>
+              </div>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.potentialCoBenefits</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{
+                  adaptationAction?.adaptation_action_information?.potential_co_benefits
+                    ? adaptationAction?.adaptation_action_information?.potential_co_benefits
+                    : '-'
+                }}
+              </h3>
+            </div>
+
+            <div fxLayout="column">
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.AAODS</h3>
               <div>
                 <mat-list class="custom-list-element">
                   <mat-list-item *ngFor="let element of adaptationAction?.adaptation_action_information?.ods">
@@ -317,6 +352,18 @@
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.descriptionElementsExposed</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.exposed_elements }}</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.descriptionLossesDamages</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.description_losses }}</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.descriptionClimateRelatedRisks</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.description_risks }}</h3>
             </div>
           </div>
 
@@ -585,6 +632,14 @@
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
                     {{ indicator?.comments }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.indicatorBaseline</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ indicator?.indicator_base_line }}
                   </h3>
                 </div>
 

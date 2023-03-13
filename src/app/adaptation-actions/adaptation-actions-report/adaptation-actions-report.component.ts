@@ -1,11 +1,17 @@
 import { DatePipe } from '@angular/common';
-import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
-import { AdaptationAction, Canton, ClimateThreatCatalog, District, Province } from '../interfaces/adaptationAction';
+import {
+  AdaptationAction,
+  BenefitedPopulation,
+  Canton,
+  ClimateThreatCatalog,
+  District,
+  Province,
+} from '../interfaces/adaptationAction';
 import { Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
 
 @Component({
@@ -20,6 +26,7 @@ export class AdaptationActionsReportComponent implements OnInit {
   subTopicsToShow: SubTopics[][] = [];
   ods: ODS[];
   adaptationAction: AdaptationAction;
+  benefiedPopulation: BenefitedPopulation[];
   @Input() adaptationActionUpdated: AdaptationAction;
   @Input() mainStepper: any;
   @Input() edit: boolean;
@@ -67,6 +74,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       this.adaptationAction = message;
     });
 
+    this.loadBenefitedPopulation();
     await this.loadProvinces();
     await this.loadCantones();
     await this.loadDistricts();
@@ -233,9 +241,9 @@ export class AdaptationActionsReportComponent implements OnInit {
         adaptationActionDescriptionCtrl: ['', [Validators.required, Validators.maxLength(3000)]],
         adaptationActionGoalCtrl: ['', [Validators.required, Validators.maxLength(3000)]],
         adaptationActionODSCtrl: ['', Validators.required],
-        //expectedResultsCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field
-        //beneficiaryPopulationCtrl: ['', [Validators.required]], // new field,
-        //potentialCoBenefitsCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field,
+        expectedResultsCtrl: ['', [Validators.required, Validators.maxLength(500)]],
+        beneficiaryPopulationCtrl: ['', [Validators.required]],
+        potentialCoBenefitsCtrl: ['', [Validators.required, Validators.maxLength(500)]],
       }),
       this.formBuilder.group({
         appScaleCtrl: ['', Validators.required],
@@ -258,8 +266,8 @@ export class AdaptationActionsReportComponent implements OnInit {
         adaptationActionInfoSourceCtrl: ['', Validators.required],
         descriptionVulnerabilityCtrl: ['', [Validators.required, Validators.maxLength(1000)]],
         descriptionElementsExposedCtrl: ['', [Validators.required, Validators.maxLength(1000)]],
-        //descriptionLossesDamagesCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field
-        //descriptionClimateRelatedRisksCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field
+        descriptionLossesDamagesCtrl: ['', [Validators.required, Validators.maxLength(500)]],
+        descriptionClimateRelatedRisksCtrl: ['', [Validators.required, Validators.maxLength(500)]],
       }),
       this.formBuilder.group({
         adaptationActionStartDateCtrl: ['', Validators.required],
@@ -326,6 +334,15 @@ export class AdaptationActionsReportComponent implements OnInit {
     const control = <FormArray>this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls;
     control.push(this.createThemesCtrl());
     this.loadTopics(index);
+  }
+
+  loadBenefitedPopulation() {
+    this.service.loadBenefitedPopulation().subscribe(
+      (response) => (this.benefiedPopulation = response),
+      (error) => {
+        this.benefiedPopulation = [];
+      }
+    );
   }
 
   loadProvinceSByCantonSelected(cantons: Canton[]) {
@@ -411,9 +428,18 @@ export class AdaptationActionsReportComponent implements OnInit {
           this.adaptationActionUpdated.adaptation_action_information.ods.map((x: any) => x.code),
           Validators.required,
         ],
-        //expectedResultsCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field,
-        //beneficiaryPopulationCtrl: ['', [Validators.required]], // new field,
-        //potentialCoBenefitsCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field,
+        expectedResultsCtrl: [
+          this.adaptationActionUpdated.adaptation_action_information.expected_result,
+          [Validators.required, Validators.maxLength(500)],
+        ],
+        beneficiaryPopulationCtrl: [
+          this.adaptationActionUpdated.adaptation_action_information.benefited_population.map((x: { id: any }) => x.id),
+          [Validators.required],
+        ],
+        potentialCoBenefitsCtrl: [
+          this.adaptationActionUpdated.adaptation_action_information.potential_co_benefits,
+          [Validators.required, Validators.maxLength(500)],
+        ],
       }),
       this.formBuilder.group({
         appScaleCtrl: [parseInt(this.adaptationActionUpdated.address.app_scale), Validators.required],
@@ -465,8 +491,14 @@ export class AdaptationActionsReportComponent implements OnInit {
           this.adaptationActionUpdated.climate_threat.exposed_elements,
           [Validators.required, Validators.maxLength(1000)],
         ],
-        //descriptionLossesDamagesCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field
-        //descriptionClimateRelatedRisksCtrl: ['', [Validators.required, Validators.maxLength(500)]], // new field
+        descriptionLossesDamagesCtrl: [
+          this.adaptationActionUpdated.climate_threat.description_losses,
+          [Validators.required, Validators.maxLength(500)],
+        ],
+        descriptionClimateRelatedRisksCtrl: [
+          this.adaptationActionUpdated.climate_threat.description_risks,
+          [Validators.required, Validators.maxLength(500)],
+        ],
       }),
       this.formBuilder.group({
         adaptationActionStartDateCtrl: [adaptationActionStartDate, Validators.required],
@@ -515,6 +547,9 @@ export class AdaptationActionsReportComponent implements OnInit {
         meta: this.form.value.formArray[0].adaptationActionGoalCtrl,
         adaptation_action_type: this.form.value.formArray[0].adaptationActionTypeCtrl,
         ods: this.form.value.formArray[0].adaptationActionODSCtrl,
+        expected_result: this.form.value.formArray[0].expectedResultsCtrl,
+        potential_co_benefits: this.form.value.formArray[0].potentialCoBenefitsCtrl,
+        benefited_population: this.form.value.formArray[0].beneficiaryPopulationCtrl,
       },
       address: {
         app_scale: this.form.value.formArray[1].appScaleCtrl,
@@ -547,6 +582,8 @@ export class AdaptationActionsReportComponent implements OnInit {
         description_climate_threat: this.form.value.formArray[4].adaptationActionInfoSourceCtrl,
         vulnerability_climate_threat: this.form.value.formArray[4].descriptionVulnerabilityCtrl,
         exposed_elements: this.form.value.formArray[4].descriptionElementsExposedCtrl,
+        description_losses: this.form.value.formArray[4].descriptionLossesDamagesCtrl,
+        description_risks: this.form.value.formArray[4].descriptionClimateRelatedRisksCtrl,
       },
 
       implementation: {
