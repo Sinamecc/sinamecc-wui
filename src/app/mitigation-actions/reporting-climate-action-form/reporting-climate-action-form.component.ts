@@ -106,6 +106,10 @@ export class ReportingClimateActionFormComponent implements OnInit {
               this.form.value.formArray[2].reportingPeriodCtrl,
               'yyyy-MM-dd'
             ),
+            progress_report_period_until: this.datePipe.transform(
+              this.form.value.formArray[2].reportingPeriodUntilCtrl,
+              'yyyy-MM-dd'
+            ),
             updated_data: this.form.value.formArray[1].informationToUpdateCtrl
               ? this.form.value.formArray[1].informationToUpdateCtrl
               : null,
@@ -180,6 +184,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
 
         this.formBuilder.group({
           reportingPeriodCtrl: ['', Validators.required],
+          reportingPeriodUntilCtrl: ['', Validators.required],
           beenProgressActionPeriodCtrl: ['', Validators.required],
         }),
       ]),
@@ -224,6 +229,10 @@ export class ReportingClimateActionFormComponent implements OnInit {
         this.formBuilder.group({
           reportingPeriodCtrl: [
             this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].progress_report_period,
+            Validators.required,
+          ],
+          reportingPeriodUntilCtrl: [
+            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].progress_report_period_until,
             Validators.required,
           ],
           beenProgressActionPeriodCtrl: [

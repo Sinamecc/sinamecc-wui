@@ -75,7 +75,6 @@ export class BasicInformationFormComponent implements OnInit {
           stepsTakingToFinancingCtrl: [''],
           detailfinancingSourceCtrl: ['', Validators.required],
           financeFrmCtrl: this.formBuilder.array([this.createFinanceForm()]),
-          referenceYearCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
           registeredNonReimbursableCooperationMideplanCtrl: ['', Validators.required],
@@ -99,7 +98,6 @@ export class BasicInformationFormComponent implements OnInit {
             Validators.required,
           ],
           financeFrmCtrl: this.createUpdateFinanceForm(),
-          referenceYearCtrl: [this.mitigationAction.finance.reference_year, Validators.required],
         }),
         this.formBuilder.group({
           registeredNonReimbursableCooperationMideplanCtrl: [
@@ -122,25 +120,32 @@ export class BasicInformationFormComponent implements OnInit {
       mitigationActionDescriptionCtrl: ['', [Validators.required, Validators.maxLength(300)]],
       currencyValueCtrl: ['CRC'],
       mitigationActionAmounttCtrl: ['', [Validators.required, Validators.maxLength(50)]],
+      referenceYearCtrl: ['', Validators.required],
     });
   }
 
   private createUpdateFinanceForm() {
+    this.mitigationActionBudgeValuetCtrl = [];
     const financeList: FormGroup[] = [];
     // const mapCurrency = ['CRC', 'USD', 'EUR'];
     let index = 0;
+
     for (const element of this.mitigationAction.finance.finance_information) {
-      this.mitigationActionBudgeValuetCtrl.push(element.currency);
+      const currency =
+        element.currency != 'CRC' && element.currency != 'USD' && element.currency != 'EUR'
+          ? 'other'
+          : element.currency;
+      this.mitigationActionBudgeValuetCtrl.push(currency);
       const form = this.formBuilder.group({
         id: [element.id],
         mitigationActionDescriptionCtrl: [element.source_description, [Validators.required, Validators.maxLength(300)]],
         currencyValueCtrl: [element.currency],
         mitigationActionAmounttCtrl: [element.budget, [Validators.required, Validators.maxLength(50)]],
+        referenceYearCtrl: [element.reference_year, Validators.required],
       });
       index += 1;
       financeList.push(form);
     }
-
     return this.formBuilder.array(financeList);
   }
 
@@ -161,8 +166,6 @@ export class BasicInformationFormComponent implements OnInit {
         ? this.form.value.formArray[0].stepsTakingToFinancingCtrl
         : 'empty field',
       source: this.form.value.formArray[0].detailfinancingSourceCtrl,
-      //source_description: this.form.value.formArray[0].financingSourceApplyingCtrl,
-      reference_year: this.datePipe.transform(this.form.value.formArray[0].referenceYearCtrl, 'yyyy-MM-dd'),
       budget: this.form.value.formArray[0].mitigationActionAmounttCtrl,
       currency: this.mitigationActionBudgeValuetCtrl,
       mideplan_registered:
@@ -178,6 +181,7 @@ export class BasicInformationFormComponent implements OnInit {
     for (const element of this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'].controls) {
       const financeinfo = {
         source_description: element.value.mitigationActionDescriptionCtrl,
+        reference_year: this.datePipe.transform(element.value.referenceYearCtrl, 'yyyy-MM-dd'),
         currency:
           this.mitigationActionBudgeValuetCtrl[index] === 'other'
             ? element.value.currencyValueCtrl

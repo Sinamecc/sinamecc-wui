@@ -230,13 +230,13 @@
                     <strong translate>general.amount</strong>
                     {{ element.currency }} - {{ element.budget }}
                   </h3>
+
+                  <h3 class="mat-h3">
+                    <strong translate>mitigationAction.referenceYear</strong> {{ element?.reference_year }}
+                  </h3>
                 </div>
               </mat-expansion-panel>
             </mat-accordion>
-
-            <h3 class="mat-h3">
-              <strong translate>mitigationAction.referenceYear</strong> {{ mitigationAction?.finance?.reference_year }}
-            </h3>
           </div>
 
           <br />
@@ -644,10 +644,15 @@
               {{ (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report_period }}
             </h3>
             <h3 class="mat-h3">
+              <strong translate>general.until</strong>
+              {{ (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report_period }}
+            </h3>
+            <h3 class="mat-h3">
               <strong translate>mitigationAction.beenProgressActionPeriod</strong>
               {{
                 mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator
-                  ? (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report
+                  ? (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]
+                      ?.progress_report_period_until
                   : ''
               }}
             </h3>

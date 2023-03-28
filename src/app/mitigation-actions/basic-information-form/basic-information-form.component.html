@@ -127,6 +127,27 @@
                     <mat-error translate>errorLabel.fieldRequired</mat-error>
                   </mat-form-field>
 
+                  <div fxLayout="row">
+                    <mat-form-field [style.width.%]="100" class="ppcn-field">
+                      <mat-label translate>2.1.4 - <span translate>mitigationAction.referenceYear</span></mat-label>
+                      <input
+                        matInput
+                        [placeholder]="'Choose a date' | translate"
+                        [matDatepicker]="implementationBudgetDatePicker"
+                        formControlName="referenceYearCtrl"
+                      />
+
+                      <mat-datepicker-toggle matSuffix [for]="implementationBudgetDatePicker"></mat-datepicker-toggle>
+                      <mat-datepicker
+                        #implementationBudgetDatePicker
+                        startView="year"
+                        [startAt]="startDate"
+                      ></mat-datepicker>
+
+                      <mat-error translate>errorLabel.fieldRequired</mat-error>
+                    </mat-form-field>
+                  </div>
+
                   <div class="box-button">
                     <button
                       mat-mini-fab
@@ -152,23 +173,6 @@
                   <span translate>general.addOther</span>
                 </button>
               </div>
-            </div>
-
-            <div fxLayout="row">
-              <mat-form-field [style.width.%]="100" class="ppcn-field">
-                <mat-label translate>2.1.4 - <span translate>mitigationAction.referenceYear</span></mat-label>
-                <input
-                  matInput
-                  [placeholder]="'Choose a date' | translate"
-                  [matDatepicker]="implementationBudgetDatePicker"
-                  formControlName="referenceYearCtrl"
-                />
-
-                <mat-datepicker-toggle matSuffix [for]="implementationBudgetDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #implementationBudgetDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
-
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
             </div>
 
             <br />
