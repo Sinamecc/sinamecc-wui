@@ -18,13 +18,43 @@
 
     <!-- Strategy Name Column -->
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef translate> Nombre</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate>info.name</mat-header-cell>
       <mat-cell *matCellDef="let element">
         {{ element.adaptation_action_information.name ? element.adaptation_action_information.name : '-' }}
       </mat-cell>
     </ng-container>
 
-    <!-- Objective Column -->
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef translate>general.type</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{
+          element.adaptation_action_information.adaptation_action_type
+            ? element.adaptation_action_information.adaptation_action_type.name
+            : '-'
+        }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="objetive">
+      <mat-header-cell *matHeaderCellDef translate>general.objective</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.adaptation_action_information.objective ? element.adaptation_action_information.objective : '-' }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastUpdate">
+      <mat-header-cell *matHeaderCellDef translate>general.lastUpdate</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.updated | date }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="created">
+      <mat-header-cell *matHeaderCellDef translate>general.createdAt</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.created | date }}
+      </mat-cell>
+    </ng-container>
 
     <!-- Status Column -->
     <ng-container matColumnDef="fms_state">

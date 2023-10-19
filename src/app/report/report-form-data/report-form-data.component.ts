@@ -93,7 +93,7 @@ export class ReportFormDataComponent implements OnInit {
   async loadFile() {
     this.loadingFiles = true;
     for (const file of this.reportEdit.files) {
-      const s3File = await this.reportService.downloadResource(file.file.replace('/api', ''));
+      const s3File = await this.reportService.downloadResource(file.file.replace('/api', ''), file.filename);
       this.files[file.report_type] = s3File;
     }
     this.loadingFiles = false;

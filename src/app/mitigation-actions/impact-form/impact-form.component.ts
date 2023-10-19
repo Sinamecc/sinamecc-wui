@@ -125,7 +125,7 @@ export class ImpactFormComponent implements OnInit {
         institutionCtrl: ['', Validators.required],
         contactPersonTitleCtrl: ['', Validators.required],
         emailAddressCtrl: ['', Validators.email],
-        phoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
+        phoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(8)])],
       }),
       this.formBuilder.group({
         dateLastUpdateCtrl: ['', Validators.required],

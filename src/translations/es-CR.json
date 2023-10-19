@@ -22,6 +22,7 @@
   },
 
   "mitigationAction": {
+    "mitigationActionBudgetTitle": "Presupuesto de la acción de mitigación",
     "mesage1": "Se sugiere tener a mano la Guía para el registro de acciones climáticas con impactos en mitigación en el Sistema Nacional de Métrica para el Cambio Climático (SINAMECC) cuando esté completando este registro",
     "mesage2": "Asegurarse que el formulario está en español o en el idioma de su preferencia",
     "descriptionRelationshipMitigationActionOthers": "Descripción de la relación de la acción de mitigación con otras",
@@ -112,6 +113,7 @@
     "registeredNonReimbursableCooperationMideplan": "¿Se encuentra la acción registrada en el registro de proyectos de cooperación internacional no reembolsable de Mideplan?",
     "financedSourcesInternationalCooperation": "Acciones financiadas con fuentes de cooperación internacional",
     "referenceYear": "Año de refencia",
+    "emissionSourceSector": "Sector fuente de emisiones",
     "mitigationActionBudget": "Descripción de la fuente de financiamiento",
     "financingSourceApplying": "Describa la fuente financiamiento a la que está aplicando",
     "detailfinancingSource": "Detalle de la fuente de financiamiento",
@@ -310,6 +312,7 @@
   },
 
   "general": {
+    "newReview": "Nueva revisión",
     "addRelationships": "Agregue relaciones adicionales",
     "addOther": "Agregar otro",
     "amount": "Monto",
@@ -332,7 +335,7 @@
     "detail": "Detalle",
     "locationAction": "Localización de la acción",
     "geographicScale": "Escala geográfica",
-    "GeographicLocation": "Ubicación geografica",
+    "GeographicLocation": "Ubicación geográfica",
     "maxWords": "La número de palabras aceptadas es de :",
     "errorLoadingFile": "Error al cargar el archivo",
     "loadingFile": "Cargando archivo",
@@ -374,6 +377,7 @@
     "yes": "Si",
     "no": "No",
     "done": "Listo",
+    "dondeReview": "Enviar para revisión",
     "youSure": "¿Esta seguro?",
     "status": "Estado",
     "previousStatus": "Estado Previo",
@@ -666,6 +670,7 @@
   },
 
   "adaptationAction": {
+    "mesage1": "Se sugiere tener a la mano la Guía para el registro de acciones climáticas con impactos de adaptación en el Sistema Nacional de Métricas de Cambio Climático (SINAMECC) al momento de completar este registro",
     "addReview": "Agregar una nueva revisión para esta acción de adaptación",
     "newButton": "Nuevo reporte Acción de Adaptación",
     "form1": {
@@ -694,7 +699,7 @@
       "AACanton": "Cantón donde se ejecuta la acción",
       "AADistrict": "Distrito donde se ejecuta la acción",
       "narrativeActionPlace": "Descripción narrativa localización donde se desarrolla la acción",
-      "attachGeographicalLocation": "Adjunte la localización geográfica de la acción en caso de contar con esta",
+      "attachGeographicalLocation": "Adjunte la localización georeferenciada de la acción en caso de contar con esta",
       "categorizationNationalIntruments": "Categorización con instrumentos nacionales",
       "categorizationNationalIntrumentsTooltip": "Para más información sobre la categorización",
       "selectTopic": "Seleccione el tema al que pertenece la acción",
@@ -708,18 +713,23 @@
       "namePlanningInstrument": "En caso de aplicar, indique el nombre del instrumento de planificación, programa o proyecto al que pertenece la acción",
       "adaptationIntegrated": "Descripción cómo se ha integrado la adaptación dentro del instrumento",
       "climateRelatedHazard": "Perfil climático",
-      "relatedClimateThreat": "Amenaza asociada al clima relacionada",
+      "relatedClimateThreat": "Amenaza asociada al clima",
       "relatedClimateThreatOther": "Amenaza asociada al clima relacionada (Otra)",
-      "descriptionRelatedClimateThreat": "Descripción de la amenaza climática (Puede adjuntar información adicional)",
-      "descriptionVulnerability": "Descripción de la vulnerabilidad asociada al clima (puede adjuntar información adicional)",
-      "descriptionElementsExposed": "Descripción de los elementos expuestos a las amenazas asociadas al clima a las que responde la acción (puede adjuntar información adicional)",
+      "descriptionRelatedClimateThreat": "Descripción de la amenaza climática y proyecciones (adjunte información de respaldo)",
+      "descriptionVulnerability": "Descripción de la vulnerabilidad asociada al clima (adjunte información de respaldo)",
+      "descriptionElementsExposed": "Descripción de los elementos expuestos a las amenazas asociadas al clima a las que responde la acción (adjunte información de respaldo)",
+      "descriptionLossesDamages": "Descripción de las pérdidas y daños a las que responde la acción (adjunte información de respaldo)",
+      "descriptionClimateRelatedRisks": "Descripción de los riesgos asociados al clima (adjunte información de respaldo y la metodología utilizada)",
       "implementation": "Implementación",
       "startImplementation": "Inicio de la implementación",
       "endImplementation": "Finalización de la implementación",
       "durationAction": "Tiempo de duración de la acción (meses)",
       "responsibleExecuting": "Entidad responsable de ejecución de la acción de adaptación",
       "otherEntitiesInvolved": "Otras entidades involucradas en la acción de adaptación",
-      "actionCode": "Código de la acción"
+      "actionCode": "Código de la acción",
+      "expectedResults": "Resultados esperados",
+      "beneficiaryPopulation": "Población beneficiaria",
+      "potentialCoBenefits": "Potenciales co-beneficios"
     },
     "form3": {
       "title": "Financiamiento",
@@ -732,7 +742,7 @@
       "actionsfinancedInternationalSources": "Acciones financiadas con fuentes de cooperación internacional",
       "mideplanRegistes": "¿Se encuentra la acción en el registro de proyectos de cooperación internacional no reembolsable de Mideplan?",
       "projectNameRegistered": "¿Bajo que nombre se encuentra el proyecto registrado en Mideplan?",
-      "executingEntity": "Entidad Ejecutora del proyecto"
+      "executingEntity": "Entidad ejecutora del proyecto"
     },
     "form4": {
       "title": "Registro de indicadores",
@@ -750,8 +760,9 @@
       "statusReportingPeriod": "Estado de la acción correspondiente al periodo de reporte",
       "progressMonitoringClimateAction": "¿Tiene algún avance en el monitoreo de sus acciones climáticas registradas?",
       "indicatorVerificationSource": "Fuente de verificación del indicador",
-      "attachSupportMonitoring": "Por favor, anexe la información de soporte para el proceso de monitoreo y seguimiento",
-      "descriptiveWay": "A modo descriptivo ¿cuál ha sido el avance de su acción en el periodo?"
+      "attachSupportMonitoring": "Adjunte la información de soporte para el proceso de monitoreo y seguimiento",
+      "descriptiveWay": "A modo descriptivo ¿cuál ha sido el avance de su acción en el periodo?",
+      "indicatorBaseline": "Línea base del indicador (adjunte información de respaldo)"
     },
     "form5": {
       "selectIndicador": "Seleccione el indicador",
@@ -763,10 +774,10 @@
       "temporalityImpact": "Temporalidad del impacto en adaptación de la acción",
       "impactsAction": "Impactos de la acción según los indicadores definidos",
       "genderEquity": "La acción incorporó elementos de equidad de género",
-      "contributesGenderEquity": "En caso positivo describa como la acción aporta a la equidad de género frente al cambio climático",
+      "contributesGenderEquity": "En caso positivo, describa como la acción aporta a la equidad de género frente al cambio climático",
       "sustainableDevelopment": "Seleccione los objetivos de desarrollo sostenible que más se identifican con la acción",
       "generatedImpact": "¿La acción ha generado algún impacto no deseado/inesperado/negativo?",
-      "annexSupporting": "Anexo información de soporte asociada al impacto de la acción reportada"
+      "annexSupporting": "Adjunte información de soporte asociada al impacto de la acción reportada"
     }
   },
 

@@ -52,7 +52,7 @@ export class ReportVersionsComponent implements OnInit {
 
   async download(file: string) {
     this.isLoading = true;
-    const blob = await this.reportService.downloadResource(file);
+    const blob = await this.reportService.downloadResource(file, 'file');
     const url = window.URL.createObjectURL(blob.data);
     const a = document.createElement('a');
     document.body.appendChild(a);

@@ -121,7 +121,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
           Validators.required,
         ],
         indicatorVerificationSourceOtherCtrl: [''],
-        attachSupportingInformationCtrl: [indicator.support_information],
+        attachSupportingInformationCtrl: [indicator.support_information, Validators.required],
       });
       indicatorList.push(form);
     }
@@ -137,7 +137,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
       indicatorDataUpdateDateCtrl: ['', Validators.required],
       indicatorVerificationSourceCtrl: ['', Validators.required],
       indicatorVerificationSourceOtherCtrl: [''],
-      attachSupportingInformationCtrl: [''],
+      attachSupportingInformationCtrl: ['', Validators.required],
     });
   }
 

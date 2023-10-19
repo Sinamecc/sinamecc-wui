@@ -39,6 +39,9 @@ export interface AdaptationActionInformation {
   meta: string;
   adaptation_action_type: any;
   ods: number[] | any;
+  benefited_population: any;
+  potential_co_benefits?: string;
+  expected_result?: string;
 }
 
 export interface Activity {
@@ -60,6 +63,8 @@ export interface ClimateThreat {
   description_climate_threat: string;
   vulnerability_climate_threat: string;
   exposed_elements: string;
+  description_risks: string;
+  description_losses: string;
 }
 
 export interface Implementation {
@@ -123,6 +128,7 @@ export interface Indicator {
   general_report?: any; //GeneralReport;
   contact: ContactIndicator;
   available_time_end_date: string;
+  indicator_base_line?: string;
 }
 
 export interface ProgressLog {
@@ -224,4 +230,12 @@ export interface InstrumentDetail {
   name: string;
   created: string;
   updated: string;
+}
+
+export interface BenefitedPopulation {
+  name: string;
+  code: string;
+  created?: string;
+  id?: number;
+  updated?: string;
 }

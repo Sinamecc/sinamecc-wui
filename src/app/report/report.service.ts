@@ -153,8 +153,8 @@ export class ReportService {
     );
   }
 
-  public async downloadResource(filePath: string): Promise<S3File> {
-    return this.s3.downloadResource(filePath);
+  public async downloadResource(filePath: string, filename: string): Promise<S3File> {
+    return this.s3.downloadResource(filePath, filename);
   }
 
   reportVersionsName(id: number): Observable<string> {

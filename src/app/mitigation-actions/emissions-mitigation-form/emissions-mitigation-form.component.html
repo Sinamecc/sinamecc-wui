@@ -50,7 +50,7 @@
                 "
               >
                 <mat-card fxLayout="column" fxLayoutAlign="start start" class="sub-container" [formGroupName]="i">
-                  <mat-form-field class="field-ppcn">
+                  <mat-form-field class="field-ppcn custom-field">
                     <mat-label translate
                       >4.1.2.1 - <span translate>mitigationAction.sectorSourceEmissions</span></mat-label
                     >
@@ -161,7 +161,11 @@
                 <input matInput formControlName="documentationCalculationsEstimateReductionEmissionsCO2Ctrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
+              <input
+                type="file"
+                accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/msword,"
+                name="filename"
+              />
               <br />
             </div>
 
@@ -306,27 +310,15 @@
                 >
                 <mat-select [(ngModel)]="mechanismStandardApplyModel" formControlName="mechanismStandardApplyCtrl">
                   <!-- This options will remplace for a catalog, waiting BE-->
-                  <mat-option [value]="1">
-                    Mecanismo de Desarrollo Limpio (MDL)
-                  </mat-option>
+                  <mat-option [value]="1"> Mecanismo de Desarrollo Limpio (MDL) </mat-option>
 
-                  <mat-option [value]="2">
-                    Verified Carbon Standard (VERRA)
-                  </mat-option>
-                  <mat-option [value]="3">
-                    The Gold Standard (GS)
-                  </mat-option>
+                  <mat-option [value]="2"> Verified Carbon Standard (VERRA) </mat-option>
+                  <mat-option [value]="3"> The Gold Standard (GS) </mat-option>
 
-                  <mat-option [value]="4">
-                    Joint Crediting Mechanism (JCM)
-                  </mat-option>
-                  <mat-option [value]="5">
-                    Forest Carbon Partnership Facility (FCPF) - REDD+
-                  </mat-option>
+                  <mat-option [value]="4"> Joint Crediting Mechanism (JCM) </mat-option>
+                  <mat-option [value]="5"> Forest Carbon Partnership Facility (FCPF) - REDD+ </mat-option>
 
-                  <mat-option [value]="6">
-                    Otro
-                  </mat-option>
+                  <mat-option [value]="6"> Otro </mat-option>
                 </mat-select>
               </mat-form-field>
               <br />
@@ -346,7 +338,7 @@
                 <mat-hint
                   >Se recomienda consultar el siguiente documento con referencias de metodologías estándar del Mecanismo
                   de Desarrollo Limpio,
-                  <a target="_blank" href="https://drive.google.com/drive/folders/1MiwoYKE7xQH0hoH5yuhyPdun8ZLYqKs6"
+                  <a target="_blank" href="https://drive.google.com/file/d/1ikG7D_iUVtBjfcEZhDc677oijhEQ2Mmd/view"
                     >Link</a
                   >
                 </mat-hint>

@@ -100,17 +100,18 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
               indicator.methodological_detail,
               [Validators.required, Validators.maxLength(500)],
             ],
-            adaptationActionIndicatorUnitFileCtrl: [''], // new field
+            adaptationActionIndicatorUnitFileCtrl: [''],
             adaptationActionIndicatorFrecuenceCtrl: [indicator.reporting_periodicity, [Validators.required]],
-            adaptationActionIndicatorFrecuenceOtherCtrl: [''], // new field
+            adaptationActionIndicatorFrecuenceOtherCtrl: [''],
             adaptationActionIndicatorTimeCtrl: [adaptationActionIndicatorTime, [Validators.required]],
-            timeSeriesAvailableEndCtrl: [timeSeriesAvailableEnd, [Validators.required]], // new field
+            timeSeriesAvailableEndCtrl: [timeSeriesAvailableEnd, [Validators.required]],
             adaptationActionIndicatorCoverageCtrl: [indicator.geographic_coverage, [Validators.required]],
-            adaptationActionIndicatorCoverageOtherCtrl: [''], // new field
+            adaptationActionIndicatorCoverageOtherCtrl: [''],
             adaptationActionIndicatorDisintegrationCtrl: [indicator.disaggregation, [Validators.maxLength(1000)]],
             adaptationActionIndicatorLimitCtrl: [indicator.limitation, [Validators.maxLength(1000)]],
             adaptationActionIndicatorMeasurementCtrl: [indicator.additional_information, [Validators.maxLength(1000)]],
             adaptationActionIndicatorDetailsCtrl: [indicator.comments, [Validators.maxLength(1000)]],
+            indicatorBaselineCtrl: [indicator.indicator_base_line, [Validators.maxLength(500)]],
           }),
           this.formBuilder.group({
             adaptationActionIndicatorResponsibleInstitutionCtrl: [
@@ -171,22 +172,23 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         adaptationActionIndicatorDescriptionCtrl: ['', [Validators.required, Validators.maxLength(500)]],
         adaptationActionIndicatorUnitCtrl: ['', [Validators.required, Validators.maxLength(100)]],
         adaptationActionIndicatorMetodologyCtrl: ['', [Validators.required, Validators.maxLength(500)]],
-        adaptationActionIndicatorUnitFileCtrl: [''], // new field
+        adaptationActionIndicatorUnitFileCtrl: [''],
         adaptationActionIndicatorFrecuenceCtrl: ['', [Validators.required]],
-        adaptationActionIndicatorFrecuenceOtherCtrl: [''], // new field
+        adaptationActionIndicatorFrecuenceOtherCtrl: [''],
         adaptationActionIndicatorTimeCtrl: ['', [Validators.required]],
-        timeSeriesAvailableEndCtrl: ['', [Validators.required]], // new field
+        timeSeriesAvailableEndCtrl: ['', [Validators.required]],
         adaptationActionIndicatorCoverageCtrl: ['', [Validators.required]],
-        adaptationActionIndicatorCoverageOtherCtrl: [''], // new field
+        adaptationActionIndicatorCoverageOtherCtrl: [''],
         adaptationActionIndicatorDisintegrationCtrl: ['', [Validators.maxLength(1000)]],
         adaptationActionIndicatorLimitCtrl: ['', [Validators.maxLength(1000)]],
         adaptationActionIndicatorMeasurementCtrl: ['', [Validators.maxLength(1000)]],
         adaptationActionIndicatorDetailsCtrl: ['', [Validators.maxLength(1000)]],
+        indicatorBaselineCtrl: ['', [Validators.maxLength(500)]],
       }),
       this.formBuilder.group({
         adaptationActionIndicatorResponsibleInstitutionCtrl: ['', [Validators.required, Validators.maxLength(300)]],
         adaptationActionIndicatorSourceTypeCtrl: ['', [Validators.required]],
-        adaptationActionIndicatorSourceTypeOtherCtrl: [''], // new field
+        adaptationActionIndicatorSourceTypeOtherCtrl: [''],
         adaptationActionIndicatorOperationNameCtrl: ['', [Validators.maxLength(300)]],
       }),
       this.formBuilder.group({
@@ -257,6 +259,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
           ? form[0].adaptationActionIndicatorMeasurementCtrl
           : null,
         comments: form[0].adaptationActionIndicatorDetailsCtrl ? form[0].adaptationActionIndicatorDetailsCtrl : null,
+        indicator_base_line: form[0].indicatorBaselineCtrl,
         available_time_start_date: this.datePipe.transform(form[0].adaptationActionIndicatorTimeCtrl, 'yyyy-MM-dd'),
         information_source: {
           responsible_institution: form[1].adaptationActionIndicatorResponsibleInstitutionCtrl,
@@ -274,7 +277,6 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         other_classifier: form[2].adaptationActionIndicatorClassifiersOtherCtrl
           ? form[2].adaptationActionIndicatorClassifiersOtherCtrl
           : null,
-
         contact: {
           institution: form[3].adaptationActionIndicatorContactInstitutionCtrl,
           contact_name: form[3].adaptationActionIndicatorContactNameCtrl,

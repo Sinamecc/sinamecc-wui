@@ -186,6 +186,21 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
+            <mat-form-field [style.width.%]="100" class="ppcn-field">
+              <mat-label translate>6.3.1 - <span translate>general.until</span></mat-label>
+              <input
+                matInput
+                [placeholder]="'Choose a date' | translate"
+                [matDatepicker]="reportingPeriodUntilDatePicker"
+                formControlName="reportingPeriodUntilCtrl"
+              />
+
+              <mat-datepicker-toggle matSuffix [for]="reportingPeriodUntilDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #reportingPeriodUntilDatePicker startView="year"></mat-datepicker>
+
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+
             <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
               <mat-label translate>6.3.2 - <span translate>mitigationAction.beenProgressActionPeriod</span></mat-label>
               <input type="text" matInput formControlName="beenProgressActionPeriodCtrl" required />
@@ -209,7 +224,7 @@
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
               <button [disabled]="wasSubmittedSuccessfully" type="submit" matRipple class="primary-button">
-                <span translate>general.done</span>
+                <span translate>general.dondeReview</span>
               </button>
             </div>
           </mat-step>

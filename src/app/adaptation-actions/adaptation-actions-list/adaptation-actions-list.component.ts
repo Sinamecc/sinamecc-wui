@@ -15,7 +15,7 @@ import { adaptationsActionsTypeMap } from '../interfaces/catalogs';
 export class AdaptationActionsListComponent implements OnInit {
   adaptationsActions: AdaptationAction[] = [];
   dataSource: MatTableDataSource<AdaptationAction>;
-  headers = ['id', 'name', 'fms_state', 'actions'];
+  headers = ['id', 'name', 'type', 'objetive', 'fms_state', 'lastUpdate', 'created', 'actions'];
   loading = false;
   typesMap = adaptationsActionsTypeMap;
   @ViewChild(MatPaginator) paginator: MatPaginator;

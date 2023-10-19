@@ -75,7 +75,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
           periodPotentialEmissionReductionEstimatedCtrl: ['', Validators.required],
           periodPotentialEmissionReductionEstimatedOtherCtrl: ['', Validators.required],
           sectorSourceFCtrl: this.formBuilder.array([this.createSectorSourceForm()]),
-          carbonSinksReservoirsCtrl: ['', Validators.required],
+          carbonSinksReservoirsCtrl: [''],
           definitionBaselineCtrl: ['', Validators.required],
           methodologyExantePotentialReductionEmissionsCO2Ctrl: ['', Validators.required],
           documentationCalculationsEstimateReductionEmissionsCO2Ctrl: ['', Validators.required],
@@ -181,7 +181,6 @@ export class EmissionsMitigationFormComponent implements OnInit {
           sectorSourceFCtrl: this.formBuilder.array(this.createSectorSourceEditForm()),
           carbonSinksReservoirsCtrl: [
             this.mitigationAction.impact_documentation.carbon_deposit.map((x: { id: any }) => x.id),
-            Validators.required,
           ],
           definitionBaselineCtrl: [
             this.mitigationAction.impact_documentation.base_line_definition,
@@ -261,7 +260,9 @@ export class EmissionsMitigationFormComponent implements OnInit {
       impact_documentation: {
         gases: this.form.value.formArray[0].periodPotentialEmissionReductionEstimatedOtherCtrl.toString(),
         standard: this.form.value.formArray[2].mechanismStandardApplyCtrl,
-        carbon_deposit: this.form.value.formArray[0].carbonSinksReservoirsCtrl,
+        carbon_deposit: this.form.value.formArray[0].carbonSinksReservoirsCtrl
+          ? this.form.value.formArray[0].carbonSinksReservoirsCtrl
+          : [],
         estimate_reduction_co2: this.form.value.formArray[0].exAnteEmissionReductionsCtrl,
         period_potential_reduction: this.form.value.formArray[0].periodPotentialEmissionReductionEstimatedCtrl,
         base_line_definition: this.form.value.formArray[0].definitionBaselineCtrl,

@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { tap } from 'rxjs/operators';
 import { AdaptationActionsActionImpactComponent } from '../adaptation-actions-action-impact/adaptation-actions-action-impact.component';
@@ -47,7 +49,9 @@ export class AdaptationActionsNewComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private cdRef: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private service: AdaptationActionService
+    private service: AdaptationActionService,
+    public snackBar: MatSnackBar,
+    private translateService: TranslateService
   ) {
     const id = this.route.snapshot.paramMap.get('id');
     this.edit = id ? true : false;
@@ -62,7 +66,9 @@ export class AdaptationActionsNewComponent implements OnInit {
     return this.mainGroup.get('formArray');
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.openStartMessages();
+  }
 
   loadAdaptationActions(id: string) {
     this.service.loadOneAdaptationActions(id).subscribe((response) => {
@@ -112,5 +118,11 @@ export class AdaptationActionsNewComponent implements OnInit {
   ngAfterViewInit() {
     this.cdRef.detectChanges();
     setTimeout(() => this.createForm(), 0);
+  }
+
+  public openStartMessages() {
+    this.translateService.get('adaptationAction.mesage1').subscribe((res: string) => {
+      this.snackBar.open(res, 'Cerrar');
+    });
   }
 }

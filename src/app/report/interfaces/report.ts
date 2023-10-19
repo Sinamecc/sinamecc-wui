@@ -100,6 +100,7 @@ export interface ReportFile {
   file: string;
   report_data: number;
   report_type: string;
+  filename: string;
 }
 
 export const baseLineFile = 'base_line_report';

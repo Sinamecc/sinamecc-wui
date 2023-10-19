@@ -209,6 +209,7 @@ export interface FinanceInformation {
   finance?: number;
   id?: number;
   source_description: string;
+  reference_year: string;
 }
 
 export interface InitiativeType {

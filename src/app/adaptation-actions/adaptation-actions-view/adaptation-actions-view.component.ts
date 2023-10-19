@@ -12,7 +12,6 @@ import {
   commentsStructureModule5,
   commentsStructureModule6,
 } from '../comments-structure';
-import { AdaptationAction } from '../interfaces/adaptationAction';
 import {
   actionState,
   adaptationActionClimateThreaMap,
@@ -21,6 +20,7 @@ import {
   AppScale,
   classifiersSINAMECCMap,
   financeInstrumentMap,
+  geographicCoverageMap,
   indicatorsTypeOfDataMap,
   provinciaMap,
   reportingEntityTypeMap,
@@ -54,6 +54,7 @@ export class AdaptationActionsViewComponent implements OnInit {
   commentsModule4 = commentsStructureModule4;
   commentsModule5 = commentsStructureModule5;
   commentsModule6 = commentsStructureModule6;
+  geographicCoverage = geographicCoverageMap;
 
   loading = false;
 

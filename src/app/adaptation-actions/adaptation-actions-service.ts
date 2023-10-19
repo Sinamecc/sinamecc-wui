@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {
   AdaptationAction,
+  BenefitedPopulation,
   Canton,
   ClimateThreat,
   ClimateThreatCatalog,
@@ -29,6 +30,7 @@ const routes = {
   districts: () => `/v1/general/district/`,
   getClimateThreat: () => `/v1/adaptation-action/type_climate_threat/`,
   instrumentDetail: () => `/v1/adaptation-action/instrument_detail/`,
+  benefitedPopulations: () => `/v1/adaptation-action/get_benefited_population/`,
 };
 
 @Injectable()
@@ -186,6 +188,14 @@ export class AdaptationActionService {
   public loadInstrumentDetail() {
     return this.httpClient.get(routes.instrumentDetail()).pipe(
       map((body: InstrumentDetail[]) => {
+        return body;
+      })
+    );
+  }
+
+  public loadBenefitedPopulation() {
+    return this.httpClient.get(routes.benefitedPopulations()).pipe(
+      map((body: BenefitedPopulation[]) => {
         return body;
       })
     );

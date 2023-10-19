@@ -29,9 +29,7 @@
               <mat-icon>vertical_align_top</mat-icon>
             </app-input-file>
 
-            <mat-error *ngIf="reportForm.get('file').hasError('required')" translate>
-              reportData.selectFile
-            </mat-error>
+            <mat-error *ngIf="reportForm.get('file').hasError('required')" translate> reportData.selectFile </mat-error>
             <mat-error *ngIf="reportForm.get('file').hasError('maxContentSize')">
               <span translate
                 >The total size must not exceed

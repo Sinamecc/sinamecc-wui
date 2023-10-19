@@ -4,9 +4,10 @@
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
 
-<br />
-<app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
-<br />
+<div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center" class="loading-component">
+  <mat-spinner color="accent"></mat-spinner>
+  <h1 class="mat-h1" translate>general.loading</h1>
+</div>
 <div class="container mat-elevation-z8 table-sinamecc">
   <mat-table #table [dataSource]="dataSource">
     <!-- Name Column -->
@@ -50,20 +51,10 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef translate>general.actions</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <button mat-icon-button color="accent" (click)="edit(element.id)">
-          <mat-icon>edit</mat-icon>
-        </button>
         <button mat-icon-button color="accent" (click)="view(element.id)">
           <mat-icon>visibility</mat-icon>
         </button>
 
-        <!-- <button mat-icon-button color="accent" (click)="update(element.id)" > <mat-icon color="white">edit</mat-icon></button> -->
-        <button mat-icon-button color="accent" *ngIf="canChangeState(element)" (click)="addReview(element.id)">
-          <mat-icon>navigate_next</mat-icon>
-        </button>
-        <button mat-icon-button color="accent" (click)="changelog(element.id)">
-          <mat-icon color="white">history</mat-icon>
-        </button>
         <button
           *ngIf="hasPermProvider()"
           mat-icon-button
@@ -79,12 +70,11 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row [ngClass]="row.fsm_state" *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
-
   <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
   </mat-paginator>
 </div>
 <br />
-<div class="box-button" *ngIf="hasPermProvider()">
+<div class="box-button" *ngIf="hasPermProvider() && !loading">
   <button mat-raised-button color="primary" type="button" routerLink="/mitigation/actions/new">
     <span translate>mitigationAction.addMA</span>
   </button>

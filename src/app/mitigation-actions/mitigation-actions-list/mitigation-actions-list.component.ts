@@ -42,6 +42,7 @@ export class MitigationActionsListComponent implements OnInit {
   version: string = environment.version;
   error: string;
   isLoading = false;
+  loading = false;
   dataSource: MatTableDataSource<MitigationAction>;
   canUpdateStatus = false;
   displayedColumns = ['name', 'strategy_name', 'purpose', 'fsm_state', 'updated', 'created', 'actions'];
@@ -78,11 +79,15 @@ export class MitigationActionsListComponent implements OnInit {
   }
 
   loadMAData() {
-    this.service.mitigationActions(this.i18nService.language.split('-')[0]).subscribe((mas: MitigationAction[]) => {
-      const maList = mas;
-      this.dataSource = new MatTableDataSource<MitigationAction>(maList);
-      this.dataSource.paginator = this.paginator;
-    });
+    this.loading = true;
+    this.service
+      .mitigationActions(this.i18nService.language.split('-')[0])
+      .subscribe((mas: MitigationAction[]) => {
+        const maList = mas;
+        this.dataSource = new MatTableDataSource<MitigationAction>(maList);
+        this.dataSource.paginator = this.paginator;
+      })
+      .add(() => (this.loading = false));
   }
 
   addReview(uuid: string) {
