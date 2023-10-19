@@ -23,8 +23,6 @@ export class RestorePasswordComponent implements OnInit {
 		private router: Router,
 		private translateService: TranslateService
 	) {
-        console.log(this.route.snapshot, this.route.snapshot.queryParams["code"] ,
-        this.route.snapshot.queryParams["token"])
 		if (
 			this.route.snapshot.queryParams["code"] &&
 			this.route.snapshot.queryParams["token"]
