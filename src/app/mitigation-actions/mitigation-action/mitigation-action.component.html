@@ -1,5 +1,5 @@
 <div *ngIf="!isLoading" class="main-container" fxLayout="row" fxLayoutAlign="start start" fxFill>
-  <div style="width: 75%">
+  <div style="width: 75%;">
     <mat-tab-group class="custom-tabs">
       <mat-tab [label]="'specificLabel.initiative' | translate">
         <div [style.width.%]="100" [style.padding.px]="20" fxLayout="column" fxLayoutAlign="start start">
@@ -662,7 +662,7 @@
       </mat-tab>
     </mat-tab-group>
   </div>
-  <div style="width: 25%; margin-left: 1em" *ngIf="reviews && !edit">
+  <div style="width: 25%; margin-left: 1em;" *ngIf="reviews && !edit">
     <app-change-log-view [reviews]="reviews"></app-change-log-view>
     <div class="box">
       <button mat-raised-button color="primary" (click)="onEdit(mitigationAction.id)">
