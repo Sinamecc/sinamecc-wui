@@ -38,7 +38,7 @@ export class RestorePasswordComponent implements OnInit {
 			code: this.code,
 			password: password
 		};
-        console.log(context,112)
+      
 		this.authenticationService.restorePassword(context).subscribe(
             (			response: any) => {
 				this.router.navigate(["/login"], { replaceUrl: true });
