@@ -1,0 +1,27 @@
+name: Deploy on ECS
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to (development, production)'
+        required: true
+        default: 'development'
+        type: choice
+        options:
+          - development
+          - production
+
+jobs:
+  ##
+  ## Missing steps to run tests and linters
+  ##
+  register-images:
+    name: 'Register Images'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Execute script
+        run: |
+          echo "Everything is fine"
