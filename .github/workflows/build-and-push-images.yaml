@@ -8,6 +8,10 @@ on:
         type: string
         default: 'dev'
 
+    secrets:
+      AWS_ROLE_ARN:
+        required: true
+
     outputs:
       image_tag:
         description: 'Commit SHA'
@@ -17,8 +21,21 @@ on:
         value: ${{ jobs.building-and-pushing-images.outputs.ecr_registry }}
 
 jobs:
+  test:
+    name: 'Test'
+    environment: ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test
+        run: |
+          echo "Testing..."
+          echo "Testing completed."
+          echo "Testing completed. ${{ secrets.AWS_ROLE_ARN}}"
+
   building-and-pushing-images:
     name: 'Building and Pushing Images'
+    needs: test
     environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     permissions:
