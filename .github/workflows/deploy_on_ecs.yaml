@@ -26,8 +26,10 @@ jobs:
           else
             echo "Invalid environment stage"
             exit 1
+          fi
   register-images:
     name: 'Register Images'
+    needs: env-vars
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
