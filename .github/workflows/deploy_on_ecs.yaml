@@ -12,6 +12,20 @@ on:
           - prod
 
 jobs:
+  test:
+    name: 'Test'
+    environment: ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Test
+        run: |
+          echo "Testing..."
+          echo "Testing completed."
+          echo "Testing completed. ${{ secrets.AWS_ROLE_ARN}}
+
   register-images:
     name: 'Register Images into ECR'
     uses: ./.github/workflows/build-and-push-images.yaml
