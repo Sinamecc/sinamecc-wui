@@ -19,6 +19,7 @@ on:
 jobs:
   building-and-pushing-images:
     name: 'Building and Pushing Images'
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
