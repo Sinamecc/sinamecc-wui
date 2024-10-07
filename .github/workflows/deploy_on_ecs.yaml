@@ -12,9 +12,20 @@ on:
           - production
 
 jobs:
-  ##
-  ## Missing steps to run tests and linters
-  ##
+  env-vars:
+    name: 'Set Environment Variables'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Stage
+        run: |
+          echo "Discovering the environment stage:"
+          if [[ ${{ inputs.environment }} == 'production' ]]; then
+            echo "ENVIRONMENT=prod" >> $GITHUB_ENV
+          elif [[ ${{ inputs.environment }} == 'development' ]]; then
+            echo "ENVIRONMENT=dev" >> $GITHUB_ENV
+          else
+            echo "Invalid environment stage"
+            exit 1
   register-images:
     name: 'Register Images'
     runs-on: ubuntu-latest
@@ -24,4 +35,4 @@ jobs:
 
       - name: Execute script
         run: |
-          echo "Everything is fine"
+          echo "Registering images for $ENVIRONMENT"
