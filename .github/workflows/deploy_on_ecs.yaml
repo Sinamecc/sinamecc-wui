@@ -13,7 +13,7 @@ on:
 
 jobs:
   env-vars:
-    name: 'Set Environment Variables'
+    name: 'Set Environment Variables for Stage ${{ inputs.environment }} ${{ env.ENVIRONMENT }}'
     runs-on: ubuntu-latest
     steps:
       - name: Set Stage
@@ -37,4 +37,4 @@ jobs:
 
       - name: Execute script
         run: |
-          echo "Registering images for $ENVIRONMENT"
+          echo "Registering images for ${{ env.ENVIRONMENT }} environment"
