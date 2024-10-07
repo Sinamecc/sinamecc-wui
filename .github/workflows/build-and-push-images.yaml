@@ -8,9 +8,6 @@ on:
         type: string
         default: 'dev'
 
-    secrets:
-      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
-
     outputs:
       image_tag:
         description: 'Commit SHA'
