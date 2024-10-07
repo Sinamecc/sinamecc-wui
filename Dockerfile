@@ -2,7 +2,7 @@
 
 FROM node:14 as node
 
-ARG env=prod
+ARG env=dev
 
 WORKDIR /app
 

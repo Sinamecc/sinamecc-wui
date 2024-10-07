@@ -8,37 +8,12 @@ on:
         default: 'development'
         type: choice
         options:
-          - development
-          - production
+          - dev
+          - prod
 
 jobs:
-  env-vars:
-    name: 'Set Environment Variables'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set Stage
-        run: |
-          echo "Discovering the environment stage:"
-          if [[ ${{ inputs.environment }} == 'production' ]]; then
-            echo "ENVIRONMENT=prod" >> $GITHUB_ENV
-          elif [[ ${{ inputs.environment }} == 'development' ]]; then
-            echo "ENVIRONMENT=dev" >> $GITHUB_ENV
-          else
-            echo "Invalid environment stage"
-            exit 1
-          fi
-      - name: Show Environment Variables
-        run: |
-          echo "Environment: ${{ env.ENVIRONMENT }}"
-
   register-images:
-    name: 'Register Images'
-    needs: env-vars
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Execute script
-        run: |
-          echo "Registering images for ${{ env.ENVIRONMENT }} environment"
+    name: 'Register Images into ECR'
+    uses: ./.github/workflows/build-and-push-images.yml
+    with:
+      environment: ${{ github.event.inputs.environment }}
