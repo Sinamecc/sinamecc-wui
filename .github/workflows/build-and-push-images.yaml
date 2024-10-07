@@ -8,6 +8,9 @@ on:
         type: string
         default: 'dev'
 
+    secrets:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+
     outputs:
       image_tag:
         description: 'Commit SHA'
@@ -31,7 +34,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::973157324549:role/github-action-sinamecc-ci-cd
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: us-east-2
           role-session-name: build-and-push-images
 
