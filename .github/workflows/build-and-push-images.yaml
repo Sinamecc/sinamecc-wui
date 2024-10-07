@@ -23,7 +23,6 @@ on:
 jobs:
   building-and-pushing-images:
     name: 'Building and Pushing Images'
-    needs: test
     environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     permissions:
