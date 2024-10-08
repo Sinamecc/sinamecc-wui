@@ -44,4 +44,4 @@ jobs:
 
       - name: Restart ECS service
         run: |
-          aws ecs update-service --cluster  sinamecc-frontend-${{ github.event.inputs.environment }} --service sinamecc-frontend-${{ github.event.inputs.environment }} --force-new-deployment
+          aws ecs update-service --cluster  sinamecc-cluster-${{ github.event.inputs.environment }} --service sinamecc-frontend-${{ github.event.inputs.environment }} --force-new-deployment
