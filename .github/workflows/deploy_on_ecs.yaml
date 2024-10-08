@@ -12,14 +12,14 @@ on:
           - prod
 
 jobs:
-  # register-images:
-  #   name: 'Register Images into ECR'
-  #   uses: ./.github/workflows/build-and-push-images.yaml
-  #   with:
-  #     environment: ${{ github.event.inputs.environment }}
+  register-images:
+    name: 'Register Images into ECR'
+    uses: ./.github/workflows/build-and-push-images.yaml
+    with:
+      environment: ${{ github.event.inputs.environment }}
 
-  #   secrets:
-  #     AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+    secrets:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
 
   deploy-on-ecs:
     name: 'Deploy on ECS Cluster (${{ github.event.inputs.environment }})'
