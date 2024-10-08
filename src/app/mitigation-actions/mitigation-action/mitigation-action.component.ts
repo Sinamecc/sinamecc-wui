@@ -1,13 +1,10 @@
 import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { finalize } from 'rxjs/operators';
 
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Logger } from '@app/@core';
-import { AuthenticationService, Credentials } from '@app/auth';
 import { I18nService } from '@app/i18n';
 import {
   commentsStructureModule1,
@@ -21,6 +18,7 @@ import {
 import { CommentsStructure, Comments } from '@app/@shared/comment';
 import { CommentsViewComponent } from '@app/@shared/comments-view/comments-view.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MitigationActionReview } from '../mitigation-action-review';
 
 @Component({
   selector: 'app-mitigation-action',
@@ -40,17 +38,15 @@ export class MitigationActionComponent implements OnInit {
   commentsModule5 = commentsStructureModule5;
   commentsModule6 = commentsStructureModule6;
   commentsByModule = {};
-  reviews: any;
+  reviews: MitigationActionReview[];
   typeDataMapDict = TypeDataMap;
 
   constructor(
-    private router: Router,
     private i18nService: I18nService,
     private service: MitigationActionsService,
     private route: ActivatedRoute,
-    private authenticationService: AuthenticationService,
-    private sanitizer: DomSanitizer,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
@@ -124,14 +120,25 @@ export class MitigationActionComponent implements OnInit {
   }
 
   loadReviews() {
-    this.service.mitigationActionReviews(this.id).subscribe((response) => {
-      this.reviews = response;
-    });
+    this.isLoading = true;
+    this.service
+      .mitigationActionReviews(this.id)
+      .subscribe((response) => {
+        this.reviews = response;
+      })
+      .add(() => (this.isLoading = false));
+  }
+
+  onEdit(uuid: string) {
+    this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
+  }
+
+  view(uuid: string) {
+    this.router.navigate([`/mitigation/actions/${uuid}/reviews/new`], { replaceUrl: true });
   }
 
   buildFormatComments() {
     let commentList: any = [];
-
     const commentsKeys = Object.keys(this.commentsByModule);
 
     for (const element of commentsKeys) {

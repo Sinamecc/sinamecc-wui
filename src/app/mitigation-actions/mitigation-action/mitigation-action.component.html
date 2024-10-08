@@ -1,4 +1,4 @@
-<div class="main-container" fxLayout="row" fxLayoutAlign="start start" fxFill>
+<div *ngIf="!isLoading" class="main-container" fxLayout="row" fxLayoutAlign="start start" fxFill>
   <div style="width: 75%;">
     <mat-tab-group class="custom-tabs">
       <mat-tab [label]="'specificLabel.initiative' | translate">
@@ -230,13 +230,13 @@
                     <strong translate>general.amount</strong>
                     {{ element.currency }} - {{ element.budget }}
                   </h3>
+
+                  <h3 class="mat-h3">
+                    <strong translate>mitigationAction.referenceYear</strong> {{ element?.reference_year }}
+                  </h3>
                 </div>
               </mat-expansion-panel>
             </mat-accordion>
-
-            <h3 class="mat-h3">
-              <strong translate>mitigationAction.referenceYear</strong> {{ mitigationAction?.finance?.reference_year }}
-            </h3>
           </div>
 
           <br />
@@ -336,7 +336,7 @@
                 </mat-expansion-panel-header>
                 <div>
                   <h3 class="mat-h3">
-                    <strong translate>mitigationAction.mitigationActionBudget</strong>
+                    <strong translate>mitigationAction.emissionSourceSector</strong>
                     {{ element.sector.name }}
                   </h3>
 
@@ -346,7 +346,7 @@
                   </h3>
 
                   <h3 class="mat-h3">
-                    <strong translate>general.maincategories</strong>
+                    <strong translate>mitigationAction.maincategories</strong>
                     {{ element.category_ipcc_2006.name }}
                   </h3>
                 </div>
@@ -644,10 +644,15 @@
               {{ (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report_period }}
             </h3>
             <h3 class="mat-h3">
+              <strong translate>general.until</strong>
+              {{ (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report_period }}
+            </h3>
+            <h3 class="mat-h3">
               <strong translate>mitigationAction.beenProgressActionPeriod</strong>
               {{
                 mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator
-                  ? (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report
+                  ? (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]
+                      ?.progress_report_period_until
                   : ''
               }}
             </h3>
@@ -659,5 +664,18 @@
   </div>
   <div style="width: 25%; margin-left: 1em;" *ngIf="reviews && !edit">
     <app-change-log-view [reviews]="reviews"></app-change-log-view>
+    <div class="box">
+      <button mat-raised-button color="primary" (click)="onEdit(mitigationAction.id)">
+        <mat-icon>edit</mat-icon> <span translate>general.edit</span>
+      </button>
+      <button mat-raised-button color="accent" (click)="view(mitigationAction.id)">
+        <span translate>general.newReview</span> <mat-icon>navigate_next</mat-icon>
+      </button>
+    </div>
   </div>
+</div>
+
+<div *ngIf="isLoading" fxLayout="column" fxLayoutAlign="center center" class="loading-component">
+  <mat-spinner color="accent"></mat-spinner>
+  <h1 class="mat-h1" translate>general.loading</h1>
 </div>

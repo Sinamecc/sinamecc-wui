@@ -136,10 +136,45 @@
               <h3 class="mat-h3">{{ adaptationAction?.adaptation_action_information?.meta }}</h3>
             </div>
 
-            <div fxLayout="column">
-              <h3 class="mat-h3 txt-title">
-                Identificación preliminar de los Objetivos de Desarrollo Sostenible (ODS) impactados
+            <div fxLayout="row">
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.expectedResults</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{
+                  adaptationAction?.adaptation_action_information?.expected_result
+                    ? adaptationAction?.adaptation_action_information?.expected_result
+                    : '-'
+                }}
               </h3>
+            </div>
+
+            <div fxLayout="column">
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.beneficiaryPopulation</h3>
+              <div>
+                <mat-list class="custom-list-element">
+                  <mat-list-item
+                    *ngFor="let element of adaptationAction?.adaptation_action_information?.benefited_population"
+                  >
+                    {{ element.name }}</mat-list-item
+                  >
+                </mat-list>
+              </div>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.potentialCoBenefits</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">
+                {{
+                  adaptationAction?.adaptation_action_information?.potential_co_benefits
+                    ? adaptationAction?.adaptation_action_information?.potential_co_benefits
+                    : '-'
+                }}
+              </h3>
+            </div>
+
+            <div fxLayout="column">
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.AAODS</h3>
               <div>
                 <mat-list class="custom-list-element">
                   <mat-list-item *ngFor="let element of adaptationAction?.adaptation_action_information?.ods">
@@ -257,9 +292,7 @@
               </div>
 
               <div fxLayout="column">
-                <h3 class="mat-h3 txt-title" translate>
-                  adaptationAction.form2.relationshipGuideline
-                </h3>
+                <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.relationshipGuideline</h3>
                 <h3 class="mat-h3">{{ activity?.adaptation_axis_guideline?.description }}</h3>
               </div>
             </mat-expansion-panel>
@@ -319,6 +352,18 @@
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.descriptionElementsExposed</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.exposed_elements }}</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.descriptionLossesDamages</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.description_losses }}</h3>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.descriptionClimateRelatedRisks</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.description_risks }}</h3>
             </div>
           </div>
 
@@ -436,9 +481,7 @@
 
           <div fxLayout="column" fxLayoutAlign="space-around start">
             <div fxLayout="row">
-              <h3 class="mat-h3 txt-title" translate>
-                adaptationAction.form3.mideplanRegistes
-              </h3>
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form3.mideplanRegistes</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
                 {{ adaptationAction?.finance?.mideplan?.registry === '1' ? 'Si' : 'No' }}
@@ -448,9 +491,7 @@
 
           <div fxLayout="column" fxLayoutAlign="space-around start">
             <div fxLayout="row">
-              <h3 class="mat-h3 txt-title" translate>
-                adaptationAction.form3.projectNameRegistered
-              </h3>
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form3.projectNameRegistered</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
                 {{ adaptationAction?.finance?.mideplan?.name }}
@@ -460,9 +501,7 @@
 
           <div fxLayout="column" fxLayoutAlign="space-around start">
             <div fxLayout="row">
-              <h3 class="mat-h3 txt-title" translate>
-                adaptationAction.form3.executingEntity
-              </h3>
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form3.executingEntity</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
                 {{ adaptationAction?.finance?.mideplan?.entity }}
@@ -540,26 +579,28 @@
                 </div>
 
                 <div fxLayout="row">
-                  <h3 class="mat-h3 txt-title" translate>mitigationAction.timeSeriesAvailable</h3>
-                  <h3 class="mat-h3 txt-separator">:</h3>
-                  <h3 class="mat-h3">
-                    {{ indicator?.available_time_start_date }}
-                  </h3>
-                </div>
+                  <div fxLayout="row">
+                    <h3 class="mat-h3 txt-title" translate>mitigationAction.timeSeriesAvailable</h3>
+                    <h3 class="mat-h3 txt-separator">:</h3>
+                    <h3 class="mat-h3">
+                      {{ indicator?.available_time_start_date }}
+                    </h3>
+                  </div>
 
-                <div fxLayout="row">
-                  <h3 class="mat-h3 txt-title" translate>general.until</h3>
-                  <h3 class="mat-h3 txt-separator">:</h3>
-                  <h3 class="mat-h3">
-                    {{ indicator?.available_time_end_date }}
-                  </h3>
+                  <div class="txt-separator" fxLayout="row">
+                    <h3 class="mat-h3 txt-title" translate>general.until</h3>
+                    <h3 class="mat-h3 txt-separator">:</h3>
+                    <h3 class="mat-h3">
+                      {{ indicator?.available_time_end_date }}
+                    </h3>
+                  </div>
                 </div>
 
                 <div fxLayout="row">
                   <h3 class="mat-h3 txt-title" translate>mitigationAction.geographicCoverage</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
-                    {{ indicator?.geographic_coverage }}
+                    {{ indicator?.geographic_coverage ? geographicCoverage[indicator?.geographic_coverage] : '-' }}
                   </h3>
                 </div>
 
@@ -591,6 +632,14 @@
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
                     {{ indicator?.comments }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.indicatorBaseline</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ indicator?.indicator_base_line }}
                   </h3>
                 </div>
 
@@ -777,19 +826,21 @@
                 </div>
 
                 <div fxLayout="row">
-                  <h3 class="mat-h3 txt-title" translate>mitigationAction.reportingPeriod</h3>
-                  <h3 class="mat-h3 txt-separator">:</h3>
-                  <h3 class="mat-h3">
-                    {{ element?.start_date }}
-                  </h3>
-                </div>
+                  <div fxLayout="row">
+                    <h3 class="mat-h3 txt-title" translate>mitigationAction.reportingPeriod</h3>
+                    <h3 class="mat-h3 txt-separator">:</h3>
+                    <h3 class="mat-h3">
+                      {{ element?.start_date }}
+                    </h3>
+                  </div>
 
-                <div fxLayout="row">
-                  <h3 class="mat-h3 txt-title" translate>general.until</h3>
-                  <h3 class="mat-h3 txt-separator">:</h3>
-                  <h3 class="mat-h3">
-                    {{ element?.end_date }}
-                  </h3>
+                  <div class="txt-separator" fxLayout="row">
+                    <h3 class="mat-h3 txt-title" translate>general.until</h3>
+                    <h3 class="mat-h3 txt-separator">:</h3>
+                    <h3 class="mat-h3">
+                      {{ element?.end_date }}
+                    </h3>
+                  </div>
                 </div>
 
                 <div fxLayout="row">
@@ -797,6 +848,14 @@
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
                     {{ element?.update_date }}
+                  </h3>
+                </div>
+
+                <div fxLayout="row">
+                  <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.dataWantUpdate</h3>
+                  <h3 class="mat-h3 txt-separator">:</h3>
+                  <h3 class="mat-h3">
+                    {{ element?.data_to_update }}
                   </h3>
                 </div>
 
@@ -883,8 +942,23 @@
             <div fxLayout="row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form6.sustainableDevelopment</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
+              <h3 class="mat-h3">{{ '-' }}</h3>
+            </div>
+
+            <div fxLayout="column">
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form6.sustainableDevelopment</h3>
+              <mat-list class="custom-list-element">
+                <mat-list-item *ngFor="let element of adaptationAction?.action_impact?.ods">
+                  {{ element.name }}</mat-list-item
+                >
+              </mat-list>
+            </div>
+
+            <div fxLayout="row">
+              <h3 class="mat-h3 txt-title" translate>adaptationAction.form6.generatedImpact</h3>
+              <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
-                {{ '-' }}
+                {{ adaptationAction?.action_impact?.unwanted_action_description }}
               </h3>
             </div>
 
