@@ -1,6 +1,7 @@
 /*
  * Application global variables.
  */
+@use "~@angular/material" as mat;
 
 // Angular Material custom theme
 // See https://material.angular.io/guide/theming for more details.
@@ -8,33 +9,32 @@
 // You can also read https://medium.com/@tomastrajan/the-complete-guide-to-angular-material-themes-4d165a9d24d1
 // for more insight about Angular Material theming.
 
-@import "~@angular/material/theming";
 @import "./variales.scss";
 
-$app-primary: mat-palette($mat-blue, 500);
-$app-accent: mat-palette($mat-orange, 500, a200, a700);
-$app-warn: mat-palette($mat-red);
+$app-primary: mat.define-palette(mat.$blue-palette, 500);
+$app-accent: mat.define-palette(mat.$orange-palette, 500, a200, a700);
+$app-warn: mat.define-palette(mat.$red-palette);
 
-$global-typography: mat-typography-config(
+$global-typography: mat.define-typography-config(
   $font-family: "Mulish",
 );
 
-$theme-primary: mat-palette($primary, 500);
-$theme-secondary: mat-palette($secondary);
-$theme-tertiary: mat-palette($tertiary);
+$theme-primary: mat.define-palette($primary, 500);
+$theme-secondary: mat.define-palette($secondary);
+$theme-tertiary: mat.define-palette($tertiary);
 
-$custom-theme: mat-light-theme($theme-primary, $theme-secondary, $app-warn);
+$custom-theme: mat.define-light-theme($theme-primary, $theme-secondary, $app-warn);
 
-$custom-typography: mat-typography-config(
+$custom-typography: mat.define-typography-config(
   $font-family: "Mulish",
-  $headline: mat-typography-level(25.5pt, 2.75em, 400, 0.015625em),
-  $title: mat-typography-level(18pt, 2.125em, 300, 0),
-  $subheading-1: mat-typography-level(12pt, 4em, 400, 0.009375em),
-  $subheading-2: mat-typography-level(10.5pt, 1.5em, 600, 0.015625em),
-  $body-1: mat-typography-level(12pt, 1.625em, 400, 0.03125em),
-  $body-2: mat-typography-level(10.5pt, 1.5em, 400, 0.015625em),
-  $button: mat-typography-level(10.5pt, auto, 600, 0.078125em),
-  $caption: mat-typography-level(9pt, auto, 400, 0.025em),
+  $headline: mat.define-typography-level(25.5pt, 2.75em, 400, 0.015625em),
+  $title: mat.define-typography-level(18pt, 2.125em, 300, 0),
+  $subheading-1: mat.define-typography-level(12pt, 4em, 400, 0.009375em),
+  $subheading-2: mat.define-typography-level(10.5pt, 1.5em, 600, 0.015625em),
+  $body-1: mat.define-typography-level(12pt, 1.625em, 400, 0.03125em),
+  $body-2: mat.define-typography-level(10.5pt, 1.5em, 400, 0.015625em),
+  $button: mat.define-typography-level(10.5pt, auto, 600, 0.078125em),
+  $caption: mat.define-typography-level(9pt, auto, 400, 0.025em),
 );
 
 /////
@@ -46,10 +46,10 @@ $gray-color: #c4c4c4;
 $primary-color: #2a658a;
 
 .login-box {
-  $alternate-primary: mat-palette($mat-light-blue);
-  $alternate-accent: mat-palette($mat-yellow, 400);
+  $alternate-primary: mat.define-palette(mat.$light-blue-palette);
+  $alternate-accent: mat.define-palette(mat.$yellow-palette, 400);
 
-  $login-box: mat-light-theme($alternate-primary, $alternate-accent);
+  $login-box: mat.define-light-theme($alternate-primary, $alternate-accent);
 
   // @include angular-material-theme($login-box);
 }

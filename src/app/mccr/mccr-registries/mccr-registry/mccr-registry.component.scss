@@ -1,3 +1,4 @@
+@use "~@angular/material" as mat;
 @import "src/theme/theme-variables";
 
 .container {
@@ -10,5 +11,5 @@
 }
 
 .report-error {
-  color: mat-color($app-warn);
+  color: mat.get-color-from-palette($app-warn);
 }

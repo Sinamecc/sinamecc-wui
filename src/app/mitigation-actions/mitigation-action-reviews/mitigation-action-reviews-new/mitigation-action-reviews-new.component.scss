@@ -1,3 +1,4 @@
+@use "~@angular/material" as mat;
 @import "src/theme/theme-variables";
 
 .container {
@@ -10,7 +11,7 @@
 }
 
 .new-mitigation-action-form-error {
-  color: mat-color($app-warn);
+  color: mat.get-color-from-palette($app-warn);
 }
 
 .mat-form-field {
