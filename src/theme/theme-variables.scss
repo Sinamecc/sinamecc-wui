@@ -1,7 +1,7 @@
 /*
  * Application global variables.
  */
-@use "~@angular/material" as mat;
+@use "@angular/material" as mat;
 
 // Angular Material custom theme
 // See https://material.angular.io/guide/theming for more details.
@@ -12,7 +12,7 @@
 @import "./variales.scss";
 
 $app-primary: mat.define-palette(mat.$blue-palette, 500);
-$app-accent: mat.define-palette(mat.$orange-palette, 500, a200, a700);
+$app-accent: mat.define-palette(mat.$orange-palette, 500, 200, 700); // TODO: a200, a700
 $app-warn: mat.define-palette(mat.$red-palette);
 
 $global-typography: mat.define-typography-config(
