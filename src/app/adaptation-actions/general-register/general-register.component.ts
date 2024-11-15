@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,7 +13,7 @@ import { AdaptationAction } from '../interfaces/adaptationAction';
   styleUrls: ['./general-register.component.scss'],
 })
 export class GeneralRegisterComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   @Input() mainStepper: any;
   id: string | null;
   adaptationAction: AdaptationAction;
@@ -21,7 +21,7 @@ export class GeneralRegisterComponent implements OnInit {
   durationInSeconds = 5;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
     private service: AdaptationActionService,
     private datePipe: DatePipe,

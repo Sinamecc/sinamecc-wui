@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl, UntypedFormArray } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
@@ -23,7 +23,7 @@ const log = new Logger('MitigationAction');
 export class BasicInformationFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
   wasSubmittedSuccessfully = false;
   mitigationAction: MitigationAction;
@@ -42,7 +42,7 @@ export class BasicInformationFormComponent implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private service: MitigationActionsService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
@@ -126,7 +126,7 @@ export class BasicInformationFormComponent implements OnInit {
 
   private createUpdateFinanceForm() {
     this.mitigationActionBudgeValuetCtrl = [];
-    const financeList: FormGroup[] = [];
+    const financeList: UntypedFormGroup[] = [];
     // const mapCurrency = ['CRC', 'USD', 'EUR'];
     let index = 0;
 
@@ -150,12 +150,12 @@ export class BasicInformationFormComponent implements OnInit {
   }
 
   public addFinanceItem() {
-    const control = <FormArray>this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'].controls;
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'].controls;
     control.push(this.createFinanceForm());
   }
 
   public removeFinanceItem(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'];
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'];
     control.removeAt(index);
   }
 

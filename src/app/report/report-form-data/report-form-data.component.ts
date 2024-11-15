@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 
 import { Logger } from '@core';
 import { I18nService } from '@app/i18n';
@@ -23,7 +23,7 @@ export class ReportFormDataComponent implements OnInit {
   transferMethodToInstitutions = 'example: email, web page, REST API Call, SFTP, FTP, WeTransfer, other.';
   version: string = environment.version;
   error: string;
-  reportForm: FormGroup;
+  reportForm: UntypedFormGroup;
   isLoading = false;
   methodological = false;
   catalogs: ReportDataCatalog = undefined;
@@ -37,7 +37,7 @@ export class ReportFormDataComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private reportService: ReportService,
     private translateService: TranslateService,

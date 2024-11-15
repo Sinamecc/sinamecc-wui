@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Permissions } from '../../permissions';
 import { finalize } from 'rxjs/operators';
 import { AdminService } from '@app/admin/admin.service';
@@ -16,7 +16,7 @@ const log = new Logger('CreatePermission');
   styleUrls: ['./admin-permissions-new.component.scss'],
 })
 export class AdminPermissionsNewComponent implements OnInit {
-  createPermissionsForm: FormGroup;
+  createPermissionsForm: UntypedFormGroup;
   isLoading = false;
   error: string;
 
@@ -28,7 +28,7 @@ export class AdminPermissionsNewComponent implements OnInit {
   name: string;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private service: AdminService,
     private translateService: TranslateService,
     private router: Router,

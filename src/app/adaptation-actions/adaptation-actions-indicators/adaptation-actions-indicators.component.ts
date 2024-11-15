@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
@@ -12,7 +12,7 @@ import { AdaptationAction } from '../interfaces/adaptationAction';
   styleUrls: ['./adaptation-actions-indicators.component.scss'],
 })
 export class AdaptationActionsIndicatorsComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   @Input() mainStepper: any;
   @Input() adaptationActionUpdated: AdaptationAction;
   @Input() edit: boolean;
@@ -24,7 +24,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     'Un indicador es una expresión cualitativa o cuantitativa, que es observable y permite describir las características de la realidad, a través de la evolución de una variable';
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private service: AdaptationActionService,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
@@ -15,7 +15,7 @@ import { AuthenticationService } from './authentication.service';
 export class LoginComponent implements OnInit {
   public version: string = environment.version;
   public error: string;
-  public loginForm: FormGroup;
+  public loginForm: UntypedFormGroup;
   public isLoading = false;
   public forgotPassword = false;
   public emailValue: string;
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private authenticationService: AuthenticationService
   ) {

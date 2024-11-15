@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Logger } from '@core/logger.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -24,13 +24,13 @@ export class UploadProposalComponent implements OnInit, OnChanges {
   @Output() formSubmitted = new EventEmitter<any>();
 
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
 
   constructor(
     private router: Router,
     public snackBar: MatSnackBar,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private translateService: TranslateService, //
     private service: UploadProposalService
   ) {}

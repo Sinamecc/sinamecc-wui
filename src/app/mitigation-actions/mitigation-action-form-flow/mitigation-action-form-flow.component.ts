@@ -9,7 +9,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { AbstractControl, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators, FormControl } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import {
@@ -52,7 +52,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   // @Input() isLinear: boolean;
   @Input() action: string;
 
-  mainGroup: FormGroup;
+  mainGroup: UntypedFormGroup;
   formData: FormData;
   isLoading: boolean;
   isUpdating: boolean;
@@ -74,7 +74,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   }
 
   constructor(
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     private service: MitigationActionsService,
     private i18nService: I18nService,
     private cdRef: ChangeDetectorRef

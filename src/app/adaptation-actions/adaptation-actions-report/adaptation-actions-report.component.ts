@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
@@ -20,7 +20,7 @@ import { Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
   styleUrls: ['./adaptation-actions-report.component.scss'],
 })
 export class AdaptationActionsReportComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   topics: Topic[][] = [];
   subTopics: SubTopics[] = [];
   subTopicsToShow: SubTopics[][] = [];
@@ -60,7 +60,7 @@ export class AdaptationActionsReportComponent implements OnInit {
   adaptationActionsExtension = '';
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private service: AdaptationActionService,
@@ -326,12 +326,12 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   removeThemeCtrl(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][2].controls['themeCtrl'];
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][2].controls['themeCtrl'];
     control.removeAt(index);
   }
 
   addThemeCtrl(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls;
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls;
     control.push(this.createThemesCtrl());
     this.loadTopics(index);
   }

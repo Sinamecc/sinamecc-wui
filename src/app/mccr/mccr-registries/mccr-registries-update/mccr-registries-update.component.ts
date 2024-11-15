@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Logger } from '@core';
 import { environment } from '@env/environment';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
@@ -23,18 +23,18 @@ const log = new Logger('Report');
 export class MccrRegistriesUpdateComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   mitigationActions: Observable<MitigationAction[]>;
   processedMitigationActions: MitigationAction[] = [];
   mccrRegistry: Observable<MccrRegistry>;
   isLoading = false;
-  files: FormArray;
+  files: UntypedFormArray;
   id: string;
   formValues: any;
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private service: MccrRegistriesService,
     private mitigationService: MitigationActionsService,

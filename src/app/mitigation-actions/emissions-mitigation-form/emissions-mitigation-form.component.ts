@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, AbstractControl } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
@@ -22,7 +22,7 @@ const log = new Logger('MitigationAction');
 export class EmissionsMitigationFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -46,7 +46,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private service: MitigationActionsService,
     private translateService: TranslateService,
@@ -149,12 +149,14 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   public removeSectorItem(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][0].controls['sectorSourceFCtrl'];
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][0].controls['sectorSourceFCtrl'];
     control.removeAt(index);
   }
 
   public addSectorItem() {
-    const control = <FormArray>this.form.controls.formArray['controls'][0].controls['sectorSourceFCtrl'].controls;
+    const control = <UntypedFormArray>(
+      this.form.controls.formArray['controls'][0].controls['sectorSourceFCtrl'].controls
+    );
     control.push(this.createSectorSourceForm());
   }
 

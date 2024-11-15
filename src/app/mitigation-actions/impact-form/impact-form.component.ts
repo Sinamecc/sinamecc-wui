@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
@@ -24,7 +24,7 @@ const log = new Logger('MitigationAction');
 export class ImpactFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
   wasSubmittedSuccessfully = false;
   startDate = new Date();
@@ -52,7 +52,7 @@ export class ImpactFormComponent implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private service: MitigationActionsService,
     private translateService: TranslateService,

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Logger } from '@core';
 import { environment } from '@env/environment';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { Router } from '@angular/router';
@@ -22,15 +22,15 @@ const log = new Logger('Report');
 export class MccrRegistriesNewComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   mitigationActions: Observable<MitigationAction[]>;
   processedMitigationActions: MitigationAction[] = [];
   isLoading = false;
-  files: FormArray;
+  files: UntypedFormArray;
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private service: MccrRegistriesService,
     private mitigationService: MitigationActionsService,
@@ -79,19 +79,19 @@ export class MccrRegistriesNewComponent implements OnInit {
     );
   }
 
-  private createItem(): FormGroup {
+  private createItem(): UntypedFormGroup {
     return this.formBuilder.group({
       file: [{ value: undefined, disabled: false }, []],
     });
   }
 
   public addFile(): void {
-    const control = <FormArray>this.form.controls['files'];
+    const control = <UntypedFormArray>this.form.controls['files'];
     control.push(this.createItem());
   }
 
   public removeFile(i: number) {
-    const control = <FormArray>this.form.controls['files'];
+    const control = <UntypedFormArray>this.form.controls['files'];
     control.removeAt(i);
   }
 

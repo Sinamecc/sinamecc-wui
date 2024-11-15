@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { environment } from '@env/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Logger } from '@core';
@@ -21,7 +21,7 @@ const log = new Logger('Report');
 export class ReportVersionsNewComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  reportForm: FormGroup;
+  reportForm: UntypedFormGroup;
   isLoading = false;
   id: number;
   reportName: Observable<string>;
@@ -29,7 +29,7 @@ export class ReportVersionsNewComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private reportService: ReportService,
     private translateService: TranslateService,

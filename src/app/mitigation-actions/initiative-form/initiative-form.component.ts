@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl, UntypedFormArray } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
@@ -23,7 +23,7 @@ const log = new Logger('MitigationAction');
 export class InitiativeFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
   isLinear = true;
   wasSubmittedSuccessfully = false;
@@ -86,7 +86,7 @@ export class InitiativeFormComponent implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private service: MitigationActionsService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
@@ -243,34 +243,36 @@ export class InitiativeFormComponent implements OnInit {
   }
 
   addNDCItem() {
-    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['relationshipCtrl'].controls;
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][4].controls['relationshipCtrl'].controls;
     control.push(this.createNDCctrl());
   }
 
   removeNDCItem(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['relationshipCtrl'];
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][4].controls['relationshipCtrl'];
     control.removeAt(index);
   }
 
   removeDecarbonizationItem(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['relationshipDecarbonizationCtrl'];
+    const control = <UntypedFormArray>(
+      this.form.controls.formArray['controls'][4].controls['relationshipDecarbonizationCtrl']
+    );
     control.removeAt(index);
   }
 
   addDecarbonizationtem() {
-    const control = <FormArray>(
+    const control = <UntypedFormArray>(
       this.form.controls.formArray['controls'][4].controls['relationshipDecarbonizationCtrl'].controls
     );
     control.push(this.createDecarbonizationCtrl());
   }
 
   removeTopicItem(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['topicsFrmCtrl'];
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][4].controls['topicsFrmCtrl'];
     control.removeAt(index);
   }
 
   addTopicItem() {
-    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['topicsFrmCtrl'].controls;
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][4].controls['topicsFrmCtrl'].controls;
     control.push(this.createTopicCtrl());
   }
 

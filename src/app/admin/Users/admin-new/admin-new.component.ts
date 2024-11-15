@@ -7,7 +7,7 @@ import { Logger } from '@core';
 import { AdminService } from '../../admin.service';
 import { Observable } from 'rxjs';
 import { Groups } from '../../groups';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -38,8 +38,8 @@ export class AdminNewComponent implements OnInit {
 
   roles: Role[];
   roles$: Observable<Role[]>;
-  createUserForm: FormGroup;
-  roleAssignForm: FormGroup;
+  createUserForm: UntypedFormGroup;
+  roleAssignForm: UntypedFormGroup;
   isLoading = false;
 
   error: string;
@@ -67,7 +67,7 @@ export class AdminNewComponent implements OnInit {
     public dialog: MatDialog,
     @Optional() public dialogRef: MatDialogRef<AdminNewComponent>,
     private adminService: AdminService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private translateService: TranslateService,
     public snackBar: MatSnackBar
@@ -387,7 +387,7 @@ export class AdminNewComponent implements OnInit {
     const rolesFormObj = {};
 
     roles.map((role) => {
-      rolesFormObj[role.role] = new FormControl('');
+      rolesFormObj[role.role] = new UntypedFormControl('');
     });
     this.createUserForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -395,7 +395,7 @@ export class AdminNewComponent implements OnInit {
       userName: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
-      roles: new FormGroup(rolesFormObj),
+      roles: new UntypedFormGroup(rolesFormObj),
 
       // permissions: ['', Validators.required],
       // groups: ['', Validators.required],
@@ -405,7 +405,7 @@ export class AdminNewComponent implements OnInit {
   private createFormEdit(roles: Array<Role>) {
     const rolesFormObj = {};
     roles.map((role) => {
-      rolesFormObj[role.role] = new FormControl('');
+      rolesFormObj[role.role] = new UntypedFormControl('');
       const findRole = this.editData.roles.find((x) => x.role === role.role);
       if (findRole) {
         rolesFormObj[role.role].setValue(true);
@@ -418,7 +418,7 @@ export class AdminNewComponent implements OnInit {
       userName: ['', Validators.required],
       email: ['', Validators.required],
       password: [''],
-      roles: new FormGroup(rolesFormObj),
+      roles: new UntypedFormGroup(rolesFormObj),
       // permissions: ['', Validators.required],
       // groups: ['', Validators.required],
     });

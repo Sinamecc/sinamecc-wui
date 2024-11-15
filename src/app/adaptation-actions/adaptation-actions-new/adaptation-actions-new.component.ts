@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -41,12 +41,12 @@ export class AdaptationActionsNewComponent implements OnInit {
   @ViewChild(AdaptationActionsActionImpactComponent)
   impactForm: AdaptationActionsActionImpactComponent;
 
-  mainGroup: FormGroup;
+  mainGroup: UntypedFormGroup;
   adaptationAction: AdaptationAction;
   edit: boolean;
 
   constructor(
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     private cdRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private service: AdaptationActionService,

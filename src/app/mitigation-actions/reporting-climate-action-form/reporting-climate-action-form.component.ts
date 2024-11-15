@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ErrorReportingComponent } from '@shared';
@@ -20,7 +20,7 @@ import { MitigationActionsService } from '../mitigation-actions.service';
 export class ReportingClimateActionFormComponent implements OnInit {
   indicator: any = [];
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
   wasSubmittedSuccessfully = false;
   mitigationAction: MitigationAction;
@@ -34,7 +34,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
   @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private service: MitigationActionsService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,

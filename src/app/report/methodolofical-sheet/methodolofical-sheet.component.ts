@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
@@ -17,7 +17,7 @@ import { ReportService } from '../report.service';
   styleUrls: ['./methodolofical-sheet.component.scss'],
 })
 export class MethodoloficalSheetComponent implements OnInit {
-  reportForm: FormGroup;
+  reportForm: UntypedFormGroup;
   catalogs: ReportDataCatalog = undefined;
   error: string;
   isLoading = false;
@@ -27,7 +27,7 @@ export class MethodoloficalSheetComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private reportService: ReportService,
     private translateService: TranslateService,

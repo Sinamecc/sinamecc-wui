@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InputFileComponent } from '@shared/input-file/input-file.component';
-import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MaterialModule } from '@app/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,7 +33,7 @@ xdescribe('InputFileComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(InputFileComponent);
-    (fixture.componentInstance as any).ngControl = new FormControl();
+    (fixture.componentInstance as any).ngControl = new UntypedFormControl();
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

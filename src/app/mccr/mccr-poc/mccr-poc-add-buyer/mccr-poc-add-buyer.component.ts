@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Logger } from '@core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MccrPocService } from '@app/mccr/mccr-poc/mccr-poc.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -17,12 +17,12 @@ const log = new Logger('Report');
 export class MccrPocAddBuyerComponent implements OnInit {
   isLoading = false;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   id = this.route.snapshot.paramMap.get('id');
 
   constructor(
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private service: MccrPocService,
     private router: Router,
     private translateService: TranslateService,

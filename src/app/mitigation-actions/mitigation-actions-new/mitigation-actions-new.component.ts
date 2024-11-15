@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
@@ -25,7 +25,7 @@ const log = new Logger('Report');
 export class MitigationActionsNewComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   isLoading = false;
   isNonLinear = false;
   initalRequiredData: Observable<MitigationActionNewFormData>;
@@ -47,7 +47,7 @@ export class MitigationActionsNewComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private service: MitigationActionsService
   ) {

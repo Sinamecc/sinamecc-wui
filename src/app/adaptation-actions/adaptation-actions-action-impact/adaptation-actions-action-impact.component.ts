@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AdaptationActionService } from '../adaptation-actions-service';
@@ -12,7 +12,7 @@ import { ODS, TemporalityImpact } from '../interfaces/catalogs';
   styleUrls: ['./adaptation-actions-action-impact.component.scss'],
 })
 export class AdaptationActionsActionImpactComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   durationInSeconds = 3;
   adaptationAction: AdaptationAction;
   temporalityImpact: TemporalityImpact[] = [];
@@ -24,7 +24,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   stateLabel = 'submitted';
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
     private service: AdaptationActionService,
     private router: Router

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-groups-new',
@@ -7,12 +7,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./admin-groups-new.component.scss'],
 })
 export class AdminGroupsNewComponent implements OnInit {
-  createGroupForm: FormGroup;
+  createGroupForm: UntypedFormGroup;
   isLoading = false;
   error: string;
   name: string;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createForm();
     this.name = '';
   }

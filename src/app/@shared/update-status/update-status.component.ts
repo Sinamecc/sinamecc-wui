@@ -8,7 +8,7 @@ import {
   ViewContainerRef,
   ComponentFactoryResolver,
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
@@ -43,14 +43,14 @@ export class UpdateStatusComponent implements OnInit {
   moduleRef: any;
 
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
   comment = false;
 
   constructor(
     private router: Router,
     public snackBar: MatSnackBar,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private translateService: TranslateService,
     private service: UpdateStatusService,
     private resolver: ComponentFactoryResolver

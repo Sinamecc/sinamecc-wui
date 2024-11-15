@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
@@ -11,7 +11,7 @@ import { AdaptationAction, InstrumentDetail } from '../interfaces/adaptationActi
   styleUrls: ['./adaptation-actions-financing.component.scss'],
 })
 export class AdaptationActionsFinancingComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   durationInSeconds = 3;
   adaptationAction: AdaptationAction;
@@ -29,7 +29,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   @Input() edit: boolean;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
     private service: AdaptationActionService,
     private translateService: TranslateService

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormArray, UntypedFormBuilder, Validators } from '@angular/forms';
 import { environment } from '@env/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Logger } from '@core';
@@ -20,9 +20,9 @@ const log = new Logger('Report');
 export class PpcnUploadComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
-  files: FormArray;
+  files: UntypedFormArray;
   ppcns: Observable<Ppcn[]>;
   processedPpcns: Ppcn[] = [];
   id: number;
@@ -103,7 +103,7 @@ export class PpcnUploadComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private translateService: TranslateService,
     private ppcnService: PpcnService,
@@ -143,7 +143,7 @@ export class PpcnUploadComponent implements OnInit {
   }
 
   public addFile(): void {
-    const control = <FormArray>this.form.controls['files'];
+    const control = <UntypedFormArray>this.form.controls['files'];
     control.push(this.createItem());
   }
 
@@ -230,14 +230,14 @@ export class PpcnUploadComponent implements OnInit {
     }
   }
 
-  private createItem(): FormGroup {
+  private createItem(): UntypedFormGroup {
     return this.formBuilder.group({
       file: [{ value: undefined, disabled: false }, []],
     });
   }
 
   private removeFile(i: number) {
-    const control = <FormArray>this.form.controls['files'];
+    const control = <UntypedFormArray>this.form.controls['files'];
     control.removeAt(i);
   }
 

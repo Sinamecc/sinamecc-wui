@@ -1,7 +1,7 @@
 import { I } from '@angular/cdk/keycodes';
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,7 +14,7 @@ import { AdaptationAction } from '../interfaces/adaptationAction';
   styleUrls: ['./adaptation-actions-climate-monitoring.component.scss'],
 })
 export class AdaptationActionsClimateMonitoringComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   adaptationAction: AdaptationAction;
   @Input() mainStepper: any;
   @Input() adaptationActionUpdated: AdaptationAction;
@@ -23,7 +23,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   durationInSeconds = 3;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private service: AdaptationActionService,
@@ -83,12 +83,12 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   }
 
   removeIndicatorCtrl(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][1].controls['indicatorCtrl'];
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][1].controls['indicatorCtrl'];
     control.removeAt(index);
   }
 
   addIndicatorCtrl(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][1].controls['indicatorCtrl'].controls;
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][1].controls['indicatorCtrl'].controls;
     control.push(this.indicatorCtrl());
   }
 

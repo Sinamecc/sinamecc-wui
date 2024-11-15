@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Logger } from '@core';
 import { TranslateService } from '@ngx-translate/core';
 import { MccrPocService } from '@app/mccr/mccr-poc/mccr-poc.service';
@@ -16,12 +16,12 @@ const log = new Logger('Report');
 export class MccrPocNewDeveloperAccountComponent implements OnInit {
   isLoading = false;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   createDisable = false;
   account_number = '';
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private service: MccrPocService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar

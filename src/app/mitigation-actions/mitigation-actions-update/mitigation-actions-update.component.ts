@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, UntypedFormGroup } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
@@ -27,7 +27,7 @@ const log = new Logger('Report');
 export class MitigationActionsUpdateComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   isLoading = false;
   isNonLinear = false;
   initalRequiredData: Observable<MitigationActionNewFormData>;

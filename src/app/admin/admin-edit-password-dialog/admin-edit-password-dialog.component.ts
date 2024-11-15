@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-edit-password-dialog',
@@ -7,11 +7,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./admin-edit-password-dialog.component.scss'],
 })
 export class AdminEditPasswordDialogComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
   error: string;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createForm();
   }
 

@@ -167,7 +167,6 @@
       }
     }
   },
-  "defaultProject": "sinamecc-wui",
   "cli": {
     "analytics": false
   }

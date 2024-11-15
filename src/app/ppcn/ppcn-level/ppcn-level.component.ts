@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import { Logger } from '@core';
 import { environment } from '@env/environment';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { GeographicLevel } from '@app/ppcn/ppcn-new-form-data';
 import { Router } from '@angular/router';
@@ -23,7 +23,7 @@ export class PpcnLevelComponent implements OnInit {
 
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   formData: FormData;
   levelId = '1';
   geographicLevel: Observable<GeographicLevel[]>;
@@ -32,7 +32,7 @@ export class PpcnLevelComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private service: PpcnService,
     private translateService: TranslateService,

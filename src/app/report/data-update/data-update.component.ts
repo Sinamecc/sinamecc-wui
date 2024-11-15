@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
@@ -15,7 +15,7 @@ import { ReportService } from '../report.service';
   styleUrls: ['./data-update.component.scss'],
 })
 export class DataUpdateComponent implements OnInit {
-  reportForm: FormGroup;
+  reportForm: UntypedFormGroup;
   error: string;
   isLoading = false;
   report: ReportDataPayload;
@@ -24,7 +24,7 @@ export class DataUpdateComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private reportService: ReportService,
     private translateService: TranslateService,

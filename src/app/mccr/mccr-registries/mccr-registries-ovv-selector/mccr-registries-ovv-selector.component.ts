@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Logger } from '@core';
 import { Ovv } from '@app/mccr/mccr-registries/mccr-registries-ovv-selector/ovv';
 import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -21,13 +21,13 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
   isLoading = false;
   mccrRegistry: MccrRegistry;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(
     private router: Router,
     private service: MccrRegistriesService,
     public snackBar: MatSnackBar,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private translateService: TranslateService
   ) {
