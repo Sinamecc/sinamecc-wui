@@ -39,7 +39,6 @@ import { UccVerifyDataComponent } from './ucc-verify-data/ucc-verify-data.compon
     ReactiveFormsModule,
     FormsModule,
   ],
-  entryComponents: [MccrPocNewDeveloperAccountComponent, MccrPocNewBuyerAccountComponent, UccVerifyDataComponent],
   providers: [MccrPocService],
 })
 export class MccrPocModule {}
