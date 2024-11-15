@@ -159,7 +159,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   private updateFormData() {
-    this.intendParticipateInternationalCarbonMarketsModel = this.mitigationAction.impact_documentation.carbon_international_commerce;
+    this.intendParticipateInternationalCarbonMarketsModel =
+      this.mitigationAction.impact_documentation.carbon_international_commerce;
     this.mechanismStandardApplyModel = this.mitigationAction.impact_documentation.standard.id;
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
@@ -267,8 +268,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
         period_potential_reduction: this.form.value.formArray[0].periodPotentialEmissionReductionEstimatedCtrl,
         base_line_definition: this.form.value.formArray[0].definitionBaselineCtrl,
         calculation_methodology: this.form.value.formArray[0].methodologyExantePotentialReductionEmissionsCO2Ctrl,
-        estimate_calculation_documentation: this.form.value.formArray[0]
-          .documentationCalculationsEstimateReductionEmissionsCO2Ctrl,
+        estimate_calculation_documentation:
+          this.form.value.formArray[0].documentationCalculationsEstimateReductionEmissionsCO2Ctrl,
         mitigation_action_in_inventory: this.form.value.formArray[0].isCurrentlyReflectedInventoryCtrl,
         carbon_international_commerce: this.form.value.formArray[2].intendParticipateInternationalCarbonMarketsCtrl,
         methodologies_to_use: this.form.value.formArray[2].methodologyUsedCtrl

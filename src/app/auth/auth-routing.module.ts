@@ -8,10 +8,10 @@ import { RestorePasswordComponent } from './restore-password/restore-password.co
 const routes: Routes = [
   { path: 'login', component: LoginComponent, data: { title: extract('Login') } },
   {
-		path: "changePassword",
-		component: RestorePasswordComponent,
-		data: { title: extract("Change password") }
-	}
+    path: 'changePassword',
+    component: RestorePasswordComponent,
+    data: { title: extract('Change password') },
+  },
 ];
 
 @NgModule({

@@ -1,15 +1,15 @@
 <div fxFill fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1.5rem" class="mat-typography">
   <div class="login-box">
-    <img class="logo" src="assets/logo-white.png" alt="angular logo"/>
+    <img class="logo" src="assets/logo-white.png" alt="angular logo" />
     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2rem">
-      <h4 class="version">v{{version}}</h4>
+      <h4 class="version">v{{ version }}</h4>
       <div class="language-selector">
         <button mat-raised-button color="primary" [matMenuTriggerFor]="languageMenu">
-          {{currentLanguage}}
+          {{ currentLanguage }}
         </button>
         <mat-menu #languageMenu="matMenu">
           <button mat-menu-item *ngFor="let language of languages" (click)="setLanguage(language)">
-            {{language}}
+            {{ language }}
           </button>
         </mat-menu>
       </div>
@@ -18,28 +18,39 @@
   <div *ngIf="!forgotPassword" class="login-container" fxLayout="row" fxLayoutAlign="center">
     <mat-card fxFlex="90%" fxFlex.sm="66%" fxFlex.md="50%" fxFlex.gt-md="33%" class="login-box">
       <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
-        <div class="login-error" [hidden]="!error || isLoading" translate>
-          credentialsSection.credentialsError
-        </div>
-        <br/>
+        <div class="login-error" [hidden]="!error || isLoading" translate>credentialsSection.credentialsError</div>
+        <br />
         <div fxLayout="column">
-          <mat-form-field class="login-label" >
-            <input type="text" matInput formControlName="username" autocomplete="username"
-                   [placeholder]="'Username' | translate"/>
+          <mat-form-field class="login-label">
+            <input
+              type="text"
+              matInput
+              formControlName="username"
+              autocomplete="username"
+              [placeholder]="'Username' | translate"
+            />
             <mat-error *ngIf="loginForm.controls.username.valid || loginForm.controls.username.untouched">
               <span translate>credentialsSection.usernameRequired</span>
             </mat-error>
           </mat-form-field>
-          <mat-form-field class="login-label" >
-            <input type="password" matInput formControlName="password" autocomplete="current-password"
-                   [placeholder]="'credentialsSection.password' | translate" required/>
+          <mat-form-field class="login-label">
+            <input
+              type="password"
+              matInput
+              formControlName="password"
+              autocomplete="current-password"
+              [placeholder]="'credentialsSection.password' | translate"
+              required
+            />
             <mat-error *ngIf="loginForm.controls.password.valid || loginForm.controls.password.untouched">
               <span translate>credentialsSection.passwordRequired</span>
             </mat-error>
           </mat-form-field>
-          <mat-slide-toggle color="primary" formControlName="remember"><span translate>credentialsSection.remember</span></mat-slide-toggle>
-          <br/>
-          <br/>
+          <mat-slide-toggle color="primary" formControlName="remember"
+            ><span translate>credentialsSection.remember</span></mat-slide-toggle
+          >
+          <br />
+          <br />
           <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading">
             <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
             <span translate>credentialsSection.login</span>
@@ -47,27 +58,46 @@
         </div>
       </form>
       <br />
-      <div >
-        <a class="mat-h5 custom-option-link" (click)="forgotPassword = !forgotPassword" ><span translate>credentialsSection.forgottenPassword</span></a>
+      <div>
+        <a class="mat-h5 custom-option-link" (click)="forgotPassword = !forgotPassword"
+          ><span translate>credentialsSection.forgottenPassword</span></a
+        >
       </div>
-      
     </mat-card>
   </div>
 
   <div *ngIf="forgotPassword" class="login-container" fxLayout="row" fxLayoutAlign="center">
-    <mat-card fxFlex="90%" fxFlex.sm="66%" fxFlex.md="50%" fxFlex.gt-md="33%" class="login-box recovery-password-section">
+    <mat-card
+      fxFlex="90%"
+      fxFlex.sm="66%"
+      fxFlex.md="50%"
+      fxFlex.gt-md="33%"
+      class="login-box recovery-password-section"
+    >
       <label color="primary" translate class="mat-h2">credentialsSection.forgotPassword</label>
       <br />
       <br />
       <label translate class="mat-h4 recovery-label">credentialsSection.recoveyPassword</label>
       <br />
       <br />
-      <input #emailValue
-      (change)="candSendEmail = validateEmail($event.target.value)"
-       class="custom-input" [placeholder]="'info.emailAddress' | translate" type="email" />
+      <input
+        #emailValue
+        (change)="candSendEmail = validateEmail($event.target.value)"
+        class="custom-input"
+        [placeholder]="'info.emailAddress' | translate"
+        type="email"
+      />
       <br />
       <br />
-      <button *ngIf="!sendEmail" [disabled]="!candSendEmail" (click)="sendEmailRestarPassword(emailValue.value)" class="recovery-button" mat-raised-button color="primary" type="submit" >
+      <button
+        *ngIf="!sendEmail"
+        [disabled]="!candSendEmail"
+        (click)="sendEmailRestarPassword(emailValue.value)"
+        class="recovery-button"
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
         <app-loader class="inline-loader" [isLoading]="isLoading"></app-loader>
         <span translate>credentialsSection.sendLink</span>
       </button>
@@ -75,5 +105,4 @@
       <label *ngIf="sendEmail" translate class="mat-h3">specificLabel.resetPasswordText</label>
     </mat-card>
   </div>
-
 </div>

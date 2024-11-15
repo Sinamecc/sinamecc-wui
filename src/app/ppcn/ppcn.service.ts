@@ -307,9 +307,8 @@ export class PpcnService {
         if (functionToInvokeByIndex[index].concat === '') {
           formData[functionToInvokeByIndex[index].name] = this[functionToInvokeByIndex[index].function](context);
         } else {
-          formData[functionToInvokeByIndex[index].name][functionToInvokeByIndex[index].concat] = this[
-            functionToInvokeByIndex[index].function
-          ](context);
+          formData[functionToInvokeByIndex[index].name][functionToInvokeByIndex[index].concat] =
+            this[functionToInvokeByIndex[index].function](context);
         }
       }
     }
