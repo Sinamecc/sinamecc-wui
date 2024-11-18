@@ -15,7 +15,7 @@ $app-primary: mat.define-palette(mat.$blue-palette, 500);
 $app-accent: mat.define-palette(mat.$orange-palette, 500, 200, 700); // TODO: a200, a700
 $app-warn: mat.define-palette(mat.$red-palette);
 
-$global-typography: mat.define-typography-config(
+$global-typography: mat.define-legacy-typography-config(
   $font-family: "Mulish",
 );
 
@@ -25,7 +25,7 @@ $theme-tertiary: mat.define-palette($tertiary);
 
 $custom-theme: mat.define-light-theme($theme-primary, $theme-secondary, $app-warn);
 
-$custom-typography: mat.define-typography-config(
+$custom-typography: mat.define-legacy-typography-config(
   $font-family: "Mulish",
   $headline: mat.define-typography-level(25.5pt, 2.75em, 400, 0.015625em),
   $title: mat.define-typography-level(18pt, 2.125em, 300, 0),

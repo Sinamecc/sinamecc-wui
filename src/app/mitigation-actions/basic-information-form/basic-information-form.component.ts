@@ -7,7 +7,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Observable } from 'rxjs';
 import { MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';

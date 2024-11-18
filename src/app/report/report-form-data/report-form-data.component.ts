@@ -6,7 +6,7 @@ import { Logger } from '@core';
 import { I18nService } from '@app/i18n';
 import { environment } from '@env/environment';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 
 import { ReportService } from '@app/report/report.service';
 import { ReportDataCatalog } from '../interfaces/report-data';

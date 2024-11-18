@@ -3,9 +3,12 @@ import { MccrPoc, VerifyResponse } from '@app/mccr/mccr-poc/mccr-poc';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
 import { MccrPocService } from '@app/mccr/mccr-poc/mccr-poc.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {
+  MatLegacyDialog as MatDialog,
+  MatLegacyDialogConfig as MatDialogConfig,
+} from '@angular/material/legacy-dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { finalize } from 'rxjs/operators';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 import { MccrPocNewDeveloperAccountComponent } from '@app/mccr/mccr-poc/mccr-poc-new-developer-account/mccr-poc-new-developer-account.component';

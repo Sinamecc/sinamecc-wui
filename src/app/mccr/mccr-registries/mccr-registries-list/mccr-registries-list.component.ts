@@ -4,14 +4,17 @@ import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
 import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { Observable } from 'rxjs';
 import { environment } from '@env/environment';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 import { Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {
+  MatLegacyDialog as MatDialog,
+  MatLegacyDialogConfig as MatDialogConfig,
+} from '@angular/material/legacy-dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { CredentialsService } from '@app/auth';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 
 export class MccrRegistriesDataSource extends DataSource<any> {

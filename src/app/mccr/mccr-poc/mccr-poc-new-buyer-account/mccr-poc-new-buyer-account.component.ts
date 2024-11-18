@@ -3,7 +3,7 @@ import { Logger } from '@core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { MccrPocService } from '@app/mccr/mccr-poc/mccr-poc.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { finalize } from 'rxjs/operators';
 
 const log = new Logger('Report');

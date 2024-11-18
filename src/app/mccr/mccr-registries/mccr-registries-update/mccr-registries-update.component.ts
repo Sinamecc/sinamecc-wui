@@ -10,7 +10,7 @@ import { I18nService } from '@app/i18n';
 import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { finalize, tap } from 'rxjs/operators';
 
 const log = new Logger('Report');

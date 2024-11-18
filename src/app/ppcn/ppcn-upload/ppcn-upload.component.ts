@@ -4,7 +4,7 @@ import { environment } from '@env/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Logger } from '@core';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Ppcn } from '@app/ppcn/ppcn_registry';
 import { Observable } from 'rxjs';
 import { PpcnService } from '@app/ppcn/ppcn.service';

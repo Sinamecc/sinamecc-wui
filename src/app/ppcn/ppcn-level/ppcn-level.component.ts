@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { finalize, tap } from 'rxjs/operators';
 
 const log = new Logger('Report');

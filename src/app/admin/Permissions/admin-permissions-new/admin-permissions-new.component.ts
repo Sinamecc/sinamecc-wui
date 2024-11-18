@@ -6,7 +6,7 @@ import { AdminService } from '@app/admin/admin.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { Logger } from '@core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 
 const log = new Logger('CreatePermission');
 

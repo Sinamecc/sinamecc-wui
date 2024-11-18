@@ -17,7 +17,7 @@ import {
 } from '../comments-structure';
 import { CommentsStructure, Comments } from '@app/@shared/comment';
 import { CommentsViewComponent } from '@app/@shared/comments-view/comments-view.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { MitigationActionReview } from '../mitigation-action-review';
 
 @Component({

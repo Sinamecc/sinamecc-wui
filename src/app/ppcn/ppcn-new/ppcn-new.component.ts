@@ -25,8 +25,8 @@ import { GasReportTableComponent } from '../gas-report-table/gas-report-table.co
 import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
 import { TranslateService } from '@ngx-translate/core';
 import { I18nService } from '@app/i18n';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatChipInputEvent } from '@angular/material/chips';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatLegacyChipInputEvent as MatChipInputEvent } from '@angular/material/legacy-chips';
 
 const log = new Logger('Report');
 @Component({
