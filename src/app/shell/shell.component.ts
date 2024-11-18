@@ -88,7 +88,7 @@ export class ShellComponent implements OnInit, OnDestroy {
         ),
         untilDestroyed(this)
       )
-      .subscribe(() => this.sidenav.close());
+      .subscribe(() => this.sidenav && this.sidenav.close());
   }
 
   get permissions(): Permissions {
