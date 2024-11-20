@@ -8,8 +8,8 @@ import { I18nService } from '@app/i18n';
 import { Observable } from 'rxjs';
 import { ReportService } from '@app/report/report.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { finalize } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('Report');
 

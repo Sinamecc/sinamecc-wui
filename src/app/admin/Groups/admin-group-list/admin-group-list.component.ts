@@ -1,12 +1,9 @@
 import { Component, OnInit, Input, ViewChild, Optional, Inject } from '@angular/core';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
 import { Groups } from '@app/admin/groups';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
-import {
-  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
-  MatLegacyDialog as MatDialog,
-} from '@angular/material/legacy-dialog';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { GroupsData } from '@app/admin/groupsData';
 import { TranslateService } from '@ngx-translate/core';
 

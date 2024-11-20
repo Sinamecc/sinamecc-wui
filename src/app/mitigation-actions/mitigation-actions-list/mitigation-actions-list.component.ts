@@ -9,14 +9,11 @@ import { ComponentDialogComponent } from '@core/component-dialog/component-dialo
 import { TranslateService } from '@ngx-translate/core';
 import { Logger } from '@app/@core';
 import { I18nService } from '@app/i18n';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { CredentialsService } from '@app/auth';
-import {
-  MatLegacyDialog as MatDialog,
-  MatLegacyDialogConfig as MatDialogConfig,
-} from '@angular/material/legacy-dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('Report');
 

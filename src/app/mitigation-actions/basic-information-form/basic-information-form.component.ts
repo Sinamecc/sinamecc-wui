@@ -7,11 +7,11 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 
 import { TranslateService } from '@ngx-translate/core';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Observable } from 'rxjs';
 import { MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('MitigationAction');
 

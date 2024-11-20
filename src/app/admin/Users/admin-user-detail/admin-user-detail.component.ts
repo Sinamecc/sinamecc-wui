@@ -2,8 +2,8 @@ import { Component, OnInit, Inject, Optional, ViewChild } from '@angular/core';
 import { User } from '@app/admin/users';
 import { PermissionsDataSource } from '@app/admin/Users/tablePermissions';
 import { AdminService } from '@app/admin/admin.service';
-import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { finalize } from 'rxjs/operators';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-admin-user-detail',

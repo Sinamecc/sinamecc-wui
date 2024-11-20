@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 import { Groups } from '@app/admin/groups';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 import { AdminService } from '@app/admin/admin.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-admin-groups-list-edit',

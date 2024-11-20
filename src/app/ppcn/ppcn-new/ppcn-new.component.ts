@@ -1,21 +1,13 @@
 import { Component, OnInit, ViewChild, Input, DoCheck } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  AbstractControl,
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormArray,
-  ValidationErrors,
-} from '@angular/forms';
-import { finalize, tap } from 'rxjs/operators';
+import { AbstractControl, UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 import { Observable } from 'rxjs';
 import { PpcnNewFormData, RequiredLevel, RecognitionType } from '@app/ppcn/ppcn-new-form-data';
 import { forkJoin } from 'rxjs';
-// import { MatChipInputEvent, MatSnackBar } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Ppcn } from '../ppcn_registry';
 import { Sector } from '../interfaces/sector';
@@ -25,8 +17,8 @@ import { GasReportTableComponent } from '../gas-report-table/gas-report-table.co
 import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
 import { TranslateService } from '@ngx-translate/core';
 import { I18nService } from '@app/i18n';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
-import { MatLegacyChipInputEvent as MatChipInputEvent } from '@angular/material/legacy-chips';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatChipInputEvent } from '@angular/material/chips';
 
 const log = new Logger('Report');
 @Component({

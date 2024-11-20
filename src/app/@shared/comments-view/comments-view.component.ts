@@ -1,10 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {
-  MatLegacyDialog as MatDialog,
-  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
-} from '@angular/material/legacy-dialog';
 import { Comments, CommentsStructure } from '../comment';
 import { CommentsAddComponent } from '../comments-add/comments-add.component';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-comments-view',

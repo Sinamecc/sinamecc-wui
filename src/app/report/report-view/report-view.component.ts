@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Comments, CommentsStructure } from '@app/@shared/comment';
 import { CommentsViewComponent } from '@app/@shared/comments-view/comments-view.component';
@@ -12,6 +11,7 @@ import {
 import { geographicCoverageMap, Report } from '../interfaces/report';
 import { formationReportedMap, reportingPeriodicity } from '../interfaces/report-data';
 import { ReportService } from '../report.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-report-view',

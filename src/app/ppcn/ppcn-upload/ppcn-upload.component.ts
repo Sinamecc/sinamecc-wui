@@ -4,12 +4,12 @@ import { environment } from '@env/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Logger } from '@core';
 import { TranslateService } from '@ngx-translate/core';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Ppcn } from '@app/ppcn/ppcn_registry';
 import { Observable } from 'rxjs';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 import { tap, finalize } from 'rxjs/operators';
 import { I18nService } from '@app/i18n/i18n.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 const log = new Logger('Report');
 
 @Component({

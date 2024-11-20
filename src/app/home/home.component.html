@@ -13,7 +13,11 @@
       -->
         <mat-card class="card" fxLayout="column" fxLayoutAlign="center center">
           <mat-icon color="primary"> {{ hasPermProvider(card.module) ? 'add' : 'visibility' }}</mat-icon>
-          <button [routerLink]="hasPermProvider(card.module) ? card.urlNew : card.urlView" mat-button color="primary">
+          <button
+            [routerLink]="hasPermProvider(card.module) ? card.urlNew : card.urlView"
+            mat-raised-button
+            color="primary"
+          >
             {{ hasPermProvider(card.module) ? 'Nueva solicitud' : 'Ver solicitudes' }}
           </button>
         </mat-card>

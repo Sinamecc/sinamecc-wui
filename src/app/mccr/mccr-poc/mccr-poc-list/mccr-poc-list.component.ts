@@ -3,8 +3,8 @@ import { MccrPoc } from '@app/mccr/mccr-poc/mccr-poc';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
 import { MccrPocService } from '@app/mccr/mccr-poc/mccr-poc.service';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { finalize } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-mccr-poc-list',

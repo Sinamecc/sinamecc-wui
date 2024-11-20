@@ -6,7 +6,6 @@ import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { ImpactEmission, MitigationAction } from '../mitigation-action';
@@ -16,6 +15,7 @@ import * as _moment from 'moment';
 import { ErrorReportingComponent } from '@shared';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { I18nService } from '@app/i18n';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export const MY_FORMATS = {
   parse: {

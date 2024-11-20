@@ -93,8 +93,8 @@
             <br />
 
             <mat-form-field class="field-ppcn" *ngIf="levelId == '2'">
-              <mat-chip-list #chipList>
-                <mat-chip
+              <mat-chip-listbox #chipList>
+                <mat-chip-option
                   *ngFor="let code of CIUUCodeList"
                   [selectable]="selectable"
                   [removable]="removable"
@@ -102,7 +102,7 @@
                 >
                   {{ code }}
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                </mat-chip>
+                </mat-chip-option>
                 <input
                   [placeholder]="'general.CIUUCode' | translate"
                   #chipListInput
@@ -111,7 +111,7 @@
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   (matChipInputTokenEnd)="add($event)"
                 />
-              </mat-chip-list>
+              </mat-chip-listbox>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 

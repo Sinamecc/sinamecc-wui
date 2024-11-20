@@ -8,8 +8,8 @@ import { RouteReusableStrategy } from './route-reusable-strategy';
 import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
-import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { TokenInterceptor } from './http/token.interceptor';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [CommonModule, HttpClientModule, TranslateModule, RouterModule, MatDialogModule],

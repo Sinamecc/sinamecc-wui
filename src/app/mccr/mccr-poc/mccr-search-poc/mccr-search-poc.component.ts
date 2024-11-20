@@ -3,17 +3,14 @@ import { MccrPoc, VerifyResponse } from '@app/mccr/mccr-poc/mccr-poc';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
 import { MccrPocService } from '@app/mccr/mccr-poc/mccr-poc.service';
-import {
-  MatLegacyDialog as MatDialog,
-  MatLegacyDialogConfig as MatDialogConfig,
-} from '@angular/material/legacy-dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { finalize } from 'rxjs/operators';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 import { MccrPocNewDeveloperAccountComponent } from '@app/mccr/mccr-poc/mccr-poc-new-developer-account/mccr-poc-new-developer-account.component';
 import { MccrPocNewBuyerAccountComponent } from '@app/mccr/mccr-poc/mccr-poc-new-buyer-account/mccr-poc-new-buyer-account.component';
 import { UccVerifyDataComponent } from '../ucc-verify-data/ucc-verify-data.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-mccr-search-poc',

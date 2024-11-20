@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 import { PpcnComponent } from '@app/ppcn/ppcn/ppcn.component';
@@ -19,6 +18,7 @@ import { Logger } from '@core/logger.service';
 import { AdaptationActionsViewComponent } from '@app/adaptation-actions/adaptation-actions-view/adaptation-actions-view.component';
 import { ReportViewComponent } from '@app/report/report-view/report-view.component';
 import { MitigationActionComponent } from '@app/mitigation-actions/mitigation-action/mitigation-action.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('UploadProposal');
 

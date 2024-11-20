@@ -7,13 +7,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import {
-  MatLegacyDialogRef as MatDialogRef,
-  MatLegacyDialogModule as MatDialogModule,
-  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
-  MatLegacyDialog as MatDialog,
-} from '@angular/material/legacy-dialog';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('ComponentDialogComponent', () => {
   const mockDialogRef = {

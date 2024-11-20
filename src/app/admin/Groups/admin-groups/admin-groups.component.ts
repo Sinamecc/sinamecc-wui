@@ -3,13 +3,11 @@ import { Groups } from '@app/admin/groups';
 import { Observable } from 'rxjs';
 import { AdminService } from '@app/admin/admin.service';
 import { DataSource } from '@angular/cdk/collections';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
-import {
-  MatLegacyDialog as MatDialog,
-  MatLegacyDialogConfig as MatDialogConfig,
-} from '@angular/material/legacy-dialog';
+
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 export class GroupsDataSource extends DataSource<any> {
   groups: Groups[];

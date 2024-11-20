@@ -74,7 +74,6 @@
                   [disabled]="goalInput.value == ''"
                   (click)="initiativeGoalList.push(goalInput.value); goalInput.value = ''"
                   type="button"
-                  mat-button
                   matSuffix
                   mat-icon-button
                 >
@@ -84,8 +83,8 @@
               </mat-form-field>
 
               <div *ngIf="initiativeGoalList.length > 0">
-                <mat-chip-list>
-                  <mat-chip
+                <mat-chip-listbox>
+                  <mat-chip-option
                     (removed)="removeGoal(item)"
                     *ngFor="let item of initiativeGoalList"
                     selected
@@ -93,8 +92,8 @@
                   >
                     {{ item }}
                     <mat-icon matChipRemove>cancel</mat-icon>
-                  </mat-chip>
-                </mat-chip-list>
+                  </mat-chip-option>
+                </mat-chip-listbox>
               </div>
             </div>
             <br />
