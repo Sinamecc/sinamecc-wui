@@ -1,0 +1,71 @@
+name: Register Images
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+        default: 'dev'
+
+    secrets:
+      AWS_ROLE_ARN:
+        required: true
+
+    outputs:
+      image_tag:
+        description: 'Commit SHA'
+        value: ${{ jobs.building-and-pushing-images.outputs.image_tag }}
+      ecr_registry:
+        description: 'ECR Registry'
+        value: ${{ jobs.building-and-pushing-images.outputs.ecr_registry }}
+
+jobs:
+  building-and-pushing-images:
+    name: 'Building and Pushing Images'
+    environment: ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    outputs:
+      ci_commit_sha: ${{ steps.push-images.outputs.ci_commit_sha }}
+      ecr_registry: ${{ steps.push-images.outputs.ecr_registry }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-2
+          role-session-name: build-and-push-images
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Building Images
+        id: build-images
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY_ENV: ${{ inputs.environment }}
+          IMAGE: sinamecc-frontend
+          IMAGE_TAG: ${{ inputs.environment }}
+
+        run: |
+          echo "Building Docker Image: $REGISTRY/$REPOSITORY_ENV/$IMAGE:$IMAGE_TAG" 
+          docker build -f ./Dockerfile --build-arg env=${{ inputs.environment }} -t $REGISTRY/$REPOSITORY_ENV/$IMAGE:$IMAGE_TAG .
+
+      - name: Pushing Images
+        id: push-images
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY_ENV: ${{ inputs.environment }}
+          IMAGE: sinamecc-frontend
+          IMAGE_TAG: ${{ inputs.environment }}
+        run: |
+          echo "Pushing Docker Image: $REGISTRY/$REPOSITORY_ENV/$IMAGE:$IMAGE_TAG"
+          docker push $REGISTRY/$REPOSITORY_ENV/$IMAGE:$IMAGE_TAG
+
+          echo "image_tag=${{ env.IMAGE_TAG }}" >> "$GITHUB_OUTPUT"
+          echo "ecr_registry=${{ steps.login-ecr.outputs.registry }}" >> "$GITHUB_OUTPUT"
