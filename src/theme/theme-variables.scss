@@ -50,28 +50,28 @@ $secondary: (
   ),
 );
 
-$theme-primary: mat.define-palette($primary);
-$theme-secondary: mat.define-palette($secondary);
-$app-warn: mat.define-palette(mat.$red-palette);
+$theme-primary: mat.m2-define-palette($primary);
+$theme-secondary: mat.m2-define-palette($secondary);
+$app-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
-$custom-typography: mat.define-typography-config(
+$custom-typography: mat.m2-define-typography-config(
   $font-family: "Mulish",
-  $headline-1: mat.define-typography-level(25.5pt, 2.75em, 400, 0.015625em),
-  $headline-2: mat.define-typography-level(25.5pt, 2.75em, 400, 0.015625em),
-  $headline-3: mat.define-typography-level(25.5pt, 2.75em, 400, 0.015625em),
-  $headline-4: mat.define-typography-level(18pt, 2.125em, 300, 0),
-  $headline-5: mat.define-typography-level(12pt, 4em, 400, 0.009375em),
-  $headline-6: mat.define-typography-level(10.5pt, 1.5em, 600, 0.015625em),
-  $subtitle-2: mat.define-typography-level(12pt, 1.625em, 400, 0.03125em),
-  $subtitle-1: mat.define-typography-level(10.5pt, 1.5em, 400, 0.015625em),
-  $body-2: mat.define-typography-level(10.5pt, 1.5em, 400, 0.015625em),
-  $body-1: mat.define-typography-level(12pt, 1.625em, 400, 0.03125em),
-  $button: mat.define-typography-level(10.5pt, auto, 600, 0.078125em),
-  $caption: mat.define-typography-level(9pt, auto, 400, 0.025em),
-  $overline: mat.define-typography-level(9pt, auto, 400, 0.025em),
+  $headline-1: mat.m2-define-typography-level(25.5pt, 2.75em, 400, 0.015625em),
+  $headline-2: mat.m2-define-typography-level(25.5pt, 2.75em, 400, 0.015625em),
+  $headline-3: mat.m2-define-typography-level(25.5pt, 2.75em, 400, 0.015625em),
+  $headline-4: mat.m2-define-typography-level(18pt, 2.125em, 300, 0),
+  $headline-5: mat.m2-define-typography-level(12pt, 4em, 400, 0.009375em),
+  $headline-6: mat.m2-define-typography-level(10.5pt, 1.5em, 600, 0.015625em),
+  $subtitle-2: mat.m2-define-typography-level(12pt, 1.625em, 400, 0.03125em),
+  $subtitle-1: mat.m2-define-typography-level(10.5pt, 1.5em, 400, 0.015625em),
+  $body-2: mat.m2-define-typography-level(10.5pt, 1.5em, 400, 0.015625em),
+  $body-1: mat.m2-define-typography-level(12pt, 1.625em, 400, 0.03125em),
+  $button: mat.m2-define-typography-level(10.5pt, auto, 600, 0.078125em),
+  $caption: mat.m2-define-typography-level(9pt, auto, 400, 0.025em),
+  $overline: mat.m2-define-typography-level(9pt, auto, 400, 0.025em),
 );
 
-$app-theme: mat.define-light-theme(
+$app-theme: mat.m2-define-light-theme(
   (
     color: (
       primary: $theme-primary,

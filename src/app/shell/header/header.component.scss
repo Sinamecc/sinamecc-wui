@@ -11,7 +11,7 @@
 }
 
 .brand {
-  color: mat.get-color-from-palette($theme-primary, "500-contrast");
+  color: mat.m2-get-color-from-palette($theme-primary, "500-contrast");
   text-decoration: none;
   padding-right: 1rem;
 }

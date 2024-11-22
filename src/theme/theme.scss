@@ -81,7 +81,7 @@ body {
 .primary-button {
   border-radius: 5px;
   color: white;
-  background-color: mat.get-color-from-palette($theme-primary, 500);
+  background-color: mat.m2-get-color-from-palette($theme-primary, 500);
   padding: 0.8em 1.3em;
   border: none;
   cursor: pointer;
