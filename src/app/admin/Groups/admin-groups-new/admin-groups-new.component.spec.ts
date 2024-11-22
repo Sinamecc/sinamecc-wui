@@ -6,9 +6,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SharedModule } from '@shared';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AdminGroupsNewComponent', () => {
   let component: AdminGroupsNewComponent;
@@ -16,6 +17,7 @@ describe('AdminGroupsNewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [AdminGroupsNewComponent],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
@@ -23,11 +25,10 @@ describe('AdminGroupsNewComponent', () => {
         TranslateModule.forRoot(),
         FormsModule,
         ReactiveFormsModule,
-        HttpClientTestingModule,
         RouterTestingModule,
         SharedModule,
       ],
-      declarations: [AdminGroupsNewComponent],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     }).compileComponents();
   }));
 

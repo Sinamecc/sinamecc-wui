@@ -6,7 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AdminPermissionListComponent } from '@app/admin/Permissions/admin-permission-list/admin-permission-list.component';
 import { AdminGroupListComponent } from '@app/admin/Groups/admin-group-list/admin-group-list.component';
@@ -16,6 +16,7 @@ import { AdminPermissionsListEditComponent } from '@app/admin/Permissions/admin-
 import { SharedModule } from '@shared';
 import { CredentialsService } from '@app/auth';
 import { MockCredentialsService } from '@app/auth/credentials.service.mock';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AdminNewComponent', () => {
   let component: AdminNewComponent;
@@ -37,11 +38,15 @@ describe('AdminNewComponent', () => {
         TranslateModule.forRoot(),
         FormsModule,
         ReactiveFormsModule,
-        HttpClientTestingModule,
         RouterTestingModule,
         SharedModule,
       ],
-      providers: [AdminService, { provide: CredentialsService, useClass: MockCredentialsService }],
+      providers: [
+        AdminService,
+        { provide: CredentialsService, useClass: MockCredentialsService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
     }).compileComponents();
   }));
 

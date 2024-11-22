@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
@@ -16,6 +16,7 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { CoreModule } from '@core';
 import { I18nService } from '@app/i18n';
 import { UpdateStatusComponent, LoaderComponent, UpdateStatusService, MockUpdateStatusService } from '@shared';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MitigationActionReviewsNewComponent', () => {
   let component: MitigationActionReviewsNewComponent;
@@ -23,18 +24,17 @@ describe('MitigationActionReviewsNewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [MitigationActionReviewsNewComponent, UpdateStatusComponent, LoaderComponent],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
         CoreModule,
       ],
-      declarations: [MitigationActionReviewsNewComponent, UpdateStatusComponent, LoaderComponent],
       providers: [
         MockS3Service,
         { provide: I18nService, useClass: MockI18nService },
@@ -51,6 +51,8 @@ describe('MitigationActionReviewsNewComponent', () => {
           },
         },
         { provide: UpdateStatusService, useClass: MockUpdateStatusService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

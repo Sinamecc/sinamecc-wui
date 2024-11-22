@@ -1,15 +1,21 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { AdminService } from './admin.service';
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CredentialsService } from '@app/auth';
 
 describe('AdminService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [AdminService, CredentialsService, HttpClient],
+      imports: [],
+      providers: [
+        AdminService,
+        CredentialsService,
+        HttpClient,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
     });
   });
 

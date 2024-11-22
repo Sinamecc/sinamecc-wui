@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@core';
 import {
@@ -21,6 +21,7 @@ import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
 import { I18nService } from '@app/i18n';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('HarmonizationProposalNewComponent', () => {
   let component: HarmonizationProposalNewComponent;
@@ -28,23 +29,22 @@ describe('HarmonizationProposalNewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        BrowserAnimationsModule,
-        FlexLayoutModule,
-        TranslateModule.forRoot(),
-        RouterTestingModule,
-        HttpClientTestingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        CoreModule,
-      ],
       declarations: [
         HarmonizationProposalNewComponent,
         UploadProposalComponent,
         LoaderComponent,
         InputFileComponent,
         ByteFormatPipe,
+      ],
+      imports: [
+        MaterialModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CoreModule,
       ],
       providers: [
         MockS3Service,
@@ -54,6 +54,8 @@ describe('HarmonizationProposalNewComponent', () => {
         },
         { provide: S3Service, useClass: MockS3Service },
         { provide: I18nService, useClass: MockI18nService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

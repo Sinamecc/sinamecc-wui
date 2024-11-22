@@ -9,7 +9,7 @@ import { MockTranslateService } from '@app/i18n/translate.service.mock';
 import { I18nService } from '@app/i18n/i18n.service';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
 import { MccrRegistriesService } from '../mccr-registries.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
@@ -24,6 +24,7 @@ import { CoreModule } from '@core';
 import { InputFileComponent } from '@shared/input-file/input-file.component';
 import { DatePipe } from '@angular/common';
 import { S3Service } from '@shared/s3.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MccrRegistriesNewComponent', () => {
   let component: MccrRegistriesNewComponent;
@@ -31,13 +32,20 @@ describe('MccrRegistriesNewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      // { provide: I18nService, useClass: MockI18nService}],
+      declarations: [
+        MccrRegistriesNewComponent,
+        InputFileComponent,
+        LoaderComponent,
+        GenericButtonComponent,
+        GenericButtonSecondaryComponent,
+      ],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
         CoreModule,
@@ -57,14 +65,8 @@ describe('MccrRegistriesNewComponent', () => {
         { provide: I18nService, useClass: MockI18nService },
         { provide: S3Service, useClass: MockS3Service },
         DatePipe,
-      ],
-      // { provide: I18nService, useClass: MockI18nService}],
-      declarations: [
-        MccrRegistriesNewComponent,
-        InputFileComponent,
-        LoaderComponent,
-        GenericButtonComponent,
-        GenericButtonSecondaryComponent,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

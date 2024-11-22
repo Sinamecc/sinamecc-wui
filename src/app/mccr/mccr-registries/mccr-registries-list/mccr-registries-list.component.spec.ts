@@ -7,7 +7,7 @@ import { MaterialModule } from '@app/material.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MccrRegistriesService } from '../mccr-registries.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { DatePipe } from '@angular/common';
 import { S3Service } from '@shared/s3.service';
 import { MockS3Service } from '@shared/s3.service.mock';
@@ -18,6 +18,7 @@ import { LoaderComponent } from '@shared';
 import { I18nService } from '@app/i18n';
 import { CredentialsService } from '@app/auth';
 import { MockCredentialsService } from '@app/auth/credentials.service.mock';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MccrRegistriesListComponent', () => {
   let component: MccrRegistriesListComponent;
@@ -25,14 +26,6 @@ describe('MccrRegistriesListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        BrowserAnimationsModule,
-        FlexLayoutModule,
-        TranslateModule.forRoot(),
-        RouterTestingModule,
-        HttpClientTestingModule,
-      ],
       declarations: [
         MccrRegistriesListComponent,
         LoaderComponent,
@@ -40,12 +33,21 @@ describe('MccrRegistriesListComponent', () => {
         GenericButtonSecondaryComponent,
         CustomSearchBarComponent,
       ],
+      imports: [
+        MaterialModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+      ],
       providers: [
         I18nService,
         DatePipe,
         MccrRegistriesService,
         { provide: CredentialsService, useClass: MockCredentialsService },
         { provide: S3Service, useClass: MockS3Service },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

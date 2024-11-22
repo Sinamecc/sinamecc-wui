@@ -1,6 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -12,8 +12,8 @@ import { TokenInterceptor } from './http/token.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, TranslateModule, RouterModule, MatDialogModule],
   declarations: [ComponentDialogComponent],
+  imports: [CommonModule, TranslateModule, RouterModule, MatDialogModule],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -30,6 +30,7 @@ import { MatDialogModule } from '@angular/material/dialog';
       useClass: RouteReusableStrategy,
     },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
 })
 export class CoreModule {

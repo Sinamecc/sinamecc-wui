@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { LoaderComponent } from '@shared';
 import { I18nService } from '@app/i18n';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
@@ -15,6 +15,7 @@ import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { CustomSearchBarComponent } from '@shared/custom-search-bar/custom-search-bar.component';
 import { GenericButtonComponent } from '@shared/generic-button/generic-button.component';
 import { GenericButtonSecondaryComponent } from '@shared/generic-button-secondary/generic-button-secondary.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('PpcnComponent', () => {
   let component: PpcnComponent;
@@ -22,14 +23,6 @@ describe('PpcnComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        BrowserAnimationsModule,
-        FlexLayoutModule,
-        TranslateModule.forRoot(),
-        RouterTestingModule,
-        HttpClientTestingModule,
-      ],
       declarations: [
         PpcnComponent,
         LoaderComponent,
@@ -37,10 +30,19 @@ describe('PpcnComponent', () => {
         GenericButtonSecondaryComponent,
         CustomSearchBarComponent,
       ],
+      imports: [
+        MaterialModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+      ],
       providers: [
         MockS3Service,
         { provide: PpcnService, useClass: MockPpcnService },
         { provide: I18nService, useClass: MockI18nService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

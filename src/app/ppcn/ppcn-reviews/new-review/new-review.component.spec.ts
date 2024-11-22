@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@core';
 import { UpdateStatusComponent } from '@app/ppcn/update-status/update-status.component';
@@ -19,6 +19,7 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { UpdateStatusService } from '@app/ppcn/update-status/update-status.service';
 import { MockUpdateStatusService } from '@app/ppcn/update-status/update-status.service.mock';
 import { I18nService } from '@app/i18n';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('NewReviewComponent', () => {
   let component: NewReviewComponent;
@@ -26,18 +27,17 @@ describe('NewReviewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [NewReviewComponent, UpdateStatusComponent, LoaderComponent],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
         CoreModule,
       ],
-      declarations: [NewReviewComponent, UpdateStatusComponent, LoaderComponent],
       providers: [
         MockS3Service,
         { provide: PpcnService, useClass: MockPpcnService },
@@ -51,6 +51,8 @@ describe('NewReviewComponent', () => {
             },
           },
         },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

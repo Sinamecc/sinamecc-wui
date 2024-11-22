@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { MitigationActionFormFlowComponent } from '../mitigation-action-form-flow/mitigation-action-form-flow.component';
 import { ImpactFormComponent } from '../impact-form/impact-form.component';
 import { EmissionsMitigationFormComponent } from '../emissions-mitigation-form/emissions-mitigation-form.component';
@@ -21,6 +21,7 @@ import { SharedModule, MockS3Service } from '@shared';
 import { DatePipe } from '@angular/common';
 import { I18nService } from '@app/i18n';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 fdescribe('MitigationActionsNewComponent', () => {
   let component: MitigationActionsNewComponent;
@@ -28,18 +29,6 @@ fdescribe('MitigationActionsNewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        BrowserAnimationsModule,
-        FlexLayoutModule,
-        TranslateModule.forRoot(),
-        RouterTestingModule,
-        HttpClientTestingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        CoreModule,
-        SharedModule,
-      ],
       declarations: [
         MitigationActionsNewComponent,
         MitigationActionFormFlowComponent,
@@ -49,6 +38,17 @@ fdescribe('MitigationActionsNewComponent', () => {
         BasicInformationFormComponent,
         InitiativeFormComponent,
       ],
+      imports: [
+        MaterialModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CoreModule,
+        SharedModule,
+      ],
       providers: [
         DatePipe,
         MockS3Service,
@@ -57,6 +57,8 @@ fdescribe('MitigationActionsNewComponent', () => {
           useClass: MockMitigationActionsService,
         },
         { provide: I18nService, useClass: MockI18nService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));
