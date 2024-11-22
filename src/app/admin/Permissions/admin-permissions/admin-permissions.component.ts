@@ -17,7 +17,10 @@ export class AdminPermissionsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   fieldsToSearch: string[][] = [['name'], ['content_type']];
 
-  constructor(private adminService: AdminService, public dialog: MatDialog) {}
+  constructor(
+    private adminService: AdminService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.loadPermissions();

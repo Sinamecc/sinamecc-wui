@@ -100,33 +100,33 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sinamecc-wui:build",
-            "hmr": true
+            "hmr": true,
+            "buildTarget": "sinamecc-wui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "sinamecc-wui:build:production",
-              "hmr": false
+              "hmr": false,
+              "buildTarget": "sinamecc-wui:build:production"
             },
             "ci": {},
             "local": {
-              "browserTarget": "sinamecc-wui:build:local",
-              "hmr": true
+              "hmr": true,
+              "buildTarget": "sinamecc-wui:build:local"
             },
             "dev": {
-              "browserTarget": "sinamecc-wui:build:dev",
-              "hmr": false
+              "hmr": false,
+              "buildTarget": "sinamecc-wui:build:dev"
             },
             "stage": {
-              "browserTarget": "sinamecc-wui:build:stage",
-              "hmr": false
+              "hmr": false,
+              "buildTarget": "sinamecc-wui:build:stage"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sinamecc-wui:build"
+            "buildTarget": "sinamecc-wui:build"
           }
         },
         "test": {
@@ -164,11 +164,18 @@
               "devServerTarget": "sinamecc-wui:serve:production"
             }
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": ["@angular-eslint/schematics"]
   }
 }

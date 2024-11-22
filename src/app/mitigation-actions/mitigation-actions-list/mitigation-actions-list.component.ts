@@ -21,7 +21,10 @@ export class MitigationActionSource extends DataSource<any> {
   mitigationActions: MitigationAction[];
   mitigationActions$: Observable<MitigationAction[]>;
 
-  constructor(private service: MitigationActionsService, private i18nService: I18nService) {
+  constructor(
+    private service: MitigationActionsService,
+    private i18nService: I18nService,
+  ) {
     super();
   }
   connect(): Observable<MitigationAction[]> {
@@ -57,7 +60,7 @@ export class MitigationActionsListComponent implements OnInit {
     private dialog: MatDialog,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
   ) {}
 
   ngOnInit() {
@@ -148,17 +151,18 @@ export class MitigationActionsListComponent implements OnInit {
 
   hasPermProvider() {
     return Boolean(
-      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.ma.provider
+      this.credentialsService.credentials.permissions.all ||
+        this.credentialsService.credentials.permissions.ma.provider,
     );
   }
 
   canChangeState(element: MitigationAction) {
     if (element.fsm_state !== 'end') {
       // is admin
-      if (Boolean(this.credentialsService.credentials.permissions.all)) {
+      if (this.credentialsService.credentials.permissions.all) {
         return true;
       } else {
-        if (!Boolean(this.credentialsService.credentials.permissions.ma.provider)) {
+        if (!this.credentialsService.credentials.permissions.ma.provider) {
           return true;
         }
       }

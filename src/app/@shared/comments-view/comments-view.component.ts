@@ -14,7 +14,10 @@ export class CommentsViewComponent implements OnInit {
   moduleIndex: number;
   edit: boolean;
 
-  constructor(public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(
+    public dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {
     this.addCommentFields = data.comments;
     this.comments = data.commentPayload;
     this.moduleIndex = data.moduleIndex;

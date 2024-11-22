@@ -21,7 +21,7 @@ export class RestorePasswordComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private _snackBar: MatSnackBar,
     private router: Router,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     if (this.route.snapshot.queryParams['code'] && this.route.snapshot.queryParams['token']) {
       this.token = this.route.snapshot.queryParams['token'];
@@ -48,7 +48,7 @@ export class RestorePasswordComponent implements OnInit {
         this.translateService.get('Error processing the request, please try again later').subscribe((res: string) => {
           this._snackBar.open(res, null, { duration: 2000 });
         });
-      }
+      },
     );
   }
 

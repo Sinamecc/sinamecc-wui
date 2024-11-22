@@ -90,7 +90,7 @@ export class InitiativeFormComponent implements OnInit {
     private service: MitigationActionsService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) {
     // this.formData = new FormData();
     this.isLoading = true;
@@ -179,7 +179,7 @@ export class InitiativeFormComponent implements OnInit {
           this.formBuilder.group({
             relationshipNDCCtrl: [element.area.id, Validators.required],
             relationshipNDCTopicCtrl: [element.goals.map((x: any) => x.id.toString()), Validators.required],
-          })
+          }),
         );
 
         index = +1;
@@ -206,7 +206,7 @@ export class InitiativeFormComponent implements OnInit {
               element.transformational_vision.map((x: { id: { toString: () => any } }) => x.id),
               Validators.required,
             ],
-          })
+          }),
         );
 
         index = +1;
@@ -229,7 +229,7 @@ export class InitiativeFormComponent implements OnInit {
           this.formBuilder.group({
             topicCtrl: [element.topic.id, Validators.required],
             subTopicPlanCtrl: [element.sub_topic.map((x: { id: any }) => x.id), Validators.required],
-          })
+          }),
         );
 
         index = +1;
@@ -345,7 +345,7 @@ export class InitiativeFormComponent implements OnInit {
         this.formBuilder.group({
           relationshipCtrl: this.createNDCctrl(this.mitigationAction.categorization.action_area_selection),
           relationshipDecarbonizationCtrl: this.createDecarbonizationCtrl(
-            this.mitigationAction.categorization.descarbonization_axis_selection
+            this.mitigationAction.categorization.descarbonization_axis_selection,
           ),
           topicsFrmCtrl: this.createTopicCtrl(this.mitigationAction.categorization.topics_selection),
           impactCategoryCtrl: ['1', Validators.required],
@@ -465,7 +465,7 @@ export class InitiativeFormComponent implements OnInit {
           finalize(() => {
             this.form.markAsPristine();
             this.isLoading = false;
-          })
+          }),
         )
         .subscribe(
           (response) => {
@@ -484,7 +484,7 @@ export class InitiativeFormComponent implements OnInit {
             this.errorComponent.parseErrors(error);
             this.error = error;
             this.wasSubmittedSuccessfully = false;
-          }
+          },
         );
     } else {
       this.service
@@ -493,7 +493,7 @@ export class InitiativeFormComponent implements OnInit {
           finalize(() => {
             this.form.markAsPristine();
             this.isLoading = false;
-          })
+          }),
         )
         .subscribe(
           (response) => {
@@ -511,7 +511,7 @@ export class InitiativeFormComponent implements OnInit {
             this.errorComponent.parseErrors(error);
             this.error = error;
             this.wasSubmittedSuccessfully = false;
-          }
+          },
         );
     }
   }
@@ -539,7 +539,7 @@ export class InitiativeFormComponent implements OnInit {
 
   loadUrl() {
     window.open(
-      'https://docs.google.com/spreadsheets/d/17rrTYpiLsargiTnARd29HLoSOaRUYtXd/edit?usp=sharing&ouid=100093507902776240980&rtpof=true&sd=true'
+      'https://docs.google.com/spreadsheets/d/17rrTYpiLsargiTnARd29HLoSOaRUYtXd/edit?usp=sharing&ouid=100093507902776240980&rtpof=true&sd=true',
     );
   }
 }

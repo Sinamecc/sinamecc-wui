@@ -9,7 +9,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class PpcnReviewSource extends DataSource<any> {
   id: string;
 
-  constructor(private service: PpcnService, private current_id: string) {
+  constructor(
+    private service: PpcnService,
+    private current_id: string,
+  ) {
     super();
     this.id = current_id;
   }
@@ -35,7 +38,11 @@ export class ReviewsListComponent implements OnInit {
 
   displayedColumns = ['date', 'current_status', 'previous_state'];
 
-  constructor(private router: Router, private route: ActivatedRoute, private service: PpcnService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private service: PpcnService,
+  ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 

@@ -26,7 +26,7 @@ export class ConceptualIntegrationNewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: MitigationActionsService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'Conceptual Proposal Integration';
@@ -39,7 +39,7 @@ export class ConceptualIntegrationNewComponent implements OnInit {
       .pipe(
         tap((mitigationAction: MitigationAction) => {
           this.mitigationAction = mitigationAction;
-        })
+        }),
       );
   }
 

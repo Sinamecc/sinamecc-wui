@@ -27,7 +27,7 @@ export class MccrPocAddDeveloperComponent implements OnInit {
     private service: MccrPocService,
     private router: Router,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.createForm();
   }
@@ -43,7 +43,7 @@ export class MccrPocAddDeveloperComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -58,7 +58,7 @@ export class MccrPocAddDeveloperComponent implements OnInit {
         (error) => {
           log.debug(`Mccr Registry File error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 

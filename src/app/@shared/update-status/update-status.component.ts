@@ -53,7 +53,7 @@ export class UpdateStatusComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private translateService: TranslateService,
     private service: UpdateStatusService,
-    private resolver: ComponentFactoryResolver
+    private resolver: ComponentFactoryResolver,
   ) {
     this.loadComponent();
   }
@@ -125,7 +125,7 @@ export class UpdateStatusComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: any) => {
@@ -138,7 +138,7 @@ export class UpdateStatusComponent implements OnInit {
         (error: any) => {
           log.debug(`Upload Proposal error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 

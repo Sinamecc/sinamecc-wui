@@ -79,7 +79,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
     private i18nService: I18nService,
     private service: PpcnService,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.createForm();
   }
@@ -184,13 +184,13 @@ export class PpcnNewComponent implements OnInit, DoCheck {
         context.contactFormId,
         context.geiOrganizationId,
         context.geographicFormId,
-        context.id
+        context.id,
       )
       .pipe(
         finalize(() => {
           this.formGroup.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -211,7 +211,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
           log.debug(`New PPCN Form error: ${error}`);
           this.errorComponent.parseErrors(error);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -249,7 +249,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
         },
         (error) => {
           this.responseMessaage('ppcn.ppcnSaveError');
-        }
+        },
       );
   }
 
@@ -270,7 +270,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
         context.contactFormId,
         context.geiOrganizationId,
         context.geographicFormId,
-        context.id
+        context.id,
       )
       .subscribe(
         (response) => {
@@ -282,7 +282,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
           log.debug(`PPCN Form error: ${error}`);
           this.errorComponent.parseErrors(error);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -356,7 +356,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
               ? this.filterValue(
                   this.ppcnEdit.organization_classification
                     ? this.ppcnEdit.organization_classification.required_level.id
-                    : null
+                    : null,
                 )
               : '',
             Validators.required,
@@ -369,7 +369,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
                     ? this.filterValue(
                         this.ppcnEdit.organization_classification
                           ? this.ppcnEdit.organization_classification.emission_quantity
-                          : null
+                          : null,
                       )
                     : '',
                   Validators.required,
@@ -382,7 +382,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
                     ? this.filterValue(
                         this.ppcnEdit.organization_classification
                           ? this.ppcnEdit.organization_classification.data_inventory_quantity
-                          : null
+                          : null,
                       )
                     : '',
                   Validators.required,
@@ -395,7 +395,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
                     ? this.filterValue(
                         this.ppcnEdit.organization_classification
                           ? this.ppcnEdit.organization_classification.buildings_number
-                          : null
+                          : null,
                       )
                     : '',
                   Validators.required,
@@ -408,7 +408,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
                     ? this.filterValue(
                         this.ppcnEdit.organization_classification
                           ? this.ppcnEdit.organization_classification.methodologies_complexity
-                          : null
+                          : null,
                       )
                     : '',
                   Validators.required,
@@ -419,7 +419,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
               ? this.filterValue(
                   this.ppcnEdit.organization_classification
                     ? this.ppcnEdit.organization_classification.recognition_type.id
-                    : null
+                    : null,
                 )
               : '',
             Validators.required,
@@ -460,7 +460,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
               ? [
                   this.editForm
                     ? this.filterValue(
-                        this.ppcnEdit.gei_organization ? this.ppcnEdit.gei_organization.emission_ovv_date : null
+                        this.ppcnEdit.gei_organization ? this.ppcnEdit.gei_organization.emission_ovv_date : null,
                       )
                     : '',
                   Validators.required,
@@ -701,7 +701,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
     return this.service.newPpcnFormData(this.levelId, this.i18nService.language.split('-')[0]).pipe(
       finalize(() => {
         this.isLoading = false;
-      })
+      }),
     );
   }
 }

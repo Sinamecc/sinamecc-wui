@@ -157,7 +157,7 @@ export interface ActionImpact {
 export interface State {
   state: string;
   label: string;
-  required_comments?: Boolean;
+  required_comments?: boolean;
 }
 
 export interface GeneralReport {

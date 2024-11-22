@@ -35,7 +35,7 @@ export class MccrRegistriesNewComponent implements OnInit {
     private service: MccrRegistriesService,
     private mitigationService: MitigationActionsService,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.createForm();
   }
@@ -50,7 +50,7 @@ export class MccrRegistriesNewComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -63,7 +63,7 @@ export class MccrRegistriesNewComponent implements OnInit {
         (error) => {
           log.debug(`Mccr Registry File error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -75,7 +75,7 @@ export class MccrRegistriesNewComponent implements OnInit {
     this.mitigationActions = this.initialFormData().pipe(
       tap((mitigationActions: MitigationAction[]) => {
         this.processedMitigationActions = mitigationActions;
-      })
+      }),
     );
   }
 
@@ -99,7 +99,7 @@ export class MccrRegistriesNewComponent implements OnInit {
     return this.mitigationService.mitigationActions(this.i18nService.language.split('-')[0]).pipe(
       finalize(() => {
         this.isLoading = false;
-      })
+      }),
     );
   }
 }

@@ -7,7 +7,7 @@ export class ByteFormatPipe implements PipeTransform {
   private readonly unit = 'Byte';
 
   transform(value: any, args?: any): any {
-    if (!!value) {
+    if (value) {
       value = this.formatBytes(+value, +args);
     }
     return value;

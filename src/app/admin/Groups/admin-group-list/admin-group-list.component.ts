@@ -33,7 +33,7 @@ export class AdminGroupListComponent implements OnInit {
     @Optional()
     @Inject(MAT_DIALOG_DATA)
     public data: GroupsData,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     if (this.data) {
       this.componentType = data.componentType;

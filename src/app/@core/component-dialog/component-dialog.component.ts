@@ -7,7 +7,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./component-dialog.component.scss'],
 })
 export class ComponentDialogComponent implements OnInit {
-  constructor(public dialogRef: MatDialogRef<ComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(
+    public dialogRef: MatDialogRef<ComponentDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {}
 
   ngOnInit() {}
 

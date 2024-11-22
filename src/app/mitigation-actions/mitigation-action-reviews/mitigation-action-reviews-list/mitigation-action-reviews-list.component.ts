@@ -9,7 +9,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class MitigationActionReviewSource extends DataSource<any> {
   id: string;
 
-  constructor(private service: MitigationActionsService, private current_id: string) {
+  constructor(
+    private service: MitigationActionsService,
+    private current_id: string,
+  ) {
     super();
     this.id = current_id;
   }
@@ -34,7 +37,10 @@ export class MitigationActionReviewsListComponent implements OnInit {
   dataSource = new MitigationActionReviewSource(this.service, this.route.snapshot.paramMap.get('id'));
   displayedColumns = ['date', 'current_status', 'previous_state'];
 
-  constructor(private route: ActivatedRoute, private service: MitigationActionsService) {
+  constructor(
+    private route: ActivatedRoute,
+    private service: MitigationActionsService,
+  ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
 

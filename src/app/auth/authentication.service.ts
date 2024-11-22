@@ -27,7 +27,10 @@ const routes = {
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private credentialsService: CredentialsService, private httpClient: HttpClient) {}
+  constructor(
+    private credentialsService: CredentialsService,
+    private httpClient: HttpClient,
+  ) {}
 
   /**
    * Authenticates the user.
@@ -62,9 +65,9 @@ export class AuthenticationService {
             };
             this.credentialsService.setCredentials(data, context.remember);
             return data;
-          })
+          }),
         );
-      })
+      }),
     );
   }
 
@@ -85,7 +88,7 @@ export class AuthenticationService {
     return this.httpClient.post(routes.emailResetPassword(), body).pipe(
       map((response: any) => {
         return response;
-      })
+      }),
     );
   }
 
@@ -100,7 +103,7 @@ export class AuthenticationService {
     return this.httpClient.get(photoUrl, { responseType: 'blob' }).pipe(
       map((res: any) => {
         return res;
-      })
+      }),
     );
   }
 }

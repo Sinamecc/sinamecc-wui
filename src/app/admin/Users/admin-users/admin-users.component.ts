@@ -49,7 +49,7 @@ export class AdminUsersComponent implements OnInit {
     private adminService: AdminService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit() {
@@ -116,7 +116,7 @@ export class AdminUsersComponent implements OnInit {
       },
       (error) => {
         this.openSnackBar(3, 'admin.createUserError');
-      }
+      },
     );
   }
 }

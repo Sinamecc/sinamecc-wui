@@ -17,7 +17,10 @@ export class PpcnSource extends DataSource<any> {
   ppcns: Ppcn[];
   ppcns$: Observable<Ppcn[]>;
 
-  constructor(private service: PpcnService, private i18nService: I18nService) {
+  constructor(
+    private service: PpcnService,
+    private i18nService: I18nService,
+  ) {
     super();
   }
   connect(): Observable<Ppcn[]> {
@@ -66,7 +69,7 @@ export class PpcnListComponent implements OnInit {
     private i18nService: I18nService,
     private service: PpcnService,
     private dialog: MatDialog,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
   ) {}
 
   ngOnInit(): void {
@@ -137,10 +140,10 @@ export class PpcnListComponent implements OnInit {
   canChangeState(element: Ppcn) {
     if (!(element.fsm_state === 'PPCN_end' || element.fsm_state === 'PPCN_send_recognition_certificate')) {
       // is admin
-      if (Boolean(this.credentialsService.credentials.permissions.all)) {
+      if (this.credentialsService.credentials.permissions.all) {
         return true;
       } else {
-        if (!Boolean(this.credentialsService.credentials.permissions.ppcn.provider)) {
+        if (!this.credentialsService.credentials.permissions.ppcn.provider) {
           return true;
         }
       }
@@ -151,14 +154,14 @@ export class PpcnListComponent implements OnInit {
   hasPermProvider() {
     return Boolean(
       this.credentialsService.credentials.permissions.all ||
-        this.credentialsService.credentials.permissions.ppcn.provider
+        this.credentialsService.credentials.permissions.ppcn.provider,
     );
   }
 
   hasPermReviewer() {
     return Boolean(
       this.credentialsService.credentials.permissions.all ||
-        this.credentialsService.credentials.permissions.ppcn.reviewer
+        this.credentialsService.credentials.permissions.ppcn.reviewer,
     );
   }
 }

@@ -35,7 +35,7 @@ export class AdminPermissionListComponent implements OnInit {
     @Optional()
     @Inject(MAT_DIALOG_DATA)
     public data: PermissionsData,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     this.componentType = 'add';
     if (data != null) {

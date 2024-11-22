@@ -39,7 +39,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
-    private router: Router
+    private router: Router,
   ) {
     this.service.currentMitigationAction.subscribe((message) => {
       this.mitigationAction = message;
@@ -75,7 +75,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
           },
           (error) => {
             this.indicator = [];
-          }
+          },
         );
       }
     }
@@ -89,26 +89,26 @@ export class ReportingClimateActionFormComponent implements OnInit {
           {
             initial_date_report_period: this.datePipe.transform(
               this.form.value.formArray[1].reportingPeriodStartCtrl,
-              'yyyy-MM-dd'
+              'yyyy-MM-dd',
             ),
 
             final_date_report_period: this.datePipe.transform(
               this.form.value.formArray[1].reportingPeriodEndCtrl,
-              'yyyy-MM-dd'
+              'yyyy-MM-dd',
             ),
 
             data_updated_date: this.datePipe.transform(
               this.form.value.formArray[1].indicatorDataUpdateDateCtrl,
-              'yyyy-MM-dd'
+              'yyyy-MM-dd',
             ),
             report_type: this.form.value.formArray[1].reportTypeCtrl,
             progress_report_period: this.datePipe.transform(
               this.form.value.formArray[2].reportingPeriodCtrl,
-              'yyyy-MM-dd'
+              'yyyy-MM-dd',
             ),
             progress_report_period_until: this.datePipe.transform(
               this.form.value.formArray[2].reportingPeriodUntilCtrl,
-              'yyyy-MM-dd'
+              'yyyy-MM-dd',
             ),
             updated_data: this.form.value.formArray[1].informationToUpdateCtrl
               ? this.form.value.formArray[1].informationToUpdateCtrl
@@ -144,7 +144,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -163,7 +163,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
           this.error = error;
           this.errorComponent.parseErrors(error);
           this.wasSubmittedSuccessfully = false;
-        }
+        },
       );
   }
 

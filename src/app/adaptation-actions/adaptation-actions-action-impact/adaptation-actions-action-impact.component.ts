@@ -27,7 +27,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
     private service: AdaptationActionService,
-    private router: Router
+    private router: Router,
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
@@ -58,7 +58,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
       },
       (error) => {
         this.ods = [];
-      }
+      },
     );
   }
 
@@ -69,7 +69,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
       },
       (error) => {
         this.temporalityImpact = [];
-      }
+      },
     );
   }
 
@@ -80,7 +80,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
       },
       (error) => {
         this.generalImpact = [];
-      }
+      },
     );
   }
 
@@ -147,7 +147,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
       },
       (error) => {
         this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      }
+      },
     );
   }
 

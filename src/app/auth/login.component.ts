@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
   ) {
     this.createForm();
   }
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         finalize(() => {
           this.loginForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (credentials) => {
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
         },
         (error) => {
           this.error = error;
-        }
+        },
       );
   }
 

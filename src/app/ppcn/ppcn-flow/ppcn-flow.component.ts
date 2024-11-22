@@ -28,7 +28,10 @@ export class PpcnFlowComponent implements OnInit {
   generalFormData: FormData;
   levelId = '1';
 
-  constructor(private _formBuilder: UntypedFormBuilder, private service: PpcnService) {
+  constructor(
+    private _formBuilder: UntypedFormBuilder,
+    private service: PpcnService,
+  ) {
     this.formData = new FormData();
     this.createForm();
   }

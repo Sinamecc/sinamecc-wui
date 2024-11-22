@@ -1,4 +1,4 @@
 export interface GeographicLevel {
-  id: Number;
+  id: number;
   level: string;
 }

@@ -28,7 +28,7 @@ export class DataUpdateComponent implements OnInit {
     private i18nService: I18nService,
     private reportService: ReportService,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.reportService.currentReport.subscribe((message) => {
       this.report = message;
@@ -105,7 +105,7 @@ export class DataUpdateComponent implements OnInit {
         finalize(() => {
           this.reportForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         () => {
@@ -116,7 +116,7 @@ export class DataUpdateComponent implements OnInit {
         },
         (error) => {
           this.error = error;
-        }
+        },
       );
   }
 }

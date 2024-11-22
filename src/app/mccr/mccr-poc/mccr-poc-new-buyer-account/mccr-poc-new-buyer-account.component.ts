@@ -24,7 +24,7 @@ export class MccrPocNewBuyerAccountComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private service: MccrPocService,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.createForm();
   }
@@ -45,7 +45,7 @@ export class MccrPocNewBuyerAccountComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: any) => {
@@ -58,7 +58,7 @@ export class MccrPocNewBuyerAccountComponent implements OnInit {
         (error) => {
           log.debug(`Error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 }

@@ -58,7 +58,7 @@ export class ImpactFormComponent implements OnInit {
     private translateService: TranslateService,
     private router: Router,
     public snackBar: MatSnackBar,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) {
     // this.formData = new FormData();
     this.service.currentMitigationAction.subscribe((message) => (this.mitigationAction = message));
@@ -275,7 +275,7 @@ export class ImpactFormComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -293,7 +293,7 @@ export class ImpactFormComponent implements OnInit {
           this.error = error;
           this.errorComponent.parseErrors(error);
           this.wasSubmittedSuccessfully = false;
-        }
+        },
       );
   }
 }

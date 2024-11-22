@@ -23,7 +23,7 @@ export class ReportReviewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: ReportService,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'adaptationAction.addReview';
@@ -46,7 +46,7 @@ export class ReportReviewComponent implements OnInit {
       },
       (complete) => {
         this.isLoading = false;
-      }
+      },
     );
   }
 

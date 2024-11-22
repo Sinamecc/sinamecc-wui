@@ -21,7 +21,7 @@ export class AdminUserDetailComponent implements OnInit {
     private adminService: AdminService,
     @Optional()
     @Inject(MAT_DIALOG_DATA)
-    public data: any
+    public data: any,
   ) {
     if (data) {
       this.user = data.user;
@@ -36,7 +36,7 @@ export class AdminUserDetailComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe((response: User) => {
         this.userDetail = response;

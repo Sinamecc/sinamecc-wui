@@ -52,7 +52,7 @@ export class MccrRegistriesListComponent implements OnInit {
     private dialog: MatDialog,
     private translateService: TranslateService,
     private credentialsService: CredentialsService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {}
 
   ngOnInit() {
@@ -132,18 +132,18 @@ export class MccrRegistriesListComponent implements OnInit {
   hasPermProvider() {
     return Boolean(
       this.credentialsService.credentials.permissions.all ||
-        this.credentialsService.credentials.permissions.mccr.provider
+        this.credentialsService.credentials.permissions.mccr.provider,
     );
   }
 
   canChangeState(element: MccrRegistry) {
     if (element.fsm_state !== 'mccr_end') {
       // is admin
-      if (Boolean(this.credentialsService.credentials.permissions.all)) {
+      if (this.credentialsService.credentials.permissions.all) {
         return true;
       } else {
         //It is not a
-        if (!Boolean(this.credentialsService.credentials.permissions.mccr.provider)) {
+        if (!this.credentialsService.credentials.permissions.mccr.provider) {
           return true;
         }
       }

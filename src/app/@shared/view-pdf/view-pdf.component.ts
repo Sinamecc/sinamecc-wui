@@ -21,7 +21,7 @@ export class ViewPdfComponent implements OnInit {
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private _snackBar: MatSnackBar,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit() {

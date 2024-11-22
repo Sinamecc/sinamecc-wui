@@ -40,7 +40,7 @@ export class ReportFormDataComponent implements OnInit {
     private i18nService: I18nService,
     private reportService: ReportService,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.createForm();
     this.getCatalogs();
@@ -169,7 +169,7 @@ export class ReportFormDataComponent implements OnInit {
 
   uploadFile(event: Event, reportFile = true) {
     const element = event.currentTarget as HTMLInputElement;
-    let fileList: FileList | null = element.files;
+    const fileList: FileList | null = element.files;
     if (fileList) {
       if (reportFile) {
         this.reportDataFile = fileList[0];
@@ -210,7 +210,7 @@ export class ReportFormDataComponent implements OnInit {
         finalize(() => {
           this.reportForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -221,7 +221,7 @@ export class ReportFormDataComponent implements OnInit {
         },
         (error) => {
           this.error = error;
-        }
+        },
       );
   }
 
@@ -232,7 +232,7 @@ export class ReportFormDataComponent implements OnInit {
         finalize(() => {
           this.reportForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -242,7 +242,7 @@ export class ReportFormDataComponent implements OnInit {
         },
         (error) => {
           this.error = error;
-        }
+        },
       );
   }
 

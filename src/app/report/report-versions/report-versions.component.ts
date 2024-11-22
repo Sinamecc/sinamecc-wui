@@ -12,7 +12,10 @@ const log = new Logger('Report');
 
 export class ReportVersionsDataSource extends DataSource<any> {
   id: number;
-  constructor(private reportService: ReportService, private current_id: number) {
+  constructor(
+    private reportService: ReportService,
+    private current_id: number,
+  ) {
     super();
     this.id = current_id;
   }
@@ -42,7 +45,7 @@ export class ReportVersionsComponent implements OnInit {
     private router: Router,
     private i18nService: I18nService,
     private reportService: ReportService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.id = +this.route.snapshot.paramMap.get('id');
     this.reportFileName = this.reportService.reportVersionsName(this.id);

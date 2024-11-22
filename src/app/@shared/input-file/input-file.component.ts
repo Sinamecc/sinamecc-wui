@@ -67,7 +67,7 @@ export class InputFileComponent implements MatFormFieldControl<FileInput>, Contr
     public ngControl: NgControl,
     private fm: FocusMonitor,
     private _elementRef: ElementRef,
-    private _renderer: Renderer2
+    private _renderer: Renderer2,
   ) {
     if (ngControl) {
       ngControl.valueAccessor = this;

@@ -28,7 +28,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private service: AdaptationActionService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
@@ -80,11 +80,11 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         const adaptationActionIndicatorTime = new Date(indicator.available_time_start_date);
 
         timeSeriesAvailableEnd.setMinutes(
-          timeSeriesAvailableEnd.getMinutes() + timeSeriesAvailableEnd.getTimezoneOffset()
+          timeSeriesAvailableEnd.getMinutes() + timeSeriesAvailableEnd.getTimezoneOffset(),
         );
 
         adaptationActionIndicatorTime.setMinutes(
-          adaptationActionIndicatorTime.getMinutes() + adaptationActionIndicatorTime.getTimezoneOffset()
+          adaptationActionIndicatorTime.getMinutes() + adaptationActionIndicatorTime.getTimezoneOffset(),
         );
 
         const form = this.formBuilder.array([
@@ -230,7 +230,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
       },
       (error) => {
         this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      }
+      },
     );
   }
 

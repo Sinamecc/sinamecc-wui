@@ -28,7 +28,7 @@ export class MonitoringProposalNewComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: MccrRegistriesService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'Reporte Monitoreo MCCR';
@@ -39,7 +39,7 @@ export class MonitoringProposalNewComponent implements OnInit {
     this.mccrRegistryObservable = this.service.getMccrRegistry(this.id).pipe(
       finalize(() => {
         this.isLoading = false;
-      })
+      }),
     );
     this.mccrRegistryObservable.subscribe((response: MccrRegistry) => {
       this.mccrRegistry = response;

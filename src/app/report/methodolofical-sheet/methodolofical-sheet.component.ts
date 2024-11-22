@@ -32,7 +32,7 @@ export class MethodoloficalSheetComponent implements OnInit {
     private reportService: ReportService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) {
     this.reportService.currentReport.subscribe((message) => {
       this.report = message;
@@ -70,7 +70,7 @@ export class MethodoloficalSheetComponent implements OnInit {
         finalize(() => {
           this.reportForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         () => {
@@ -81,7 +81,7 @@ export class MethodoloficalSheetComponent implements OnInit {
         },
         (error) => {
           this.error = error;
-        }
+        },
       );
   }
 
@@ -94,7 +94,7 @@ export class MethodoloficalSheetComponent implements OnInit {
       measurement_frequency: this.reportForm.value['formArray'][0].measurementFrequencyCtrl,
       from_date: this.datePipe.transform(
         this.reportForm.value['formArray'][0].timeSeriesAvailableStartCtrl,
-        'yyyy-MM-dd'
+        'yyyy-MM-dd',
       ),
       to_date: this.datePipe.transform(this.reportForm.value['formArray'][0].timeSeriesAvailableEndCtrl, 'yyyy-MM-dd'),
       geographic_coverage: this.reportForm.value['formArray'][0].geographicCoverageCtrl,

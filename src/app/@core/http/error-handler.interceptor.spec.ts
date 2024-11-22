@@ -50,7 +50,7 @@ describe('ErrorHandlerInterceptor', () => {
       () => {
         // Assert
         expect((ErrorHandlerInterceptor.prototype as any).errorHandler).toHaveBeenCalled();
-      }
+      },
     );
 
     httpMock.expectOne({}).flush(null, {

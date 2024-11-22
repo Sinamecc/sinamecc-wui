@@ -27,7 +27,7 @@ export class UpdateStatusService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 }

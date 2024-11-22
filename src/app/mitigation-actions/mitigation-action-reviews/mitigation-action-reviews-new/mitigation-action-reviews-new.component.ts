@@ -41,7 +41,7 @@ export class MitigationActionReviewsNewComponent implements OnInit {
     private route: ActivatedRoute,
     private i18nService: I18nService,
     private service: MitigationActionsService,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'mitigationAction.addReviewMA';
@@ -59,7 +59,7 @@ export class MitigationActionReviewsNewComponent implements OnInit {
             this.statuses = mitigationAction.next_state.map((x) => x);
             this.shouldDisplayComment = true;
           }
-        })
+        }),
       );
   }
 

@@ -60,7 +60,7 @@ export class AdminPermissionsListEditComponent implements OnInit, AfterViewInit 
   add(perm: Permissions) {
     this.newListOfUserpermission.push(perm);
     this.listOfDeleteUserPermission = this.listOfDeleteUserPermission.filter(
-      (permissions) => permissions.id === perm.id
+      (permissions) => permissions.id === perm.id,
     );
     this.userPermissions.push(perm);
   }

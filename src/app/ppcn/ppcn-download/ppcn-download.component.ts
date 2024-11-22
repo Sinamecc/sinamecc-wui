@@ -15,7 +15,11 @@ export class PpcnDownloadComponent implements OnInit {
   nextRoute: string;
   levelId: string;
 
-  constructor(private router: Router, private route: ActivatedRoute, private service: PpcnService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private service: PpcnService,
+  ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.levelId = this.route.snapshot.paramMap.get('geographic');
     this.title = this.levelId === '2' ? 'PPCN-National' : 'PPCN-Cantonal';

@@ -77,7 +77,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     private _formBuilder: UntypedFormBuilder,
     private service: MitigationActionsService,
     private i18nService: I18nService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
   ) {
     this.formData = new FormData();
     this.isLoading = true;
@@ -88,7 +88,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     this.newFormData = this.initFormOptions().pipe(
       tap((processedNewFormData: MitigationActionNewFormData) => {
         this.processedNewFormData = processedNewFormData;
-      })
+      }),
     );
     this.isUpdating = this.action === 'update';
     this.isLinear = true;
@@ -112,7 +112,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     return this.service.newMitigationActionFormData(this.i18nService.language.split('-')[0], this.action).pipe(
       finalize(() => {
         this.isLoading = false;
-      })
+      }),
     );
   }
 
@@ -126,7 +126,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
         this.ingeis = mitigationActionNewFormData.ingei_compliances;
         this.geographicScales = mitigationActionNewFormData.geographic_scale;
         this.financeSourceTypes = mitigationActionNewFormData.finance_source_types;
-      })
+      }),
     );
     return initialRequiredData;
   }

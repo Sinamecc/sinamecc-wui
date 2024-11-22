@@ -33,7 +33,7 @@ export class ReportVersionsNewComponent implements OnInit {
     private i18nService: I18nService,
     private reportService: ReportService,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.id = +this.route.snapshot.paramMap.get('id');
     this.createForm();
@@ -49,7 +49,7 @@ export class ReportVersionsNewComponent implements OnInit {
         finalize(() => {
           this.reportForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -63,7 +63,7 @@ export class ReportVersionsNewComponent implements OnInit {
         (error) => {
           log.debug(`Report File error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -75,7 +75,7 @@ export class ReportVersionsNewComponent implements OnInit {
         finalize(() => {
           this.reportForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -87,7 +87,7 @@ export class ReportVersionsNewComponent implements OnInit {
         (error) => {
           log.debug(`Report File error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 }

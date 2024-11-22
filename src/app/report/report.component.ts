@@ -27,7 +27,7 @@ export class ReportComponent implements OnInit {
     private reportService: ReportService,
     public datePipe: DatePipe,
     private router: Router,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
   ) {}
 
   ngOnInit(): void {
@@ -68,13 +68,15 @@ export class ReportComponent implements OnInit {
 
   hasPermProvider() {
     return Boolean(
-      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.rd.provider
+      this.credentialsService.credentials.permissions.all ||
+        this.credentialsService.credentials.permissions.rd.provider,
     );
   }
 
   hasPermReviewer() {
     return Boolean(
-      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.rd.reviewer
+      this.credentialsService.credentials.permissions.all ||
+        this.credentialsService.credentials.permissions.rd.reviewer,
     );
   }
 }

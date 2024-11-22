@@ -60,7 +60,11 @@ export class AdaptationActionsViewComponent implements OnInit {
 
   commentsByModule = {};
 
-  constructor(private route: ActivatedRoute, private service: AdaptationActionService, public dialog: MatDialog) {}
+  constructor(
+    private route: ActivatedRoute,
+    private service: AdaptationActionService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -77,7 +81,7 @@ export class AdaptationActionsViewComponent implements OnInit {
         },
         (error) => {
           this.adaptationAction = {};
-        }
+        },
       )
       .add(() => (this.loading = false));
   }
@@ -108,8 +112,8 @@ export class AdaptationActionsViewComponent implements OnInit {
         commentPayload: !this.edit
           ? commentList
           : this.commentsByModule[moduleIndex]
-          ? this.commentsByModule[moduleIndex]
-          : [],
+            ? this.commentsByModule[moduleIndex]
+            : [],
       },
     });
 

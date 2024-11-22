@@ -46,7 +46,7 @@ export class MitigationActionComponent implements OnInit {
     private service: MitigationActionsService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
@@ -55,7 +55,7 @@ export class MitigationActionComponent implements OnInit {
     if (this.mitigationAction) {
       if (this.mitigationAction.impact_documentation.question) {
         const element = this.mitigationAction.impact_documentation.question.find(
-          (x: { code: string }) => x.code === id
+          (x: { code: string }) => x.code === id,
         );
 
         if (check) {
@@ -79,8 +79,8 @@ export class MitigationActionComponent implements OnInit {
         commentPayload: !this.edit
           ? commentList
           : this.commentsByModule[moduleIndex]
-          ? this.commentsByModule[moduleIndex]
-          : [],
+            ? this.commentsByModule[moduleIndex]
+            : [],
       },
     });
 
@@ -112,7 +112,7 @@ export class MitigationActionComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe((response: MitigationAction) => {
         this.mitigationAction = response;

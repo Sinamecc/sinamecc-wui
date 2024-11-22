@@ -69,7 +69,7 @@ export class AdminNewComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private router: Router,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.name = '';
     this.lastName = '';
@@ -91,7 +91,7 @@ export class AdminNewComponent implements OnInit {
         this.translateService.get('Error loading form information').subscribe((res: string) => {
           this.snackBar.open(res, null, { duration: 3000 });
         });
-      }
+      },
     );
   }
 
@@ -176,7 +176,7 @@ export class AdminNewComponent implements OnInit {
         finalize(() => {
           this.createUserForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: Response) => {
@@ -197,7 +197,7 @@ export class AdminNewComponent implements OnInit {
         (error) => {
           log.debug(`Create user error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -216,7 +216,7 @@ export class AdminNewComponent implements OnInit {
         finalize(() => {
           this.createUserForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -234,7 +234,7 @@ export class AdminNewComponent implements OnInit {
         (error) => {
           log.debug(`Create user error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -248,7 +248,7 @@ export class AdminNewComponent implements OnInit {
       (err: any) => {
         log.debug(`Create user error: ${err}`);
         this.error = err;
-      }
+      },
     );
   }
 
@@ -272,7 +272,7 @@ export class AdminNewComponent implements OnInit {
         finalize(() => {
           this.createUserForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: any) => {
@@ -285,7 +285,7 @@ export class AdminNewComponent implements OnInit {
         (error) => {
           log.debug(`Create user image error: ${error.error}`);
           this.error = error.error;
-        }
+        },
       );
   }
 
@@ -303,7 +303,7 @@ export class AdminNewComponent implements OnInit {
         finalize(() => {
           this.createUserForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: any) => {
@@ -316,7 +316,7 @@ export class AdminNewComponent implements OnInit {
         (error) => {
           log.debug(`Delete groups  error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -334,7 +334,7 @@ export class AdminNewComponent implements OnInit {
         finalize(() => {
           this.createUserForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: any) => {
@@ -346,7 +346,7 @@ export class AdminNewComponent implements OnInit {
         (error) => {
           log.debug(`Delete permissions  error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -365,7 +365,7 @@ export class AdminNewComponent implements OnInit {
         finalize(() => {
           this.createUserForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: any) => {
@@ -378,7 +378,7 @@ export class AdminNewComponent implements OnInit {
         (error) => {
           log.debug(`Create user `.concat(` error: ${error}`));
           this.error = error;
-        }
+        },
       );
   }
 

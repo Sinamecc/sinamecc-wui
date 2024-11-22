@@ -23,7 +23,7 @@ export class AdaptationActionsListComponent implements OnInit {
   constructor(
     private service: AdaptationActionService,
     private router: Router,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
   ) {}
 
   ngOnInit() {
@@ -42,13 +42,15 @@ export class AdaptationActionsListComponent implements OnInit {
 
   hasPermProvider() {
     return Boolean(
-      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.aa.provider
+      this.credentialsService.credentials.permissions.all ||
+        this.credentialsService.credentials.permissions.aa.provider,
     );
   }
 
   hasPermReviewer() {
     return Boolean(
-      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.aa.reviewer
+      this.credentialsService.credentials.permissions.all ||
+        this.credentialsService.credentials.permissions.aa.reviewer,
     );
   }
 
@@ -64,7 +66,7 @@ export class AdaptationActionsListComponent implements OnInit {
         },
         (error) => {
           this.loading = false;
-        }
+        },
       )
       .add(() => {
         this.loading = false;

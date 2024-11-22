@@ -54,7 +54,7 @@ export class AdaptationActionService {
           body: body,
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -68,7 +68,7 @@ export class AdaptationActionService {
           body: body,
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -76,7 +76,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.adaptationAction()).pipe(
       map((body: AdaptationAction[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -84,7 +84,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.adaptationActionUpdate(id)).pipe(
       map((body: AdaptationAction) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -92,7 +92,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.topics()).pipe(
       map((body: Topic[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -101,7 +101,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.subTopics(ID)).pipe(
       map((body: SubTopics[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -109,7 +109,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.getActivities(id)).pipe(
       map((body: Activities[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -117,7 +117,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.ods()).pipe(
       map((body: ODS[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -125,7 +125,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.temporalityImpact()).pipe(
       map((body: TemporalityImpact[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -133,7 +133,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.generalImpact()).pipe(
       map((body: TemporalityImpact[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -141,7 +141,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.getProvince()).pipe(
       map((body: Province[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -149,7 +149,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.getCanton(id)).pipe(
       map((body: Canton[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -157,7 +157,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.getCantones()).pipe(
       map((body: Canton[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -165,7 +165,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.getDistricts(idCanton)).pipe(
       map((body: District[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -173,7 +173,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.districts()).pipe(
       map((body: District[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -181,7 +181,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.getClimateThreat()).pipe(
       map((body: ClimateThreatCatalog[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -189,7 +189,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.instrumentDetail()).pipe(
       map((body: InstrumentDetail[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -197,7 +197,7 @@ export class AdaptationActionService {
     return this.httpClient.get(routes.benefitedPopulations()).pipe(
       map((body: BenefitedPopulation[]) => {
         return body;
-      })
+      }),
     );
   }
 }

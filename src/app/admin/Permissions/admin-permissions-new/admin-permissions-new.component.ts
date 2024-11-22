@@ -32,7 +32,7 @@ export class AdminPermissionsNewComponent implements OnInit {
     private service: AdminService,
     private translateService: TranslateService,
     private router: Router,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.createForm();
     this.contentTypeMap = new Map<string, number>();
@@ -56,7 +56,7 @@ export class AdminPermissionsNewComponent implements OnInit {
   submitForm(value: string) {
     this.createPermissionsForm.value.codename = `${value}_${this.createPermissionsForm.value.name.replace(
       new RegExp(' ', 'g'),
-      '_'
+      '_',
     )}`;
     this.createPermissionsForm.value.content_type = this.contentTypeMap.get(value);
 
@@ -70,7 +70,7 @@ export class AdminPermissionsNewComponent implements OnInit {
             finalize(() => {
               this.createPermissionsForm.markAsPristine();
               this.isLoading = false;
-            })
+            }),
           )
           .subscribe(
             (response) => {
@@ -83,7 +83,7 @@ export class AdminPermissionsNewComponent implements OnInit {
             (error) => {
               log.debug(`Create permission error: ${error}`);
               this.error = error;
-            }
+            },
           );
       }
     }

@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
     private titleService: Title,
     private authenticationService: AuthenticationService,
     private credentialsService: CredentialsService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
   ) {
     this.logoName = 'logo-white-nav.png';
   }

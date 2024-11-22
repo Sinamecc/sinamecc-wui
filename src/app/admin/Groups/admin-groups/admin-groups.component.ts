@@ -39,7 +39,10 @@ export class AdminGroupsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   fieldsToSearch: string[][] = [['label']];
 
-  constructor(private adminService: AdminService, public dialog: MatDialog) {}
+  constructor(
+    private adminService: AdminService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.loadGroups();

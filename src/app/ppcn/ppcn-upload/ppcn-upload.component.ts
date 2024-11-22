@@ -108,7 +108,7 @@ export class PpcnUploadComponent implements OnInit {
     private translateService: TranslateService,
     private ppcnService: PpcnService,
     public snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.createForm();
   }
@@ -125,7 +125,7 @@ export class PpcnUploadComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -138,7 +138,7 @@ export class PpcnUploadComponent implements OnInit {
         (error) => {
           log.debug(`PPCN File error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -161,7 +161,7 @@ export class PpcnUploadComponent implements OnInit {
           files: this.formBuilder.array(
             Array.from({ length: numberOfItems }, (_, i) => i + 1).map((_) => {
               return this.createItem();
-            })
+            }),
           ),
         });
 
@@ -172,11 +172,11 @@ export class PpcnUploadComponent implements OnInit {
           const idRecognition = this.ppcn.organization_classification.recognition_type;
           this.loadDocumentsByRecognitionType(idRecognition.id);
         }
-      })
+      }),
     );
   }
 
-  loadDocumentsByRecognitionType(id: Number) {
+  loadDocumentsByRecognitionType(id: number) {
     const idNeutralCarbonDocuments = 9;
     const idNeutralCarbonPlus = 10;
     const idCarbonoReductionPlus = 8;
@@ -245,7 +245,7 @@ export class PpcnUploadComponent implements OnInit {
     return this.ppcnService.ppcn(this.i18nService.language.split('-')[0]).pipe(
       finalize(() => {
         this.isLoading = false;
-      })
+      }),
     );
   }
 }

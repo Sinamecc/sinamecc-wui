@@ -41,7 +41,7 @@ export class MccrRegistriesService {
     private credentialsService: CredentialsService,
     private httpClient: HttpClient,
     private datePipe: DatePipe,
-    private s3: S3Service
+    private s3: S3Service,
   ) {}
 
   updateCurrentMccrRegistry(newMccrRegistry: MccrRegistry) {
@@ -67,7 +67,7 @@ export class MccrRegistriesService {
             message: 'Form submitted correctly',
           };
           return response;
-        })
+        }),
       );
     } else {
       // raise exception
@@ -84,7 +84,7 @@ export class MccrRegistriesService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -92,7 +92,7 @@ export class MccrRegistriesService {
     return this.httpClient.get(routes.seededFormData(), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -100,7 +100,7 @@ export class MccrRegistriesService {
     return this.httpClient.get(routes.mccrRegistries(), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -108,7 +108,7 @@ export class MccrRegistriesService {
     return this.httpClient.get(routes.getMccrRegistry(uuid), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -122,7 +122,7 @@ export class MccrRegistriesService {
           message: 'Mitigation Action deleted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -130,7 +130,7 @@ export class MccrRegistriesService {
     return this.httpClient.get(routes.ovvs(), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -142,7 +142,7 @@ export class MccrRegistriesService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 

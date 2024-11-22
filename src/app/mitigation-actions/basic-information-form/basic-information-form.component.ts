@@ -46,7 +46,7 @@ export class BasicInformationFormComponent implements OnInit {
     private service: MitigationActionsService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) {
     this.service.currentMitigationAction.subscribe((message) => {
       this.mitigationAction = message;
@@ -214,7 +214,7 @@ export class BasicInformationFormComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -232,7 +232,7 @@ export class BasicInformationFormComponent implements OnInit {
           this.errorComponent.parseErrors(error);
           this.error = error;
           this.wasSubmittedSuccessfully = false;
-        }
+        },
       );
   }
 

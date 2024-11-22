@@ -41,7 +41,7 @@ export class NewReviewComponent implements OnInit {
     private route: ActivatedRoute,
     private i18nService: I18nService,
     private credentialsService: CredentialsService,
-    private service: PpcnService
+    private service: PpcnService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'Add a new review for this PPCN Registry';
@@ -60,7 +60,7 @@ export class NewReviewComponent implements OnInit {
           this.statuses = this.service.commonstatuses(ppcn);
           this.shouldDisplayComment = true;
         }
-      })
+      }),
     );
   }
 

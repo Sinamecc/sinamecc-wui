@@ -26,7 +26,7 @@ export class GeneralRegisterComponent implements OnInit {
     private service: AdaptationActionService,
     private datePipe: DatePipe,
     private route: ActivatedRoute,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.createForm();
@@ -145,7 +145,7 @@ export class GeneralRegisterComponent implements OnInit {
         },
         (error) => {
           this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-        }
+        },
       );
     } else {
       this.service.createNewAdaptationAction(payload).subscribe(
@@ -159,7 +159,7 @@ export class GeneralRegisterComponent implements OnInit {
         },
         (error) => {
           this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-        }
+        },
       );
     }
 

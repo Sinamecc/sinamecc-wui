@@ -32,7 +32,7 @@ export class UploadProposalComponent implements OnInit, OnChanges {
     public snackBar: MatSnackBar,
     private formBuilder: UntypedFormBuilder,
     private translateService: TranslateService, //
-    private service: UploadProposalService
+    private service: UploadProposalService,
   ) {}
 
   ngOnInit() {
@@ -52,7 +52,7 @@ export class UploadProposalComponent implements OnInit, OnChanges {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: any) => {
@@ -65,7 +65,7 @@ export class UploadProposalComponent implements OnInit, OnChanges {
         (error: any) => {
           log.debug(`Upload Proposal error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 

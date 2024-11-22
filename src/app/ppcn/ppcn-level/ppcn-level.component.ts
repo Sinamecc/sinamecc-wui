@@ -36,7 +36,7 @@ export class PpcnLevelComponent implements OnInit {
     private i18nService: I18nService,
     private service: PpcnService,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.formData = new FormData();
     this.createForm();
@@ -53,7 +53,7 @@ export class PpcnLevelComponent implements OnInit {
     this.geographicLevel = this.initialFormData().pipe(
       tap((geographicLevel: GeographicLevel[]) => {
         this.processedGeographicLevel = geographicLevel;
-      })
+      }),
     );
   }
 
@@ -61,7 +61,7 @@ export class PpcnLevelComponent implements OnInit {
     return this.service.geographicLevel(this.i18nService.language.split('-')[0]).pipe(
       finalize(() => {
         this.isLoading = false;
-      })
+      }),
     );
   }
 

@@ -29,7 +29,7 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
     public snackBar: MatSnackBar,
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     this.createForm();
   }
@@ -42,7 +42,7 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe((response: Ovv[]) => {
         this.ovvs = response;
@@ -57,7 +57,7 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -71,7 +71,7 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
         (error) => {
           log.debug(`Report File error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 

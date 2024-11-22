@@ -21,7 +21,7 @@ export class MccrPocListComponent implements OnInit {
     private i18nService: I18nService,
     private service: MccrPocService,
     private dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.isLoading = true;
@@ -30,7 +30,7 @@ export class MccrPocListComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe((response: MccrPoc) => {
         this.mccr_poc = response;

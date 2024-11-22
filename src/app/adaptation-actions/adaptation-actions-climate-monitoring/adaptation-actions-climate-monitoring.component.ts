@@ -28,7 +28,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     private datePipe: DatePipe,
     private service: AdaptationActionService,
     private router: Router,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
@@ -69,7 +69,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
       }),
       this.formBuilder.group({
         indicatorCtrl: this.formBuilder.array(
-          this.updatedIndicatorCtrl(this.adaptationActionUpdated.indicator_monitoring_list)
+          this.updatedIndicatorCtrl(this.adaptationActionUpdated.indicator_monitoring_list),
         ),
       }),
 
@@ -102,7 +102,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
       const reportPeriodStart = new Date(indicator.start_date);
 
       indicatorDataUpdateDate.setMinutes(
-        indicatorDataUpdateDate.getMinutes() + indicatorDataUpdateDate.getTimezoneOffset()
+        indicatorDataUpdateDate.getMinutes() + indicatorDataUpdateDate.getTimezoneOffset(),
       );
 
       reportPeriodEnd.setMinutes(reportPeriodEnd.getMinutes() + reportPeriodEnd.getTimezoneOffset());
@@ -170,7 +170,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
       },
       (error) => {
         this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      }
+      },
     );
   }
 
@@ -186,7 +186,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
       },
       (error) => {
         this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      }
+      },
     );
   }
 

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -17,7 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './adaptation-actions-new.component.html',
   styleUrls: ['./adaptation-actions-new.component.scss'],
 })
-export class AdaptationActionsNewComponent implements OnInit {
+export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
   durationInSeconds = 3;
   loading = false;
 
@@ -49,7 +49,7 @@ export class AdaptationActionsNewComponent implements OnInit {
     private route: ActivatedRoute,
     private service: AdaptationActionService,
     public snackBar: MatSnackBar,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     const id = this.route.snapshot.paramMap.get('id');
     this.edit = id ? true : false;

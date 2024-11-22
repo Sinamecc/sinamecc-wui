@@ -64,7 +64,7 @@ export class AdaptationActionsReportComponent implements OnInit {
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private service: AdaptationActionService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     this.createForm();
   }
@@ -118,7 +118,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
       (error) => {
         this.ods = [];
-      }
+      },
     );
   }
 
@@ -129,7 +129,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
       (error) => {
         this.topics = [];
-      }
+      },
     );
   }
 
@@ -140,7 +140,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
       (error) => {
         this.subTopics = [];
-      }
+      },
     );
   }
 
@@ -151,7 +151,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
       (error) => {
         this.subTopics = [];
-      }
+      },
     );
   }
 
@@ -222,7 +222,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
       (error) => {
         this.subTopics = [];
-      }
+      },
     );
   }
 
@@ -307,7 +307,7 @@ export class AdaptationActionsReportComponent implements OnInit {
             adaptationActionGoalRelationCtrl: [adaptationActionGoalRelationValue, Validators.required],
             adaptationActionEjeRelationCtrl: [adaptationActionEjeRelationValue, Validators.required],
             adaptationActionLinealRelationCtrl: [adaptationActionLinealRelationValue, Validators.required],
-          })
+          }),
         );
         index = +1;
       }
@@ -341,7 +341,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       (response) => (this.benefiedPopulation = response),
       (error) => {
         this.benefiedPopulation = [];
-      }
+      },
     );
   }
 
@@ -378,11 +378,11 @@ export class AdaptationActionsReportComponent implements OnInit {
     const adaptationActionEndDate = new Date(this.adaptationActionUpdated.implementation.end_date);
 
     adaptationActionStartDate.setMinutes(
-      adaptationActionStartDate.getMinutes() + adaptationActionStartDate.getTimezoneOffset()
+      adaptationActionStartDate.getMinutes() + adaptationActionStartDate.getTimezoneOffset(),
     );
 
     adaptationActionEndDate.setMinutes(
-      adaptationActionEndDate.getMinutes() + adaptationActionEndDate.getTimezoneOffset()
+      adaptationActionEndDate.getMinutes() + adaptationActionEndDate.getTimezoneOffset(),
     );
 
     if (this.adaptationActionUpdated.address.app_scale === '2') {
@@ -534,7 +534,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
       (error) => {
         this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      }
+      },
     );
   }
 
@@ -567,7 +567,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
 
       activity: this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls.map(
-        (x: { value: { adaptationActionTypeCtrl: number } }) => x.value.adaptationActionTypeCtrl
+        (x: { value: { adaptationActionTypeCtrl: number } }) => x.value.adaptationActionTypeCtrl,
       ),
 
       instrument: {

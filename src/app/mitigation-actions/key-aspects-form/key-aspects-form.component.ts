@@ -74,7 +74,7 @@ export class KeyAspectsFormComponent implements OnInit {
     private service: MitigationActionsService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
   ) {
     // this.formData = new FormData();
     this.service.currentMitigationAction.subscribe((message) => (this.mitigationAction = message));
@@ -150,7 +150,7 @@ export class KeyAspectsFormComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -168,7 +168,7 @@ export class KeyAspectsFormComponent implements OnInit {
           this.errorComponent.parseErrors(error);
           this.error = error;
           this.wasSubmittedSuccessfully = false;
-        }
+        },
       );
   }
 

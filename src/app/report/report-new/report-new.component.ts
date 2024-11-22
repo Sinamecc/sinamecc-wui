@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, AbstractControl } from '@angular/forms';
 
 import { Logger } from '@core';
@@ -16,7 +16,7 @@ const log = new Logger('Report');
   templateUrl: './report-new.component.html',
   styleUrls: ['./report-new.component.scss'],
 })
-export class ReportNewComponent implements OnInit {
+export class ReportNewComponent implements OnInit, AfterViewInit {
   isLoading = false;
   mainGroup: UntypedFormGroup;
   reportEdit: Report;
@@ -29,7 +29,7 @@ export class ReportNewComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private cdRef: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private service: ReportService
+    private service: ReportService,
   ) {
     this.createForm();
   }

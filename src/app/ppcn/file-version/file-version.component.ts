@@ -27,7 +27,7 @@ export class FileVersionComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: PpcnService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'File Version PPCN Registry';
@@ -38,7 +38,7 @@ export class FileVersionComponent implements OnInit {
     this.ppcnObservable = this.service.getPpcn(this.id, this.i18nService.language.split('-')[0]).pipe(
       tap((ppcn: Ppcn) => {
         this.ppcn = ppcn;
-      })
+      }),
     );
   }
 

@@ -12,7 +12,7 @@ export class UccVerifyDataComponent implements OnInit {
   constructor(
     @Optional()
     @Inject(MAT_DIALOG_DATA)
-    public data: any
+    public data: any,
   ) {
     this.verifyResponse = data.verifyResponse;
   }

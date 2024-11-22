@@ -39,7 +39,7 @@ export class MitigationActionsNewComponent implements OnInit {
   statuses: Status[];
   geographicScales: GeographicScale[];
   financeSourceTypes: FinanceSourceType[];
-  displayFinancialSource: Boolean;
+  displayFinancialSource: boolean;
 
   get formArray(): AbstractControl | null {
     return this.formGroup.get('formArray');
@@ -49,7 +49,7 @@ export class MitigationActionsNewComponent implements OnInit {
     private router: Router,
     private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
-    private service: MitigationActionsService
+    private service: MitigationActionsService,
   ) {
     // this.createForm();
     this.action = 'new';

@@ -51,7 +51,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
     private service: MitigationActionsService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
   ) {
     this.service.currentMitigationAction.subscribe((message) => (this.mitigationAction = message));
     this.createForm();
@@ -320,7 +320,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -338,7 +338,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
           this.errorComponent.parseErrors(error);
           this.error = error;
           this.wasSubmittedSuccessfully = false;
-        }
+        },
       );
   }
 

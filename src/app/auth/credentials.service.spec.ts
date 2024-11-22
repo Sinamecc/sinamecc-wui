@@ -76,7 +76,7 @@ describe('CredentialsService', () => {
           permissions: undefined,
           is_administrador_dcc: false,
         },
-        true
+        true,
       );
 
       // Assert

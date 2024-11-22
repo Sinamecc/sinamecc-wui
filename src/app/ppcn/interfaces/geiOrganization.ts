@@ -2,7 +2,7 @@ import { GeiActivityType } from './geiActivityType';
 import { Ovv } from './ovv';
 
 export interface GeiOrganization {
-  id: Number;
+  id: number;
   activity_type: string;
   ovv: Ovv;
   emission_ovv_date: string;

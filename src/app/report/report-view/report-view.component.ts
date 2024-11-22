@@ -35,7 +35,11 @@ export class ReportViewComponent implements OnInit {
   informationReportMapFields = formationReportedMap;
   reportingPeriodicityMap = reportingPeriodicity;
 
-  constructor(private service: ReportService, private route: ActivatedRoute, public dialog: MatDialog) {}
+  constructor(
+    private service: ReportService,
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -68,8 +72,8 @@ export class ReportViewComponent implements OnInit {
         commentPayload: !this.edit
           ? commentList
           : this.commentsByModule[moduleIndex]
-          ? this.commentsByModule[moduleIndex]
-          : [],
+            ? this.commentsByModule[moduleIndex]
+            : [],
       },
     });
 

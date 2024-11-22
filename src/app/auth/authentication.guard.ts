@@ -10,7 +10,10 @@ const log = new Logger('AuthenticationGuard');
   providedIn: 'root',
 })
 export class AuthenticationGuard {
-  constructor(private router: Router, private credentialsService: CredentialsService) {}
+  constructor(
+    private router: Router,
+    private credentialsService: CredentialsService,
+  ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.credentialsService.isAuthenticated()) {
