@@ -5,7 +5,6 @@ import { AdaptationActionsRoutingModule } from './adaptation-actions-routing.mod
 import { GeneralRegisterComponent } from './general-register/general-register.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { AdaptationActionsReportComponent } from './adaptation-actions-report/adaptation-actions-report.component';
 import { AdaptationActionsFinancingComponent } from './adaptation-actions-financing/adaptation-actions-financing.component';
@@ -25,9 +24,7 @@ import { AdaptationActionReviewComponent } from './adaptation-action-review/adap
     TranslateModule,
     ReactiveFormsModule,
     FormsModule,
-    CoreModule,
     SharedModule,
-    FlexLayoutModule,
     MaterialModule,
   ],
   declarations: [

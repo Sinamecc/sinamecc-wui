@@ -21,7 +21,8 @@
       "@shared/*": ["src/app/@shared/*"],
       "@env/*": ["src/environments/*"]
     },
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "emitDecoratorMetadata": true
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

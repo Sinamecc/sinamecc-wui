@@ -1,25 +1,24 @@
-<div class="main-div" [@fadeInOut] fxLayout="column" fxLayoutAlign="start start">
+<div class="main-div flex flex-col justify-start items-start" [@fadeInOut]>
   <div class="module-container" *ngFor="let card of data">
     <div *ngIf="showModule(permissions, card.module)" class="module-container">
       <h2 class="mat-h2">{{ card.name }}</h2>
       <hr />
-      <div fxLayout="row" fxLayoutAlign="start stretch">
+      <div class="flex flex-row justify-start items-stretch">
         <!--
-      <mat-card *ngFor="let item of card.cards" class="card" fxLayout="column" fxLayoutAlign="start start">
+      <mat-card *ngFor="let item of card.cards" class="card flex flex-col justify-start items-start" >
         <h2 *ngIf="item.value" class="mat-h2 icon-card">2</h2>
         <mat-icon *ngIf="item.icon" class="icon-card">{{ item.icon }}</mat-icon>
         <h3 class="mat-h3">{{ item.name }}</h3>
       </mat-card>
       -->
-        <mat-card class="card" fxLayout="column" fxLayoutAlign="center center">
-          <mat-icon color="primary"> {{ hasPermProvider(card.module) ? 'add' : 'visibility' }}</mat-icon>
-          <button
-            [routerLink]="hasPermProvider(card.module) ? card.urlNew : card.urlView"
-            mat-raised-button
-            color="primary"
-          >
-            {{ hasPermProvider(card.module) ? 'Nueva solicitud' : 'Ver solicitudes' }}
-          </button>
+        <mat-card
+          class="card flex flex-col justify-center items-center cursor-pointer p-4"
+          [routerLink]="hasPermProvider(card.module) ? card.urlNew : card.urlView"
+        >
+          <mat-icon color="primary" class="mb-2">
+            {{ hasPermProvider(card.module) ? 'add' : 'visibility' }}
+          </mat-icon>
+          <span>{{ hasPermProvider(card.module) ? 'Nueva solicitud' : 'Ver solicitudes' }}</span>
         </mat-card>
       </div>
     </div>

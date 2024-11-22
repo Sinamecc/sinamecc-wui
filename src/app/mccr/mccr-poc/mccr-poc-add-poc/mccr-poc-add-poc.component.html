@@ -12,7 +12,7 @@
           <span translate>errorLabel.errorSubmittingForm</span>
         </div>
 
-        <div fxLayout="column">
+        <div class="flex flex-col">
           <mat-form-field>
             <input type="text" matInput formControlName="userId" [placeholder]="'admin.IDuser' | translate" />
             <mat-error *ngIf="form.controls.userId.invalid || form.controls.userId.untouched">

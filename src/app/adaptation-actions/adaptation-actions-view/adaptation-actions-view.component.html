@@ -1,14 +1,14 @@
-<div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center" class="loading-component">
+<div *ngIf="loading" class="loading-component flex flex-col justify-center items-center">
   <mat-spinner color="accent"></mat-spinner>
   <h1 class="mat-h1" translate>general.loading</h1>
 </div>
 
-<div *ngIf="!loading" class="main-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-  <div fxFill>
+<div *ngIf="!loading" class="main-container flex flex-col justify-start items-start flex-fill">
+  <div class="flex-fill">
     <mat-tab-group class="custom-tabs">
       <mat-tab [label]="'adaptationAction.form1.title' | translate">
-        <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="tab-container flex flex-col justify-start items-start flex-fill">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>adaptationAction.form1.dataRegister</label>
             <button
               *ngIf="adaptationAction.comments || edit"
@@ -19,8 +19,8 @@
             </button>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-between items-center">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form1.reportingEntityType</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -32,7 +32,7 @@
               </h3>
             </div>
 
-            <div *ngIf="adaptationAction?.report_organization?.other_report_organization_type" fxLayout="row">
+            <div *ngIf="adaptationAction?.report_organization?.other_report_organization_type" class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>
                 <span translate>adaptationAction.form1.reportingEntityType</span> (<span translate>general.other</span>)
               </h3>
@@ -40,49 +40,49 @@
               <h3 class="mat-h3">{{ adaptationAction?.report_organization?.other_report_organization_type }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form1.responsibleReportingEntity</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.report_organization?.responsible_entity }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form1.legalID</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.report_organization?.legal_identification }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form1.reportData</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.report_organization?.elaboration_date }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>ppcn.nameContactPerson</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.report_organization?.contact?.contact_name }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form1.positionResponsiblePerson</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.report_organization?.contact?.contact_position }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>info.emailAddress</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.report_organization?.contact?.email }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>info.phone</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.report_organization?.contact?.phone }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form1.entityAddress</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.report_organization?.entity_address }}</h3>
@@ -91,8 +91,8 @@
         </div>
       </mat-tab>
       <mat-tab [label]="'adaptationAction.form2.title' | translate">
-        <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="tab-container flex flex-col justify-start items-start flex-fill">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>adaptationAction.form2.registerInfo</label>
             <button
               *ngIf="adaptationAction.comments || edit"
@@ -103,8 +103,8 @@
             </button>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-between items-center">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.AAType</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -112,31 +112,31 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.AAName</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.adaptation_action_information?.name }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.AAObjective</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.adaptation_action_information?.objective }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.AADescription</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.adaptation_action_information?.description }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.AAGoal</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.adaptation_action_information?.meta }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.expectedResults</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -148,7 +148,7 @@
               </h3>
             </div>
 
-            <div fxLayout="column">
+            <div class="flex flex-col">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.beneficiaryPopulation</h3>
               <div>
                 <mat-list class="custom-list-element">
@@ -161,7 +161,7 @@
               </div>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.potentialCoBenefits</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -173,7 +173,7 @@
               </h3>
             </div>
 
-            <div fxLayout="column">
+            <div class="flex flex-col">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.AAODS</h3>
               <div>
                 <mat-list class="custom-list-element">
@@ -187,12 +187,12 @@
 
           <mat-divider style="width: 100%"></mat-divider>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>general.GeographicLocation</label>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-between items-center">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.appScale</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -202,31 +202,31 @@
               </h3>
             </div>
 
-            <div *ngIf="adaptationAction?.address?.district" fxLayout="row">
+            <div *ngIf="adaptationAction?.address?.district" class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.AAProvince</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ (adaptationAction?.address?.district)[0]?.canton?.province?.name }}</h3>
             </div>
 
-            <div *ngIf="adaptationAction?.address?.district" fxLayout="row">
+            <div *ngIf="adaptationAction?.address?.district" class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.AACanton</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ (adaptationAction?.address?.district)[0]?.canton?.name }}</h3>
             </div>
 
-            <div *ngIf="adaptationAction?.address?.district" fxLayout="row">
+            <div *ngIf="adaptationAction?.address?.district" class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.AADistrict</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ (adaptationAction?.address?.district)[0]?.name }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.narrativeActionPlace</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.address?.description }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.attachGeographicalLocation</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.address?.GIS }}</h3>
@@ -235,7 +235,7 @@
 
           <mat-divider style="width: 100%"></mat-divider>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>adaptationAction.form2.categorizationNationalIntruments</label>
           </div>
 
@@ -246,25 +246,25 @@
                   {{ activity?.sub_topic?.topic?.description }}
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <div fxLayout="row">
+              <div class="flex flex-row">
                 <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.selectTopic</h3>
                 <h3 class="mat-h3 txt-separator">:</h3>
                 <h3 class="mat-h3">{{ activity?.sub_topic?.topic?.description }}</h3>
               </div>
 
-              <div fxLayout="row">
+              <div class="flex flex-row">
                 <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.selectSubtopic</h3>
                 <h3 class="mat-h3 txt-separator">:</h3>
                 <h3 class="mat-h3">{{ activity?.sub_topic?.description }}</h3>
               </div>
 
-              <div fxLayout="row">
+              <div class="flex flex-row">
                 <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.selectActionType</h3>
                 <h3 class="mat-h3 txt-separator">:</h3>
                 <h3 class="mat-h3">{{ activity?.description }}</h3>
               </div>
 
-              <div fxLayout="column">
+              <div class="flex flex-col">
                 <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.relationNDC</h3>
                 <mat-list class="custom-list-element">
                   <mat-list-item *ngFor="let element of activity?.ndc_contribution">
@@ -273,7 +273,7 @@
                 </mat-list>
               </div>
 
-              <div fxLayout="column">
+              <div class="flex flex-col">
                 <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.relationGoalNDC</h3>
                 <div>
                   <mat-list class="custom-list-element">
@@ -284,14 +284,14 @@
                 </div>
               </div>
 
-              <div fxLayout="column">
+              <div class="flex flex-col">
                 <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.relationshipAxis</h3>
                 <h3 class="mat-h3">
                   {{ activity?.adaptation_axis_guideline?.adaptation_axis?.description }}
                 </h3>
               </div>
 
-              <div fxLayout="column">
+              <div class="flex flex-col">
                 <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.relationshipGuideline</h3>
                 <h3 class="mat-h3">{{ activity?.adaptation_axis_guideline?.description }}</h3>
               </div>
@@ -300,12 +300,12 @@
 
           <mat-divider style="width: 100%"></mat-divider>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>adaptationAction.form2.relationshipInstruments</label>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-between items-center">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.namePlanningInstrument</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.instrument?.name }}</h3>
@@ -314,12 +314,12 @@
 
           <mat-divider style="width: 100%"></mat-divider>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>adaptationAction.form2.climateRelatedHazard</label>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="column">
+          <div class="flex flex-col justify-between items-center">
+            <div class="flex flex-col">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.relatedClimateThreat</h3>
               <div>
                 <mat-list class="custom-list-element">
@@ -330,37 +330,37 @@
               </div>
             </div>
 
-            <div *ngIf="adaptationAction?.climate_threat?.other_type_climate_threat" fxLayout="row">
+            <div *ngIf="adaptationAction?.climate_threat?.other_type_climate_threat" class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.relatedClimateThreatOther</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.other_type_climate_threat }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.descriptionRelatedClimateThreat</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.description_climate_threat }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.descriptionVulnerability</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.vulnerability_climate_threat }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.descriptionElementsExposed</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.exposed_elements }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.descriptionLossesDamages</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.description_losses }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.descriptionClimateRelatedRisks</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.climate_threat?.description_risks }}</h3>
@@ -369,36 +369,36 @@
 
           <mat-divider style="width: 100%"></mat-divider>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>adaptationAction.form2.implementation</label>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-between items-center">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.startImplementation</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.implementation?.start_date }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.endImplementation</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.implementation?.end_date }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.responsibleExecuting</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.implementation?.responsible_entity }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.otherEntitiesInvolved</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.implementation?.other_entity }}</h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.actionCode</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ adaptationAction?.code }}</h3>
@@ -407,8 +407,8 @@
         </div>
       </mat-tab>
       <mat-tab [label]="'adaptationAction.form3.title' | translate">
-        <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="tab-container flex flex-col justify-start items-start flex-fill">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>adaptationAction.form3.financingInfo</label>
             <button
               *ngIf="adaptationAction.comments || edit"
@@ -419,8 +419,8 @@
             </button>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-between items-center">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form3.status</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -432,7 +432,7 @@
               </h3>
             </div>
 
-            <div *ngIf="adaptationAction?.finance?.administration" fxLayout="row">
+            <div *ngIf="adaptationAction?.finance?.administration" class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form3.stepsFinancing</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -440,7 +440,7 @@
               </h3>
             </div>
 
-            <div fxLayout="column">
+            <div class="flex flex-col">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form3.sourceFinancing</h3>
               <mat-list class="custom-list-element">
                 <mat-list-item *ngFor="let element of adaptationAction?.finance?.source">
@@ -449,7 +449,7 @@
               </mat-list>
             </div>
 
-            <div fxLayout="column">
+            <div class="flex flex-col">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form3.financingInstrument</h3>
               <mat-list class="custom-list-element">
                 <mat-list-item *ngFor="let element of adaptationAction?.finance?.finance_instrument">
@@ -458,7 +458,7 @@
               </mat-list>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title">Presupuesto</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -466,7 +466,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>mitigationAction.referenceYear</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -475,12 +475,12 @@
             </div>
           </div>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate> adaptationAction.form3.actionsfinancedInternationalSources</label>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-between items-center">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form3.mideplanRegistes</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -489,8 +489,8 @@
             </div>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-between items-center">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form3.projectNameRegistered</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -499,8 +499,8 @@
             </div>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-between items-center">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form3.executingEntity</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -511,8 +511,8 @@
         </div>
       </mat-tab>
       <mat-tab [label]="'adaptationAction.form4.title' | translate">
-        <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="tab-container flex flex-col justify-start items-start flex-fill">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>adaptationAction.form4.title</label>
             <button
               *ngIf="adaptationAction.comments || edit"
@@ -529,12 +529,12 @@
                   {{ indicator.name }}
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+              <div class="header-container flex flex-row justify-between items-center">
                 <label class="mat-h1" translate>adaptationAction.form4.RegisterIindicators</label>
               </div>
 
-              <div fxLayout="column" fxLayoutAlign="space-around start">
-                <div fxLayout="row">
+              <div class="flex flex-col justify-between items-center">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.indicatorName</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -542,7 +542,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.indicatorDescription</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -550,7 +550,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>mitigationAction.indicatorUnit</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -558,7 +558,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.calculationMethodology</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -566,7 +566,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>mitigationAction.indicatorReportingPeriodicity</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -578,8 +578,8 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
-                  <div fxLayout="row">
+                <div class="flex flex-row">
+                  <div class="flex flex-row">
                     <h3 class="mat-h3 txt-title" translate>mitigationAction.timeSeriesAvailable</h3>
                     <h3 class="mat-h3 txt-separator">:</h3>
                     <h3 class="mat-h3">
@@ -587,7 +587,7 @@
                     </h3>
                   </div>
 
-                  <div class="txt-separator" fxLayout="row">
+                  <div class="txt-separator flex flex-row">
                     <h3 class="mat-h3 txt-title" translate>general.until</h3>
                     <h3 class="mat-h3 txt-separator">:</h3>
                     <h3 class="mat-h3">
@@ -596,7 +596,7 @@
                   </div>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>mitigationAction.geographicCoverage</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -604,7 +604,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>mitigationAction.disintegration</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -612,7 +612,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>mitigationAction.dataSource</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -620,14 +620,14 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>mitigationAction.howSustainabilityIndicator</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
                     {{ indicator?.additional_information }}
                   </h3>
                 </div>
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>mitigationAction.observationsComments</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -635,7 +635,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.indicatorBaseline</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -643,12 +643,12 @@
                   </h3>
                 </div>
 
-                <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+                <div class="header-container flex flex-row justify-around items-center">
                   <label class="mat-h1" translate> mitigationAction.indicatorDataSource</label>
                 </div>
 
-                <div fxLayout="column" fxLayoutAlign="space-around start">
-                  <div fxLayout="row">
+                <div class="flex flex-col justify-between items-center">
+                  <div class="flex flex-row">
                     <h3 class="mat-h3 txt-title" translate>mitigationAction.responsibleInstitution</h3>
                     <h3 class="mat-h3 txt-separator">:</h3>
                     <h3 class="mat-h3">
@@ -656,7 +656,7 @@
                     </h3>
                   </div>
 
-                  <div fxLayout="column">
+                  <div class="flex flex-col">
                     <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.sourceType</h3>
                     <mat-list class="custom-list-element">
                       <mat-list-item *ngFor="let element of indicator?.information_source?.type_information">
@@ -665,7 +665,7 @@
                     </mat-list>
                   </div>
 
-                  <div fxLayout="row">
+                  <div class="flex flex-row">
                     <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.sourceTypeDetail</h3>
                     <h3 class="mat-h3 txt-separator">:</h3>
                     <h3 class="mat-h3">
@@ -673,7 +673,7 @@
                     </h3>
                   </div>
 
-                  <div fxLayout="row">
+                  <div class="flex flex-row">
                     <h3 class="mat-h3 txt-title" translate>mitigationAction.statisticalOperationName</h3>
                     <h3 class="mat-h3 txt-separator">:</h3>
                     <h3 class="mat-h3">
@@ -682,12 +682,12 @@
                   </div>
                 </div>
 
-                <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+                <div class="header-container flex flex-row justify-around items-center">
                   <label class="mat-h1" translate>reportData.thematicCategorization</label>
                 </div>
 
-                <div fxLayout="column" fxLayoutAlign="space-around start">
-                  <div fxLayout="row">
+                <div class="flex flex-col justify-between items-center">
+                  <div class="flex flex-row">
                     <h3 class="mat-h3 txt-title" translate>mitigationAction.datatype</h3>
                     <h3 class="mat-h3 txt-separator">:</h3>
                     <h3 class="mat-h3">
@@ -696,7 +696,7 @@
                   </div>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>mitigationAction.datatypeDetail</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -704,7 +704,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>mitigationAction.SINAMECCClassifiers</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -712,7 +712,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>
                     <span translate>mitigationAction.SINAMECCClassifiers</span> (<span translate>general.other</span>)
                   </h3>
@@ -722,11 +722,11 @@
                   </h3>
                 </div>
 
-                <div class="header-container" fxLayout="row" fxLayoutAlign="space-around center">
+                <div class="header-container flex flex-row justify-around items-center">
                   <label class="mat-h1" translate>adaptationAction.form4.contactInfo</label>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.contactName</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -734,7 +734,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>reportData.institution</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -742,7 +742,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>reportData.department</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -750,7 +750,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>admin.email</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -758,7 +758,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>info.telephone</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -771,8 +771,8 @@
         </div>
       </mat-tab>
       <mat-tab [label]="'adaptationAction.form5.title' | translate">
-        <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="tab-container flex flex-col justify-start items-start flex-fill">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>mitigationAction.monitoringProgressLog</label>
             <button
               *ngIf="adaptationAction.comments || edit"
@@ -783,8 +783,8 @@
             </button>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-between items-center">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.statusReportingPeriod</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -796,7 +796,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.progressMonitoringClimateAction</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -805,7 +805,7 @@
             </div>
           </div>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>mitigationAction.indicatorMonitoring</label>
           </div>
           <mat-accordion class="custom-card">
@@ -816,8 +816,8 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
 
-              <div fxLayout="column" fxLayoutAlign="space-around start">
-                <div fxLayout="row">
+              <div class="flex flex-col justify-between items-center">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>adaptationAction.form5.selectIndicador</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -825,8 +825,8 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
-                  <div fxLayout="row">
+                <div class="flex flex-row">
+                  <div class="flex flex-row">
                     <h3 class="mat-h3 txt-title" translate>mitigationAction.reportingPeriod</h3>
                     <h3 class="mat-h3 txt-separator">:</h3>
                     <h3 class="mat-h3">
@@ -834,7 +834,7 @@
                     </h3>
                   </div>
 
-                  <div class="txt-separator" fxLayout="row">
+                  <div class="txt-separator flex flex-row">
                     <h3 class="mat-h3 txt-title" translate>general.until</h3>
                     <h3 class="mat-h3 txt-separator">:</h3>
                     <h3 class="mat-h3">
@@ -843,7 +843,7 @@
                   </div>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>mitigationAction.indicatorDataUpdateDate</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -851,7 +851,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.dataWantUpdate</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -859,7 +859,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.indicatorVerificationSource</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -867,7 +867,7 @@
                   </h3>
                 </div>
 
-                <div fxLayout="row">
+                <div class="flex flex-row">
                   <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.attachSupportMonitoring</h3>
                   <h3 class="mat-h3 txt-separator">:</h3>
                   <h3 class="mat-h3">
@@ -878,12 +878,12 @@
             </mat-expansion-panel>
           </mat-accordion>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>mitigationAction.generalProgressReportClimateAction</label>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-between items-center">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form4.descriptiveWay</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -894,8 +894,8 @@
         </div>
       </mat-tab>
       <mat-tab [label]="'adaptationAction.form6.title' | translate">
-        <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="tab-container flex flex-col justify-start items-start flex-fill">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>adaptationAction.form6.actionImpact</label>
             <button
               *ngIf="adaptationAction.comments || edit"
@@ -906,8 +906,8 @@
             </button>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-between items-center">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form6.temporalityImpact</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -915,7 +915,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form6.impactsAction</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -923,7 +923,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form6.genderEquity</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -931,7 +931,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form6.contributesGenderEquity</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -939,13 +939,13 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form6.sustainableDevelopment</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">{{ '-' }}</h3>
             </div>
 
-            <div fxLayout="column">
+            <div class="flex flex-col">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form6.sustainableDevelopment</h3>
               <mat-list class="custom-list-element">
                 <mat-list-item *ngFor="let element of adaptationAction?.action_impact?.ods">
@@ -954,7 +954,7 @@
               </mat-list>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form6.generatedImpact</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -962,7 +962,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form6.annexSupporting</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">

@@ -13,7 +13,7 @@
           <span translate>errorLabel.errorSubmittingForm</span>
         </div>
         <br />
-        <div fxLayout="column">
+        <div class="flex flex-col">
           <br />
           <mat-card formArrayName="files">
             <mat-card-title translate
@@ -32,16 +32,16 @@
                 <div>
                   <mat-form-field [style.width.%]="100">
                     <div>
-                      <mat-card fxLayout="row" fxLayoutAlign="start center" class="document-card">
+                      <mat-card class="document-card flex flex-row justify-start items-center">
                         <div>
                           <mat-icon [style.font-size.px]="50">picture_as_pdf</mat-icon>
                         </div>
-                        <div class="description-section" fxLayout="column" fxLayoutAlign="start start">
+                        <div class="description-section flex flex-col justify-start items-start">
                           <mat-card-title translate>{{ fileDetail[i].name }}</mat-card-title>
                           <mat-card-subtitle translate>{{ fileDetail[i].description }}</mat-card-subtitle>
                         </div>
-                        <span fxFlex></span>
-                        <div fxLayoutAlign=" end">
+                        <span class="fxFlex"></span>
+                        <div class="flex flex-row justify-end">
                           <app-input-file
                             class="mat-raised-button mat-primary"
                             formControlName="file"

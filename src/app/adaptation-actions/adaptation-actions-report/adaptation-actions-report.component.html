@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+  <div class="header-container flex flex-col justify-center items-center">
     <h2 translate>adaptationAction.form2.title</h2>
   </div>
   <form [formGroup]="form">
@@ -44,7 +44,7 @@
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
-        <div fxLayout="row" fxLayoutAlign=" center">
+        <div class="flex flex-row justify-center">
           <mat-form-field class="field-ppcn">
             <mat-label translate>adaptationAction.form2.AADescription</mat-label>
             <input type="text" matInput formControlName="adaptationActionDescriptionCtrl" />
@@ -89,7 +89,7 @@
           </mat-select>
         </mat-form-field>
 
-        <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+        <div class="button-box flex flex-row justify-end items-center">
           <button
             mat-raised-button
             color="primary"
@@ -178,7 +178,7 @@
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
-        <div fxLayout="row" fxLayoutAlign=" center">
+        <div class="flex flex-row justify-center">
           <mat-form-field class="field-ppcn">
             <mat-label translate>adaptationAction.form2.attachGeographicalLocation</mat-label>
             <input type="text" matInput formControlName="adaptationActionLocationCtrl" />
@@ -187,7 +187,7 @@
           <input formControlName="adaptationActionLocationOtherCtrl" type="file" />
         </div>
 
-        <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+        <div class="button-box flex flex-row justify-end items-center">
           <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
           <button
             mat-raised-button
@@ -215,12 +215,12 @@
           >
         </ng-template>
 
-        <div class="finance-container" fxLayout="column" fxLayoutAlign="start start" formArrayName="themeCtrl">
+        <div class="finance-container flex flex-col justify-start items-start" formArrayName="themeCtrl">
           <div
             class="max-container"
             *ngFor="let element of form.controls.formArray['controls'][2].controls['themeCtrl'].controls; let i = index"
           >
-            <mat-card fxLayout="column" fxLayoutAlign="start start" class="finance-container" [formGroupName]="i">
+            <mat-card class="finance-container flex flex-col justify-start items-start" [formGroupName]="i">
               <mat-form-field class="field-ppcn" appearance="fill">
                 <mat-label translate>adaptationAction.form2.selectTopic</mat-label>
                 <mat-select
@@ -282,7 +282,7 @@
           </div>
         </div>
 
-        <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+        <div class="button-box flex flex-row justify-end items-center">
           <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
           <button
             mat-raised-button
@@ -307,7 +307,7 @@
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
-        <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+        <div class="button-box flex flex-row justify-end items-center">
           <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
           <button
             mat-raised-button
@@ -341,7 +341,7 @@
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
-        <div fxLayout="row" fxLayoutAlign=" center">
+        <div class="flex flex-row justify-center">
           <mat-form-field class="field-ppcn">
             <mat-label translate>adaptationAction.form2.descriptionRelatedClimateThreat</mat-label>
             <input matInput formControlName="adaptationActionInfoSourceCtrl" />
@@ -351,7 +351,7 @@
           <br />
         </div>
 
-        <div fxLayout="row" fxLayoutAlign=" center">
+        <div class="flex flex-row justify-center">
           <mat-form-field class="field-ppcn">
             <mat-label translate>adaptationAction.form2.descriptionVulnerability</mat-label>
             <input matInput formControlName="descriptionVulnerabilityCtrl" />
@@ -361,7 +361,7 @@
           <br />
         </div>
 
-        <div fxLayout="row" fxLayoutAlign=" center">
+        <div class="flex flex-row justify-center">
           <mat-form-field class="field-ppcn">
             <mat-label translate>adaptationAction.form2.descriptionElementsExposed</mat-label>
             <input matInput formControlName="descriptionElementsExposedCtrl" />
@@ -371,7 +371,7 @@
           <br />
         </div>
 
-        <div fxLayout="row" fxLayoutAlign=" center">
+        <div class="flex flex-row justify-center">
           <mat-form-field class="field-ppcn">
             <mat-label translate>adaptationAction.form2.descriptionLossesDamages</mat-label>
             <input matInput formControlName="descriptionLossesDamagesCtrl" />
@@ -381,7 +381,7 @@
           <br />
         </div>
 
-        <div fxLayout="row" fxLayoutAlign=" center">
+        <div class="flex flex-row justify-center">
           <mat-form-field class="field-ppcn">
             <mat-label translate>adaptationAction.form2.descriptionClimateRelatedRisks</mat-label>
             <input matInput formControlName="descriptionClimateRelatedRisksCtrl" />
@@ -391,7 +391,7 @@
           <br />
         </div>
 
-        <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+        <div class="button-box flex flex-row justify-end items-center">
           <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
           <button
             mat-raised-button
@@ -467,7 +467,7 @@
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
-        <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+        <div class="button-box flex flex-row justify-end items-center">
           <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
           <button
             mat-raised-button

@@ -6,7 +6,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { AdminService } from '@app/admin/admin.service';
 import { AdminPermissionListComponent } from './Permissions/admin-permission-list/admin-permission-list.component';
@@ -45,7 +44,6 @@ import { AdminUsersComponent } from './Users/admin-users/admin-users.component';
     FormsModule,
     CoreModule,
     SharedModule,
-    FlexLayoutModule,
     MaterialModule,
     AdminRoutingModule,
   ],

@@ -1,7 +1,7 @@
-<div fxFill fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1.5rem" class="mat-typography">
+<div class="mat-typography flex flex-col justify-center items-center w-screen">
   <div class="login-box">
     <img class="logo" src="assets/logo-white.png" alt="angular logo" />
-    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2rem">
+    <div class="flex flex-row justify-center items-center gap-8 my-4">
       <h4 class="version">v{{ version }}</h4>
       <div class="language-selector">
         <button mat-raised-button color="primary" [matMenuTriggerFor]="languageMenu">
@@ -15,12 +15,12 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!forgotPassword" class="login-container" fxLayout="row" fxLayoutAlign="center">
-    <mat-card fxFlex="90%" fxFlex.sm="66%" fxFlex.md="50%" fxFlex.gt-md="33%" class="login-box">
+  <div *ngIf="!forgotPassword" class="login-container flex flex-row justify-center">
+    <mat-card class="login-box w-[90%] sm:w-[66%] md:w-[50%] lg:w-[33%] p-4">
       <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
         <div class="login-error" [hidden]="!error || isLoading" translate>credentialsSection.credentialsError</div>
         <br />
-        <div fxLayout="column">
+        <div class="flex flex-col">
           <mat-form-field class="login-label">
             <input
               type="text"
@@ -46,7 +46,7 @@
               <span translate>credentialsSection.passwordRequired</span>
             </mat-error>
           </mat-form-field>
-          <mat-slide-toggle color="primary" formControlName="remember"
+          <mat-slide-toggle class="mb-4" color="primary" formControlName="remember"
             ><span translate>credentialsSection.remember</span></mat-slide-toggle
           >
           <br />
@@ -66,14 +66,8 @@
     </mat-card>
   </div>
 
-  <div *ngIf="forgotPassword" class="login-container" fxLayout="row" fxLayoutAlign="center">
-    <mat-card
-      fxFlex="90%"
-      fxFlex.sm="66%"
-      fxFlex.md="50%"
-      fxFlex.gt-md="33%"
-      class="login-box recovery-password-section"
-    >
+  <div *ngIf="forgotPassword" class="login-container flex flex-row justify-center">
+    <mat-card class="login-box recovery-password-section w-[90%] sm:w-[66%] md:w-[50%] lg:w-[33%] p-4">
       <label color="primary" translate class="mat-h2">credentialsSection.forgotPassword</label>
       <br />
       <br />

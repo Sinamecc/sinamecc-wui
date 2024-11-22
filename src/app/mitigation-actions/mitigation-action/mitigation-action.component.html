@@ -1,9 +1,9 @@
-<div *ngIf="!isLoading" class="main-container" fxLayout="row" fxLayoutAlign="start start" fxFill>
+<div *ngIf="!isLoading" class="main-container flex flex-row justify-start items-start flex-fill">
   <div style="width: 75%">
     <mat-tab-group class="custom-tabs">
       <mat-tab [label]="'specificLabel.initiative' | translate">
-        <div [style.width.%]="100" [style.padding.px]="20" fxLayout="column" fxLayoutAlign="start start">
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div [style.width.%]="100" [style.padding.px]="20" class="flex flex-col justify-start items-start">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>specificLabel.initiative</label>
             <button (click)="openCommentsModal(commentsModule1, 0)" mat-icon-button>
               <mat-icon>comment</mat-icon>
@@ -12,7 +12,7 @@
 
           <mat-divider></mat-divider>
           <br />
-          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>specificLabel.initiativeType</strong>
               {{ mitigationAction?.initiative?.initiative_type?.name }}
@@ -39,7 +39,7 @@
           <h3 class="mat-h3" class="mat-h1" translate>specificLabel.initiativeContactInfo</h3>
           <mat-divider></mat-divider>
           <br />
-          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>mitigationAction.entityReporting</strong> {{ mitigationAction?.contact.institution }}
             </h3>
@@ -57,7 +57,7 @@
           <h3 class="mat-h3" class="mat-h1" translate>mitigationAction.statusMitigationAction</h3>
           <mat-divider></mat-divider>
           <br />
-          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>mitigationAction.initiativeStatus</strong>
               {{ mitigationAction?.status_information?.status?.status }}
@@ -88,7 +88,7 @@
 
           <mat-divider></mat-divider>
           <br />
-          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>general.geographicScale</strong>
               {{ mitigationAction?.geographic_location?.geographic_scale?.name }}
@@ -104,7 +104,7 @@
           <mat-divider></mat-divider>
           <br />
 
-          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <mat-accordion>
               <mat-expansion-panel>
                 <mat-expansion-panel-header>
@@ -191,8 +191,8 @@
       </mat-tab>
 
       <mat-tab [label]="'info.financingInformation' | translate">
-        <div [style.width.%]="100" [style.padding.px]="20" fxLayout="column" fxLayoutAlign="start start">
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div [style.width.%]="100" [style.padding.px]="20" class="flex flex-col justify-start items-start">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>info.financingInformation</label>
             <button (click)="openCommentsModal(commentsModule2, 1)" mat-icon-button>
               <mat-icon>comment</mat-icon>
@@ -200,7 +200,7 @@
           </div>
           <mat-divider></mat-divider>
           <br />
-          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>mitigationAction.financingStatus</strong> {{ mitigationAction?.finance?.status.name }}
             </h3>
@@ -243,7 +243,7 @@
           <strong translate>mitigationAction.financedSourcesInternationalCooperation</strong>
           <mat-divider></mat-divider>
           <br />
-          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>mitigationAction.registeredNonReimbursableCooperationMideplan</strong>
               {{ mitigationAction?.finance?.mideplan_registered ? 'Si' : 'No' }}
@@ -261,8 +261,8 @@
       </mat-tab>
 
       <mat-tab [label]="'general.keyAspects' | translate">
-        <div [style.width.%]="100" [style.padding.px]="20" fxLayout="column" fxLayoutAlign="start start">
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div [style.width.%]="100" [style.padding.px]="20" class="flex flex-col justify-start items-start">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>mitigationAction.overviewImpactEmissionsRemovals</label>
             <button (click)="openCommentsModal(commentsModule3, 2)" mat-icon-button>
               <mat-icon>comment</mat-icon>
@@ -270,7 +270,7 @@
           </div>
           <mat-divider></mat-divider>
           <br />
-          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>mitigationAction.overviewImpactEmissionsRemovals</strong>
               {{ mitigationAction?.ghg_information?.impact_emission }}
@@ -281,7 +281,7 @@
             </h3>
             <h3 class="mat-h3"><strong translate>mitigationAction.sectorsGEIInventoryImpacted</strong></h3>
 
-            <div fxLayout="column">
+            <div class="flex flex-col">
               <h3 class="mat-h3" *ngFor="let element of mitigationAction?.ghg_information?.impact_sector">
                 {{ element.name }}
               </h3>
@@ -290,7 +290,7 @@
             <h3 class="mat-h3">
               <strong translate>mitigationAction.preliminaryIdentificationSustainableDevelopmentGoals</strong>
             </h3>
-            <div fxLayout="column">
+            <div class="flex flex-col">
               <h3 class="mat-h3" *ngFor="let element of mitigationAction?.ghg_information?.goals">
                 {{ element.code }} - {{ element.description }}
               </h3>
@@ -300,8 +300,8 @@
       </mat-tab>
 
       <mat-tab [label]="'specificLabel.mitigationEmissions' | translate">
-        <div [style.width.%]="100" [style.padding.px]="20" fxLayout="column" fxLayoutAlign="start start">
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div [style.width.%]="100" [style.padding.px]="20" class="flex flex-col justify-start items-start">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>specificLabel.documentationImpactEstimate</label>
             <button (click)="openCommentsModal(commentsModule4, 3)" mat-icon-button>
               <mat-icon>comment</mat-icon>
@@ -309,7 +309,7 @@
           </div>
           <mat-divider></mat-divider>
           <br />
-          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>specificLabel.exAnteEmissionReductions</strong>
               {{ mitigationAction?.impact_documentation?.estimate_reduction_co2 }}
@@ -391,7 +391,7 @@
           <strong translate>mitigationAction.QA/QCEestimate</strong>
           <mat-divider></mat-divider>
           <br />
-          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <strong translate>mitigationAction.standardizedCalculationMethodologyUsed</strong>
             <h3 class="mat-h3" translate>{{ findQuestion('Q1', true) }}</h3>
             <strong translate>general.detail</strong>
@@ -413,7 +413,7 @@
           <strong translate>mitigationAction.marketParticipation</strong>
           <mat-divider></mat-divider>
           <br />
-          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>mitigationAction.intendParticipateInternationalCarbonMarkets</strong>
               {{ mitigationAction?.impact_documentation.carbon_international_commerce ? 'Si' : 'No' }}
@@ -433,8 +433,8 @@
       </mat-tab>
 
       <mat-tab [label]="'specificLabel.informationMonitoring' | translate">
-        <div [style.width.%]="100" [style.padding.px]="20" fxLayout="column" fxLayoutAlign="start start">
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div [style.width.%]="100" [style.padding.px]="20" class="flex flex-col justify-start items-start">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>specificLabel.monitoringDetail</label>
             <button (click)="openCommentsModal(commentsModule5, 4)" mat-icon-button>
               <mat-icon>comment</mat-icon>
@@ -454,7 +454,7 @@
               <label class="mat-h1" translate>specificLabel.monitoringDetail</label>
               <mat-divider></mat-divider>
               <br />
-              <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+              <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
                 <strong translate>mitigationAction.indicatorName</strong>
                 <h3 class="mat-h3">{{ indicator['name'] }}</h3>
                 <strong translate>mitigationAction.indicatorDescription</strong>
@@ -488,7 +488,7 @@
               <strong translate>mitigationAction.indicatorDataSource</strong>
               <mat-divider></mat-divider>
               <br />
-              <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+              <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
                 <strong translate>mitigationAction.responsibleInstitution</strong>
                 <h3 class="mat-h3">{{ indicator?.information_source?.responsible_institution }}</h3>
                 <strong translate>mitigationAction.sourceType</strong>
@@ -507,7 +507,7 @@
               <strong translate>mitigationAction.thematicCategorization</strong>
               <mat-divider></mat-divider>
               <br />
-              <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+              <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
                 <strong translate>mitigationAction.datatype</strong>
                 <h3 class="mat-h3">
                   {{ indicator['type_of_data'] ? typeDataMapDict[indicator['type_of_data']] : '' }}
@@ -529,7 +529,7 @@
               <strong translate>mitigationAction.contactInformation</strong>
               <mat-divider></mat-divider>
               <br />
-              <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+              <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
                 <strong translate>mitigationAction.namePersonResponsible</strong>
                 <h3 class="mat-h3">{{ indicator?.contact?.full_name }}</h3>
                 <strong translate>reportData.institution</strong>
@@ -547,7 +547,7 @@
               <mat-divider></mat-divider>
               <br />
 
-              <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+              <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
                 <strong translate>mitigationAction.dateLastUpdate</strong>
                 <h3 class="mat-h3">{{ indicator?.change_log ? (indicator?.change_log)[0]?.update_date : '' }}</h3>
                 <strong translate>mitigationAction.changesLastupdate</strong>
@@ -567,8 +567,8 @@
       </mat-tab>
 
       <mat-tab [label]="'mitigationAction.monitoringReportingClimateActions' | translate">
-        <div [style.width.%]="100" [style.padding.px]="20" fxLayout="column" fxLayoutAlign="start start">
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div [style.width.%]="100" [style.padding.px]="20" class="flex flex-col justify-start items-start">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>mitigationAction.monitoringProgressLog</label>
             <button (click)="openCommentsModal(commentsModule5, 4)" mat-icon-button>
               <mat-icon>comment</mat-icon>
@@ -577,7 +577,7 @@
 
           <mat-divider></mat-divider>
           <br />
-          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>mitigationAction.anyProgressMonitoringRecordedClimateActions</strong>
               {{ mitigationAction?.monitoring_reporting_indicator?.progress_in_monitoring ? 'Si' : 'No' }}
@@ -588,7 +588,7 @@
           <strong translate>mitigationAction.indicatorMonitoring</strong>
           <mat-divider></mat-divider>
           <br />
-          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>mitigationAction.indicatorSelection</strong>
               ID:
@@ -638,7 +638,7 @@
           <strong translate>mitigationAction.generalProgressReportClimateAction</strong>
           <mat-divider></mat-divider>
           <br />
-          <div fxLayout="column" fxLayoutAlign="start start" [style.padding.px]="'10'">
+          <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>mitigationAction.reportingPeriod</strong>
               {{ (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report_period }}
@@ -675,7 +675,7 @@
   </div>
 </div>
 
-<div *ngIf="isLoading" fxLayout="column" fxLayoutAlign="center center" class="loading-component">
+<div *ngIf="isLoading" class="loading-component flex flex-col justify-center items-center">
   <mat-spinner color="accent"></mat-spinner>
   <h1 class="mat-h1" translate>general.loading</h1>
 </div>

@@ -4,7 +4,7 @@
       <span translate>errorLabel.errorSubmittingForm</span>
     </div>
     <br />
-    <div fxLayout="column">
+    <div class="flex flex-col">
       <span translate>geographyLabel.geographicLevel</span><br /><br />
       <mat-radio-group formControlName="geographicCtrl" (change)="onSaving($event)">
         <mat-radio-button *ngFor="let geographicLevel of processedGeographicLevel" [value]="geographicLevel.id">

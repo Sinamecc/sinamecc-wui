@@ -4,7 +4,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { MccrRegistriesRoutingModule } from '@app/mccr/mccr-registries/mccr-registries-routing.module';
 import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
@@ -39,7 +38,6 @@ import { MonitoringProposalVerificationNewComponent } from './monitoring-proposa
     FormsModule,
     CoreModule,
     SharedModule,
-    FlexLayoutModule,
     MaterialModule,
     MccrRegistriesRoutingModule,
   ],

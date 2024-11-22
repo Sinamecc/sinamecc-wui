@@ -1,10 +1,10 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="center center" class="toolbar-title">
+<mat-toolbar class="toolbar-title flex flex-row justify-center items-center">
   <div [style.width]="'auto'" translate class="section-heading">Acciones de adaptación</div>
 </mat-toolbar>
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
 
-<div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center" class="loading-component">
+<div *ngIf="loading" class="loading-component flex flex-col justify-center items-center">
   <mat-spinner color="accent"></mat-spinner>
   <h1 class="mat-h1" translate>general.loading</h1>
 </div>

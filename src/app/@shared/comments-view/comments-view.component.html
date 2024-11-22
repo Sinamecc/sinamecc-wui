@@ -1,17 +1,17 @@
 <div>
-  <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="header-container flex flex-row justify-between items-center">
     <label class="mat-h1" translate>general.comments</label>
     <button [mat-dialog-close]="comments" mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <div *ngIf="edit" fxLayout="row" fxLayoutAlign="end center">
+  <div *ngIf="edit" class="flex flex-row justify-end items-center">
     <button (click)="openAddCommentsModal()" mat-raised-button color="primary">
       <span translate>general.newComment</span>
     </button>
   </div>
   <div *ngFor="let comment of comments; index as i">
-    <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="header-container flex flex-row justify-between items-center">
       <label class="mat-h3 comment-title" translate
         ><span translate>{{ comment.module }}</span
         >/<span translate>{{ comment.subModule }}</span></label
@@ -22,7 +22,7 @@
         {{ comment.comment }}
       </p>
     </div>
-    <div fxLayout="row" fxLayoutAlign="end center">
+    <div class="flex flex-row justify-end items-center">
       <button *ngIf="edit" (click)="deleteComment(i)" mat-button color="warn">
         <span translate>general.delete</span>
       </button>

@@ -268,3 +268,11 @@ $primary-color: #2a658a;
   border-radius: 5px;
   padding: 1.3em;
 }
+
+.flex-fill {
+  @apply min-w-[100%] w-[100%] min-h-[100%] h-[100%] m-0;
+}
+
+.fxFlex {
+  @apply flex-[1_1_0%] box-border;
+}

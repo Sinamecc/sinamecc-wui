@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+  <div class="header-container flex flex-col justify-center items-center">
     <h2 translate>specificLabel.informationMonitoring</h2>
   </div>
   <h1>{{ mitigationAction?.code }}</h1>
@@ -11,7 +11,7 @@
         <app-error-reporting #errorComponent></app-error-reporting>
       </div>
       <br />
-      <div fxLayout="column">
+      <div class="flex flex-col">
         <div *ngFor="let formElement of getFormKeys(); let i = index">
           <div *ngIf="i > 0">
             <br />
@@ -44,7 +44,7 @@
               </mat-form-field>
               <br />
 
-              <div fxLayout="row" fxLayoutAlign=" center">
+              <div class="flex flex-row justify-center">
                 <mat-form-field class="field-ppcn">
                   <mat-label translate
                     >5.1.4 - <span translate>mitigationAction.methodologicalDetailIndicator</span></mat-label
@@ -91,7 +91,7 @@
                 <br />
               </div>
 
-              <div fxLayout="row" fxLayoutAlign=" center">
+              <div class="flex flex-row justify-center">
                 <mat-form-field class="field-ppcn">
                   <mat-label translate>5.1.6 - <span translate>mitigationAction.timeSeriesAvailable</span></mat-label>
                   <input
@@ -172,7 +172,7 @@
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
-              <div fxLayout="row" fxLayoutAlign=" center">
+              <div class="flex flex-row justify-center">
                 <mat-form-field class="field-ppcn">
                   <mat-label translate
                     >5.1.10 - <span translate>mitigationAction.howSustainabilityIndicator</span></mat-label

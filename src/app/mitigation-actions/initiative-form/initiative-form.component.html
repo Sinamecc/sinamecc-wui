@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+  <div class="header-container flex flex-col justify-center items-center">
     <h2 translate>specificLabel.registerInitiatives</h2>
   </div>
   <mat-card-content>
@@ -9,7 +9,7 @@
         <app-error-reporting #errorComponent></app-error-reporting>
       </div>
       <br />
-      <div fxLayout="column">
+      <div class="flex flex-col">
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel> <span>1.1 - </span><span translate>specificLabel.initiative</span> </ng-template>
@@ -52,7 +52,7 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
-            <div fxLayout="row" fxLayoutAlign=" center">
+            <div class="flex flex-row justify-center">
               <mat-form-field class="field-ppcn">
                 <mat-label translate>1.1.4 - <span translate>specificLabel.initiativeDescription</span></mat-label>
                 <textarea
@@ -293,7 +293,7 @@
               </mat-radio-group>
             </div>
 
-            <div fxLayout="row" fxLayoutAlign=" center">
+            <div class="flex flex-row justify-center">
               <mat-form-field class="field-ppcn">
                 <mat-label translate>1.4.2 - <span translate>general.locationAction</span></mat-label>
                 <textarea
@@ -323,12 +323,7 @@
               <mat-icon (click)="loadUrl()" [matTooltip]="section5TooltipTxt">info</mat-icon>
             </ng-template>
 
-            <div
-              class="finance-container"
-              fxLayout="column"
-              fxLayoutAlign="start start"
-              formArrayName="relationshipCtrl"
-            >
+            <div class="finance-container flex flex-col justify-start items-start" formArrayName="relationshipCtrl">
               <div
                 class="max-container"
                 *ngFor="
@@ -336,7 +331,7 @@
                   let i = index
                 "
               >
-                <mat-card fxLayout="column" fxLayoutAlign="start start" class="finance-container" [formGroupName]="i">
+                <mat-card class="finance-container flex flex-col justify-start items-start" [formGroupName]="i">
                   <mat-form-field class="field-ppcn last-section-mat-select" appearance="fill">
                     <mat-label translate>1.5.1 - <span translate>mitigationAction.relationshipNDC</span></mat-label>
                     <mat-select
@@ -388,9 +383,7 @@
             <hr class="custom-divider" />
 
             <div
-              class="finance-container"
-              fxLayout="column"
-              fxLayoutAlign="start start"
+              class="finance-container flex flex-col justify-start items-start"
               formArrayName="relationshipDecarbonizationCtrl"
             >
               <div
@@ -463,7 +456,7 @@
 
             <hr class="custom-divider" />
 
-            <div class="finance-container" fxLayout="column" fxLayoutAlign="start start" formArrayName="topicsFrmCtrl">
+            <div class="finance-container flex flex-col justify-start items-start" formArrayName="topicsFrmCtrl">
               <div
                 class="max-container"
                 *ngFor="
@@ -471,7 +464,7 @@
                   let i = index
                 "
               >
-                <mat-card fxLayout="column" fxLayoutAlign="start start" class="finance-container" [formGroupName]="i">
+                <mat-card class="finance-container flex flex-col justify-start items-start" [formGroupName]="i">
                   <mat-form-field class="field-ppcn last-section-mat-select" appearance="fill">
                     <mat-label translate
                       >1.5.3 - <span translate>mitigationAction.classificationTopics</span></mat-label

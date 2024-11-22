@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+  <div class="header-container flex flex-col justify-center items-center">
     <h2 translate>specificLabel.mitigationEmissions</h2>
   </div>
   <h1>{{ mitigationAction?.code }}</h1>
@@ -12,7 +12,7 @@
       </div>
 
       <br />
-      <div fxLayout="column">
+      <div class="flex flex-col">
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
@@ -36,12 +36,7 @@
             </mat-form-field>
             <br />
 
-            <div
-              class="finance-container"
-              fxLayout="column"
-              fxLayoutAlign="start start"
-              formArrayName="sectorSourceFCtrl"
-            >
+            <div class="finance-container flex flex-col justify-start items-start" formArrayName="sectorSourceFCtrl">
               <div
                 class="max-container"
                 *ngFor="
@@ -49,7 +44,7 @@
                   let i = index
                 "
               >
-                <mat-card fxLayout="column" fxLayoutAlign="start start" class="sub-container" [formGroupName]="i">
+                <mat-card class="sub-container flex flex-col justify-start items-start" [formGroupName]="i">
                   <mat-form-field class="field-ppcn custom-field">
                     <mat-label translate
                       >4.1.2.1 - <span translate>mitigationAction.sectorSourceEmissions</span></mat-label
@@ -150,7 +145,7 @@
             </mat-form-field>
             <br />
 
-            <div fxLayout="row" fxLayoutAlign=" center">
+            <div class="flex flex-row justify-center">
               <mat-form-field class="field-ppcn">
                 <mat-label translate
                   >4.1.7 -
@@ -197,7 +192,7 @@
             </ng-template>
             <br />
 
-            <div fxLayout="column">
+            <div class="flex flex-col">
               <mat-form-field>
                 <mat-label translate
                   >4.2.1 - <span translate>mitigationAction.standardizedCalculationMethodologyUsed</span></mat-label
@@ -219,7 +214,7 @@
               </mat-form-field>
             </div>
             <br />
-            <div fxLayout="column">
+            <div class="flex flex-col">
               <mat-form-field>
                 <mat-label translate>4.2.2 - <span translate>mitigationAction.calculationsDocumented</span></mat-label>
                 <mat-select formControlName="calculationsDocumentedCtrl">
@@ -234,7 +229,7 @@
               </mat-form-field>
             </div>
             <br />
-            <div fxLayout="column">
+            <div class="flex flex-col">
               <mat-form-field>
                 <mat-label translate
                   >4.2.3 - <span translate>mitigationAction.emissionFactorsUsedCalculationDocumented</span></mat-label
@@ -256,7 +251,7 @@
               </mat-form-field>
             </div>
             <br />
-            <div fxLayout="column">
+            <div class="flex flex-col">
               <mat-form-field>
                 <mat-label translate>4.2.4 - <span translate>mitigationAction.assumptionsDocumented</span></mat-label>
                 <mat-select formControlName="assumptionsDocumentedCtrl">
