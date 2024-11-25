@@ -1,18 +1,18 @@
 @use "src/theme/theme-variables";
 
 .main-container {
-  width: 100wh;
+  width: 100vw;
   height: 100vh;
 
   .side-menu {
-    width: 20%;
+    width: 16em;
     height: 100%;
     background-color: #0f375a;
   }
 
   .side-content {
-    width: 80%;
     height: 100%;
+    margin-left: 16em !important;
   }
 }
 
