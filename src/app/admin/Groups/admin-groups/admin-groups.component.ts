@@ -3,10 +3,11 @@ import { Groups } from '@app/admin/groups';
 import { Observable } from 'rxjs';
 import { AdminService } from '@app/admin/admin.service';
 import { DataSource } from '@angular/cdk/collections';
+
+import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 
 export class GroupsDataSource extends DataSource<any> {
   groups: Groups[];
@@ -30,6 +31,7 @@ export class GroupsDataSource extends DataSource<any> {
   selector: 'app-admin-groups',
   templateUrl: './admin-groups.component.html',
   styleUrls: ['./admin-groups.component.scss'],
+  standalone: false,
 })
 export class AdminGroupsComponent implements OnInit {
   displayedColumns = ['name', 'action'];
@@ -38,7 +40,10 @@ export class AdminGroupsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   fieldsToSearch: string[][] = [['label']];
 
-  constructor(private adminService: AdminService, public dialog: MatDialog) {}
+  constructor(
+    private adminService: AdminService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.loadGroups();

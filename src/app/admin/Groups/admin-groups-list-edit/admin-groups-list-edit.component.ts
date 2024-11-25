@@ -1,13 +1,14 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { Groups } from '@app/admin/groups';
-import { MatPaginator } from '@angular/material/paginator';
 import { AdminService } from '@app/admin/admin.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-admin-groups-list-edit',
   templateUrl: './admin-groups-list-edit.component.html',
   styleUrls: ['./admin-groups-list-edit.component.scss'],
+  standalone: false,
 })
 export class AdminGroupsListEditComponent implements OnInit, AfterViewInit {
   displayedColumns = ['name', 'action'];

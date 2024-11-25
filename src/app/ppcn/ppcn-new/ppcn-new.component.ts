@@ -1,14 +1,13 @@
 import { Component, OnInit, ViewChild, Input, DoCheck } from '@angular/core';
 import { Router } from '@angular/router';
-import { AbstractControl, FormGroup, FormBuilder, Validators, FormArray, ValidationErrors } from '@angular/forms';
-import { finalize, tap } from 'rxjs/operators';
+import { AbstractControl, UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 import { Observable } from 'rxjs';
 import { PpcnNewFormData, RequiredLevel, RecognitionType } from '@app/ppcn/ppcn-new-form-data';
 import { forkJoin } from 'rxjs';
-// import { MatChipInputEvent, MatSnackBar } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Ppcn } from '../ppcn_registry';
 import { Sector } from '../interfaces/sector';
@@ -26,20 +25,21 @@ const log = new Logger('Report');
   selector: 'app-ppcn-new',
   templateUrl: './ppcn-new.component.html',
   styleUrls: ['./ppcn-new.component.scss'],
+  standalone: false,
 })
 export class PpcnNewComponent implements OnInit, DoCheck {
   @Input() dataShared = false;
 
   version: string = environment.version;
   error: string;
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   ppcn: Observable<Ppcn[]>;
   processedPpcn: Ppcn[] = [];
   initialRequiredData: Observable<PpcnNewFormData>;
   isLoading = false;
   levelId = '1';
   levelIdTmp: string = this.levelId;
-  activitiesList: FormArray;
+  activitiesList: UntypedFormArray;
 
   required_levels: RequiredLevel[];
   recognition_types: RecognitionType[];
@@ -76,11 +76,11 @@ export class PpcnNewComponent implements OnInit, DoCheck {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private service: PpcnService,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.createForm();
   }
@@ -185,13 +185,13 @@ export class PpcnNewComponent implements OnInit, DoCheck {
         context.contactFormId,
         context.geiOrganizationId,
         context.geographicFormId,
-        context.id
+        context.id,
       )
       .pipe(
         finalize(() => {
           this.formGroup.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -212,7 +212,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
           log.debug(`New PPCN Form error: ${error}`);
           this.errorComponent.parseErrors(error);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -250,7 +250,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
         },
         (error) => {
           this.responseMessaage('ppcn.ppcnSaveError');
-        }
+        },
       );
   }
 
@@ -271,7 +271,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
         context.contactFormId,
         context.geiOrganizationId,
         context.geographicFormId,
-        context.id
+        context.id,
       )
       .subscribe(
         (response) => {
@@ -283,7 +283,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
           log.debug(`PPCN Form error: ${error}`);
           this.errorComponent.parseErrors(error);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -357,7 +357,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
               ? this.filterValue(
                   this.ppcnEdit.organization_classification
                     ? this.ppcnEdit.organization_classification.required_level.id
-                    : null
+                    : null,
                 )
               : '',
             Validators.required,
@@ -370,7 +370,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
                     ? this.filterValue(
                         this.ppcnEdit.organization_classification
                           ? this.ppcnEdit.organization_classification.emission_quantity
-                          : null
+                          : null,
                       )
                     : '',
                   Validators.required,
@@ -383,7 +383,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
                     ? this.filterValue(
                         this.ppcnEdit.organization_classification
                           ? this.ppcnEdit.organization_classification.data_inventory_quantity
-                          : null
+                          : null,
                       )
                     : '',
                   Validators.required,
@@ -396,7 +396,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
                     ? this.filterValue(
                         this.ppcnEdit.organization_classification
                           ? this.ppcnEdit.organization_classification.buildings_number
-                          : null
+                          : null,
                       )
                     : '',
                   Validators.required,
@@ -409,7 +409,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
                     ? this.filterValue(
                         this.ppcnEdit.organization_classification
                           ? this.ppcnEdit.organization_classification.methodologies_complexity
-                          : null
+                          : null,
                       )
                     : '',
                   Validators.required,
@@ -420,7 +420,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
               ? this.filterValue(
                   this.ppcnEdit.organization_classification
                     ? this.ppcnEdit.organization_classification.recognition_type.id
-                    : null
+                    : null,
                 )
               : '',
             Validators.required,
@@ -461,7 +461,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
               ? [
                   this.editForm
                     ? this.filterValue(
-                        this.ppcnEdit.gei_organization ? this.ppcnEdit.gei_organization.emission_ovv_date : null
+                        this.ppcnEdit.gei_organization ? this.ppcnEdit.gei_organization.emission_ovv_date : null,
                       )
                     : '',
                   Validators.required,
@@ -514,7 +514,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
     this.formGroup.controls.formArray['controls'][4].value.compensations[index][field] = value;
   }
 
-  createReductionForm(newElement: boolean = false): FormGroup | FormArray {
+  createReductionForm(newElement: boolean = false): UntypedFormGroup | UntypedFormArray {
     const cleanForm = this.formBuilder.group({
       reductionProjectCtrl: ['', Validators.required],
       reductionActivityCtrl: ['', Validators.required],
@@ -528,7 +528,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
     });
 
     if (this.editForm && !newElement) {
-      const reductions: FormGroup[] = [];
+      const reductions: UntypedFormGroup[] = [];
       if (this.ppcnEdit.organization_classification) {
         if (this.ppcnEdit.organization_classification.reduction.length > 0) {
           for (const reduction of this.ppcnEdit.organization_classification.reduction) {
@@ -557,7 +557,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
     }
   }
 
-  createcompensationForm(newElement: boolean = false): FormGroup | FormArray {
+  createcompensationForm(newElement: boolean = false): UntypedFormGroup | UntypedFormArray {
     const cleanForm = this.formBuilder.group({
       compensationScheme: ['', Validators.required],
       projectLocation: ['', Validators.required],
@@ -571,7 +571,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
     });
 
     if (this.editForm && !newElement) {
-      const compensations: FormGroup[] = [];
+      const compensations: UntypedFormGroup[] = [];
       if (this.ppcnEdit.organization_classification) {
         if (this.ppcnEdit.organization_classification.carbon_offset.length > 0) {
           for (const compensation of this.ppcnEdit.organization_classification.carbon_offset) {
@@ -599,9 +599,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
     }
   }
 
-  createActivityForm(newElement: boolean = false): FormGroup | FormArray {
+  createActivityForm(newElement: boolean = false): UntypedFormGroup | UntypedFormArray {
     if (this.editForm && !newElement) {
-      const activities: FormGroup[] = [];
+      const activities: UntypedFormGroup[] = [];
       if (this.ppcnEdit.gei_organization) {
         for (const activity of this.ppcnEdit.gei_organization.gei_activity_type) {
           const form = this.formBuilder.group({
@@ -625,9 +625,9 @@ export class PpcnNewComponent implements OnInit, DoCheck {
     }
   }
 
-  createRemovalForm(newElement: boolean = false): FormGroup | FormArray {
+  createRemovalForm(newElement: boolean = false): UntypedFormGroup | UntypedFormArray {
     if (this.editForm && !newElement) {
-      const removals: FormGroup[] = [];
+      const removals: UntypedFormGroup[] = [];
       for (const reduction of this.ppcnEdit.gas_removal) {
         const form = this.formBuilder.group({
           id: [reduction.id],
@@ -650,43 +650,43 @@ export class PpcnNewComponent implements OnInit, DoCheck {
   }
 
   addItems(): void {
-    const control = <FormArray>this.formGroup.controls.formArray['controls'][7].controls['activities'];
+    const control = <UntypedFormArray>this.formGroup.controls.formArray['controls'][7].controls['activities'];
     control.push(this.createActivityForm(true));
   }
 
   addReductionItem() {
-    const control = <FormArray>this.formGroup.controls.formArray['controls'][3].controls['reductions'];
+    const control = <UntypedFormArray>this.formGroup.controls.formArray['controls'][3].controls['reductions'];
     control.push(this.createReductionForm(true));
   }
 
   addCompensationItem() {
-    const control = <FormArray>this.formGroup.controls.formArray['controls'][4].controls['compensations'];
+    const control = <UntypedFormArray>this.formGroup.controls.formArray['controls'][4].controls['compensations'];
     control.push(this.createcompensationForm(true));
   }
 
   addRemovalItem() {
-    const control = <FormArray>this.formGroup.controls.formArray['controls'][6].controls['removals'];
+    const control = <UntypedFormArray>this.formGroup.controls.formArray['controls'][6].controls['removals'];
 
     control.push(this.createRemovalForm(true));
   }
 
   deleteRemovalItem(i: number) {
-    const control = <FormArray>this.formGroup.controls.formArray['controls'][6].controls['removals'];
+    const control = <UntypedFormArray>this.formGroup.controls.formArray['controls'][6].controls['removals'];
     control.removeAt(i);
   }
 
   deleteItems(i: number): void {
-    const control = <FormArray>this.formGroup.controls.formArray['controls'][7].controls['activities'];
+    const control = <UntypedFormArray>this.formGroup.controls.formArray['controls'][7].controls['activities'];
     control.removeAt(i);
   }
 
   deleteReductionItem(index: number) {
-    const control = <FormArray>this.formGroup.controls.formArray['controls'][3].controls['reductions'];
+    const control = <UntypedFormArray>this.formGroup.controls.formArray['controls'][3].controls['reductions'];
     control.removeAt(index);
   }
 
   deleteCompensationItem(index: number) {
-    const control = <FormArray>this.formGroup.controls.formArray['controls'][4].controls['compensations'];
+    const control = <UntypedFormArray>this.formGroup.controls.formArray['controls'][4].controls['compensations'];
     control.removeAt(index);
   }
 
@@ -702,7 +702,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
     return this.service.newPpcnFormData(this.levelId, this.i18nService.language.split('-')[0]).pipe(
       finalize(() => {
         this.isLoading = false;
-      })
+      }),
     );
   }
 }

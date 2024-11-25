@@ -3,13 +3,14 @@ import { MccrPoc } from '@app/mccr/mccr-poc/mccr-poc';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
 import { MccrPocService } from '@app/mccr/mccr-poc/mccr-poc.service';
-import { MatDialog } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-mccr-poc-list',
   templateUrl: './mccr-poc-list.component.html',
   styleUrls: ['./mccr-poc-list.component.scss'],
+  standalone: false,
 })
 export class MccrPocListComponent implements OnInit {
   mccr_poc: MccrPoc;
@@ -21,7 +22,7 @@ export class MccrPocListComponent implements OnInit {
     private i18nService: I18nService,
     private service: MccrPocService,
     private dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.isLoading = true;
@@ -30,7 +31,7 @@ export class MccrPocListComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe((response: MccrPoc) => {
         this.mccr_poc = response;

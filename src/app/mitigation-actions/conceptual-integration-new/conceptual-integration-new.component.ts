@@ -11,6 +11,7 @@ import { I18nService } from '@app/i18n';
   selector: 'app-conceptual-integration-new',
   templateUrl: './conceptual-integration-new.component.html',
   styleUrls: ['./conceptual-integration-new.component.scss'],
+  standalone: false,
 })
 export class ConceptualIntegrationNewComponent implements OnInit {
   version: string = environment.version;
@@ -26,7 +27,7 @@ export class ConceptualIntegrationNewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: MitigationActionsService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'Conceptual Proposal Integration';
@@ -39,7 +40,7 @@ export class ConceptualIntegrationNewComponent implements OnInit {
       .pipe(
         tap((mitigationAction: MitigationAction) => {
           this.mitigationAction = mitigationAction;
-        })
+        }),
       );
   }
 

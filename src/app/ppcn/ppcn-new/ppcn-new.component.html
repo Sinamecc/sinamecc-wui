@@ -6,7 +6,7 @@
       <app-error-reporting #errorComponent></app-error-reporting>
     </div>
     <form (ngSubmit)="submitForm()" *ngIf="!isLoading" [formGroup]="formGroup">
-      <div fxLayout="column">
+      <div class="flex flex-col">
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
@@ -93,8 +93,8 @@
             <br />
 
             <mat-form-field class="field-ppcn" *ngIf="levelId == '2'">
-              <mat-chip-list #chipList>
-                <mat-chip
+              <mat-chip-listbox #chipList>
+                <mat-chip-option
                   *ngFor="let code of CIUUCodeList"
                   [selectable]="selectable"
                   [removable]="removable"
@@ -102,7 +102,7 @@
                 >
                   {{ code }}
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                </mat-chip>
+                </mat-chip-option>
                 <input
                   [placeholder]="'general.CIUUCode' | translate"
                   #chipListInput
@@ -111,7 +111,7 @@
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   (matChipInputTokenEnd)="add($event)"
                 />
-              </mat-chip-list>
+              </mat-chip-listbox>
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
@@ -315,7 +315,7 @@
                     <br />
                     <br />
 
-                    <div fxLayout="row">
+                    <div class="flex flex-row">
                       <div class="ppcn-container">
                         <mat-button-toggle-group
                           name="fontStyle"
@@ -335,7 +335,7 @@
                     </div>
 
                     <br />
-                    <div fxLayout="row">
+                    <div class="flex flex-row">
                       <div class="ppcn-container">
                         <mat-button-toggle-group
                           name="fontStyle"
@@ -461,7 +461,7 @@
                     <br />
                     <br />
 
-                    <div fxLayout="row">
+                    <div class="flex flex-row">
                       <br />
                       <div class="ppcn-container">
                         <mat-button-toggle-group
@@ -497,7 +497,7 @@
                     <label translate>geographyLabel.totalCostCompensation</label>
                     <br />
                     <br />
-                    <div fxLayout="row">
+                    <div class="flex flex-row">
                       <br />
                       <div class="ppcn-container">
                         <mat-button-toggle-group
@@ -656,14 +656,14 @@
                 </mat-divider
                 ><br />
                 <div [formGroupName]="i">
-                  <div fxLayout="row">
+                  <div class="flex flex-row">
                     <div class="ppcn-container">
                       <mat-button-toggle-group
                         name="fontStyle"
                         class="m-r-10"
                         (change)="
                           this.formGroup.controls.formArray['controls'][6].patchValue({
-                            costRemovalInventoryValueCtrl: $event.value
+                            costRemovalInventoryValueCtrl: $event.value,
                           })
                         "
                         value="CRC"

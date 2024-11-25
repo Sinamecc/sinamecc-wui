@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MonitoringProposalNewComponent } from '@app/mccr/mccr-registries/monitoring-proposal-new/monitoring-proposal-new.component';
@@ -18,6 +18,7 @@ import { InputFileComponent } from '@shared/input-file/input-file.component';
 import { I18nService } from '@app/i18n';
 import { CredentialsService } from '@app/auth';
 import { MockCredentialsService } from '@app/auth/credentials.service.mock';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MonitoringProposalNewComponent', () => {
   let component: MonitoringProposalNewComponent;
@@ -25,16 +26,6 @@ describe('MonitoringProposalNewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        BrowserAnimationsModule,
-        FlexLayoutModule,
-        TranslateModule.forRoot(),
-        RouterTestingModule,
-        HttpClientTestingModule,
-        FormsModule,
-        ReactiveFormsModule,
-      ],
       declarations: [
         MonitoringProposalNewComponent,
         LoaderComponent,
@@ -42,12 +33,23 @@ describe('MonitoringProposalNewComponent', () => {
         InputFileComponent,
         ByteFormatPipe,
       ],
+      imports: [
+        MaterialModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+      ],
       providers: [
         I18nService,
         DatePipe,
         MccrRegistriesService,
         { provide: CredentialsService, useClass: MockCredentialsService },
         { provide: S3Service, useClass: MockS3Service },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

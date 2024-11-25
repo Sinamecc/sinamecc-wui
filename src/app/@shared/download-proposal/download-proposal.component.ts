@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
   selector: 'app-download-proposal',
   templateUrl: './download-proposal.component.html',
   styleUrls: ['./download-proposal.component.scss'],
+  standalone: false,
 })
 export class DownloadProposalComponent implements OnInit {
   @Input() title: string;

@@ -119,7 +119,7 @@ export class MockPpcnService {
             name: 'Random OVV 10',
           },
           emission_ovv_date: moment(new Date(+new Date() - Math.floor(Math.random() * 10000000000))).format(
-            'MM/DD/YYYY'
+            'MM/DD/YYYY',
           ),
           report_year: '1998',
           base_year: '1991',
@@ -234,7 +234,7 @@ export class MockPpcnService {
             name: 'Random OVV 10',
           },
           emission_ovv_date: moment(new Date(+new Date() - Math.floor(Math.random() * 10000000000))).format(
-            'MM/DD/YYYY'
+            'MM/DD/YYYY',
           ),
           report_year: '2010',
           base_year: '2015',
@@ -438,7 +438,7 @@ export class MockPpcnService {
     contactFormId: number,
     geographicFormId: number,
 
-    ovvFormId: number
+    ovvFormId: number,
   ): Observable<Response> {
     const response = {
       statusCode: 200,

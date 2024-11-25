@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { CoreModule } from '@core';
@@ -55,7 +54,6 @@ import { ReportingClimateActionFormComponent } from './reporting-climate-action-
     FormsModule,
     CoreModule,
     SharedModule,
-    FlexLayoutModule,
     MaterialModule,
     MitigationActionsRoutingModule,
   ],

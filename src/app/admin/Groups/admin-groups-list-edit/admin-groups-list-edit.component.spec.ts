@@ -6,12 +6,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AdminService } from '@app/admin/admin.service';
 import { SharedModule } from '@shared';
 import { CredentialsService } from '@app/auth';
 import { MockCredentialsService } from '@app/auth/credentials.service.mock';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AdminGroupsListEditComponent', () => {
   let component: AdminGroupsListEditComponent;
@@ -19,6 +20,7 @@ describe('AdminGroupsListEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [AdminGroupsListEditComponent],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
@@ -26,12 +28,15 @@ describe('AdminGroupsListEditComponent', () => {
         TranslateModule.forRoot(),
         FormsModule,
         ReactiveFormsModule,
-        HttpClientTestingModule,
         RouterTestingModule,
         SharedModule,
       ],
-      declarations: [AdminGroupsListEditComponent],
-      providers: [AdminService, { provide: CredentialsService, useClass: MockCredentialsService }],
+      providers: [
+        AdminService,
+        { provide: CredentialsService, useClass: MockCredentialsService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
     }).compileComponents();
   }));
 

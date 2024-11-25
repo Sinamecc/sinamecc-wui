@@ -15,11 +15,12 @@ import { Permissions } from '@app/@core/permissions';
         'void',
         style({
           opacity: 0,
-        })
+        }),
       ),
       transition('void <=> *', animate(1000)),
     ]),
   ],
+  standalone: false,
 })
 export class HomeComponent implements OnInit {
   data = [
@@ -118,7 +119,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
   ) {}
 
   ngOnInit() {}

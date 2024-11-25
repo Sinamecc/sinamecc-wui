@@ -1,10 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs/internal/Observable';
-import { tap } from 'rxjs/operators';
 import { AdaptationActionsActionImpactComponent } from '../adaptation-actions-action-impact/adaptation-actions-action-impact.component';
 import { AdaptationActionsClimateMonitoringComponent } from '../adaptation-actions-climate-monitoring/adaptation-actions-climate-monitoring.component';
 import { AdaptationActionsFinancingComponent } from '../adaptation-actions-financing/adaptation-actions-financing.component';
@@ -13,13 +10,15 @@ import { AdaptationActionsReportComponent } from '../adaptation-actions-report/a
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { GeneralRegisterComponent } from '../general-register/general-register.component';
 import { AdaptationAction } from '../interfaces/adaptationAction';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-adaptation-actions-new',
   templateUrl: './adaptation-actions-new.component.html',
   styleUrls: ['./adaptation-actions-new.component.scss'],
+  standalone: false,
 })
-export class AdaptationActionsNewComponent implements OnInit {
+export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
   durationInSeconds = 3;
   loading = false;
 
@@ -41,17 +40,17 @@ export class AdaptationActionsNewComponent implements OnInit {
   @ViewChild(AdaptationActionsActionImpactComponent)
   impactForm: AdaptationActionsActionImpactComponent;
 
-  mainGroup: FormGroup;
+  mainGroup: UntypedFormGroup;
   adaptationAction: AdaptationAction;
   edit: boolean;
 
   constructor(
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     private cdRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private service: AdaptationActionService,
     public snackBar: MatSnackBar,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     const id = this.route.snapshot.paramMap.get('id');
     this.edit = id ? true : false;

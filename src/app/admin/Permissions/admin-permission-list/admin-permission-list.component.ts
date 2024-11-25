@@ -1,17 +1,18 @@
 import { Component, OnInit, Inject, Optional, Input, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { PermissionsData } from '@app/admin/permissionsData';
 import { Permissions } from '../../permissions';
 import { TranslateService } from '@ngx-translate/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin-permission-list',
   templateUrl: './admin-permission-list.component.html',
   styleUrls: ['./admin-permission-list.component.scss'],
+  standalone: false,
 })
 export class AdminPermissionListComponent implements OnInit {
   displayedColumns = ['name', 'type', 'action'];
@@ -35,7 +36,7 @@ export class AdminPermissionListComponent implements OnInit {
     @Optional()
     @Inject(MAT_DIALOG_DATA)
     public data: PermissionsData,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     this.componentType = 'add';
     if (data != null) {

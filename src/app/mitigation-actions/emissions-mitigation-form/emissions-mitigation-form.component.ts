@@ -1,28 +1,29 @@
 import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, AbstractControl } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { CategoryIppc2006, MADataCatalogItem, MitigationAction, SectorIpcc2006 } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
 import { I18nService } from '@app/i18n';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('MitigationAction');
 @Component({
   selector: 'app-emissions-mitigation-form',
   templateUrl: './emissions-mitigation-form.component.html',
   styleUrls: ['./emissions-mitigation-form.component.scss'],
+  standalone: false,
 })
 export class EmissionsMitigationFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -46,12 +47,12 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private service: MitigationActionsService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
   ) {
     this.service.currentMitigationAction.subscribe((message) => (this.mitigationAction = message));
     this.createForm();
@@ -149,17 +150,20 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   public removeSectorItem(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][0].controls['sectorSourceFCtrl'];
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][0].controls['sectorSourceFCtrl'];
     control.removeAt(index);
   }
 
   public addSectorItem() {
-    const control = <FormArray>this.form.controls.formArray['controls'][0].controls['sectorSourceFCtrl'].controls;
+    const control = <UntypedFormArray>(
+      this.form.controls.formArray['controls'][0].controls['sectorSourceFCtrl'].controls
+    );
     control.push(this.createSectorSourceForm());
   }
 
   private updateFormData() {
-    this.intendParticipateInternationalCarbonMarketsModel = this.mitigationAction.impact_documentation.carbon_international_commerce;
+    this.intendParticipateInternationalCarbonMarketsModel =
+      this.mitigationAction.impact_documentation.carbon_international_commerce;
     this.mechanismStandardApplyModel = this.mitigationAction.impact_documentation.standard.id;
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
@@ -267,8 +271,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
         period_potential_reduction: this.form.value.formArray[0].periodPotentialEmissionReductionEstimatedCtrl,
         base_line_definition: this.form.value.formArray[0].definitionBaselineCtrl,
         calculation_methodology: this.form.value.formArray[0].methodologyExantePotentialReductionEmissionsCO2Ctrl,
-        estimate_calculation_documentation: this.form.value.formArray[0]
-          .documentationCalculationsEstimateReductionEmissionsCO2Ctrl,
+        estimate_calculation_documentation:
+          this.form.value.formArray[0].documentationCalculationsEstimateReductionEmissionsCO2Ctrl,
         mitigation_action_in_inventory: this.form.value.formArray[0].isCurrentlyReflectedInventoryCtrl,
         carbon_international_commerce: this.form.value.formArray[2].intendParticipateInternationalCarbonMarketsCtrl,
         methodologies_to_use: this.form.value.formArray[2].methodologyUsedCtrl
@@ -317,7 +321,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -335,7 +339,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
           this.errorComponent.parseErrors(error);
           this.error = error;
           this.wasSubmittedSuccessfully = false;
-        }
+        },
       );
   }
 

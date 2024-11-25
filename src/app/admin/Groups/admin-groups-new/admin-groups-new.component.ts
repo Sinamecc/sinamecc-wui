@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-groups-new',
   templateUrl: './admin-groups-new.component.html',
   styleUrls: ['./admin-groups-new.component.scss'],
+  standalone: false,
 })
 export class AdminGroupsNewComponent implements OnInit {
-  createGroupForm: FormGroup;
+  createGroupForm: UntypedFormGroup;
   isLoading = false;
   error: string;
   name: string;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createForm();
     this.name = '';
   }

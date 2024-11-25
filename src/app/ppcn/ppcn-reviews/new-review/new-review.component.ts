@@ -16,6 +16,7 @@ const log = new Logger('Report');
   selector: 'app-new-review',
   templateUrl: './new-review.component.html',
   styleUrls: ['./new-review.component.scss'],
+  standalone: false,
 })
 export class NewReviewComponent implements OnInit {
   version: string = environment.version;
@@ -41,7 +42,7 @@ export class NewReviewComponent implements OnInit {
     private route: ActivatedRoute,
     private i18nService: I18nService,
     private credentialsService: CredentialsService,
-    private service: PpcnService
+    private service: PpcnService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'Add a new review for this PPCN Registry';
@@ -60,7 +61,7 @@ export class NewReviewComponent implements OnInit {
           this.statuses = this.service.commonstatuses(ppcn);
           this.shouldDisplayComment = true;
         }
-      })
+      }),
     );
   }
 

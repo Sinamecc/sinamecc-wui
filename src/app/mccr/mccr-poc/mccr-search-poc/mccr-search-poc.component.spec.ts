@@ -6,13 +6,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MccrPocService } from '../mccr-poc.service';
 import { MockMccrPocService } from '../mccr-poc.service.mock';
 import { LoaderComponent } from '@shared';
 import { I18nService } from '@app/i18n/i18n.service';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MccrSearchPocComponent', () => {
   let component: MccrSearchPocComponent;
@@ -20,19 +21,20 @@ describe('MccrSearchPocComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [MccrSearchPocComponent, LoaderComponent],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule,
         ReactiveFormsModule,
       ],
-      declarations: [MccrSearchPocComponent, LoaderComponent],
       providers: [
         { provide: I18nService, useClass: MockI18nService },
         { provide: MccrPocService, useClass: MockMccrPocService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

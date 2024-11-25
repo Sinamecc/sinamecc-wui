@@ -1,29 +1,29 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 
-import { Logger } from '@core';
 import { I18nService } from '@app/i18n';
 import { environment } from '@env/environment';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ReportService } from '@app/report/report.service';
 import { ReportDataCatalog } from '../interfaces/report-data';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
 import { Report } from '../interfaces/report';
 import { finalize } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-report-form-data',
   templateUrl: './report-form-data.component.html',
   styleUrls: ['./report-form-data.component.scss'],
+  standalone: false,
 })
 export class ReportFormDataComponent implements OnInit {
   transferMethodToInstitutions = 'example: email, web page, REST API Call, SFTP, FTP, WeTransfer, other.';
   version: string = environment.version;
   error: string;
-  reportForm: FormGroup;
+  reportForm: UntypedFormGroup;
   isLoading = false;
   methodological = false;
   catalogs: ReportDataCatalog = undefined;
@@ -37,11 +37,11 @@ export class ReportFormDataComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private reportService: ReportService,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.createForm();
     this.getCatalogs();
@@ -170,7 +170,7 @@ export class ReportFormDataComponent implements OnInit {
 
   uploadFile(event: Event, reportFile = true) {
     const element = event.currentTarget as HTMLInputElement;
-    let fileList: FileList | null = element.files;
+    const fileList: FileList | null = element.files;
     if (fileList) {
       if (reportFile) {
         this.reportDataFile = fileList[0];
@@ -211,7 +211,7 @@ export class ReportFormDataComponent implements OnInit {
         finalize(() => {
           this.reportForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -222,7 +222,7 @@ export class ReportFormDataComponent implements OnInit {
         },
         (error) => {
           this.error = error;
-        }
+        },
       );
   }
 
@@ -233,7 +233,7 @@ export class ReportFormDataComponent implements OnInit {
         finalize(() => {
           this.reportForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -243,7 +243,7 @@ export class ReportFormDataComponent implements OnInit {
         },
         (error) => {
           this.error = error;
-        }
+        },
       );
   }
 

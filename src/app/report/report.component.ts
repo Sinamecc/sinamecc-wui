@@ -1,17 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from '@env/environment';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { ReportService } from '@app/report/report.service';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { Report } from './interfaces/report';
 import { CredentialsService } from '@app/auth';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss'],
+  standalone: false,
 })
 export class ReportComponent implements OnInit {
   version: string = environment.version;
@@ -27,7 +28,7 @@ export class ReportComponent implements OnInit {
     private reportService: ReportService,
     public datePipe: DatePipe,
     private router: Router,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
   ) {}
 
   ngOnInit(): void {
@@ -68,13 +69,15 @@ export class ReportComponent implements OnInit {
 
   hasPermProvider() {
     return Boolean(
-      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.rd.provider
+      this.credentialsService.credentials.permissions.all ||
+        this.credentialsService.credentials.permissions.rd.provider,
     );
   }
 
   hasPermReviewer() {
     return Boolean(
-      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.rd.reviewer
+      this.credentialsService.credentials.permissions.all ||
+        this.credentialsService.credentials.permissions.rd.reviewer,
     );
   }
 }

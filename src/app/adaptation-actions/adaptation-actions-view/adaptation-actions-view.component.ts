@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Comments, CommentsStructure } from '@app/@shared/comment';
 import { CommentsViewComponent } from '@app/@shared/comments-view/comments-view.component';
@@ -26,11 +25,13 @@ import {
   reportingEntityTypeMap,
   ReportingPeriodicity,
 } from '../interfaces/catalogs';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-adaptation-actions-view',
   templateUrl: './adaptation-actions-view.component.html',
   styleUrls: ['./adaptation-actions-view.component.scss'],
+  standalone: false,
 })
 export class AdaptationActionsViewComponent implements OnInit {
   id = '';
@@ -60,7 +61,11 @@ export class AdaptationActionsViewComponent implements OnInit {
 
   commentsByModule = {};
 
-  constructor(private route: ActivatedRoute, private service: AdaptationActionService, public dialog: MatDialog) {}
+  constructor(
+    private route: ActivatedRoute,
+    private service: AdaptationActionService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -77,7 +82,7 @@ export class AdaptationActionsViewComponent implements OnInit {
         },
         (error) => {
           this.adaptationAction = {};
-        }
+        },
       )
       .add(() => (this.loading = false));
   }
@@ -108,8 +113,8 @@ export class AdaptationActionsViewComponent implements OnInit {
         commentPayload: !this.edit
           ? commentList
           : this.commentsByModule[moduleIndex]
-          ? this.commentsByModule[moduleIndex]
-          : [],
+            ? this.commentsByModule[moduleIndex]
+            : [],
       },
     });
 

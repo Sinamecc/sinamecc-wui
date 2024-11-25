@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Comments, CommentsStructure } from '@app/@shared/comment';
 import { CommentsViewComponent } from '@app/@shared/comments-view/comments-view.component';
@@ -12,11 +11,13 @@ import {
 import { geographicCoverageMap, Report } from '../interfaces/report';
 import { formationReportedMap, reportingPeriodicity } from '../interfaces/report-data';
 import { ReportService } from '../report.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-report-view',
   templateUrl: './report-view.component.html',
   styleUrls: ['./report-view.component.scss'],
+  standalone: false,
 })
 export class ReportViewComponent implements OnInit {
   report: Report;
@@ -35,7 +36,11 @@ export class ReportViewComponent implements OnInit {
   informationReportMapFields = formationReportedMap;
   reportingPeriodicityMap = reportingPeriodicity;
 
-  constructor(private service: ReportService, private route: ActivatedRoute, public dialog: MatDialog) {}
+  constructor(
+    private service: ReportService,
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -68,8 +73,8 @@ export class ReportViewComponent implements OnInit {
         commentPayload: !this.edit
           ? commentList
           : this.commentsByModule[moduleIndex]
-          ? this.commentsByModule[moduleIndex]
-          : [],
+            ? this.commentsByModule[moduleIndex]
+            : [],
       },
     });
 

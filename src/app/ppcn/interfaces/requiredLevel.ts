@@ -1,4 +1,4 @@
 export interface RequiredLevel {
-  id: Number;
+  id: number;
   level_type: string;
 }

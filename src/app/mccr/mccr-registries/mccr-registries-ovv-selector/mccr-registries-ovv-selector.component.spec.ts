@@ -8,12 +8,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LoaderComponent } from '@shared';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MccrRegistriesService } from '../mccr-registries.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
 import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { MockMccrRegistriesService } from '@app/mccr-registries/mccr-registries.service.mock';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MccrRegistriesOvvSelectorComponent', () => {
   let component: MccrRegistriesOvvSelectorComponent;
@@ -21,16 +22,15 @@ describe('MccrRegistriesOvvSelectorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [MccrRegistriesOvvSelectorComponent, LoaderComponent],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule,
         ReactiveFormsModule,
       ],
-      declarations: [MccrRegistriesOvvSelectorComponent, LoaderComponent],
       providers: [
         MockMccrRegistriesService,
         MockMitigationActionsService,
@@ -40,6 +40,8 @@ describe('MccrRegistriesOvvSelectorComponent', () => {
           provide: MitigationActionsService,
           useClass: MockMitigationActionsService,
         },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

@@ -1,7 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ErrorReportingComponent } from '@shared';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,16 +10,18 @@ import { finalize } from 'rxjs/operators';
 import { MitigationAction } from '../mitigation-action';
 import { MitigationActionNewFormData } from '../mitigation-action-new-form-data';
 import { MitigationActionsService } from '../mitigation-actions.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-reporting-climate-action-form',
   templateUrl: './reporting-climate-action-form.component.html',
   styleUrls: ['./reporting-climate-action-form.component.scss'],
+  standalone: false,
 })
 export class ReportingClimateActionFormComponent implements OnInit {
   indicator: any = [];
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
   wasSubmittedSuccessfully = false;
   mitigationAction: MitigationAction;
@@ -34,12 +35,12 @@ export class ReportingClimateActionFormComponent implements OnInit {
   @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private service: MitigationActionsService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
-    private router: Router
+    private router: Router,
   ) {
     this.service.currentMitigationAction.subscribe((message) => {
       this.mitigationAction = message;
@@ -75,7 +76,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
           },
           (error) => {
             this.indicator = [];
-          }
+          },
         );
       }
     }
@@ -89,26 +90,26 @@ export class ReportingClimateActionFormComponent implements OnInit {
           {
             initial_date_report_period: this.datePipe.transform(
               this.form.value.formArray[1].reportingPeriodStartCtrl,
-              'yyyy-MM-dd'
+              'yyyy-MM-dd',
             ),
 
             final_date_report_period: this.datePipe.transform(
               this.form.value.formArray[1].reportingPeriodEndCtrl,
-              'yyyy-MM-dd'
+              'yyyy-MM-dd',
             ),
 
             data_updated_date: this.datePipe.transform(
               this.form.value.formArray[1].indicatorDataUpdateDateCtrl,
-              'yyyy-MM-dd'
+              'yyyy-MM-dd',
             ),
             report_type: this.form.value.formArray[1].reportTypeCtrl,
             progress_report_period: this.datePipe.transform(
               this.form.value.formArray[2].reportingPeriodCtrl,
-              'yyyy-MM-dd'
+              'yyyy-MM-dd',
             ),
             progress_report_period_until: this.datePipe.transform(
               this.form.value.formArray[2].reportingPeriodUntilCtrl,
-              'yyyy-MM-dd'
+              'yyyy-MM-dd',
             ),
             updated_data: this.form.value.formArray[1].informationToUpdateCtrl
               ? this.form.value.formArray[1].informationToUpdateCtrl
@@ -127,9 +128,8 @@ export class ReportingClimateActionFormComponent implements OnInit {
     }
     if (this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator']) {
       if (this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'][0].id) {
-        context['monitoring_reporting_indicator']['monitoring_indicator'][
-          'id'
-        ] = this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'][0].id;
+        context['monitoring_reporting_indicator']['monitoring_indicator']['id'] =
+          this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'][0].id;
       }
     }
 
@@ -145,7 +145,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -164,7 +164,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
           this.error = error;
           this.errorComponent.parseErrors(error);
           this.wasSubmittedSuccessfully = false;
-        }
+        },
       );
   }
 

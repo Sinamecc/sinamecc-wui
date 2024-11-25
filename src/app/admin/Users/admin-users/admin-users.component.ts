@@ -7,11 +7,11 @@ import { ComponentDialogComponent } from '@core/component-dialog/component-dialo
 import { AdminUserDetailComponent } from '../admin-user-detail/admin-user-detail.component';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
-import { MatTableDataSource } from '@angular/material/table';
+import { TranslateService } from '@ngx-translate/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngx-translate/core';
 
 export class UsersDataSource extends DataSource<any> {
   users: User[];
@@ -35,6 +35,7 @@ export class UsersDataSource extends DataSource<any> {
   selector: 'app-admin-users',
   templateUrl: './admin-users.component.html',
   styleUrls: ['./admin-users.component.scss'],
+  standalone: false,
 })
 export class AdminUsersComponent implements OnInit {
   displayedColumns = ['username', 'email', 'roles', 'action'];
@@ -49,7 +50,7 @@ export class AdminUsersComponent implements OnInit {
     private adminService: AdminService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit() {
@@ -116,7 +117,7 @@ export class AdminUsersComponent implements OnInit {
       },
       (error) => {
         this.openSnackBar(3, 'admin.createUserError');
-      }
+      },
     );
   }
 }

@@ -2,12 +2,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'byteFormat',
+  standalone: false,
 })
 export class ByteFormatPipe implements PipeTransform {
   private readonly unit = 'Byte';
 
   transform(value: any, args?: any): any {
-    if (!!value) {
+    if (value) {
       value = this.formatBytes(+value, +args);
     }
     return value;

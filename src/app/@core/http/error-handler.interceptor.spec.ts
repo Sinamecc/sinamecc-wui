@@ -1,7 +1,7 @@
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { ErrorHandlerInterceptor } from './error-handler.interceptor';
 import { Router } from '@angular/router';
@@ -20,13 +20,15 @@ describe('ErrorHandlerInterceptor', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
+      imports: [RouterTestingModule.withRoutes([])],
       providers: [
         {
           provide: HTTP_INTERCEPTORS,
           useFactory: createInterceptor,
           multi: true,
         },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     });
 
@@ -50,7 +52,7 @@ describe('ErrorHandlerInterceptor', () => {
       () => {
         // Assert
         expect((ErrorHandlerInterceptor.prototype as any).errorHandler).toHaveBeenCalled();
-      }
+      },
     );
 
     httpMock.expectOne({}).flush(null, {

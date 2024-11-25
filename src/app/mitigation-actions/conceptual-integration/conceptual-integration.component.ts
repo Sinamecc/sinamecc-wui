@@ -9,6 +9,7 @@ const log = new Logger('Conceptual integration');
   selector: 'app-conceptual-integration',
   templateUrl: './conceptual-integration.component.html',
   styleUrls: ['./conceptual-integration.component.scss'],
+  standalone: false,
 })
 export class ConceptualIntegrationComponent implements OnInit {
   isLoading: boolean;

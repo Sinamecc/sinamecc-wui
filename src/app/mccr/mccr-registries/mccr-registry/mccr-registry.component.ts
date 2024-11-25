@@ -12,6 +12,7 @@ const log = new Logger('Report');
   selector: 'app-mccr-registry',
   templateUrl: './mccr-registry.component.html',
   styleUrls: ['./mccr-registry.component.scss'],
+  standalone: false,
 })
 export class MccrRegistryComponent implements OnInit {
   mccrRegistry: MccrRegistry;
@@ -22,7 +23,7 @@ export class MccrRegistryComponent implements OnInit {
     private router: Router,
     private i18nService: I18nService,
     private service: MccrRegistriesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
@@ -34,7 +35,7 @@ export class MccrRegistryComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe((response: MccrRegistry) => {
         this.mccrRegistry = response;

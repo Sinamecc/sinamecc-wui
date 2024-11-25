@@ -1,4 +1,4 @@
 export interface RecognitionType {
-  id: Number;
+  id: number;
   recognition_type: string;
 }

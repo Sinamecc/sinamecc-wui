@@ -37,7 +37,7 @@ export class AdminService {
     const asyncResult = this.httpClient.get<Permissions[]>(routes.permissions(), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
     return asyncResult;
   }
@@ -46,7 +46,7 @@ export class AdminService {
     const asyncResult = this.httpClient.get<Groups[]>(routes.groups(), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
     return asyncResult;
   }
@@ -55,7 +55,7 @@ export class AdminService {
     return this.httpClient.get(routes.users(), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -63,7 +63,7 @@ export class AdminService {
     return this.httpClient.get(routes.roles(), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -71,7 +71,7 @@ export class AdminService {
     return this.httpClient.get(routes.user(username), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -86,7 +86,7 @@ export class AdminService {
     return this.httpClient.put(routes.editUser(userId), formData, {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -102,7 +102,7 @@ export class AdminService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -118,7 +118,7 @@ export class AdminService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -141,7 +141,7 @@ export class AdminService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -156,7 +156,7 @@ export class AdminService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -181,7 +181,7 @@ export class AdminService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -197,7 +197,7 @@ export class AdminService {
           message: 'Image submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -218,7 +218,7 @@ export class AdminService {
           body: body,
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -230,7 +230,7 @@ export class AdminService {
           id: body.id,
         };
         return response;
-      })
+      }),
     );
   }
 }

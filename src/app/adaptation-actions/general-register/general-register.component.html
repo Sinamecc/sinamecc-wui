@@ -1,12 +1,12 @@
 <div class="container">
-  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+  <div class="header-container flex flex-col justify-center items-center">
     <h2 translate>adaptationAction.form1.title</h2>
     <p translate>adaptationAction.form1.subtitle</p>
   </div>
   <label class="mat-h1" translate>adaptationAction.form1.dataRegister</label>
   <br />
   <br />
-  <form fxLayout="column" fxLayoutAlign="space-around start" [formGroup]="formArray?.get([0])">
+  <form class="flex flex-col justify-around items-start" [formGroup]="formArray?.get([0])">
     <span translate>adaptationAction.form1.reportingEntityType</span>
     <mat-radio-group
       #reportingEntityTypeControl="matRadioGroup"
@@ -97,7 +97,7 @@
       <mat-error translate>errorLabel.fieldRequired</mat-error>
     </mat-form-field>
 
-    <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+    <div class="button-box flex flex-row justify-end items-center">
       <button mat-raised-button color="primary" type="button" [disabled]="form.invalid" (click)="submitForm()">
         <span translate>general.done</span>
       </button>

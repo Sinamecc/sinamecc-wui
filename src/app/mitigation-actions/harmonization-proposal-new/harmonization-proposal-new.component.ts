@@ -13,6 +13,7 @@ import { I18nService } from '@app/i18n';
   selector: 'app-harmonization-proposal-new',
   templateUrl: './harmonization-proposal-new.component.html',
   styleUrls: ['./harmonization-proposal-new.component.scss'],
+  standalone: false,
 })
 export class HarmonizationProposalNewComponent implements OnInit {
   version: string = environment.version;
@@ -28,7 +29,7 @@ export class HarmonizationProposalNewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: MitigationActionsService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'Harmonization Proposal Integration';
@@ -41,7 +42,7 @@ export class HarmonizationProposalNewComponent implements OnInit {
       .pipe(
         tap((mitigationAction: MitigationAction) => {
           this.mitigationAction = mitigationAction;
-        })
+        }),
       );
   }
   ngOnInit() {}

@@ -1,19 +1,20 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-general-register',
   templateUrl: './general-register.component.html',
   styleUrls: ['./general-register.component.scss'],
+  standalone: false,
 })
 export class GeneralRegisterComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   @Input() mainStepper: any;
   id: string | null;
   adaptationAction: AdaptationAction;
@@ -21,12 +22,12 @@ export class GeneralRegisterComponent implements OnInit {
   durationInSeconds = 5;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
     private service: AdaptationActionService,
     private datePipe: DatePipe,
     private route: ActivatedRoute,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.createForm();
@@ -145,7 +146,7 @@ export class GeneralRegisterComponent implements OnInit {
         },
         (error) => {
           this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-        }
+        },
       );
     } else {
       this.service.createNewAdaptationAction(payload).subscribe(
@@ -159,7 +160,7 @@ export class GeneralRegisterComponent implements OnInit {
         },
         (error) => {
           this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-        }
+        },
       );
     }
 

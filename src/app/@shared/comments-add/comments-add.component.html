@@ -1,5 +1,5 @@
 <div>
-  <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="header-container flex flex-row justify-between items-center">
     <label class="mat-h1" translate>general.newComment</label>
     <button mat-dialog-close mat-icon-button>
       <mat-icon>close</mat-icon>
@@ -8,7 +8,7 @@
   <div class="comment-container">
     <mat-form-field class="comment-container" appearance="fill">
       <mat-label>Sub-Módulo</mat-label>
-      <mat-select (selectionChange)="loadSubModules($event.value)" fxFlex="100" [(ngModel)]="comment.module">
+      <mat-select (selectionChange)="loadSubModules($event.value)" class="flex flex-1" [(ngModel)]="comment.module">
         <mat-option *ngFor="let module of fields" translate [value]="module.module">
           <span translate>{{ module.module }}</span>
         </mat-option>
@@ -17,7 +17,7 @@
 
     <mat-form-field *ngIf="comment.module" class="comment-container" appearance="fill">
       <mat-label translate>general.fields</mat-label>
-      <mat-select fxFlex="100" [(ngModel)]="comment.subModule">
+      <mat-select class="flex flex-1" [(ngModel)]="comment.subModule">
         <mat-option *ngFor="let subField of subFields" [value]="subField">
           <span translate>{{ subField }}</span>
         </mat-option>

@@ -9,7 +9,7 @@
         </h3>
         <mat-card-content>
           <form (ngSubmit)="submit()" [formGroup]="createUserForm" novalidate *ngIf="roles$ | async">
-            <div fxLayout="column">
+            <div class="flex flex-col">
               <div class="custom-container-image-section">
                 <div>
                   <img class="mat-elevation-z3 custom-image" [src]="imageUrl" />

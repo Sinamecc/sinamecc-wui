@@ -1,17 +1,18 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction, InstrumentDetail } from '../interfaces/adaptationAction';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-adaptation-actions-financing',
   templateUrl: './adaptation-actions-financing.component.html',
   styleUrls: ['./adaptation-actions-financing.component.scss'],
+  standalone: false,
 })
 export class AdaptationActionsFinancingComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   durationInSeconds = 3;
   adaptationAction: AdaptationAction;
@@ -29,10 +30,10 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   @Input() edit: boolean;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
     private service: AdaptationActionService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
@@ -143,7 +144,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
       },
       (error) => {
         this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      }
+      },
     );
   }
 

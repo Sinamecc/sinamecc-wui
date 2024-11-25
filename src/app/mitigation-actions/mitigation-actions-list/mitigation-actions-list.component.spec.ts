@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
 import {
@@ -19,6 +19,7 @@ import { AuthenticationService } from '@app/auth';
 import { MockAuthenticationService } from '@app/auth/authentication.service.mock';
 import { I18nService } from '@app/i18n';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MitigationActionsListComponent', () => {
   let component: MitigationActionsListComponent;
@@ -26,19 +27,18 @@ describe('MitigationActionsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [
+        MitigationActionsListComponent,
+        GenericButtonComponent,
+        GenericButtonSecondaryComponent,
+        CustomSearchBarComponent,
+      ],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule,
-      ],
-      declarations: [
-        MitigationActionsListComponent,
-        GenericButtonComponent,
-        GenericButtonSecondaryComponent,
-        CustomSearchBarComponent,
       ],
       providers: [
         I18nService,
@@ -49,6 +49,8 @@ describe('MitigationActionsListComponent', () => {
           useClass: MockMitigationActionsService,
         },
         { provide: I18nService, useClass: MockI18nService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

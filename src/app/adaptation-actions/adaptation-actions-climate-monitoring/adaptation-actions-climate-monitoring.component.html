@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+  <div class="header-container flex flex-col justify-center items-center">
     <h2 translate>adaptationAction.form5.title</h2>
   </div>
   <form [formGroup]="form">
@@ -45,7 +45,7 @@
           </mat-radio-group>
         </div>
 
-        <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+        <div class="button-box flex flex-row justify-end items-center">
           <button
             mat-raised-button
             color="primary"
@@ -73,7 +73,7 @@
           <span translate>mitigationAction.indicatorMonitoring</span>
         </ng-template>
 
-        <div class="indicator-container" fxLayout="column" fxLayoutAlign="start start" formArrayName="indicatorCtrl">
+        <div class="indicator-container flex flex-col justify-start items-start" formArrayName="indicatorCtrl">
           <div
             class="indicator-container"
             *ngFor="
@@ -81,7 +81,7 @@
               let i = index
             "
           >
-            <mat-card fxLayout="column" fxLayoutAlign="start start" class="indicator-container" [formGroupName]="i">
+            <mat-card class="indicator-container flex flex-col justify-start items-start" [formGroupName]="i">
               <mat-form-field class="field-ppcn">
                 <mat-select
                   formControlName="indicatorsCtrl"
@@ -97,7 +97,7 @@
               </mat-form-field>
 
               <mat-label translate>mitigationAction.reportingPeriod </mat-label>
-              <div class="indicator-container" fxLayout="row" fxLayoutAlign="start center">
+              <div class="indicator-container flex flex-row justify-start items-center">
                 <mat-form-field class="field-ppcn">
                   <mat-label translate>Desde</mat-label>
                   <input
@@ -208,7 +208,7 @@
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
-              <div class="indicator-container" fxLayout="row" fxLayoutAlign=" center">
+              <div class="indicator-container flex flex-row justify-center">
                 <mat-form-field class="field-ppcn">
                   <mat-label translate>adaptationAction.form4.attachSupportMonitoring</mat-label>
                   <input matInput formControlName="attachSupportingInformationCtrl" />
@@ -245,7 +245,7 @@
           </div>
         </div>
 
-        <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+        <div class="button-box flex flex-row justify-end items-center">
           <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
           <button
             mat-raised-button
@@ -274,7 +274,7 @@
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
-        <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+        <div class="button-box flex-row justify-end items-center">
           <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
           <button
             mat-raised-button

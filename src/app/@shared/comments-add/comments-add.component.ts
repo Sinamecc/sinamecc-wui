@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Comments, CommentsStructure } from '../comment';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-comments-add',
   templateUrl: './comments-add.component.html',
   styleUrls: ['./comments-add.component.scss'],
+  standalone: false,
 })
 export class CommentsAddComponent implements OnInit {
   fields: CommentsStructure[] = [];
