@@ -5,10 +5,10 @@
 @use "theme/theme" as *;
 
 // Angular Material custom theme
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 // Custom
-@include mat.core-theme($app-theme);
 @include mat.all-component-themes($app-theme);
 @include mat.typography-hierarchy($custom-typography);
 
