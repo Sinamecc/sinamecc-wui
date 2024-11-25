@@ -37,6 +37,7 @@ export class PpcnSource extends DataSource<any> {
   selector: 'app-ppcn-list',
   templateUrl: './ppcn-list.component.html',
   styleUrls: ['./ppcn-list.component.scss'],
+  standalone: false,
 })
 export class PpcnListComponent implements OnInit {
   version: string = environment.version;

@@ -17,6 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-report-form-data',
   templateUrl: './report-form-data.component.html',
   styleUrls: ['./report-form-data.component.scss'],
+  standalone: false,
 })
 export class ReportFormDataComponent implements OnInit {
   transferMethodToInstitutions = 'example: email, web page, REST API Call, SFTP, FTP, WeTransfer, other.';

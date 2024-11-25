@@ -34,6 +34,7 @@ import { I18nService } from '@app/i18n';
   selector: 'app-mitigation-action-form-flow',
   templateUrl: './mitigation-action-form-flow.component.html',
   styleUrls: ['./mitigation-action-form-flow.component.scss'],
+  standalone: false,
 })
 export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit {
   @ViewChild(InitiativeFormComponent) initiativeForm: InitiativeFormComponent;

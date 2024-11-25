@@ -21,6 +21,7 @@ const log = new Logger('Report');
   selector: 'app-mitigation-actions-new',
   templateUrl: './mitigation-actions-new.component.html',
   styleUrls: ['./mitigation-actions-new.component.scss'],
+  standalone: false,
 })
 export class MitigationActionsNewComponent implements OnInit {
   version: string = environment.version;

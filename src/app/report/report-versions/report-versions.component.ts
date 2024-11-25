@@ -29,6 +29,7 @@ export class ReportVersionsDataSource extends DataSource<any> {
   selector: 'app-report-versions',
   templateUrl: './report-versions.component.html',
   styleUrls: ['./report-versions.component.scss'],
+  standalone: false,
 })
 export class ReportVersionsComponent implements OnInit {
   version: string = environment.version;

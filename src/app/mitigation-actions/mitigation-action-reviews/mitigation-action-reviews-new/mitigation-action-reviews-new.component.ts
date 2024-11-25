@@ -17,6 +17,7 @@ const log = new Logger('Report');
   selector: 'app-mitigation-action-reviews-new',
   templateUrl: './mitigation-action-reviews-new.component.html',
   styleUrls: ['./mitigation-action-reviews-new.component.scss'],
+  standalone: false,
 })
 export class MitigationActionReviewsNewComponent implements OnInit {
   version: string = environment.version;

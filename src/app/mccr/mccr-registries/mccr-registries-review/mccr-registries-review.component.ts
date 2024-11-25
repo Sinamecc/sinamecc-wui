@@ -14,6 +14,7 @@ const log = new Logger('Report');
   selector: 'app-mccr-registries-review',
   templateUrl: './mccr-registries-review.component.html',
   styleUrls: ['./mccr-registries-review.component.scss'],
+  standalone: false,
 })
 export class MccrRegistriesReviewComponent implements OnInit {
   version: string = environment.version;

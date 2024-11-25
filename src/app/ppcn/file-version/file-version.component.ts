@@ -11,6 +11,7 @@ import { tap } from 'rxjs/operators';
   selector: 'app-file-version',
   templateUrl: './file-version.component.html',
   styleUrls: ['./file-version.component.scss'],
+  standalone: false,
 })
 export class FileVersionComponent implements OnInit {
   version: string = environment.version;

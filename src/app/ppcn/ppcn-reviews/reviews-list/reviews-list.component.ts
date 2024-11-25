@@ -27,6 +27,7 @@ export class PpcnReviewSource extends DataSource<any> {
   selector: 'app-reviews-list',
   templateUrl: './reviews-list.component.html',
   styleUrls: ['./reviews-list.component.scss'],
+  standalone: false,
 })
 export class ReviewsListComponent implements OnInit {
   id: string;

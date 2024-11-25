@@ -11,6 +11,7 @@ import { I18nService } from '@app/i18n';
   selector: 'app-ppcn',
   templateUrl: './ppcn.component.html',
   styleUrls: ['./ppcn.component.scss'],
+  standalone: false,
 })
 export class PpcnComponent implements OnInit {
   ppcn: Ppcn;

@@ -6,6 +6,7 @@ import { I18nService } from './i18n.service';
   selector: 'app-language-selector',
   templateUrl: './language-selector.component.html',
   styleUrls: ['./language-selector.component.scss'],
+  standalone: false,
 })
 export class LanguageSelectorComponent implements OnInit {
   @Input() icon = false;

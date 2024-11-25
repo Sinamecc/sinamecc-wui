@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-methodolofical-sheet',
   templateUrl: './methodolofical-sheet.component.html',
   styleUrls: ['./methodolofical-sheet.component.scss'],
+  standalone: false,
 })
 export class MethodoloficalSheetComponent implements OnInit {
   reportForm: UntypedFormGroup;

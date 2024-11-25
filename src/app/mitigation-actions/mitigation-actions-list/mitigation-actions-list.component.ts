@@ -40,6 +40,7 @@ export class MitigationActionSource extends DataSource<any> {
   selector: 'app-mitigation-actions-list',
   templateUrl: './mitigation-actions-list.component.html',
   styleUrls: ['./mitigation-actions-list.component.scss'],
+  standalone: false,
 })
 export class MitigationActionsListComponent implements OnInit {
   version: string = environment.version;

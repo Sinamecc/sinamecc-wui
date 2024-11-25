@@ -16,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-mccr-search-poc',
   templateUrl: './mccr-search-poc.component.html',
   styleUrls: ['./mccr-search-poc.component.scss'],
+  standalone: false,
 })
 export class MccrSearchPocComponent implements OnInit {
   idMccrPoc: string;

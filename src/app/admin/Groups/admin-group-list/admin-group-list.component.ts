@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'app-admin-group-list',
   templateUrl: './admin-group-list.component.html',
   styleUrls: ['./admin-group-list.component.scss'],
+  standalone: false,
 })
 export class AdminGroupListComponent implements OnInit {
   displayedColumnsGroups = ['name', 'action'];

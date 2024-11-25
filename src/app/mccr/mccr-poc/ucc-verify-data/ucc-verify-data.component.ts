@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   selector: 'app-ucc-verify-data',
   templateUrl: './ucc-verify-data.component.html',
   styleUrls: ['./ucc-verify-data.component.scss'],
+  standalone: false,
 })
 export class UccVerifyDataComponent implements OnInit {
   verifyResponse: VerifyResponse;

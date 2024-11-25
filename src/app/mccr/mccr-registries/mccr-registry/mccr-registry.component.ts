@@ -12,6 +12,7 @@ const log = new Logger('Report');
   selector: 'app-mccr-registry',
   templateUrl: './mccr-registry.component.html',
   styleUrls: ['./mccr-registry.component.scss'],
+  standalone: false,
 })
 export class MccrRegistryComponent implements OnInit {
   mccrRegistry: MccrRegistry;

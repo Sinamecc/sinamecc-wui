@@ -11,6 +11,7 @@ import { MatFormFieldControl } from '@angular/material/form-field';
   templateUrl: './input-file.component.html',
   styleUrls: ['./input-file.component.scss'],
   providers: [{ provide: MatFormFieldControl, useExisting: InputFileComponent }],
+  standalone: false,
 })
 export class InputFileComponent implements MatFormFieldControl<FileInput>, ControlValueAccessor, OnInit, OnDestroy {
   @Input() get value(): FileInput | null {

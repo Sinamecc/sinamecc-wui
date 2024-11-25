@@ -32,6 +32,7 @@ export class MccrRegistriesDataSource extends DataSource<any> {
   selector: 'app-mccr-registries-list',
   templateUrl: './mccr-registries-list.component.html',
   styleUrls: ['./mccr-registries-list.component.scss'],
+  standalone: false,
 })
 export class MccrRegistriesListComponent implements OnInit {
   version: string = environment.version;

@@ -4,6 +4,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
   selector: 'app-generic-dialog-box',
   templateUrl: './generic-dialog-box.component.html',
   styleUrls: ['./generic-dialog-box.component.scss'],
+  standalone: false,
 })
 export class GenericDialogBoxComponent implements OnInit {
   @Input() moduleName: string;

@@ -16,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-reporting-climate-action-form',
   templateUrl: './reporting-climate-action-form.component.html',
   styleUrls: ['./reporting-climate-action-form.component.scss'],
+  standalone: false,
 })
 export class ReportingClimateActionFormComponent implements OnInit {
   indicator: any = [];

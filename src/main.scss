@@ -1,7 +1,8 @@
 @use "@angular/material" as mat;
 
 // Theme variables
-@import "theme/theme-variables";
+@use "theme/theme-variables" as *;
+@use "theme/theme" as *;
 
 // Angular Material custom theme
 @include mat.core();
@@ -16,7 +17,6 @@
 // that you are using.
 
 // Theme customization
-@import "theme/theme";
 
 @tailwind base;
 @tailwind components;

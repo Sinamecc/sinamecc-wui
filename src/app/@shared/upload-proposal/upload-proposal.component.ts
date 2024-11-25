@@ -13,6 +13,7 @@ const log = new Logger('UploadProposal');
   selector: 'app-upload-proposal',
   templateUrl: './upload-proposal.component.html',
   styleUrls: ['./upload-proposal.component.scss'],
+  standalone: false,
 })
 export class UploadProposalComponent implements OnInit, OnChanges {
   @Input() title: string;

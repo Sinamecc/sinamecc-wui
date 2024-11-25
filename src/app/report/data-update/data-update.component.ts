@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-data-update',
   templateUrl: './data-update.component.html',
   styleUrls: ['./data-update.component.scss'],
+  standalone: false,
 })
 export class DataUpdateComponent implements OnInit {
   reportForm: UntypedFormGroup;

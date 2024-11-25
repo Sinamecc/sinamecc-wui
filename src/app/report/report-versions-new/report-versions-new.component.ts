@@ -17,6 +17,7 @@ const log = new Logger('Report');
   selector: 'app-report-versions-new',
   templateUrl: './report-versions-new.component.html',
   styleUrls: ['./report-versions-new.component.scss'],
+  standalone: false,
 })
 export class ReportVersionsNewComponent implements OnInit {
   version: string = environment.version;

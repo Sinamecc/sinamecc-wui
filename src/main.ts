@@ -18,6 +18,7 @@ if (environment.production) {
 const bootstrap = () => platformBrowserDynamic().bootstrapModule(AppModule);
 
 if (environment.hmr) {
+  // TODO: module is empty
   if (module['hot' as keyof typeof module]) {
     hmrBootstrap(module, bootstrap);
   } else {

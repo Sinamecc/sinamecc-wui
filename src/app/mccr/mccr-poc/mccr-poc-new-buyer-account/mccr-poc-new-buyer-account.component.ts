@@ -12,6 +12,7 @@ const log = new Logger('Report');
   selector: 'app-mccr-poc-new-buyer-account',
   templateUrl: './mccr-poc-new-buyer-account.component.html',
   styleUrls: ['./mccr-poc-new-buyer-account.component.scss'],
+  standalone: false,
 })
 export class MccrPocNewBuyerAccountComponent implements OnInit {
   isLoading = false;

@@ -7,6 +7,7 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
   selector: 'app-comments-view',
   templateUrl: './comments-view.component.html',
   styleUrls: ['./comments-view.component.scss'],
+  standalone: false,
 })
 export class CommentsViewComponent implements OnInit {
   addCommentFields: CommentsStructure;

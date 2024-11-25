@@ -19,6 +19,7 @@ const log = new Logger('MitigationAction');
   selector: 'app-basic-information-form',
   templateUrl: './basic-information-form.component.html',
   styleUrls: ['./basic-information-form.component.scss'],
+  standalone: false,
 })
 export class BasicInformationFormComponent implements OnInit {
   version: string = environment.version;

@@ -46,6 +46,7 @@ const log = new Logger('MitigationAction');
     },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
+  standalone: false,
 })
 export class KeyAspectsFormComponent implements OnInit {
   version: string = environment.version;

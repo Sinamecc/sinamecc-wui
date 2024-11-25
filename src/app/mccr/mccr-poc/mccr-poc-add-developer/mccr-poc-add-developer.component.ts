@@ -13,6 +13,7 @@ const log = new Logger('Report');
   selector: 'app-mccr-poc-add-developer',
   templateUrl: './mccr-poc-add-developer.component.html',
   styleUrls: ['./mccr-poc-add-developer.component.scss'],
+  standalone: false,
 })
 export class MccrPocAddDeveloperComponent implements OnInit {
   isLoading = false;

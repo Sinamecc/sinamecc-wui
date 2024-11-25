@@ -25,6 +25,7 @@ const log = new Logger('Report');
   selector: 'app-ppcn-new',
   templateUrl: './ppcn-new.component.html',
   styleUrls: ['./ppcn-new.component.scss'],
+  standalone: false,
 })
 export class PpcnNewComponent implements OnInit, DoCheck {
   @Input() dataShared = false;

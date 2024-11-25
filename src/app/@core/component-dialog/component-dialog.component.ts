@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   selector: 'app-component-dialog',
   templateUrl: './component-dialog.component.html',
   styleUrls: ['./component-dialog.component.scss'],
+  standalone: false,
 })
 export class ComponentDialogComponent implements OnInit {
   constructor(

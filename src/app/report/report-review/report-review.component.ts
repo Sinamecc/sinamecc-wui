@@ -8,6 +8,7 @@ import { ReportService } from '../report.service';
   selector: 'app-report-review',
   templateUrl: './report-review.component.html',
   styleUrls: ['./report-review.component.scss'],
+  standalone: false,
 })
 export class ReportReviewComponent implements OnInit {
   isLoading = false;

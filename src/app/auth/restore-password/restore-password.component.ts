@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-restore-password',
   templateUrl: './restore-password.component.html',
   styleUrls: ['./restore-password.component.scss'],
+  standalone: false,
 })
 export class RestorePasswordComponent implements OnInit {
   token: string;

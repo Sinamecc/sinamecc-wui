@@ -20,6 +20,7 @@ import { Permissions } from '@app/@core/permissions';
       transition('void <=> *', animate(1000)),
     ]),
   ],
+  standalone: false,
 })
 export class HomeComponent implements OnInit {
   data = [

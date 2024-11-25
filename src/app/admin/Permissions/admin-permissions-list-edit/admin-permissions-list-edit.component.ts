@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
   selector: 'app-admin-permissions-list-edit',
   templateUrl: './admin-permissions-list-edit.component.html',
   styleUrls: ['./admin-permissions-list-edit.component.scss'],
+  standalone: false,
 })
 export class AdminPermissionsListEditComponent implements OnInit, AfterViewInit {
   displayedColumns = ['name', 'content_type', 'action'];

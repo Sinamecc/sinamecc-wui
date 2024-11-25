@@ -24,6 +24,7 @@ import { MatDialog } from '@angular/material/dialog';
   selector: 'app-mitigation-action',
   templateUrl: './mitigation-action.component.html',
   styleUrls: ['./mitigation-action.component.scss'],
+  standalone: false,
 })
 export class MitigationActionComponent implements OnInit {
   mitigationAction: any;

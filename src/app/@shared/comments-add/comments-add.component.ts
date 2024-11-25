@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   selector: 'app-comments-add',
   templateUrl: './comments-add.component.html',
   styleUrls: ['./comments-add.component.scss'],
+  standalone: false,
 })
 export class CommentsAddComponent implements OnInit {
   fields: CommentsStructure[] = [];

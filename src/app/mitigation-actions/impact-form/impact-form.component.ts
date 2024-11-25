@@ -20,6 +20,7 @@ const log = new Logger('MitigationAction');
   selector: 'app-impact-form',
   templateUrl: './impact-form.component.html',
   styleUrls: ['./impact-form.component.scss'],
+  standalone: false,
 })
 export class ImpactFormComponent implements OnInit {
   version: string = environment.version;

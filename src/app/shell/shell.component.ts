@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   selector: 'app-shell',
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.scss'],
+  standalone: false,
 })
 export class ShellComponent implements OnInit, OnDestroy {
   logoSINAMECC = 'assets/SINAMECC-logo-vaciado.svg';

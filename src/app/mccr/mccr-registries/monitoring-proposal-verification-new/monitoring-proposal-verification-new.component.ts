@@ -11,6 +11,7 @@ import { finalize } from 'rxjs/operators';
   selector: 'app-monitoring-proposal-verification-new',
   templateUrl: './monitoring-proposal-verification-new.component.html',
   styleUrls: ['./monitoring-proposal-verification-new.component.scss'],
+  standalone: false,
 })
 export class MonitoringProposalVerificationNewComponent implements OnInit {
   version: string = environment.version;

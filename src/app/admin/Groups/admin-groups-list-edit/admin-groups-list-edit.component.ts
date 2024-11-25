@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
   selector: 'app-admin-groups-list-edit',
   templateUrl: './admin-groups-list-edit.component.html',
   styleUrls: ['./admin-groups-list-edit.component.scss'],
+  standalone: false,
 })
 export class AdminGroupsListEditComponent implements OnInit, AfterViewInit {
   displayedColumns = ['name', 'action'];

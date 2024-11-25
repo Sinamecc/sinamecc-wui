@@ -23,6 +23,7 @@ const log = new Logger('Report');
   selector: 'app-mitigation-actions-update',
   templateUrl: './mitigation-actions-update.component.html',
   styleUrls: ['./mitigation-actions-update.component.scss'],
+  standalone: false,
 })
 export class MitigationActionsUpdateComponent implements OnInit {
   version: string = environment.version;

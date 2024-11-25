@@ -16,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-adaptation-actions-new',
   templateUrl: './adaptation-actions-new.component.html',
   styleUrls: ['./adaptation-actions-new.component.scss'],
+  standalone: false,
 })
 export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
   durationInSeconds = 3;

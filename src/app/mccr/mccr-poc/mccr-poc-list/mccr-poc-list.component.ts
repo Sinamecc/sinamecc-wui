@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
   selector: 'app-mccr-poc-list',
   templateUrl: './mccr-poc-list.component.html',
   styleUrls: ['./mccr-poc-list.component.scss'],
+  standalone: false,
 })
 export class MccrPocListComponent implements OnInit {
   mccr_poc: MccrPoc;

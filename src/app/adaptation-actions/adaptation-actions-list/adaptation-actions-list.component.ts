@@ -11,6 +11,7 @@ import { MatPaginator } from '@angular/material/paginator';
   selector: 'app-adaptation-actions-list',
   templateUrl: './adaptation-actions-list.component.html',
   styleUrls: ['./adaptation-actions-list.component.scss'],
+  standalone: false,
 })
 export class AdaptationActionsListComponent implements OnInit {
   adaptationsActions: AdaptationAction[] = [];

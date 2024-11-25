@@ -26,6 +26,7 @@ const log = new Logger('UploadProposal');
   selector: 'app-update-status',
   templateUrl: './update-status.component.html',
   styleUrls: ['./update-status.component.scss'],
+  standalone: false,
 })
 export class UpdateStatusComponent implements OnInit {
   @Input() title: string;

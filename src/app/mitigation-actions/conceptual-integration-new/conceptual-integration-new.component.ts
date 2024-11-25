@@ -11,6 +11,7 @@ import { I18nService } from '@app/i18n';
   selector: 'app-conceptual-integration-new',
   templateUrl: './conceptual-integration-new.component.html',
   styleUrls: ['./conceptual-integration-new.component.scss'],
+  standalone: false,
 })
 export class ConceptualIntegrationNewComponent implements OnInit {
   version: string = environment.version;

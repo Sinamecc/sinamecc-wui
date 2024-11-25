@@ -13,6 +13,7 @@ import { I18nService } from '@app/i18n';
   selector: 'app-harmonization-proposal-new',
   templateUrl: './harmonization-proposal-new.component.html',
   styleUrls: ['./harmonization-proposal-new.component.scss'],
+  standalone: false,
 })
 export class HarmonizationProposalNewComponent implements OnInit {
   version: string = environment.version;

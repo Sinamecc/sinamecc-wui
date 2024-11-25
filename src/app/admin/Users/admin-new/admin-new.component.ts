@@ -30,6 +30,7 @@ const log = new Logger('CreateUser');
   selector: 'app-admin-new',
   templateUrl: './admin-new.component.html',
   styleUrls: ['./admin-new.component.scss'],
+  standalone: false,
 })
 export class AdminNewComponent implements OnInit {
   permList$: Observable<Permissions[]>;

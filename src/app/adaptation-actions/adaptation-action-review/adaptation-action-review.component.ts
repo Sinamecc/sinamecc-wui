@@ -8,6 +8,7 @@ import { AdaptationAction } from '../interfaces/adaptationAction';
   selector: 'app-adaptation-action-review',
   templateUrl: './adaptation-action-review.component.html',
   styleUrls: ['./adaptation-action-review.component.scss'],
+  standalone: false,
 })
 export class AdaptationActionReviewComponent implements OnInit {
   isLoading = false;

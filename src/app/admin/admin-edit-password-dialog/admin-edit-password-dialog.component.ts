@@ -5,6 +5,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
   selector: 'app-admin-edit-password-dialog',
   templateUrl: './admin-edit-password-dialog.component.html',
   styleUrls: ['./admin-edit-password-dialog.component.scss'],
+  standalone: false,
 })
 export class AdminEditPasswordDialogComponent implements OnInit {
   form: UntypedFormGroup;

@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-adaptation-actions-report',
   templateUrl: './adaptation-actions-report.component.html',
   styleUrls: ['./adaptation-actions-report.component.scss'],
+  standalone: false,
 })
 export class AdaptationActionsReportComponent implements OnInit {
   form: UntypedFormGroup;

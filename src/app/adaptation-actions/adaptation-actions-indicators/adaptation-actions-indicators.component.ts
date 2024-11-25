@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-adaptation-actions-indicators',
   templateUrl: './adaptation-actions-indicators.component.html',
   styleUrls: ['./adaptation-actions-indicators.component.scss'],
+  standalone: false,
 })
 export class AdaptationActionsIndicatorsComponent implements OnInit {
   form: UntypedFormGroup;

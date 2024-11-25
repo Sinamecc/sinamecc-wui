@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-adaptation-actions-climate-monitoring',
   templateUrl: './adaptation-actions-climate-monitoring.component.html',
   styleUrls: ['./adaptation-actions-climate-monitoring.component.scss'],
+  standalone: false,
 })
 export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   form: UntypedFormGroup;

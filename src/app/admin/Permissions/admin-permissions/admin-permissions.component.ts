@@ -10,6 +10,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
   selector: 'app-admin-permissions',
   templateUrl: './admin-permissions.component.html',
   styleUrls: ['./admin-permissions.component.scss'],
+  standalone: false,
 })
 export class AdminPermissionsComponent implements OnInit {
   displayedColumns = ['name', 'content_type', 'action'];

@@ -31,6 +31,7 @@ export class GroupsDataSource extends DataSource<any> {
   selector: 'app-admin-groups',
   templateUrl: './admin-groups.component.html',
   styleUrls: ['./admin-groups.component.scss'],
+  standalone: false,
 })
 export class AdminGroupsComponent implements OnInit {
   displayedColumns = ['name', 'action'];

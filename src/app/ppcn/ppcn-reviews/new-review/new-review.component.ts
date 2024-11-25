@@ -16,6 +16,7 @@ const log = new Logger('Report');
   selector: 'app-new-review',
   templateUrl: './new-review.component.html',
   styleUrls: ['./new-review.component.scss'],
+  standalone: false,
 })
 export class NewReviewComponent implements OnInit {
   version: string = environment.version;

@@ -18,6 +18,7 @@ const log = new Logger('MitigationAction');
   selector: 'app-emissions-mitigation-form',
   templateUrl: './emissions-mitigation-form.component.html',
   styleUrls: ['./emissions-mitigation-form.component.scss'],
+  standalone: false,
 })
 export class EmissionsMitigationFormComponent implements OnInit {
   version: string = environment.version;

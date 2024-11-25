@@ -6,6 +6,7 @@ import { PpcnService } from '@app/ppcn/ppcn.service';
   selector: 'app-ppcn-download',
   templateUrl: './ppcn-download.component.html',
   styleUrls: ['./ppcn-download.component.scss'],
+  standalone: false,
 })
 export class PpcnDownloadComponent implements OnInit {
   isLoading: boolean;

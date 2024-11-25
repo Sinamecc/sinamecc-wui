@@ -15,6 +15,7 @@ const log = new Logger('Report');
   selector: 'app-mccr-registries-ovv-selector',
   templateUrl: './mccr-registries-ovv-selector.component.html',
   styleUrls: ['./mccr-registries-ovv-selector.component.scss'],
+  standalone: false,
 })
 export class MccrRegistriesOvvSelectorComponent implements OnInit {
   ovvs: Ovv[];

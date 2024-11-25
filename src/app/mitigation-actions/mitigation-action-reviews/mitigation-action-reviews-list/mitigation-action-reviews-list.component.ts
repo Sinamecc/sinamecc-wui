@@ -27,6 +27,7 @@ export class MitigationActionReviewSource extends DataSource<any> {
   selector: 'app-mitigation-action-reviews-list',
   templateUrl: './mitigation-action-reviews-list.component.html',
   styleUrls: ['./mitigation-action-reviews-list.component.scss'],
+  standalone: false,
 })
 export class MitigationActionReviewsListComponent implements OnInit {
   id: string;

@@ -11,6 +11,7 @@ import { finalize } from 'rxjs/operators';
   selector: 'app-ovv-proposal-new',
   templateUrl: './ovv-proposal-new.component.html',
   styleUrls: ['./ovv-proposal-new.component.scss'],
+  standalone: false,
 })
 export class OvvProposalNewComponent implements OnInit {
   version: string = environment.version;

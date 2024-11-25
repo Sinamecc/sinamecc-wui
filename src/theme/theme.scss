@@ -5,7 +5,7 @@
 
 // stylelint-disable-next-line selector-max-universal
 @use "@angular/material" as mat;
-@import "theme-variables";
+@use "theme-variables" as *;
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800");
 
 * {

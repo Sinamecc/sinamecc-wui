@@ -17,6 +17,7 @@ const log = new Logger('Report');
   selector: 'app-ppcn-level',
   templateUrl: './ppcn-level.component.html',
   styleUrls: ['./ppcn-level.component.scss'],
+  standalone: false,
 })
 export class PpcnLevelComponent implements OnInit {
   @Output() emitEvent: EventEmitter<number> = new EventEmitter<number>();

@@ -9,6 +9,7 @@ const log = new Logger('Report');
   selector: 'app-ingei-harmonization',
   templateUrl: './ingei-harmonization.component.html',
   styleUrls: ['./ingei-harmonization.component.scss'],
+  standalone: false,
 })
 export class IngeiHarmonizationComponent implements OnInit {
   isLoading: boolean;

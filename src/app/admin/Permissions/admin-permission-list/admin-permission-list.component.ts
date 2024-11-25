@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-admin-permission-list',
   templateUrl: './admin-permission-list.component.html',
   styleUrls: ['./admin-permission-list.component.scss'],
+  standalone: false,
 })
 export class AdminPermissionListComponent implements OnInit {
   displayedColumns = ['name', 'type', 'action'];

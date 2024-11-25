@@ -14,6 +14,7 @@ const log = new Logger('CreatePermission');
   selector: 'app-admin-permissions-new',
   templateUrl: './admin-permissions-new.component.html',
   styleUrls: ['./admin-permissions-new.component.scss'],
+  standalone: false,
 })
 export class AdminPermissionsNewComponent implements OnInit {
   createPermissionsForm: UntypedFormGroup;

@@ -31,6 +31,7 @@ import { MatDialog } from '@angular/material/dialog';
   selector: 'app-adaptation-actions-view',
   templateUrl: './adaptation-actions-view.component.html',
   styleUrls: ['./adaptation-actions-view.component.scss'],
+  standalone: false,
 })
 export class AdaptationActionsViewComponent implements OnInit {
   id = '';

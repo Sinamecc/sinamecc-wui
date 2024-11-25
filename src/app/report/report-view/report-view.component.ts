@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
   selector: 'app-report-view',
   templateUrl: './report-view.component.html',
   styleUrls: ['./report-view.component.scss'],
+  standalone: false,
 })
 export class ReportViewComponent implements OnInit {
   report: Report;

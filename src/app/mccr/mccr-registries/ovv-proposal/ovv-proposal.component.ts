@@ -8,6 +8,7 @@ const log = new Logger('Report');
   selector: 'app-ovv-proposal',
   templateUrl: './ovv-proposal.component.html',
   styleUrls: ['./ovv-proposal.component.scss'],
+  standalone: false,
 })
 export class OvvProposalComponent implements OnInit {
   isLoading: boolean;

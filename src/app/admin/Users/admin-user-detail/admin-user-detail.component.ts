@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   selector: 'app-admin-user-detail',
   templateUrl: './admin-user-detail.component.html',
   styleUrls: ['./admin-user-detail.component.scss'],
+  standalone: false,
 })
 export class AdminUserDetailComponent implements OnInit {
   userDetail: User;

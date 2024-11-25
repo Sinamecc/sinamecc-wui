@@ -16,6 +16,7 @@ const log = new Logger('Report');
   selector: 'app-ppcn-upload',
   templateUrl: './ppcn-upload.component.html',
   styleUrls: ['./ppcn-upload.component.scss'],
+  standalone: false,
 })
 export class PpcnUploadComponent implements OnInit {
   version: string = environment.version;

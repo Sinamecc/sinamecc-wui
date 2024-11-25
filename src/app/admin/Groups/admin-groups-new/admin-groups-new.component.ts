@@ -5,6 +5,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
   selector: 'app-admin-groups-new',
   templateUrl: './admin-groups-new.component.html',
   styleUrls: ['./admin-groups-new.component.scss'],
+  standalone: false,
 })
 export class AdminGroupsNewComponent implements OnInit {
   createGroupForm: UntypedFormGroup;

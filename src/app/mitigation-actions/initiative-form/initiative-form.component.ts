@@ -19,6 +19,7 @@ const log = new Logger('MitigationAction');
   selector: 'app-initiative-form',
   templateUrl: './initiative-form.component.html',
   styleUrls: ['./initiative-form.component.scss'],
+  standalone: false,
 })
 export class InitiativeFormComponent implements OnInit {
   version: string = environment.version;

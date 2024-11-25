@@ -35,6 +35,7 @@ export class UsersDataSource extends DataSource<any> {
   selector: 'app-admin-users',
   templateUrl: './admin-users.component.html',
   styleUrls: ['./admin-users.component.scss'],
+  standalone: false,
 })
 export class AdminUsersComponent implements OnInit {
   displayedColumns = ['username', 'email', 'roles', 'action'];

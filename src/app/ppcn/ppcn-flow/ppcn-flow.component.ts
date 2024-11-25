@@ -10,6 +10,7 @@ import { PpcnService } from '@app/ppcn/ppcn.service';
   selector: 'app-ppcn-flow',
   templateUrl: './ppcn-flow.component.html',
   styleUrls: ['./ppcn-flow.component.scss'],
+  standalone: false,
 })
 export class PpcnFlowComponent implements OnInit {
   @ViewChild('PpcnLevelComponent') geographicLvl: PpcnLevelComponent;

@@ -15,6 +15,7 @@ const log = new Logger('Report');
   selector: 'app-report-new',
   templateUrl: './report-new.component.html',
   styleUrls: ['./report-new.component.scss'],
+  standalone: false,
 })
 export class ReportNewComponent implements OnInit, AfterViewInit {
   isLoading = false;

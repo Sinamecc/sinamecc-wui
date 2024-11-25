@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-general-register',
   templateUrl: './general-register.component.html',
   styleUrls: ['./general-register.component.scss'],
+  standalone: false,
 })
 export class GeneralRegisterComponent implements OnInit {
   form: UntypedFormGroup;
