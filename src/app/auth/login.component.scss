@@ -9,7 +9,6 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-  color: white;
   font-family: "Open Sans" sans-serif !important ;
   font-weight: 800;
 }
@@ -20,6 +19,7 @@
 
 .version {
   margin: 0;
+  color: white;
 }
 
 .login-box.mat-card {
@@ -70,11 +70,7 @@
   text-align: center;
 }
 
-.recovery-button {
-  width: 350px;
-}
-
 .recovery-label {
-  color: rgb(216, 216, 216);
+  // color: rgb(216, 216, 216);
   text-transform: none;
 }

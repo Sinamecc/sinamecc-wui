@@ -68,26 +68,27 @@
 
   <div *ngIf="forgotPassword" class="login-container flex flex-row justify-center">
     <mat-card class="login-box recovery-password-section w-[90%] sm:w-[66%] md:w-[50%] lg:w-[33%] p-4">
-      <label color="primary" translate class="mat-h2">credentialsSection.forgotPassword</label>
+      <h4 color="primary" translate>credentialsSection.forgotPassword</h4>
       <br />
       <br />
-      <label translate class="mat-h4 recovery-label">credentialsSection.recoveyPassword</label>
+      <p translate>credentialsSection.recoveyPassword</p>
       <br />
-      <br />
-      <input
-        #emailValue
-        (change)="candSendEmail = validateEmail($event.target.value)"
-        class="custom-input"
-        [placeholder]="'info.emailAddress' | translate"
-        type="email"
-      />
+      <mat-form-field class="login-label">
+        <input
+          #emailValue
+          type="email"
+          matInput
+          [placeholder]="'info.emailAddress' | translate"
+          (change)="candSendEmail = validateEmail($event.target.value)"
+        />
+      </mat-form-field>
+
       <br />
       <br />
       <button
         *ngIf="!sendEmail"
         [disabled]="!candSendEmail"
         (click)="sendEmailRestarPassword(emailValue.value)"
-        class="recovery-button"
         mat-raised-button
         color="primary"
         type="submit"
