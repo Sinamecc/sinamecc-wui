@@ -7,14 +7,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import {
-  MatCommonModule,
-  MatLineModule,
-  MatNativeDateModule,
-  MatPseudoCheckboxModule,
-  MatRippleModule,
-} from '@angular/material/core';
-
+import { MatLineModule, MatNativeDateModule, MatPseudoCheckboxModule, MatRippleModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -43,6 +36,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTreeModule } from '@angular/material/tree';
 import { ReactiveFormsModule } from '@angular/forms';
+import { A11yModule } from '@angular/cdk/a11y';
 
 @NgModule({
   exports: [
@@ -63,7 +57,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSidenavModule,
     MatToolbarModule,
     MatStepperModule,
-    MatCommonModule,
     MatRippleModule,
     MatSelectModule,
     MatButtonModule,
@@ -79,6 +72,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatMenuModule,
     MatListModule,
     MatTreeModule,
+    A11yModule,
   ],
 })
 export class MaterialModule {}

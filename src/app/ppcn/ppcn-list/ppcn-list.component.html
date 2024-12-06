@@ -1,12 +1,13 @@
 <mat-toolbar class="toolbar-title">
-  <div translate class="section-heading">ppcn.dataPPCN</div>
+  <div [style.width]="'auto'" translate class="section-heading">ppcn.dataPPCN</div>
 </mat-toolbar>
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
 <br />
-<app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
 <br />
-<div class="container mat-elevation-z8 table-sinamecc">
+<div class="container-custom mat-elevation-z8 table-sinamecc bg-white">
+  <app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
+
   <mat-table #table [dataSource]="dataSource">
     <!-- Name Column -->
     <ng-container matColumnDef="id_ppcn">
@@ -85,5 +86,7 @@
 </div>
 <br />
 <div class="box-button" *ngIf="hasPermProvider()">
-  <app-generic-button routerLink="/ppcn/registries/new" name="ppcn.addPPCN"></app-generic-button>
+  <button routerLink="/ppcn/registries/new" mat-raised-button color="primary" type="button">
+    <span translate>ppcn.addPPCN</span>
+  </button>
 </div>
