@@ -167,7 +167,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
       },
     };
 
-    if (this.adaptationActionUpdated.next_state[0].state === this.stateLabel) {
+    if (this.adaptationActionUpdated && this.adaptationActionUpdated.next_state[0].state === this.stateLabel) {
       context['is_complete'] = true;
     }
 

@@ -64,7 +64,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
   buildRegisterForm() {
     return this.formBuilder.array([
       this.formBuilder.group({
-        adaptationActionFinancingStatusCtrl: ['', Validators.required],
+        adaptationActionFinancingStatusCtrl: ['1', Validators.required],
         adaptationActionFinancingManagementCtrl: [''],
         adaptationActionFinancingSourceDetailCtrl: ['', Validators.required],
         adaptationActionFinancingDetailInstrumentCtrl: ['', Validators.required],
