@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-custom">
   <mat-card-content>
     <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
       <span translate>errorLabel.errorSubmittingForm</span>
@@ -125,7 +125,9 @@
             <br />
 
             <div class="box-button">
-              <app-generic-button (click)="stepper.next()" name="general.next"> </app-generic-button>
+              <button (click)="stepper.next()" mat-raised-button color="primary" type="button">
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -166,9 +168,12 @@
             <br />
 
             <div class="box-button">
-              <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-              </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button (click)="stepper.previous()" mat-raised-button type="button">
+                <span translate>general.back</span>
+              </button>
+              <button (click)="stepper.next()" mat-raised-button color="primary" type="button">
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -247,9 +252,12 @@
             </mat-form-field>
             <br />
             <div class="box-button">
-              <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-              </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button (click)="stepper.previous()" mat-raised-button type="button">
+                <span translate>general.back</span>
+              </button>
+              <button (click)="stepper.next()" mat-raised-button color="primary" type="button">
+                <span translate>general.next</span>
+              </button>
             </div>
             <br />
           </mat-step>
@@ -390,9 +398,12 @@
                   <br />
                 </div>
                 <div class="box-button">
-                  <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-                  </app-generic-button-secondary>
-                  <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+                  <button (click)="stepper.previous()" mat-raised-button type="button">
+                    <span translate>general.back</span>
+                  </button>
+                  <button (click)="stepper.next()" mat-raised-button color="primary" type="button">
+                    <span translate>general.next</span>
+                  </button>
                 </div>
               </div>
               <br />
@@ -536,20 +547,24 @@
               </div>
               <br />
 
-              <app-generic-button
-                mat-raised-button
-                (click)="addCompensationItem()"
-                name="specificLabel.addCompensations"
-                type="button"
+              <button
                 *ngIf="formGroup?.controls.length <= 10"
+                (click)="addCompensationItem()"
+                mat-raised-button
+                color="primary"
+                type="button"
               >
-              </app-generic-button>
+                <span translate>specificLabel.addCompensations</span>
+              </button>
               <br />
 
               <div class="box-button">
-                <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-                </app-generic-button-secondary>
-                <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+                <button (click)="stepper.previous()" mat-raised-button type="button">
+                  <span translate>general.back</span>
+                </button>
+                <button (click)="stepper.next()" mat-raised-button color="primary" type="button">
+                  <span translate>general.next</span>
+                </button>
               </div>
 
               <br />
@@ -627,9 +642,12 @@
             <br />
 
             <div class="box-button">
-              <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-              </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button (click)="stepper.previous()" mat-raised-button type="button">
+                <span translate>general.back</span>
+              </button>
+              <button (click)="stepper.next()" mat-raised-button color="primary" type="button">
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -720,9 +738,12 @@
             <br />
             <div class="box-button">
               <br />
-              <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-              </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button (click)="stepper.previous()" mat-raised-button type="button">
+                <span translate>general.back</span>
+              </button>
+              <button (click)="stepper.next()" mat-raised-button color="primary" type="button">
+                <span translate>general.next</span>
+              </button>
             </div>
           </mat-step>
 
@@ -801,9 +822,12 @@
             <br />
             <br />
             <div class="box-button">
-              <app-generic-button-secondary (click)="stepper.previous()" name="general.back">
-              </app-generic-button-secondary>
-              <app-generic-button (click)="stepper.next()" name="general.next"></app-generic-button>
+              <button (click)="stepper.previous()" mat-raised-button type="button">
+                <span translate>general.back</span>
+              </button>
+              <button (click)="stepper.next()" mat-raised-button color="primary" type="button">
+                <span translate>general.next</span>
+              </button>
             </div>
             <br />
           </mat-step>

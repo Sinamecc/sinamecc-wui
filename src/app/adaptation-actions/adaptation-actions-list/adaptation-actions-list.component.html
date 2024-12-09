@@ -3,12 +3,13 @@
 </mat-toolbar>
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
+<br />
 
 <div *ngIf="loading" class="loading-component flex flex-col justify-center items-center">
   <mat-spinner color="accent"></mat-spinner>
   <h1 class="mat-h1" translate>general.loading</h1>
 </div>
-<div class="container mat-elevation-z8 table-sinamecc">
+<div class="container-custom mat-elevation-z8 table-sinamecc bg-white">
   <mat-table #table [dataSource]="dataSource">
     <!-- Name Column -->
     <ng-container matColumnDef="id">

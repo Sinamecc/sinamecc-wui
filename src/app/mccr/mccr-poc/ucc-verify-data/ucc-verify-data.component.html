@@ -1,11 +1,11 @@
-<div class="container">
+<div class="container-custom">
   <h3>
     <mat-card-title translate class="section-heading">mccrPoc.verifyData</mat-card-title>
     <mat-divider class="divider-custom"></mat-divider>
     <mat-divider class="divider-custom"></mat-divider>
   </h3>
 
-  <div class="container" *ngIf="verifyResponse">
+  <div class="container-custom" *ngIf="verifyResponse">
     <h3 translate class="text-color">{{ 'mccrPoc.blocksVerify' | translate }}</h3>
     <strong translate>{{ 'mccrPoc.blocksVerify' | translate }}</strong
     >: {{ verifyResponse?.verified_blocks ? 'Si' : 'No' }} <br />

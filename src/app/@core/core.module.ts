@@ -10,10 +10,11 @@ import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 import { TokenInterceptor } from './http/token.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [ComponentDialogComponent],
-  imports: [CommonModule, TranslateModule, RouterModule, MatDialogModule],
+  imports: [CommonModule, TranslateModule, RouterModule, MatDialogModule, MatButtonModule],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
