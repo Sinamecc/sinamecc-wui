@@ -11,6 +11,7 @@ import { finalize } from 'rxjs/operators';
   selector: 'app-monitoring-proposal-new',
   templateUrl: './monitoring-proposal-new.component.html',
   styleUrls: ['./monitoring-proposal-new.component.scss'],
+  standalone: false,
 })
 export class MonitoringProposalNewComponent implements OnInit {
   version: string = environment.version;
@@ -28,7 +29,7 @@ export class MonitoringProposalNewComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: MccrRegistriesService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'Reporte Monitoreo MCCR';
@@ -39,7 +40,7 @@ export class MonitoringProposalNewComponent implements OnInit {
     this.mccrRegistryObservable = this.service.getMccrRegistry(this.id).pipe(
       finalize(() => {
         this.isLoading = false;
-      })
+      }),
     );
     this.mccrRegistryObservable.subscribe((response: MccrRegistry) => {
       this.mccrRegistry = response;

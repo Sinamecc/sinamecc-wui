@@ -4,6 +4,7 @@ import { Component, Input, OnInit } from '@angular/core';
   selector: 'app-change-log-view',
   templateUrl: './change-log-view.component.html',
   styleUrls: ['./change-log-view.component.scss'],
+  standalone: false,
 })
 export class ChangeLogViewComponent implements OnInit {
   @Input() reviews: any[];

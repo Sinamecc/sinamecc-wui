@@ -1,18 +1,19 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { ODS, TemporalityImpact } from '../interfaces/catalogs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-adaptation-actions-action-impact',
   templateUrl: './adaptation-actions-action-impact.component.html',
   styleUrls: ['./adaptation-actions-action-impact.component.scss'],
+  standalone: false,
 })
 export class AdaptationActionsActionImpactComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   durationInSeconds = 3;
   adaptationAction: AdaptationAction;
   temporalityImpact: TemporalityImpact[] = [];
@@ -24,10 +25,10 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   stateLabel = 'submitted';
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
     private service: AdaptationActionService,
-    private router: Router
+    private router: Router,
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
@@ -58,7 +59,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
       },
       (error) => {
         this.ods = [];
-      }
+      },
     );
   }
 
@@ -69,7 +70,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
       },
       (error) => {
         this.temporalityImpact = [];
-      }
+      },
     );
   }
 
@@ -80,7 +81,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
       },
       (error) => {
         this.generalImpact = [];
-      }
+      },
     );
   }
 
@@ -147,7 +148,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
       },
       (error) => {
         this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      }
+      },
     );
   }
 

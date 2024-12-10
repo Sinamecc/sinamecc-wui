@@ -8,9 +8,8 @@ import {
   ViewContainerRef,
   ComponentFactoryResolver,
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 import { PpcnComponent } from '@app/ppcn/ppcn/ppcn.component';
@@ -19,6 +18,7 @@ import { Logger } from '@core/logger.service';
 import { AdaptationActionsViewComponent } from '@app/adaptation-actions/adaptation-actions-view/adaptation-actions-view.component';
 import { ReportViewComponent } from '@app/report/report-view/report-view.component';
 import { MitigationActionComponent } from '@app/mitigation-actions/mitigation-action/mitigation-action.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('UploadProposal');
 
@@ -26,6 +26,7 @@ const log = new Logger('UploadProposal');
   selector: 'app-update-status',
   templateUrl: './update-status.component.html',
   styleUrls: ['./update-status.component.scss'],
+  standalone: false,
 })
 export class UpdateStatusComponent implements OnInit {
   @Input() title: string;
@@ -43,17 +44,17 @@ export class UpdateStatusComponent implements OnInit {
   moduleRef: any;
 
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
   comment = false;
 
   constructor(
     private router: Router,
     public snackBar: MatSnackBar,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private translateService: TranslateService,
     private service: UpdateStatusService,
-    private resolver: ComponentFactoryResolver
+    private resolver: ComponentFactoryResolver,
   ) {
     this.loadComponent();
   }
@@ -125,7 +126,7 @@ export class UpdateStatusComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: any) => {
@@ -138,7 +139,7 @@ export class UpdateStatusComponent implements OnInit {
         (error: any) => {
           log.debug(`Upload Proposal error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl, UntypedFormArray } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
@@ -7,11 +7,11 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('MitigationAction');
 
@@ -19,11 +19,12 @@ const log = new Logger('MitigationAction');
   selector: 'app-basic-information-form',
   templateUrl: './basic-information-form.component.html',
   styleUrls: ['./basic-information-form.component.scss'],
+  standalone: false,
 })
 export class BasicInformationFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
   wasSubmittedSuccessfully = false;
   mitigationAction: MitigationAction;
@@ -42,11 +43,11 @@ export class BasicInformationFormComponent implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private service: MitigationActionsService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) {
     this.service.currentMitigationAction.subscribe((message) => {
       this.mitigationAction = message;
@@ -126,7 +127,7 @@ export class BasicInformationFormComponent implements OnInit {
 
   private createUpdateFinanceForm() {
     this.mitigationActionBudgeValuetCtrl = [];
-    const financeList: FormGroup[] = [];
+    const financeList: UntypedFormGroup[] = [];
     // const mapCurrency = ['CRC', 'USD', 'EUR'];
     let index = 0;
 
@@ -150,12 +151,12 @@ export class BasicInformationFormComponent implements OnInit {
   }
 
   public addFinanceItem() {
-    const control = <FormArray>this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'].controls;
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'].controls;
     control.push(this.createFinanceForm());
   }
 
   public removeFinanceItem(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'];
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][0].controls['financeFrmCtrl'];
     control.removeAt(index);
   }
 
@@ -214,7 +215,7 @@ export class BasicInformationFormComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -232,7 +233,7 @@ export class BasicInformationFormComponent implements OnInit {
           this.errorComponent.parseErrors(error);
           this.error = error;
           this.wasSubmittedSuccessfully = false;
-        }
+        },
       );
   }
 

@@ -1,17 +1,17 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl, UntypedFormArray } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData, InitiativeType } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('MitigationAction');
 
@@ -19,11 +19,12 @@ const log = new Logger('MitigationAction');
   selector: 'app-initiative-form',
   templateUrl: './initiative-form.component.html',
   styleUrls: ['./initiative-form.component.scss'],
+  standalone: false,
 })
 export class InitiativeFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
   isLinear = true;
   wasSubmittedSuccessfully = false;
@@ -86,11 +87,11 @@ export class InitiativeFormComponent implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private service: MitigationActionsService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) {
     // this.formData = new FormData();
     this.isLoading = true;
@@ -132,7 +133,7 @@ export class InitiativeFormComponent implements OnInit {
         this.formBuilder.group({
           initiativeTypeCtrl: ['', Validators.required],
           initiativeNameCtrl: ['', [Validators.required, Validators.maxLength(200)]],
-          initiativeObjectiveCtrl: ['', [Validators.required, Validators.maxLength(1000)]],
+          initiativeObjectiveCtrl: ['', [Validators.required, Validators.maxLength(1300)]],
           initiativeDescriptionCtrl: ['', [Validators.required, Validators.maxLength(1000)]],
           initiativeGoalCtrl: ['', [Validators.required, Validators.maxLength(500)]],
         }),
@@ -179,7 +180,7 @@ export class InitiativeFormComponent implements OnInit {
           this.formBuilder.group({
             relationshipNDCCtrl: [element.area.id, Validators.required],
             relationshipNDCTopicCtrl: [element.goals.map((x: any) => x.id.toString()), Validators.required],
-          })
+          }),
         );
 
         index = +1;
@@ -206,7 +207,7 @@ export class InitiativeFormComponent implements OnInit {
               element.transformational_vision.map((x: { id: { toString: () => any } }) => x.id),
               Validators.required,
             ],
-          })
+          }),
         );
 
         index = +1;
@@ -229,7 +230,7 @@ export class InitiativeFormComponent implements OnInit {
           this.formBuilder.group({
             topicCtrl: [element.topic.id, Validators.required],
             subTopicPlanCtrl: [element.sub_topic.map((x: { id: any }) => x.id), Validators.required],
-          })
+          }),
         );
 
         index = +1;
@@ -243,34 +244,36 @@ export class InitiativeFormComponent implements OnInit {
   }
 
   addNDCItem() {
-    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['relationshipCtrl'].controls;
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][4].controls['relationshipCtrl'].controls;
     control.push(this.createNDCctrl());
   }
 
   removeNDCItem(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['relationshipCtrl'];
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][4].controls['relationshipCtrl'];
     control.removeAt(index);
   }
 
   removeDecarbonizationItem(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['relationshipDecarbonizationCtrl'];
+    const control = <UntypedFormArray>(
+      this.form.controls.formArray['controls'][4].controls['relationshipDecarbonizationCtrl']
+    );
     control.removeAt(index);
   }
 
   addDecarbonizationtem() {
-    const control = <FormArray>(
+    const control = <UntypedFormArray>(
       this.form.controls.formArray['controls'][4].controls['relationshipDecarbonizationCtrl'].controls
     );
     control.push(this.createDecarbonizationCtrl());
   }
 
   removeTopicItem(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['topicsFrmCtrl'];
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][4].controls['topicsFrmCtrl'];
     control.removeAt(index);
   }
 
   addTopicItem() {
-    const control = <FormArray>this.form.controls.formArray['controls'][4].controls['topicsFrmCtrl'].controls;
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][4].controls['topicsFrmCtrl'].controls;
     control.push(this.createTopicCtrl());
   }
 
@@ -343,7 +346,7 @@ export class InitiativeFormComponent implements OnInit {
         this.formBuilder.group({
           relationshipCtrl: this.createNDCctrl(this.mitigationAction.categorization.action_area_selection),
           relationshipDecarbonizationCtrl: this.createDecarbonizationCtrl(
-            this.mitigationAction.categorization.descarbonization_axis_selection
+            this.mitigationAction.categorization.descarbonization_axis_selection,
           ),
           topicsFrmCtrl: this.createTopicCtrl(this.mitigationAction.categorization.topics_selection),
           impactCategoryCtrl: ['1', Validators.required],
@@ -463,7 +466,7 @@ export class InitiativeFormComponent implements OnInit {
           finalize(() => {
             this.form.markAsPristine();
             this.isLoading = false;
-          })
+          }),
         )
         .subscribe(
           (response) => {
@@ -482,7 +485,7 @@ export class InitiativeFormComponent implements OnInit {
             this.errorComponent.parseErrors(error);
             this.error = error;
             this.wasSubmittedSuccessfully = false;
-          }
+          },
         );
     } else {
       this.service
@@ -491,7 +494,7 @@ export class InitiativeFormComponent implements OnInit {
           finalize(() => {
             this.form.markAsPristine();
             this.isLoading = false;
-          })
+          }),
         )
         .subscribe(
           (response) => {
@@ -509,7 +512,7 @@ export class InitiativeFormComponent implements OnInit {
             this.errorComponent.parseErrors(error);
             this.error = error;
             this.wasSubmittedSuccessfully = false;
-          }
+          },
         );
     }
   }
@@ -537,7 +540,7 @@ export class InitiativeFormComponent implements OnInit {
 
   loadUrl() {
     window.open(
-      'https://docs.google.com/spreadsheets/d/17rrTYpiLsargiTnARd29HLoSOaRUYtXd/edit?usp=sharing&ouid=100093507902776240980&rtpof=true&sd=true'
+      'https://docs.google.com/spreadsheets/d/17rrTYpiLsargiTnARd29HLoSOaRUYtXd/edit?usp=sharing&ouid=100093507902776240980&rtpof=true&sd=true',
     );
   }
 }

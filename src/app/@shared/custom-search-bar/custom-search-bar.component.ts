@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
   selector: 'app-custom-search-bar',
   templateUrl: './custom-search-bar.component.html',
   styleUrls: ['./custom-search-bar.component.scss'],
+  standalone: false,
 })
 export class CustomSearchBarComponent implements OnInit {
   @Input() table: MatTableDataSource<any>;

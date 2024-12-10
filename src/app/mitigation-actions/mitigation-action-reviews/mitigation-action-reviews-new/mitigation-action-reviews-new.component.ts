@@ -17,6 +17,7 @@ const log = new Logger('Report');
   selector: 'app-mitigation-action-reviews-new',
   templateUrl: './mitigation-action-reviews-new.component.html',
   styleUrls: ['./mitigation-action-reviews-new.component.scss'],
+  standalone: false,
 })
 export class MitigationActionReviewsNewComponent implements OnInit {
   version: string = environment.version;
@@ -41,7 +42,7 @@ export class MitigationActionReviewsNewComponent implements OnInit {
     private route: ActivatedRoute,
     private i18nService: I18nService,
     private service: MitigationActionsService,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'mitigationAction.addReviewMA';
@@ -59,7 +60,7 @@ export class MitigationActionReviewsNewComponent implements OnInit {
             this.statuses = mitigationAction.next_state.map((x) => x);
             this.shouldDisplayComment = true;
           }
-        })
+        }),
       );
   }
 

@@ -1,18 +1,18 @@
 import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { I18nService } from '@app/i18n';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('MitigationAction');
 
@@ -20,11 +20,12 @@ const log = new Logger('MitigationAction');
   selector: 'app-impact-form',
   templateUrl: './impact-form.component.html',
   styleUrls: ['./impact-form.component.scss'],
+  standalone: false,
 })
 export class ImpactFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
   wasSubmittedSuccessfully = false;
   startDate = new Date();
@@ -52,13 +53,13 @@ export class ImpactFormComponent implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private service: MitigationActionsService,
     private translateService: TranslateService,
     private router: Router,
     public snackBar: MatSnackBar,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) {
     // this.formData = new FormData();
     this.service.currentMitigationAction.subscribe((message) => (this.mitigationAction = message));
@@ -275,7 +276,7 @@ export class ImpactFormComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -293,7 +294,7 @@ export class ImpactFormComponent implements OnInit {
           this.error = error;
           this.errorComponent.parseErrors(error);
           this.wasSubmittedSuccessfully = false;
-        }
+        },
       );
   }
 }

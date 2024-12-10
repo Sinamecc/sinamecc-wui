@@ -2,13 +2,14 @@ import { Component, OnInit, Inject, Optional, ViewChild } from '@angular/core';
 import { User } from '@app/admin/users';
 import { PermissionsDataSource } from '@app/admin/Users/tablePermissions';
 import { AdminService } from '@app/admin/admin.service';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-admin-user-detail',
   templateUrl: './admin-user-detail.component.html',
   styleUrls: ['./admin-user-detail.component.scss'],
+  standalone: false,
 })
 export class AdminUserDetailComponent implements OnInit {
   userDetail: User;
@@ -21,7 +22,7 @@ export class AdminUserDetailComponent implements OnInit {
     private adminService: AdminService,
     @Optional()
     @Inject(MAT_DIALOG_DATA)
-    public data: any
+    public data: any,
   ) {
     if (data) {
       this.user = data.user;
@@ -36,7 +37,7 @@ export class AdminUserDetailComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe((response: User) => {
         this.userDetail = response;

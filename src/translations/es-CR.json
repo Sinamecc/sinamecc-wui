@@ -312,6 +312,7 @@
   },
 
   "general": {
+    "close": "Cerrar",
     "newReview": "Nueva revisión",
     "addRelationships": "Agregue relaciones adicionales",
     "addOther": "Agregar otro",

@@ -1,16 +1,17 @@
 import { Subject } from 'rxjs';
 import { Component, OnInit, Input, ElementRef, OnDestroy, HostBinding, Renderer2, HostListener } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { MatFormFieldControl } from '@angular/material/form-field';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { FileInput } from '@shared/input-file/file-input.model';
+import { MatFormFieldControl } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-input-file',
   templateUrl: './input-file.component.html',
   styleUrls: ['./input-file.component.scss'],
   providers: [{ provide: MatFormFieldControl, useExisting: InputFileComponent }],
+  standalone: false,
 })
 export class InputFileComponent implements MatFormFieldControl<FileInput>, ControlValueAccessor, OnInit, OnDestroy {
   @Input() get value(): FileInput | null {
@@ -67,7 +68,7 @@ export class InputFileComponent implements MatFormFieldControl<FileInput>, Contr
     public ngControl: NgControl,
     private fm: FocusMonitor,
     private _elementRef: ElementRef,
-    private _renderer: Renderer2
+    private _renderer: Renderer2,
   ) {
     if (ngControl) {
       ngControl.valueAccessor = this;

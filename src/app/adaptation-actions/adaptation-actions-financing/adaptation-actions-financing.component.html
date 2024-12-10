@@ -1,5 +1,5 @@
-<div class="container">
-  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+<div class="container-custom">
+  <div class="header-container flex flex-col justify-center items-center">
     <h2 translate>adaptationAction.form3.title</h2>
   </div>
   <form [formGroup]="form">
@@ -65,7 +65,7 @@
         </mat-form-field>
 
         <mat-form-field
-          *ngIf="climateValue?.value?.includes(instrumentDeatils[instrumentDeatils.length - 1].id)"
+          *ngIf="climateValue?.value?.includes(instrumentDeatils[instrumentDeatils.length - 1]?.id)"
           [style.margin-right]="'10px'"
           [style.width.%]="100"
           class="ppcn-field"
@@ -75,7 +75,7 @@
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
-        <div fxLayout="row">
+        <div class="flex flex-row">
           <div [style.margin-right]="'10px'">
             <mat-button-toggle-group (change)="changeCurrency($event.value)" [value]="actualCurrency">
               <mat-button-toggle value="CRC">CRC</mat-button-toggle>
@@ -111,7 +111,7 @@
           </mat-form-field>
         </div>
 
-        <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+        <div class="button-box flex flex-row justify-end items-center">
           <button
             mat-raised-button
             color="primary"
@@ -156,7 +156,7 @@
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
 
-        <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+        <div class="button-box flex flex-row justify-end items-center">
           <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
           <button
             mat-raised-button

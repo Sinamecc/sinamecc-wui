@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@core';
 import { ImpactFormComponent } from '../impact-form/impact-form.component';
@@ -20,6 +20,7 @@ import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
 import { I18nService } from '@app/i18n/i18n.service';
 import { SharedModule } from '@shared';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MitigationActionFormFlowComponent', () => {
   let component: MitigationActionFormFlowComponent;
@@ -27,18 +28,6 @@ describe('MitigationActionFormFlowComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        BrowserAnimationsModule,
-        FlexLayoutModule,
-        TranslateModule.forRoot(),
-        RouterTestingModule,
-        HttpClientTestingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        CoreModule,
-        SharedModule,
-      ],
       declarations: [
         MitigationActionFormFlowComponent,
         ImpactFormComponent,
@@ -47,6 +36,17 @@ describe('MitigationActionFormFlowComponent', () => {
         BasicInformationFormComponent,
         InitiativeFormComponent,
       ],
+      imports: [
+        MaterialModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CoreModule,
+        SharedModule,
+      ],
       providers: [
         MockS3Service,
         {
@@ -54,6 +54,8 @@ describe('MitigationActionFormFlowComponent', () => {
           useClass: MockMitigationActionsService,
         },
         { provide: I18nService, useClass: MockI18nService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

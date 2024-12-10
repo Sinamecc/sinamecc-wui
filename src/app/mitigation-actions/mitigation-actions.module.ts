@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { CoreModule } from '@core';
@@ -28,6 +27,7 @@ import { MitigationActionReviewsNewComponent } from './mitigation-action-reviews
 import { ConceptualIntegrationNewComponent } from './conceptual-integration-new/conceptual-integration-new.component';
 import { HarmonizationProposalNewComponent } from './harmonization-proposal-new/harmonization-proposal-new.component';
 import { ReportingClimateActionFormComponent } from './reporting-climate-action-form/reporting-climate-action-form.component';
+import { OrderByIdPipe } from '@app/@shared/order-by-id.pipe';
 @NgModule({
   declarations: [
     MitigationActionsListComponent,
@@ -55,9 +55,9 @@ import { ReportingClimateActionFormComponent } from './reporting-climate-action-
     FormsModule,
     CoreModule,
     SharedModule,
-    FlexLayoutModule,
     MaterialModule,
     MitigationActionsRoutingModule,
+    OrderByIdPipe,
   ],
   providers: [MitigationActionsService, DatePipe],
 })

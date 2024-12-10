@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoaderComponent } from '@shared/loader/loader.component';
 import { MockMitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service.mock';
@@ -20,6 +20,7 @@ import { MockMccrRegistriesService } from '@app/mccr-registries/mccr-registries.
 import { CredentialsService } from '@app/auth';
 import { MockCredentialsService } from '@app/auth/credentials.service.mock';
 import { I18nService } from '@app/i18n';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MccrRegistriesUpdateComponent', () => {
   let component: MccrRegistriesUpdateComponent;
@@ -27,16 +28,15 @@ describe('MccrRegistriesUpdateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [MccrRegistriesUpdateComponent, LoaderComponent],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule,
         ReactiveFormsModule,
       ],
-      declarations: [MccrRegistriesUpdateComponent, LoaderComponent],
       providers: [
         MockMccrRegistriesService,
         MockMitigationActionsService,
@@ -57,6 +57,8 @@ describe('MccrRegistriesUpdateComponent', () => {
             },
           },
         },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

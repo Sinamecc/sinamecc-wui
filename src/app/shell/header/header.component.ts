@@ -11,6 +11,7 @@ import { Permissions } from '@app/@core/permissions';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  standalone: false,
 })
 export class HeaderComponent implements OnInit {
   logoName: string;
@@ -21,7 +22,7 @@ export class HeaderComponent implements OnInit {
     private titleService: Title,
     private authenticationService: AuthenticationService,
     private credentialsService: CredentialsService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
   ) {
     this.logoName = 'logo-white-nav.png';
   }

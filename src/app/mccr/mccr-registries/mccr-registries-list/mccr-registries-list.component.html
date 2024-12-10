@@ -1,5 +1,5 @@
 <mat-toolbar class="toolbar-title">
-  <div translate class="section-heading"><span translate>mccr.MCCRRegistries</span></div>
+  <div [style.width]="'auto'" translate class="section-heading"><span translate>mccr.MCCRRegistries</span></div>
 </mat-toolbar>
 <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
 <mat-divider class="divider-custom"></mat-divider>
@@ -10,10 +10,9 @@
 </mat-card-subtitle>
 
 <br />
-<app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
 <br />
-
-<div class="container mat-elevation-z8 table-sinamecc">
+<div class="container-custom mat-elevation-z8 table-sinamecc bg-white">
+  <app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
   <mat-table #table [dataSource]="dataSource">
     <!-- Mccr Registry Name Column -->
     <ng-container matColumnDef="id">

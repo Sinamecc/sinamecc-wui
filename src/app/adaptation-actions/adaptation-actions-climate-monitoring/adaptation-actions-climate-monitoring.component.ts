@@ -1,20 +1,21 @@
 import { I } from '@angular/cdk/keycodes';
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-adaptation-actions-climate-monitoring',
   templateUrl: './adaptation-actions-climate-monitoring.component.html',
   styleUrls: ['./adaptation-actions-climate-monitoring.component.scss'],
+  standalone: false,
 })
 export class AdaptationActionsClimateMonitoringComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   adaptationAction: AdaptationAction;
   @Input() mainStepper: any;
   @Input() adaptationActionUpdated: AdaptationAction;
@@ -23,12 +24,12 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   durationInSeconds = 3;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private service: AdaptationActionService,
     private router: Router,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
@@ -69,7 +70,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
       }),
       this.formBuilder.group({
         indicatorCtrl: this.formBuilder.array(
-          this.updatedIndicatorCtrl(this.adaptationActionUpdated.indicator_monitoring_list)
+          this.updatedIndicatorCtrl(this.adaptationActionUpdated.indicator_monitoring_list),
         ),
       }),
 
@@ -83,12 +84,12 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   }
 
   removeIndicatorCtrl(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][1].controls['indicatorCtrl'];
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][1].controls['indicatorCtrl'];
     control.removeAt(index);
   }
 
   addIndicatorCtrl(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][1].controls['indicatorCtrl'].controls;
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][1].controls['indicatorCtrl'].controls;
     control.push(this.indicatorCtrl());
   }
 
@@ -102,7 +103,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
       const reportPeriodStart = new Date(indicator.start_date);
 
       indicatorDataUpdateDate.setMinutes(
-        indicatorDataUpdateDate.getMinutes() + indicatorDataUpdateDate.getTimezoneOffset()
+        indicatorDataUpdateDate.getMinutes() + indicatorDataUpdateDate.getTimezoneOffset(),
       );
 
       reportPeriodEnd.setMinutes(reportPeriodEnd.getMinutes() + reportPeriodEnd.getTimezoneOffset());
@@ -170,7 +171,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
       },
       (error) => {
         this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      }
+      },
     );
   }
 
@@ -186,7 +187,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
       },
       (error) => {
         this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      }
+      },
     );
   }
 

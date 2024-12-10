@@ -11,7 +11,7 @@ export interface PpcnNewFormData {
 }
 
 export interface Organization {
-  id: Number;
+  id: number;
   name: string;
   representative_name: string;
   phone_organization: string;
@@ -23,17 +23,17 @@ export interface Organization {
 }
 
 export interface GeographicLevel {
-  id: Number;
+  id: number;
   level: string;
 }
 
 export interface RequiredLevel {
-  id: Number;
+  id: number;
   level: string;
 }
 
 export interface RecognitionType {
-  id: Number;
+  id: number;
   recognition: string;
 }
 
@@ -45,25 +45,25 @@ export interface Contact {
 }
 
 export interface Sector {
-  id: Number;
+  id: number;
   sector: string;
 }
 
 export interface SubSector {
-  id: Number;
+  id: number;
   name: string;
   sector: Sector;
 }
 
 export interface Ovv {
-  id: Number;
+  id: number;
   email: string;
   phone: string;
   name: string;
 }
 
 export interface GeiOrganization {
-  id: Number;
+  id: number;
   activity_type: string;
   ovv: Ovv;
   emission_OVV: string;
@@ -74,7 +74,7 @@ export interface GeiOrganization {
 }
 
 export interface GeiActivityType {
-  id: Number;
+  id: number;
   sector: Sector;
   sub_sector: SubSector;
   activity_type: string;

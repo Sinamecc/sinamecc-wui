@@ -1,7 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,14 +9,16 @@ import { Report } from '../interfaces/report';
 import { ReportDataCatalog } from '../interfaces/report-data';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
 import { ReportService } from '../report.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-methodolofical-sheet',
   templateUrl: './methodolofical-sheet.component.html',
   styleUrls: ['./methodolofical-sheet.component.scss'],
+  standalone: false,
 })
 export class MethodoloficalSheetComponent implements OnInit {
-  reportForm: FormGroup;
+  reportForm: UntypedFormGroup;
   catalogs: ReportDataCatalog = undefined;
   error: string;
   isLoading = false;
@@ -27,12 +28,12 @@ export class MethodoloficalSheetComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private reportService: ReportService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) {
     this.reportService.currentReport.subscribe((message) => {
       this.report = message;
@@ -70,7 +71,7 @@ export class MethodoloficalSheetComponent implements OnInit {
         finalize(() => {
           this.reportForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         () => {
@@ -81,7 +82,7 @@ export class MethodoloficalSheetComponent implements OnInit {
         },
         (error) => {
           this.error = error;
-        }
+        },
       );
   }
 
@@ -94,7 +95,7 @@ export class MethodoloficalSheetComponent implements OnInit {
       measurement_frequency: this.reportForm.value['formArray'][0].measurementFrequencyCtrl,
       from_date: this.datePipe.transform(
         this.reportForm.value['formArray'][0].timeSeriesAvailableStartCtrl,
-        'yyyy-MM-dd'
+        'yyyy-MM-dd',
       ),
       to_date: this.datePipe.transform(this.reportForm.value['formArray'][0].timeSeriesAvailableEndCtrl, 'yyyy-MM-dd'),
       geographic_coverage: this.reportForm.value['formArray'][0].geographicCoverageCtrl,

@@ -1,13 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { MccrPocService } from './mccr-poc.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MccrPocService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [MccrPocService],
+      imports: [],
+      providers: [MccrPocService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     });
   });
 

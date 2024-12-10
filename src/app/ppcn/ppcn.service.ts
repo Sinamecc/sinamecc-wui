@@ -63,7 +63,7 @@ export class PpcnService {
     private credentialsService: CredentialsService,
     private httpClient: HttpClient,
     private datePipe: DatePipe,
-    private s3: S3Service
+    private s3: S3Service,
   ) {}
 
   deletePpcn(uuid: string): Observable<{} | Object> {
@@ -76,7 +76,7 @@ export class PpcnService {
           message: 'PPCN deleted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -88,7 +88,7 @@ export class PpcnService {
     return this.httpClient.get(routes.ppcns(lang), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -96,7 +96,7 @@ export class PpcnService {
     return this.httpClient.get(routes.ppcnsAll(lang), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -108,7 +108,7 @@ export class PpcnService {
     return this.httpClient.get(routes.getGeographicLevel(lang), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -116,7 +116,7 @@ export class PpcnService {
     return this.httpClient.get(routes.getAllOvv(), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -124,7 +124,7 @@ export class PpcnService {
     return this.httpClient.get(routes.seededFormData(levelId, lang), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -132,7 +132,7 @@ export class PpcnService {
     return this.httpClient.get(routes.subsectors(sector, lang), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -140,7 +140,7 @@ export class PpcnService {
     return this.httpClient.get(routes.getPpcn(uuid, lang), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -162,7 +162,7 @@ export class PpcnService {
             message: 'Files submitted correctly',
           };
           return response;
-        })
+        }),
       );
     } else {
       // raise exception
@@ -173,7 +173,7 @@ export class PpcnService {
     return this.httpClient.get(routes.ppcnReviews(id), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -181,7 +181,7 @@ export class PpcnService {
     return this.httpClient.get(routes.ppcnAvailableStatuses(), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -200,7 +200,7 @@ export class PpcnService {
     return this.httpClient.get(routes.getPpcnComments(id), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -214,7 +214,7 @@ export class PpcnService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -228,7 +228,7 @@ export class PpcnService {
           message: 'Form updated correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -239,7 +239,7 @@ export class PpcnService {
     contactFormId: number = null,
     geiOrganizationId: number = null,
     geographicFormId: number = null,
-    id: string = null
+    id: string = null,
   ) {
     const formData = this.buildPPCNForm(state, context, contactFormId, geographicFormId, geiOrganizationId);
 
@@ -255,7 +255,7 @@ export class PpcnService {
     context: any,
     contactFormId: number = null,
     geographicFormId: number = null,
-    geiOrganizationId: number = null
+    geiOrganizationId: number = null,
   ) {
     const formData = {};
 
@@ -307,9 +307,8 @@ export class PpcnService {
         if (functionToInvokeByIndex[index].concat === '') {
           formData[functionToInvokeByIndex[index].name] = this[functionToInvokeByIndex[index].function](context);
         } else {
-          formData[functionToInvokeByIndex[index].name][functionToInvokeByIndex[index].concat] = this[
-            functionToInvokeByIndex[index].function
-          ](context);
+          formData[functionToInvokeByIndex[index].name][functionToInvokeByIndex[index].concat] =
+            this[functionToInvokeByIndex[index].function](context);
         }
       }
     }
@@ -445,7 +444,7 @@ export class PpcnService {
       }
       geiOrganization['emission_ovv_date'] = this.datePipe.transform(
         context[5].implementationEmissionDateCtrl,
-        'yyyy-MM-dd'
+        'yyyy-MM-dd',
       );
       geiOrganization['base_year'] = context[5].baseYearCtrl;
       geiOrganization['report_year'] = context[5].reportYearCtrl;
@@ -461,7 +460,7 @@ export class PpcnService {
       geiOrganization['ovv'] = context[5].ovvCtrl;
       geiOrganization['emission_ovv_date'] = this.datePipe.transform(
         context[5].implementationEmissionDateCtrl,
-        'yyyy-MM-dd'
+        'yyyy-MM-dd',
       );
       geiOrganization['base_year'] = context[5].baseYearCtrl;
       geiOrganization['report_year'] = context[5].reportYearCtrl;

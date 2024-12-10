@@ -1,11 +1,11 @@
 <mat-toolbar class="mat-elevation-z6 navbar" color="primary">
-  <div fxHide.gt-sm fxLayoutAlign="start center">
+  <div class="flex justify-start items-center sm:hidden">
     <button class="menu-button" mat-icon-button (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
     <a class="brand" href="./home" translate><img src="assets/{{ logoName }}" /></a>
   </div>
-  <div fxHide.lt-md>
+  <div class="md:hidden">
     <a class="brand" href="./home" translate><img src="assets/{{ logoName }}" /></a>
 
     <button *ngIf="showModule(permissions, 'admin')" mat-button [matMenuTriggerFor]="admin">
@@ -59,7 +59,7 @@
       <span translate>ACCIONES DE ADAPTACIÓN</span>
     </button>
   </div>
-  <span fxFlex></span>
+  <span class="flex flex-1"></span>
   <button mat-icon-button [matMenuTriggerFor]="languageMenu">
     <mat-icon>language</mat-icon>
   </button>

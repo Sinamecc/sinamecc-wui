@@ -1,7 +1,7 @@
 import { Contact } from './contact';
 
 export interface Organization {
-  id: Number;
+  id: number;
   name: string;
   legal_identification: string;
   representative_legal_identification: string;

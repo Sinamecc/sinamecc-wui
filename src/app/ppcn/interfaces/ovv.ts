@@ -1,5 +1,5 @@
 export interface Ovv {
-  id: Number;
+  id: number;
   email: string;
   phone: string;
   name: string;

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from '@app/material.module';
 import { LoaderComponent } from './loader/loader.component';
@@ -25,7 +24,7 @@ import { CommentsViewComponent } from './comments-view/comments-view.component';
 import { CommentsAddComponent } from './comments-add/comments-add.component';
 import { ChangeLogViewComponent } from './change-log-view/change-log-view.component';
 @NgModule({
-  imports: [FlexLayoutModule, MaterialModule, CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
+  imports: [MaterialModule, CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
   declarations: [
     LoaderComponent,
     InputFileComponent,

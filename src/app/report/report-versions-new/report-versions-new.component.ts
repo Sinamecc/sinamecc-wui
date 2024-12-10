@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { environment } from '@env/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Logger } from '@core';
@@ -8,8 +8,8 @@ import { I18nService } from '@app/i18n';
 import { Observable } from 'rxjs';
 import { ReportService } from '@app/report/report.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('Report');
 
@@ -17,11 +17,12 @@ const log = new Logger('Report');
   selector: 'app-report-versions-new',
   templateUrl: './report-versions-new.component.html',
   styleUrls: ['./report-versions-new.component.scss'],
+  standalone: false,
 })
 export class ReportVersionsNewComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  reportForm: FormGroup;
+  reportForm: UntypedFormGroup;
   isLoading = false;
   id: number;
   reportName: Observable<string>;
@@ -29,11 +30,11 @@ export class ReportVersionsNewComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private reportService: ReportService,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.id = +this.route.snapshot.paramMap.get('id');
     this.createForm();
@@ -49,7 +50,7 @@ export class ReportVersionsNewComponent implements OnInit {
         finalize(() => {
           this.reportForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -63,7 +64,7 @@ export class ReportVersionsNewComponent implements OnInit {
         (error) => {
           log.debug(`Report File error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -75,7 +76,7 @@ export class ReportVersionsNewComponent implements OnInit {
         finalize(() => {
           this.reportForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -87,7 +88,7 @@ export class ReportVersionsNewComponent implements OnInit {
         (error) => {
           log.debug(`Report File error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 }

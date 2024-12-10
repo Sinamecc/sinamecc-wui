@@ -1,5 +1,5 @@
 <br />
-<div class="container">
+<div class="container-custom">
   <mat-card>
     <mat-card-content>
       <mat-card-title class="section-heading" translate>MMCR POC</mat-card-title>
@@ -10,7 +10,7 @@
         <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
       </mat-card-subtitle>
 
-      <div class="container" [hidden]="isLoading">
+      <div class="container-custom" [hidden]="isLoading">
         <h3 translate class="text-color">{{ 'general.data' | translate }}</h3>
         <strong translate>{{ 'mccrPoc.uccCode' | translate }}</strong
         >: {{ mccr_poc?.ucc_code }} <br />

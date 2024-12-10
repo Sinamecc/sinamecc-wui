@@ -11,6 +11,7 @@ import { finalize } from 'rxjs/operators';
   selector: 'app-monitoring-proposal-verification-new',
   templateUrl: './monitoring-proposal-verification-new.component.html',
   styleUrls: ['./monitoring-proposal-verification-new.component.scss'],
+  standalone: false,
 })
 export class MonitoringProposalVerificationNewComponent implements OnInit {
   version: string = environment.version;
@@ -28,7 +29,7 @@ export class MonitoringProposalVerificationNewComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: MccrRegistriesService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'Informe de Verificacion del Reporte de Monitoreo';
@@ -39,7 +40,7 @@ export class MonitoringProposalVerificationNewComponent implements OnInit {
     this.mccrRegistryObservable = this.service.getMccrRegistry(this.id).pipe(
       finalize(() => {
         this.isLoading = false;
-      })
+      }),
     );
     this.mccrRegistryObservable.subscribe((response: MccrRegistry) => {
       this.mccrRegistry = response;

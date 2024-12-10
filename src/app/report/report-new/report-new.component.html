@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-custom">
   <h3>
     <mat-card-title translate class="section-heading">reportData.createReport</mat-card-title>
     <mat-divider class="divider-custom"></mat-divider>
@@ -6,7 +6,7 @@
   </h3>
   <div>
     <form *ngIf="!isLoading" [formGroup]="mainGroup">
-      <div fxLayout="column">
+      <div class="flex flex-col">
         <mat-horizontal-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
@@ -33,7 +33,7 @@
     </form>
   </div>
 
-  <div fxFill fxLayout="column" fxLayoutAlign="center center" *ngIf="isLoading">
+  <div class="flex flex-col flex-fill justify-center items-center" *ngIf="isLoading">
     <mat-spinner color="accent"></mat-spinner>
     <h1>Cargando</h1>
   </div>

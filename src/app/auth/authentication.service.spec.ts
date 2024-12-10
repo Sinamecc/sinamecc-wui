@@ -3,8 +3,9 @@ import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
 import { CredentialsService, Credentials } from './credentials.service';
 import { MockCredentialsService } from './credentials.service.mock';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AuthenticationService', () => {
   let authenticationService: AuthenticationService;
@@ -13,8 +14,13 @@ describe('AuthenticationService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [{ provide: CredentialsService, useClass: MockCredentialsService }, AuthenticationService],
+      imports: [],
+      providers: [
+        { provide: CredentialsService, useClass: MockCredentialsService },
+        AuthenticationService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
     });
 
     httpMock = TestBed.inject(HttpTestingController as Type<HttpTestingController>);

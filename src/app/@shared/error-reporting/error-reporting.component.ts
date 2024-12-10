@@ -5,6 +5,7 @@ import { ErrorDetail } from '../error';
   selector: 'app-error-reporting',
   templateUrl: './error-reporting.component.html',
   styleUrls: ['./error-reporting.component.scss'],
+  standalone: false,
 })
 export class ErrorReportingComponent implements OnInit {
   constructor() {}

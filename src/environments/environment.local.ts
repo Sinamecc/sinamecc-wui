@@ -13,5 +13,5 @@ export const environment = {
   serverUrl: '/api',
   carbonUrl: '/carbonmarket',
   supportedLanguages: ['en-US', 'es-CR'],
-  hmr: true,
+  hmr: false, // TODO: fix this
 };

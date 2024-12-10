@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoaderComponent } from '../loader/loader.component';
 import { InputFileComponent } from '../input-file/input-file.component';
@@ -16,6 +16,7 @@ import { UploadProposalService } from './upload-proposal.service';
 import { MockUploadProposalService } from './upload-proposal.service.mock';
 import * as _moment from 'moment';
 import { UploadProposalComponent } from './upload-proposal.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const moment = _moment;
 
@@ -25,18 +26,22 @@ describe('UploadProposalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [UploadProposalComponent, LoaderComponent, InputFileComponent, ByteFormatPipe],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
       ],
-      declarations: [UploadProposalComponent, LoaderComponent, InputFileComponent, ByteFormatPipe],
-      providers: [I18nService, { provide: UploadProposalService, useClass: MockUploadProposalService }],
+      providers: [
+        I18nService,
+        { provide: UploadProposalService, useClass: MockUploadProposalService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
     }).compileComponents();
   }));
 

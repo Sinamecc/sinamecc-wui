@@ -1,13 +1,14 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { AdminService } from '@app/admin/admin.service';
 import { Permissions } from '../../permissions';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-admin-permissions-list-edit',
   templateUrl: './admin-permissions-list-edit.component.html',
   styleUrls: ['./admin-permissions-list-edit.component.scss'],
+  standalone: false,
 })
 export class AdminPermissionsListEditComponent implements OnInit, AfterViewInit {
   displayedColumns = ['name', 'content_type', 'action'];
@@ -60,7 +61,7 @@ export class AdminPermissionsListEditComponent implements OnInit, AfterViewInit 
   add(perm: Permissions) {
     this.newListOfUserpermission.push(perm);
     this.listOfDeleteUserPermission = this.listOfDeleteUserPermission.filter(
-      (permissions) => permissions.id === perm.id
+      (permissions) => permissions.id === perm.id,
     );
     this.userPermissions.push(perm);
   }

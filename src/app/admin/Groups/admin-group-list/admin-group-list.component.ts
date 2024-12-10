@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ViewChild, Optional, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Groups } from '@app/admin/groups';
-import { MatPaginator } from '@angular/material/paginator';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { GroupsData } from '@app/admin/groupsData';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'app-admin-group-list',
   templateUrl: './admin-group-list.component.html',
   styleUrls: ['./admin-group-list.component.scss'],
+  standalone: false,
 })
 export class AdminGroupListComponent implements OnInit {
   displayedColumnsGroups = ['name', 'action'];
@@ -33,7 +34,7 @@ export class AdminGroupListComponent implements OnInit {
     @Optional()
     @Inject(MAT_DIALOG_DATA)
     public data: GroupsData,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     if (this.data) {
       this.componentType = data.componentType;

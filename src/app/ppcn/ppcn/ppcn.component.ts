@@ -11,6 +11,7 @@ import { I18nService } from '@app/i18n';
   selector: 'app-ppcn',
   templateUrl: './ppcn.component.html',
   styleUrls: ['./ppcn.component.scss'],
+  standalone: false,
 })
 export class PpcnComponent implements OnInit {
   ppcn: Ppcn;
@@ -99,7 +100,7 @@ export class PpcnComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
   }
@@ -111,7 +112,7 @@ export class PpcnComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe((response: Ppcn) => {
         this.ppcn = response;
@@ -156,7 +157,7 @@ export class PpcnComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe((response: Object[]) => {
         if (response.length > 0) {

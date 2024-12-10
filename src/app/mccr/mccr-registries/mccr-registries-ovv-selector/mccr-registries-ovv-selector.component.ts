@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Logger } from '@core';
 import { Ovv } from '@app/mccr/mccr-registries/mccr-registries-ovv-selector/ovv';
 import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('Report');
 
@@ -15,21 +15,22 @@ const log = new Logger('Report');
   selector: 'app-mccr-registries-ovv-selector',
   templateUrl: './mccr-registries-ovv-selector.component.html',
   styleUrls: ['./mccr-registries-ovv-selector.component.scss'],
+  standalone: false,
 })
 export class MccrRegistriesOvvSelectorComponent implements OnInit {
   ovvs: Ovv[];
   isLoading = false;
   mccrRegistry: MccrRegistry;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(
     private router: Router,
     private service: MccrRegistriesService,
     public snackBar: MatSnackBar,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     this.createForm();
   }
@@ -42,7 +43,7 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe((response: Ovv[]) => {
         this.ovvs = response;
@@ -57,7 +58,7 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -71,7 +72,7 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
         (error) => {
           log.debug(`Report File error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 

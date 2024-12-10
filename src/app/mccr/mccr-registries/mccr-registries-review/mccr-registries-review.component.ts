@@ -14,6 +14,7 @@ const log = new Logger('Report');
   selector: 'app-mccr-registries-review',
   templateUrl: './mccr-registries-review.component.html',
   styleUrls: ['./mccr-registries-review.component.scss'],
+  standalone: false,
 })
 export class MccrRegistriesReviewComponent implements OnInit {
   version: string = environment.version;
@@ -35,7 +36,7 @@ export class MccrRegistriesReviewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private credentialsService: CredentialsService,
-    private service: MccrRegistriesService
+    private service: MccrRegistriesService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'specificLabel.addReviewMCCRRegistry';
@@ -47,7 +48,7 @@ export class MccrRegistriesReviewComponent implements OnInit {
     this.mccrRegistryObservable = this.service.getMccrRegistry(this.id).pipe(
       finalize(() => {
         this.isLoading = false;
-      })
+      }),
     );
     this.mccrRegistryObservable.subscribe((response: MccrRegistry) => {
       this.mccrRegistry = response;

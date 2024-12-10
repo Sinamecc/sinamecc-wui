@@ -1,13 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { Angulartics2Module } from 'angulartics2';
-import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
 import { environment } from '@env/environment';
 import { CoreModule } from '@core';
@@ -30,13 +29,14 @@ import { MccrPocModule } from '@app/mccr/mccr-poc/mccr-poc.module';
 import { AdaptationActionsModule } from './adaptation-actions/adaptation-actions.module';
 
 @NgModule({
+  declarations: [AppComponent, ErrorComponent],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     ServiceWorkerModule.register('./ngsw-worker.js', {
       enabled: environment.production,
     }),
     FormsModule,
-    HttpClientModule,
     TranslateModule.forRoot(),
     BrowserAnimationsModule,
     MaterialModule,
@@ -53,16 +53,15 @@ import { AdaptationActionsModule } from './adaptation-actions/adaptation-actions
     MccrPocModule,
     AdaptationActionsModule,
     Angulartics2Module.forRoot(),
-    AppRoutingModule, // must be imported as the last module as it contains the fallback route
+    AppRoutingModule,
   ],
-  declarations: [AppComponent, ErrorComponent],
   providers: [
     RouteService,
     {
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy,
     },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,17 +1,15 @@
-@import "src/theme/theme-variables";
+@use "@angular/material" as mat;
+@use "src/theme/theme-variables" as *;
 
 :host {
   display: flex;
   flex: 1;
   height: 100vh;
-  // background-color: #f5f5f5;
   background-image: url("../../assets/background-login.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: center; 
-  color: white;
-  text-transform: uppercase;
-  font-family: "Open Sans" !important, sans-serif;
+  background-position: center;
+  font-family: "Open Sans" sans-serif !important ;
   font-weight: 800;
 }
 
@@ -21,9 +19,10 @@
 
 .version {
   margin: 0;
+  color: white;
 }
 
-.login-box.mat-card{
+.login-box.mat-card {
   background-color: rgba(#fff, 0.4);
 }
 
@@ -33,48 +32,44 @@
 }
 
 .login-error {
-  color: mat-color($app-warn);
+  color: mat.m2-get-color-from-palette($app-warn);
 }
 
 .mat-card {
   color: #fff;
 }
 
-.custom-option-link{
-  color:white;
+.custom-option-link {
   text-decoration: none;
-  
 }
 
-.custom-option-link:hover{
+.custom-option-link:hover {
   cursor: pointer;
 }
 
-.custom-input{
+.custom-input {
   border-radius: 7px;
-  background: transparent; background: #ededed url("../../../node_modules/material-design-icons/communication/1x_web/ic_email_black_18dp.png") no-repeat 9px center; 
+  background: transparent;
+  background: #ededed url("../../../node_modules/material-design-icons/communication/1x_web/ic_email_black_18dp.png")
+    no-repeat 9px center;
   border: solid 1px #ccc;
-  padding: 9px 10px 9px 32px; 
+  padding: 9px 10px 9px 32px;
   width: 350px;
   outline: none;
 }
 
 .custom-input:focus {
-	background-color: #fff;
-	border-color: rgb(102, 155, 204);
-  box-shadow: 0 0 5px rgba(109,207,246,.5);
+  background-color: #fff;
+  border-color: rgb(102, 155, 204);
+  box-shadow: 0 0 5px rgba(109, 207, 246, 0.5);
   outline: none;
 }
 
-.recovery-password-section{
+.recovery-password-section {
   text-align: center;
 }
 
-.recovery-button{
-  width: 350px;
-}
-
-.recovery-label{
-  color: rgb(216, 216, 216); 
+.recovery-label {
+  // color: rgb(216, 216, 216);
   text-transform: none;
 }

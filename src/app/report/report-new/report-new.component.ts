@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, AbstractControl } from '@angular/forms';
 
 import { Logger } from '@core';
 import { ReportFormDataComponent } from '../report-form-data/report-form-data.component';
@@ -15,10 +15,11 @@ const log = new Logger('Report');
   selector: 'app-report-new',
   templateUrl: './report-new.component.html',
   styleUrls: ['./report-new.component.scss'],
+  standalone: false,
 })
-export class ReportNewComponent implements OnInit {
+export class ReportNewComponent implements OnInit, AfterViewInit {
   isLoading = false;
-  mainGroup: FormGroup;
+  mainGroup: UntypedFormGroup;
   reportEdit: Report;
 
   @ViewChild(ReportFormDataComponent) reportFormData: ReportFormDataComponent;
@@ -26,10 +27,10 @@ export class ReportNewComponent implements OnInit {
   @ViewChild(DataUpdateComponent) dataUpdate: DataUpdateComponent;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private cdRef: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private service: ReportService
+    private service: ReportService,
   ) {
     this.createForm();
   }

@@ -41,7 +41,7 @@ export function untilDestroyed(instance: object, destroyMethodName: string = 'ng
 
     if (!hasDestroyFunction) {
       throw new Error(
-        `${instance.constructor.name} is using untilDestroyed but doesn't implement ${destroyMethodName}`
+        `${instance.constructor.name} is using untilDestroyed but doesn't implement ${destroyMethodName}`,
       );
     }
 

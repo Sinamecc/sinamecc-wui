@@ -2,16 +2,16 @@
   <div #commentContainer></div>
 </div>
 
-<div class="container">
+<div class="container-custom">
   <mat-card>
     <h1>
       <mat-card-title translate>APP_NAME</mat-card-title>
       <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
     </h1>
     <h3>
-      <mat-card-title
-        ><span translate>{{ title }}</span></mat-card-title
-      >
+      <mat-card-title>
+        <span translate>{{ title }}</span>
+      </mat-card-title>
     </h3>
     <mat-card-content>
       <form (ngSubmit)="submitForm()" [formGroup]="form" novalidate>
@@ -19,7 +19,7 @@
           <span translate>errorLabel.errorSubmittingForm</span>
         </div>
         <br />
-        <div fxLayout="column">
+        <div class="flex flex-col">
           <h3 translate>general.currentStatus</h3>
           <span>{{ entity.fsm_state?.label }}</span>
           <hr />

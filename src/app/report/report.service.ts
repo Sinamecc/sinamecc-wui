@@ -47,7 +47,11 @@ export class ReportService {
   private reportSource = new BehaviorSubject(null);
   currentReport = this.reportSource.asObservable();
 
-  constructor(private httpClient: HttpClient, private credentialsService: CredentialsService, private s3: S3Service) {}
+  constructor(
+    private httpClient: HttpClient,
+    private credentialsService: CredentialsService,
+    private s3: S3Service,
+  ) {}
 
   updateCurrentReport(newReport: ReportDataPayload) {
     this.reportSource.next(newReport);
@@ -60,7 +64,7 @@ export class ReportService {
     return this.httpClient.post(routes.submitReportFile(id), formData, {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -80,7 +84,7 @@ export class ReportService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -92,7 +96,7 @@ export class ReportService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -122,7 +126,7 @@ export class ReportService {
               message: 'Form submitted correctly',
             };
             return response;
-          })
+          }),
         );
     } else {
       // raise exception
@@ -133,7 +137,7 @@ export class ReportService {
     return this.httpClient.get(routes.reports(), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -141,7 +145,7 @@ export class ReportService {
     return this.httpClient.get(routes.reports(id), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -149,7 +153,7 @@ export class ReportService {
     return this.httpClient.get(routes.versions(id), {}).pipe(
       map((body: any) => {
         return body.versions;
-      })
+      }),
     );
   }
 
@@ -161,7 +165,7 @@ export class ReportService {
     return this.httpClient.get(routes.versions(id), {}).pipe(
       map((body: any) => {
         return body.name;
-      })
+      }),
     );
   }
 
@@ -169,7 +173,7 @@ export class ReportService {
     return this.httpClient.get(routes.reportDataCatalogs()).pipe(
       map((body: ReportDataCatalog) => {
         return body;
-      })
+      }),
     );
   }
 }

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-custom">
   <mat-card>
     <h3>
       <mat-card-title translate class="section-heading">
@@ -11,7 +11,7 @@
 
     <mat-card-content>
       <form (ngSubmit)="submitForm(searchType.value)" [formGroup]="createPermissionsForm" novalidate>
-        <div fxLayout="column">
+        <div class="flex flex-col">
           <mat-form-field>
             <input
               type="text"

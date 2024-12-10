@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-custom">
   <mat-card>
     <h3>
       <mat-card-title class="section-heading" translate>admin.users</mat-card-title>
@@ -6,8 +6,9 @@
       <mat-divider class="divider-custom"></mat-divider>
     </h3>
     <br />
-    <app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
-    <br />
+    <div class="p-4">
+      <app-custom-search-bar [fieldsToSearch]="fieldsToSearch" [table]="dataSource"></app-custom-search-bar>
+    </div>
     <mat-card-content>
       <mat-table #table [dataSource]="dataSource">
         <ng-container matColumnDef="username">

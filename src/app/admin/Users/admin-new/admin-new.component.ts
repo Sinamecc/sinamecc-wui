@@ -7,7 +7,7 @@ import { Logger } from '@core';
 import { AdminService } from '../../admin.service';
 import { Observable } from 'rxjs';
 import { Groups } from '../../groups';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,9 +20,8 @@ import { Role } from '@app/admin/roles';
 import { pickBy, identity } from 'lodash';
 import { map } from 'rxjs/operators';
 import { Response } from './../../admin.service';
-
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
 const log = new Logger('CreateUser');
@@ -31,6 +30,7 @@ const log = new Logger('CreateUser');
   selector: 'app-admin-new',
   templateUrl: './admin-new.component.html',
   styleUrls: ['./admin-new.component.scss'],
+  standalone: false,
 })
 export class AdminNewComponent implements OnInit {
   permList$: Observable<Permissions[]>;
@@ -38,8 +38,8 @@ export class AdminNewComponent implements OnInit {
 
   roles: Role[];
   roles$: Observable<Role[]>;
-  createUserForm: FormGroup;
-  roleAssignForm: FormGroup;
+  createUserForm: UntypedFormGroup;
+  roleAssignForm: UntypedFormGroup;
   isLoading = false;
 
   error: string;
@@ -67,10 +67,10 @@ export class AdminNewComponent implements OnInit {
     public dialog: MatDialog,
     @Optional() public dialogRef: MatDialogRef<AdminNewComponent>,
     private adminService: AdminService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.name = '';
     this.lastName = '';
@@ -92,7 +92,7 @@ export class AdminNewComponent implements OnInit {
         this.translateService.get('Error loading form information').subscribe((res: string) => {
           this.snackBar.open(res, null, { duration: 3000 });
         });
-      }
+      },
     );
   }
 
@@ -177,7 +177,7 @@ export class AdminNewComponent implements OnInit {
         finalize(() => {
           this.createUserForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: Response) => {
@@ -198,7 +198,7 @@ export class AdminNewComponent implements OnInit {
         (error) => {
           log.debug(`Create user error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -217,7 +217,7 @@ export class AdminNewComponent implements OnInit {
         finalize(() => {
           this.createUserForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -235,7 +235,7 @@ export class AdminNewComponent implements OnInit {
         (error) => {
           log.debug(`Create user error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -249,7 +249,7 @@ export class AdminNewComponent implements OnInit {
       (err: any) => {
         log.debug(`Create user error: ${err}`);
         this.error = err;
-      }
+      },
     );
   }
 
@@ -273,7 +273,7 @@ export class AdminNewComponent implements OnInit {
         finalize(() => {
           this.createUserForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: any) => {
@@ -286,7 +286,7 @@ export class AdminNewComponent implements OnInit {
         (error) => {
           log.debug(`Create user image error: ${error.error}`);
           this.error = error.error;
-        }
+        },
       );
   }
 
@@ -304,7 +304,7 @@ export class AdminNewComponent implements OnInit {
         finalize(() => {
           this.createUserForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: any) => {
@@ -317,7 +317,7 @@ export class AdminNewComponent implements OnInit {
         (error) => {
           log.debug(`Delete groups  error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -335,7 +335,7 @@ export class AdminNewComponent implements OnInit {
         finalize(() => {
           this.createUserForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: any) => {
@@ -347,7 +347,7 @@ export class AdminNewComponent implements OnInit {
         (error) => {
           log.debug(`Delete permissions  error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -366,7 +366,7 @@ export class AdminNewComponent implements OnInit {
         finalize(() => {
           this.createUserForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: any) => {
@@ -379,7 +379,7 @@ export class AdminNewComponent implements OnInit {
         (error) => {
           log.debug(`Create user `.concat(` error: ${error}`));
           this.error = error;
-        }
+        },
       );
   }
 
@@ -387,7 +387,7 @@ export class AdminNewComponent implements OnInit {
     const rolesFormObj = {};
 
     roles.map((role) => {
-      rolesFormObj[role.role] = new FormControl('');
+      rolesFormObj[role.role] = new UntypedFormControl('');
     });
     this.createUserForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -395,7 +395,7 @@ export class AdminNewComponent implements OnInit {
       userName: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
-      roles: new FormGroup(rolesFormObj),
+      roles: new UntypedFormGroup(rolesFormObj),
 
       // permissions: ['', Validators.required],
       // groups: ['', Validators.required],
@@ -405,7 +405,7 @@ export class AdminNewComponent implements OnInit {
   private createFormEdit(roles: Array<Role>) {
     const rolesFormObj = {};
     roles.map((role) => {
-      rolesFormObj[role.role] = new FormControl('');
+      rolesFormObj[role.role] = new UntypedFormControl('');
       const findRole = this.editData.roles.find((x) => x.role === role.role);
       if (findRole) {
         rolesFormObj[role.role].setValue(true);
@@ -418,7 +418,7 @@ export class AdminNewComponent implements OnInit {
       userName: ['', Validators.required],
       email: ['', Validators.required],
       password: [''],
-      roles: new FormGroup(rolesFormObj),
+      roles: new UntypedFormGroup(rolesFormObj),
       // permissions: ['', Validators.required],
       // groups: ['', Validators.required],
     });
