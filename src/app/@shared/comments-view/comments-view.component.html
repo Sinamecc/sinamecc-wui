@@ -1,32 +1,35 @@
-<div>
-  <div class="header-container flex flex-row justify-between items-center">
-    <label class="mat-h1" translate>general.comments</label>
-    <button [mat-dialog-close]="comments" mat-icon-button>
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-  <div *ngIf="edit" class="flex flex-row justify-end items-center">
-    <button (click)="openAddCommentsModal()" mat-raised-button color="primary">
-      <span translate>general.newComment</span>
-    </button>
-  </div>
+<mat-dialog-content class="mat-typography">
+  <h1 translate>general.comments</h1>
+
   <div *ngFor="let comment of comments; index as i">
     <div class="header-container flex flex-row justify-between items-center">
-      <label class="mat-h3 comment-title" translate
-        ><span translate>{{ comment.module }}</span
-        >/<span translate>{{ comment.subModule }}</span></label
-      >
+      <label class="mat-h3 comment-title" translate>
+        <span translate>{{ comment.module }}</span
+        >/<span translate>{{ comment.subModule }}</span>
+      </label>
     </div>
+
     <div>
       <p class="mat-p">
         {{ comment.comment }}
       </p>
     </div>
+
     <div class="flex flex-row justify-end items-center">
       <button *ngIf="edit" (click)="deleteComment(i)" mat-button color="warn">
         <span translate>general.delete</span>
       </button>
     </div>
+
     <mat-divider style="width: 100%"></mat-divider>
   </div>
-</div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>
+    <span translate>general.close</span>
+  </button>
+  <button *ngIf="edit" (click)="openAddCommentsModal()" mat-raised-button color="primary">
+    <span translate>general.newComment</span>
+  </button>
+</mat-dialog-actions>

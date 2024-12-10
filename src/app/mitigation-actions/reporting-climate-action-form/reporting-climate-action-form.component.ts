@@ -86,43 +86,40 @@ export class ReportingClimateActionFormComponent implements OnInit {
     const context = {
       monitoring_reporting_indicator: {
         progress_in_monitoring: this.form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl,
-        monitoring_indicator: [
-          {
-            initial_date_report_period: this.datePipe.transform(
-              this.form.value.formArray[1].reportingPeriodStartCtrl,
-              'yyyy-MM-dd',
-            ),
+        monitoring_indicator: this.form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl
+          ? [
+              {
+                initial_date_report_period: this.datePipe.transform(
+                  this.form.value.formArray[1].reportingPeriodStartCtrl,
+                  'yyyy-MM-dd',
+                ),
 
-            final_date_report_period: this.datePipe.transform(
-              this.form.value.formArray[1].reportingPeriodEndCtrl,
-              'yyyy-MM-dd',
-            ),
+                final_date_report_period: this.datePipe.transform(
+                  this.form.value.formArray[1].reportingPeriodEndCtrl,
+                  'yyyy-MM-dd',
+                ),
 
-            data_updated_date: this.datePipe.transform(
-              this.form.value.formArray[1].indicatorDataUpdateDateCtrl,
-              'yyyy-MM-dd',
-            ),
-            report_type: this.form.value.formArray[1].reportTypeCtrl,
-            progress_report_period: this.datePipe.transform(
-              this.form.value.formArray[2].reportingPeriodCtrl,
-              'yyyy-MM-dd',
-            ),
-            progress_report_period_until: this.datePipe.transform(
-              this.form.value.formArray[2].reportingPeriodUntilCtrl,
-              'yyyy-MM-dd',
-            ),
-            updated_data: this.form.value.formArray[1].informationToUpdateCtrl
-              ? this.form.value.formArray[1].informationToUpdateCtrl
-              : null,
-            progress_report: this.form.value.formArray[2].beenProgressActionPeriodCtrl
-              ? this.form.value.formArray[2].beenProgressActionPeriodCtrl
-              : null,
-            indicator: this.form.value.formArray[1].indicatorSelectionCtrl,
-          },
-        ],
+                data_updated_date: this.datePipe.transform(
+                  this.form.value.formArray[1].indicatorDataUpdateDateCtrl,
+                  'yyyy-MM-dd',
+                ),
+                report_type: this.form.value.formArray[1].reportTypeCtrl,
+                progress_report_period: this.datePipe.transform(
+                  this.form.value.formArray[2].reportingPeriodCtrl,
+                  'yyyy-MM-dd',
+                ),
+                progress_report_period_until: this.datePipe.transform(
+                  this.form.value.formArray[2].reportingPeriodUntilCtrl,
+                  'yyyy-MM-dd',
+                ),
+                updated_data: this.form.value.formArray[1].informationToUpdateCtrl || null,
+                progress_report: this.form.value.formArray[2].beenProgressActionPeriodCtrl || null,
+                indicator: this.form.value.formArray[1].indicatorSelectionCtrl,
+              },
+            ]
+          : [],
       },
     };
-
     if (this.mitigationAction.next_state[0].state === this.stateLabel) {
       context['is_complete'] = true;
     }

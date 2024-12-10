@@ -204,22 +204,26 @@ export class EmissionsMitigationFormComponent implements OnInit {
           ],
         }),
         this.formBuilder.group({
-          standardizedCalculationMethodologyUsedCtrl: [this.mitigationAction.impact_documentation.question[0].check],
+          standardizedCalculationMethodologyUsedCtrl: [
+            this.mitigationAction.impact_documentation.question[0].is_checked,
+          ],
           standardizedCalculationMethodologyUsedDetailCtrl: [
             this.mitigationAction.impact_documentation.question[0].detail,
             Validators.required,
           ],
-          calculationsDocumentedCtrl: [this.mitigationAction.impact_documentation.question[1].check],
+          calculationsDocumentedCtrl: [this.mitigationAction.impact_documentation.question[1].is_checked],
           calculationsDocumentedDetailCtrl: [
             this.mitigationAction.impact_documentation.question[1].detail,
             Validators.required,
           ],
-          emissionFactorsUsedCalculationDocumentedCtrl: [this.mitigationAction.impact_documentation.question[2].check],
+          emissionFactorsUsedCalculationDocumentedCtrl: [
+            this.mitigationAction.impact_documentation.question[2].is_checked,
+          ],
           emissionFactorsUsedCalculationDocumentedDetailCtrl: [
             this.mitigationAction.impact_documentation.question[2].detail,
             Validators.required,
           ],
-          assumptionsDocumentedCtrl: [this.mitigationAction.impact_documentation.question[3].check],
+          assumptionsDocumentedCtrl: [this.mitigationAction.impact_documentation.question[3].is_checked],
           assumptionsDocumentedDetailCtrl: [
             this.mitigationAction.impact_documentation.question[3].detail,
             Validators.required,
@@ -283,25 +287,25 @@ export class EmissionsMitigationFormComponent implements OnInit {
           {
             code: 'Q1',
             question: 'mitigationAction.standardizedCalculationMethodologyUsed',
-            check: this.form.value.formArray[1].standardizedCalculationMethodologyUsedCtrl,
+            is_checked: this.form.value.formArray[1].standardizedCalculationMethodologyUsedCtrl,
             detail: this.form.value.formArray[1].standardizedCalculationMethodologyUsedDetailCtrl,
           },
           {
             code: 'Q2',
             question: 'mitigationAction.calculationsDocumented',
-            check: this.form.value.formArray[1].calculationsDocumentedCtrl,
+            is_checked: this.form.value.formArray[1].calculationsDocumentedCtrl,
             detail: this.form.value.formArray[1].calculationsDocumentedDetailCtrl,
           },
           {
             code: 'Q3',
             question: 'mitigationAction.emissionFactorsUsedCalculationDocumented',
-            check: this.form.value.formArray[1].emissionFactorsUsedCalculationDocumentedCtrl,
+            is_checked: this.form.value.formArray[1].emissionFactorsUsedCalculationDocumentedCtrl,
             detail: this.form.value.formArray[1].emissionFactorsUsedCalculationDocumentedDetailCtrl,
           },
           {
             code: 'Q4',
             question: 'mitigationAction.assumptionsDocumented',
-            check: this.form.value.formArray[1].assumptionsDocumentedCtrl,
+            is_checked: this.form.value.formArray[1].assumptionsDocumentedCtrl,
             detail: this.form.value.formArray[1].assumptionsDocumentedDetailCtrl,
           },
         ],
