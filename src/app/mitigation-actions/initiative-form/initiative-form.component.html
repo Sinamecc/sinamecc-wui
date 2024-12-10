@@ -25,7 +25,7 @@
               <mat-radio-group class="custom-radio-group" formControlName="initiativeTypeCtrl">
                 <mat-radio-button
                   [style.margin.px]="5"
-                  *ngFor="let initiativeType of processedNewFormData?.initiative_type"
+                  *ngFor="let initiativeType of processedNewFormData?.initiative_type | orderById"
                   [value]="initiativeType.id"
                 >
                   {{ initiativeType.name }}
@@ -45,7 +45,7 @@
                 matInput
                 formControlName="initiativeObjectiveCtrl"
                 matTextareaAutosize
-                maxlength="100"
+                maxlength="1300"
                 matAutosizeMinRows="2"
                 matAutosizeMaxRows="20"
               ></textarea>

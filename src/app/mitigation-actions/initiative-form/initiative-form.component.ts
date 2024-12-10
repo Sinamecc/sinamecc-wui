@@ -133,7 +133,7 @@ export class InitiativeFormComponent implements OnInit {
         this.formBuilder.group({
           initiativeTypeCtrl: ['', Validators.required],
           initiativeNameCtrl: ['', [Validators.required, Validators.maxLength(200)]],
-          initiativeObjectiveCtrl: ['', [Validators.required, Validators.maxLength(1000)]],
+          initiativeObjectiveCtrl: ['', [Validators.required, Validators.maxLength(1300)]],
           initiativeDescriptionCtrl: ['', [Validators.required, Validators.maxLength(1000)]],
           initiativeGoalCtrl: ['', [Validators.required, Validators.maxLength(500)]],
         }),
