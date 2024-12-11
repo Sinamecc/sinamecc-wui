@@ -1,6 +1,6 @@
 <div class="container-custom">
   <mat-card>
-    <h3>
+    <div class="w-full flex justify-center p-3">
       <mat-card-title>
         <span class="section-heading" translate>
           {{ edit ? 'Actualizar acción de adaptación' : ' Nueva acción de adaptación' }}
@@ -8,7 +8,7 @@
         <mat-divider class="divider-custom"></mat-divider>
         <mat-divider class="divider-custom"></mat-divider>
       </mat-card-title>
-    </h3>
+    </div>
 
     <form *ngIf="!loading" [formGroup]="mainGroup">
       <mat-horizontal-stepper formArrayName="formArray" #stepper>
