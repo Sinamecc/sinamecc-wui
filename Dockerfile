@@ -1,6 +1,6 @@
 # Stage 0, based on Node.js, to build and compile Angular
 
-FROM node:14 as node
+FROM node:current as node
 
 ARG env=dev
 
