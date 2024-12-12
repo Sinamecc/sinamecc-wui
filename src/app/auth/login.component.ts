@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 import { environment } from '@env/environment';
 import { I18nService } from '@app/i18n';
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   public sendEmail = false;
 
   constructor(
+    private location: Location,
     private router: Router,
     private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
@@ -39,19 +41,22 @@ export class LoginComponent implements OnInit {
     this.authenticationService
       .login(this.loginForm.value)
       .pipe(
+        tap({
+          next: (credentials) => {
+            this.location.replaceState('/home');
+            window.location.reload();
+           // this.router.navigate(['/home'], { replaceUrl: true }); # TODO: Check why it is working.
+          },
+          error: (error) => {
+            this.error = error;
+          },
+        }),
         finalize(() => {
           this.loginForm.markAsPristine();
           this.isLoading = false;
-        }),
+        })
       )
-      .subscribe(
-        (credentials) => {
-          this.router.navigate(['/home'], { replaceUrl: true });
-        },
-        (error) => {
-          this.error = error;
-        },
-      );
+      .subscribe(); 
   }
 
   setLanguage(language: string) {
