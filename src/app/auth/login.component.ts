@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
           next: (credentials) => {
             this.location.replaceState('/home');
             window.location.reload();
-           // this.router.navigate(['/home'], { replaceUrl: true }); # TODO: Check why it is working.
+            // this.router.navigate(['/home'], { replaceUrl: true }); # TODO: Check why it is working.
           },
           error: (error) => {
             this.error = error;
@@ -54,9 +54,9 @@ export class LoginComponent implements OnInit {
         finalize(() => {
           this.loginForm.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
-      .subscribe(); 
+      .subscribe();
   }
 
   setLanguage(language: string) {

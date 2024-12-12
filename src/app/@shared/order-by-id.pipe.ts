@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'orderById',
-  standalone: true // Pipe standalone
+  standalone: true, // Pipe standalone
 })
 export class OrderByIdPipe implements PipeTransform {
   transform(array: any[], ...args: unknown[]): any[] {
