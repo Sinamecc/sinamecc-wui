@@ -4,6 +4,7 @@ import { Component, Input, OnInit } from '@angular/core';
   selector: 'app-gas-report-table',
   templateUrl: './gas-report-table.component.html',
   styleUrls: ['./gas-report-table.component.scss'],
+  standalone: false,
 })
 export class GasReportTableComponent implements OnInit {
   @Input() editForm = false;

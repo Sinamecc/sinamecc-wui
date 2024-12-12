@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Logger } from '@core';
 import { environment } from '@env/environment';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { Router } from '@angular/router';
@@ -9,8 +9,8 @@ import { I18nService } from '@app/i18n';
 import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize, tap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('Report');
 
@@ -18,24 +18,25 @@ const log = new Logger('Report');
   selector: 'app-mccr-registries-new',
   templateUrl: './mccr-registries-new.component.html',
   styleUrls: ['./mccr-registries-new.component.scss'],
+  standalone: false,
 })
 export class MccrRegistriesNewComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   mitigationActions: Observable<MitigationAction[]>;
   processedMitigationActions: MitigationAction[] = [];
   isLoading = false;
-  files: FormArray;
+  files: UntypedFormArray;
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private service: MccrRegistriesService,
     private mitigationService: MitigationActionsService,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.createForm();
   }
@@ -50,7 +51,7 @@ export class MccrRegistriesNewComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -63,7 +64,7 @@ export class MccrRegistriesNewComponent implements OnInit {
         (error) => {
           log.debug(`Mccr Registry File error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -75,23 +76,23 @@ export class MccrRegistriesNewComponent implements OnInit {
     this.mitigationActions = this.initialFormData().pipe(
       tap((mitigationActions: MitigationAction[]) => {
         this.processedMitigationActions = mitigationActions;
-      })
+      }),
     );
   }
 
-  private createItem(): FormGroup {
+  private createItem(): UntypedFormGroup {
     return this.formBuilder.group({
       file: [{ value: undefined, disabled: false }, []],
     });
   }
 
   public addFile(): void {
-    const control = <FormArray>this.form.controls['files'];
+    const control = <UntypedFormArray>this.form.controls['files'];
     control.push(this.createItem());
   }
 
   public removeFile(i: number) {
-    const control = <FormArray>this.form.controls['files'];
+    const control = <UntypedFormArray>this.form.controls['files'];
     control.removeAt(i);
   }
 
@@ -99,7 +100,7 @@ export class MccrRegistriesNewComponent implements OnInit {
     return this.mitigationService.mitigationActions(this.i18nService.language.split('-')[0]).pipe(
       finalize(() => {
         this.isLoading = false;
-      })
+      }),
     );
   }
 }

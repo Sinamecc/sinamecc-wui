@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ViewPdfService } from './view-pdf.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-view-pdf',
   templateUrl: './view-pdf.component.html',
   styleUrls: ['./view-pdf.component.scss'],
+  standalone: false,
 })
 export class ViewPdfComponent implements OnInit {
   isLoading = true;
@@ -21,7 +22,7 @@ export class ViewPdfComponent implements OnInit {
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private _snackBar: MatSnackBar,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {}
 
   ngOnInit() {

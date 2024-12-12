@@ -9,6 +9,7 @@ const log = new Logger('Report');
   selector: 'app-ingei-harmonization',
   templateUrl: './ingei-harmonization.component.html',
   styleUrls: ['./ingei-harmonization.component.scss'],
+  standalone: false,
 })
 export class IngeiHarmonizationComponent implements OnInit {
   isLoading: boolean;
@@ -17,7 +18,10 @@ export class IngeiHarmonizationComponent implements OnInit {
   fileName: string;
   nextRoute: string;
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'harmonization_ingei_proposal';
     this.fileName = 'harmonization_proposal.xlsx';

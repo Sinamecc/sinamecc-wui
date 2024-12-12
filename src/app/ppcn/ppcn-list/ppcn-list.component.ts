@@ -5,18 +5,22 @@ import { Ppcn } from '@app/ppcn/ppcn_registry';
 import { I18nService } from '@app/i18n';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 import { environment } from '@env/environment';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+
 import { CredentialsService } from '@app/auth';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 export class PpcnSource extends DataSource<any> {
   ppcns: Ppcn[];
   ppcns$: Observable<Ppcn[]>;
 
-  constructor(private service: PpcnService, private i18nService: I18nService) {
+  constructor(
+    private service: PpcnService,
+    private i18nService: I18nService,
+  ) {
     super();
   }
   connect(): Observable<Ppcn[]> {
@@ -33,6 +37,7 @@ export class PpcnSource extends DataSource<any> {
   selector: 'app-ppcn-list',
   templateUrl: './ppcn-list.component.html',
   styleUrls: ['./ppcn-list.component.scss'],
+  standalone: false,
 })
 export class PpcnListComponent implements OnInit {
   version: string = environment.version;
@@ -65,7 +70,7 @@ export class PpcnListComponent implements OnInit {
     private i18nService: I18nService,
     private service: PpcnService,
     private dialog: MatDialog,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
   ) {}
 
   ngOnInit(): void {
@@ -136,10 +141,10 @@ export class PpcnListComponent implements OnInit {
   canChangeState(element: Ppcn) {
     if (!(element.fsm_state === 'PPCN_end' || element.fsm_state === 'PPCN_send_recognition_certificate')) {
       // is admin
-      if (Boolean(this.credentialsService.credentials.permissions.all)) {
+      if (this.credentialsService.credentials.permissions.all) {
         return true;
       } else {
-        if (!Boolean(this.credentialsService.credentials.permissions.ppcn.provider)) {
+        if (!this.credentialsService.credentials.permissions.ppcn.provider) {
           return true;
         }
       }
@@ -150,14 +155,14 @@ export class PpcnListComponent implements OnInit {
   hasPermProvider() {
     return Boolean(
       this.credentialsService.credentials.permissions.all ||
-        this.credentialsService.credentials.permissions.ppcn.provider
+        this.credentialsService.credentials.permissions.ppcn.provider,
     );
   }
 
   hasPermReviewer() {
     return Boolean(
       this.credentialsService.credentials.permissions.all ||
-        this.credentialsService.credentials.permissions.ppcn.reviewer
+        this.credentialsService.credentials.permissions.ppcn.reviewer,
     );
   }
 }

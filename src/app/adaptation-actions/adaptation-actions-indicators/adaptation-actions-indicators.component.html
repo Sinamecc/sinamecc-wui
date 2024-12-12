@@ -1,9 +1,9 @@
-<div class="container">
-  <div class="header-container" fxLayout="column" fxLayoutAlign="center center">
+<div class="container-custom">
+  <div class="header-container flex flex-col justify-center items-center">
     <h2 translate>adaptationAction.form4.title</h2>
   </div>
   <form [formGroup]="form">
-    <div fxLayout="column">
+    <div class="flex flex-col">
       <div *ngFor="let formElement of getFormKeys(); let i = index">
         <div *ngIf="i > 0">
           <br />
@@ -16,7 +16,7 @@
               <span translate>adaptationAction.form4.RegisterIindicators</span>
             </ng-template>
 
-            <div fxLayout="row" fxLayoutAlign="start center">
+            <div class="flex flex-row justify-start items-center">
               <mat-icon [matTooltip]="indicatorToolTipTxt">info</mat-icon>
               <mat-form-field class="field-ppcn">
                 <mat-label [matTooltip]="indicatorToolTipTxt" translate
@@ -39,7 +39,7 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
-            <div fxLayout="row" fxLayoutAlign=" center">
+            <div class="flex flex-row justify-center">
               <mat-form-field class="field-ppcn">
                 <mat-label translate>adaptationAction.form4.calculationMethodology</mat-label>
                 <input matInput formControlName="adaptationActionIndicatorMetodologyCtrl" />
@@ -76,7 +76,7 @@
             <br />
             <br />
             <mat-label translate>mitigationAction.timeSeriesAvailable</mat-label>
-            <div fxLayout="row" fxLayoutAlign=" center">
+            <div class="flex flex-row justify-center">
               <mat-form-field class="field-ppcn">
                 <mat-label translate>Desde</mat-label>
                 <input
@@ -162,7 +162,7 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
-            <div fxLayout="row" fxLayoutAlign=" center">
+            <div class="flex flex-row justify-center">
               <mat-form-field class="field-ppcn">
                 <mat-label translate>adaptationAction.form4.indicatorBaseline</mat-label>
                 <input matInput formControlName="indicatorBaselineCtrl" />
@@ -171,7 +171,7 @@
               <input type="file" />
             </div>
 
-            <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+            <div class="button-box flex flex-row justify-end items-center">
               <button
                 mat-raised-button
                 color="primary"
@@ -244,7 +244,7 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
-            <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+            <div class="button-box flex flex-row justify-end items-center">
               <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
               <button
                 mat-raised-button
@@ -263,7 +263,7 @@
               <span translate> reportData.thematicCategorization</span>
             </ng-template>
 
-            <div fxLayout="row" fxLayoutAlign="start center">
+            <div class="flex flex-row justify-start items-center">
               <mat-icon [matTooltip]="typeIndicatorToolTipTxt">info</mat-icon>
               <div>
                 <span translate>mitigationAction.datatype</span>
@@ -335,7 +335,7 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
-            <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+            <div class="button-box flex flex-row justify-end items-center">
               <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
               <button
                 mat-raised-button
@@ -399,7 +399,7 @@
         </div>
       </div>
 
-      <div fxLayout="row" class="button-box" fxLayoutAlign="end center">
+      <div class="button-box flex flex-row justify-end items-center">
         <br />
         <button mat-raised-button color="primary" type="button" (click)="submitForm()">
           <span translate>general.next</span>

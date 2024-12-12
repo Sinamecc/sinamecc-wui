@@ -1,226 +1,84 @@
-/*
- * Application global variables.
- */
+@use "@angular/material" as mat;
 
-// Angular Material custom theme
-// See https://material.angular.io/guide/theming for more details.
-//
-// You can also read https://medium.com/@tomastrajan/the-complete-guide-to-angular-material-themes-4d165a9d24d1
-// for more insight about Angular Material theming.
-
-@import "~@angular/material/theming";
-@import "./variales.scss";
-
-$app-primary: mat-palette($mat-blue, 500);
-$app-accent: mat-palette($mat-orange, 500, a200, a700);
-$app-warn: mat-palette($mat-red);
-
-$global-typography: mat-typography-config(
-  $font-family: "Mulish",
+$primary: (
+  50: #e5edf1,
+  100: #bfd1dc,
+  200: #96b2c5,
+  300: #6a93ad,
+  400: #4a7c9c,
+  500: #1e5674,
+  600: #255d82,
+  700: #1f5377,
+  800: #19496d,
+  900: #0f375a,
+  contrast: (
+    50: #000,
+    100: #000,
+    200: #000,
+    300: #000,
+    400: #fff,
+    500: #fff,
+    600: #fff,
+    700: #fff,
+    800: #fff,
+    900: #fff,
+  ),
 );
 
-$theme-primary: mat-palette($primary, 500);
-$theme-secondary: mat-palette($secondary);
-$theme-tertiary: mat-palette($tertiary);
-
-$custom-theme: mat-light-theme($theme-primary, $theme-secondary, $app-warn);
-
-$custom-typography: mat-typography-config(
-  $font-family: "Mulish",
-  $headline: mat-typography-level(25.5pt, 2.75em, 400, 0.015625em),
-  $title: mat-typography-level(18pt, 2.125em, 300, 0),
-  $subheading-1: mat-typography-level(12pt, 4em, 400, 0.009375em),
-  $subheading-2: mat-typography-level(10.5pt, 1.5em, 600, 0.015625em),
-  $body-1: mat-typography-level(12pt, 1.625em, 400, 0.03125em),
-  $body-2: mat-typography-level(10.5pt, 1.5em, 400, 0.015625em),
-  $button: mat-typography-level(10.5pt, auto, 600, 0.078125em),
-  $caption: mat-typography-level(9pt, auto, 400, 0.025em),
+$secondary: (
+  50: #e3f6ea,
+  100: #b9e8ca,
+  200: #8bd8a7,
+  300: #5cc884,
+  400: #39bd69,
+  500: #1cb752,
+  600: #13aa48,
+  700: #10a13f,
+  800: #0c9836,
+  900: #068826,
+  contrast: (
+    50: #000,
+    100: #000,
+    200: #000,
+    300: #000,
+    400: #000,
+    500: #000,
+    600: #000,
+    700: #000,
+    800: #000,
+    900: #fff,
+  ),
 );
 
-/////
+$theme-primary: mat.m2-define-palette($primary);
+$theme-secondary: mat.m2-define-palette($secondary);
+$app-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
-// Material design icons font path
-$material-design-icons-font-directory-path: "~material-design-icons-iconfont/dist/fonts/";
+$custom-typography: mat.m2-define-typography-config(
+  $font-family: "Mulish",
+  $headline-1: mat.m2-define-typography-level(25.5pt, 2.75em, 400, $letter-spacing: 0.015625em),
+  $headline-2: mat.m2-define-typography-level(25.5pt, 2.75em, 400, $letter-spacing: 0.015625em),
+  $headline-3: mat.m2-define-typography-level(25.5pt, 2.75em, 400, $letter-spacing: 0.015625em),
+  $headline-4: mat.m2-define-typography-level(18pt, 2.125em, 300, $letter-spacing: 0),
+  $headline-5: mat.m2-define-typography-level(12pt, 4em, 400, $letter-spacing: 0.009375em),
+  $headline-6: mat.m2-define-typography-level(10.5pt, 1.5em, 600, $letter-spacing: 0.015625em),
+  $subtitle-2: mat.m2-define-typography-level(12pt, 1.625em, 400, $letter-spacing: 0.03125em),
+  $subtitle-1: mat.m2-define-typography-level(10.5pt, 1.5em, 400, $letter-spacing: 0.015625em),
+  $body-2: mat.m2-define-typography-level(10.5pt, 1.5em, 400, $letter-spacing: 0.015625em),
+  $body-1: mat.m2-define-typography-level(12pt, 1.625em, 400, $letter-spacing: 0.03125em),
+  $button: mat.m2-define-typography-level(10.5pt, auto, 600, $letter-spacing: 0.078125em),
+  $caption: mat.m2-define-typography-level(9pt, auto, 400, $letter-spacing: 0.025em),
+  $overline: mat.m2-define-typography-level(9pt, auto, 400, $letter-spacing: 0.025em),
+);
 
-$gray-color: #c4c4c4;
-$primary-color: #2a658a;
-
-.login-box {
-  $alternate-primary: mat-palette($mat-light-blue);
-  $alternate-accent: mat-palette($mat-yellow, 400);
-
-  $login-box: mat-light-theme($alternate-primary, $alternate-accent);
-
-  // @include angular-material-theme($login-box);
-}
-
-// Toolbar
-.mat-toolbar[_ngcontent-c6],
-.mat-toolbar.mat-primary {
-  background: #000;
-  color: #fff;
-  width: 100%;
-  font: 18px/28px "Open Sans", sans-serif;
-  font-weight: 800;
-}
-
-.mat-button,
-.mat-raised-button,
-.mat-icon-button,
-.mat-stroked-button,
-.mat-flat-button,
-.mat-fab,
-.mat-mini-fab {
-  font-weight: 600;
-}
-
-.text-color {
-  color: #000;
-  border-bottom: 3px solid #ccc;
-  position: relative;
-  padding: 5px;
-  width: 50%;
-}
-
-.text-color::after {
-  bottom: -3px;
-  content: "";
-  height: 3px;
-  left: 0;
-  position: absolute;
-  width: 50px;
-  background: #2aa7d9;
-  font-size: 18px;
-}
-
-@media only screen and (max-width: 700px) {
-  .text-color {
-    width: 100%;
-  }
-
-  .mat-elevation-z8,
-  .container {
-    text-align: left !important;
-    padding: 0.1rem;
-    font-size: 15px;
-    width: 100% !important;
-    margin: 0 !important;
-  }
-}
-
-.mat-elevation-z8,
-.container {
-  text-align: left !important;
-  padding: 1rem;
-  font-size: 15px;
-  width: 90%;
-  margin: 0 auto;
-}
-
-.divider-custom {
-  border-color: #2aa7d9 !important;
-  background: #2aa7d9 !important;
-  max-width: 150px;
-  min-width: 100px;
-  margin: 5px auto 0 auto !important;
-  border: solid 1px;
-  position: relative !important;
-}
-
-.mat-card .mat-divider {
-  position: relative;
-  margin: 5px auto 0 auto;
-  font-size: 15px;
-}
-
-.mat-toolbar-row,
-.mat-toolbar-single-row {
-  width: auto !important;
-  background: transparent;
-}
-
-.mat-header-row {
-  background: #e5e5e5 !important;
-  text-align: center;
-}
-
-.mat-row {
-  text-align: center;
-}
-
-.mat-table > .mat-header-row > .mat-header-cell {
-  font-weight: bold;
-}
-
-.section-heading {
-  margin: 0 auto;
-  text-align: center;
-}
-
-.box-button {
-  width: 90%;
-  margin: 5px auto 10px;
-  text-align: right;
-}
-
-.mat-card-title {
-  text-align: center;
-}
-
-.table-sinamecc {
-  width: 90%;
-  margin: 0 auto;
-}
-
-.brand {
-  float: left;
-}
-
-.mat-card > :first-child {
-  margin-top: 0;
-  text-align: center;
-}
-
-.text-upload {
-  position: relative;
-  float: left;
-  margin-right: 10px;
-}
-
-.field-ppcn {
-  width: 100%;
-}
-
-.center {
-  text-align: center;
-}
-
-.align-right {
-  text-align: right;
-}
-
-.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: #3f51b5 !important;
-}
-
-.mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: #3f51b5 !important;
-}
-
-.mat-raised-button.mat-accent,
-.mat-fab.mat-accent,
-.mat-mini-fab.mat-accent {
-  color: #fff !important;
-}
-
-.login-label .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
-.login-label .mat-form-field-empty.mat-form-field-label {
-  font-weight: 800 !important;
-  color: black;
-}
-
-.sinamecc-container {
-  border: solid 1px $gray-color;
-  border-radius: 5px;
-  padding: 1.3em;
-}
+$app-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $theme-primary,
+      accent: $theme-secondary,
+      warn: $app-warn,
+    ),
+    typography: $custom-typography,
+    density: 0,
+  )
+);

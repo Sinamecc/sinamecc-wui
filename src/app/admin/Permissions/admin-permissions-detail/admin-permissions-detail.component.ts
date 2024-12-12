@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   selector: 'app-admin-permissions-detail',
   templateUrl: './admin-permissions-detail.component.html',
   styleUrls: ['./admin-permissions-detail.component.scss'],
+  standalone: false,
 })
 export class AdminPermissionsDetailComponent implements OnInit {
   permission: any;

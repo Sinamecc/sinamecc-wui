@@ -9,11 +9,11 @@ import { ComponentDialogComponent } from '@core/component-dialog/component-dialo
 import { TranslateService } from '@ngx-translate/core';
 import { Logger } from '@app/@core';
 import { I18nService } from '@app/i18n';
+import { CredentialsService } from '@app/auth';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CredentialsService } from '@app/auth';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 const log = new Logger('Report');
 
@@ -21,7 +21,10 @@ export class MitigationActionSource extends DataSource<any> {
   mitigationActions: MitigationAction[];
   mitigationActions$: Observable<MitigationAction[]>;
 
-  constructor(private service: MitigationActionsService, private i18nService: I18nService) {
+  constructor(
+    private service: MitigationActionsService,
+    private i18nService: I18nService,
+  ) {
     super();
   }
   connect(): Observable<MitigationAction[]> {
@@ -37,6 +40,7 @@ export class MitigationActionSource extends DataSource<any> {
   selector: 'app-mitigation-actions-list',
   templateUrl: './mitigation-actions-list.component.html',
   styleUrls: ['./mitigation-actions-list.component.scss'],
+  standalone: false,
 })
 export class MitigationActionsListComponent implements OnInit {
   version: string = environment.version;
@@ -57,7 +61,7 @@ export class MitigationActionsListComponent implements OnInit {
     private dialog: MatDialog,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
   ) {}
 
   ngOnInit() {
@@ -148,17 +152,18 @@ export class MitigationActionsListComponent implements OnInit {
 
   hasPermProvider() {
     return Boolean(
-      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.ma.provider
+      this.credentialsService.credentials.permissions.all ||
+        this.credentialsService.credentials.permissions.ma.provider,
     );
   }
 
   canChangeState(element: MitigationAction) {
     if (element.fsm_state !== 'end') {
       // is admin
-      if (Boolean(this.credentialsService.credentials.permissions.all)) {
+      if (this.credentialsService.credentials.permissions.all) {
         return true;
       } else {
-        if (!Boolean(this.credentialsService.credentials.permissions.ma.provider)) {
+        if (!this.credentialsService.credentials.permissions.ma.provider) {
           return true;
         }
       }

@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { PpcnLevelComponent } from '../ppcn-level/ppcn-level.component';
 import { PpcnNewComponent } from '../ppcn-new/ppcn-new.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -18,6 +18,7 @@ import { GasReportTableComponent } from '../gas-report-table/gas-report-table.co
 import { CoreModule } from '@core';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
 import { I18nService } from '@app/i18n';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('PpcnFlowComponent', () => {
   let component: PpcnFlowComponent;
@@ -25,23 +26,24 @@ describe('PpcnFlowComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [PpcnFlowComponent, PpcnLevelComponent, PpcnNewComponent, GasReportTableComponent],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
         CoreModule,
         SharedModule,
       ],
-      declarations: [PpcnFlowComponent, PpcnLevelComponent, PpcnNewComponent, GasReportTableComponent],
       providers: [
         MockS3Service,
         { provide: PpcnService, useClass: MockPpcnService },
         { provide: I18nService, useClass: MockI18nService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

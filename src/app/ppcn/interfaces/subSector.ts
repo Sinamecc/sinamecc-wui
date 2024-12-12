@@ -1,7 +1,7 @@
 import { Sector } from './sector';
 
 export interface SubSector {
-  id: Number;
+  id: number;
   name: string;
   sector: Sector;
 }

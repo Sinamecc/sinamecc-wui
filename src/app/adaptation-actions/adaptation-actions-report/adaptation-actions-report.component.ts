@@ -1,7 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import {
@@ -13,14 +12,16 @@ import {
   Province,
 } from '../interfaces/adaptationAction';
 import { Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-adaptation-actions-report',
   templateUrl: './adaptation-actions-report.component.html',
   styleUrls: ['./adaptation-actions-report.component.scss'],
+  standalone: false,
 })
 export class AdaptationActionsReportComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   topics: Topic[][] = [];
   subTopics: SubTopics[] = [];
   subTopicsToShow: SubTopics[][] = [];
@@ -60,11 +61,11 @@ export class AdaptationActionsReportComponent implements OnInit {
   adaptationActionsExtension = '';
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private service: AdaptationActionService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     this.createForm();
   }
@@ -118,7 +119,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
       (error) => {
         this.ods = [];
-      }
+      },
     );
   }
 
@@ -129,7 +130,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
       (error) => {
         this.topics = [];
-      }
+      },
     );
   }
 
@@ -140,7 +141,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
       (error) => {
         this.subTopics = [];
-      }
+      },
     );
   }
 
@@ -151,7 +152,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
       (error) => {
         this.subTopics = [];
-      }
+      },
     );
   }
 
@@ -222,7 +223,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
       (error) => {
         this.subTopics = [];
-      }
+      },
     );
   }
 
@@ -307,7 +308,7 @@ export class AdaptationActionsReportComponent implements OnInit {
             adaptationActionGoalRelationCtrl: [adaptationActionGoalRelationValue, Validators.required],
             adaptationActionEjeRelationCtrl: [adaptationActionEjeRelationValue, Validators.required],
             adaptationActionLinealRelationCtrl: [adaptationActionLinealRelationValue, Validators.required],
-          })
+          }),
         );
         index = +1;
       }
@@ -326,12 +327,12 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   removeThemeCtrl(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][2].controls['themeCtrl'];
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][2].controls['themeCtrl'];
     control.removeAt(index);
   }
 
   addThemeCtrl(index: number) {
-    const control = <FormArray>this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls;
+    const control = <UntypedFormArray>this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls;
     control.push(this.createThemesCtrl());
     this.loadTopics(index);
   }
@@ -341,7 +342,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       (response) => (this.benefiedPopulation = response),
       (error) => {
         this.benefiedPopulation = [];
-      }
+      },
     );
   }
 
@@ -378,11 +379,11 @@ export class AdaptationActionsReportComponent implements OnInit {
     const adaptationActionEndDate = new Date(this.adaptationActionUpdated.implementation.end_date);
 
     adaptationActionStartDate.setMinutes(
-      adaptationActionStartDate.getMinutes() + adaptationActionStartDate.getTimezoneOffset()
+      adaptationActionStartDate.getMinutes() + adaptationActionStartDate.getTimezoneOffset(),
     );
 
     adaptationActionEndDate.setMinutes(
-      adaptationActionEndDate.getMinutes() + adaptationActionEndDate.getTimezoneOffset()
+      adaptationActionEndDate.getMinutes() + adaptationActionEndDate.getTimezoneOffset(),
     );
 
     if (this.adaptationActionUpdated.address.app_scale === '2') {
@@ -534,7 +535,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
       (error) => {
         this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      }
+      },
     );
   }
 
@@ -567,7 +568,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
 
       activity: this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls.map(
-        (x: { value: { adaptationActionTypeCtrl: number } }) => x.value.adaptationActionTypeCtrl
+        (x: { value: { adaptationActionTypeCtrl: number } }) => x.value.adaptationActionTypeCtrl,
       ),
 
       instrument: {

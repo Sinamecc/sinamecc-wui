@@ -1,21 +1,21 @@
-<div *ngIf="loading" fxLayout="column" fxLayoutAlign="center center" class="loading-component">
+<div *ngIf="loading" class="loading-component flex flex-col justify-center items-center">
   <mat-spinner color="accent"></mat-spinner>
   <h1 class="mat-h1" translate>general.loading</h1>
 </div>
-<div *ngIf="!loading" class="main-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-  <div fxFill>
+<div *ngIf="!loading" class="main-container flex flex-col justify-start items-start flex-fill">
+  <div class="flex-fill">
     <mat-tab-group class="custom-tabs">
       <mat-tab [label]="'reportData.form1.title' | translate">
-        <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="tab-container flex flex-col justify-start items-start flex-fill">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>reportData.dataReport</label>
             <button *ngIf="report?.comments || edit" (click)="openCommentsModal(commentsModule1, 0)" mat-icon-button>
               <mat-icon>comment</mat-icon>
             </button>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-around items-start">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.whatInformationReported</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -23,7 +23,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.isBaseline</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3" translate>
@@ -31,21 +31,21 @@
               </h3>
             </div>
 
-            <div *ngIf="loadingFiles" fxLayout="column">
+            <div *ngIf="loadingFiles" class="flex flex-col">
               <mat-spinner [diameter]="30"></mat-spinner>
               <h3 class="mat-h3" translate>general.loading</h3>
             </div>
 
-            <div fxLayout="column" *ngIf="files['base_line_report']">
+            <div class="flex flex-col" *ngIf="files['base_line_report']">
               <h3 class="mat-h3" translate>reportData.form1.reportBaselineIndicator</h3>
-              <div fxLayout="row">
+              <div class="flex flex-row">
                 <button (click)="downloadFile('base_line_report')" mat-raised-button color="primary">
                   {{ files['base_line_report'].filename }} <mat-icon>cloud_download</mat-icon>
                 </button>
               </div>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>¿Cómo se desea reportar la línea base del indicador?</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -53,7 +53,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.qualityPreItems</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3" translate>
@@ -61,7 +61,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.form1.previousElementQuality</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3" translate>
@@ -69,7 +69,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.agreementTransferSINAMECC</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3" translate>
@@ -77,7 +77,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.form1.agreementsTransfer</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3" translate>
@@ -85,7 +85,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>¿Cómo se deben reportar los datos?</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -93,14 +93,14 @@
               </h3>
             </div>
 
-            <div *ngIf="loadingFiles" fxLayout="column">
+            <div *ngIf="loadingFiles" class="flex flex-col">
               <mat-spinner [diameter]="30"></mat-spinner>
               <h3 class="mat-h3" translate>general.loading</h3>
             </div>
 
-            <div fxLayout="column" *ngIf="files['report_file']">
+            <div class="flex flex-col" *ngIf="files['report_file']">
               <h3 class="mat-h3" translate>reportData.files</h3>
-              <div fxLayout="row">
+              <div class="flex flex-row">
                 <button (click)="downloadFile('report_file')" mat-raised-button color="primary">
                   {{ files['report_file'].filename }} <mat-icon>cloud_download</mat-icon>
                 </button>
@@ -111,16 +111,16 @@
       </mat-tab>
 
       <mat-tab [label]="'reportData.form2.title' | translate">
-        <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="tab-container flex flex-col justify-start items-start flex-fill">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>reportData.form2.technicalInfo</label>
             <button *ngIf="report?.comments || edit" (click)="openCommentsModal(commentsModule2, 1)" mat-icon-button>
               <mat-icon>comment</mat-icon>
             </button>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-around items-start">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.form2.recordName</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -128,7 +128,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.form2.description</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -136,7 +136,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.form2.unit</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -144,7 +144,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.form2.calculationMethodology</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -152,7 +152,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.form2.frecuency</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -160,7 +160,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.form2.frecuencyOther</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -168,7 +168,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>mitigationAction.timeSeriesAvailable</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -176,7 +176,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>general.until</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -184,7 +184,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>mitigationAction.geographicCoverage</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -192,7 +192,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>general.other</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -200,7 +200,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.form2.disaggregation</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -208,7 +208,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.form2.limitations</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -216,7 +216,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.form2.sustainabilityEnsured</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -224,7 +224,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.form2.observations</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -233,12 +233,12 @@
             </div>
           </div>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>reportData.form2.informationSources</label>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-around items-start">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>mitigationAction.responsibleInstitution</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -246,9 +246,9 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>adaptationAction.form4.sourceType</h3>
-              <div fxLayout="column">
+              <div class="flex flex-col">
                 <ul>
                   <li *ngFor="let element of report?.information_source">
                     {{ element.name }}
@@ -258,7 +258,7 @@
               <br />
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>mitigationAction.statisticalOperationName</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -267,12 +267,12 @@
             </div>
           </div>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>info.contactInfo</label>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-around items-start">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>info.name</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -280,7 +280,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>general.positionPerson</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -288,7 +288,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>info.emailAddress</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -296,7 +296,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.institution</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -304,7 +304,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>info.phone</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -312,7 +312,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.additionalAnnotations</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -321,12 +321,12 @@
             </div>
           </div>
 
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>Categorización temática</label>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-around items-start">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>mitigationAction.datatype</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -334,9 +334,9 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>mitigationAction.SINAMECCClassifiers</h3>
-              <div fxLayout="column">
+              <div class="flex flex-col">
                 <ul>
                   <li *ngFor="let element of report?.classifier">
                     {{ element.name }}
@@ -350,16 +350,16 @@
       </mat-tab>
 
       <mat-tab [label]="'reportData.form3.title' | translate">
-        <div class="tab-container" fxLayout="column" fxLayoutAlign="start start" fxFill>
-          <div class="header-container" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="tab-container flex flex-col justify-start items-start flex-fill">
+          <div class="header-container flex flex-row justify-between items-center">
             <label class="mat-h1" translate>reportData.form3.title</label>
             <button *ngIf="report?.comments || edit" (click)="openCommentsModal(commentsModule3, 2)" mat-icon-button>
               <mat-icon>comment</mat-icon>
             </button>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="space-around start">
-            <div fxLayout="row">
+          <div class="flex flex-col justify-around items-start">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>mitigationAction.dateLastUpdate</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -367,7 +367,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>mitigationAction.changesLastupdate</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">
@@ -375,7 +375,7 @@
               </h3>
             </div>
 
-            <div fxLayout="row">
+            <div class="flex flex-row">
               <h3 class="mat-h3" translate>reportData.form3.description</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
               <h3 class="mat-h3">

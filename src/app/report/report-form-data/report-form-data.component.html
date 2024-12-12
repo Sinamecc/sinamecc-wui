@@ -1,15 +1,14 @@
-<div class="container">
+<div class="container-custom">
   <mat-card>
     <mat-card-content>
       <form [formGroup]="reportForm">
-        <div fxLayout="column">
+        <div class="flex flex-col">
           <div class="report-error" [hidden]="!error || isLoading" translate>
             <span translate>errorLabel.errorSubmittingForm</span>
           </div>
           <mat-vertical-stepper formArrayName="formArray" #stepper>
             <mat-step
-              fxLayout="column"
-              fxLayoutAlign="start start"
+              class="flex flex-col justify-start items-start"
               formGroupName="0"
               [stepControl]="formArray?.get([0])"
             >
@@ -17,7 +16,7 @@
                 <span translate>reportData.dataReport </span>
               </ng-template>
 
-              <div fxLayout="column" fxLayoutAlign="start start">
+              <div class="flex flex-col justify-start items-start">
                 <span translate>reportData.whatInformationReported</span>
                 <mat-radio-group
                   #whatInformationReported="matRadioGroup"
@@ -36,7 +35,7 @@
                 </mat-radio-group>
                 <br />
               </div>
-              <div fxLayout="column" fxLayoutAlign="start start" *ngIf="whatInformationReported.value == 'indicator'">
+              <div class="flex flex-col justify-start items-start" *ngIf="whatInformationReported.value == 'indicator'">
                 <span translate>reportData.isBaseline</span>
                 <mat-radio-group
                   #isBaseline="matRadioGroup"
@@ -51,7 +50,7 @@
                   </mat-radio-button>
                 </mat-radio-group>
 
-                <div *ngIf="isBaseline.value" [style.width.%]="100" fxLayout="column" fxLayoutAlign="start start">
+                <div *ngIf="isBaseline.value" [style.width.%]="100" class="flex flex-col justify-start items-start">
                   <span translate>¿Cómo se desea reportar la línea base del indicador?</span>
                   <mat-radio-group
                     formControlName="reportUpdateCtrl"
@@ -70,7 +69,7 @@
                   </mat-radio-group>
 
                   <span *ngIf="howReportedInfo?.value == 1" translate>Cargue los archivos seleccionados</span>
-                  <div *ngIf="howReportedInfo?.value == 1" [style.width.%]="100" fxLayout="row" fxLayoutAlign=" center">
+                  <div *ngIf="howReportedInfo?.value == 1" [style.width.%]="100" class="flex flex-row justify-center">
                     <input type="file" (change)="uploadFile($event, false)" name="filename" />
                     <mat-spinner *ngIf="loadingFiles" [diameter]="30"></mat-spinner>
                     <mat-hint *ngIf="files['base_line_report']">{{ files['base_line_report'].filename }}</mat-hint>
@@ -93,7 +92,7 @@
 
               <br />
 
-              <div fxLayout="column" fxLayoutAlign="start start">
+              <div class="flex flex-col justify-start items-start">
                 <span translate>reportData.qualityPreItems</span>
                 <mat-radio-group
                   #qualityPreItems="matRadioGroup"
@@ -115,7 +114,7 @@
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
-              <div fxLayout="column" fxLayoutAlign="start start">
+              <div class="flex flex-col justify-start items-start">
                 <span translate>reportData.agreementTransferSINAMECC</span>
                 <mat-radio-group
                   #agreementTransferSINAMECC="matRadioGroup"
@@ -137,7 +136,7 @@
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
-              <div [style.width.%]="100" fxLayout="column" fxLayoutAlign="start start">
+              <div [style.width.%]="100" class="flex flex-col justify-start items-start">
                 <span translate>¿Cómo se desean reportar los datos?</span>
                 <mat-radio-group
                   formControlName="howReportedDataCtrl"
@@ -155,7 +154,7 @@
                   </mat-radio-button>
                 </mat-radio-group>
 
-                <div *ngIf="howReportedData.value == 1" fxLayout="column">
+                <div *ngIf="howReportedData.value == 1" class="flex flex-col">
                   <input (change)="uploadFile($event)" type="file" name="filename" />
                   <mat-spinner *ngIf="loadingFiles" [diameter]="30"></mat-spinner>
                   <mat-hint *ngIf="files['report_file']">{{ files['report_file'].filename }}</mat-hint>
@@ -176,7 +175,7 @@
 
               <br />
 
-              <div fxLayout="row" fxLayoutAlign="end center">
+              <div class="flex flex-row justify-end items-center">
                 <div>
                   <mat-spinner [diameter]="50" *ngIf="isLoading"></mat-spinner>
                   <button *ngIf="!isLoading" mat-raised-button color="primary" type="button" (click)="submitForm()">

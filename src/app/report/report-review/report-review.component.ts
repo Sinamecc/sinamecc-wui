@@ -8,6 +8,7 @@ import { ReportService } from '../report.service';
   selector: 'app-report-review',
   templateUrl: './report-review.component.html',
   styleUrls: ['./report-review.component.scss'],
+  standalone: false,
 })
 export class ReportReviewComponent implements OnInit {
   isLoading = false;
@@ -23,7 +24,7 @@ export class ReportReviewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: ReportService,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.title = 'adaptationAction.addReview';
@@ -46,7 +47,7 @@ export class ReportReviewComponent implements OnInit {
       },
       (complete) => {
         this.isLoading = false;
-      }
+      },
     );
   }
 

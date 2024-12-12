@@ -50,7 +50,7 @@ export interface MonitoringInformation {
 }
 
 export interface ImpacDocumentationQuestion {
-  check: number;
+  is_checked: number;
   code: string;
   detail: string;
   id: number;

@@ -3,13 +3,13 @@ import { DeveloperAccount } from './mccr-poc-developer-account';
 
 export interface MccrPoc {
   ucc_code: string;
-  minusq_account: Number;
-  generation_account: Number;
-  reserve_account: Number;
+  minusq_account: number;
+  generation_account: number;
+  reserve_account: number;
   developer_account: DeveloperAccount;
-  final_balance: Number;
+  final_balance: number;
   buyer_account: BuyerAccount;
-  cancellation_account: Number;
+  cancellation_account: number;
 }
 
 export interface VerifyDetails {

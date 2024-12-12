@@ -1,3 +1,4 @@
+/.angular/cache
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
@@ -55,3 +56,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+.nx/cache
+.nx/workspace-data

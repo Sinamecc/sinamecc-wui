@@ -1,15 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AdminService } from '@app/admin/admin.service';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 import { AdminPermissionsDetailComponent } from '@app/admin/Permissions/admin-permissions-detail/admin-permissions-detail.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-admin-permissions',
   templateUrl: './admin-permissions.component.html',
   styleUrls: ['./admin-permissions.component.scss'],
+  standalone: false,
 })
 export class AdminPermissionsComponent implements OnInit {
   displayedColumns = ['name', 'content_type', 'action'];
@@ -17,7 +18,10 @@ export class AdminPermissionsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   fieldsToSearch: string[][] = [['name'], ['content_type']];
 
-  constructor(private adminService: AdminService, public dialog: MatDialog) {}
+  constructor(
+    private adminService: AdminService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.loadPermissions();

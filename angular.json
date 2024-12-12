@@ -22,7 +22,6 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/apple-touch-icon.png",
@@ -31,16 +30,21 @@
               "src/assets"
             ],
             "styles": ["src/main.scss"],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true,
+            "allowedCommonJsDependencies": ["lodash", "moment"]
           },
           "configurations": {
             "prod": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -90,41 +94,39 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sinamecc-wui:build",
             "hmr": true,
-            "hmrWarning": false
+            "buildTarget": "sinamecc-wui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "sinamecc-wui:build:production",
-              "hmr": false
+              "hmr": false,
+              "buildTarget": "sinamecc-wui:build:production"
             },
-            "ci": {
-              "progress": false
-            },
+            "ci": {},
             "local": {
-              "browserTarget": "sinamecc-wui:build:local",
-              "hmr": true
+              "hmr": true,
+              "buildTarget": "sinamecc-wui:build:local"
             },
             "dev": {
-              "browserTarget": "sinamecc-wui:build:dev",
-              "hmr": false
+              "hmr": false,
+              "buildTarget": "sinamecc-wui:build:dev"
             },
             "stage": {
-              "browserTarget": "sinamecc-wui:build:stage",
-              "hmr": false
+              "hmr": false,
+              "buildTarget": "sinamecc-wui:build:stage"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sinamecc-wui:build"
+            "buildTarget": "sinamecc-wui:build"
           }
         },
         "test": {
@@ -151,13 +153,6 @@
             }
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json", "e2e/tsconfig.json"],
-            "exclude": ["**/node_modules/**"]
-          }
-        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -169,12 +164,18 @@
               "devServerTarget": "sinamecc-wui:serve:production"
             }
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
         }
       }
     }
   },
-  "defaultProject": "sinamecc-wui",
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": ["@angular-eslint/schematics"]
   }
 }

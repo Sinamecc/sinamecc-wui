@@ -1,28 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormArray, UntypedFormBuilder, Validators } from '@angular/forms';
 import { environment } from '@env/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Logger } from '@core';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Ppcn } from '@app/ppcn/ppcn_registry';
 import { Observable } from 'rxjs';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 import { tap, finalize } from 'rxjs/operators';
 import { I18nService } from '@app/i18n/i18n.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 const log = new Logger('Report');
 
 @Component({
   selector: 'app-ppcn-upload',
   templateUrl: './ppcn-upload.component.html',
   styleUrls: ['./ppcn-upload.component.scss'],
+  standalone: false,
 })
 export class PpcnUploadComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
-  files: FormArray;
+  files: UntypedFormArray;
   ppcns: Observable<Ppcn[]>;
   processedPpcns: Ppcn[] = [];
   id: number;
@@ -103,12 +104,12 @@ export class PpcnUploadComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private translateService: TranslateService,
     private ppcnService: PpcnService,
     public snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.createForm();
   }
@@ -125,7 +126,7 @@ export class PpcnUploadComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -138,12 +139,12 @@ export class PpcnUploadComponent implements OnInit {
         (error) => {
           log.debug(`PPCN File error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
   public addFile(): void {
-    const control = <FormArray>this.form.controls['files'];
+    const control = <UntypedFormArray>this.form.controls['files'];
     control.push(this.createItem());
   }
 
@@ -161,7 +162,7 @@ export class PpcnUploadComponent implements OnInit {
           files: this.formBuilder.array(
             Array.from({ length: numberOfItems }, (_, i) => i + 1).map((_) => {
               return this.createItem();
-            })
+            }),
           ),
         });
 
@@ -172,11 +173,11 @@ export class PpcnUploadComponent implements OnInit {
           const idRecognition = this.ppcn.organization_classification.recognition_type;
           this.loadDocumentsByRecognitionType(idRecognition.id);
         }
-      })
+      }),
     );
   }
 
-  loadDocumentsByRecognitionType(id: Number) {
+  loadDocumentsByRecognitionType(id: number) {
     const idNeutralCarbonDocuments = 9;
     const idNeutralCarbonPlus = 10;
     const idCarbonoReductionPlus = 8;
@@ -230,14 +231,14 @@ export class PpcnUploadComponent implements OnInit {
     }
   }
 
-  private createItem(): FormGroup {
+  private createItem(): UntypedFormGroup {
     return this.formBuilder.group({
       file: [{ value: undefined, disabled: false }, []],
     });
   }
 
   private removeFile(i: number) {
-    const control = <FormArray>this.form.controls['files'];
+    const control = <UntypedFormArray>this.form.controls['files'];
     control.removeAt(i);
   }
 
@@ -245,7 +246,7 @@ export class PpcnUploadComponent implements OnInit {
     return this.ppcnService.ppcn(this.i18nService.language.split('-')[0]).pipe(
       finalize(() => {
         this.isLoading = false;
-      })
+      }),
     );
   }
 }

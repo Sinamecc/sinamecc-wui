@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, UntypedFormGroup } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
@@ -23,11 +23,12 @@ const log = new Logger('Report');
   selector: 'app-mitigation-actions-update',
   templateUrl: './mitigation-actions-update.component.html',
   styleUrls: ['./mitigation-actions-update.component.scss'],
+  standalone: false,
 })
 export class MitigationActionsUpdateComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   isLoading = false;
   isNonLinear = false;
   initalRequiredData: Observable<MitigationActionNewFormData>;
@@ -46,7 +47,7 @@ export class MitigationActionsUpdateComponent implements OnInit {
   statuses: Status[];
   geographicScales: GeographicScale[];
   financeSourceTypes: FinanceSourceType[];
-  displayFinancialSource: Boolean;
+  displayFinancialSource: boolean;
 
   get formArray(): AbstractControl | null {
     return this.formGroup.get('formArray');
@@ -55,7 +56,7 @@ export class MitigationActionsUpdateComponent implements OnInit {
   constructor(
     private i18nService: I18nService,
     private route: ActivatedRoute,
-    private service: MitigationActionsService
+    private service: MitigationActionsService,
   ) {
     this.title = 'Update mitigation action';
     this.isLinear = true;
@@ -65,7 +66,7 @@ export class MitigationActionsUpdateComponent implements OnInit {
       tap((mitigationAction: MitigationAction) => {
         this.processedMitigationAction = mitigationAction;
         this.service.updateCurrentMitigationAction(mitigationAction);
-      })
+      }),
     );
   }
 
@@ -79,7 +80,7 @@ export class MitigationActionsUpdateComponent implements OnInit {
     return this.service.newMitigationActionFormData(this.i18nService.language.split('-')[0], 'new').pipe(
       finalize(() => {
         this.isLoading = false;
-      })
+      }),
     );
   }
 

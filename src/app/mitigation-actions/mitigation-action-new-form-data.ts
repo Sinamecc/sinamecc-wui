@@ -29,70 +29,70 @@ export interface MonitoringReportingIndicator {
   data_updated_date: string;
   updated_data: string;
   progress_report: string;
-  indicator: Number;
+  indicator: number;
 }
 
 export interface RegistrationType {
   id: string;
   code: string;
-  name: String;
+  name: string;
 }
 
 export interface Institution {
-  id: Number;
-  name: String;
+  id: number;
+  name: string;
 }
 
 export interface Status {
-  id: Number;
-  status: String;
+  id: number;
+  status: string;
 }
 
 export interface Finance {
-  id: Number;
-  name: String;
+  id: number;
+  name: string;
   source: any;
 }
 
 export interface IngeiCompliance {
-  id: Number;
-  name: String;
+  id: number;
+  name: string;
 }
 
 export interface GeographicScale {
-  id: Number;
-  name: String;
-  code?: String;
+  id: number;
+  name: string;
+  code?: string;
 }
 
 export interface FinanceSourceType {
-  id: Number;
-  name: String;
+  id: number;
+  name: string;
 }
 
 export interface FinanceStatus {
-  id: Number;
-  status: String;
+  id: number;
+  status: string;
 }
 export interface InitiativeType {
-  id: Number;
-  types: String;
+  id: number;
+  types: string;
 }
 
 export interface DescarbonizationAxis {
-  id: Number;
-  code?: String;
-  description?: String;
+  id: number;
+  code?: string;
+  description?: string;
 }
 
 export interface SustainableDevelopmentGoals {
-  id: Number;
-  code?: String;
-  description?: String;
+  id: number;
+  code?: string;
+  description?: string;
 }
 
 export interface GhgImpactSector {
-  id: Number;
-  name: String;
-  code?: String;
+  id: number;
+  name: string;
+  code?: string;
 }

@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DownloadProposalComponent } from '@shared/download-proposal/download-proposal.component';
 import { DatePipe } from '@angular/common';
@@ -18,6 +18,7 @@ import { I18nService } from '@app/i18n';
 import { AuthenticationService } from '@app/auth';
 import { MockAuthenticationService } from '@app/auth/authentication.service.mock';
 import { S3Service } from '@shared/s3.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('OvvProposalComponent', () => {
   let component: OvvProposalComponent;
@@ -25,21 +26,20 @@ describe('OvvProposalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [
+        OvvProposalComponent,
+        DownloadProposalComponent,
+        GenericButtonComponent,
+        GenericButtonSecondaryComponent,
+      ],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-      ],
-      declarations: [
-        OvvProposalComponent,
-        DownloadProposalComponent,
-        GenericButtonComponent,
-        GenericButtonSecondaryComponent,
       ],
       providers: [
         I18nService,
@@ -47,6 +47,8 @@ describe('OvvProposalComponent', () => {
         MccrRegistriesService,
         { provide: AuthenticationService, useClass: MockAuthenticationService },
         { provide: S3Service, useClass: MockS3Service },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

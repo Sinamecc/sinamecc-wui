@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-custom">
   <mat-card>
     <mat-card-content>
       <mat-card-title class="section-heading" translate
@@ -12,7 +12,7 @@
       <mat-card-subtitle>
         <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
       </mat-card-subtitle>
-      <div fxLayout="row" fxLayoutAlign="start start">
+      <div class="flex flex-row justify-start items-start">
         <div class="info-container" [hidden]="isLoading">
           <h3 translate class="text-color">
             specificLabel.organizationInformation
@@ -44,11 +44,11 @@
           <strong translate>info.address</strong>: {{ ppcn?.organization?.address }} <br />
 
           <strong translate>CIIU</strong>: <br />
-          <mat-chip-list fxLayout="row">
-            <mat-chip *ngFor="let ciuu of ppcn?.organization?.ciiu_code" color="primary"
+          <mat-chip-listbox class="flex flex-row">
+            <mat-chip-option *ngFor="let ciuu of ppcn?.organization?.ciiu_code" color="primary"
               >{{ ciuu.ciiu_code }}
-            </mat-chip>
-          </mat-chip-list>
+            </mat-chip-option>
+          </mat-chip-listbox>
 
           <!--<mat-divider></mat-divider>-->
           <h3 translate class="text-color">
@@ -262,11 +262,11 @@
         <br />
         <br />
         <div class="comment-container" *ngIf="edit || showComments">
-          <div fxLayout="row" class="comment-box-header">
+          <div class="comment-box-header flex flex-row">
             <div class="image-container">
               <img [src]="userImage" class="mat-elevation-z2 custom-image" />
             </div>
-            <div [style.margin-lef.px]="15" fxLayout="row" fxLayoutAlign="start center">
+            <div [style.margin-lef.px]="15" class="flex flex-row justify-start items-center">
               <strong class="header-text"
                 ><label>{{ usernameComment }}</label></strong
               >

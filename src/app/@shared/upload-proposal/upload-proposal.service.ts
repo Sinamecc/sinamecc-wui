@@ -16,7 +16,7 @@ export class UploadProposalService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 }

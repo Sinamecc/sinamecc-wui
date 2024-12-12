@@ -1,4 +1,4 @@
-<div class="sinamecc-container" fxLayout="column" fxLayoutAlign="start start">
+<div class="sinamecc-container flex flex-col justify-start items-start">
   <h3 class="mat-h3">Estado actual</h3>
   <div class="custom-chip">
     {{ actualReview?.current_status }}
@@ -7,13 +7,13 @@
   <div *ngIf="reviews.length > 0">
     <h3 class="mat-h3">Historial</h3>
     <div *ngFor="let review of reviews; let isLast = last">
-      <div fxLayout="row" fxLayoutAlign="start center">
+      <div class="flex flex-row justify-start items-center">
         <mat-icon>done</mat-icon>
-        <mat-label class="mat-h4" style="margin-left: 1em;">{{ review?.date | date: 'medium' }}</mat-label>
+        <mat-label class="mat-h4" style="margin-left: 1em">{{ review?.date | date: 'medium' }}</mat-label>
       </div>
-      <div class="comment-container" fxLayout="row" fxLayoutAlign="start center">
+      <div class="comment-container flex flex-row justify-start items-center">
         <mat-divider [vertical]="true" class="custom-vertical-divider"></mat-divider>
-        <div fxLayout="column" fxLayoutAlign="start center">
+        <div class="flex flex-col justify-start items-center">
           <div [class]="isLast ? 'custom-success-chip' : 'custom-chip'">
             <label class="mat-h4">{{ review?.current_status }}</label>
           </div>

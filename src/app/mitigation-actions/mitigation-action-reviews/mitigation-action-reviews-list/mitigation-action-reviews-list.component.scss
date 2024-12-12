@@ -1,6 +1,6 @@
-@import "src/theme/theme-variables";
+@use "src/theme/theme-variables" as *;
 
-.container {
+.container-custom {
   text-align: center;
   padding: 1rem;
 }

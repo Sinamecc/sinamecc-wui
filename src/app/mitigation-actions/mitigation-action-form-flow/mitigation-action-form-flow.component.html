@@ -1,4 +1,4 @@
-<div *ngIf="!isLoading" class="container">
+<div *ngIf="!isLoading" class="container-custom">
   <mat-card>
     <h3>
       <mat-card-title>
@@ -32,7 +32,7 @@
           >
           </app-basic-information-form>
 
-          <div fxLayout="row">
+          <div class="flex flex-row">
             <div>
               <app-generic-button-secondary
                 [disabled]="basicInfoForm?.wasSubmittedSuccessfully"
@@ -64,7 +64,7 @@
           >
           </app-key-aspects-form>
 
-          <div fxLayout="row">
+          <div class="flex flex-row">
             <div>
               <app-generic-button-secondary
                 [disabled]="keyAspectsForm?.wasSubmittedSuccessfully"
@@ -96,8 +96,8 @@
           >
           </app-emissions-mitigation-form>
 
-          <div fxLayout="row">
-            <div fxLayout="row">
+          <div class="flex flex-row">
+            <div class="flex flex-row">
               <div>
                 <app-generic-button-secondary
                   [disabled]="emissionsMitigationForm?.wasSubmittedSuccessfully"
@@ -164,7 +164,7 @@
   </mat-card>
 </div>
 
-<div *ngIf="isLoading" fxLayout="column" fxLayoutAlign="center center" class="loading-component">
+<div *ngIf="isLoading" class="loading-component flex flex-col justify-center items-center">
   <mat-spinner color="accent"></mat-spinner>
   <h1 class="mat-h1" translate>general.loading</h1>
 </div>

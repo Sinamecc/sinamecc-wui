@@ -312,6 +312,7 @@
   },
 
   "general": {
+    "close": "Close",
     "newReview": "New review",
     "addRelationships": "Add additional relationships",
     "addOther": "Add other",

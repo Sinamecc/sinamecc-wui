@@ -3,7 +3,6 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@shared';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { PpcnRoutingModule } from '@app/ppcn/ppcn-routing.module';
 import { PpcnListComponent } from './ppcn-list/ppcn-list.component';
@@ -40,7 +39,6 @@ import { GenericDialogBoxComponent } from './generic-dialog-box/generic-dialog-b
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
-    FlexLayoutModule,
     MaterialModule,
     PpcnRoutingModule,
   ],

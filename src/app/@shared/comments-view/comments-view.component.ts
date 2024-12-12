@@ -1,12 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Comments, CommentsStructure } from '../comment';
 import { CommentsAddComponent } from '../comments-add/comments-add.component';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-comments-view',
   templateUrl: './comments-view.component.html',
   styleUrls: ['./comments-view.component.scss'],
+  standalone: false,
 })
 export class CommentsViewComponent implements OnInit {
   addCommentFields: CommentsStructure;
@@ -14,7 +15,10 @@ export class CommentsViewComponent implements OnInit {
   moduleIndex: number;
   edit: boolean;
 
-  constructor(public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(
+    public dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {
     this.addCommentFields = data.comments;
     this.comments = data.commentPayload;
     this.moduleIndex = data.moduleIndex;

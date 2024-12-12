@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@app/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MccrPocRoutingModule } from '@app/mccr/mccr-poc/mccr-poc-routing.module';
@@ -33,13 +32,11 @@ import { UccVerifyDataComponent } from './ucc-verify-data/ucc-verify-data.compon
     TranslateModule,
     CoreModule,
     SharedModule,
-    FlexLayoutModule,
     MaterialModule,
     MccrPocRoutingModule,
     ReactiveFormsModule,
     FormsModule,
   ],
-  entryComponents: [MccrPocNewDeveloperAccountComponent, MccrPocNewBuyerAccountComponent, UccVerifyDataComponent],
   providers: [MccrPocService],
 })
 export class MccrPocModule {}

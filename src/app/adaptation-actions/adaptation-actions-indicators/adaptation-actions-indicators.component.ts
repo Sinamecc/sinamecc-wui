@@ -1,18 +1,19 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-adaptation-actions-indicators',
   templateUrl: './adaptation-actions-indicators.component.html',
   styleUrls: ['./adaptation-actions-indicators.component.scss'],
+  standalone: false,
 })
 export class AdaptationActionsIndicatorsComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   @Input() mainStepper: any;
   @Input() adaptationActionUpdated: AdaptationAction;
   @Input() edit: boolean;
@@ -24,11 +25,11 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     'Un indicador es una expresión cualitativa o cuantitativa, que es observable y permite describir las características de la realidad, a través de la evolución de una variable';
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private service: AdaptationActionService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
@@ -80,11 +81,11 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         const adaptationActionIndicatorTime = new Date(indicator.available_time_start_date);
 
         timeSeriesAvailableEnd.setMinutes(
-          timeSeriesAvailableEnd.getMinutes() + timeSeriesAvailableEnd.getTimezoneOffset()
+          timeSeriesAvailableEnd.getMinutes() + timeSeriesAvailableEnd.getTimezoneOffset(),
         );
 
         adaptationActionIndicatorTime.setMinutes(
-          adaptationActionIndicatorTime.getMinutes() + adaptationActionIndicatorTime.getTimezoneOffset()
+          adaptationActionIndicatorTime.getMinutes() + adaptationActionIndicatorTime.getTimezoneOffset(),
         );
 
         const form = this.formBuilder.array([
@@ -230,7 +231,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
       },
       (error) => {
         this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      }
+      },
     );
   }
 

@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@core';
 import { MitigationActionsService } from '../mitigation-actions.service';
@@ -14,6 +14,7 @@ import { MockMitigationActionsService } from '../mitigation-actions.service.mock
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { MockS3Service } from '@shared/s3.service.mock';
 import { SharedModule } from '@shared';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('BasicInformationFormComponent', () => {
   let component: BasicInformationFormComponent;
@@ -21,19 +22,18 @@ describe('BasicInformationFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [BasicInformationFormComponent],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
         CoreModule,
         SharedModule,
       ],
-      declarations: [BasicInformationFormComponent],
       providers: [
         MockS3Service,
         {
@@ -48,6 +48,8 @@ describe('BasicInformationFormComponent', () => {
             },
           },
         },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Logger } from '@core';
 import { environment } from '@env/environment';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
@@ -10,8 +10,8 @@ import { I18nService } from '@app/i18n';
 import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize, tap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('Report');
 
@@ -19,28 +19,29 @@ const log = new Logger('Report');
   selector: 'app-mccr-registries-update',
   templateUrl: './mccr-registries-update.component.html',
   styleUrls: ['./mccr-registries-update.component.scss'],
+  standalone: false,
 })
 export class MccrRegistriesUpdateComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   mitigationActions: Observable<MitigationAction[]>;
   processedMitigationActions: MitigationAction[] = [];
   mccrRegistry: Observable<MccrRegistry>;
   isLoading = false;
-  files: FormArray;
+  files: UntypedFormArray;
   id: string;
   formValues: any;
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private service: MccrRegistriesService,
     private mitigationService: MitigationActionsService,
     private route: ActivatedRoute,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.createForm();
@@ -56,7 +57,7 @@ export class MccrRegistriesUpdateComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response) => {
@@ -69,7 +70,7 @@ export class MccrRegistriesUpdateComponent implements OnInit {
         (error) => {
           log.debug(`Mccr Registry File error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 
@@ -85,7 +86,7 @@ export class MccrRegistriesUpdateComponent implements OnInit {
       (formOptions: any, formData: any) => {
         this.isLoading = false;
         return { formOptions, formData };
-      }
+      },
     );
   }
 
@@ -93,7 +94,7 @@ export class MccrRegistriesUpdateComponent implements OnInit {
     const mitigationActions = this.mitigationService.mitigationActions(this.i18nService.language.split('-')[0]).pipe(
       tap((actions) => {
         this.processedMitigationActions = actions;
-      })
+      }),
     );
     return mitigationActions;
   }
@@ -102,7 +103,7 @@ export class MccrRegistriesUpdateComponent implements OnInit {
     return this.service.getMccrRegistry(this.id).pipe(
       finalize(() => {
         this.isLoading = false;
-      })
+      }),
     );
   }
 
@@ -113,7 +114,7 @@ export class MccrRegistriesUpdateComponent implements OnInit {
           mitigation: incomingMccrRegistry['mitigation'],
           status: incomingMccrRegistry['fsm_state'],
         });
-      })
+      }),
     );
     return mccrRegistry;
   }

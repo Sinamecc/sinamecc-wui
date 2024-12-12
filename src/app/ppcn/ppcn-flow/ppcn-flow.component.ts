@@ -3,13 +3,14 @@ import { PpcnLevelComponent } from '@app/ppcn/ppcn-level/ppcn-level.component';
 import { PpcnNewComponent } from '@app/ppcn/ppcn-new/ppcn-new.component';
 import { DownloadProposalComponent } from '@shared/download-proposal/download-proposal.component';
 import { PpcnUploadComponent } from '@app/ppcn/ppcn-upload/ppcn-upload.component';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 
 @Component({
   selector: 'app-ppcn-flow',
   templateUrl: './ppcn-flow.component.html',
   styleUrls: ['./ppcn-flow.component.scss'],
+  standalone: false,
 })
 export class PpcnFlowComponent implements OnInit {
   @ViewChild('PpcnLevelComponent') geographicLvl: PpcnLevelComponent;
@@ -17,7 +18,7 @@ export class PpcnFlowComponent implements OnInit {
   @ViewChild('DownloadProposalComponent') downloadProposal: DownloadProposalComponent;
   @ViewChild('PpcnUploadComponent') uploadFiles: PpcnUploadComponent;
 
-  mainGroup: FormGroup;
+  mainGroup: UntypedFormGroup;
 
   get formArray(): AbstractControl | null {
     return this.mainGroup.get('formArray');
@@ -28,7 +29,10 @@ export class PpcnFlowComponent implements OnInit {
   generalFormData: FormData;
   levelId = '1';
 
-  constructor(private _formBuilder: FormBuilder, private service: PpcnService) {
+  constructor(
+    private _formBuilder: UntypedFormBuilder,
+    private service: PpcnService,
+  ) {
     this.formData = new FormData();
     this.createForm();
   }

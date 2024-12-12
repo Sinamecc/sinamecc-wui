@@ -47,7 +47,7 @@ export class MccrPocService {
     return this.httpClient.get(routes.getMccrPoc(uuid, lang), httpOptions).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -65,7 +65,7 @@ export class MccrPocService {
           message: 'UCC cancel correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -92,7 +92,7 @@ export class MccrPocService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -115,7 +115,7 @@ export class MccrPocService {
           account_number: body.account_number,
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -138,7 +138,7 @@ export class MccrPocService {
           account_number: body.account_number,
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -164,7 +164,7 @@ export class MccrPocService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -189,7 +189,7 @@ export class MccrPocService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -203,7 +203,7 @@ export class MccrPocService {
     return this.httpClient.get(routes.verifyUCC(uuid), httpOptions).pipe(
       map((body: VerifyResponse) => {
         return body;
-      })
+      }),
     );
   }
 }

@@ -6,6 +6,7 @@ import { PpcnService } from '@app/ppcn/ppcn.service';
   selector: 'app-ppcn-download',
   templateUrl: './ppcn-download.component.html',
   styleUrls: ['./ppcn-download.component.scss'],
+  standalone: false,
 })
 export class PpcnDownloadComponent implements OnInit {
   isLoading: boolean;
@@ -15,7 +16,11 @@ export class PpcnDownloadComponent implements OnInit {
   nextRoute: string;
   levelId: string;
 
-  constructor(private router: Router, private route: ActivatedRoute, private service: PpcnService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private service: PpcnService,
+  ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.levelId = this.route.snapshot.paramMap.get('geographic');
     this.title = this.levelId === '2' ? 'PPCN-National' : 'PPCN-Cantonal';

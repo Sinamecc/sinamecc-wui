@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Logger } from '@core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { MccrPocService } from '@app/mccr/mccr-poc/mccr-poc.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('Report');
 
@@ -12,19 +12,20 @@ const log = new Logger('Report');
   selector: 'app-mccr-poc-new-buyer-account',
   templateUrl: './mccr-poc-new-buyer-account.component.html',
   styleUrls: ['./mccr-poc-new-buyer-account.component.scss'],
+  standalone: false,
 })
 export class MccrPocNewBuyerAccountComponent implements OnInit {
   isLoading = false;
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   createDisable = false;
   account_number = '';
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private service: MccrPocService,
     private translateService: TranslateService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.createForm();
   }
@@ -45,7 +46,7 @@ export class MccrPocNewBuyerAccountComponent implements OnInit {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: any) => {
@@ -58,7 +59,7 @@ export class MccrPocNewBuyerAccountComponent implements OnInit {
         (error) => {
           log.debug(`Error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 }

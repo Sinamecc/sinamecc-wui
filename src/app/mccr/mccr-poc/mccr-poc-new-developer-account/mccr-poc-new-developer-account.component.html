@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-custom">
   <mat-card>
     <h3>
       <mat-card-title translate class="section-heading">mccrPoc.addDAC</mat-card-title>
@@ -12,7 +12,7 @@
           <span translate>errorLabel.errorSubmittingForm</span>
         </div>
 
-        <div fxLayout="column">
+        <div class="flex flex-col">
           <mat-form-field>
             <input formControlName="user_id" matInput placeholder="{{ 'admin.IDuser' | translate }}" />
             <mat-error *ngIf="form.controls.user_id.invalid || form.controls.user_id.untouched">

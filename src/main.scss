@@ -1,28 +1,23 @@
-/*
- * Entry point of global application style.
- * Component-specific style should not go here and be included directly as part of the components.
- */
+@use "@angular/material" as mat;
 
-// Theme variables, must be included before the libraries to allow overriding defaults
-@import "theme/theme-variables";
-
-// 3rd party libraries
-@import "~material-design-icons-iconfont/src/material-design-icons";
+// Theme variables
+@use "theme/theme-variables" as *;
+@use "theme/theme" as *;
 
 // Angular Material custom theme
-// The mixins below must be included once so we separated them from the variables
-@import "~@angular/material/theming";
+@include mat.elevation-classes();
+@include mat.app-background();
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
+// Custom
+@include mat.all-component-themes($app-theme);
+@include mat.typography-hierarchy($custom-typography);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 
 // Theme customization
-@import "theme/theme";
 
-@include angular-material-theme($custom-theme);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

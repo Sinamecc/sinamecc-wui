@@ -1,16 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { CredentialsService } from '@app/auth';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { adaptationsActionsTypeMap } from '../interfaces/catalogs';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-adaptation-actions-list',
   templateUrl: './adaptation-actions-list.component.html',
   styleUrls: ['./adaptation-actions-list.component.scss'],
+  standalone: false,
 })
 export class AdaptationActionsListComponent implements OnInit {
   adaptationsActions: AdaptationAction[] = [];
@@ -23,7 +24,7 @@ export class AdaptationActionsListComponent implements OnInit {
   constructor(
     private service: AdaptationActionService,
     private router: Router,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
   ) {}
 
   ngOnInit() {
@@ -42,13 +43,15 @@ export class AdaptationActionsListComponent implements OnInit {
 
   hasPermProvider() {
     return Boolean(
-      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.aa.provider
+      this.credentialsService.credentials.permissions.all ||
+        this.credentialsService.credentials.permissions.aa.provider,
     );
   }
 
   hasPermReviewer() {
     return Boolean(
-      this.credentialsService.credentials.permissions.all || this.credentialsService.credentials.permissions.aa.reviewer
+      this.credentialsService.credentials.permissions.all ||
+        this.credentialsService.credentials.permissions.aa.reviewer,
     );
   }
 
@@ -64,7 +67,7 @@ export class AdaptationActionsListComponent implements OnInit {
         },
         (error) => {
           this.loading = false;
-        }
+        },
       )
       .add(() => {
         this.loading = false;

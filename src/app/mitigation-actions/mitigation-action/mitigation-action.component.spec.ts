@@ -6,13 +6,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { LoaderComponent } from '@shared';
 import { I18nService } from '@app/i18n';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MockMitigationActionsService } from '../mitigation-actions.service.mock';
 import { MockS3Service } from '@app/@shared/s3.service.mock';
 import { MockI18nService } from '@app/i18n/i18n.service.mock';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MitigationActionComponent', () => {
   let component: MitigationActionComponent;
@@ -20,15 +21,14 @@ describe('MitigationActionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [MitigationActionComponent, LoaderComponent],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        HttpClientTestingModule,
       ],
-      declarations: [MitigationActionComponent, LoaderComponent],
       providers: [
         I18nService,
         MockS3Service,
@@ -37,6 +37,8 @@ describe('MitigationActionComponent', () => {
           useClass: MockMitigationActionsService,
         },
         { provide: I18nService, useClass: MockI18nService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

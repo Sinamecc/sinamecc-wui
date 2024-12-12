@@ -52,7 +52,11 @@ export interface ReportContext {
 
 @Injectable()
 export class MitigationActionsService {
-  constructor(private credentialsService: CredentialsService, private httpClient: HttpClient, private s3: S3Service) {}
+  constructor(
+    private credentialsService: CredentialsService,
+    private httpClient: HttpClient,
+    private s3: S3Service,
+  ) {}
 
   private mitigationActionSource = new BehaviorSubject(null);
   currentMitigationAction = this.mitigationActionSource.asObservable();
@@ -65,7 +69,7 @@ export class MitigationActionsService {
     return this.httpClient.get(routes.getCatalogs(id, parentCatalog, catalog), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -73,7 +77,7 @@ export class MitigationActionsService {
     return this.httpClient.get(routes.getComments(id)).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -86,7 +90,7 @@ export class MitigationActionsService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -94,7 +98,7 @@ export class MitigationActionsService {
     return this.httpClient.get(routes.loadSubTopics(id)).pipe(
       map((body: any[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -108,7 +112,7 @@ export class MitigationActionsService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -116,7 +120,7 @@ export class MitigationActionsService {
     return this.httpClient.get(routes.seededFormData(language, registration_type), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -124,7 +128,7 @@ export class MitigationActionsService {
     return this.httpClient.get(routes.mitigationActions(language), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -132,7 +136,7 @@ export class MitigationActionsService {
     return this.httpClient.get(routes.mitigationActionReviews(uuid), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -140,7 +144,7 @@ export class MitigationActionsService {
     return this.httpClient.get(routes.getIndicator(id), {}).pipe(
       map((body: Indicator[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -148,7 +152,7 @@ export class MitigationActionsService {
     return this.httpClient.get(routes.getMitigationAction(uuid, lang), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -162,7 +166,7 @@ export class MitigationActionsService {
           message: 'Mitigation Action deleted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -170,7 +174,7 @@ export class MitigationActionsService {
     return this.httpClient.get(routes.mitigationActionAvailableStatuses(), {}).pipe(
       map((body: any) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -184,7 +188,7 @@ export class MitigationActionsService {
           message: 'Form submitted correctly',
         };
         return response;
-      })
+      }),
     );
   }
 
@@ -192,7 +196,7 @@ export class MitigationActionsService {
     return this.httpClient.get(routes.allData(), {}).pipe(
       map((body: MADataCatalogs) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -200,7 +204,7 @@ export class MitigationActionsService {
     return this.httpClient.get(routes.sectorIppc2006(id), {}).pipe(
       map((body: SectorIpcc2006[]) => {
         return body;
-      })
+      }),
     );
   }
 
@@ -208,7 +212,7 @@ export class MitigationActionsService {
     return this.httpClient.get(routes.categoryIppc2006(id), {}).pipe(
       map((body: CategoryIppc2006[]) => {
         return body;
-      })
+      }),
     );
   }
 

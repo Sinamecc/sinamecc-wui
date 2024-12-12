@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Logger } from '@core/logger.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 import { UploadProposalService } from '@shared/upload-proposal/upload-proposal.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const log = new Logger('UploadProposal');
 
@@ -13,6 +13,7 @@ const log = new Logger('UploadProposal');
   selector: 'app-upload-proposal',
   templateUrl: './upload-proposal.component.html',
   styleUrls: ['./upload-proposal.component.scss'],
+  standalone: false,
 })
 export class UploadProposalComponent implements OnInit, OnChanges {
   @Input() title: string;
@@ -24,15 +25,15 @@ export class UploadProposalComponent implements OnInit, OnChanges {
   @Output() formSubmitted = new EventEmitter<any>();
 
   error: string;
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
 
   constructor(
     private router: Router,
     public snackBar: MatSnackBar,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private translateService: TranslateService, //
-    private service: UploadProposalService
+    private service: UploadProposalService,
   ) {}
 
   ngOnInit() {
@@ -52,7 +53,7 @@ export class UploadProposalComponent implements OnInit, OnChanges {
         finalize(() => {
           this.form.markAsPristine();
           this.isLoading = false;
-        })
+        }),
       )
       .subscribe(
         (response: any) => {
@@ -65,7 +66,7 @@ export class UploadProposalComponent implements OnInit, OnChanges {
         (error: any) => {
           log.debug(`Upload Proposal error: ${error}`);
           this.error = error;
-        }
+        },
       );
   }
 

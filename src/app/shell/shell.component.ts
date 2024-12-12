@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
-import { filter } from 'rxjs/operators';
 import { Permissions } from '@app/@core/permissions';
 import { AuthenticationService, CredentialsService, Credentials } from '@app/auth';
-
 import { untilDestroyed } from '@core';
 import { I18nService } from '@app/i18n';
 import { Router } from '@angular/router';
@@ -13,6 +11,7 @@ import { Router } from '@angular/router';
   selector: 'app-shell',
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.scss'],
+  standalone: false,
 })
 export class ShellComponent implements OnInit, OnDestroy {
   logoSINAMECC = 'assets/SINAMECC-logo-vaciado.svg';
@@ -72,23 +71,22 @@ export class ShellComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private media: MediaObserver,
+    private breakpointObserver: BreakpointObserver,
     private authenticationService: AuthenticationService,
     private credentialsService: CredentialsService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
   ) {}
 
   ngOnInit() {
     // Automatically close side menu on screens > sm breakpoint
-    this.media
-      .asObservable()
-      .pipe(
-        filter((changes: MediaChange[]) =>
-          changes.some((change) => change.mqAlias !== 'xs' && change.mqAlias !== 'sm')
-        ),
-        untilDestroyed(this)
-      )
-      .subscribe(() => this.sidenav.close());
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall, Breakpoints.Small])
+      .pipe(untilDestroyed(this))
+      .subscribe((state) => {
+        if (!state.matches && this.sidenav) {
+          this.sidenav.close();
+        }
+      });
   }
 
   get permissions(): Permissions {

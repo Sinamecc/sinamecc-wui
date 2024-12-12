@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-edit-password-dialog',
   templateUrl: './admin-edit-password-dialog.component.html',
   styleUrls: ['./admin-edit-password-dialog.component.scss'],
+  standalone: false,
 })
 export class AdminEditPasswordDialogComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   isLoading = false;
   error: string;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.createForm();
   }
 

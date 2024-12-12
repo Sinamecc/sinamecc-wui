@@ -1,6 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -8,12 +8,13 @@ import { RouteReusableStrategy } from './route-reusable-strategy';
 import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
 import { TokenInterceptor } from './http/token.interceptor';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, TranslateModule, RouterModule, MatDialogModule],
   declarations: [ComponentDialogComponent],
+  imports: [CommonModule, TranslateModule, RouterModule, MatDialogModule, MatButtonModule],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -30,6 +31,7 @@ import { TokenInterceptor } from './http/token.interceptor';
       useClass: RouteReusableStrategy,
     },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
 })
 export class CoreModule {

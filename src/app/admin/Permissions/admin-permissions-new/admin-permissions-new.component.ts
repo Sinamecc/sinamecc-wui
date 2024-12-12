@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Permissions } from '../../permissions';
 import { finalize } from 'rxjs/operators';
 import { AdminService } from '@app/admin/admin.service';
@@ -14,9 +14,10 @@ const log = new Logger('CreatePermission');
   selector: 'app-admin-permissions-new',
   templateUrl: './admin-permissions-new.component.html',
   styleUrls: ['./admin-permissions-new.component.scss'],
+  standalone: false,
 })
 export class AdminPermissionsNewComponent implements OnInit {
-  createPermissionsForm: FormGroup;
+  createPermissionsForm: UntypedFormGroup;
   isLoading = false;
   error: string;
 
@@ -28,11 +29,11 @@ export class AdminPermissionsNewComponent implements OnInit {
   name: string;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private service: AdminService,
     private translateService: TranslateService,
     private router: Router,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
   ) {
     this.createForm();
     this.contentTypeMap = new Map<string, number>();
@@ -56,7 +57,7 @@ export class AdminPermissionsNewComponent implements OnInit {
   submitForm(value: string) {
     this.createPermissionsForm.value.codename = `${value}_${this.createPermissionsForm.value.name.replace(
       new RegExp(' ', 'g'),
-      '_'
+      '_',
     )}`;
     this.createPermissionsForm.value.content_type = this.contentTypeMap.get(value);
 
@@ -70,7 +71,7 @@ export class AdminPermissionsNewComponent implements OnInit {
             finalize(() => {
               this.createPermissionsForm.markAsPristine();
               this.isLoading = false;
-            })
+            }),
           )
           .subscribe(
             (response) => {
@@ -83,7 +84,7 @@ export class AdminPermissionsNewComponent implements OnInit {
             (error) => {
               log.debug(`Create permission error: ${error}`);
               this.error = error;
-            }
+            },
           );
       }
     }

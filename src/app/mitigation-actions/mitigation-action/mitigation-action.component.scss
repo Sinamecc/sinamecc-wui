@@ -1,6 +1,7 @@
-@import "src/theme/theme-variables";
+@use "@angular/material" as mat;
+@use "src/theme/theme-variables" as *;
 
-.container {
+.container-custom {
   text-align: center;
   padding: 1rem;
 }
@@ -10,7 +11,7 @@
 }
 
 .report-error {
-  color: mat-color($app-warn);
+  color: mat.m2-get-color-from-palette($app-warn);
 }
 
 mat-divider {
@@ -66,5 +67,6 @@ mat-divider {
   margin-top: 1em;
   button {
     margin-top: 1em;
+    color: white;
   }
 }

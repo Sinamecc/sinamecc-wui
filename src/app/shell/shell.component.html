@@ -1,23 +1,22 @@
 <div class="main-container">
-  <mat-drawer-container fxFlex>
-    <mat-drawer fxLayout="column" fxLayoutAlign="start start" class="side-menu" mode="side" opened>
-      <div fxLayout="row" fxLayoutAlign="center center" class="logo-container">
+  <mat-drawer-container class="h-screen box-border">
+    <mat-drawer class="flex flex-col justify-start items-star side-menu" mode="side" opened>
+      <div class="logo-container flex flex-row justify-center items-center">
         <img class="logo" [src]="logoSINAMECC" />
       </div>
-      <div class="option-container" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="option-container flex flex-col justify-start items-stretch">
         <div *ngFor="let item of modules; index as i">
           <div
             [routerLink]="item.url"
             *ngIf="showModule(permissions, item.module)"
             (click)="selectItem(i)"
             [class]="item.selected ? 'option-selected' : 'option'"
-            fxLayout="row"
-            fxLayoutAlign="start center"
+            class="flex flex-row justify-start items-center"
           >
             <button class="icon-button" mat-icon-button color="primary">
               <mat-icon>{{ item.icon }}</mat-icon>
-              <label translate class="mat-h3">{{ item.name }}</label>
             </button>
+            <label translate class="icon-button mat-h3">{{ item.name }}</label>
           </div>
         </div>
       </div>
@@ -37,10 +36,14 @@
         <div class="user-data">
           <h3 class="mat-h3 no-margin">{{ fullName }}</h3>
           <h3 class="mat-h3">{{ email }}</h3>
-          <button (click)="logout()" mat-button><span translate>credentialsSection.logout</span></button>
+          <button (click)="logout()" mat-button>
+            <span translate>credentialsSection.logout</span>
+          </button>
         </div>
       </div>
     </mat-drawer>
-    <mat-drawer-content class="side-content"> <router-outlet></router-outlet></mat-drawer-content>
+    <mat-drawer-content class="side-content">
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
   </mat-drawer-container>
 </div>
