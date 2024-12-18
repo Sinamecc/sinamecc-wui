@@ -39,6 +39,13 @@ export class EmissionsMitigationFormComponent implements OnInit {
   sectorCatalog: MADataCatalogItem[] = [];
   sectorIppc2006: SectorIpcc2006[][] = [];
   categoryIppc2006: CategoryIppc2006[][] = [];
+  impact_documentation: {
+    file: File;
+    name: string;
+  } = {
+    file: null,
+    name: '',
+  };
 
   gasList = ['CO2', 'CH4', 'N2O', 'HFC*', 'SF6', 'CO', 'NOx', 'NMVOC', 'SO2', 'C Negro', 'Otro'];
 
@@ -347,6 +354,18 @@ export class EmissionsMitigationFormComponent implements OnInit {
       );
   }
 
+  successSendForm(id: string) {
+    if (this.impact_documentation.file) {
+      this.submitFile(id, this.impact_documentation.name, this.impact_documentation.file);
+    }
+
+    this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+      this.snackBar.open(res, null, { duration: 3000 });
+    });
+    this.wasSubmittedSuccessfully = true;
+    this.stepper.next();
+  }
+
   public setLastSectionValidations(validation: number) {
     if (validation === 1) {
       this.form.get('formArray').get([2]).get('mechanismStandardApplyCtrl').setValidators(Validators.required);
@@ -358,5 +377,22 @@ export class EmissionsMitigationFormComponent implements OnInit {
 
     this.form.get('formArray').get([2]).get('mechanismStandardApplyCtrl').updateValueAndValidity();
     this.form.get('formArray').get([2]).get('methodologyUsedCtrl').updateValueAndValidity();
+  }
+
+  uploadFile(event: Event) {
+    // TODO: fix names
+    const element = event.currentTarget as HTMLInputElement;
+    const fileList: FileList | null = element.files;
+    const name = element.name;
+    if (fileList) {
+      this.impact_documentation = {
+        file: fileList[0],
+        name: name,
+      };
+    }
+  }
+
+  async submitFile(id: string, key: string, file: File) {
+    await this.service.submitMitigationFile(key, file, id).toPromise();
   }
 }

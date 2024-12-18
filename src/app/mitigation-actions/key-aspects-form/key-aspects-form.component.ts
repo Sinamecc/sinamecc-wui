@@ -8,7 +8,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { ImpactEmission, MitigationAction } from '../mitigation-action';
+import { ImpactEmission, MAFile, MitigationAction } from '../mitigation-action';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 import * as _moment from 'moment';
@@ -57,6 +57,11 @@ export class KeyAspectsFormComponent implements OnInit {
   wasSubmittedSuccessfully = false;
 
   mitigationAction: MitigationAction;
+
+  ghg_information: MAFile = {
+    file: null,
+    name: '',
+  };
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -155,11 +160,7 @@ export class KeyAspectsFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
-          this.stepper.next();
-          this.wasSubmittedSuccessfully = true;
+          this.successSendForm(response.id);
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -173,11 +174,39 @@ export class KeyAspectsFormComponent implements OnInit {
       );
   }
 
+  successSendForm(id: string) {
+    if (this.ghg_information.file) {
+      this.submitFile(id, this.ghg_information.name, this.ghg_information.file);
+    }
+
+    this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+      this.snackBar.open(res, null, { duration: 3000 });
+    });
+    this.stepper.next();
+    this.wasSubmittedSuccessfully = true;
+  }
+
   financialSourceInputShown($event: any) {
     // todo: when we traslate in the backend we need to traslate this hardcoded value here
     const insuredSourceTypeId = this.processedNewFormData.finance_status
       .filter((financeSource) => financeSource.status === 'Asegurado' || financeSource.status === 'Insured')
       .map(({ id }) => id);
     this.displayFinancialSource = $event.value === insuredSourceTypeId;
+  }
+
+  uploadFile(event: Event) {
+    const element = event.currentTarget as HTMLInputElement;
+    const fileList: FileList | null = element.files;
+    const name = element.name;
+    if (fileList) {
+      this.ghg_information = {
+        file: fileList[0],
+        name: name,
+      };
+    }
+  }
+
+  async submitFile(id: string, key: string, file: File) {
+    await this.service.submitMitigationFile(key, file, id).toPromise();
   }
 }

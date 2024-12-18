@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 import { finalize } from 'rxjs/operators';
-import { MitigationAction } from '../mitigation-action';
+import { MAFile, MitigationAction } from '../mitigation-action';
 import { MitigationActionNewFormData } from '../mitigation-action-new-form-data';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -26,6 +26,10 @@ export class ReportingClimateActionFormComponent implements OnInit {
   wasSubmittedSuccessfully = false;
   mitigationAction: MitigationAction;
   stateLabel = 'submitted';
+  file: MAFile = {
+    file: null,
+    name: '',
+  };
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
@@ -146,13 +150,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.translateService.get('specificLabel.sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
-          this.wasSubmittedSuccessfully = true;
-          setTimeout(() => {
-            this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
-          }, 2000);
+          this.successSendForm(response.id);
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -163,6 +161,20 @@ export class ReportingClimateActionFormComponent implements OnInit {
           this.wasSubmittedSuccessfully = false;
         },
       );
+  }
+
+  successSendForm(id: string) {
+    if (this.file.file) {
+      this.submitFile(id, this.file.name, this.file.file);
+    }
+
+    this.translateService.get('specificLabel.sucessfullySubmittedForm').subscribe((res: string) => {
+      this.snackBar.open(res, null, { duration: 3000 });
+    });
+    this.wasSubmittedSuccessfully = true;
+    setTimeout(() => {
+      this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
+    }, 2000);
   }
 
   private createForm() {
@@ -190,6 +202,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
   }
 
   private updateFormData() {
+    const monitoring_indicator = this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0];
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
@@ -198,30 +211,26 @@ export class ReportingClimateActionFormComponent implements OnInit {
             Validators.required,
           ],
         }),
+
         this.formBuilder.group({
-          indicatorSelectionCtrl: [
-            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].indicator,
-          ],
+          indicatorSelectionCtrl: [monitoring_indicator ? monitoring_indicator.indicator : ''],
           indicatorDataUpdateDateCtrl: [
-            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].data_updated_date,
+            monitoring_indicator ? monitoring_indicator.data_updated_date : '',
             Validators.required,
           ],
           reportingPeriodStartCtrl: [
-            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].initial_date_report_period,
+            monitoring_indicator ? monitoring_indicator.initial_date_report_period : '',
             Validators.required,
           ],
           reportingPeriodEndCtrl: [
-            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].final_date_report_period,
+            monitoring_indicator ? monitoring_indicator.final_date_report_period : '',
             Validators.required,
           ],
           reportTypeCtrl: [
-            parseInt(this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].report_type),
+            parseInt(monitoring_indicator ? monitoring_indicator.report_type : '0'),
             Validators.required,
           ],
-          informationToUpdateCtrl: [
-            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].updated_data,
-            Validators.required,
-          ],
+          informationToUpdateCtrl: [monitoring_indicator ? monitoring_indicator.updated_data : '', Validators.required],
         }),
 
         this.formBuilder.group({
@@ -246,5 +255,21 @@ export class ReportingClimateActionFormComponent implements OnInit {
     this.translateService.get('mitigationAction.mesage1').subscribe((res: string) => {
       this.snackBar.open(res, 'Cerrar');
     });
+  }
+
+  uploadFile(event: Event) {
+    const element = event.currentTarget as HTMLInputElement;
+    const fileList: FileList | null = element.files;
+    const name = element.name;
+    if (fileList) {
+      this.file = {
+        file: fileList[0],
+        name: name,
+      };
+    }
+  }
+
+  async submitFile(id: string, key: string, file: File) {
+    await this.service.submitMitigationFile(key, file, id).toPromise();
   }
 }

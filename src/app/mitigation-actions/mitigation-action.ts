@@ -274,3 +274,8 @@ export interface MADataCatalogs {
   thematic_categorization_type: MADataCatalogItem[];
   sector: MADataCatalogItem[];
 }
+
+export interface MAFile {
+  file: File;
+  name: string;
+}

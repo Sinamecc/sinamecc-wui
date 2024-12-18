@@ -52,7 +52,7 @@
                   <input matInput formControlName="methodologicalDetailIndicatorCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-                <input type="file" name="filename" />
+                <input type="file" name="methodologicalDetailIndicatorFile" (change)="uploadFile($event)" />
                 <br />
               </div>
 
@@ -180,7 +180,7 @@
                   <input matInput formControlName="howSustainabilityIndicatorCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-                <input type="file" name="filename" />
+                <input type="file" name="howSustainabilityIndicatorFile" (change)="uploadFile($event)" />
                 <br />
               </div>
 

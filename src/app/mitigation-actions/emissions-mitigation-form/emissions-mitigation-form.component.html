@@ -159,7 +159,8 @@
               <input
                 type="file"
                 accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/msword,"
-                name="filename"
+                name="impact-documentation"
+                (change)="uploadFile($event)"
               />
               <br />
             </div>
