@@ -32,7 +32,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
   isLoading = false;
   wasSubmittedSuccessfully = false;
   mechanismStandardApplyModel: number;
-  intendParticipateInternationalCarbonMarketsModel: number;
+  intendParticipateInternationalCarbonMarketsModel: boolean;
   mitigationAction: MitigationAction;
   @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
 
@@ -101,9 +101,9 @@ export class EmissionsMitigationFormComponent implements OnInit {
         }),
         this.formBuilder.group({
           intendParticipateInternationalCarbonMarketsCtrl: ['', Validators.required],
-          mechanismStandardApplyCtrl: ['', Validators.required],
+          mechanismStandardApplyCtrl: [''],
           methodologyExantePotentialReductionEmissionsCO2OtherCtrl: [''],
-          methodologyUsedCtrl: ['', Validators.required],
+          methodologyUsedCtrl: [''],
         }),
       ]),
     });
@@ -171,7 +171,10 @@ export class EmissionsMitigationFormComponent implements OnInit {
   private updateFormData() {
     this.intendParticipateInternationalCarbonMarketsModel =
       this.mitigationAction.impact_documentation.carbon_international_commerce;
-    this.mechanismStandardApplyModel = this.mitigationAction.impact_documentation.standard.id;
+
+    this.mechanismStandardApplyModel = this.mitigationAction.impact_documentation.standard
+      ? this.mitigationAction.impact_documentation.standard.id
+      : 0;
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
@@ -239,14 +242,11 @@ export class EmissionsMitigationFormComponent implements OnInit {
         this.formBuilder.group({
           intendParticipateInternationalCarbonMarketsCtrl: [
             this.mitigationAction.impact_documentation.carbon_international_commerce,
-            Validators.required,
+            [Validators.required],
           ],
-          mechanismStandardApplyCtrl: [
-            parseInt(this.mitigationAction.impact_documentation.standard.id),
-            Validators.required,
-          ],
+          mechanismStandardApplyCtrl: [parseInt(this.mitigationAction.impact_documentation.standard.id)],
           methodologyExantePotentialReductionEmissionsCO2OtherCtrl: [''],
-          methodologyUsedCtrl: [this.mitigationAction.impact_documentation.methodologies_to_use, Validators.required],
+          methodologyUsedCtrl: [this.mitigationAction.impact_documentation.methodologies_to_use],
         }),
       ]),
     });
@@ -366,8 +366,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
     this.stepper.next();
   }
 
-  public setLastSectionValidations(validation: number) {
-    if (validation === 1) {
+  public setLastSectionValidations(validation: boolean) {
+    if (validation) {
       this.form.get('formArray').get([2]).get('mechanismStandardApplyCtrl').setValidators(Validators.required);
       this.form.get('formArray').get([2]).get('methodologyUsedCtrl').setValidators(Validators.required);
     } else {

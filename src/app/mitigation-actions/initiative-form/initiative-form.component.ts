@@ -170,7 +170,7 @@ export class InitiativeFormComponent implements OnInit {
         }),
         this.formBuilder.group({
           geographicScaleCtrl: ['', Validators.required],
-          locationActionCtrl: ['', Validators.minLength(1)],
+          locationActionCtrl: ['', [Validators.required, Validators.minLength(1)]],
         }),
         this.formBuilder.group({
           relationshipCtrl: this.formBuilder.array([this.createNDCctrl()]),
@@ -484,7 +484,6 @@ export class InitiativeFormComponent implements OnInit {
         )
         .subscribe(
           (response) => {
-            console.log('RESPONSE 1', response);
             this.successSendForm(response.id);
           },
           (error) => {
@@ -509,7 +508,6 @@ export class InitiativeFormComponent implements OnInit {
         )
         .subscribe(
           (response) => {
-            console.log('RESPONSE 2', response);
             this.successSendForm(response.id);
           },
           (error) => {
@@ -578,7 +576,6 @@ export class InitiativeFormComponent implements OnInit {
         name: name,
       };
 
-      console.log(file);
       if (name === 'initiative') {
         this.files.initiative = file;
       } else if (name === 'geographic_location') {

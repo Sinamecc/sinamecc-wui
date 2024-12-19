@@ -90,7 +90,10 @@ export class BasicInformationFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
-          programCtrl: [this.mitigationAction.finance.status.id, Validators.required],
+          programCtrl: [
+            this.mitigationAction.finance.status ? this.mitigationAction.finance.status.id : '',
+            Validators.required,
+          ],
           stepsTakingToFinancingCtrl: [
             this.mitigationAction.finance.administration ? this.mitigationAction.finance.administration : '',
           ],

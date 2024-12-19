@@ -1,9 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConceptualIntegrationNewComponent } from '@app/mitigation-actions/conceptual-integration-new/conceptual-integration-new.component';
 import { MaterialModule } from '@app/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
@@ -20,7 +19,7 @@ describe('ConceptualIntegrationNewComponent', () => {
   let component: ConceptualIntegrationNewComponent;
   let fixture: ComponentFixture<ConceptualIntegrationNewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         ConceptualIntegrationNewComponent,
@@ -32,7 +31,6 @@ describe('ConceptualIntegrationNewComponent', () => {
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
-        FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
         FormsModule,

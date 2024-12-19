@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReportingClimateActionFormComponent } from './reporting-climate-action-form.component';
 
@@ -6,7 +6,7 @@ describe('ReportingClimateActionFormComponent', () => {
   let component: ReportingClimateActionFormComponent;
   let fixture: ComponentFixture<ReportingClimateActionFormComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ReportingClimateActionFormComponent],
     }).compileComponents();
