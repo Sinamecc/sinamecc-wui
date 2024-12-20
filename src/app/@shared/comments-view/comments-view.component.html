@@ -29,7 +29,7 @@
   <button mat-button mat-dialog-close>
     <span translate>general.close</span>
   </button>
-  <button *ngIf="edit" (click)="openAddCommentsModal()" mat-raised-button color="primary">
+  <button *ngIf="edit" (click)="openAddCommentsModal()" mat-raised-button color="primary" [mat-dialog-close]="comments">
     <span translate>general.newComment</span>
   </button>
 </mat-dialog-actions>

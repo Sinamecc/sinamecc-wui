@@ -182,8 +182,8 @@ export class KeyAspectsFormComponent implements OnInit {
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
       this.snackBar.open(res, null, { duration: 3000 });
     });
-    this.stepper.next();
     this.wasSubmittedSuccessfully = true;
+    this.stepper.next();
   }
 
   financialSourceInputShown($event: any) {
