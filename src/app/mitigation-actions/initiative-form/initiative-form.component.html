@@ -339,7 +339,7 @@
                       (selectionChange)="loadSubNDCcatalogs($event.value, i)"
                     >
                       <mat-option *ngFor="let element of processedNewFormData?.action_areas" [value]="element.id">
-                        {{ element.name }}
+                        {{ element.id }}. {{ element.name }}
                       </mat-option>
                     </mat-select>
                     <mat-hint><span translate>mitigationAction.relationshipNDCHint</span></mat-hint>
@@ -407,7 +407,7 @@
                         *ngFor="let element of processedNewFormData?.descarbonization_axis"
                         [value]="element.id"
                       >
-                        {{ element.description }}
+                        {{ element.id }}. {{ element.description }}
                       </mat-option>
                     </mat-select>
                     <mat-hint translate>mitigationAction.relationshipDecarbonizationPlanHint</mat-hint>
