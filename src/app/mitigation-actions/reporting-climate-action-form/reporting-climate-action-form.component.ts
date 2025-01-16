@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 import { finalize } from 'rxjs/operators';
-import { MitigationAction } from '../mitigation-action';
+import { MAFile, MitigationAction } from '../mitigation-action';
 import { MitigationActionNewFormData } from '../mitigation-action-new-form-data';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -26,6 +26,10 @@ export class ReportingClimateActionFormComponent implements OnInit {
   wasSubmittedSuccessfully = false;
   mitigationAction: MitigationAction;
   stateLabel = 'submitted';
+  file: MAFile = {
+    file: null,
+    name: '',
+  };
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
@@ -123,10 +127,10 @@ export class ReportingClimateActionFormComponent implements OnInit {
     if (this.mitigationAction.next_state[0].state === this.stateLabel) {
       context['is_complete'] = true;
     }
-    if (this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator']) {
-      if (this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'][0].id) {
-        context['monitoring_reporting_indicator']['monitoring_indicator']['id'] =
-          this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'][0].id;
+    const monitoringReporting = this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'];
+    if (monitoringReporting && monitoringReporting.length > 0) {
+      if (monitoringReporting[0].id) {
+        context['monitoring_reporting_indicator']['monitoring_indicator']['id'] = monitoringReporting[0].id;
       }
     }
 
@@ -146,13 +150,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.translateService.get('specificLabel.sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
-          this.wasSubmittedSuccessfully = true;
-          setTimeout(() => {
-            this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
-          }, 2000);
+          this.successSendForm(response.id);
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -163,6 +161,20 @@ export class ReportingClimateActionFormComponent implements OnInit {
           this.wasSubmittedSuccessfully = false;
         },
       );
+  }
+
+  successSendForm(id: string) {
+    if (this.file.file) {
+      this.submitFile(id, this.file.name, this.file.file);
+    }
+
+    this.translateService.get('specificLabel.sucessfullySubmittedForm').subscribe((res: string) => {
+      this.snackBar.open(res, null, { duration: 3000 });
+    });
+    this.wasSubmittedSuccessfully = true;
+    setTimeout(() => {
+      this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
+    }, 2000);
   }
 
   private createForm() {
@@ -190,61 +202,79 @@ export class ReportingClimateActionFormComponent implements OnInit {
   }
 
   private updateFormData() {
-    this.form = this.formBuilder.group({
-      formArray: this.formBuilder.array([
-        this.formBuilder.group({
-          anyProgressMonitoringRecordedClimateActionsCtrl: [
-            this.mitigationAction.monitoring_reporting_indicator.progress_in_monitoring,
-            Validators.required,
-          ],
-        }),
-        this.formBuilder.group({
-          indicatorSelectionCtrl: [
-            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].indicator,
-          ],
-          indicatorDataUpdateDateCtrl: [
-            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].data_updated_date,
-            Validators.required,
-          ],
-          reportingPeriodStartCtrl: [
-            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].initial_date_report_period,
-            Validators.required,
-          ],
-          reportingPeriodEndCtrl: [
-            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].final_date_report_period,
-            Validators.required,
-          ],
-          reportTypeCtrl: [
-            parseInt(this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].report_type),
-            Validators.required,
-          ],
-          informationToUpdateCtrl: [
-            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].updated_data,
-            Validators.required,
-          ],
-        }),
+    const monitoring_indicator = this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator;
+    if (monitoring_indicator && monitoring_indicator.length > 0) {
+      this.form = this.formBuilder.group({
+        formArray: this.formBuilder.array([
+          this.formBuilder.group({
+            anyProgressMonitoringRecordedClimateActionsCtrl: [
+              this.mitigationAction.monitoring_reporting_indicator.progress_in_monitoring,
+              Validators.required,
+            ],
+          }),
 
-        this.formBuilder.group({
-          reportingPeriodCtrl: [
-            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].progress_report_period,
-            Validators.required,
-          ],
-          reportingPeriodUntilCtrl: [
-            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].progress_report_period_until,
-            Validators.required,
-          ],
-          beenProgressActionPeriodCtrl: [
-            this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].progress_report,
-            Validators.required,
-          ],
-        }),
-      ]),
-    });
+          this.formBuilder.group({
+            indicatorSelectionCtrl: [monitoring_indicator ? monitoring_indicator[0].indicator : ''],
+            indicatorDataUpdateDateCtrl: [
+              monitoring_indicator ? monitoring_indicator[0].data_updated_date : '',
+              Validators.required,
+            ],
+            reportingPeriodStartCtrl: [
+              monitoring_indicator ? monitoring_indicator[0].initial_date_report_period : '',
+              Validators.required,
+            ],
+            reportingPeriodEndCtrl: [
+              monitoring_indicator ? monitoring_indicator[0].final_date_report_period : '',
+              Validators.required,
+            ],
+            reportTypeCtrl: [
+              parseInt(monitoring_indicator ? monitoring_indicator[0].report_type : '0'),
+              Validators.required,
+            ],
+            informationToUpdateCtrl: [
+              monitoring_indicator ? monitoring_indicator[0].updated_data : '',
+              Validators.required,
+            ],
+          }),
+
+          this.formBuilder.group({
+            reportingPeriodCtrl: [
+              monitoring_indicator ? monitoring_indicator[0].progress_report_period : '',
+              Validators.required,
+            ],
+            reportingPeriodUntilCtrl: [
+              monitoring_indicator ? monitoring_indicator[0].progress_report_period_until : '',
+              Validators.required,
+            ],
+            beenProgressActionPeriodCtrl: [
+              monitoring_indicator ? monitoring_indicator[0].progress_report : '',
+              Validators.required,
+            ],
+          }),
+        ]),
+      });
+    }
   }
 
   public openStartMessages() {
     this.translateService.get('mitigationAction.mesage1').subscribe((res: string) => {
       this.snackBar.open(res, 'Cerrar');
     });
+  }
+
+  uploadFile(event: Event) {
+    const element = event.currentTarget as HTMLInputElement;
+    const fileList: FileList | null = element.files;
+    const name = element.name;
+    if (fileList) {
+      this.file = {
+        file: fileList[0],
+        name: name,
+      };
+    }
+  }
+
+  async submitFile(id: string, key: string, file: File) {
+    await this.service.submitMitigationFile(key, file, id).toPromise();
   }
 }

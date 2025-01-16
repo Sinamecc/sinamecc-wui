@@ -148,7 +148,7 @@
             <div *ngIf="informationToUpdate.value === 2">
               <div class="flex flex-row justify-center">
                 <mat-label translate>6.2.1.3 - <span translate>mitigationAction.informationToUpdate</span></mat-label>
-                <input type="file" name="filename" />
+                <input type="file" name="informationToUpdateFile" (change)="uploadFile($event)" />
                 <br />
               </div>
             </div>

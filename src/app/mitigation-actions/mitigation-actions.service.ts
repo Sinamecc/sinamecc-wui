@@ -36,6 +36,7 @@ const routes = {
   allData: () => `/v1/mitigation-action/data/`,
   sectorIppc2006: (sectorID: string) => `/v1/mitigation-action/data/sector/${sectorID}/sector-ipcc/`,
   categoryIppc2006: (CategoryId: string) => `/v1/mitigation-action/data/sector-ipcc/${CategoryId}/category-ipcc/`,
+  submitFile: (id: string, key: string) => `/v1/mitigation-action/${id}/file/${key}/`,
 };
 
 export interface Response {
@@ -252,5 +253,16 @@ export class MitigationActionsService {
 
   public async downloadResource(filePath: string): Promise<S3File> {
     return this.s3.downloadResource(filePath);
+  }
+
+  public submitMitigationFile(key: string, file: File, id: string) {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    return this.httpClient.put(routes.submitFile(id, key), formData, {}).pipe(
+      map((body: any) => {
+        return body;
+      }),
+    );
   }
 }

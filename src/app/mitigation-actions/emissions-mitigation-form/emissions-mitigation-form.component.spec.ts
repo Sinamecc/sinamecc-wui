@@ -1,9 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EmissionsMitigationFormComponent } from './emissions-mitigation-form.component';
 import { MaterialModule } from '@app/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
@@ -18,13 +17,13 @@ describe('EmissionsMitigationFormComponent', () => {
   let component: EmissionsMitigationFormComponent;
   let fixture: ComponentFixture<EmissionsMitigationFormComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [EmissionsMitigationFormComponent],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
-        FlexLayoutModule,
+
         TranslateModule.forRoot(),
         RouterTestingModule,
         FormsModule,
@@ -43,7 +42,7 @@ describe('EmissionsMitigationFormComponent', () => {
         provideHttpClientTesting(),
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EmissionsMitigationFormComponent);

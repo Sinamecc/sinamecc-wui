@@ -8,7 +8,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData, InitiativeType } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MitigationAction } from '../mitigation-action';
+import { MAFile, MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -34,6 +34,20 @@ export class InitiativeFormComponent implements OnInit {
 
   mitigationAction: MitigationAction;
   initiativeGoalList: string[] = [];
+
+  files: {
+    geographic_location: MAFile;
+    initiative: MAFile;
+  } = {
+    geographic_location: {
+      name: '',
+      file: null,
+    },
+    initiative: {
+      name: '',
+      file: null,
+    },
+  };
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -156,7 +170,7 @@ export class InitiativeFormComponent implements OnInit {
         }),
         this.formBuilder.group({
           geographicScaleCtrl: ['', Validators.required],
-          locationActionCtrl: ['', Validators.minLength(1)],
+          locationActionCtrl: ['', [Validators.required, Validators.minLength(1)]],
         }),
         this.formBuilder.group({
           relationshipCtrl: this.formBuilder.array([this.createNDCctrl()]),
@@ -470,11 +484,7 @@ export class InitiativeFormComponent implements OnInit {
         )
         .subscribe(
           (response) => {
-            this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-              this.snackBar.open(res, null, { duration: 3000 });
-              this.stepper.next();
-            });
-            this.wasSubmittedSuccessfully = true;
+            this.successSendForm(response.id);
           },
           (error) => {
             this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -498,11 +508,7 @@ export class InitiativeFormComponent implements OnInit {
         )
         .subscribe(
           (response) => {
-            this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-              this.snackBar.open(res, null, { duration: 3000 });
-            });
-            this.wasSubmittedSuccessfully = true;
-            this.stepper.next();
+            this.successSendForm(response.id);
           },
           (error) => {
             this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -515,6 +521,22 @@ export class InitiativeFormComponent implements OnInit {
           },
         );
     }
+  }
+
+  successSendForm(id: string) {
+    if (this.files.initiative.file) {
+      this.submitFile(id, this.files.initiative.name, this.files.initiative.file);
+    }
+
+    if (this.files.geographic_location.file) {
+      this.submitFile(id, this.files.geographic_location.name, this.files.geographic_location.file);
+    }
+
+    this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+      this.snackBar.open(res, null, { duration: 3000 });
+      this.stepper.next();
+    });
+    this.wasSubmittedSuccessfully = true;
   }
 
   financialSourceInputShown($event: any) {
@@ -542,5 +564,27 @@ export class InitiativeFormComponent implements OnInit {
     window.open(
       'https://docs.google.com/spreadsheets/d/17rrTYpiLsargiTnARd29HLoSOaRUYtXd/edit?usp=sharing&ouid=100093507902776240980&rtpof=true&sd=true',
     );
+  }
+
+  uploadFile(event: Event) {
+    const element = event.currentTarget as HTMLInputElement;
+    const fileList: FileList | null = element.files;
+    const name = element.name;
+    if (fileList) {
+      const file = {
+        file: fileList[0],
+        name: name,
+      };
+
+      if (name === 'initiative') {
+        this.files.initiative = file;
+      } else if (name === 'geographic_location') {
+        this.files.geographic_location = file;
+      }
+    }
+  }
+
+  async submitFile(id: string, key: string, file: File) {
+    await this.service.submitMitigationFile(key, file, id).toPromise();
   }
 }

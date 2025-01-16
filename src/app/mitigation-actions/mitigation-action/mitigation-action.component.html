@@ -641,19 +641,26 @@
           <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
               <strong translate>mitigationAction.reportingPeriod</strong>
-              {{ (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report_period }}
+              {{
+                mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator &&
+                  (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report_period
+              }}
             </h3>
             <h3 class="mat-h3">
               <strong translate>general.until</strong>
-              {{ (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report_period }}
+              {{
+                mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator &&
+                  (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report_period
+              }}
             </h3>
             <h3 class="mat-h3">
               <strong translate>mitigationAction.beenProgressActionPeriod</strong>
               {{
-                mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator
-                  ? (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]
-                      ?.progress_report_period_until
-                  : ''
+                mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator &&
+                  (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator
+                    ? (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]
+                        ?.progress_report_period_until
+                    : '')
               }}
             </h3>
           </div>

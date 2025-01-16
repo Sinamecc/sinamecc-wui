@@ -1,9 +1,8 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BasicInformationFormComponent } from './basic-information-form.component';
 import { MaterialModule } from '@app/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
@@ -20,13 +19,12 @@ describe('BasicInformationFormComponent', () => {
   let component: BasicInformationFormComponent;
   let fixture: ComponentFixture<BasicInformationFormComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [BasicInformationFormComponent],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
-        FlexLayoutModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
         FormsModule,

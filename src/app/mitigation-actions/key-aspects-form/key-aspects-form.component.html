@@ -42,7 +42,12 @@
                 >
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <input type="file" accept=".rar,application/pdf,.zip" name="filename" />
+              <input
+                type="file"
+                accept=".rar,application/pdf,.zip"
+                name="ghg-information"
+                (change)="uploadFile($event)"
+              />
               <br />
             </div>
 

@@ -32,13 +32,20 @@ export class EmissionsMitigationFormComponent implements OnInit {
   isLoading = false;
   wasSubmittedSuccessfully = false;
   mechanismStandardApplyModel: number;
-  intendParticipateInternationalCarbonMarketsModel: number;
+  intendParticipateInternationalCarbonMarketsModel: boolean;
   mitigationAction: MitigationAction;
   @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
 
   sectorCatalog: MADataCatalogItem[] = [];
   sectorIppc2006: SectorIpcc2006[][] = [];
   categoryIppc2006: CategoryIppc2006[][] = [];
+  impact_documentation: {
+    file: File;
+    name: string;
+  } = {
+    file: null,
+    name: '',
+  };
 
   gasList = ['CO2', 'CH4', 'N2O', 'HFC*', 'SF6', 'CO', 'NOx', 'NMVOC', 'SO2', 'C Negro', 'Otro'];
 
@@ -94,9 +101,9 @@ export class EmissionsMitigationFormComponent implements OnInit {
         }),
         this.formBuilder.group({
           intendParticipateInternationalCarbonMarketsCtrl: ['', Validators.required],
-          mechanismStandardApplyCtrl: ['', Validators.required],
+          mechanismStandardApplyCtrl: [''],
           methodologyExantePotentialReductionEmissionsCO2OtherCtrl: [''],
-          methodologyUsedCtrl: ['', Validators.required],
+          methodologyUsedCtrl: [''],
         }),
       ]),
     });
@@ -164,7 +171,10 @@ export class EmissionsMitigationFormComponent implements OnInit {
   private updateFormData() {
     this.intendParticipateInternationalCarbonMarketsModel =
       this.mitigationAction.impact_documentation.carbon_international_commerce;
-    this.mechanismStandardApplyModel = this.mitigationAction.impact_documentation.standard.id;
+
+    this.mechanismStandardApplyModel = this.mitigationAction.impact_documentation.standard
+      ? this.mitigationAction.impact_documentation.standard.id
+      : 0;
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
@@ -232,14 +242,11 @@ export class EmissionsMitigationFormComponent implements OnInit {
         this.formBuilder.group({
           intendParticipateInternationalCarbonMarketsCtrl: [
             this.mitigationAction.impact_documentation.carbon_international_commerce,
-            Validators.required,
+            [Validators.required],
           ],
-          mechanismStandardApplyCtrl: [
-            parseInt(this.mitigationAction.impact_documentation.standard.id),
-            Validators.required,
-          ],
+          mechanismStandardApplyCtrl: [parseInt(this.mitigationAction.impact_documentation.standard.id)],
           methodologyExantePotentialReductionEmissionsCO2OtherCtrl: [''],
-          methodologyUsedCtrl: [this.mitigationAction.impact_documentation.methodologies_to_use, Validators.required],
+          methodologyUsedCtrl: [this.mitigationAction.impact_documentation.methodologies_to_use],
         }),
       ]),
     });
@@ -347,8 +354,20 @@ export class EmissionsMitigationFormComponent implements OnInit {
       );
   }
 
-  public setLastSectionValidations(validation: number) {
-    if (validation === 1) {
+  successSendForm(id: string) {
+    if (this.impact_documentation.file) {
+      this.submitFile(id, this.impact_documentation.name, this.impact_documentation.file);
+    }
+
+    this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+      this.snackBar.open(res, null, { duration: 3000 });
+    });
+    this.wasSubmittedSuccessfully = true;
+    this.stepper.next();
+  }
+
+  public setLastSectionValidations(validation: boolean) {
+    if (validation) {
       this.form.get('formArray').get([2]).get('mechanismStandardApplyCtrl').setValidators(Validators.required);
       this.form.get('formArray').get([2]).get('methodologyUsedCtrl').setValidators(Validators.required);
     } else {
@@ -358,5 +377,22 @@ export class EmissionsMitigationFormComponent implements OnInit {
 
     this.form.get('formArray').get([2]).get('mechanismStandardApplyCtrl').updateValueAndValidity();
     this.form.get('formArray').get([2]).get('methodologyUsedCtrl').updateValueAndValidity();
+  }
+
+  uploadFile(event: Event) {
+    // TODO: fix names
+    const element = event.currentTarget as HTMLInputElement;
+    const fileList: FileList | null = element.files;
+    const name = element.name;
+    if (fileList) {
+      this.impact_documentation = {
+        file: fileList[0],
+        name: name,
+      };
+    }
+  }
+
+  async submitFile(id: string, key: string, file: File) {
+    await this.service.submitMitigationFile(key, file, id).toPromise();
   }
 }

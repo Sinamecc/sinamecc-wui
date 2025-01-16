@@ -8,7 +8,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MitigationAction } from '../mitigation-action';
+import { MAFile, MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { I18nService } from '@app/i18n';
@@ -30,6 +30,20 @@ export class ImpactFormComponent implements OnInit {
   wasSubmittedSuccessfully = false;
   startDate = new Date();
   mitigationAction: MitigationAction;
+
+  files: {
+    methodologicalDetail: MAFile;
+    howSustainability: MAFile;
+  } = {
+    methodologicalDetail: {
+      file: null,
+      name: '',
+    },
+    howSustainability: {
+      file: null,
+      name: '',
+    },
+  };
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -125,7 +139,7 @@ export class ImpactFormComponent implements OnInit {
         namePersonResponsibleCtrl: ['', Validators.required],
         institutionCtrl: ['', Validators.required],
         contactPersonTitleCtrl: ['', Validators.required],
-        emailAddressCtrl: ['', Validators.email],
+        emailAddressCtrl: ['', [Validators.required, Validators.email]],
         phoneCtrl: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(8)])],
       }),
       this.formBuilder.group({
@@ -140,68 +154,70 @@ export class ImpactFormComponent implements OnInit {
   private updateFormData() {
     //this.createForm();
     let index = 0;
-    for (const indicator of this.mitigationAction.monitoring_information.indicator) {
-      const form = this.formBuilder.array([
-        this.formBuilder.group({
-          id: indicator.id,
-          responsibleInstitutionCtrl: [
-            indicator.name,
-            Validators.compose([Validators.required, Validators.maxLength(200)]),
-          ],
-          howSustainabilityIndicatorCtrl: [indicator.ensure_sustainability, Validators.required],
-          indicatorNameCtrl: [''],
-          indicatorDescriptionCtrl: [indicator.description, Validators.required],
-          indicatorUnitCtrl: [indicator.unit, Validators.required],
-          methodologicalDetailIndicatorCtrl: [
-            indicator.methodological_detail,
-            Validators.compose([Validators.required, Validators.maxLength(1000)]),
-          ],
-          indicatorReportingPeriodicityOtherCtrl: [''],
-          indicatorReportingPeriodicityCtrl: [indicator.reporting_periodicity, Validators.required],
-          timeSeriesAvailableStartCtrl: [indicator.available_time_start_date, Validators.required],
-          timeSeriesAvailableEndCtrl: [indicator.available_time_end_date, Validators.required],
-          geographicCoverageCtrl: [indicator.geographic_coverage, Validators.required],
-          geographicCoverageOtherCtrl: [indicator.other_geographic_coverage],
-          disintegrationCtrl: [indicator.disaggregation, Validators.required],
-          dataSourceCtrl: [indicator.limitation, Validators.required],
-          observationsCommentsCtrl: [indicator.comments],
-        }),
-        this.formBuilder.group({
-          responsibleInstitutionCtrl: [indicator.information_source.responsible_institution, Validators.required],
-          sourceTypeCtrl: [indicator.information_source.type.map((x: { id: any }) => x.id), Validators.required],
-          sourceTypeOtherCtrl: [indicator.information_source.other_type],
-          statisticalOperationNameCtrl: [indicator.information_source.statistical_operation, Validators.required],
-        }),
-        this.formBuilder.group({
-          datatypeCtrl: [indicator.type_of_data, Validators.required],
-          datatypeOtherCtrl: [indicator.other_type_of_data],
-          sinameccClassifiersCtrl: [indicator.classifier.map((x: { id: any }) => x.id), Validators.required],
-          sinameccClassifiersOtherCtrl: [indicator.other_classifier],
-        }),
-        this.formBuilder.group({
-          namePersonResponsibleCtrl: [indicator.contact.full_name, Validators.required],
-          institutionCtrl: [indicator.contact.institution, Validators.required],
-          contactPersonTitleCtrl: [indicator.contact.job_title, Validators.required],
-          emailAddressCtrl: [indicator.contact.email, Validators.email],
-          phoneCtrl: [indicator.contact.phone, Validators.compose([Validators.required, Validators.minLength(8)])],
-        }),
-        this.formBuilder.group({
-          dateLastUpdateCtrl: [indicator.change_log[0].update_date, Validators.required],
-          changesLastupdateCtrl: [indicator.change_log[0].changes, Validators.required],
-          descriptionChangesCtrl: [indicator.change_log[0].changes_description, Validators.required],
-          authorLastUpdateCtrl: [indicator.change_log[0].author, Validators.required],
-        }),
-      ]);
+    if (this.mitigationAction.monitoring_reporting_indicator.indicator) {
+      for (const indicator of this.mitigationAction.monitoring_information.indicator) {
+        const form = this.formBuilder.array([
+          this.formBuilder.group({
+            id: indicator.id,
+            responsibleInstitutionCtrl: [
+              indicator.name,
+              Validators.compose([Validators.required, Validators.maxLength(200)]),
+            ],
+            howSustainabilityIndicatorCtrl: [indicator.ensure_sustainability, Validators.required],
+            indicatorNameCtrl: [''],
+            indicatorDescriptionCtrl: [indicator.description, Validators.required],
+            indicatorUnitCtrl: [indicator.unit, Validators.required],
+            methodologicalDetailIndicatorCtrl: [
+              indicator.methodological_detail,
+              Validators.compose([Validators.required, Validators.maxLength(1000)]),
+            ],
+            indicatorReportingPeriodicityOtherCtrl: [''],
+            indicatorReportingPeriodicityCtrl: [indicator.reporting_periodicity, Validators.required],
+            timeSeriesAvailableStartCtrl: [indicator.available_time_start_date, Validators.required],
+            timeSeriesAvailableEndCtrl: [indicator.available_time_end_date, Validators.required],
+            geographicCoverageCtrl: [indicator.geographic_coverage, Validators.required],
+            geographicCoverageOtherCtrl: [indicator.other_geographic_coverage],
+            disintegrationCtrl: [indicator.disaggregation, Validators.required],
+            dataSourceCtrl: [indicator.limitation, Validators.required],
+            observationsCommentsCtrl: [indicator.comments],
+          }),
+          this.formBuilder.group({
+            responsibleInstitutionCtrl: [indicator.information_source.responsible_institution, Validators.required],
+            sourceTypeCtrl: [indicator.information_source.type.map((x: { id: any }) => x.id), Validators.required],
+            sourceTypeOtherCtrl: [indicator.information_source.other_type],
+            statisticalOperationNameCtrl: [indicator.information_source.statistical_operation, Validators.required],
+          }),
+          this.formBuilder.group({
+            datatypeCtrl: [indicator.type_of_data, Validators.required],
+            datatypeOtherCtrl: [indicator.other_type_of_data],
+            sinameccClassifiersCtrl: [indicator.classifier.map((x: { id: any }) => x.id), Validators.required],
+            sinameccClassifiersOtherCtrl: [indicator.other_classifier],
+          }),
+          this.formBuilder.group({
+            namePersonResponsibleCtrl: [indicator.contact.full_name, Validators.required],
+            institutionCtrl: [indicator.contact.institution, Validators.required],
+            contactPersonTitleCtrl: [indicator.contact.job_title, Validators.required],
+            emailAddressCtrl: [indicator.contact.email, Validators.email],
+            phoneCtrl: [indicator.contact.phone, Validators.compose([Validators.required, Validators.minLength(8)])],
+          }),
+          this.formBuilder.group({
+            dateLastUpdateCtrl: [indicator.change_log[0].update_date, Validators.required],
+            changesLastupdateCtrl: [indicator.change_log[0].changes, Validators.required],
+            descriptionChangesCtrl: [indicator.change_log[0].changes_description, Validators.required],
+            authorLastUpdateCtrl: [indicator.change_log[0].author, Validators.required],
+          }),
+        ]);
 
-      if (index === 0) {
-        this.form = this.formBuilder.group({
-          formArray: form,
-        });
-      } else {
-        this.form.controls['formArray' + index] = form;
+        if (index === 0) {
+          this.form = this.formBuilder.group({
+            formArray: form,
+          });
+        } else {
+          this.form.controls['formArray' + index] = form;
+        }
+
+        index += 1;
       }
-
-      index += 1;
     }
 
     this.isLoading = false;
@@ -280,11 +296,7 @@ export class ImpactFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
-          this.wasSubmittedSuccessfully = true;
-          this.stepper.next();
+          this.successSendForm(response.id);
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -296,5 +308,44 @@ export class ImpactFormComponent implements OnInit {
           this.wasSubmittedSuccessfully = false;
         },
       );
+  }
+
+  successSendForm(id: string) {
+    if (this.files.methodologicalDetail.file) {
+      this.submitFile(id, this.files.methodologicalDetail.name, this.files.methodologicalDetail.file);
+    }
+
+    if (this.files.howSustainability.file) {
+      this.submitFile(id, this.files.howSustainability.name, this.files.howSustainability.file);
+    }
+
+    this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+      this.snackBar.open(res, null, { duration: 3000 });
+    });
+    this.wasSubmittedSuccessfully = true;
+    this.stepper.next();
+  }
+
+  uploadFile(event: Event) {
+    // TODO: correct names
+    const element = event.currentTarget as HTMLInputElement;
+    const fileList: FileList | null = element.files;
+    const name = element.name;
+    if (fileList) {
+      const file = {
+        file: fileList[0],
+        name: name,
+      };
+
+      if (name === 'methodologicalDetailIndicatorFile') {
+        this.files.methodologicalDetail = file;
+      } else if (name === 'howSustainabilityIndicatorFile') {
+        this.files.howSustainability = file;
+      }
+    }
+  }
+
+  async submitFile(id: string, key: string, file: File) {
+    await this.service.submitMitigationFile(key, file, id).toPromise();
   }
 }

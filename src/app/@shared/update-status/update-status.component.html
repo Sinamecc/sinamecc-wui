@@ -18,8 +18,7 @@
         <div class="form-error" [hidden]="!error || isLoading" translate>
           <span translate>errorLabel.errorSubmittingForm</span>
         </div>
-        <br />
-        <div class="flex flex-col">
+        <div class="flex flex-col gap-4">
           <h3 translate>general.currentStatus</h3>
           <span>{{ entity.fsm_state?.label }}</span>
           <hr />
@@ -34,7 +33,6 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <br />
 
           <mat-form-field *ngIf="shouldDisplayComment">
             <textarea
@@ -47,14 +45,10 @@
             ></textarea>
             <mat-error translate>errorLabel.fieldRequired</mat-error>
           </mat-form-field>
-          <br />
-
-          <br />
 
           <button (click)="loadComponent()" type="button" *ngIf="!moduleRef" mat-raised-button color="primary">
             <span translate>specificLabel.commentForm</span>
           </button>
-          <br />
 
           <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading">
             <span translate>specificLabel.submitReview</span>

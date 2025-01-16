@@ -64,7 +64,7 @@
                 ></textarea>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <input type="file" name="filename" />
+              <input type="file" name="initiative" (change)="uploadFile($event)" />
             </div>
             <div>
               <mat-form-field class="field-ppcn">
@@ -305,7 +305,7 @@
                 ></textarea>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <input type="file" name="filename2" />
+              <input type="file" name="geographic-location" (change)="uploadFile($event)" />
             </div>
 
             <div class="box-button">
