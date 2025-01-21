@@ -49,7 +49,7 @@ export class MitigationActionsListComponent implements OnInit {
   loading = false;
   dataSource: MatTableDataSource<MitigationAction>;
   canUpdateStatus = false;
-  displayedColumns = ['name', 'strategy_name', 'purpose', 'fsm_state', 'updated', 'created', 'actions'];
+  displayedColumns = ['name', 'strategy_name', 'fsm_state', 'updated', 'created', 'actions'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   fieldsToSearch: string[][] = [['name'], ['strategy_name'], ['purpose'], ['fsm_state'], ['created'], ['updated']];
@@ -74,6 +74,10 @@ export class MitigationActionsListComponent implements OnInit {
 
   edit(uuid: string) {
     this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
+  }
+
+  review(uuid: string) {
+    this.router.navigate([`/mitigation/actions/${uuid}/reviews/new`], { replaceUrl: true });
   }
 
   update(uuid: string) {

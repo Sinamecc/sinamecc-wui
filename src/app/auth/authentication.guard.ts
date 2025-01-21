@@ -11,20 +11,35 @@ const log = new Logger('AuthenticationGuard');
 })
 export class AuthenticationGuard {
   constructor(
-    private router: Router,
-    private credentialsService: CredentialsService,
+    private readonly router: Router,
+    private readonly credentialsService: CredentialsService
   ) {}
 
+  /**
+   * Determines if a route can be activated based on authentication status.
+   * @param route - The route that is being accessed.
+   * @param state - The current router state.
+   * @returns True if the user is authenticated, otherwise redirects to login and returns false.
+   */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.credentialsService.isAuthenticated()) {
+      log.debug('User is authenticated. Access granted.');
       return true;
     }
 
-    log.debug('Not authenticated, redirecting and adding redirect url...');
+    log.debug('User is not authenticated. Redirecting to login...');
+    this.redirectToLogin(state.url);
+    return false;
+  }
+
+  /**
+   * Redirects the user to the login page with the intended URL as a query parameter.
+   * @param redirectUrl - The URL the user attempted to access.
+   */
+  private redirectToLogin(redirectUrl: string): void {
     this.router.navigate(['/login'], {
-      queryParams: { redirect: state.url },
+      queryParams: { redirect: redirectUrl },
       replaceUrl: true,
     });
-    return false;
   }
 }
