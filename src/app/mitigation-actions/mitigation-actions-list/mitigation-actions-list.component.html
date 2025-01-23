@@ -19,16 +19,10 @@
 
     <!-- Strategy Name Column -->
     <ng-container matColumnDef="strategy_name">
-      <mat-header-cell *matHeaderCellDef translate> mitigationAction.ProgramStrategyInitiative</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate> mitigationAction.maType</mat-header-cell>
       <mat-cell *matCellDef="let element">
         {{ element.initiative.initiative_type.type }} - {{ element.initiative.initiative_type.name }}
       </mat-cell>
-    </ng-container>
-
-    <!-- Objective Column -->
-    <ng-container matColumnDef="purpose">
-      <mat-header-cell *matHeaderCellDef translate> general.objective</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.initiative.goal[0].goal }} </mat-cell>
     </ng-container>
 
     <!-- Status Column -->
@@ -54,6 +48,14 @@
       <mat-cell *matCellDef="let element">
         <button mat-icon-button color="accent" (click)="view(element.id)">
           <mat-icon>visibility</mat-icon>
+        </button>
+
+        <button mat-icon-button color="accent" (click)="edit(element.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button mat-icon-button color="accent" (click)="review(element.id)">
+          <mat-icon>navigate_next</mat-icon>
         </button>
 
         <button

@@ -133,7 +133,7 @@
     "MAs": "Mitigation Actions",
     "addMA": "Add new mitigation action",
     "MAstatus": "Mitigation Action Status",
-    "ProgramStrategyInitiative": "Program, Strategy or Initiative",
+    "maType": "Type of Mitigation Action",
     "CreateMA": "Create new mitigation action",
     "ObjectiveMA": "Objective of the mitigation action",
     "StartMA": "Starting year of Mitigation Action",
