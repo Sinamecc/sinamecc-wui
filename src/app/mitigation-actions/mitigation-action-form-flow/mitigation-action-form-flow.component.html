@@ -11,9 +11,10 @@
     <form [formGroup]="mainGroup">
       <!-- {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}} -->
       <mat-horizontal-stepper formArrayName="formArray" linear #stepper>
-        <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+        <mat-step formGroupName="0">
           <ng-template matStepLabel><span translate>specificLabel.registerInitiatives</span></ng-template>
           <app-initiative-form
+            [typeCtrl]="typeCtrlFunc"
             [newFormData]="newFormData"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
@@ -22,7 +23,7 @@
           ></app-initiative-form>
         </mat-step>
 
-        <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+        <mat-step formGroupName="1" [stepControl]="typeCtrl.toString() === '1' ? null : formArray?.get([1])">
           <ng-template matStepLabel><span translate>info.financingInformation</span></ng-template>
           <app-basic-information-form
             [newFormData]="newFormData"
@@ -86,7 +87,10 @@
           </div>
         </mat-step>
 
-        <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
+        <mat-step
+          formGroupName="3"
+          [stepControl]="typeCtrl.toString() === '1' || typeCtrl.toString() === '2' ? null : formArray?.get([3])"
+        >
           <ng-template matStepLabel><span translate>specificLabel.mitigationEmissions</span></ng-template>
           <app-emissions-mitigation-form
             [newFormData]="newFormData"
@@ -142,7 +146,7 @@
           </div>
         </mat-step>
 
-        <mat-step formGroupName="5" [stepControl]="formArray?.get([5])">
+        <!-- <mat-step formGroupName="5" [stepControl]="formArray?.get([5])">
           <ng-template matStepLabel
             ><span translate>mitigationAction.monitoringReportingClimateActions</span>
           </ng-template>
@@ -151,7 +155,7 @@
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
           ></app-reporting-climate-action-form>
-        </mat-step>
+        </mat-step> -->
       </mat-horizontal-stepper>
       <!-- <div class="margin-20">
             <div>form main group details:-</div>

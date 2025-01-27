@@ -49,6 +49,7 @@ export class InitiativeFormComponent implements OnInit {
     },
   };
 
+  @Input() typeCtrl!: (value: string) => void;
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   // @Input() action: string;
@@ -536,6 +537,7 @@ export class InitiativeFormComponent implements OnInit {
       this.snackBar.open(res, null, { duration: 3000 });
       this.stepper.next();
     });
+    this.typeCtrl(this.form.value.formArray[0].initiativeTypeCtrl) 
     this.wasSubmittedSuccessfully = true;
   }
 
