@@ -16,11 +16,11 @@ export interface Response {
 const routes = {
   permissions: () => `/v1/user/permission/`,
   groups: () => `/v1/user/group/`,
-  roles: () => `/v1/user/roles/`,
-  submitUser: () => `/v1/user/`,
+  roles: () => `/v1/users/roles`,
+  submitUser: () => `/v1/users`,
   submitPermissions: (userName: string) => `/v1/user/${userName}/permission/`,
   submitGroups: (userName: string) => `/v1/user/${userName}/group/`,
-  users: () => `/v1/user/`,
+  users: () => `/v1/users`,
   user: (userName: string) => `/v1/user/${userName}`,
   editUser: (userId: string) => `/v1/user/${userId}`,
   submitImage: () => `/v1/user/1/profile_picture/`,
@@ -210,7 +210,7 @@ export class AdminService {
     formData.append('last_name', context.lastName);
     formData.append('status', 'created');
 
-    return this.httpClient.post(routes.submitUser(), formData, {}).pipe(
+    return this.httpClient.post(routes.users(), formData, {}).pipe(
       map((body: any) => {
         const response = {
           statusCode: 200,
