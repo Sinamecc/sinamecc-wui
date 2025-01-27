@@ -53,7 +53,6 @@ export class AuthenticationService {
         };
         return this.httpClient.get(routes.userData(body.user_id), innerHttpOptions).pipe(
           map((req: any) => {
-            console.log(req, 333333333334)
             const data = {
               fullName: req.first_name + ' ' + req.last_name,
               username: req.username,
