@@ -22,9 +22,9 @@ const routes = {
   submitGroups: (userName: string) => `/v1/user/${userName}/group/`,
   users: () => `/v1/user/`,
   user: (userName: string) => `/v1/user/${userName}`,
-  editUser: (userId: string) => `/v1/user/${userId}`,
+  editUser: (userId: string) => `/v1/users/${userId}`,
   submitImage: () => `/v1/user/1/profile_picture/`,
-  assignRoles: (userId: string) => `/v1/user/${userId}/roles/`,
+  assignRoles: (userId: string) => `/v1/users/${userId}/roles`,
 };
 
 @Injectable({
@@ -163,8 +163,11 @@ export class AdminService {
   assignRoles(context: any) {
     const userId = context.userId;
     const formData: FormData = new FormData();
-    formData.append('roles', JSON.stringify(context.roles));
-    return this.httpClient.post(routes.assignRoles(userId), formData, {});
+    const form = {
+      roles: context.roles,
+    };
+    // formData.append('roles', JSON.stringify(context.roles));
+    return this.httpClient.post(routes.assignRoles(userId), form, {});
   }
 
   submitCreatePermissions(context: any): Observable<Response> {
