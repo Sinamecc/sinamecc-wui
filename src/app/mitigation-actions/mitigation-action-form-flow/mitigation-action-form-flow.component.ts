@@ -9,7 +9,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators, FormControl } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators, FormControl, FormArray, FormGroup } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import {
@@ -69,6 +69,8 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
 
   newFormData: Observable<MitigationActionNewFormData>;
   processedNewFormData: MitigationActionNewFormData;
+  typeCtrl = ""
+  typeCtrlFunc = (value:string) => this.typeCtrl = value
 
   get formArray(): AbstractControl | null {
     return this.mainGroup.get('formArray');
@@ -95,6 +97,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     this.isLinear = true;
     this.isLoading = false;
   }
+
 
   createForm() {
     this.mainGroup = this._formBuilder.group({
