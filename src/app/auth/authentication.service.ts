@@ -14,7 +14,7 @@ export interface LoginContext {
 
 const routes = {
   login: () => `/v1/token/`,
-  userData: (username: string) => `/v1/user/${username}`,
+  userData: (userId: number) => `/v1/users/${userId}`,
   emailResetPassword: () => `/v1/user/change_password/`,
   changePassword: (token: string, code: string) => `/v1/user/change_password/${code}/${token}`,
 };
@@ -51,7 +51,7 @@ export class AuthenticationService {
             Authorization: 'JWT ' + body.token,
           }),
         };
-        return this.httpClient.get(routes.userData(context.username), innerHttpOptions).pipe(
+        return this.httpClient.get(routes.userData(body.user_id), innerHttpOptions).pipe(
           map((req: any) => {
             const data = {
               fullName: req.first_name + ' ' + req.last_name,

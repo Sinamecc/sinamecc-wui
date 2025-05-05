@@ -11,6 +11,7 @@ import { ComponentDialogComponent } from '@core/component-dialog/component-dialo
 import { TokenInterceptor } from './http/token.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { DataInterceptor } from './http/data.interceptor';
 
 @NgModule({
   declarations: [ComponentDialogComponent],
@@ -19,6 +20,11 @@ import { MatButtonModule } from '@angular/material/button';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiPrefixInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: DataInterceptor,
       multi: true,
     },
     {
