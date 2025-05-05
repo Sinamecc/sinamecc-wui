@@ -154,7 +154,8 @@ export class ImpactFormComponent implements OnInit {
   private updateFormData() {
     //this.createForm();
     let index = 0;
-    if (this.mitigationAction.monitoring_reporting_indicator.indicator) {
+    if (this.mitigationAction.
+      monitoring_information.indicator) {
       for (const indicator of this.mitigationAction.monitoring_information.indicator) {
         const form = this.formBuilder.array([
           this.formBuilder.group({
@@ -283,31 +284,35 @@ export class ImpactFormComponent implements OnInit {
   }
 
   submitForm() {
-    this.isLoading = true;
-    const context = this.buildPayload();
 
-    this.service
-      .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
-      .pipe(
-        finalize(() => {
-          this.form.markAsPristine();
-          this.isLoading = false;
-        }),
-      )
-      .subscribe(
-        (response) => {
-          this.successSendForm(response.id);
-        },
-        (error) => {
-          this.translateService.get('Error submitting form').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
-          log.debug(`New Mitigation Action Form error: ${error}`);
-          this.error = error;
-          this.errorComponent.parseErrors(error);
-          this.wasSubmittedSuccessfully = false;
-        },
-      );
+    if(this.isLoading === false){
+      this.isLoading = true;
+      const context = this.buildPayload();
+  
+      this.service
+        .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
+        .pipe(
+          finalize(() => {
+            this.form.markAsPristine();
+            this.isLoading = false;
+          }),
+        )
+        .subscribe(
+          (response) => {
+            this.successSendForm(response.id);
+          },
+          (error) => {
+            this.translateService.get('Error submitting form').subscribe((res: string) => {
+              this.snackBar.open(res, null, { duration: 3000 });
+            });
+            log.debug(`New Mitigation Action Form error: ${error}`);
+            this.error = error;
+            this.errorComponent.parseErrors(error);
+            this.wasSubmittedSuccessfully = false;
+          },
+        );
+    }
+
   }
 
   successSendForm(id: string) {
