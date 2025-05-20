@@ -144,7 +144,8 @@
     "addReviewMA": "Add a new review for this mitigation action",
     "descriptionReviewMA": "Description of the review of the Mitigation Action",
     "changelogMA": "Changelog for mitigation action",
-    "MAt": "MITIGATIONS ACTIONS"
+    "MAt": "MITIGATIONS ACTIONS",
+    "dataEntryMonitoring": "Data entry monitoring"
   },
 
   "reportData": {
