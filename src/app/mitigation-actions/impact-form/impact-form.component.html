@@ -44,15 +44,20 @@
               </mat-form-field>
               <br />
 
-              <div class="flex flex-row justify-center">
-                <mat-form-field class="field-ppcn">
+              <div class="flex flex-col xl:flex-row gap-1 xl:gap-6 justify-center w-full">
+                <mat-form-field class="field-ppcn w-full xl:flex-1 min-w-[250px] mb-0 xl:mb-0">
                   <mat-label translate
                     >5.1.4 - <span translate>mitigationAction.methodologicalDetailIndicator</span></mat-label
                   >
                   <input matInput formControlName="methodologicalDetailIndicatorCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-                <input type="file" name="methodologicalDetailIndicatorFile" (change)="uploadFile($event)" />
+                <input
+                  type="file"
+                  name="methodologicalDetailIndicatorFile"
+                  (change)="uploadFile($event)"
+                  class="block w-full xl:w-auto mb-4 mt-6"
+                />
                 <br />
               </div>
 
@@ -172,15 +177,20 @@
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
-              <div class="flex flex-row justify-center">
-                <mat-form-field class="field-ppcn">
+              <div class="flex flex-col xl:flex-row gap-1 xl:gap-6 justify-center w-full">
+                <mat-form-field class="field-ppcn w-full xl:flex-1 min-w-[250px] mb-0 xl:mb-0">
                   <mat-label translate
                     >5.1.10 - <span translate>mitigationAction.howSustainabilityIndicator</span></mat-label
                   >
                   <input matInput formControlName="howSustainabilityIndicatorCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-                <input type="file" name="howSustainabilityIndicatorFile" (change)="uploadFile($event)" />
+                <input
+                  class="block w-full xl:w-auto mb-4"
+                  type="file"
+                  name="howSustainabilityIndicatorFile"
+                  (change)="uploadFile($event)"
+                />
                 <br />
               </div>
 
