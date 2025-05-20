@@ -78,22 +78,7 @@
                   <mat-radio-button [style.margin.px]="5" value="BIANNUAL">
                     <label translate>general.biannual</label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" value="QUARTERLY">
-                    <label translate>general.quarterly</label>
-                  </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" value="OTHER">
-                    <label translate>general.other</label>
-                  </mat-radio-button>
                 </mat-radio-group>
-              </div>
-
-              <div *ngIf="indicatorReportingPeriodicity.value === 'OTHER'">
-                <mat-form-field class="field-ppcn">
-                  <mat-label translate>5.1.5 - <span translate>general.other</span></mat-label>
-                  <input matInput formControlName="indicatorReportingPeriodicityOtherCtrl" />
-                  <mat-error translate>errorLabel.fieldRequired</mat-error>
-                </mat-form-field>
-                <br />
               </div>
 
               <div class="flex flex-row justify-center">
