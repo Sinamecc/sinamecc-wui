@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { Location } from '@angular/common';
-import { emailRegex } from '@app/utils/regex'
+import { emailRegex } from '@app/utils/regex';
 import { environment } from '@env/environment';
 import { I18nService } from '@app/i18n';
 import { AuthenticationService } from './authentication.service';
@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
   }
 
   validateEmail(email: string) {
-    const re = emailRegex
+    const re = emailRegex;
     return re.test(String(email).toLowerCase());
   }
 
