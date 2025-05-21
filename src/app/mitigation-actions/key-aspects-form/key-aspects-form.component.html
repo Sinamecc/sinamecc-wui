@@ -7,9 +7,7 @@
   <mat-card-content>
     <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
       <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
-        <span translate>errorLabel.errorSubmittingForm</span>
-        <br />
-        <app-error-reporting #errorComponent></app-error-reporting>
+        <app-error-reporting #errorComponent [errorMessage]="'errorLabel.errorSubmittingForm'"></app-error-reporting>
       </div>
 
       <br />
@@ -42,11 +40,10 @@
                 >
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <input
-                type="file"
+              <app-upload-button
                 accept=".rar,application/pdf,.zip"
                 name="ghg-information"
-                (change)="uploadFile($event)"
+                (fileChange)="uploadFile($event)"
               />
               <br />
             </div>

@@ -13,6 +13,7 @@ import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 const log = new Logger('MitigationAction');
 
@@ -154,8 +155,7 @@ export class ImpactFormComponent implements OnInit {
   private updateFormData() {
     //this.createForm();
     let index = 0;
-    if (this.mitigationAction.
-      monitoring_information.indicator) {
+    if (this.mitigationAction.monitoring_information.indicator) {
       for (const indicator of this.mitigationAction.monitoring_information.indicator) {
         const form = this.formBuilder.array([
           this.formBuilder.group({
@@ -284,11 +284,10 @@ export class ImpactFormComponent implements OnInit {
   }
 
   submitForm() {
-
-    if(this.isLoading === false){
+    if (this.isLoading === false) {
       this.isLoading = true;
       const context = this.buildPayload();
-  
+
       this.service
         .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
         .pipe(
@@ -312,7 +311,6 @@ export class ImpactFormComponent implements OnInit {
           },
         );
     }
-
   }
 
   successSendForm(id: string) {
@@ -331,20 +329,13 @@ export class ImpactFormComponent implements OnInit {
     this.stepper.next();
   }
 
-  uploadFile(event: Event) {
+  uploadFile(event: FileUpload) {
     // TODO: correct names
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      const file = {
-        file: fileList[0],
-        name: name,
-      };
-
-      if (name === 'methodologicalDetailIndicatorFile') {
+    if (event.file) {
+      const file = event;
+      if (file.name === 'methodologicalDetailIndicatorFile') {
         this.files.methodologicalDetail = file;
-      } else if (name === 'howSustainabilityIndicatorFile') {
+      } else if (file.name === 'howSustainabilityIndicatorFile') {
         this.files.howSustainability = file;
       }
     }

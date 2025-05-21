@@ -12,6 +12,7 @@ import { MAFile, MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 const log = new Logger('MitigationAction');
 
@@ -566,21 +567,12 @@ export class InitiativeFormComponent implements OnInit {
     );
   }
 
-  uploadFile(event: Event) {
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      const file = {
-        file: fileList[0],
-        name: name,
-      };
-
-      if (name === 'initiative') {
-        this.files.initiative = file;
-      } else if (name === 'geographic_location') {
-        this.files.geographic_location = file;
-      }
+  uploadFile(event: FileUpload) {
+    const name = event.name;
+    if (name === 'initiative') {
+      this.files.initiative = event;
+    } else if (name === 'geographic-location') {
+      this.files.geographic_location = event;
     }
   }
 

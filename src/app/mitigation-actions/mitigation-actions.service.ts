@@ -89,6 +89,7 @@ export class MitigationActionsService {
         const response = {
           statusCode: 200,
           message: 'Form submitted correctly',
+          id: body.id,
         };
         return response;
       }),

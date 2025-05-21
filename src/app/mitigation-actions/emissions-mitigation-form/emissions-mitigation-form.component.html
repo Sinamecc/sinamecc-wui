@@ -6,9 +6,7 @@
   <mat-card-content>
     <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
       <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
-        <span translate>errorLabel.errorSubmittingForm</span>
-        <br />
-        <app-error-reporting #errorComponent></app-error-reporting>
+        <app-error-reporting #errorComponent [errorMessage]="'errorLabel.errorSubmittingForm'"></app-error-reporting>
       </div>
 
       <br />
@@ -156,11 +154,10 @@
                 <input matInput formControlName="documentationCalculationsEstimateReductionEmissionsCO2Ctrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <input
-                type="file"
+              <app-upload-button
                 accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/msword,"
                 name="impact-documentation"
-                (change)="uploadFile($event)"
+                (fileChange)="uploadFile($event)"
               />
               <br />
             </div>

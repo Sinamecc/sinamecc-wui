@@ -16,6 +16,7 @@ import { ErrorReportingComponent } from '@shared';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 export const MY_FORMATS = {
   parse: {
@@ -194,15 +195,9 @@ export class KeyAspectsFormComponent implements OnInit {
     this.displayFinancialSource = $event.value === insuredSourceTypeId;
   }
 
-  uploadFile(event: Event) {
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      this.ghg_information = {
-        file: fileList[0],
-        name: name,
-      };
+  uploadFile(event: FileUpload) {
+    if (event.file) {
+      this.ghg_information = event;
     }
   }
 

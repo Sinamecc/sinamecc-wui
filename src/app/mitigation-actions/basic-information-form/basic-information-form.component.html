@@ -7,9 +7,7 @@
   <mat-card-content>
     <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
       <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
-        <span translate>errorLabel.errorSubmittingForm</span>
-        <br />
-        <app-error-reporting #errorComponent></app-error-reporting>
+        <app-error-reporting #errorComponent [errorMessage]="'errorLabel.errorSubmittingForm'"></app-error-reporting>
       </div>
       <br />
       <div class="flex flex-col">

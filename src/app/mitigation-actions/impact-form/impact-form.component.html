@@ -6,9 +6,7 @@
   <mat-card-content>
     <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
       <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
-        <span translate>errorLabel.errorSubmittingForm</span>
-        <br />
-        <app-error-reporting #errorComponent></app-error-reporting>
+        <app-error-reporting #errorComponent [errorMessage]="'errorLabel.errorSubmittingForm'"></app-error-reporting>
       </div>
       <br />
       <div class="flex flex-col">
@@ -52,7 +50,7 @@
                   <input matInput formControlName="methodologicalDetailIndicatorCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-                <input type="file" name="methodologicalDetailIndicatorFile" (change)="uploadFile($event)" />
+                <app-upload-button name="methodologicalDetailIndicatorFile" (fileChange)="uploadFile($event)" />
                 <br />
               </div>
 
@@ -180,7 +178,7 @@
                   <input matInput formControlName="howSustainabilityIndicatorCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-                <input type="file" name="howSustainabilityIndicatorFile" (change)="uploadFile($event)" />
+                <app-upload-button name="howSustainabilityIndicatorFile" (fileChange)="uploadFile($event)" />
                 <br />
               </div>
 

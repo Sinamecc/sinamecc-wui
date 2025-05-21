@@ -12,6 +12,7 @@ import { CategoryIppc2006, MADataCatalogItem, MitigationAction, SectorIpcc2006 }
 import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 const log = new Logger('MitigationAction');
 @Component({
@@ -336,11 +337,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
-          this.wasSubmittedSuccessfully = true;
-          this.stepper.next();
+          this.successSendForm(response.id);
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -379,16 +376,10 @@ export class EmissionsMitigationFormComponent implements OnInit {
     this.form.get('formArray').get([2]).get('methodologyUsedCtrl').updateValueAndValidity();
   }
 
-  uploadFile(event: Event) {
+  uploadFile(event: FileUpload) {
     // TODO: fix names
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      this.impact_documentation = {
-        file: fileList[0],
-        name: name,
-      };
+    if (event.file) {
+      this.impact_documentation = event;
     }
   }
 

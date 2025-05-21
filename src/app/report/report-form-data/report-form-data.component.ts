@@ -12,6 +12,7 @@ import { ReportDataPayload } from '../interfaces/report-data-payload';
 import { Report } from '../interfaces/report';
 import { finalize } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 @Component({
   selector: 'app-report-form-data',
@@ -168,14 +169,12 @@ export class ReportFormDataComponent implements OnInit {
     }
   }
 
-  uploadFile(event: Event, reportFile = true) {
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    if (fileList) {
+  uploadFile(event: FileUpload, reportFile = true) {
+    if (event.file) {
       if (reportFile) {
-        this.reportDataFile = fileList[0];
+        this.reportDataFile = event.file;
       } else {
-        this.baseLineReportFile = fileList[0];
+        this.baseLineReportFile = event.file;
       }
     }
   }
