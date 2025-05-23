@@ -79,36 +79,51 @@
                     <label translate>general.biannual</label>
                   </mat-radio-button>
                 </mat-radio-group>
+
+                <mat-form-field class="field-ppcn">
+                  <mat-label translate><span translate>mitigationAction.ghgIndicatorBase</span></mat-label>
+                  <input matInput formControlName="ghgIndicatorBaseCtrl" type="text" />
+                  <mat-hint translate>mitigationAction.ghgIndicatorNote</mat-hint>
+                  <mat-error translate>errorLabel.inputInvalid</mat-error>
+                </mat-form-field>
               </div>
 
-              <div class="flex flex-row justify-center">
+              <div class="flex flex-col">
+                <div class="flex flex-row gap-4 justify-center">
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate>5.1.6 - <span translate>mitigationAction.timeSeriesAvailable</span></mat-label>
+                    <input
+                      matInput
+                      [placeholder]="'Desde' | translate"
+                      [matDatepicker]="timeSeriesAvailableCtrl"
+                      formControlName="timeSeriesAvailableStartCtrl"
+                    />
+
+                    <mat-datepicker-toggle matSuffix [for]="timeSeriesAvailableCtrl"></mat-datepicker-toggle>
+                    <mat-datepicker #timeSeriesAvailableCtrl startView="year" [startAt]="startDate"></mat-datepicker>
+
+                    <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="field-ppcn">
+                    <mat-label translate>general.until</mat-label>
+                    <input
+                      matInput
+                      [matDatepicker]="timeSeriesAvailableEndCtrl"
+                      formControlName="timeSeriesAvailableEndCtrl"
+                    />
+
+                    <mat-datepicker-toggle matSuffix [for]="timeSeriesAvailableEndCtrl"></mat-datepicker-toggle>
+                    <mat-datepicker #timeSeriesAvailableEndCtrl startView="year" [startAt]="startDate"></mat-datepicker>
+
+                    <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
+                </div>
                 <mat-form-field class="field-ppcn">
-                  <mat-label translate>5.1.6 - <span translate>mitigationAction.timeSeriesAvailable</span></mat-label>
-                  <input
-                    matInput
-                    [placeholder]="'Desde' | translate"
-                    [matDatepicker]="timeSeriesAvailableCtrl"
-                    formControlName="timeSeriesAvailableStartCtrl"
-                  />
-
-                  <mat-datepicker-toggle matSuffix [for]="timeSeriesAvailableCtrl"></mat-datepicker-toggle>
-                  <mat-datepicker #timeSeriesAvailableCtrl startView="year" [startAt]="startDate"></mat-datepicker>
-
-                  <mat-error translate>errorLabel.fieldRequired</mat-error>
-                </mat-form-field>
-
-                <mat-form-field class="field-ppcn">
-                  <mat-label translate>general.until</mat-label>
-                  <input
-                    matInput
-                    [matDatepicker]="timeSeriesAvailableEndCtrl"
-                    formControlName="timeSeriesAvailableEndCtrl"
-                  />
-
-                  <mat-datepicker-toggle matSuffix [for]="timeSeriesAvailableEndCtrl"></mat-datepicker-toggle>
-                  <mat-datepicker #timeSeriesAvailableEndCtrl startView="year" [startAt]="startDate"></mat-datepicker>
-
-                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  <mat-label translate><span translate>mitigationAction.ghgIndicatorGoal</span></mat-label>
+                  <input matInput formControlName="ghgIndicatorGoalCtrl" type="text" />
+                  <mat-hint translate>mitigationAction.ghgIndicatorNote</mat-hint>
+                  <mat-error translate>errorLabel.inputInvalid</mat-error>
                 </mat-form-field>
               </div>
               <br />

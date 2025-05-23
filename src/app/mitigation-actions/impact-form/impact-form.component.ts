@@ -117,6 +117,8 @@ export class ImpactFormComponent implements OnInit {
         indicatorReportingPeriodicityCtrl: ['', Validators.required],
         timeSeriesAvailableStartCtrl: ['', Validators.required],
         timeSeriesAvailableEndCtrl: ['', Validators.required],
+        ghgIndicatorGoalCtrl: ['', [Validators.pattern('^\\d{1,18}(\\.\\d{1,2})?$')]],
+        ghgIndicatorBaseCtrl: ['', [Validators.pattern('^\\d{1,18}(\\.\\d{1,2})?$')]],
         geographicCoverageCtrl: ['', Validators.required],
         geographicCoverageOtherCtrl: [''],
         disintegrationCtrl: ['', Validators.required],
@@ -154,8 +156,7 @@ export class ImpactFormComponent implements OnInit {
   private updateFormData() {
     //this.createForm();
     let index = 0;
-    if (this.mitigationAction.
-      monitoring_information.indicator) {
+    if (this.mitigationAction.monitoring_information.indicator) {
       for (const indicator of this.mitigationAction.monitoring_information.indicator) {
         const form = this.formBuilder.array([
           this.formBuilder.group({
@@ -176,6 +177,8 @@ export class ImpactFormComponent implements OnInit {
             indicatorReportingPeriodicityCtrl: [indicator.reporting_periodicity, Validators.required],
             timeSeriesAvailableStartCtrl: [indicator.available_time_start_date, Validators.required],
             timeSeriesAvailableEndCtrl: [indicator.available_time_end_date, Validators.required],
+            ghgIndicatorGoalCtrl: [indicator.ghg_indicator_goal],
+            ghgIndicatorBaseCtrl: [indicator.ghg_indicator_base],
             geographicCoverageCtrl: [indicator.geographic_coverage, Validators.required],
             geographicCoverageOtherCtrl: [indicator.other_geographic_coverage],
             disintegrationCtrl: [indicator.disaggregation, Validators.required],
@@ -236,6 +239,8 @@ export class ImpactFormComponent implements OnInit {
         reporting_periodicity: actualForm[0].indicatorReportingPeriodicityCtrl,
         available_time_start_date: this.datePipe.transform(actualForm[0].timeSeriesAvailableStartCtrl, 'yyyy-MM-dd'),
         available_time_end_date: this.datePipe.transform(actualForm[0].timeSeriesAvailableEndCtrl, 'yyyy-MM-dd'),
+        ghg_indicator_goal: actualForm[0].ghgIndicatorGoalCtrl,
+        ghg_indicator_base: actualForm[0].ghgIndicatorBaseCtrl,
         geographic_coverage: actualForm[0].geographicCoverageCtrl,
         other_geographic_coverage: actualForm[0].geographicCoverageOtherCtrl,
         disaggregation: actualForm[0].disintegrationCtrl,
@@ -284,11 +289,10 @@ export class ImpactFormComponent implements OnInit {
   }
 
   submitForm() {
-
-    if(this.isLoading === false){
+    if (this.isLoading === false) {
       this.isLoading = true;
       const context = this.buildPayload();
-  
+
       this.service
         .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
         .pipe(
@@ -312,7 +316,6 @@ export class ImpactFormComponent implements OnInit {
           },
         );
     }
-
   }
 
   successSendForm(id: string) {

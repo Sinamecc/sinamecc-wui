@@ -12,7 +12,7 @@ const log = new Logger('AuthenticationGuard');
 export class AuthenticationGuard {
   constructor(
     private readonly router: Router,
-    private readonly credentialsService: CredentialsService
+    private readonly credentialsService: CredentialsService,
   ) {}
 
   /**
