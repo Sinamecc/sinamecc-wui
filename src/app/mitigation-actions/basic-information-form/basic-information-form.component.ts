@@ -12,7 +12,6 @@ import { MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { twoDecimalPlacesValidator } from '@app/@shared/validators';
 
 const log = new Logger('MitigationAction');
 
@@ -147,7 +146,7 @@ export class BasicInformationFormComponent implements OnInit {
         currencyValueCtrl: [element.currency],
         mitigationActionAmounttCtrl: [
           element.budget,
-          [Validators.required, Validators.maxLength(50), twoDecimalPlacesValidator],
+          [Validators.required, Validators.pattern('^\\d{1,18}(\\.\\d{1,2})?$')],
         ],
         referenceYearCtrl: [element.reference_year, Validators.required],
       });
