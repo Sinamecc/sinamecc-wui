@@ -28,8 +28,8 @@
             </mat-form-field>
             <br />
 
-            <div class="flex flex-row justify-center">
-              <mat-form-field class="field-ppcn">
+            <div class="flex flex-col xl:flex-row gap-1 xl:gap-6 justify-center w-full">
+              <mat-form-field class="field-ppcn w-full xl:flex-1 min-w-[250px] mb-0 xl:mb-0">
                 <mat-label translate
                   >3.1.2 - <span translate>mitigationAction.graphicLogicImpactEmissionsRemovals</span></mat-label
                 >
@@ -46,6 +46,7 @@
                 type="file"
                 accept=".rar,application/pdf,.zip"
                 name="ghg-information"
+                class="block w-full xl:w-auto mb-4 mt-6"
                 (change)="uploadFile($event)"
               />
               <br />

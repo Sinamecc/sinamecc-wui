@@ -144,7 +144,10 @@ export class BasicInformationFormComponent implements OnInit {
         id: [element.id],
         mitigationActionDescriptionCtrl: [element.source_description, [Validators.required, Validators.maxLength(300)]],
         currencyValueCtrl: [element.currency],
-        mitigationActionAmounttCtrl: [element.budget, [Validators.required, Validators.maxLength(50)]],
+        mitigationActionAmounttCtrl: [
+          element.budget,
+          [Validators.required, Validators.pattern('^\\d{1,18}(\\.\\d{1,2})?$')],
+        ],
         referenceYearCtrl: [element.reference_year, Validators.required],
       });
       index += 1;
