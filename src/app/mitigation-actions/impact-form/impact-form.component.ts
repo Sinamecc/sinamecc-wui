@@ -8,7 +8,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MAFile, MitigationAction } from '../mitigation-action';
+import { MAFile, MAFileType, MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { I18nService } from '@app/i18n';
@@ -31,6 +31,7 @@ export class ImpactFormComponent implements OnInit {
   wasSubmittedSuccessfully = false;
   startDate = new Date();
   mitigationAction: MitigationAction;
+  maFileType = MAFileType;
 
   files: {
     methodologicalDetail: MAFile;
@@ -343,5 +344,9 @@ export class ImpactFormComponent implements OnInit {
 
   async submitFile(id: string, key: string, file: File) {
     await this.service.submitMitigationFile(key, file, id).toPromise();
+  }
+
+  onStepChange() {
+    this.wasSubmittedSuccessfully = false;
   }
 }

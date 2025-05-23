@@ -16,13 +16,13 @@
             <mat-divider></mat-divider>
             <br />
           </div>
-          <mat-vertical-stepper [formArrayName]="formElement" linear #stepper>
+          <mat-vertical-stepper [formArrayName]="formElement" linear #stepper (selectedIndexChange)="onStepChange()">
             <mat-step formGroupName="0" [stepControl]="getFormObject(formElement)?.get([0])">
               <ng-template matStepLabel>
                 <span>5.1 - </span><span translate>specificLabel.monitoringDetail</span>
               </ng-template>
 
-              <mat-form-field class="field-ppcn">
+              <mat-form-field class="field-ppcn mt-2">
                 <mat-label translate>5.1.1 - <span translate>mitigationAction.indicatorName</span></mat-label>
                 <input matInput formControlName="responsibleInstitutionCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -42,7 +42,7 @@
               </mat-form-field>
               <br />
 
-              <div class="flex flex-row justify-center">
+              <div class="flex flex-row justify-center gap-2">
                 <mat-form-field class="field-ppcn">
                   <mat-label translate
                     >5.1.4 - <span translate>mitigationAction.methodologicalDetailIndicator</span></mat-label
@@ -50,7 +50,10 @@
                   <input matInput formControlName="methodologicalDetailIndicatorCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-                <app-upload-button name="methodologicalDetailIndicatorFile" (fileChange)="uploadFile($event)" />
+                <app-upload-button
+                  [name]="maFileType.METHODOLOGICAL_INDICATOR_FILE"
+                  (fileChange)="uploadFile($event)"
+                />
                 <br />
               </div>
 
@@ -170,7 +173,7 @@
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
-              <div class="flex flex-row justify-center">
+              <div class="flex flex-row justify-center gap-2">
                 <mat-form-field class="field-ppcn">
                   <mat-label translate
                     >5.1.10 - <span translate>mitigationAction.howSustainabilityIndicator</span></mat-label
@@ -178,7 +181,10 @@
                   <input matInput formControlName="howSustainabilityIndicatorCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-                <app-upload-button name="howSustainabilityIndicatorFile" (fileChange)="uploadFile($event)" />
+                <app-upload-button
+                  [name]="maFileType.SUSTAINABILITY_INDICATOR_FILE"
+                  (fileChange)="uploadFile($event)"
+                />
                 <br />
               </div>
 
@@ -208,7 +214,7 @@
                 <span>5.2 - </span><span translate>mitigationAction.indicatorDataSource</span>
               </ng-template>
 
-              <mat-form-field class="field-ppcn">
+              <mat-form-field class="field-ppcn mt-2">
                 <mat-label translate>5.2.1 - <span translate>mitigationAction.responsibleInstitution</span></mat-label>
                 <input matInput formControlName="responsibleInstitutionCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>

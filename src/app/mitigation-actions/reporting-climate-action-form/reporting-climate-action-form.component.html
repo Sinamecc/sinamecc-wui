@@ -67,7 +67,7 @@
             </div>
             <br />
 
-            <div class="flex flex-row justify-start items-center">
+            <div class="flex flex-row justify-start items-center gap-2">
               <mat-form-field [style.width.%]="100" class="ppcn-field">
                 <mat-label translate>6.2.1.1 - <span translate>mitigationAction.reportingPeriod</span></mat-label>
                 <input
@@ -150,9 +150,9 @@
             </div>
 
             <div *ngIf="informationToUpdate.value === 2">
-              <div class="flex flex-row justify-center">
+              <div class="flex flex-row justify-center gap-2">
                 <mat-label translate>6.2.1.3 - <span translate>mitigationAction.informationToUpdate</span></mat-label>
-                <app-upload-button name="informationToUpdateFile" (fileChange)="uploadFile($event)" />
+                <app-upload-button [name]="maFileType.TO_UPDATE_FILE" (fileChange)="uploadFile($event)" />
                 <br />
               </div>
             </div>

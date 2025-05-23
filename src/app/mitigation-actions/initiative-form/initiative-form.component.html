@@ -9,7 +9,7 @@
       </div>
       <br />
       <div class="flex flex-col">
-        <mat-vertical-stepper formArrayName="formArray" linear #stepper>
+        <mat-vertical-stepper formArrayName="formArray" linear #stepper (selectedIndexChange)="onStepChange()">
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel> <span>1.1 - </span><span translate>specificLabel.initiative</span> </ng-template>
 
@@ -63,7 +63,7 @@
                 ></textarea>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <app-upload-button name="initiative" (fileChange)="uploadFile($event)" />
+              <app-upload-button [name]="maFileType.INITIATIVE" (fileChange)="uploadFile($event)" />
             </div>
             <div>
               <mat-form-field class="field-ppcn">
@@ -108,7 +108,7 @@
             <ng-template matStepLabel>
               <span>1.2 - </span><span translate>specificLabel.initiativeContactInfo</span>
             </ng-template>
-            <mat-form-field class="field-ppcn">
+            <mat-form-field class="field-ppcn mt-2">
               <mat-label translate>1.2.1 - <span translate>mitigationAction.entityReporting</span></mat-label>
               <input maxlength="50" matInput formControlName="entityReportingCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -279,7 +279,7 @@
               <span>1.4 - </span><span translate>general.GeographicLocation</span>
             </ng-template>
 
-            <div>
+            <div class="mt-2">
               <label class="radio-grup-label" translate>1.4.1 - <span translate>general.geographicScale</span></label>
               <mat-radio-group formControlName="geographicScaleCtrl" class="custom-radio-group">
                 <mat-radio-button
@@ -292,7 +292,7 @@
               </mat-radio-group>
             </div>
 
-            <div class="flex flex-row justify-center">
+            <div class="flex flex-row justify-center gap-2">
               <mat-form-field class="field-ppcn">
                 <mat-label translate>1.4.2 - <span translate>general.locationAction</span></mat-label>
                 <textarea
@@ -304,7 +304,7 @@
                 ></textarea>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <app-upload-button name="geographic-location" (fileChange)="uploadFile($event)" />
+              <app-upload-button [name]="maFileType.GEOGRAPHIC_LOCATION" (fileChange)="uploadFile($event)" />
             </div>
 
             <div class="box-button">

@@ -12,7 +12,7 @@
 
       <br />
       <div class="flex flex-col">
-        <mat-vertical-stepper formArrayName="formArray" linear #stepper>
+        <mat-vertical-stepper formArrayName="formArray" linear #stepper (selectedIndexChange)="onStepChange()">
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
               <span>3.1 - </span><span translate>mitigationAction.overviewImpactEmissionsRemovals</span>
@@ -26,7 +26,7 @@
             </mat-form-field>
             <br />
 
-            <div class="flex flex-row justify-center">
+            <div class="flex flex-row justify-center gap-2">
               <mat-form-field class="field-ppcn">
                 <mat-label translate
                   >3.1.2 - <span translate>mitigationAction.graphicLogicImpactEmissionsRemovals</span></mat-label
@@ -42,7 +42,7 @@
               </mat-form-field>
               <app-upload-button
                 accept=".rar,application/pdf,.zip"
-                name="ghg-information"
+                [name]="maFileType.GHG_INFORMATION"
                 (fileChange)="uploadFile($event)"
               />
               <br />

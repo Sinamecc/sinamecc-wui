@@ -8,7 +8,13 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { CategoryIppc2006, MADataCatalogItem, MitigationAction, SectorIpcc2006 } from '../mitigation-action';
+import {
+  CategoryIppc2006,
+  MADataCatalogItem,
+  MAFileType,
+  MitigationAction,
+  SectorIpcc2006,
+} from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -25,7 +31,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
   form: UntypedFormGroup;
-
+  maFileType = MAFileType;
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
@@ -385,5 +391,9 @@ export class EmissionsMitigationFormComponent implements OnInit {
 
   async submitFile(id: string, key: string, file: File) {
     await this.service.submitMitigationFile(key, file, id).toPromise();
+  }
+
+  onStepChange() {
+    this.wasSubmittedSuccessfully = false;
   }
 }

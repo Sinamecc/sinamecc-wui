@@ -11,7 +11,7 @@
       </div>
       <br />
       <div class="flex flex-col">
-        <mat-vertical-stepper formArrayName="formArray" linear #stepper>
+        <mat-vertical-stepper formArrayName="formArray" linear #stepper (selectedIndexChange)="onStepChange()">
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
               <span>2.1 - </span><span translate>info.financingInformation</span>
@@ -91,7 +91,7 @@
                     <mat-error translate>errorLabel.fieldRequired</mat-error>
                   </mat-form-field>
 
-                  <div [style.margin-right]="'10px'">
+                  <div class="mb-4" [style.margin-right]="'10px'">
                     <mat-label class="radio-grup-label" translate
                       >2.1.3 - <span translate>general.currency</span></mat-label
                     >

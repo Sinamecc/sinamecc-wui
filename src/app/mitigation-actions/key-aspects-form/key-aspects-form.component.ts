@@ -8,7 +8,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { ImpactEmission, MAFile, MitigationAction } from '../mitigation-action';
+import { ImpactEmission, MAFile, MAFileType, MitigationAction } from '../mitigation-action';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 import * as _moment from 'moment';
@@ -29,7 +29,6 @@ export const MY_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
-
 const log = new Logger('MitigationAction');
 
 @Component({
@@ -56,7 +55,7 @@ export class KeyAspectsFormComponent implements OnInit {
   displayFinancialSource: boolean;
   isLoading = false;
   wasSubmittedSuccessfully = false;
-
+  maFileType = MAFileType;
   mitigationAction: MitigationAction;
 
   ghg_information: MAFile = {
@@ -203,5 +202,9 @@ export class KeyAspectsFormComponent implements OnInit {
 
   async submitFile(id: string, key: string, file: File) {
     await this.service.submitMitigationFile(key, file, id).toPromise();
+  }
+
+  onStepChange() {
+    this.wasSubmittedSuccessfully = false;
   }
 }

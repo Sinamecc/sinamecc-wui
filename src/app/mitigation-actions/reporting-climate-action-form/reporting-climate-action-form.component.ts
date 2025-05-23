@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 import { finalize } from 'rxjs/operators';
-import { MAFile, MitigationAction } from '../mitigation-action';
+import { MAFile, MAFileType, MitigationAction } from '../mitigation-action';
 import { MitigationActionNewFormData } from '../mitigation-action-new-form-data';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -31,6 +31,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
     file: null,
     name: '',
   };
+  maFileType = MAFileType;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;

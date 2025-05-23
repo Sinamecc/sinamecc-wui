@@ -8,7 +8,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData, InitiativeType } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MAFile, MitigationAction } from '../mitigation-action';
+import { MAFile, MAFileType, MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -32,6 +32,7 @@ export class InitiativeFormComponent implements OnInit {
   initiativeTypes: InitiativeType[];
   displayFinancialSource: boolean;
   startDate = new Date();
+  maFileType = MAFileType;
 
   mitigationAction: MitigationAction;
   initiativeGoalList: string[] = [];
@@ -578,5 +579,9 @@ export class InitiativeFormComponent implements OnInit {
 
   async submitFile(id: string, key: string, file: File) {
     await this.service.submitMitigationFile(key, file, id).toPromise();
+  }
+
+  onStepChange() {
+    this.wasSubmittedSuccessfully = false;
   }
 }
