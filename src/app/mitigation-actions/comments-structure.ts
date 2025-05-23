@@ -133,7 +133,7 @@ export const commentsStructureModule5: CommentsStructure[] = [
     module: 'mitigationAction.indicatorDataSource',
     fields: [
       'mitigationAction.responsibleInstitution',
-      'mitigationAction.sourceType',
+      'mitigationAction.dataEntryMonitoring',
       'general.other',
       'mitigationAction.statisticalOperationName',
     ],
@@ -175,7 +175,7 @@ export const commentsStructureModule6: CommentsStructure[] = [
       'mitigationAction.reportingPeriod',
       'general.until',
       'mitigationAction.indicatorDataUpdateDate',
-      'mitigationAction.sourceType',
+      'mitigationAction.dataEntryMonitoring',
     ],
   },
   {

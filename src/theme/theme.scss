@@ -278,3 +278,7 @@ $primary-color: #2a658a;
 .fxFlex {
   @apply flex-[1_1_0%] box-border;
 }
+
+.mat-expansion-panel-header {
+  @apply my-1;
+}

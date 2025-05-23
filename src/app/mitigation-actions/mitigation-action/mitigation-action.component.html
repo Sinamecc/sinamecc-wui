@@ -172,7 +172,7 @@
               </mat-expansion-panel>
             </mat-accordion>
             <br />
-            <h3 class="mat-h3">
+            <h3 class="mt-4 mat-h3">
               <strong translate>mitigationAction.impactCategory</strong>
               <label translate>mitigationAction.directImpactGEI</label>
             </h3>
@@ -213,7 +213,7 @@
               </ul>
             </div>
 
-            <mat-accordion class="max-w">
+            <mat-accordion class="max-w m-2">
               <mat-expansion-panel class="max-w" *ngFor="let element of mitigationAction?.finance?.finance_information">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
@@ -421,7 +421,11 @@
 
             <h3 class="mat-h3">
               <strong translate>mitigationAction.mechanismStandardApply</strong>
-              {{ mitigationAction?.impact_documentation.standard.name }}
+              {{
+                mitigationAction?.impact_documentation.standard
+                  ? mitigationAction?.impact_documentation.standard.name
+                  : ''
+              }}
             </h3>
 
             <h3 class="mat-h3">
@@ -625,7 +629,7 @@
               }}
             </h3>
             <h3 class="mat-h3">
-              <strong translate>mitigationAction.sourceType</strong>
+              <strong translate>mitigationAction.dataEntryMonitoring</strong>
               {{
                 mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator
                   ? (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.updated_data

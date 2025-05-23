@@ -6,7 +6,10 @@ import { I18nService } from '@app/i18n';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private credentialsService: CredentialsService, private i18nService: I18nService,) {}
+  constructor(
+    private credentialsService: CredentialsService,
+    private i18nService: I18nService,
+  ) {}
 
   get currentLanguage(): string {
     return this.i18nService.language;

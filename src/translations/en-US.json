@@ -60,6 +60,9 @@
     "disintegration": "Disintegration",
     "geographicCoverage": "Geographic coverage",
     "timeSeriesAvailable": "Time series available",
+    "ghgIndicatorGoal": "GHG indicator goal (Tons of CO2 eq)",
+    "ghgIndicatorBase": "GHG indicator baseline (Tons of CO2 eq)",
+    "ghgIndicatorNote": "Please complete only if the registered indicator is related to the accounting of GHG emissions or reductions",
     "indicatorDescription": "Indicator description",
     "enablingMeasure": "Enabling measure",
     "directImpactGEI": "Direct impact on GEI",
@@ -112,7 +115,7 @@
     "nameRegisteredMideplan": "Under what name is the project registered in Mideplan?",
     "registeredNonReimbursableCooperationMideplan": "Is the action registered in the registry of non-reimbursable international cooperation projects of Mideplan?",
     "financedSourcesInternationalCooperation": "Acciones financiadas con fuentes de cooperación internacional",
-    "referenceYear": "reference year",
+    "referenceYear": "Reference year",
     "emissionSourceSector": "Emission source sector",
     "mitigationActionBudget": "Description of the funding source",
     "financingSourceApplying": "Describe the financing source to which you are applying",
@@ -144,7 +147,8 @@
     "addReviewMA": "Add a new review for this mitigation action",
     "descriptionReviewMA": "Description of the review of the Mitigation Action",
     "changelogMA": "Changelog for mitigation action",
-    "MAt": "MITIGATIONS ACTIONS"
+    "MAt": "MITIGATIONS ACTIONS",
+    "dataEntryMonitoring": "Data entry monitoring"
   },
 
   "reportData": {

@@ -1,12 +1,12 @@
 <div *ngIf="!isLoading" class="container-custom">
   <mat-card>
-    <h3>
-      <mat-card-title>
+    <div class="w-full flex flex-col content-center justify-center">
+      <h3 class="mb-4 mt-4 text-center">
         <span class="section-heading" translate>{{ title }}</span>
-        <mat-divider class="divider-custom"></mat-divider>
-        <mat-divider class="divider-custom"></mat-divider>
-      </mat-card-title>
-    </h3>
+      </h3>
+      <mat-divider class="divider-custom"></mat-divider>
+      <mat-divider class="divider-custom"></mat-divider>
+    </div>
 
     <form [formGroup]="mainGroup">
       <!-- {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}} -->
@@ -153,14 +153,7 @@
           ></app-reporting-climate-action-form>
         </mat-step>
       </mat-horizontal-stepper>
-      <!-- <div class="margin-20">
-            <div>form main group details:-</div>
-            <pre>Is mainGroup valid?: <br />{{mainGroup.valid | json}}</pre>
-            <pre>form value: <br />{{mainGroup.value | json}}</pre>
-
-        </div> -->
     </form>
-    <!-- </div> -->
   </mat-card>
 </div>
 

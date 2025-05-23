@@ -60,6 +60,9 @@
     "disintegration": "Desagregación",
     "geographicCoverage": "Cobertura geográfica",
     "timeSeriesAvailable": "Serie de tiempo disponible",
+    "ghgIndicatorGoal": "Meta del indicador GEI (Ton de CO2 eq)",
+    "ghgIndicatorBase": "Linea base del indicador GEI (Ton de CO2 eq)",
+    "ghgIndicatorNote": "Por favor completar solo si el indicador registrado está relacionado con la contabilidad de emisiones o reducciones de GEI",
     "indicatorDescription": "Descripción del indicador",
     "enablingMeasure": "Medida habilitante",
     "directImpactGEI": "Impacto directo en GEI",
@@ -112,7 +115,7 @@
     "nameRegisteredMideplan": "¿Bajo que nombre se encuentra el proyecto registrado en Mideplan?",
     "registeredNonReimbursableCooperationMideplan": "¿Se encuentra la acción registrada en el registro de proyectos de cooperación internacional no reembolsable de Mideplan?",
     "financedSourcesInternationalCooperation": "Acciones financiadas con fuentes de cooperación internacional",
-    "referenceYear": "Año de refencia",
+    "referenceYear": "Año de referencia",
     "emissionSourceSector": "Sector fuente de emisiones",
     "mitigationActionBudget": "Descripción de la fuente de financiamiento",
     "financingSourceApplying": "Describa la fuente financiamiento a la que está aplicando",
@@ -144,7 +147,8 @@
     "addReviewMA": "Agregar una nueva revisión para esta acción de mitigación",
     "descriptionReviewMA": "Descripción de la revisión de la Acción de Mitigación",
     "changelogMA": "Historial de cambios de la revision para la acción de mitigación",
-    "MAt": "ACCIONES DE MITIGACIÓN"
+    "MAt": "ACCIONES DE MITIGACIÓN",
+    "dataEntryMonitoring": "Ingreso de datos de monitoreo"
   },
 
   "reportData": {
