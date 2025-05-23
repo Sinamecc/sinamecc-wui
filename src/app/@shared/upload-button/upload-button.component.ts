@@ -4,7 +4,7 @@ import { FileUpload } from './file-upload';
 @Component({
   selector: 'app-upload-button',
   templateUrl: './upload-button.component.html',
-  styleUrl: './upload-button.component.scss',
+  styleUrls: ['./upload-button.component.scss'],
   standalone: false,
 })
 export class UploadButtonComponent {
