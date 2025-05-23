@@ -91,8 +91,9 @@
                 <br />
                 <mat-form-field class="field-ppcn">
                   <mat-label translate><span translate>mitigationAction.ghgIndicatorBase</span></mat-label>
-                  <input matInput formControlName="ghgIndicatorBaseCtrl" type="number" />
+                  <input matInput formControlName="ghgIndicatorBaseCtrl" type="text" />
                   <mat-hint translate>mitigationAction.ghgIndicatorNote</mat-hint>
+                  <mat-error translate>errorLabel.inputInvalid</mat-error>
                 </mat-form-field>
               </div>
 
@@ -129,8 +130,9 @@
                 </div>
                 <mat-form-field class="field-ppcn">
                   <mat-label translate><span translate>mitigationAction.ghgIndicatorGoal</span></mat-label>
-                  <input matInput formControlName="ghgIndicatorGoalCtrl" type="number" />
+                  <input matInput formControlName="ghgIndicatorGoalCtrl" type="text" />
                   <mat-hint translate>mitigationAction.ghgIndicatorNote</mat-hint>
+                  <mat-error translate>errorLabel.inputInvalid</mat-error>
                 </mat-form-field>
               </div>
               <br />
