@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 @Component({
   selector: 'app-adaptation-actions-climate-monitoring',
@@ -474,7 +475,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     this.form.get('formArray').get([0]).get('progressMonitoringRecordedClimateActionsCtrl').updateValueAndValidity();
   }
 
-  uploadFile(event: any) {
-    this.attachSupportMonitoringFile = event;
+  uploadFile(event: FileUpload) {
+    this.attachSupportMonitoringFile = event.file;
   }
 }
