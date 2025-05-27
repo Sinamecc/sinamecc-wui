@@ -14,10 +14,6 @@
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel> <span>1.1 - </span><span translate>specificLabel.initiative</span> </ng-template>
 
-            <h3 *ngIf="isUpdating">
-              <span translate>info.code</span>:<span>{{ mitigationAction?.id }}</span>
-            </h3>
-
             <div>
               <label class="radio-grup-label" translate
                 >1.1.1 - <span translate>specificLabel.initiativeType</span></label
