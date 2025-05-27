@@ -34,6 +34,7 @@ export class InitiativeFormComponent implements OnInit {
 
   mitigationAction: MitigationAction;
   initiativeGoalList: string[] = [];
+  deploymentCompletionSubscription: any;
 
   files: {
     geographic_location: MAFile;
@@ -141,6 +142,12 @@ export class InitiativeFormComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    if (this.deploymentCompletionSubscription) {
+      this.deploymentCompletionSubscription.unsubscribe();
+    }
+  }
+
   private createForm() {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
@@ -182,6 +189,23 @@ export class InitiativeFormComponent implements OnInit {
         }),
       ]),
     });
+    this.changeDeploymentCompletionCtrl();
+  }
+
+  private changeDeploymentCompletionCtrl() {
+    const deploymentCompletionIdCtrl = this.form.controls['formArray']['controls'][2].get('deploymentCompletionIdCtrl');
+
+    if (deploymentCompletionIdCtrl) {
+      this.deploymentCompletionSubscription = deploymentCompletionIdCtrl.valueChanges.subscribe((value: string) => {
+        const parentGroup = this.form.controls['formArray']['controls'][2];
+
+        if (value === '1') {
+          parentGroup.get('deploymentCompletionOtherCtrl')?.setValue('');
+        } else if (value === '2') {
+          parentGroup.get('deploymentCompletionDateCtrl')?.setValue('');
+        }
+      });
+    }
   }
 
   private createNDCctrl(data: any = null) {
@@ -292,6 +316,7 @@ export class InitiativeFormComponent implements OnInit {
   }
 
   private updateFormData() {
+    console.log(this.mitigationAction.status_information);
     this.initiativeGoalList.concat(this.mitigationAction.initiative.goal.map((x: { goal: any }) => x.goal));
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
@@ -332,7 +357,7 @@ export class InitiativeFormComponent implements OnInit {
         }),
         this.formBuilder.group({
           deploymentCompletionIdCtrl: [
-            this.mitigationAction.status_information.other_end_date !== '' ? '2' : '1',
+            this.mitigationAction.status_information.end_date !== null ? '1' : '2',
             Validators.required,
           ],
           deploymentCompletionDateCtrl: [this.mitigationAction.status_information.end_date],
@@ -376,6 +401,7 @@ export class InitiativeFormComponent implements OnInit {
     });
 
     this.isLoading = false;
+    this.changeDeploymentCompletionCtrl();
   }
 
   buildInitiativeGoal() {
