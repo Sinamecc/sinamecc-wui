@@ -316,7 +316,6 @@ export class InitiativeFormComponent implements OnInit {
   }
 
   private updateFormData() {
-    console.log(this.mitigationAction.status_information);
     this.initiativeGoalList.concat(this.mitigationAction.initiative.goal.map((x: { goal: any }) => x.goal));
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
