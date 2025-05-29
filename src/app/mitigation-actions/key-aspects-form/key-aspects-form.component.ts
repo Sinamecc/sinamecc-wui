@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { ImpactEmission, MAFile, MitigationAction } from '../mitigation-action';
+import { ImpactEmission, MAFile, MitigationAction, States } from '../mitigation-action';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 import * as _moment from 'moment';
@@ -67,6 +67,7 @@ export class KeyAspectsFormComponent implements OnInit {
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
+  @Output() state = new EventEmitter<States>();
 
   @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
 
@@ -93,6 +94,7 @@ export class KeyAspectsFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
+        this.state.emit(this.mitigationAction.fsm_state.state as States);
       });
     }
   }
@@ -160,6 +162,7 @@ export class KeyAspectsFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
+          this.state.emit(response.state as States);
           this.successSendForm(response.id);
         },
         (error) => {
@@ -183,6 +186,7 @@ export class KeyAspectsFormComponent implements OnInit {
       this.snackBar.open(res, null, { duration: 3000 });
     });
     this.wasSubmittedSuccessfully = true;
+
     this.stepper.next();
   }
 

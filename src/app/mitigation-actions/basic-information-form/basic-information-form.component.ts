@@ -8,7 +8,7 @@ import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-
 
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { MitigationAction } from '../mitigation-action';
+import { MitigationAction, States } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -36,6 +36,7 @@ export class BasicInformationFormComponent implements OnInit {
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
+  @Output() state = new EventEmitter<States>();
   @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
 
   get formArray(): AbstractControl | null {
@@ -60,6 +61,7 @@ export class BasicInformationFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
+        this.state.emit(this.mitigationAction.fsm_state.state as States);
       });
     }
   }
@@ -134,25 +136,29 @@ export class BasicInformationFormComponent implements OnInit {
     // const mapCurrency = ['CRC', 'USD', 'EUR'];
     let index = 0;
 
-    for (const element of this.mitigationAction.finance.finance_information) {
-      const currency =
-        element.currency != 'CRC' && element.currency != 'USD' && element.currency != 'EUR'
-          ? 'other'
-          : element.currency;
-      this.mitigationActionBudgeValuetCtrl.push(currency);
-      const form = this.formBuilder.group({
-        id: [element.id],
-        mitigationActionDescriptionCtrl: [element.source_description, [Validators.required, Validators.maxLength(300)]],
-        currencyValueCtrl: [element.currency],
-        mitigationActionAmounttCtrl: [
-          element.budget,
-          [Validators.required, Validators.pattern('^\\d{1,18}(\\.\\d{1,2})?$')],
-        ],
-        referenceYearCtrl: [element.reference_year, Validators.required],
-      });
-      index += 1;
-      financeList.push(form);
-    }
+    if (this.mitigationAction.finance.finance_information)
+      for (const element of this.mitigationAction.finance.finance_information) {
+        const currency =
+          element.currency != 'CRC' && element.currency != 'USD' && element.currency != 'EUR'
+            ? 'other'
+            : element.currency;
+        this.mitigationActionBudgeValuetCtrl.push(currency);
+        const form = this.formBuilder.group({
+          id: [element.id],
+          mitigationActionDescriptionCtrl: [
+            element.source_description,
+            [Validators.required, Validators.maxLength(300)],
+          ],
+          currencyValueCtrl: [element.currency],
+          mitigationActionAmounttCtrl: [
+            element.budget,
+            [Validators.required, Validators.pattern('^\\d{1,18}(\\.\\d{1,2})?$')],
+          ],
+          referenceYearCtrl: [element.reference_year, Validators.required],
+        });
+        index += 1;
+        financeList.push(form);
+      }
     return this.formBuilder.array(financeList);
   }
 
@@ -229,6 +235,7 @@ export class BasicInformationFormComponent implements OnInit {
             this.snackBar.open(res, null, { duration: 3000 });
           });
           this.wasSubmittedSuccessfully = true;
+          this.state.emit(response.state as States);
           this.stepper.next();
         },
         (error) => {
