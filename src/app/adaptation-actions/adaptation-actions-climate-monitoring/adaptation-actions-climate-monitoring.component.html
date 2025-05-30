@@ -214,7 +214,7 @@
                   <input matInput formControlName="attachSupportingInformationCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-                <input (change)="uploadFile($event)" type="file" name="attachSupportMonitoring" />
+                <app-upload-button (fileChange)="uploadFile($event)" name="attachSupportMonitoring" />
                 <br />
               </div>
 

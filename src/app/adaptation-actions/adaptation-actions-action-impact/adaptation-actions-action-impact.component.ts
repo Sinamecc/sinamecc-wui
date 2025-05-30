@@ -5,6 +5,7 @@ import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { ODS, TemporalityImpact } from '../interfaces/catalogs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 @Component({
   selector: 'app-adaptation-actions-action-impact',
@@ -174,7 +175,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     return context;
   }
 
-  uploadFile(event: any) {
-    this.annexSupportingFile = event;
+  uploadFile(event: FileUpload) {
+    this.annexSupportingFile = event.file;
   }
 }

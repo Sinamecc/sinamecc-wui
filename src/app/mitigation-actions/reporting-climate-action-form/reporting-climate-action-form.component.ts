@@ -7,10 +7,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 import { finalize } from 'rxjs/operators';
-import { MAFile, MitigationAction } from '../mitigation-action';
+import { MAFile, MAFileType, MitigationAction } from '../mitigation-action';
 import { MitigationActionNewFormData } from '../mitigation-action-new-form-data';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 @Component({
   selector: 'app-reporting-climate-action-form',
@@ -30,6 +31,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
     file: null,
     name: '',
   };
+  maFileType = MAFileType;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
@@ -262,15 +264,9 @@ export class ReportingClimateActionFormComponent implements OnInit {
     });
   }
 
-  uploadFile(event: Event) {
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      this.file = {
-        file: fileList[0],
-        name: name,
-      };
+  uploadFile(event: FileUpload) {
+    if (event.file) {
+      this.file = event;
     }
   }
 

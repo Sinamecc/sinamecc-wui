@@ -8,7 +8,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { ImpactEmission, MAFile, MitigationAction } from '../mitigation-action';
+import { ImpactEmission, MAFile, MAFileType, MitigationAction } from '../mitigation-action';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 import * as _moment from 'moment';
@@ -16,6 +16,7 @@ import { ErrorReportingComponent } from '@shared';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 export const MY_FORMATS = {
   parse: {
@@ -28,7 +29,6 @@ export const MY_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
-
 const log = new Logger('MitigationAction');
 
 @Component({
@@ -55,7 +55,7 @@ export class KeyAspectsFormComponent implements OnInit {
   displayFinancialSource: boolean;
   isLoading = false;
   wasSubmittedSuccessfully = false;
-
+  maFileType = MAFileType;
   mitigationAction: MitigationAction;
 
   ghg_information: MAFile = {
@@ -194,19 +194,17 @@ export class KeyAspectsFormComponent implements OnInit {
     this.displayFinancialSource = $event.value === insuredSourceTypeId;
   }
 
-  uploadFile(event: Event) {
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      this.ghg_information = {
-        file: fileList[0],
-        name: name,
-      };
+  uploadFile(event: FileUpload) {
+    if (event.file) {
+      this.ghg_information = event;
     }
   }
 
   async submitFile(id: string, key: string, file: File) {
     await this.service.submitMitigationFile(key, file, id).toPromise();
+  }
+
+  onStepChange() {
+    this.wasSubmittedSuccessfully = false;
   }
 }
