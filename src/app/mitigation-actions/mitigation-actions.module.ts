@@ -8,7 +8,6 @@ import { SharedModule } from '@shared';
 import { MaterialModule } from '@app/material.module';
 import { MitigationActionsRoutingModule } from '@app/mitigation-actions/mitigation-actions-routing.module';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-
 import { DatePipe } from '@angular/common';
 import { MitigationActionsListComponent } from './mitigation-actions-list/mitigation-actions-list.component';
 import { MitigationActionsNewComponent } from './mitigation-actions-new/mitigation-actions-new.component';
@@ -26,9 +25,11 @@ import { IngeiHarmonizationComponent } from './ingei-harmonization/ingei-harmoni
 import { MitigationActionReviewsNewComponent } from './mitigation-action-reviews/mitigation-action-reviews-new/mitigation-action-reviews-new.component';
 import { ConceptualIntegrationNewComponent } from './conceptual-integration-new/conceptual-integration-new.component';
 import { HarmonizationProposalNewComponent } from './harmonization-proposal-new/harmonization-proposal-new.component';
-import { ReportingClimateActionFormComponent } from './reporting-climate-action-form/reporting-climate-action-form.component';
-import { OrderByIdPipe } from '@app/@shared/order-by-id.pipe';
+import { ReportingClimateActionComponent } from './reporting-climate-action/reporting-climate-action.component';
 import { MitigationActionFileUploadComponent } from './mitigation-action-file-upload/mitigation-action-file-upload.component';
+import { ReportingClimateActionFormComponent } from './reporting-climate-action/reporting-climate-action-form/reporting-climate-action-form.component';
+import { OrderByIdPipe } from '@app/@shared/order-by-id.pipe';
+
 @NgModule({
   declarations: [
     MitigationActionsListComponent,
@@ -49,6 +50,7 @@ import { MitigationActionFileUploadComponent } from './mitigation-action-file-up
     ImpactFormComponent,
     ReportingClimateActionFormComponent,
     MitigationActionFileUploadComponent,
+    ReportingClimateActionComponent,
   ],
   imports: [
     CommonModule,

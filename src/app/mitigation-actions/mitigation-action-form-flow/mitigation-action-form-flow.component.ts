@@ -1,15 +1,6 @@
-import {
-  Component,
-  OnInit,
-  ElementRef,
-  ViewChild,
-  EventEmitter,
-  Input,
-  AfterViewInit,
-  ChangeDetectorRef,
-} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators, FormControl } from '@angular/forms';
+import { Component, OnInit, ViewChild, Input, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import {
@@ -27,7 +18,7 @@ import { BasicInformationFormComponent } from '@app/mitigation-actions/basic-inf
 import { KeyAspectsFormComponent } from '@app/mitigation-actions/key-aspects-form/key-aspects-form.component';
 import { EmissionsMitigationFormComponent } from '@app/mitigation-actions/emissions-mitigation-form/emissions-mitigation-form.component';
 import { ImpactFormComponent } from '@app/mitigation-actions/impact-form/impact-form.component';
-import { ReportingClimateActionFormComponent } from '../reporting-climate-action-form/reporting-climate-action-form.component';
+import { ReportingClimateActionComponent } from '../reporting-climate-action/reporting-climate-action.component';
 import { I18nService } from '@app/i18n';
 import { States } from '@app/@shared/next-state';
 import { PermissionService } from '@app/@core/permissions.service';
@@ -48,11 +39,10 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   @ViewChild(EmissionsMitigationFormComponent)
   emissionsMitigationForm: EmissionsMitigationFormComponent;
   @ViewChild(ImpactFormComponent) impactForm: ImpactFormComponent;
-
-  @ViewChild(ReportingClimateActionFormComponent)
-  reportingClimateFormComponent: ReportingClimateActionFormComponent;
+  @ViewChild(ReportingClimateActionComponent)
   impactEvaluationFormComponent: SustainableDevelopmentComponent;
   transformationalChange: TransformationalChangeComponent;
+  reportingClimateComponent: ReportingClimateActionComponent;
   state: States;
 
   @Input()
@@ -176,7 +166,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   }
 
   get reportingClimateFrmComponent() {
-    return this.reportingClimateFormComponent ? this.reportingClimateFormComponent.form : null;
+    return this.reportingClimateComponent ? this.reportingClimateComponent.form : null;
   }
 
   get impactEvaluationFrm() {

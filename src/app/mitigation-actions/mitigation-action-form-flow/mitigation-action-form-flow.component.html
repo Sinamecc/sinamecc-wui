@@ -161,13 +161,13 @@
           <ng-template matStepLabel
             ><span translate>mitigationAction.monitoringReportingClimateActions</span>
           </ng-template>
-          <app-reporting-climate-action-form
+          <app-reporting-climate-action
             [newFormData]="newFormData"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
             [stepper]="stepper"
             (wantsImpactEval)="wantsImpactEval = $event"
-          ></app-reporting-climate-action-form>
+          ></app-reporting-climate-action>
         </mat-step>
 
         <!-- Section 7 -->

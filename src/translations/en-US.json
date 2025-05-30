@@ -150,6 +150,8 @@
     "changelogMA": "Change history of the mitigation action review",
     "MAt": "MITIGATION ACTIONS",
     "dataEntryMonitoring": "Monitoring data entry",
+    "addMonitoring": "Add monitoring",
+    "editMonitoring": "Edit monitoring",
     "monitoringIndicatorName": "Monitoring indicator name",
     "monitoringUpdateDate": "Update date",
     "monitoringGHG": "Indicator baseline",
