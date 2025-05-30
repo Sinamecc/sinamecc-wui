@@ -1,0 +1,19 @@
+$COLOR_INPUT: #757575;
+
+.custom-radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.report-error {
+  color: red;
+}
+
+.custom-radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-grup-label {
+  color: $COLOR_INPUT;
+}

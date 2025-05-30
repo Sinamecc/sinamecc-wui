@@ -27,7 +27,9 @@ import { MitigationActionReviewsNewComponent } from './mitigation-action-reviews
 import { ConceptualIntegrationNewComponent } from './conceptual-integration-new/conceptual-integration-new.component';
 import { HarmonizationProposalNewComponent } from './harmonization-proposal-new/harmonization-proposal-new.component';
 import { ReportingClimateActionFormComponent } from './reporting-climate-action-form/reporting-climate-action-form.component';
+import { ReportingClimateActionComponent } from './reporting-climate-action/reporting-climate-action.component';
 import { OrderByIdPipe } from '@app/@shared/order-by-id.pipe';
+
 @NgModule({
   declarations: [
     MitigationActionsListComponent,
@@ -47,6 +49,7 @@ import { OrderByIdPipe } from '@app/@shared/order-by-id.pipe';
     EmissionsMitigationFormComponent,
     ImpactFormComponent,
     ReportingClimateActionFormComponent,
+    ReportingClimateActionComponent,
   ],
   imports: [
     CommonModule,

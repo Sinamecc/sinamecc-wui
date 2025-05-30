@@ -1,11 +1,46 @@
-<mat-dialog-container>
-  <mat-dialog-content>
-    <form [formGroup]="data.form" (ngSubmit)="submitForm()">
+<div class="container-custom">
+  <div class="header-container flex flex-col justify-center items-center">
+    <h2 translate>mitigationAction.monitoringReportingClimateActions</h2>
+  </div>
+  <h1>{{ mitigationAction?.code }}</h1>
+  <mat-card-content>
+    <button class="primary-button" (click)="openDialog()">TEST DIALOG</button>
+    <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
       <div class="flex flex-col">
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
+          <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+            <ng-template matStepLabel>
+              <span>6.1 - </span><span translate>mitigationAction.monitoringProgressLog</span>
+            </ng-template>
+
+            <div>
+              <label class="radio-grup-label" translate
+                >6.1.1 - <span translate>mitigationAction.anyProgressMonitoringRecordedClimateActions</span></label
+              >
+              <mat-radio-group
+                class="custom-radio-group"
+                formControlName="anyProgressMonitoringRecordedClimateActionsCtrl"
+              >
+                <mat-radio-button [style.margin.px]="5" [value]="true">
+                  <label translate>general.yes</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5" [value]="false">
+                  <label translate>No</label>
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <br />
+
+            <div class="box-button">
+              <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+                <span translate>general.next</span>
+              </button>
+            </div>
+          </mat-step>
+
           <mat-step
-            *ngIf="data.form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl"
-            formGroupName="0"
+            *ngIf="form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl"
+            formGroupName="1"
             [stepControl]="formArray?.get([1])"
           >
             <ng-template matStepLabel>
@@ -19,7 +54,7 @@
               <mat-hint>Haga click en el indicador de interés para reportar su avance'</mat-hint>
               <mat-radio-group class="custom-radio-group" formControlName="indicatorSelectionCtrl">
                 <mat-radio-button
-                  *ngFor="let item of data.mitigationAction?.monitoring_information?.indicator"
+                  *ngFor="let item of mitigationAction?.monitoring_information?.indicator"
                   [style.margin.px]="5"
                   [value]="item.id"
                 >
@@ -129,8 +164,8 @@
           </mat-step>
 
           <mat-step
-            *ngIf="data.form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl"
-            formGroupName="1"
+            *ngIf="form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl"
+            formGroupName="2"
             [stepControl]="formArray?.get([2])"
           >
             <ng-template matStepLabel>
@@ -185,7 +220,7 @@
           <mat-step>
             <ng-template matStepLabel> <span translate> specificLabel.confirmInformation </span></ng-template>
 
-            <div *ngIf="data.form.valid; else elseBlock" translate>specificLabel.everythingCorrect</div>
+            <div *ngIf="form.valid; else elseBlock" translate>specificLabel.everythingCorrect</div>
 
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
@@ -197,13 +232,5 @@
         </mat-vertical-stepper>
       </div>
     </form>
-  </mat-dialog-content>
-  <mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">
-      <span translate>no</span>
-    </button>
-    <button matButton [mat-dialog-close]="" cdkFocusInitial>
-      <span translate>yes</span>
-    </button>
-  </mat-dialog-actions>
-</mat-dialog-container>
+  </mat-card-content>
+</div>

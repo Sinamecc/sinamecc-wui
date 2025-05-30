@@ -27,7 +27,7 @@ import { BasicInformationFormComponent } from '@app/mitigation-actions/basic-inf
 import { KeyAspectsFormComponent } from '@app/mitigation-actions/key-aspects-form/key-aspects-form.component';
 import { EmissionsMitigationFormComponent } from '@app/mitigation-actions/emissions-mitigation-form/emissions-mitigation-form.component';
 import { ImpactFormComponent } from '@app/mitigation-actions/impact-form/impact-form.component';
-import { ReportingClimateActionFormComponent } from '../reporting-climate-action-form/reporting-climate-action-form.component';
+import { ReportingClimateActionComponent } from '../reporting-climate-action/reporting-climate-action.component';
 import { I18nService } from '@app/i18n';
 
 @Component({
@@ -45,8 +45,8 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   emissionsMitigationForm: EmissionsMitigationFormComponent;
   @ViewChild(ImpactFormComponent) impactForm: ImpactFormComponent;
 
-  @ViewChild(ReportingClimateActionFormComponent)
-  reportingClimateFormComponent: ReportingClimateActionFormComponent;
+  @ViewChild(ReportingClimateActionComponent)
+  reportingClimateComponent: ReportingClimateActionComponent;
 
   @Input()
   title: string;
@@ -153,7 +153,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   }
 
   get reportingClimateFrmComponent() {
-    return this.reportingClimateFormComponent ? this.reportingClimateFormComponent.form : null;
+    return this.reportingClimateComponent ? this.reportingClimateComponent.form : null;
   }
 
   ngAfterViewInit() {

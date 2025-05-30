@@ -36,6 +36,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTreeModule } from '@angular/material/tree';
 import { ReactiveFormsModule } from '@angular/forms';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { A11yModule } from '@angular/cdk/a11y';
 
 @NgModule({
@@ -72,6 +73,7 @@ import { A11yModule } from '@angular/cdk/a11y';
     MatMenuModule,
     MatListModule,
     MatTreeModule,
+    OverlayModule,
     A11yModule,
   ],
 })
