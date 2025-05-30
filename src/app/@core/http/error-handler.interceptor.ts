@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core/logger.service';
 import { Router } from '@angular/router';
+import { CredentialsService } from '@app/auth';
 
 const log = new Logger('ErrorHandlerInterceptor');
 
@@ -14,7 +15,10 @@ const log = new Logger('ErrorHandlerInterceptor');
  */
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private service: CredentialsService,
+  ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError((error) => this.errorHandler(error)));
@@ -24,6 +28,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   private errorHandler(response: HttpEvent<any>): Observable<HttpEvent<any>> {
     if (response instanceof HttpErrorResponse) {
       if (401 === response.status) {
+        this.service.setCredentials();
         this.router.navigate(['/login'], { replaceUrl: true });
       }
     }

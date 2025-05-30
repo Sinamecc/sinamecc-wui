@@ -102,7 +102,7 @@ export class MitigationActionsListComponent implements OnInit {
     const selectedMitigationAction = this.dataSource.data.find((ma) => ma.id === uuid);
     const status = selectedMitigationAction.fsm_state;
 
-    const route = this.service.mapRoutesStatuses(uuid).find((x) => x.status === status);
+    const route = this.service.mapRoutesStatuses(uuid).find((x) => x.status === status.state);
     if (route) {
       this.router.navigate([route.route], { replaceUrl: true });
     } else {
@@ -162,7 +162,7 @@ export class MitigationActionsListComponent implements OnInit {
   }
 
   canChangeState(element: MitigationAction) {
-    if (element.fsm_state !== 'end') {
+    if (element.fsm_state.state !== 'end') {
       // is admin
       if (this.credentialsService.credentials.permissions.all) {
         return true;

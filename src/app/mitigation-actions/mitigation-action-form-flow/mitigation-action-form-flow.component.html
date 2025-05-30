@@ -19,6 +19,7 @@
             [isUpdating]="isUpdating"
             [stepper]="stepper"
             [action]="action"
+            (state)="state = $event"
           ></app-initiative-form>
         </mat-step>
 
@@ -29,6 +30,7 @@
             [stepper]="stepper"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
+            (state)="state = $event"
           >
           </app-basic-information-form>
 
@@ -61,6 +63,7 @@
             [newFormData]="newFormData"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
+            (state)="state = $event"
           >
           </app-key-aspects-form>
 
@@ -93,6 +96,7 @@
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
             [stepper]="stepper"
+            (state)="state = $event"
           >
           </app-emissions-mitigation-form>
 
@@ -127,10 +131,11 @@
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
             [stepper]="stepper"
+            (state)="state = $event"
           >
           </app-impact-form>
 
-          <div class="align-right">
+          <div *ngIf="state === accepted" class="align-right">
             <button
               [disabled]="!impactForm?.wasSubmittedSuccessfully"
               (click)="stepper.next()"
@@ -142,7 +147,7 @@
           </div>
         </mat-step>
 
-        <mat-step formGroupName="5" [stepControl]="formArray?.get([5])">
+        <mat-step *ngIf="state === accepted" formGroupName="5" [stepControl]="formArray?.get([5])">
           <ng-template matStepLabel
             ><span translate>mitigationAction.monitoringReportingClimateActions</span>
           </ng-template>

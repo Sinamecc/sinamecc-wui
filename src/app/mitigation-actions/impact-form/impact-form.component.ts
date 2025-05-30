@@ -8,7 +8,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MAFile, MitigationAction } from '../mitigation-action';
+import { MAFile, MitigationAction, States } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { I18nService } from '@app/i18n';
@@ -30,6 +30,7 @@ export class ImpactFormComponent implements OnInit {
   wasSubmittedSuccessfully = false;
   startDate = new Date();
   mitigationAction: MitigationAction;
+  @Output() state = new EventEmitter<States>();
 
   files: {
     methodologicalDetail: MAFile;
@@ -85,6 +86,7 @@ export class ImpactFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
+        this.state.emit(this.mitigationAction.fsm_state.state as States);
       });
     }
   }
@@ -304,6 +306,7 @@ export class ImpactFormComponent implements OnInit {
         .subscribe(
           (response) => {
             this.successSendForm(response.id);
+            this.state.emit(response.state as States);
           },
           (error) => {
             this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -331,7 +334,9 @@ export class ImpactFormComponent implements OnInit {
       this.snackBar.open(res, null, { duration: 3000 });
     });
     this.wasSubmittedSuccessfully = true;
-    this.stepper.next();
+    setTimeout(() => {
+      this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
+    }, 2000);
   }
 
   uploadFile(event: Event) {
