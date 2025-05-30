@@ -33,13 +33,13 @@
     <!-- Updated Column -->
     <ng-container matColumnDef="updated">
       <mat-header-cell *matHeaderCellDef translate>general.lastUpdate </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.updated | date: 'dd/MM/yyy hh:mm:ss' }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.updated | date: 'dd/MM/yyyy hh:mm:ss' }} </mat-cell>
     </ng-container>
 
     <!-- Created Column -->
     <ng-container matColumnDef="created">
       <mat-header-cell *matHeaderCellDef translate> general.createdAt</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.created | date: 'dd/MM/yyy hh:mm:ss' }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.created | date: 'dd/MM/yyyy hh:mm:ss' }} </mat-cell>
     </ng-container>
 
     <!-- Actions Column -->
