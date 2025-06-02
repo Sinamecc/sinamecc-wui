@@ -1,11 +1,13 @@
 <div class="flex flex-col items-center justify-center space-y-2">
-  <input hidden type="file" [accept]="accept" [name]="name" #fileInput (change)="fileChanged($event)" />
+  <input hidden type="file" [accept]="accept" [name]="type" #fileInput (change)="fileChanged($event)" multiple />
   <button class="primary-button" type="button" matRipple color="primary" (click)="fileInput.click()">
     <span translate>general.fileUpload</span>
   </button>
-  <div *ngIf="fileName" class="flex flex-row items-center justify-between">
-    <mat-icon color="primary">attach_file</mat-icon>
-    <span class="truncate w-20">{{ fileName }}</span>
-    <mat-icon class="cursor-pointer" color="warn" (click)="clearFile()" type="button">close</mat-icon>
+  <div *ngIf="files && files.length > 0" class="flex flex-col items-start justify-between">
+    <div *ngFor="let file of files" class="flex items-center space-x-2">
+      <mat-icon color="primary">attach_file</mat-icon>
+      <span class="truncate w-20">{{ file.name }}</span>
+      <mat-icon class="cursor-pointer" color="warn" (click)="removeFile(file)" type="button">close</mat-icon>
+    </div>
   </div>
 </div>

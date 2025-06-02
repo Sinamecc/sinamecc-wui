@@ -156,7 +156,7 @@
               </mat-form-field>
               <app-upload-button
                 accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/msword,"
-                [name]="maFileType.IMPACT_DOCUMENTATION"
+                [type]="maFileType.IMPACT_DOCUMENTATION"
                 (fileChange)="uploadFile($event)"
               />
               <br />

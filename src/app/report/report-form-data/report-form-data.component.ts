@@ -28,8 +28,8 @@ export class ReportFormDataComponent implements OnInit {
   isLoading = false;
   methodological = false;
   catalogs: ReportDataCatalog = undefined;
-  reportDataFile: File;
-  baseLineReportFile: File;
+  reportDataFile: FileUpload;
+  baseLineReportFile: FileUpload;
   @Input() mainStepper: any;
   @Input() reportEdit: Report;
 
@@ -170,11 +170,11 @@ export class ReportFormDataComponent implements OnInit {
   }
 
   uploadFile(event: FileUpload, reportFile = true) {
-    if (event.file) {
+    if (event.files) {
       if (reportFile) {
-        this.reportDataFile = event.file;
+        this.reportDataFile = event;
       } else {
-        this.baseLineReportFile = event.file;
+        this.baseLineReportFile = event;
       }
     }
   }
@@ -248,11 +248,11 @@ export class ReportFormDataComponent implements OnInit {
 
   successSendForm(id: string) {
     if (this.reportDataFile) {
-      this.submitFile(id, 'report_file', this.reportDataFile);
+      this.submitFile(id, this.reportDataFile);
     }
 
     if (this.baseLineReportFile) {
-      this.submitFile(id, 'base_line_report', this.baseLineReportFile);
+      this.submitFile(id, this.baseLineReportFile);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -261,7 +261,9 @@ export class ReportFormDataComponent implements OnInit {
     });
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.reportService.submitReportFile(key, file, id).toPromise();
+  async submitFile(id: string, file: FileUpload) {
+    for (const f of file.files) {
+      await this.reportService.submitReportFile(file.type, f, id).toPromise();
+    }
   }
 }

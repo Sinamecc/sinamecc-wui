@@ -38,16 +38,16 @@ export class InitiativeFormComponent implements OnInit {
   initiativeGoalList: string[] = [];
 
   files: {
-    geographic_location: MAFile;
-    initiative: MAFile;
+    geographic_location: FileUpload;
+    initiative: FileUpload;
   } = {
     geographic_location: {
-      name: '',
-      file: null,
+      type: '',
+      files: null,
     },
     initiative: {
-      name: '',
-      file: null,
+      type: '',
+      files: null,
     },
   };
 
@@ -526,12 +526,12 @@ export class InitiativeFormComponent implements OnInit {
   }
 
   successSendForm(id: string) {
-    if (this.files.initiative.file) {
-      this.submitFile(id, this.files.initiative.name, this.files.initiative.file);
+    if (this.files.initiative.files) {
+      this.submitFile(id, this.files.initiative);
     }
 
-    if (this.files.geographic_location.file) {
-      this.submitFile(id, this.files.geographic_location.name, this.files.geographic_location.file);
+    if (this.files.geographic_location.files) {
+      this.submitFile(id, this.files.geographic_location);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -569,7 +569,7 @@ export class InitiativeFormComponent implements OnInit {
   }
 
   uploadFile(event: FileUpload) {
-    const name = event.name;
+    const name = event.type;
     if (name === 'initiative') {
       this.files.initiative = event;
     } else if (name === 'geographic-location') {
@@ -577,8 +577,10 @@ export class InitiativeFormComponent implements OnInit {
     }
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
+  async submitFile(id: string, file: FileUpload) {
+    for (const f of file.files) {
+      await this.service.submitMitigationFile(file.type, f, id).toPromise();
+    }
   }
 
   onStepChange() {

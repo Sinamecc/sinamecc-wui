@@ -42,7 +42,7 @@
               </mat-form-field>
               <app-upload-button
                 accept=".rar,application/pdf,.zip"
-                [name]="maFileType.GHG_INFORMATION"
+                [type]="maFileType.GHG_INFORMATION"
                 (fileChange)="uploadFile($event)"
               />
               <br />

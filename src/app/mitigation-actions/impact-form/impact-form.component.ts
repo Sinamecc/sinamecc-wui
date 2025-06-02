@@ -34,16 +34,16 @@ export class ImpactFormComponent implements OnInit {
   maFileType = MAFileType;
 
   files: {
-    methodologicalDetail: MAFile;
-    howSustainability: MAFile;
+    methodologicalDetail: FileUpload;
+    howSustainability: FileUpload;
   } = {
     methodologicalDetail: {
-      file: null,
-      name: '',
+      files: null,
+      type: '',
     },
     howSustainability: {
-      file: null,
-      name: '',
+      files: null,
+      type: '',
     },
   };
 
@@ -321,12 +321,12 @@ export class ImpactFormComponent implements OnInit {
   }
 
   successSendForm(id: string) {
-    if (this.files.methodologicalDetail.file) {
-      this.submitFile(id, this.files.methodologicalDetail.name, this.files.methodologicalDetail.file);
+    if (this.files.methodologicalDetail.files) {
+      this.submitFile(id, this.files.methodologicalDetail);
     }
 
-    if (this.files.howSustainability.file) {
-      this.submitFile(id, this.files.howSustainability.name, this.files.howSustainability.file);
+    if (this.files.howSustainability.files) {
+      this.submitFile(id, this.files.howSustainability);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -338,18 +338,20 @@ export class ImpactFormComponent implements OnInit {
 
   uploadFile(event: FileUpload) {
     // TODO: correct names
-    if (event.file) {
+    if (event.files) {
       const file = event;
-      if (file.name === 'methodologicalDetailIndicatorFile') {
+      if (file.type === 'methodologicalDetailIndicatorFile') {
         this.files.methodologicalDetail = file;
-      } else if (file.name === 'howSustainabilityIndicatorFile') {
+      } else if (file.type === 'howSustainabilityIndicatorFile') {
         this.files.howSustainability = file;
       }
     }
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
+  async submitFile(id: string, file: FileUpload) {
+    for (const f of file.files) {
+      await this.service.submitMitigationFile(file.type, f, id).toPromise();
+    }
   }
 
   onStepChange() {

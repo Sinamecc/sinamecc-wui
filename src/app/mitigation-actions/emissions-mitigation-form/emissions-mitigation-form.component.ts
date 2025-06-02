@@ -46,12 +46,9 @@ export class EmissionsMitigationFormComponent implements OnInit {
   sectorCatalog: MADataCatalogItem[] = [];
   sectorIppc2006: SectorIpcc2006[][] = [];
   categoryIppc2006: CategoryIppc2006[][] = [];
-  impact_documentation: {
-    file: File;
-    name: string;
-  } = {
-    file: null,
-    name: '',
+  impact_documentation: FileUpload = {
+    files: null,
+    type: '',
   };
 
   gasList = ['CO2', 'CH4', 'N2O', 'HFC*', 'SF6', 'CO', 'NOx', 'NMVOC', 'SO2', 'C Negro', 'Otro'];
@@ -358,8 +355,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   successSendForm(id: string) {
-    if (this.impact_documentation.file) {
-      this.submitFile(id, this.impact_documentation.name, this.impact_documentation.file);
+    if (this.impact_documentation.files) {
+      this.submitFile(id, this.impact_documentation);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -384,13 +381,15 @@ export class EmissionsMitigationFormComponent implements OnInit {
 
   uploadFile(event: FileUpload) {
     // TODO: fix names
-    if (event.file) {
+    if (event.files) {
       this.impact_documentation = event;
     }
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
+  async submitFile(id: string, file: FileUpload) {
+    for (const f of file.files) {
+      await this.service.submitMitigationFile(file.type, f, id).toPromise();
+    }
   }
 
   onStepChange() {

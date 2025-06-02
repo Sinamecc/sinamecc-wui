@@ -21,7 +21,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   @Input() mainStepper: any;
   @Input() adaptationActionUpdated: AdaptationAction;
   @Input() edit: boolean;
-  attachSupportMonitoringFile: any;
+  attachSupportMonitoringFile: FileUpload;
   durationInSeconds = 3;
 
   constructor(
@@ -96,7 +96,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
 
   updatedIndicatorCtrl(indicatorMonitoringList: any[]) {
     const indicatorList = [];
-    this.attachSupportMonitoringFile = 'file';
+    // this.attachSupportMonitoringFile = 'file'; // TODO: remove this line when the file upload is implemented
 
     for (const indicator of indicatorMonitoringList) {
       const indicatorDataUpdateDate = new Date(indicator.update_date);
@@ -476,6 +476,6 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   }
 
   uploadFile(event: FileUpload) {
-    this.attachSupportMonitoringFile = event.file;
+    this.attachSupportMonitoringFile = event;
   }
 }

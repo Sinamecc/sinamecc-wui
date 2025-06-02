@@ -51,7 +51,7 @@
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
                 <app-upload-button
-                  [name]="maFileType.METHODOLOGICAL_INDICATOR_FILE"
+                  [type]="maFileType.METHODOLOGICAL_INDICATOR_FILE"
                   (fileChange)="uploadFile($event)"
                 />
                 <br />
@@ -182,7 +182,7 @@
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
                 <app-upload-button
-                  [name]="maFileType.SUSTAINABILITY_INDICATOR_FILE"
+                  [type]="maFileType.SUSTAINABILITY_INDICATOR_FILE"
                   (fileChange)="uploadFile($event)"
                 />
                 <br />

@@ -9,25 +9,36 @@ import { FileUpload } from './file-upload';
 })
 export class UploadButtonComponent {
   @Input() accept: string = '';
-  @Input() name: string = '';
+  @Input() type: string = '';
   @Output() fileChange = new EventEmitter<FileUpload>();
-  fileName: string = '';
+  files: File[] = [];
 
   fileChanged(event) {
     const files = event.target.files;
     if (files) {
+      this.files = Array.from(files);
       this.fileChange.emit({
-        name: this.name,
-        file: files[0],
+        type: this.type,
+        files: this.files,
       });
-      this.fileName = files[0].name;
     } else {
-      this.clearFile();
+      this.clearFiles();
     }
   }
 
-  clearFile() {
-    this.fileName = '';
-    this.fileChange.emit({ name: this.name, file: null });
+  clearFiles() {
+    this.fileChange.emit({ files: null, type: '' });
+    this.files = [];
+  }
+
+  removeFile(file: File) {
+    const index = this.files.indexOf(file);
+    if (index > -1) {
+      this.files = this.files.filter((f) => f !== file);
+      this.fileChange.emit({
+        type: this.type,
+        files: this.files,
+      });
+    }
   }
 }

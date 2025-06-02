@@ -63,7 +63,7 @@
                 ></textarea>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <app-upload-button [name]="maFileType.INITIATIVE" (fileChange)="uploadFile($event)" />
+              <app-upload-button [type]="maFileType.INITIATIVE" (fileChange)="uploadFile($event)" />
             </div>
 
             <div>
@@ -305,7 +305,7 @@
                 ></textarea>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <app-upload-button [name]="maFileType.GEOGRAPHIC_LOCATION" (fileChange)="uploadFile($event)" />
+              <app-upload-button [type]="maFileType.GEOGRAPHIC_LOCATION" (fileChange)="uploadFile($event)" />
             </div>
 
             <div class="box-button">

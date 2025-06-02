@@ -58,9 +58,9 @@ export class KeyAspectsFormComponent implements OnInit {
   maFileType = MAFileType;
   mitigationAction: MitigationAction;
 
-  ghg_information: MAFile = {
-    file: null,
-    name: '',
+  ghg_information: FileUpload = {
+    files: null,
+    type: '',
   };
 
   @Input() stepper: any;
@@ -175,8 +175,8 @@ export class KeyAspectsFormComponent implements OnInit {
   }
 
   successSendForm(id: string) {
-    if (this.ghg_information.file) {
-      this.submitFile(id, this.ghg_information.name, this.ghg_information.file);
+    if (this.ghg_information.files) {
+      this.submitFile(id, this.ghg_information);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -195,13 +195,15 @@ export class KeyAspectsFormComponent implements OnInit {
   }
 
   uploadFile(event: FileUpload) {
-    if (event.file) {
+    if (event.files) {
       this.ghg_information = event;
     }
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
+  async submitFile(id: string, file: FileUpload) {
+    for (const f of file.files) {
+      await this.service.submitMitigationFile(file.type, f, id).toPromise();
+    }
   }
 
   onStepChange() {

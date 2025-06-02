@@ -27,9 +27,9 @@ export class ReportingClimateActionFormComponent implements OnInit {
   wasSubmittedSuccessfully = false;
   mitigationAction: MitigationAction;
   stateLabel = 'submitted';
-  file: MAFile = {
-    file: null,
-    name: '',
+  files: FileUpload = {
+    files: null,
+    type: '',
   };
   maFileType = MAFileType;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -166,8 +166,8 @@ export class ReportingClimateActionFormComponent implements OnInit {
   }
 
   successSendForm(id: string) {
-    if (this.file.file) {
-      this.submitFile(id, this.file.name, this.file.file);
+    if (this.files.files) {
+      this.submitFile(id, this.files);
     }
 
     this.translateService.get('specificLabel.sucessfullySubmittedForm').subscribe((res: string) => {
@@ -265,12 +265,14 @@ export class ReportingClimateActionFormComponent implements OnInit {
   }
 
   uploadFile(event: FileUpload) {
-    if (event.file) {
-      this.file = event;
+    if (event.files) {
+      this.files = event;
     }
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
+  async submitFile(id: string, file: FileUpload) {
+    for (const f of file.files) {
+      await this.service.submitMitigationFile(file.type, f, id).toPromise();
+    }
   }
 }
