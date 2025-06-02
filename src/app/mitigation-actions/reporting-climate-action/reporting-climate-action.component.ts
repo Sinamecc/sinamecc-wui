@@ -83,7 +83,6 @@ export class ReportingClimateActionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
       if (result !== undefined) {
         console.log('Dialog result:', result);
       }
@@ -112,20 +111,6 @@ export class ReportingClimateActionComponent implements OnInit {
         this.formBuilder.group({
           anyProgressMonitoringRecordedClimateActionsCtrl: ['', Validators.required],
         }),
-        this.formBuilder.group({
-          indicatorSelectionCtrl: [''],
-          indicatorDataUpdateDateCtrl: ['', Validators.required],
-          reportingPeriodStartCtrl: ['', Validators.required],
-          reportingPeriodEndCtrl: ['', Validators.required],
-          reportTypeCtrl: ['', Validators.required],
-          informationToUpdateCtrl: ['', Validators.required],
-        }),
-
-        this.formBuilder.group({
-          reportingPeriodCtrl: ['', Validators.required],
-          reportingPeriodUntilCtrl: ['', Validators.required],
-          beenProgressActionPeriodCtrl: ['', Validators.required],
-        }),
       ]),
     });
   }
@@ -138,45 +123,6 @@ export class ReportingClimateActionComponent implements OnInit {
           this.formBuilder.group({
             anyProgressMonitoringRecordedClimateActionsCtrl: [
               this.mitigationAction.monitoring_reporting_indicator.progress_in_monitoring,
-              Validators.required,
-            ],
-          }),
-
-          this.formBuilder.group({
-            indicatorSelectionCtrl: [monitoring_indicator ? monitoring_indicator[0].indicator : ''],
-            indicatorDataUpdateDateCtrl: [
-              monitoring_indicator ? monitoring_indicator[0].data_updated_date : '',
-              Validators.required,
-            ],
-            reportingPeriodStartCtrl: [
-              monitoring_indicator ? monitoring_indicator[0].initial_date_report_period : '',
-              Validators.required,
-            ],
-            reportingPeriodEndCtrl: [
-              monitoring_indicator ? monitoring_indicator[0].final_date_report_period : '',
-              Validators.required,
-            ],
-            reportTypeCtrl: [
-              parseInt(monitoring_indicator ? monitoring_indicator[0].report_type : '0'),
-              Validators.required,
-            ],
-            informationToUpdateCtrl: [
-              monitoring_indicator ? monitoring_indicator[0].updated_data : '',
-              Validators.required,
-            ],
-          }),
-
-          this.formBuilder.group({
-            reportingPeriodCtrl: [
-              monitoring_indicator ? monitoring_indicator[0].progress_report_period : '',
-              Validators.required,
-            ],
-            reportingPeriodUntilCtrl: [
-              monitoring_indicator ? monitoring_indicator[0].progress_report_period_until : '',
-              Validators.required,
-            ],
-            beenProgressActionPeriodCtrl: [
-              monitoring_indicator ? monitoring_indicator[0].progress_report : '',
               Validators.required,
             ],
           }),

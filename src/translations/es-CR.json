@@ -148,7 +148,9 @@
     "descriptionReviewMA": "Descripción de la revisión de la Acción de Mitigación",
     "changelogMA": "Historial de cambios de la revision para la acción de mitigación",
     "MAt": "ACCIONES DE MITIGACIÓN",
-    "dataEntryMonitoring": "Ingreso de datos de monitoreo"
+    "dataEntryMonitoring": "Ingreso de datos de monitoreo",
+    "addMonitoring": "Agregar monitoreo",
+    "editMonitoring": "Editar monitoreo"
   },
 
   "reportData": {

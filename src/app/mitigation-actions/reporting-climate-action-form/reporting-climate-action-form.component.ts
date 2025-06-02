@@ -11,7 +11,7 @@ import { ErrorReportingComponent } from '@app/@shared';
 
 export interface DialogData {
   mitigationAction: MitigationAction;
-  report: string;
+  report?: string;
   indicator: string;
 }
 
@@ -162,6 +162,7 @@ export class ReportingClimateActionFormComponent {
   }
 
   buildPayload() {
+    console.log('dsa', this.form.value.formArray);
     const context = {
       monitoring_reporting_indicator: {
         progress_in_monitoring: true,
@@ -179,7 +180,7 @@ export class ReportingClimateActionFormComponent {
               this.form.value.formArray[0].reportingPeriodEndCtrl,
               'yyyy-MM-dd',
             ),
-            report_type: this.form.value.formArray[1].reportTypeCtrl,
+            report_type: this.form.value.formArray[0].reportTypeCtrl,
             progress_report_period: this.datePipe.transform(
               this.form.value.formArray[1].reportingPeriodCtrl,
               'yyyy-MM-dd',
@@ -195,6 +196,10 @@ export class ReportingClimateActionFormComponent {
         ],
       },
     };
+
+    if (this.data.report) {
+      context['monitoring_reporting_indicator']['monitoring_indicator'][0]['id'] = this.data.report;
+    }
 
     // if (this.mitigationAction.next_state[0].state === this.stateLabel) {
     //   context['is_complete'] = true;
