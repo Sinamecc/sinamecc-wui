@@ -4,8 +4,7 @@
   </div>
   <h1>{{ mitigationAction?.code }}</h1>
   <mat-card-content>
-    <button class="primary-button" (click)="openDialog()">TEST DIALOG</button>
-    <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
+    <form *ngIf="newFormData | async" [formGroup]="form">
       <div class="flex flex-col">
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
@@ -52,161 +51,37 @@
                 >6.2.1 - <span translate>mitigationAction.indicatorSelection</span></label
               ><br />
               <mat-hint>Haga click en el indicador de interés para reportar su avance'</mat-hint>
-              <mat-radio-group class="custom-radio-group" formControlName="indicatorSelectionCtrl">
-                <mat-radio-button
-                  *ngFor="let item of mitigationAction?.monitoring_information?.indicator"
-                  [style.margin.px]="5"
-                  [value]="item.id"
-                >
-                  <label translate>{{ item.id }} - {{ item.name }}</label>
-                </mat-radio-button>
-              </mat-radio-group>
-            </div>
-            <br />
-
-            <div class="flex flex-row justify-start items-center">
-              <mat-form-field [style.width.%]="100" class="ppcn-field">
-                <mat-label translate>6.2.1.1 - <span translate>mitigationAction.reportingPeriod</span></mat-label>
-                <input
-                  matInput
-                  [placeholder]="'Choose a date' | translate"
-                  [matDatepicker]="reportingPeriodStartDateDatePicker"
-                  formControlName="reportingPeriodStartCtrl"
-                />
-
-                <mat-datepicker-toggle matSuffix [for]="reportingPeriodStartDateDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #reportingPeriodStartDateDatePicker startView="year"></mat-datepicker>
-
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-
-              <mat-form-field [style.width.%]="100" class="ppcn-field">
-                <mat-label translate>general.until</mat-label>
-                <input
-                  matInput
-                  [placeholder]="'Choose a date' | translate"
-                  [matDatepicker]="reportingPeriodEndDateDatePicker"
-                  formControlName="reportingPeriodEndCtrl"
-                />
-
-                <mat-datepicker-toggle matSuffix [for]="reportingPeriodEndDateDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #reportingPeriodEndDateDatePicker startView="year"></mat-datepicker>
-
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-            </div>
-            <br />
-
-            <mat-form-field [style.width.%]="100" class="ppcn-field">
-              <mat-label translate>6.2.1.2 - <span translate>mitigationAction.indicatorDataUpdateDate</span></mat-label>
-              <input
-                matInput
-                [placeholder]="'Choose a date' | translate"
-                [matDatepicker]="indicatordataUpdateDateDatePicker"
-                formControlName="indicatorDataUpdateDateCtrl"
-              />
-
-              <mat-datepicker-toggle matSuffix [for]="indicatordataUpdateDateDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #indicatordataUpdateDateDatePicker startView="year"></mat-datepicker>
-
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-            <br />
-
-            <div>
-              <label class="radio-grup-label" translate
-                >6.2.1.3 - <span translate>mitigationAction.dataEntryMonitoring</span></label
-              ><br />
-              <mat-radio-group
-                formControlName="reportTypeCtrl"
-                #informationToUpdate="matRadioGroup"
-                class="custom-radio-group"
-              >
-                <mat-radio-button [style.margin.px]="5" [value]="1">
-                  <label translate>Dato de monitoreo</label>
-                </mat-radio-button>
-                <mat-radio-button [style.margin.px]="5" [value]="2">
-                  <label translate>Carga de documento</label>
-                </mat-radio-button>
-                <mat-radio-button [style.margin.px]="5" [value]="3">
-                  <label translate>Conexión con webservice: brindar detalles de la conexión </label>
-                </mat-radio-button>
-              </mat-radio-group>
-            </div>
-            <br />
-
-            <div *ngIf="informationToUpdate.value === 1 || informationToUpdate.value === 3">
-              <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
-                <mat-label translate
-                  >6.2.1.3 - <span translate>mitigationAction.dataEntryMonitoring</span>
-                  {{ informationToUpdate.value === 3 ? '- Webservice' : '' }}
-                </mat-label>
-                <input type="text" matInput formControlName="informationToUpdateCtrl" required />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-            </div>
-
-            <div *ngIf="informationToUpdate.value === 2">
-              <div class="flex flex-row justify-center">
-                <mat-label translate>6.2.1.3 - <span translate>mitigationAction.informationToUpdate</span></mat-label>
-                <input type="file" name="informationToUpdateFile" (change)="uploadFile($event)" />
-                <br />
+              <div>
+                <mat-accordion>
+                  <mat-expansion-panel
+                    *ngFor="let item of mitigationAction?.monitoring_information?.indicator"
+                    [style.margin.px]="5"
+                    class="flex flex-col gap-2"
+                  >
+                    <mat-expansion-panel-header>
+                      <mat-panel-title> {{ item.id }} - {{ item.name }} </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="flex flex-col gap-2">
+                      <div
+                        *ngFor="let report of mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator"
+                        class="flex flex-row justify-between items-center"
+                      >
+                        <span>{{ report.id }} - {{ report.indicator }}</span>
+                        <button type="button" class="primary-button" (click)="openDialog(item.id, report.id)">
+                          <span translate>general.edit</span>
+                        </button>
+                      </div>
+                      <div class="flex flex-row justify-end">
+                        <button type="button" class="primary-button" (click)="openDialog(item.id)">
+                          <span translate>general.add</span>
+                        </button>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
               </div>
             </div>
-
-            <div class="box-button">
-              <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
-              </app-generic-button-secondary>
-              <button type="button" matRipple (click)="stepper.next()" class="primary-button">
-                <span translate>general.next</span>
-              </button>
-            </div>
-          </mat-step>
-
-          <mat-step
-            *ngIf="form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl"
-            formGroupName="2"
-            [stepControl]="formArray?.get([2])"
-          >
-            <ng-template matStepLabel>
-              <span>6.3 - </span><span translate>mitigationAction.generalProgressReportClimateAction</span>
-            </ng-template>
-
-            <mat-form-field [style.width.%]="100" class="ppcn-field">
-              <mat-label translate>6.3.1 - <span translate>mitigationAction.reportingPeriod</span></mat-label>
-              <input
-                matInput
-                [placeholder]="'Choose a date' | translate"
-                [matDatepicker]="reportingPeriodDatePicker"
-                formControlName="reportingPeriodCtrl"
-              />
-
-              <mat-datepicker-toggle matSuffix [for]="reportingPeriodDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #reportingPeriodDatePicker startView="year"></mat-datepicker>
-
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-
-            <mat-form-field [style.width.%]="100" class="ppcn-field">
-              <mat-label translate>6.3.1 - <span translate>general.until</span></mat-label>
-              <input
-                matInput
-                [placeholder]="'Choose a date' | translate"
-                [matDatepicker]="reportingPeriodUntilDatePicker"
-                formControlName="reportingPeriodUntilCtrl"
-              />
-
-              <mat-datepicker-toggle matSuffix [for]="reportingPeriodUntilDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #reportingPeriodUntilDatePicker startView="year"></mat-datepicker>
-
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-
-            <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
-              <mat-label translate>6.3.2 - <span translate>mitigationAction.beenProgressActionPeriod</span></mat-label>
-              <input type="text" matInput formControlName="beenProgressActionPeriodCtrl" required />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
+            <br />
 
             <div class="box-button">
               <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">

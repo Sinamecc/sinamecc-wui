@@ -73,10 +73,12 @@ export class ReportingClimateActionComponent implements OnInit {
     return this.form.get('formArray');
   }
 
-  openDialog(): void {
+  openDialog(indicator: string, report?: string): void {
     const dialogRef = this.dialog.open(ReportingClimateActionFormComponent, {
       data: {
-        ...this.mitigationAction.monitoring_reporting_indicator,
+        mitigationAction: this.mitigationAction,
+        report: report,
+        indicator: indicator,
       },
     });
 
@@ -102,97 +104,6 @@ export class ReportingClimateActionComponent implements OnInit {
         );
       }
     }
-  }
-
-  buildPayload() {
-    const context = {
-      monitoring_reporting_indicator: {
-        progress_in_monitoring: this.form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl,
-        monitoring_indicator: this.form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl
-          ? [
-              {
-                initial_date_report_period: this.datePipe.transform(
-                  this.form.value.formArray[1].reportingPeriodStartCtrl,
-                  'yyyy-MM-dd',
-                ),
-
-                final_date_report_period: this.datePipe.transform(
-                  this.form.value.formArray[1].reportingPeriodEndCtrl,
-                  'yyyy-MM-dd',
-                ),
-
-                data_updated_date: this.datePipe.transform(
-                  this.form.value.formArray[1].indicatorDataUpdateDateCtrl,
-                  'yyyy-MM-dd',
-                ),
-                report_type: this.form.value.formArray[1].reportTypeCtrl,
-                progress_report_period: this.datePipe.transform(
-                  this.form.value.formArray[2].reportingPeriodCtrl,
-                  'yyyy-MM-dd',
-                ),
-                progress_report_period_until: this.datePipe.transform(
-                  this.form.value.formArray[2].reportingPeriodUntilCtrl,
-                  'yyyy-MM-dd',
-                ),
-                updated_data: this.form.value.formArray[1].informationToUpdateCtrl || null,
-                progress_report: this.form.value.formArray[2].beenProgressActionPeriodCtrl || null,
-                indicator: this.form.value.formArray[1].indicatorSelectionCtrl,
-              },
-            ]
-          : [],
-      },
-    };
-    if (this.mitigationAction.next_state[0].state === this.stateLabel) {
-      context['is_complete'] = true;
-    }
-    const monitoringReporting = this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'];
-    if (monitoringReporting && monitoringReporting.length > 0) {
-      if (monitoringReporting[0].id) {
-        context['monitoring_reporting_indicator']['monitoring_indicator']['id'] = monitoringReporting[0].id;
-      }
-    }
-
-    return context;
-  }
-
-  submitForm() {
-    const context = this.buildPayload();
-
-    this.service
-      .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
-      .pipe(
-        finalize(() => {
-          this.form.markAsPristine();
-          this.isLoading = false;
-        }),
-      )
-      .subscribe(
-        (response) => {
-          this.successSendForm(response.id);
-        },
-        (error) => {
-          this.translateService.get('Error submitting form').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
-          this.error = error;
-          this.errorComponent.parseErrors(error);
-          this.wasSubmittedSuccessfully = false;
-        },
-      );
-  }
-
-  successSendForm(id: string) {
-    if (this.file.file) {
-      this.submitFile(id, this.file.name, this.file.file);
-    }
-
-    this.translateService.get('specificLabel.sucessfullySubmittedForm').subscribe((res: string) => {
-      this.snackBar.open(res, null, { duration: 3000 });
-    });
-    this.wasSubmittedSuccessfully = true;
-    setTimeout(() => {
-      this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
-    }, 2000);
   }
 
   private createForm() {
@@ -278,21 +189,5 @@ export class ReportingClimateActionComponent implements OnInit {
     this.translateService.get('mitigationAction.mesage1').subscribe((res: string) => {
       this.snackBar.open(res, 'Cerrar');
     });
-  }
-
-  uploadFile(event: Event) {
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      this.file = {
-        file: fileList[0],
-        name: name,
-      };
-    }
-  }
-
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
   }
 }
