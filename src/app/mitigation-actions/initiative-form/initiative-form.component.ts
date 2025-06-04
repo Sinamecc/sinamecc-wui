@@ -527,11 +527,11 @@ export class InitiativeFormComponent implements OnInit {
 
   successSendForm(id: string) {
     if (this.files.initiative.files) {
-      this.submitFile(id, this.files.initiative);
+      this.submitFiles(id, this.files.initiative);
     }
 
     if (this.files.geographic_location.files) {
-      this.submitFile(id, this.files.geographic_location);
+      this.submitFiles(id, this.files.geographic_location);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -577,9 +577,9 @@ export class InitiativeFormComponent implements OnInit {
     }
   }
 
-  async submitFile(id: string, file: FileUpload) {
+  async submitFiles(id: string, file: FileUpload) {
     for (const f of file.files) {
-      await this.service.submitMitigationFile(file.type, f, id).toPromise();
+      await this.service.submitFiles(id, file.type, file.files).toPromise();
     }
   }
 

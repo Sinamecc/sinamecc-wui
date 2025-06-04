@@ -50,10 +50,14 @@
                   <input matInput formControlName="methodologicalDetailIndicatorCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-                <app-upload-button
-                  [type]="maFileType.METHODOLOGICAL_INDICATOR_FILE"
-                  (fileChange)="uploadFile($event)"
-                />
+                <div class="w-full xl:w-auto flex items-start justify-start">
+                  <app-upload-button
+                    class="w-full"
+                    [type]="maFileType.METHODOLOGICAL_INDICATOR_FILE"
+                    (fileChange)="uploadFile($event)"
+                  />
+                </div>
+
                 <br />
               </div>
 
@@ -181,10 +185,13 @@
                   <input matInput formControlName="howSustainabilityIndicatorCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-                <app-upload-button
-                  [type]="maFileType.SUSTAINABILITY_INDICATOR_FILE"
-                  (fileChange)="uploadFile($event)"
-                />
+                <div class="w-full xl:w-auto flex items-start justify-start">
+                  <app-upload-button
+                    class="w-full"
+                    [type]="maFileType.SUSTAINABILITY_INDICATOR_FILE"
+                    (fileChange)="uploadFile($event)"
+                  />
+                </div>
                 <br />
               </div>
 

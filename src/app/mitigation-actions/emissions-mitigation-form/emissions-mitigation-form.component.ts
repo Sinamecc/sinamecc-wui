@@ -356,7 +356,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
 
   successSendForm(id: string) {
     if (this.impact_documentation.files) {
-      this.submitFile(id, this.impact_documentation);
+      this.submitFiles(id, this.impact_documentation);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -386,9 +386,9 @@ export class EmissionsMitigationFormComponent implements OnInit {
     }
   }
 
-  async submitFile(id: string, file: FileUpload) {
+  async submitFiles(id: string, file: FileUpload) {
     for (const f of file.files) {
-      await this.service.submitMitigationFile(file.type, f, id).toPromise();
+      await this.service.submitFiles(id, file.type, file.files).toPromise();
     }
   }
 

@@ -284,8 +284,8 @@ export enum MAFileType {
   IMPACT_DOCUMENTATION = 'impact-documentation',
   INITIATIVE = 'initiative',
   GEOGRAPHIC_LOCATION = 'geographic-location',
-  METHODOLOGICAL_INDICATOR_FILE = 'methodologicalDetailIndicatorFile',
-  SUSTAINABILITY_INDICATOR_FILE = 'howSustainabilityIndicatorFile',
+  METHODOLOGICAL_INDICATOR_FILE = 'methodological-indicator-file',
+  SUSTAINABILITY_INDICATOR_FILE = 'sustainability-indicator-file',
   GHG_INFORMATION = 'ghg-information',
   TO_UPDATE_FILE = 'to-update-file',
 }

@@ -40,11 +40,14 @@
                 >
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <app-upload-button
-                accept=".rar,application/pdf,.zip"
-                [type]="maFileType.GHG_INFORMATION"
-                (fileChange)="uploadFile($event)"
-              />
+              <div class="w-full xl:w-auto flex items-start justify-start">
+                <app-upload-button
+                  class="w-full"
+                  accept=".rar,application/pdf,.zip"
+                  [type]="maFileType.GHG_INFORMATION"
+                  (fileChange)="uploadFile($event)"
+                />
+              </div>
               <br />
             </div>
 

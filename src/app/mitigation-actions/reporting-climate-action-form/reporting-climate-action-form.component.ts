@@ -167,7 +167,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
 
   successSendForm(id: string) {
     if (this.files.files) {
-      this.submitFile(id, this.files);
+      this.submitFiles(id, this.files);
     }
 
     this.translateService.get('specificLabel.sucessfullySubmittedForm').subscribe((res: string) => {
@@ -270,9 +270,9 @@ export class ReportingClimateActionFormComponent implements OnInit {
     }
   }
 
-  async submitFile(id: string, file: FileUpload) {
+  async submitFiles(id: string, file: FileUpload) {
     for (const f of file.files) {
-      await this.service.submitMitigationFile(file.type, f, id).toPromise();
+      await this.service.submitFiles(id, file.type, file.files).toPromise();
     }
   }
 }

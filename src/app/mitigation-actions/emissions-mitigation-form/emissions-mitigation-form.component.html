@@ -154,11 +154,14 @@
                 <input matInput formControlName="documentationCalculationsEstimateReductionEmissionsCO2Ctrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <app-upload-button
-                accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/msword,"
-                [type]="maFileType.IMPACT_DOCUMENTATION"
-                (fileChange)="uploadFile($event)"
-              />
+              <div class="w-full xl:w-auto flex items-start justify-start">
+                <app-upload-button
+                  class="w-full"
+                  accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/msword,"
+                  [type]="maFileType.IMPACT_DOCUMENTATION"
+                  (fileChange)="uploadFile($event)"
+                />
+              </div>
               <br />
             </div>
 

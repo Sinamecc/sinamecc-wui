@@ -322,11 +322,11 @@ export class ImpactFormComponent implements OnInit {
 
   successSendForm(id: string) {
     if (this.files.methodologicalDetail.files) {
-      this.submitFile(id, this.files.methodologicalDetail);
+      this.submitFiles(id, this.files.methodologicalDetail);
     }
 
     if (this.files.howSustainability.files) {
-      this.submitFile(id, this.files.howSustainability);
+      this.submitFiles(id, this.files.howSustainability);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -348,9 +348,9 @@ export class ImpactFormComponent implements OnInit {
     }
   }
 
-  async submitFile(id: string, file: FileUpload) {
+  async submitFiles(id: string, file: FileUpload) {
     for (const f of file.files) {
-      await this.service.submitMitigationFile(file.type, f, id).toPromise();
+      await this.service.submitFiles(id, file.type, file.files).toPromise();
     }
   }
 

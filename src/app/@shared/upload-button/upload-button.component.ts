@@ -16,7 +16,7 @@ export class UploadButtonComponent {
   fileChanged(event) {
     const files = event.target.files;
     if (files) {
-      this.files = Array.from(files);
+      this.files = [...this.files, ...Array.from<File>(files)];
       this.fileChange.emit({
         type: this.type,
         files: this.files,

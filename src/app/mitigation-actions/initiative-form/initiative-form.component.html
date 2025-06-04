@@ -51,7 +51,7 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
-            <div class="flex flex-col xl:flex-row gap-1 xl:gap-6 justify-center w-full gap-4">
+            <div class="flex flex-col xl:flex-row xl:gap-6 justify-center w-full gap-4">
               <mat-form-field class="field-ppcn w-full xl:flex-1 min-w-[250px] mb-0 xl:mb-0">
                 <mat-label translate> 1.1.4 - <span translate>specificLabel.initiativeDescription</span> </mat-label>
                 <textarea
@@ -63,7 +63,9 @@
                 ></textarea>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <app-upload-button [type]="maFileType.INITIATIVE" (fileChange)="uploadFile($event)" />
+              <div class="w-full xl:w-auto flex items-start justify-start">
+                <app-upload-button class="w-full" [type]="maFileType.INITIATIVE" (fileChange)="uploadFile($event)" />
+              </div>
             </div>
 
             <div>
@@ -305,7 +307,13 @@
                 ></textarea>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <app-upload-button [type]="maFileType.GEOGRAPHIC_LOCATION" (fileChange)="uploadFile($event)" />
+              <div class="w-full xl:w-auto flex items-start justify-start">
+                <app-upload-button
+                  class="w-full"
+                  [type]="maFileType.GEOGRAPHIC_LOCATION"
+                  (fileChange)="uploadFile($event)"
+                />
+              </div>
             </div>
 
             <div class="box-button">

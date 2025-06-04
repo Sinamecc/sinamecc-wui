@@ -70,7 +70,9 @@
 
                   <span *ngIf="howReportedInfo?.value == 1" translate>Cargue los archivos seleccionados</span>
                   <div *ngIf="howReportedInfo?.value == 1" [style.width.%]="100" class="flex flex-row justify-center">
-                    <app-upload-button (fileChange)="uploadFile($event, false)" name="filename" />
+                    <div class="w-full xl:w-auto flex items-start justify-start">
+                      <app-upload-button class="w-full" (fileChange)="uploadFile($event, false)" name="filename" />
+                    </div>
                     <mat-spinner *ngIf="loadingFiles" [diameter]="30"></mat-spinner>
                     <mat-hint *ngIf="files['base_line_report']">{{ files['base_line_report'].filename }}</mat-hint>
                   </div>
@@ -155,7 +157,9 @@
                 </mat-radio-group>
 
                 <div *ngIf="howReportedData.value == 1" class="flex flex-col">
-                  <app-upload-button (fileChange)="uploadFile($event)" name="filename" />
+                  <div class="w-full xl:w-auto flex items-start justify-start">
+                    <app-upload-button class="w-full" (fileChange)="uploadFile($event)" name="filename" />
+                  </div>
                   <mat-spinner *ngIf="loadingFiles" [diameter]="30"></mat-spinner>
                   <mat-hint *ngIf="files['report_file']">{{ files['report_file'].filename }}</mat-hint>
                 </div>

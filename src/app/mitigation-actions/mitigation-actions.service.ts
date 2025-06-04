@@ -36,7 +36,7 @@ const routes = {
   allData: () => `/v1/mitigation-action/data/`,
   sectorIppc2006: (sectorID: string) => `/v1/mitigation-action/data/sector/${sectorID}/sector-ipcc/`,
   categoryIppc2006: (CategoryId: string) => `/v1/mitigation-action/data/sector-ipcc/${CategoryId}/category-ipcc/`,
-  submitFile: (id: string, key: string) => `/v1/mitigation-action/${id}/file/${key}/`,
+  submitFiles: (id: string) => `/v1/mitigation-action/${id}/attachments`,
 };
 
 export interface Response {
@@ -256,11 +256,13 @@ export class MitigationActionsService {
     return this.s3.downloadResource(filePath);
   }
 
-  public submitMitigationFile(key: string, file: File, id: string) {
+  public submitFiles(id: string, type: string, files: File[]) {
     const formData: FormData = new FormData();
-    formData.append('file', file);
-
-    return this.httpClient.put(routes.submitFile(id, key), formData, {}).pipe(
+    formData.append('type', type);
+    files.forEach((file) => {
+      formData.append('files', file);
+    });
+    return this.httpClient.post(routes.submitFiles(id), formData, {}).pipe(
       map((body: any) => {
         return body;
       }),

@@ -176,13 +176,14 @@ export class KeyAspectsFormComponent implements OnInit {
 
   successSendForm(id: string) {
     if (this.ghg_information.files) {
-      this.submitFile(id, this.ghg_information);
+      this.submitFiles(id, this.ghg_information);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
       this.snackBar.open(res, null, { duration: 3000 });
     });
     this.wasSubmittedSuccessfully = true;
+    console.log('KeyAspectsFormComponent: Form submitted successfully');
     this.stepper.next();
   }
 
@@ -200,9 +201,9 @@ export class KeyAspectsFormComponent implements OnInit {
     }
   }
 
-  async submitFile(id: string, file: FileUpload) {
+  async submitFiles(id: string, file: FileUpload) {
     for (const f of file.files) {
-      await this.service.submitMitigationFile(file.type, f, id).toPromise();
+      await this.service.submitFiles(id, file.type, file.files).toPromise();
     }
   }
 
