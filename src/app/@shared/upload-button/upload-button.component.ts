@@ -11,33 +11,43 @@ export class UploadButtonComponent {
   @Input() accept: string = '';
   @Input() type: string = '';
   @Output() fileChange = new EventEmitter<FileUpload>();
-  files: File[] = [];
+  @Input() files: File[] = [];
+  filesToUpload: File[] = [];
 
   fileChanged(event) {
     const files = event.target.files;
     if (files) {
-      this.files = [...this.files, ...Array.from<File>(files)];
+      const filesToUpload = Array.from<File>(files);
+      this.filesToUpload = [...this.filesToUpload, ...Array.from<File>(files)];
       this.fileChange.emit({
         type: this.type,
-        files: this.files,
+        files: filesToUpload,
       });
     } else {
       this.clearFiles();
     }
   }
 
+  get filesToShow() {
+    const res = [...this.files, ...this.filesToUpload].map((file) => ({
+      file: file,
+      canDelete: this.filesToUpload.includes(file),
+    }));
+    return res;
+  }
+
   clearFiles() {
     this.fileChange.emit({ files: null, type: '' });
-    this.files = [];
+    this.filesToUpload = [];
   }
 
   removeFile(file: File) {
-    const index = this.files.indexOf(file);
+    const index = this.filesToUpload.indexOf(file);
     if (index > -1) {
-      this.files = this.files.filter((f) => f !== file);
+      this.filesToUpload = this.filesToUpload.filter((f) => f !== file);
       this.fileChange.emit({
         type: this.type,
-        files: this.files,
+        files: this.filesToUpload,
       });
     }
   }

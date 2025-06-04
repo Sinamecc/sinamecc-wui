@@ -349,9 +349,11 @@ export class ImpactFormComponent implements OnInit {
   }
 
   async submitFiles(id: string, file: FileUpload) {
-    for (const f of file.files) {
-      await this.service.submitFiles(id, file.type, file.files).toPromise();
-    }
+    await this.service.submitFiles(id, file.type, file.files).toPromise();
+  }
+
+  getFilesByType(type: string) {
+    return this.mitigationAction.files.filter((file) => file.type === type);
   }
 
   onStepChange() {

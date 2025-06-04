@@ -45,6 +45,7 @@
                   class="w-full"
                   accept=".rar,application/pdf,.zip"
                   [type]="maFileType.GHG_INFORMATION"
+                  [files]="getFilesByType(maFileType.GHG_INFORMATION)"
                   (fileChange)="uploadFile($event)"
                 />
               </div>

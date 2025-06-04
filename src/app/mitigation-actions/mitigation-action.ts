@@ -228,7 +228,8 @@ export interface ReviewStatus {
 }
 
 export interface Files {
-  id: string;
+  id: number;
+  type: string;
   file: string;
 }
 

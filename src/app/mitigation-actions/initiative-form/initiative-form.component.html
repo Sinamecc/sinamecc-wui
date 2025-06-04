@@ -64,7 +64,12 @@
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <div class="w-full xl:w-auto flex items-start justify-start">
-                <app-upload-button class="w-full" [type]="maFileType.INITIATIVE" (fileChange)="uploadFile($event)" />
+                <app-upload-button
+                  class="w-full"
+                  [type]="maFileType.INITIATIVE"
+                  [files]="getFilesByType(maFileType.INITIATIVE)"
+                  (fileChange)="uploadFile($event)"
+                />
               </div>
             </div>
 
@@ -311,6 +316,7 @@
                 <app-upload-button
                   class="w-full"
                   [type]="maFileType.GEOGRAPHIC_LOCATION"
+                  [files]="getFilesByType(maFileType.GEOGRAPHIC_LOCATION)"
                   (fileChange)="uploadFile($event)"
                 />
               </div>

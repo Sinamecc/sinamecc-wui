@@ -159,6 +159,7 @@
                   class="w-full"
                   accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/msword,"
                   [type]="maFileType.IMPACT_DOCUMENTATION"
+                  [files]="getFilesByType(maFileType.IMPACT_DOCUMENTATION)"
                   (fileChange)="uploadFile($event)"
                 />
               </div>

@@ -481,7 +481,6 @@ export class InitiativeFormComponent implements OnInit {
         .pipe(
           finalize(() => {
             this.form.markAsPristine();
-            this.isLoading = false;
           }),
         )
         .subscribe(
@@ -505,7 +504,6 @@ export class InitiativeFormComponent implements OnInit {
         .pipe(
           finalize(() => {
             this.form.markAsPristine();
-            this.isLoading = false;
           }),
         )
         .subscribe(
@@ -538,6 +536,7 @@ export class InitiativeFormComponent implements OnInit {
       this.snackBar.open(res, null, { duration: 3000 });
       this.stepper.next();
     });
+    this.isLoading = false;
     this.wasSubmittedSuccessfully = true;
   }
 
@@ -570,17 +569,19 @@ export class InitiativeFormComponent implements OnInit {
 
   uploadFile(event: FileUpload) {
     const name = event.type;
-    if (name === 'initiative') {
+    if (name === this.maFileType.INITIATIVE) {
       this.files.initiative = event;
-    } else if (name === 'geographic-location') {
+    } else if (name === this.maFileType.GEOGRAPHIC_LOCATION) {
       this.files.geographic_location = event;
     }
   }
 
   async submitFiles(id: string, file: FileUpload) {
-    for (const f of file.files) {
-      await this.service.submitFiles(id, file.type, file.files).toPromise();
-    }
+    await this.service.submitFiles(id, file.type, file.files).toPromise();
+  }
+
+  getFilesByType(type: string) {
+    return this.mitigationAction.files.filter((file) => file.type === type);
   }
 
   onStepChange() {
