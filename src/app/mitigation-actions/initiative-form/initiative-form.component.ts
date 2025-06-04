@@ -8,10 +8,11 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData, InitiativeType } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MAFile, MitigationAction } from '../mitigation-action';
+import { MAFile, MAFileType, MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 const log = new Logger('MitigationAction');
 
@@ -31,21 +32,22 @@ export class InitiativeFormComponent implements OnInit {
   initiativeTypes: InitiativeType[];
   displayFinancialSource: boolean;
   startDate = new Date();
+  maFileType = MAFileType;
 
   mitigationAction: MitigationAction;
   initiativeGoalList: string[] = [];
 
   files: {
-    geographic_location: MAFile;
-    initiative: MAFile;
+    geographic_location: FileUpload;
+    initiative: FileUpload;
   } = {
     geographic_location: {
-      name: '',
-      file: null,
+      type: '',
+      files: null,
     },
     initiative: {
-      name: '',
-      file: null,
+      type: '',
+      files: null,
     },
   };
 
@@ -479,7 +481,6 @@ export class InitiativeFormComponent implements OnInit {
         .pipe(
           finalize(() => {
             this.form.markAsPristine();
-            this.isLoading = false;
           }),
         )
         .subscribe(
@@ -503,7 +504,6 @@ export class InitiativeFormComponent implements OnInit {
         .pipe(
           finalize(() => {
             this.form.markAsPristine();
-            this.isLoading = false;
           }),
         )
         .subscribe(
@@ -524,18 +524,19 @@ export class InitiativeFormComponent implements OnInit {
   }
 
   successSendForm(id: string) {
-    if (this.files.initiative.file) {
-      this.submitFile(id, this.files.initiative.name, this.files.initiative.file);
+    if (this.files.initiative.files) {
+      this.submitFiles(id, this.files.initiative);
     }
 
-    if (this.files.geographic_location.file) {
-      this.submitFile(id, this.files.geographic_location.name, this.files.geographic_location.file);
+    if (this.files.geographic_location.files) {
+      this.submitFiles(id, this.files.geographic_location);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
       this.snackBar.open(res, null, { duration: 3000 });
       this.stepper.next();
     });
+    this.isLoading = false;
     this.wasSubmittedSuccessfully = true;
   }
 
@@ -566,25 +567,24 @@ export class InitiativeFormComponent implements OnInit {
     );
   }
 
-  uploadFile(event: Event) {
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      const file = {
-        file: fileList[0],
-        name: name,
-      };
-
-      if (name === 'initiative') {
-        this.files.initiative = file;
-      } else if (name === 'geographic_location') {
-        this.files.geographic_location = file;
-      }
+  uploadFile(event: FileUpload) {
+    const name = event.type;
+    if (name === this.maFileType.INITIATIVE) {
+      this.files.initiative = event;
+    } else if (name === this.maFileType.GEOGRAPHIC_LOCATION) {
+      this.files.geographic_location = event;
     }
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
+  async submitFiles(id: string, file: FileUpload) {
+    await this.service.submitFiles(id, file.type, file.files).toPromise();
+  }
+
+  getFilesByType(type: string) {
+    return this.mitigationAction.files.filter((file) => file.type === type);
+  }
+
+  onStepChange() {
+    this.wasSubmittedSuccessfully = false;
   }
 }

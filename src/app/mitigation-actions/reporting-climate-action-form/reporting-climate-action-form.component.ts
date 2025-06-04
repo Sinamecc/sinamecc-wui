@@ -7,10 +7,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 import { finalize } from 'rxjs/operators';
-import { MAFile, MitigationAction } from '../mitigation-action';
+import { MAFile, MAFileType, MitigationAction } from '../mitigation-action';
 import { MitigationActionNewFormData } from '../mitigation-action-new-form-data';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 @Component({
   selector: 'app-reporting-climate-action-form',
@@ -26,10 +27,11 @@ export class ReportingClimateActionFormComponent implements OnInit {
   wasSubmittedSuccessfully = false;
   mitigationAction: MitigationAction;
   stateLabel = 'submitted';
-  file: MAFile = {
-    file: null,
-    name: '',
+  files: FileUpload = {
+    files: null,
+    type: '',
   };
+  maFileType = MAFileType;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
@@ -164,8 +166,8 @@ export class ReportingClimateActionFormComponent implements OnInit {
   }
 
   successSendForm(id: string) {
-    if (this.file.file) {
-      this.submitFile(id, this.file.name, this.file.file);
+    if (this.files.files) {
+      this.submitFiles(id, this.files);
     }
 
     this.translateService.get('specificLabel.sucessfullySubmittedForm').subscribe((res: string) => {
@@ -262,19 +264,17 @@ export class ReportingClimateActionFormComponent implements OnInit {
     });
   }
 
-  uploadFile(event: Event) {
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      this.file = {
-        file: fileList[0],
-        name: name,
-      };
+  uploadFile(event: FileUpload) {
+    if (event.files) {
+      this.files = event;
     }
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
+  async submitFiles(id: string, file: FileUpload) {
+    await this.service.submitFiles(id, file.type, file.files).toPromise();
+  }
+
+  getFilesByType(type: string) {
+    return this.mitigationAction.files.filter((file) => file.type === type);
   }
 }

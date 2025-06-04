@@ -8,11 +8,12 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MAFile, MitigationAction } from '../mitigation-action';
+import { MAFile, MAFileType, MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 const log = new Logger('MitigationAction');
 
@@ -30,18 +31,19 @@ export class ImpactFormComponent implements OnInit {
   wasSubmittedSuccessfully = false;
   startDate = new Date();
   mitigationAction: MitigationAction;
+  maFileType = MAFileType;
 
   files: {
-    methodologicalDetail: MAFile;
-    howSustainability: MAFile;
+    methodologicalDetail: FileUpload;
+    howSustainability: FileUpload;
   } = {
     methodologicalDetail: {
-      file: null,
-      name: '',
+      files: null,
+      type: '',
     },
     howSustainability: {
-      file: null,
-      name: '',
+      files: null,
+      type: '',
     },
   };
 
@@ -319,12 +321,12 @@ export class ImpactFormComponent implements OnInit {
   }
 
   successSendForm(id: string) {
-    if (this.files.methodologicalDetail.file) {
-      this.submitFile(id, this.files.methodologicalDetail.name, this.files.methodologicalDetail.file);
+    if (this.files.methodologicalDetail.files) {
+      this.submitFiles(id, this.files.methodologicalDetail);
     }
 
-    if (this.files.howSustainability.file) {
-      this.submitFile(id, this.files.howSustainability.name, this.files.howSustainability.file);
+    if (this.files.howSustainability.files) {
+      this.submitFiles(id, this.files.howSustainability);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -334,26 +336,27 @@ export class ImpactFormComponent implements OnInit {
     this.stepper.next();
   }
 
-  uploadFile(event: Event) {
+  uploadFile(event: FileUpload) {
     // TODO: correct names
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      const file = {
-        file: fileList[0],
-        name: name,
-      };
-
-      if (name === 'methodologicalDetailIndicatorFile') {
+    if (event.files) {
+      const file = event;
+      if (file.type === 'methodologicalDetailIndicatorFile') {
         this.files.methodologicalDetail = file;
-      } else if (name === 'howSustainabilityIndicatorFile') {
+      } else if (file.type === 'howSustainabilityIndicatorFile') {
         this.files.howSustainability = file;
       }
     }
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
+  async submitFiles(id: string, file: FileUpload) {
+    await this.service.submitFiles(id, file.type, file.files).toPromise();
+  }
+
+  getFilesByType(type: string) {
+    return this.mitigationAction.files.filter((file) => file.type === type);
+  }
+
+  onStepChange() {
+    this.wasSubmittedSuccessfully = false;
   }
 }
