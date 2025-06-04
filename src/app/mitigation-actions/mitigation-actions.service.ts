@@ -39,6 +39,18 @@ const routes = {
   submitFiles: (id: string) => `/v1/mitigation-action/${id}/attachments`,
 };
 
+export interface MAResponse {
+  data: any;
+  code: number;
+}
+
+export interface MAFileResponse extends MAResponse {
+  data: {
+    number_of_files: number;
+    mitigation_action_id: string;
+  };
+}
+
 export interface Response {
   // Customize received credentials here
   statusCode: number;
@@ -263,9 +275,19 @@ export class MitigationActionsService {
       formData.append('files', file);
     });
     return this.httpClient.post(routes.submitFiles(id), formData, {}).pipe(
-      map((body: any) => {
+      map((body: MAFileResponse) => {
         return body;
       }),
     );
+  }
+
+  public downloadFile(file: string) {
+    this.httpClient.get(file, { responseType: 'blob' }).subscribe((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.click();
+      window.URL.revokeObjectURL(url);
+    });
   }
 }

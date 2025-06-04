@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
+import { MAFileType, MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { I18nService } from '@app/i18n';
 import {
   commentsStructureModule1,
@@ -156,5 +156,13 @@ export class MitigationActionComponent implements OnInit {
     }
 
     return commentList;
+  }
+
+  getFilesByType(type: MAFileType) {
+    return this.mitigationAction.files.filter((file) => file.type === type);
+  }
+
+  downloadFile(url: string): void {
+    this.service.downloadFile(url);
   }
 }

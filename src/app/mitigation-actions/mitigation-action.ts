@@ -228,7 +228,7 @@ export interface ReviewStatus {
 }
 
 export interface Files {
-  name: string;
+  id: string;
   file: string;
 }
 
