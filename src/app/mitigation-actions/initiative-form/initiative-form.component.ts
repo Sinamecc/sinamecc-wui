@@ -58,6 +58,7 @@ export class InitiativeFormComponent implements OnInit {
   @Input() action: string;
 
   ndcList: any = [];
+  loadingNDCList: boolean[] = [];
 
   ejeList: any = [];
 
@@ -114,9 +115,17 @@ export class InitiativeFormComponent implements OnInit {
     this.createForm();
   }
 
-  loadSubNDCcatalogs(id: string, index: number) {
-    this.service.loadCatalogs(id, 'action-areas', 'action-goal').subscribe((response) => {
-      this.ndcList[index] = response;
+  loadSubNDCcatalogs(id: string, index: number): void {
+    this.loadingNDCList[index] = true;
+
+    this.service.loadCatalogs(id, 'action-areas', 'action-goal').subscribe({
+      next: (response) => {
+        this.ndcList[index] = response;
+      },
+
+      complete: () => {
+        this.loadingNDCList[index] = false;
+      },
     });
   }
 
@@ -197,7 +206,7 @@ export class InitiativeFormComponent implements OnInit {
           }),
         );
 
-        index = +1;
+        index += 1;
       }
       return this.formBuilder.array(list);
     }
@@ -466,6 +475,8 @@ export class InitiativeFormComponent implements OnInit {
       relation_description: this.form.value.formArray[4].descriptionRelationshipMitigationActionOthersCtrl,
     };
     payload['categorization'] = categorization;
+
+    console.log(categorization);
     return payload;
   }
 

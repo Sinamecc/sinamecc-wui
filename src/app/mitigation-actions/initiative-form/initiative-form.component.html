@@ -339,27 +339,40 @@
               >
                 <mat-card class="finance-container flex flex-col justify-start items-start" [formGroupName]="i">
                   <mat-form-field class="field-ppcn last-section-mat-select" appearance="fill">
-                    <mat-label translate>1.5.1 - <span translate>mitigationAction.relationshipNDC</span></mat-label>
+                    <mat-label translate> 1.5.1 - <span translate>mitigationAction.relationshipNDC</span> </mat-label>
                     <mat-select
                       formControlName="relationshipNDCCtrl"
                       (selectionChange)="loadSubNDCcatalogs($event.value, i)"
                     >
-                      <mat-option *ngFor="let element of processedNewFormData?.action_areas" [value]="element.id">
-                        {{ element.id }}. {{ element.name }}
+                      <mat-option *ngFor="let option of processedNewFormData?.action_areas" [value]="option.id">
+                        {{ option.id }}. {{ option.name }}
                       </mat-option>
                     </mat-select>
                     <mat-hint><span translate>mitigationAction.relationshipNDCHint</span></mat-hint>
                   </mat-form-field>
+
                   <br />
+
                   <mat-form-field *ngIf="ndcList[i]" class="field-ppcn last-section-mat-select" appearance="fill">
-                    <mat-label translate>1.5.1.1 - <span translate>mitigationAction.NDCGoals</span></mat-label>
-                    <mat-select formControlName="relationshipNDCTopicCtrl" multiple>
+                    <mat-label translate> 1.5.1.1 - <span translate>mitigationAction.NDCGoals</span> </mat-label>
+
+                    <mat-select formControlName="relationshipNDCTopicCtrl" multiple [disabled]="loadingNDCList[i]">
                       <mat-option *ngFor="let option of ndcList[i]" [value]="option.code">
                         {{ option.area }}.{{ option.code }} - {{ option.goal }}
                       </mat-option>
                     </mat-select>
+
+                    <mat-progress-spinner
+                      *ngIf="loadingNDCList[i]"
+                      mode="indeterminate"
+                      diameter="24"
+                      color="primary"
+                      class="ndc-loading-spinner"
+                    ></mat-progress-spinner>
                   </mat-form-field>
+
                   <br />
+
                   <div class="box-button">
                     <button
                       mat-mini-fab
@@ -373,6 +386,7 @@
                   </div>
                 </mat-card>
               </div>
+
               <div class="box-button">
                 <button
                   [disabled]="wasSubmittedSuccessfully"
