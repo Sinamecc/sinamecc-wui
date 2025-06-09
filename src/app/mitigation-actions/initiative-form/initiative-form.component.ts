@@ -60,6 +60,7 @@ export class InitiativeFormComponent implements OnInit {
   @Input() action: string;
 
   ndcList: any = [];
+  loadingNDCList: boolean[] = [];
 
   ejeList: any = [];
 
@@ -116,9 +117,17 @@ export class InitiativeFormComponent implements OnInit {
     this.createForm();
   }
 
-  loadSubNDCcatalogs(id: string, index: number) {
-    this.service.loadCatalogs(id, 'action-areas', 'action-goal').subscribe((response) => {
-      this.ndcList[index] = response;
+  loadSubNDCcatalogs(id: string, index: number): void {
+    this.loadingNDCList[index] = true;
+
+    this.service.loadCatalogs(id, 'action-areas', 'action-goal').subscribe({
+      next: (response) => {
+        this.ndcList[index] = response;
+      },
+
+      complete: () => {
+        this.loadingNDCList[index] = false;
+      },
     });
   }
 
@@ -219,11 +228,11 @@ export class InitiativeFormComponent implements OnInit {
         list.push(
           this.formBuilder.group({
             relationshipNDCCtrl: [element.area.id, Validators.required],
-            relationshipNDCTopicCtrl: [element.goals.map((x: any) => x.id.toString()), Validators.required],
+            relationshipNDCTopicCtrl: [element.goals.map((x: any) => x.id), Validators.required],
           }),
         );
 
-        index = +1;
+        index += 1;
       }
       return this.formBuilder.array(list);
     }
