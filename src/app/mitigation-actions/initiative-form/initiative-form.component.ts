@@ -202,7 +202,7 @@ export class InitiativeFormComponent implements OnInit {
         list.push(
           this.formBuilder.group({
             relationshipNDCCtrl: [element.area.id, Validators.required],
-            relationshipNDCTopicCtrl: [element.goals.map((x: any) => x.id.toString()), Validators.required],
+            relationshipNDCTopicCtrl: [element.goals.map((x: any) => x.id), Validators.required],
           }),
         );
 
@@ -475,8 +475,6 @@ export class InitiativeFormComponent implements OnInit {
       relation_description: this.form.value.formArray[4].descriptionRelationshipMitigationActionOthersCtrl,
     };
     payload['categorization'] = categorization;
-
-    console.log(categorization);
     return payload;
   }
 
