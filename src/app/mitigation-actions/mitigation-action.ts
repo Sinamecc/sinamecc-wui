@@ -283,7 +283,7 @@ export interface MAFile {
   name: string;
 }
 
-export enum States {
+export enum MAStates {
   NEW = 'new',
   SUBMITTED = 'submitted',
   IN_EVALUATION_BY_DCC = 'in_evaluation_by_DCC',

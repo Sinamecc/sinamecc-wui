@@ -8,7 +8,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData, InitiativeType } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MAFile, MitigationAction, States } from '../mitigation-action';
+import { MAFile, MitigationAction, MAStates } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,7 +22,7 @@ const log = new Logger('MitigationAction');
   standalone: false,
 })
 export class InitiativeFormComponent implements OnInit {
-  @Output() state = new EventEmitter<States>();
+  @Output() state = new EventEmitter<MAStates>();
   version: string = environment.version;
   error: string;
   form: UntypedFormGroup;
@@ -148,7 +148,7 @@ export class InitiativeFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
-        this.state.emit(this.mitigationAction.fsm_state.state as States);
+        this.state.emit(this.mitigationAction.fsm_state.state as MAStates);
       });
     }
   }
@@ -521,7 +521,7 @@ export class InitiativeFormComponent implements OnInit {
         .subscribe(
           (response) => {
             this.successSendForm(response.id);
-            this.state.emit(response.state as States);
+            this.state.emit(response.state as MAStates);
           },
           (error) => {
             this.translateService.get('Error submitting form').subscribe((res: string) => {

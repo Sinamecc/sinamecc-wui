@@ -8,7 +8,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { CategoryIppc2006, MADataCatalogItem, MitigationAction, SectorIpcc2006, States } from '../mitigation-action';
+import { CategoryIppc2006, MADataCatalogItem, MitigationAction, SectorIpcc2006, MAStates } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -24,7 +24,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
   form: UntypedFormGroup;
-  @Output() state = new EventEmitter<States>();
+  @Output() state = new EventEmitter<MAStates>();
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -72,7 +72,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
-        this.state.emit(this.mitigationAction.fsm_state.state as States);
+        this.state.emit(this.mitigationAction.fsm_state.state as MAStates);
       });
     }
   }
@@ -327,7 +327,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
             this.snackBar.open(res, null, { duration: 3000 });
           });
           this.wasSubmittedSuccessfully = true;
-          this.state.emit(response.state as States);
+          this.state.emit(response.state as MAStates);
           this.stepper.next();
         },
         (error) => {
