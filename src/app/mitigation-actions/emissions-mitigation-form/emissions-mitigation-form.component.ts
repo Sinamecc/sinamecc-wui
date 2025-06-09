@@ -8,7 +8,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { CategoryIppc2006, MADataCatalogItem, MitigationAction, SectorIpcc2006 } from '../mitigation-action';
+import { CategoryIppc2006, MADataCatalogItem, MitigationAction, SectorIpcc2006, States } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -24,6 +24,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
   form: UntypedFormGroup;
+  @Output() state = new EventEmitter<States>();
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -71,6 +72,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
+        this.state.emit(this.mitigationAction.fsm_state.state as States);
       });
     }
   }
@@ -121,19 +123,20 @@ export class EmissionsMitigationFormComponent implements OnInit {
     const sectorSourceFormList = [];
     let index = 0;
 
-    for (const sector of this.mitigationAction.impact_documentation.sector_selection) {
-      const form = this.formBuilder.group({
-        sectorSourceEmissionsCtrl: [sector.sector.id, Validators.required],
-        emissionsSourceCategoryCtrl: [sector.sector_ipcc_2006.id, Validators.required],
-        maincategoriesCtrl: [sector.category_ipcc_2006.id, Validators.required],
-        id: [sector.id],
-      });
+    if (this.mitigationAction.impact_documentation.sector_selection)
+      for (const sector of this.mitigationAction.impact_documentation.sector_selection) {
+        const form = this.formBuilder.group({
+          sectorSourceEmissionsCtrl: [sector.sector.id, Validators.required],
+          emissionsSourceCategoryCtrl: [sector.sector_ipcc_2006.id, Validators.required],
+          maincategoriesCtrl: [sector.category_ipcc_2006.id, Validators.required],
+          id: [sector.id],
+        });
 
-      sectorSourceFormList.push(form);
-      this.selectSectorCatalog(sector.sector.id, index);
-      this.selectSectorIppcCatalog(sector.sector_ipcc_2006.id, index);
-      index += 1;
-    }
+        sectorSourceFormList.push(form);
+        this.selectSectorCatalog(sector.sector.id, index);
+        this.selectSectorIppcCatalog(sector.sector_ipcc_2006.id, index);
+        index += 1;
+      }
 
     return sectorSourceFormList;
   }
@@ -171,10 +174,10 @@ export class EmissionsMitigationFormComponent implements OnInit {
   private updateFormData() {
     this.intendParticipateInternationalCarbonMarketsModel =
       this.mitigationAction.impact_documentation.carbon_international_commerce;
-
     this.mechanismStandardApplyModel = this.mitigationAction.impact_documentation.standard
-      ? this.mitigationAction.impact_documentation.standard.id
+      ? parseInt(this.mitigationAction.impact_documentation.standard.id)
       : 0;
+    const question = this.mitigationAction.impact_documentation.question;
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
@@ -214,37 +217,21 @@ export class EmissionsMitigationFormComponent implements OnInit {
           ],
         }),
         this.formBuilder.group({
-          standardizedCalculationMethodologyUsedCtrl: [
-            this.mitigationAction.impact_documentation.question[0].is_checked,
-          ],
-          standardizedCalculationMethodologyUsedDetailCtrl: [
-            this.mitigationAction.impact_documentation.question[0].detail,
-            Validators.required,
-          ],
-          calculationsDocumentedCtrl: [this.mitigationAction.impact_documentation.question[1].is_checked],
-          calculationsDocumentedDetailCtrl: [
-            this.mitigationAction.impact_documentation.question[1].detail,
-            Validators.required,
-          ],
-          emissionFactorsUsedCalculationDocumentedCtrl: [
-            this.mitigationAction.impact_documentation.question[2].is_checked,
-          ],
-          emissionFactorsUsedCalculationDocumentedDetailCtrl: [
-            this.mitigationAction.impact_documentation.question[2].detail,
-            Validators.required,
-          ],
-          assumptionsDocumentedCtrl: [this.mitigationAction.impact_documentation.question[3].is_checked],
-          assumptionsDocumentedDetailCtrl: [
-            this.mitigationAction.impact_documentation.question[3].detail,
-            Validators.required,
-          ],
+          standardizedCalculationMethodologyUsedCtrl: [question ? question[0].is_checked : false],
+          standardizedCalculationMethodologyUsedDetailCtrl: [question ? question[0].detail : '', Validators.required],
+          calculationsDocumentedCtrl: [question ? question[1].is_checked : false],
+          calculationsDocumentedDetailCtrl: [question ? question[1].is_checked : '', Validators.required],
+          emissionFactorsUsedCalculationDocumentedCtrl: [question ? question[2].is_checked : false],
+          emissionFactorsUsedCalculationDocumentedDetailCtrl: [question ? question[2].detail : '', Validators.required],
+          assumptionsDocumentedCtrl: [question ? question[3].is_checked : false],
+          assumptionsDocumentedDetailCtrl: [question ? question[3].detail : '', Validators.required],
         }),
         this.formBuilder.group({
           intendParticipateInternationalCarbonMarketsCtrl: [
             this.mitigationAction.impact_documentation.carbon_international_commerce,
             [Validators.required],
           ],
-          mechanismStandardApplyCtrl: [parseInt(this.mitigationAction.impact_documentation.standard.id)],
+          mechanismStandardApplyCtrl: [this.mechanismStandardApplyModel],
           methodologyExantePotentialReductionEmissionsCO2OtherCtrl: [''],
           methodologyUsedCtrl: [this.mitigationAction.impact_documentation.methodologies_to_use],
         }),
@@ -340,6 +327,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
             this.snackBar.open(res, null, { duration: 3000 });
           });
           this.wasSubmittedSuccessfully = true;
+          this.state.emit(response.state as States);
           this.stepper.next();
         },
         (error) => {
