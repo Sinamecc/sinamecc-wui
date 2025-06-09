@@ -4,7 +4,7 @@ import { environment } from '@env/environment';
 import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
+import { DELETABLE_MA, EDITABLE_MA, MAStates, MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { Logger } from '@app/@core';
@@ -72,8 +72,10 @@ export class MitigationActionsListComponent implements OnInit {
     this.router.navigate([`/mitigation/actions/${uuid}`], { replaceUrl: true });
   }
 
-  edit(uuid: string) {
-    this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
+  edit(uuid: string, state: MAStates) {
+    if (this.canEdit(state)) {
+      this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
+    }
   }
 
   review(uuid: string) {
@@ -84,6 +86,14 @@ export class MitigationActionsListComponent implements OnInit {
     this.router.navigate([`mitigation/actions/${uuid}/edit`], {
       replaceUrl: true,
     });
+  }
+
+  canEdit(state: MAStates): boolean {
+    return EDITABLE_MA.includes(state);
+  }
+
+  canDelete(state: MAStates): boolean {
+    return DELETABLE_MA.includes(state);
   }
 
   loadMAData() {
