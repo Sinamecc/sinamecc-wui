@@ -125,7 +125,7 @@ export class BasicInformationFormComponent implements OnInit {
     return this.formBuilder.group({
       mitigationActionDescriptionCtrl: ['', [Validators.required, Validators.maxLength(300)]],
       currencyValueCtrl: ['CRC'],
-      mitigationActionAmounttCtrl: ['', [Validators.required, Validators.maxLength(50)]],
+      mitigationActionAmounttCtrl: ['', [Validators.required, Validators.pattern('^\\d{1,18}(\\.\\d{1,2})?$')]],
       referenceYearCtrl: ['', Validators.required],
     });
   }
