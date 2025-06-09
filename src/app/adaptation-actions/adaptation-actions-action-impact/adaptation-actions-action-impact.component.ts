@@ -5,6 +5,7 @@ import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { ODS, TemporalityImpact } from '../interfaces/catalogs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 @Component({
   selector: 'app-adaptation-actions-action-impact',
@@ -19,7 +20,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   temporalityImpact: TemporalityImpact[] = [];
   generalImpact: TemporalityImpact[] = [];
   ods: ODS[];
-  annexSupportingFile: any;
+  annexSupportingFile: FileUpload;
   @Input() edit: boolean;
   @Input() adaptationActionUpdated: AdaptationAction;
   stateLabel = 'submitted';
@@ -86,7 +87,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   }
 
   buildUpdateRegisterForm() {
-    this.annexSupportingFile = 'file';
+    // this.annexSupportingFile = 'file'; // TODO: remove this line when the file upload is implemented
     return this.formBuilder.array([
       this.formBuilder.group({
         adaptationTemporalityImpactCtrl: [
@@ -174,7 +175,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     return context;
   }
 
-  uploadFile(event: any) {
+  uploadFile(event: FileUpload) {
     this.annexSupportingFile = event;
   }
 }

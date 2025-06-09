@@ -8,10 +8,17 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { CategoryIppc2006, MADataCatalogItem, MitigationAction, SectorIpcc2006 } from '../mitigation-action';
+import {
+  CategoryIppc2006,
+  MADataCatalogItem,
+  MAFileType,
+  MitigationAction,
+  SectorIpcc2006,
+} from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 const log = new Logger('MitigationAction');
 @Component({
@@ -24,7 +31,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
   form: UntypedFormGroup;
-
+  maFileType = MAFileType;
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
@@ -39,12 +46,9 @@ export class EmissionsMitigationFormComponent implements OnInit {
   sectorCatalog: MADataCatalogItem[] = [];
   sectorIppc2006: SectorIpcc2006[][] = [];
   categoryIppc2006: CategoryIppc2006[][] = [];
-  impact_documentation: {
-    file: File;
-    name: string;
-  } = {
-    file: null,
-    name: '',
+  impact_documentation: FileUpload = {
+    files: null,
+    type: '',
   };
 
   gasList = ['CO2', 'CH4', 'N2O', 'HFC*', 'SF6', 'CO', 'NOx', 'NMVOC', 'SO2', 'C Negro', 'Otro'];
@@ -336,11 +340,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
-          this.wasSubmittedSuccessfully = true;
-          this.stepper.next();
+          this.successSendForm(response.id);
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -355,8 +355,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   successSendForm(id: string) {
-    if (this.impact_documentation.file) {
-      this.submitFile(id, this.impact_documentation.name, this.impact_documentation.file);
+    if (this.impact_documentation.files) {
+      this.submitFiles(id, this.impact_documentation);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -379,20 +379,22 @@ export class EmissionsMitigationFormComponent implements OnInit {
     this.form.get('formArray').get([2]).get('methodologyUsedCtrl').updateValueAndValidity();
   }
 
-  uploadFile(event: Event) {
+  uploadFile(event: FileUpload) {
     // TODO: fix names
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      this.impact_documentation = {
-        file: fileList[0],
-        name: name,
-      };
+    if (event.files) {
+      this.impact_documentation = event;
     }
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
+  async submitFiles(id: string, file: FileUpload) {
+    await this.service.submitFiles(id, file.type, file.files).toPromise();
+  }
+
+  getFilesByType(type: string) {
+    return this.mitigationAction.files.filter((file) => file.type === type);
+  }
+
+  onStepChange() {
+    this.wasSubmittedSuccessfully = false;
   }
 }

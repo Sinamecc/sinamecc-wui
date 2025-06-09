@@ -228,7 +228,8 @@ export interface ReviewStatus {
 }
 
 export interface Files {
-  name: string;
+  id: number;
+  type: string;
   file: string;
 }
 
@@ -278,4 +279,14 @@ export interface MADataCatalogs {
 export interface MAFile {
   file: File;
   name: string;
+}
+
+export enum MAFileType {
+  IMPACT_DOCUMENTATION = 'impact-documentation',
+  INITIATIVE = 'initiative',
+  GEOGRAPHIC_LOCATION = 'geographic-location',
+  METHODOLOGICAL_INDICATOR_FILE = 'methodological-indicator-file',
+  SUSTAINABILITY_INDICATOR_FILE = 'sustainability-indicator-file',
+  GHG_INFORMATION = 'ghg-information',
+  TO_UPDATE_FILE = 'to-update-file',
 }

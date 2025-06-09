@@ -23,6 +23,8 @@ import { S3Service } from './s3.service';
 import { CommentsViewComponent } from './comments-view/comments-view.component';
 import { CommentsAddComponent } from './comments-add/comments-add.component';
 import { ChangeLogViewComponent } from './change-log-view/change-log-view.component';
+import { UploadButtonComponent } from './upload-button/upload-button.component';
+
 @NgModule({
   imports: [MaterialModule, CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
   declarations: [
@@ -40,6 +42,7 @@ import { ChangeLogViewComponent } from './change-log-view/change-log-view.compon
     CommentsViewComponent,
     CommentsAddComponent,
     ChangeLogViewComponent,
+    UploadButtonComponent,
   ],
   providers: [UploadProposalService, UpdateStatusService, ViewPdfService, S3Service],
   exports: [
@@ -57,6 +60,7 @@ import { ChangeLogViewComponent } from './change-log-view/change-log-view.compon
     CommentsViewComponent,
     CommentsAddComponent,
     ChangeLogViewComponent,
+    UploadButtonComponent,
   ],
 })
 export class SharedModule {}

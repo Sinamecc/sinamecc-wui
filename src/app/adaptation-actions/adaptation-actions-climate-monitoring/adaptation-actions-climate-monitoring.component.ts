@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 @Component({
   selector: 'app-adaptation-actions-climate-monitoring',
@@ -20,7 +21,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   @Input() mainStepper: any;
   @Input() adaptationActionUpdated: AdaptationAction;
   @Input() edit: boolean;
-  attachSupportMonitoringFile: any;
+  attachSupportMonitoringFile: FileUpload;
   durationInSeconds = 3;
 
   constructor(
@@ -95,7 +96,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
 
   updatedIndicatorCtrl(indicatorMonitoringList: any[]) {
     const indicatorList = [];
-    this.attachSupportMonitoringFile = 'file';
+    // this.attachSupportMonitoringFile = 'file'; // TODO: remove this line when the file upload is implemented
 
     for (const indicator of indicatorMonitoringList) {
       const indicatorDataUpdateDate = new Date(indicator.update_date);
@@ -474,7 +475,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     this.form.get('formArray').get([0]).get('progressMonitoringRecordedClimateActionsCtrl').updateValueAndValidity();
   }
 
-  uploadFile(event: any) {
+  uploadFile(event: FileUpload) {
     this.attachSupportMonitoringFile = event;
   }
 }

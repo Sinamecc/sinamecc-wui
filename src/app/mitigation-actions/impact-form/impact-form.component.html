@@ -6,9 +6,7 @@
   <mat-card-content>
     <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
       <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
-        <span translate>errorLabel.errorSubmittingForm</span>
-        <br />
-        <app-error-reporting #errorComponent></app-error-reporting>
+        <app-error-reporting #errorComponent [errorMessage]="'errorLabel.errorSubmittingForm'"></app-error-reporting>
       </div>
       <br />
       <div class="flex flex-col">
@@ -18,13 +16,13 @@
             <mat-divider></mat-divider>
             <br />
           </div>
-          <mat-vertical-stepper [formArrayName]="formElement" linear #stepper>
+          <mat-vertical-stepper [formArrayName]="formElement" linear #stepper (selectedIndexChange)="onStepChange()">
             <mat-step formGroupName="0" [stepControl]="getFormObject(formElement)?.get([0])">
               <ng-template matStepLabel>
                 <span>5.1 - </span><span translate>specificLabel.monitoringDetail</span>
               </ng-template>
 
-              <mat-form-field class="field-ppcn">
+              <mat-form-field class="field-ppcn mt-2">
                 <mat-label translate>5.1.1 - <span translate>mitigationAction.indicatorName</span></mat-label>
                 <input matInput formControlName="responsibleInstitutionCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -52,12 +50,15 @@
                   <input matInput formControlName="methodologicalDetailIndicatorCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-                <input
-                  type="file"
-                  name="methodologicalDetailIndicatorFile"
-                  (change)="uploadFile($event)"
-                  class="block w-full xl:w-auto mb-4 mt-6"
-                />
+                <div class="w-full xl:w-auto flex items-start justify-start">
+                  <app-upload-button
+                    class="w-full"
+                    [type]="maFileType.METHODOLOGICAL_INDICATOR_FILE"
+                    [files]="getFilesByType(maFileType.METHODOLOGICAL_INDICATOR_FILE)"
+                    (fileChange)="uploadFile($event)"
+                  />
+                </div>
+
                 <br />
               </div>
 
@@ -185,12 +186,14 @@
                   <input matInput formControlName="howSustainabilityIndicatorCtrl" />
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
-                <input
-                  class="block w-full xl:w-auto mb-4"
-                  type="file"
-                  name="howSustainabilityIndicatorFile"
-                  (change)="uploadFile($event)"
-                />
+                <div class="w-full xl:w-auto flex items-start justify-start">
+                  <app-upload-button
+                    class="w-full"
+                    [type]="maFileType.SUSTAINABILITY_INDICATOR_FILE"
+                    [files]="getFilesByType(maFileType.SUSTAINABILITY_INDICATOR_FILE)"
+                    (fileChange)="uploadFile($event)"
+                  />
+                </div>
                 <br />
               </div>
 
@@ -220,7 +223,7 @@
                 <span>5.2 - </span><span translate>mitigationAction.indicatorDataSource</span>
               </ng-template>
 
-              <mat-form-field class="field-ppcn">
+              <mat-form-field class="field-ppcn mt-2">
                 <mat-label translate>5.2.1 - <span translate>mitigationAction.responsibleInstitution</span></mat-label>
                 <input matInput formControlName="responsibleInstitutionCtrl" />
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
