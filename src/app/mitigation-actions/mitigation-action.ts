@@ -296,3 +296,4 @@ export enum States {
 }
 
 export const DECIMAL_NUMBER_REGEX = '^\\d{1,18}(\\.\\d{1,2})?$';
+export const AMOUNT_REGEX_STRING = '^\\d{0,15}(\\.\\d{0,2})?$';
