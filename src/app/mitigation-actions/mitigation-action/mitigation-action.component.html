@@ -64,11 +64,11 @@
             </h3>
             <h3 class="mat-h3">
               <strong translate>mitigationAction.startImplementation</strong>
-              {{ mitigationAction?.status_information?.start_date }}
+              {{ dateFormat(mitigationAction?.status_information?.start_date) }}
             </h3>
             <h3 class="mat-h3">
               <strong translate>mitigationAction.deploymentCompletion</strong>
-              {{ mitigationAction?.status_information?.end_date }}
+              {{ dateFormat(mitigationAction?.status_information?.end_date) }}
             </h3>
             <h3 class="mat-h3">
               <strong translate>general.other</strong> {{ mitigationAction?.status_information?.other_end_date }}
@@ -232,7 +232,7 @@
                   </h3>
 
                   <h3 class="mat-h3">
-                    <strong translate>mitigationAction.referenceYear</strong> {{ element?.reference_year }}
+                    <strong translate>mitigationAction.referenceYear</strong> {{ dateFormat(element?.reference_year) }}
                   </h3>
                 </div>
               </mat-expansion-panel>
@@ -470,9 +470,9 @@
                 <strong translate>mitigationAction.indicatorReportingPeriodicity</strong>
                 <h3 class="mat-h3">{{ indicator['reporting_periodicity'] }}</h3>
                 <strong translate>mitigationAction.timeSeriesAvailable</strong>
-                <h3 class="mat-h3">{{ indicator['available_time_start_date'] }}</h3>
+                <h3 class="mat-h3">{{ dateFormat(indicator['available_time_start_date']) }}</h3>
                 <strong translate>general.until</strong>
-                <h3 class="mat-h3">{{ indicator['available_time_end_date'] }}</h3>
+                <h3 class="mat-h3">{{ dateFormat(indicator['available_time_end_date']) }}</h3>
                 <strong translate>mitigationAction.geographicCoverage</strong>
                 <h3 class="mat-h3">{{ indicator['geographic_coverage'] }}</h3>
                 <strong translate>general.other</strong>
@@ -553,7 +553,9 @@
 
               <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
                 <strong translate>mitigationAction.dateLastUpdate</strong>
-                <h3 class="mat-h3">{{ indicator?.change_log ? (indicator?.change_log)[0]?.update_date : '' }}</h3>
+                <h3 class="mat-h3">
+                  {{ indicator?.change_log ? dateFormat((indicator?.change_log)[0]?.update_date) : '' }}
+                </h3>
                 <strong translate>mitigationAction.changesLastupdate</strong>
                 <h3 class="mat-h3">{{ indicator?.change_log ? (indicator?.change_log)[0]?.changes : '' }}</h3>
                 <strong translate>mitigationAction.descriptionChanges</strong>
@@ -606,8 +608,10 @@
               <strong translate>mitigationAction.reportingPeriod</strong>
               {{
                 mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator
-                  ? (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]
-                      ?.initial_date_report_period
+                  ? dateFormat(
+                      (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]
+                        ?.initial_date_report_period
+                    )
                   : ''
               }}
             </h3>
@@ -615,8 +619,10 @@
               <strong translate>general.until</strong>
               {{
                 mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator
-                  ? (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]
-                      ?.final_date_report_period
+                  ? dateFormat(
+                      (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]
+                        ?.final_date_report_period
+                    )
                   : ''
               }}
             </h3>
@@ -624,7 +630,9 @@
               <strong translate>mitigationAction.indicatorDataUpdateDate</strong>
               {{
                 mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator
-                  ? (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.data_updated_date
+                  ? dateFormat(
+                      (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.data_updated_date
+                    )
                   : ''
               }}
             </h3>
@@ -647,14 +655,18 @@
               <strong translate>mitigationAction.reportingPeriod</strong>
               {{
                 mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator &&
-                  (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report_period
+                  dateFormat(
+                    (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report_period
+                  )
               }}
             </h3>
             <h3 class="mat-h3">
               <strong translate>general.until</strong>
               {{
                 mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator &&
-                  (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report_period
+                  dateFormat(
+                    (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.progress_report_period
+                  )
               }}
             </h3>
             <h3 class="mat-h3">
