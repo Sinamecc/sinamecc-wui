@@ -121,10 +121,7 @@
                     <mat-error translate>errorLabel.inputInvalid</mat-error>
                   </mat-form-field>
 
-                  <app-amount-input
-                    [control]="finance.controls['mitigationActionAmounttCtrl']"
-                    [controlName]="'mitigationActionAmounttCtrl'"
-                  />
+                  <app-amount-input [control]="finance.controls['mitigationActionAmounttCtrl']" />
 
                   <div class="flex flex-row">
                     <mat-form-field [style.width.%]="100" class="ppcn-field">

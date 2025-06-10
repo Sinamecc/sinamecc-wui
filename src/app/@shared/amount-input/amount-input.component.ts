@@ -8,7 +8,6 @@ import { FormControl } from '@angular/forms';
   standalone: false,
 })
 export class AmountInputComponent {
-  @Input() controlName: string = '';
   @Input() control: FormControl;
 
   displayValue: string = '';
