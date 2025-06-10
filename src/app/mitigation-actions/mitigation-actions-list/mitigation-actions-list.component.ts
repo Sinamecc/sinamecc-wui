@@ -93,7 +93,7 @@ export class MitigationActionsListComponent implements OnInit {
   }
 
   canDelete(state: MAStates): boolean {
-    return DELETABLE_MA.includes(state);
+    return DELETABLE_MA.includes(state) || this.hasPermProvider();
   }
 
   loadMAData() {

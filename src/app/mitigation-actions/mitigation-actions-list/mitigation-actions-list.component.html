@@ -50,7 +50,12 @@
           <mat-icon>visibility</mat-icon>
         </button>
 
-        <button mat-icon-button color="accent" (click)="edit(element.id, element.fsm_state)">
+        <button
+          *ngIf="canEdit(element.fsm_state)"
+          mat-icon-button
+          color="accent"
+          (click)="edit(element.id, element.fsm_state)"
+        >
           <mat-icon>edit</mat-icon>
         </button>
 
@@ -59,7 +64,7 @@
         </button>
 
         <button
-          *ngIf="hasPermProvider()"
+          *ngIf="canDelete(element.fsm_state)"
           mat-icon-button
           color="warn"
           (click)="openDeleteConfirmationDialog(element.id)"
