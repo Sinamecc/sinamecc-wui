@@ -27,6 +27,26 @@ import { PpcnModule } from '@app/ppcn/ppcn.module';
 import { MccrRegistriesModule } from '@app/mccr/mccr-registries/mccr-registries.module';
 import { MccrPocModule } from '@app/mccr/mccr-poc/mccr-poc.module';
 import { AdaptationActionsModule } from './adaptation-actions/adaptation-actions.module';
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeEsCR from '@angular/common/locales/es-CR';
+
+import { MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+
+registerLocaleData(localeEsCR);
+
+export const DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @NgModule({
   declarations: [AppComponent, ErrorComponent],
@@ -60,6 +80,23 @@ import { AdaptationActionsModule } from './adaptation-actions/adaptation-actions
     {
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy,
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'es-CR',
+    },
+    {
+      provide: MAT_DATE_LOCALE,
+      useValue: 'es-CR',
+    },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: DATE_FORMATS,
     },
     provideHttpClient(withInterceptorsFromDi()),
   ],

@@ -8,7 +8,7 @@ import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-
 
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { MitigationAction, States } from '../mitigation-action';
+import { AMOUNT_REGEX_STRING, MitigationAction, States } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -125,7 +125,7 @@ export class BasicInformationFormComponent implements OnInit {
     return this.formBuilder.group({
       mitigationActionDescriptionCtrl: ['', [Validators.required, Validators.maxLength(300)]],
       currencyValueCtrl: ['CRC'],
-      mitigationActionAmounttCtrl: ['', [Validators.required, Validators.maxLength(50)]],
+      mitigationActionAmounttCtrl: ['', [Validators.required, Validators.pattern(AMOUNT_REGEX_STRING)]],
       referenceYearCtrl: ['', Validators.required],
     });
   }
@@ -150,10 +150,7 @@ export class BasicInformationFormComponent implements OnInit {
             [Validators.required, Validators.maxLength(300)],
           ],
           currencyValueCtrl: [element.currency],
-          mitigationActionAmounttCtrl: [
-            element.budget,
-            [Validators.required, Validators.pattern('^\\d{1,18}(\\.\\d{1,2})?$')],
-          ],
+          mitigationActionAmounttCtrl: [element.budget, [Validators.required, Validators.pattern(AMOUNT_REGEX_STRING)]],
           referenceYearCtrl: [element.reference_year, Validators.required],
         });
         index += 1;

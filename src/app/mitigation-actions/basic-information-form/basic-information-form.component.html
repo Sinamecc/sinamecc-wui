@@ -118,14 +118,10 @@
                   >
                     <mat-label translate>2.1.3 - <span translate>general.other</span></mat-label>
                     <input formControlName="currencyValueCtrl" type="text" matInput required />
-                    <mat-error translate>errorLabel.fieldRequired</mat-error>
+                    <mat-error translate>errorLabel.inputInvalid</mat-error>
                   </mat-form-field>
 
-                  <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
-                    <mat-label translate>2.1.3 - <span translate>general.amount</span></mat-label>
-                    <input type="text" matInput formControlName="mitigationActionAmounttCtrl" required step=".01" />
-                    <mat-error translate>errorLabel.fieldRequired</mat-error>
-                  </mat-form-field>
+                  <app-amount-input [control]="finance.controls['mitigationActionAmounttCtrl']" />
 
                   <div class="flex flex-row">
                     <mat-form-field [style.width.%]="100" class="ppcn-field">
