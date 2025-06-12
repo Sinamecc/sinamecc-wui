@@ -305,8 +305,7 @@ export class ImpactFormComponent implements OnInit {
         )
         .subscribe(
           (response) => {
-            this.successSendForm(response.id);
-            this.state.emit(response.state as States);
+            this.successSendForm(response.id, response.state);
           },
           (error) => {
             this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -321,7 +320,7 @@ export class ImpactFormComponent implements OnInit {
     }
   }
 
-  successSendForm(id: string) {
+  successSendForm(id: string, state: string) {
     if (this.files.methodologicalDetail.file) {
       this.submitFile(id, this.files.methodologicalDetail.name, this.files.methodologicalDetail.file);
     }
@@ -334,9 +333,14 @@ export class ImpactFormComponent implements OnInit {
       this.snackBar.open(res, null, { duration: 3000 });
     });
     this.wasSubmittedSuccessfully = true;
-    setTimeout(() => {
-      this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
-    }, 2000);
+    this.state.emit(state as States);
+    if (state === States.ACCEPTED_BY_DCC) {
+      this.stepper.next();
+    } else {
+      setTimeout(() => {
+        this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
+      }, 2000);
+    }
   }
 
   uploadFile(event: Event) {
