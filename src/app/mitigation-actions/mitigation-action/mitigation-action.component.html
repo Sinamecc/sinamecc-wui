@@ -202,7 +202,8 @@
           <br />
           <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
             <h3 class="mat-h3">
-              <strong translate>mitigationAction.financingStatus</strong> {{ mitigationAction?.finance?.status.name }}
+              <strong translate>mitigationAction.financingStatus</strong>
+              {{ mitigationAction?.finance?.status?.name ?? '' }}
             </h3>
             <h3 class="mat-h3">
               <strong translate>mitigationAction.detailfinancingSource</strong>

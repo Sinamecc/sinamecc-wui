@@ -146,16 +146,19 @@
             <br />
 
             <div class="flex flex-col xl:flex-row gap-1 xl:gap-6 justify-center w-full">
-              <mat-form-field class="field-ppcn w-full xl:flex-1 min-w-[250px] mb-0 xl:mb-0">
+              <div class="flex flex-col">
                 <mat-label translate
                   >4.1.7 -
                   <span translate
                     >mitigationAction.documentationCalculationsEstimateReductionEmissionsCO2</span
                   ></mat-label
                 >
-                <input matInput formControlName="documentationCalculationsEstimateReductionEmissionsCO2Ctrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
+                <mat-form-field class="field-ppcn w-full xl:flex-1 min-w-[250px] mb-0 xl:mb-0">
+                  <input matInput formControlName="documentationCalculationsEstimateReductionEmissionsCO2Ctrl" />
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+              </div>
+
               <input
                 type="file"
                 accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/msword,"

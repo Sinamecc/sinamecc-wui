@@ -136,7 +136,7 @@ export class BasicInformationFormComponent implements OnInit {
     // const mapCurrency = ['CRC', 'USD', 'EUR'];
     let index = 0;
 
-    if (this.mitigationAction.finance.finance_information)
+    if (this.mitigationAction.finance.finance_information) {
       for (const element of this.mitigationAction.finance.finance_information) {
         const currency =
           element.currency != 'CRC' && element.currency != 'USD' && element.currency != 'EUR'
@@ -156,7 +156,10 @@ export class BasicInformationFormComponent implements OnInit {
         index += 1;
         financeList.push(form);
       }
-    return this.formBuilder.array(financeList);
+      return this.formBuilder.array(financeList);
+    } else {
+      return this.formBuilder.array([this.createFinanceForm()]);
+    }
   }
 
   public addFinanceItem() {
