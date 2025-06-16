@@ -24,6 +24,7 @@ import { CommentsViewComponent } from './comments-view/comments-view.component';
 import { CommentsAddComponent } from './comments-add/comments-add.component';
 import { ChangeLogViewComponent } from './change-log-view/change-log-view.component';
 import { UploadButtonComponent } from './upload-button/upload-button.component';
+import { AmountInputComponent } from './amount-input/amount-input.component';
 
 @NgModule({
   imports: [MaterialModule, CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
@@ -43,6 +44,7 @@ import { UploadButtonComponent } from './upload-button/upload-button.component';
     CommentsAddComponent,
     ChangeLogViewComponent,
     UploadButtonComponent,
+    AmountInputComponent,
   ],
   providers: [UploadProposalService, UpdateStatusService, ViewPdfService, S3Service],
   exports: [
@@ -61,6 +63,7 @@ import { UploadButtonComponent } from './upload-button/upload-button.component';
     CommentsAddComponent,
     ChangeLogViewComponent,
     UploadButtonComponent,
+    AmountInputComponent,
   ],
 })
 export class SharedModule {}

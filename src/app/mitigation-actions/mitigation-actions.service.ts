@@ -55,6 +55,7 @@ export interface Response {
   // Customize received credentials here
   statusCode: number;
   message: string;
+  state: string;
   id?: string;
 }
 
@@ -102,6 +103,7 @@ export class MitigationActionsService {
           statusCode: 200,
           message: 'Form submitted correctly',
           id: body.id,
+          state: body.fsm_state.state,
         };
         return response;
       }),
@@ -123,6 +125,7 @@ export class MitigationActionsService {
         const response = {
           statusCode: 200,
           id: body.id,
+          state: body.fsm_state.state,
           message: 'Form submitted correctly',
         };
         return response;

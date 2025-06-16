@@ -8,7 +8,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MAFile, MAFileType, MitigationAction } from '../mitigation-action';
+import { DECIMAL_NUMBER_REGEX, MitigationAction, States, MAFileType } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { I18nService } from '@app/i18n';
@@ -32,6 +32,7 @@ export class ImpactFormComponent implements OnInit {
   startDate = new Date();
   mitigationAction: MitigationAction;
   maFileType = MAFileType;
+  @Output() state = new EventEmitter<States>();
 
   files: {
     methodologicalDetail: FileUpload;
@@ -87,6 +88,7 @@ export class ImpactFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
+        this.state.emit(this.mitigationAction.fsm_state.state as States);
       });
     }
   }
@@ -119,8 +121,8 @@ export class ImpactFormComponent implements OnInit {
         indicatorReportingPeriodicityCtrl: ['', Validators.required],
         timeSeriesAvailableStartCtrl: ['', Validators.required],
         timeSeriesAvailableEndCtrl: ['', Validators.required],
-        ghgIndicatorGoalCtrl: ['', [Validators.pattern('^\\d{1,18}(\\.\\d{1,2})?$')]],
-        ghgIndicatorBaseCtrl: ['', [Validators.pattern('^\\d{1,18}(\\.\\d{1,2})?$')]],
+        ghgIndicatorGoalCtrl: ['', [Validators.pattern(DECIMAL_NUMBER_REGEX)]],
+        ghgIndicatorBaseCtrl: ['', [Validators.pattern(DECIMAL_NUMBER_REGEX)]],
         geographicCoverageCtrl: ['', Validators.required],
         geographicCoverageOtherCtrl: [''],
         disintegrationCtrl: ['', Validators.required],
@@ -179,8 +181,8 @@ export class ImpactFormComponent implements OnInit {
             indicatorReportingPeriodicityCtrl: [indicator.reporting_periodicity, Validators.required],
             timeSeriesAvailableStartCtrl: [indicator.available_time_start_date, Validators.required],
             timeSeriesAvailableEndCtrl: [indicator.available_time_end_date, Validators.required],
-            ghgIndicatorGoalCtrl: [indicator.ghg_indicator_goal],
-            ghgIndicatorBaseCtrl: [indicator.ghg_indicator_base],
+            ghgIndicatorGoalCtrl: [indicator.ghg_indicator_goal, Validators.pattern(DECIMAL_NUMBER_REGEX)],
+            ghgIndicatorBaseCtrl: [indicator.ghg_indicator_base, Validators.pattern(DECIMAL_NUMBER_REGEX)],
             geographicCoverageCtrl: [indicator.geographic_coverage, Validators.required],
             geographicCoverageOtherCtrl: [indicator.other_geographic_coverage],
             disintegrationCtrl: [indicator.disaggregation, Validators.required],
@@ -305,7 +307,7 @@ export class ImpactFormComponent implements OnInit {
         )
         .subscribe(
           (response) => {
-            this.successSendForm(response.id);
+            this.successSendForm(response.id, response.state);
           },
           (error) => {
             this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -320,7 +322,7 @@ export class ImpactFormComponent implements OnInit {
     }
   }
 
-  successSendForm(id: string) {
+  successSendForm(id: string, state: string) {
     if (this.files.methodologicalDetail.files) {
       this.submitFiles(id, this.files.methodologicalDetail);
     }
@@ -333,7 +335,14 @@ export class ImpactFormComponent implements OnInit {
       this.snackBar.open(res, null, { duration: 3000 });
     });
     this.wasSubmittedSuccessfully = true;
-    this.stepper.next();
+    this.state.emit(state as States);
+    if (state === States.ACCEPTED_BY_DCC) {
+      this.stepper.next();
+    } else {
+      setTimeout(() => {
+        this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
+      }, 2000);
+    }
   }
 
   uploadFile(event: FileUpload) {

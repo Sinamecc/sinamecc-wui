@@ -138,6 +138,16 @@ export class MitigationActionComponent implements OnInit {
     this.router.navigate([`/mitigation/actions/${uuid}/reviews/new`], { replaceUrl: true });
   }
 
+  formatAmount(currency: string, amount: number | string): string {
+    const number = parseFloat(amount as string);
+    if (isNaN(number)) return `${currency} - `;
+    const formattedAmount = number.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+    return `${currency} - ${formattedAmount}`;
+  }
+
   buildFormatComments() {
     let commentList: any = [];
     const commentsKeys = Object.keys(this.commentsByModule);

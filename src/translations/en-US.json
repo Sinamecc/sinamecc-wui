@@ -148,7 +148,13 @@
     "descriptionReviewMA": "Description of the review of the Mitigation Action",
     "changelogMA": "Changelog for mitigation action",
     "MAt": "MITIGATIONS ACTIONS",
-    "dataEntryMonitoring": "Data entry monitoring"
+    "dataEntryMonitoring": "Data entry monitoring",
+    "monitoringIndicatorName": "Monitoring indicator name",
+    "monitoringUpdateDate": "Update date",
+    "monitoringGHG": "Indicator baseline",
+    "monitoringGHGGoal": "Indicator target",
+    "monitoringData": "Monitored data",
+    "monitoringAdvance": "Narrative progress update for the reporting period"
   },
 
   "reportData": {

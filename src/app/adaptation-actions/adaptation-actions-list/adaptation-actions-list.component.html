@@ -46,14 +46,14 @@
     <ng-container matColumnDef="lastUpdate">
       <mat-header-cell *matHeaderCellDef translate>general.lastUpdate</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{ element.updated | date }}
+        {{ element.updated | date: 'dd/MM/yyyy hh:mm:ss' }}
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="created">
       <mat-header-cell *matHeaderCellDef translate>general.createdAt</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{ element.created | date }}
+        {{ element.created | date: 'dd/MM/yyyy hh:mm:ss' }}
       </mat-cell>
     </ng-container>
 

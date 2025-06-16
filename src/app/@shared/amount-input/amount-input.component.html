@@ -1,0 +1,16 @@
+<mat-form-field class="ppcn-field" [style.margin-right]="'10px'" [style.width.%]="100">
+  <mat-label translate>2.1.3 - <span translate>general.amount</span></mat-label>
+
+  <input
+    type="text"
+    matInput
+    [formControl]="control"
+    [value]="displayValue || control.value"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+    required
+  />
+
+  <mat-error *ngIf="control.hasError('required')" translate>errorLabel.fieldRequired</mat-error>
+  <mat-error *ngIf="control.hasError('pattern')" translate>errorLabel.inputInvalid</mat-error>
+</mat-form-field>
