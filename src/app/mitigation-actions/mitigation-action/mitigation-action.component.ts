@@ -41,6 +41,8 @@ export class MitigationActionComponent implements OnInit {
   commentsByModule = {};
   reviews: MitigationActionReview[];
   typeDataMapDict = TypeDataMap;
+  fileType = MAFileType;
+  files: { [key: string]: any } = {};
 
   constructor(
     private i18nService: I18nService,
@@ -117,6 +119,10 @@ export class MitigationActionComponent implements OnInit {
       )
       .subscribe((response: MitigationAction) => {
         this.mitigationAction = response;
+
+        Object.values(MAFileType).forEach((type: MAFileType) => {
+          this.files[type] = this.getFilesByType(type);
+        });
       });
   }
 
@@ -170,6 +176,10 @@ export class MitigationActionComponent implements OnInit {
 
   getFilesByType(type: MAFileType) {
     return this.mitigationAction.files.filter((file) => file.type === type);
+  }
+
+  hasFiles(type: MAFileType): boolean {
+    return this.files && this.files[type] && this.files[type].length > 0;
   }
 
   downloadFile(url: string): void {

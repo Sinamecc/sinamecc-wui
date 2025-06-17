@@ -327,7 +327,6 @@ export class ImpactFormComponent implements OnInit {
   }
 
   successSendForm(id: string, state: string) {
-    console.log('files', this.files);
     const { howSustainability, methodologicalDetail } = this.files;
     [howSustainability, methodologicalDetail].forEach((section) => {
       if (section.filesToUpload?.length) {

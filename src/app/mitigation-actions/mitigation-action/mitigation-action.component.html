@@ -33,6 +33,7 @@
                 {{ element.goal }}
               </label>
             </h3>
+            <app-file-list *ngIf="hasFiles(fileType.INITIATIVE)" [files]="files[fileType.INITIATIVE]" />
           </div>
 
           <br />
@@ -97,6 +98,7 @@
               <strong translate>general.locationAction</strong> {{ mitigationAction?.geographic_location?.location }}
             </h3>
           </div>
+          <app-file-list *ngIf="hasFiles(fileType.GEOGRAPHIC_LOCATION)" [files]="files[fileType.GEOGRAPHIC_LOCATION]" />
 
           <br />
           <h3 class="mat-h3" class="mat-h1" translate>mitigationAction.CategorizationNationalInstruments</h3>
@@ -297,6 +299,7 @@
                 {{ element.code }} - {{ element.description }}
               </h3>
             </div>
+            <app-file-list *ngIf="hasFiles(fileType.GHG_INFORMATION)" [files]="files[fileType.GHG_INFORMATION]" />
           </div>
         </div>
       </mat-tab>
@@ -387,6 +390,11 @@
               <strong translate>mitigationAction.isCurrentlyReflectedInventory</strong>
               {{ mitigationAction?.impact_documentation?.mitigation_action_in_inventory === 1 ? 'Si' : 'No' }}
             </h3>
+
+            <app-file-list
+              *ngIf="hasFiles(fileType.IMPACT_DOCUMENTATION)"
+              [files]="files[fileType.IMPACT_DOCUMENTATION]"
+            />
           </div>
           <br />
 
@@ -469,6 +477,11 @@
                 <h3 class="mat-h3">{{ indicator['unit'] }}</h3>
                 <strong translate>mitigationAction.methodologicalDetailIndicator</strong>
                 <h3 class="mat-h3">{{ indicator['methodological_detail'] }}</h3>
+                <app-file-list
+                  *ngIf="hasFiles(fileType.METHODOLOGICAL_INDICATOR_FILE)"
+                  [files]="files[fileType.METHODOLOGICAL_INDICATOR_FILE]"
+                />
+
                 <strong translate>mitigationAction.indicatorReportingPeriodicity</strong>
                 <h3 class="mat-h3">{{ indicator['reporting_periodicity'] }}</h3>
                 <strong translate>mitigationAction.timeSeriesAvailable</strong>
@@ -485,6 +498,10 @@
                 <h3 class="mat-h3">{{ indicator['limitation'] }}</h3>
                 <strong translate>mitigationAction.howSustainabilityIndicator</strong>
                 <h3 class="mat-h3">{{ indicator['ensure_sustainability'] }}</h3>
+                <app-file-list
+                  *ngIf="hasFiles(fileType.SUSTAINABILITY_INDICATOR_FILE)"
+                  [files]="files[fileType.SUSTAINABILITY_INDICATOR_FILE]"
+                />
 
                 <strong translate>mitigationAction.observationsComments</strong>
                 <h3 class="mat-h3">{{ indicator['comments'] }}</h3>
@@ -645,6 +662,7 @@
                   : ''
               }}
             </h3>
+            <app-file-list *ngIf="hasFiles(fileType.TO_UPDATE_FILE)" [files]="files[fileType.TO_UPDATE_FILE]" />
           </div>
           <br />
 

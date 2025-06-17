@@ -1,0 +1,13 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <span translate>reportData.files</span>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div *ngFor="let file of files">
+    <div class="flex flex-row gap-2">
+      <label>{{ file.metadata.filename }}</label>
+      <mat-icon class="cursor-pointer" (click)="viewFile(file)" type="button">download</mat-icon>
+    </div>
+  </div>
+</mat-expansion-panel>
