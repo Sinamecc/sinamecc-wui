@@ -6,10 +6,8 @@
   <div class="flex flex-col items-start justify-between">
     <div *ngFor="let file of filesToShow" class="flex items-center justify-end xl:justify-start space-x-2">
       <mat-icon color="primary">attach_file</mat-icon>
-      <span class="truncate w-40 xl:w-20">{{ file.file.metadata ? file.file.metadata.filename : file.file.name }}</span>
-      <mat-icon *ngIf="file.canDelete" class="cursor-pointer" color="warn" (click)="removeFile(file.file)" type="button"
-        >close</mat-icon
-      >
+      <span class="truncate w-40 xl:w-20">{{ file.metadata ? file.metadata.filename : file.name }}</span>
+      <mat-icon class="cursor-pointer" color="warn" (click)="removeFile(file)" type="button">close</mat-icon>
     </div>
   </div>
 </div>

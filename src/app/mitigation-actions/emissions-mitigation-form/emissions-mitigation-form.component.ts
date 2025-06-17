@@ -51,8 +51,9 @@ export class EmissionsMitigationFormComponent implements OnInit {
   sectorIppc2006: SectorIpcc2006[][] = [];
   categoryIppc2006: CategoryIppc2006[][] = [];
   impact_documentation: FileUpload = {
-    files: null,
     type: '',
+    filesToUpload: null,
+    filesUploaded: null,
   };
 
   gasList = ['CO2', 'CH4', 'N2O', 'HFC*', 'SF6', 'CO', 'NOx', 'NMVOC', 'SO2', 'C Negro', 'Otro'];
@@ -80,6 +81,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
+        this.impact_documentation.filesUploaded = this.getFilesByType(this.maFileType.IMPACT_DOCUMENTATION);
       });
     }
   }
@@ -345,8 +347,12 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   successSendForm(id: string, state: States) {
-    if (this.impact_documentation.files) {
+    if (this.impact_documentation.filesToUpload && this.impact_documentation.filesToUpload.length > 0) {
       this.submitFiles(id, this.impact_documentation);
+    }
+
+    if (this.impact_documentation.filesToRemove && this.impact_documentation.filesToRemove.length > 0) {
+      this.deleteFiles(id, this.impact_documentation.filesToRemove);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -371,14 +377,15 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   uploadFile(event: FileUpload) {
-    // TODO: fix names
-    if (event.files) {
-      this.impact_documentation = event;
-    }
+    this.impact_documentation = event;
   }
 
   async submitFiles(id: string, file: FileUpload) {
-    await this.service.submitFiles(id, file.type, file.files).toPromise();
+    await this.service.submitFiles(id, file.type, file.filesToUpload).toPromise();
+  }
+
+  async deleteFiles(id: string, files: string[]) {
+    await this.service.deleteFile(id, files).toPromise();
   }
 
   getFilesByType(type: string) {

@@ -1,3 +1,4 @@
+import { FileUploaded } from '@app/@shared/upload-button/file-upload';
 import { GeographicScale } from './mitigation-action-new-form-data';
 import { NextState } from '@shared/next-state';
 
@@ -36,7 +37,7 @@ export interface MitigationAction {
     state: string;
     label: string;
   };
-  files: Files[];
+  files: FileUploaded[];
   status_information: StatusInformation;
   geographic_location: GeographicLocation;
   categorization: any; //waiting BE have this data
@@ -277,11 +278,6 @@ export interface MADataCatalogs {
   information_source_type: MADataCatalogItem[];
   thematic_categorization_type: MADataCatalogItem[];
   sector: MADataCatalogItem[];
-}
-
-export interface MAFile {
-  file: File;
-  name: string;
 }
 
 export enum MAFileType {

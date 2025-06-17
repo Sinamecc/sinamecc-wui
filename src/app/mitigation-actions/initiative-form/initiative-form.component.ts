@@ -45,11 +45,13 @@ export class InitiativeFormComponent implements OnInit {
   } = {
     geographic_location: {
       type: '',
-      files: null,
+      filesToUpload: null,
+      filesUploaded: null,
     },
     initiative: {
       type: '',
-      files: null,
+      filesToUpload: null,
+      filesUploaded: null,
     },
   };
 
@@ -151,6 +153,8 @@ export class InitiativeFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
+        this.files.initiative.filesUploaded = this.getFilesByType(this.maFileType.INITIATIVE);
+        this.files.geographic_location.filesUploaded = this.getFilesByType(this.maFileType.GEOGRAPHIC_LOCATION);
       });
     }
   }
@@ -561,12 +565,16 @@ export class InitiativeFormComponent implements OnInit {
   }
 
   successSendForm(id: string) {
-    if (this.files.initiative.files) {
-      this.submitFiles(id, this.files.initiative);
-    }
+    const { initiative, geographic_location } = this.files;
+    [initiative, geographic_location].forEach((section) => {
+      if (section.filesToUpload?.length) {
+        this.submitFiles(id, section);
+      }
+    });
 
-    if (this.files.geographic_location.files) {
-      this.submitFiles(id, this.files.geographic_location);
+    const filesToRemove = [...(initiative.filesToRemove || []), ...(geographic_location.filesToRemove || [])];
+    if (filesToRemove.length) {
+      this.deleteFiles(id, filesToRemove);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -604,7 +612,7 @@ export class InitiativeFormComponent implements OnInit {
     );
   }
 
-  uploadFile(event: FileUpload) {
+  onFileChange(event: FileUpload) {
     const name = event.type;
     if (name === this.maFileType.INITIATIVE) {
       this.files.initiative = event;
@@ -614,7 +622,11 @@ export class InitiativeFormComponent implements OnInit {
   }
 
   async submitFiles(id: string, file: FileUpload) {
-    await this.service.submitFiles(id, file.type, file.files).toPromise();
+    await this.service.submitFiles(id, file.type, file.filesToUpload).toPromise();
+  }
+
+  async deleteFiles(id: string, files: string[]) {
+    await this.service.deleteFile(id, files).toPromise();
   }
 
   getFilesByType(type: string) {

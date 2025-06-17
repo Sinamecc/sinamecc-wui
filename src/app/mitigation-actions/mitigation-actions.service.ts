@@ -36,7 +36,7 @@ const routes = {
   allData: () => `/v1/mitigation-action/data/`,
   sectorIppc2006: (sectorID: string) => `/v1/mitigation-action/data/sector/${sectorID}/sector-ipcc/`,
   categoryIppc2006: (CategoryId: string) => `/v1/mitigation-action/data/sector-ipcc/${CategoryId}/category-ipcc/`,
-  submitFiles: (id: string) => `/v1/mitigation-action/${id}/attachments`,
+  files: (id: string) => `/v1/mitigation-action/${id}/attachments`,
 };
 
 export interface MAResponse {
@@ -277,11 +277,25 @@ export class MitigationActionsService {
     files.forEach((file) => {
       formData.append('files', file);
     });
-    return this.httpClient.post(routes.submitFiles(id), formData, {}).pipe(
+    return this.httpClient.post(routes.files(id), formData, {}).pipe(
       map((body: MAFileResponse) => {
         return body;
       }),
     );
+  }
+
+  public deleteFile(id: string, files: string[]) {
+    return this.httpClient
+      .delete(routes.files(id), {
+        body: {
+          file_ids: files,
+        },
+      })
+      .pipe(
+        map((body: MAFileResponse) => {
+          return body;
+        }),
+      );
   }
 
   public downloadFile(file: string) {

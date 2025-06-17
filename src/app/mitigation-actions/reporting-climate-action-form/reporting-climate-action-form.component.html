@@ -156,7 +156,7 @@
                   <app-upload-button
                     class="w-full"
                     [type]="maFileType.TO_UPDATE_FILE"
-                    [files]="getFilesByType(maFileType.TO_UPDATE_FILE)"
+                    [filesUploaded]="files.filesUploaded"
                     (fileChange)="uploadFile($event)"
                   />
                 </div>

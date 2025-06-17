@@ -59,8 +59,9 @@ export class KeyAspectsFormComponent implements OnInit {
   mitigationAction: MitigationAction;
 
   ghg_information: FileUpload = {
-    files: null,
     type: '',
+    filesToUpload: null,
+    filesUploaded: null,
   };
 
   @Input() stepper: any;
@@ -95,6 +96,7 @@ export class KeyAspectsFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
+        this.ghg_information.filesUploaded = this.getFilesByType(this.maFileType.GHG_INFORMATION);
       });
     }
   }
@@ -178,8 +180,12 @@ export class KeyAspectsFormComponent implements OnInit {
   }
 
   successSendForm(id: string) {
-    if (this.ghg_information.files) {
+    if (this.ghg_information.filesToUpload && this.ghg_information.filesToUpload.length > 0) {
       this.submitFiles(id, this.ghg_information);
+    }
+
+    if (this.ghg_information.filesToRemove && this.ghg_information.filesToRemove.length > 0) {
+      this.deleteFiles(id, this.ghg_information.filesToRemove);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -198,13 +204,15 @@ export class KeyAspectsFormComponent implements OnInit {
   }
 
   uploadFile(event: FileUpload) {
-    if (event.files) {
-      this.ghg_information = event;
-    }
+    this.ghg_information = event;
   }
 
   async submitFiles(id: string, file: FileUpload) {
-    await this.service.submitFiles(id, file.type, file.files).toPromise();
+    await this.service.submitFiles(id, file.type, file.filesToUpload).toPromise();
+  }
+
+  async deleteFiles(id: string, files: string[]) {
+    await this.service.deleteFile(id, files).toPromise();
   }
 
   getFilesByType(type: string) {

@@ -170,12 +170,10 @@ export class ReportFormDataComponent implements OnInit {
   }
 
   uploadFile(event: FileUpload, reportFile = true) {
-    if (event.files) {
-      if (reportFile) {
-        this.reportDataFile = event;
-      } else {
-        this.baseLineReportFile = event;
-      }
+    if (reportFile) {
+      this.reportDataFile = event;
+    } else {
+      this.baseLineReportFile = event;
     }
   }
 
@@ -262,7 +260,7 @@ export class ReportFormDataComponent implements OnInit {
   }
 
   async submitFile(id: string, file: FileUpload) {
-    for (const f of file.files) {
+    for (const f of file.filesToUpload) {
       await this.reportService.submitReportFile(file.type, f, id).toPromise();
     }
   }

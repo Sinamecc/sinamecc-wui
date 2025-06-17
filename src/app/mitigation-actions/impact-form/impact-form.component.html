@@ -54,7 +54,7 @@
                   <app-upload-button
                     class="w-full"
                     [type]="maFileType.METHODOLOGICAL_INDICATOR_FILE"
-                    [files]="getFilesByType(maFileType.METHODOLOGICAL_INDICATOR_FILE)"
+                    [filesUploaded]="files.methodologicalDetail.filesUploaded"
                     (fileChange)="uploadFile($event)"
                   />
                 </div>
@@ -190,7 +190,7 @@
                   <app-upload-button
                     class="w-full"
                     [type]="maFileType.SUSTAINABILITY_INDICATOR_FILE"
-                    [files]="getFilesByType(maFileType.SUSTAINABILITY_INDICATOR_FILE)"
+                    [filesUploaded]="files.howSustainability.filesUploaded"
                     (fileChange)="uploadFile($event)"
                   />
                 </div>

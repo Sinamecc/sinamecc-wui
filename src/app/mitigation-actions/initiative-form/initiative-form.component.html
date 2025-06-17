@@ -63,8 +63,8 @@
                 <app-upload-button
                   class="w-full"
                   [type]="maFileType.INITIATIVE"
-                  [files]="getFilesByType(maFileType.INITIATIVE)"
-                  (fileChange)="uploadFile($event)"
+                  [filesUploaded]="files.initiative.filesUploaded"
+                  (fileChange)="onFileChange($event)"
                 />
               </div>
             </div>
@@ -312,8 +312,8 @@
                 <app-upload-button
                   class="w-full"
                   [type]="maFileType.GEOGRAPHIC_LOCATION"
-                  [files]="getFilesByType(maFileType.GEOGRAPHIC_LOCATION)"
-                  (fileChange)="uploadFile($event)"
+                  [filesUploaded]="files.geographic_location.filesUploaded"
+                  (fileChange)="onFileChange($event)"
                 />
               </div>
             </div>

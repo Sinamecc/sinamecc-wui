@@ -39,12 +39,14 @@ export class ImpactFormComponent implements OnInit {
     howSustainability: FileUpload;
   } = {
     methodologicalDetail: {
-      files: null,
       type: '',
+      filesToUpload: null,
+      filesUploaded: null,
     },
     howSustainability: {
-      files: null,
       type: '',
+      filesToUpload: null,
+      filesUploaded: null,
     },
   };
 
@@ -89,6 +91,8 @@ export class ImpactFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
+        this.files.methodologicalDetail.filesUploaded = this.getFilesByType(MAFileType.METHODOLOGICAL_INDICATOR_FILE);
+        this.files.howSustainability.filesUploaded = this.getFilesByType(MAFileType.SUSTAINABILITY_INDICATOR_FILE);
       });
     }
   }
@@ -323,12 +327,17 @@ export class ImpactFormComponent implements OnInit {
   }
 
   successSendForm(id: string, state: string) {
-    if (this.files.methodologicalDetail.files) {
-      this.submitFiles(id, this.files.methodologicalDetail);
-    }
+    console.log('files', this.files);
+    const { howSustainability, methodologicalDetail } = this.files;
+    [howSustainability, methodologicalDetail].forEach((section) => {
+      if (section.filesToUpload?.length) {
+        this.submitFiles(id, section);
+      }
+    });
 
-    if (this.files.howSustainability.files) {
-      this.submitFiles(id, this.files.howSustainability);
+    const filesToRemove = [...(howSustainability.filesToRemove || []), ...(methodologicalDetail.filesToRemove || [])];
+    if (filesToRemove.length) {
+      this.deleteFiles(id, filesToRemove);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -346,19 +355,20 @@ export class ImpactFormComponent implements OnInit {
   }
 
   uploadFile(event: FileUpload) {
-    // TODO: correct names
-    if (event.files) {
-      const file = event;
-      if (file.type === 'methodologicalDetailIndicatorFile') {
-        this.files.methodologicalDetail = file;
-      } else if (file.type === 'howSustainabilityIndicatorFile') {
-        this.files.howSustainability = file;
-      }
+    const name = event.type;
+    if (name === this.maFileType.METHODOLOGICAL_INDICATOR_FILE) {
+      this.files.methodologicalDetail = event;
+    } else if (name === this.maFileType.SUSTAINABILITY_INDICATOR_FILE) {
+      this.files.howSustainability = event;
     }
   }
 
   async submitFiles(id: string, file: FileUpload) {
-    await this.service.submitFiles(id, file.type, file.files).toPromise();
+    await this.service.submitFiles(id, file.type, file.filesToUpload).toPromise();
+  }
+
+  async deleteFiles(id: string, files: string[]) {
+    await this.service.deleteFile(id, files).toPromise();
   }
 
   getFilesByType(type: string) {

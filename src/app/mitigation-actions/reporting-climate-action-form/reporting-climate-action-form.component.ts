@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 import { finalize } from 'rxjs/operators';
-import { MAFile, MAFileType, MitigationAction } from '../mitigation-action';
+import { MAFileType, MitigationAction } from '../mitigation-action';
 import { MitigationActionNewFormData } from '../mitigation-action-new-form-data';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -28,8 +28,9 @@ export class ReportingClimateActionFormComponent implements OnInit {
   mitigationAction: MitigationAction;
   stateLabel = 'submitted';
   files: FileUpload = {
-    files: null,
     type: '',
+    filesToUpload: null,
+    filesUploaded: null,
   };
   maFileType = MAFileType;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -64,6 +65,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
+        this.files.filesUploaded = this.getFilesByType(this.maFileType.TO_UPDATE_FILE);
       });
     }
   }
@@ -166,8 +168,12 @@ export class ReportingClimateActionFormComponent implements OnInit {
   }
 
   successSendForm(id: string) {
-    if (this.files.files) {
+    if (this.files.filesToUpload && this.files.filesToUpload.length > 0) {
       this.submitFiles(id, this.files);
+    }
+
+    if (this.files.filesToRemove && this.files.filesToRemove.length > 0) {
+      this.deleteFiles(id, this.files.filesToRemove);
     }
 
     this.translateService.get('specificLabel.sucessfullySubmittedForm').subscribe((res: string) => {
@@ -265,13 +271,15 @@ export class ReportingClimateActionFormComponent implements OnInit {
   }
 
   uploadFile(event: FileUpload) {
-    if (event.files) {
-      this.files = event;
-    }
+    this.files = event;
   }
 
   async submitFiles(id: string, file: FileUpload) {
-    await this.service.submitFiles(id, file.type, file.files).toPromise();
+    await this.service.submitFiles(id, file.type, file.filesToUpload).toPromise();
+  }
+
+  async deleteFiles(id: string, files: string[]) {
+    await this.service.deleteFile(id, files).toPromise();
   }
 
   getFilesByType(type: string) {
