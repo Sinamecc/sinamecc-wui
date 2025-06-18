@@ -29,19 +29,22 @@
             <br />
 
             <div class="flex flex-col xl:flex-row gap-1 xl:gap-6 justify-center w-full">
-              <mat-form-field class="field-ppcn w-full xl:flex-1 min-w-[250px] mb-0 xl:mb-0">
+              <div class="flex flex-col">
                 <mat-label translate
                   >3.1.2 - <span translate>mitigationAction.graphicLogicImpactEmissionsRemovals</span></mat-label
                 >
-                <input matInput formControlName="graphicLogicImpactEmissionsRemovalsCtrl" />
-                <mat-hint
-                  ><span translate>mitigationAction.graphicLogicImpactEmissionsRemovalsHint</span>
-                  <a target="_blank" href="https://drive.google.com/file/d/10IMk4cghz5CuCQzjgYPDBGoot-8Y82FA/view"
-                    >Link</a
-                  ></mat-hint
-                >
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
+                <mat-form-field class="field-ppcn w-full xl:flex-1 min-w-[250px] mb-0 xl:mb-0">
+                  <input matInput formControlName="graphicLogicImpactEmissionsRemovalsCtrl" />
+                  <mat-hint
+                    ><span translate>mitigationAction.graphicLogicImpactEmissionsRemovalsHint</span>
+                    <a target="_blank" href="https://drive.google.com/file/d/10IMk4cghz5CuCQzjgYPDBGoot-8Y82FA/view"
+                      >Link</a
+                    ></mat-hint
+                  >
+                  <mat-error translate>errorLabel.fieldRequired</mat-error>
+                </mat-form-field>
+              </div>
+
               <input
                 type="file"
                 accept=".rar,application/pdf,.zip"

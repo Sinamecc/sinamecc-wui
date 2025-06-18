@@ -8,7 +8,7 @@ import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-
 
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { MitigationAction, MAStates } from '../mitigation-action';
+import { AMOUNT_REGEX_STRING, MAStates, MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -125,7 +125,7 @@ export class BasicInformationFormComponent implements OnInit {
     return this.formBuilder.group({
       mitigationActionDescriptionCtrl: ['', [Validators.required, Validators.maxLength(300)]],
       currencyValueCtrl: ['CRC'],
-      mitigationActionAmounttCtrl: ['', [Validators.required]],
+      mitigationActionAmounttCtrl: ['', [Validators.required, Validators.pattern(AMOUNT_REGEX_STRING)]],
       referenceYearCtrl: ['', Validators.required],
     });
   }
@@ -136,7 +136,7 @@ export class BasicInformationFormComponent implements OnInit {
     // const mapCurrency = ['CRC', 'USD', 'EUR'];
     let index = 0;
 
-    if (this.mitigationAction.finance.finance_information)
+    if (this.mitigationAction.finance.finance_information) {
       for (const element of this.mitigationAction.finance.finance_information) {
         const currency =
           element.currency != 'CRC' && element.currency != 'USD' && element.currency != 'EUR'
@@ -150,16 +150,16 @@ export class BasicInformationFormComponent implements OnInit {
             [Validators.required, Validators.maxLength(300)],
           ],
           currencyValueCtrl: [element.currency],
-          mitigationActionAmounttCtrl: [
-            element.budget,
-            [Validators.required, Validators.pattern('^\\d{1,18}(\\.\\d{1,2})?$')],
-          ],
+          mitigationActionAmounttCtrl: [element.budget, [Validators.required, Validators.pattern(AMOUNT_REGEX_STRING)]],
           referenceYearCtrl: [element.reference_year, Validators.required],
         });
         index += 1;
         financeList.push(form);
       }
-    return this.formBuilder.array(financeList);
+      return this.formBuilder.array(financeList);
+    } else {
+      return this.formBuilder.array([this.createFinanceForm()]);
+    }
   }
 
   public addFinanceItem() {
