@@ -45,6 +45,7 @@
     "howSustainabilityIndicator": "¿Cómo se asegura la sostenibilidad en la medición del indicador?",
     "informationToUpdate": "Ingrese dato que desea actualizar ",
     "beenProgressActionPeriod": "¿Cuál ha sido el avance de su acción en el periódo?",
+    "beenProgressActionPeriodView": "Avance narrativo del progreso en el periódo de reporte",
     "reportingPeriod": "Periodo de reporte",
     "generalProgressReportClimateAction": "Reporte general de avance de la acción climática",
     "indicatorDataUpdateDate": "Fecha de actualización del dato del indicador",
@@ -61,7 +62,9 @@
     "geographicCoverage": "Cobertura geográfica",
     "timeSeriesAvailable": "Serie de tiempo disponible",
     "ghgIndicatorGoal": "Meta del indicador GEI (Ton de CO2 eq)",
+    "ghgIndicatorGoalView": "Meta del indicador",
     "ghgIndicatorBase": "Linea base del indicador GEI (Ton de CO2 eq)",
+    "ghgIndicatorBaseView": "Linea base del indicador",
     "ghgIndicatorNote": "Por favor completar solo si el indicador registrado está relacionado con la contabilidad de emisiones o reducciones de GEI",
     "indicatorDescription": "Descripción del indicador",
     "enablingMeasure": "Medida habilitante",
@@ -148,7 +151,8 @@
     "descriptionReviewMA": "Descripción de la revisión de la Acción de Mitigación",
     "changelogMA": "Historial de cambios de la revision para la acción de mitigación",
     "MAt": "ACCIONES DE MITIGACIÓN",
-    "dataEntryMonitoring": "Ingreso de datos de monitoreo"
+    "dataEntryMonitoring": "Ingreso de datos de monitoreo",
+    "dataEntryMonitoringView": "Datos monitoreados"
   },
 
   "reportData": {

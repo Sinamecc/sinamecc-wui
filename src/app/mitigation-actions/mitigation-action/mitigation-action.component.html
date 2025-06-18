@@ -475,6 +475,10 @@
                 <h3 class="mat-h3">{{ indicator['available_time_start_date'] | date: 'dd/MM/yyyy' }}</h3>
                 <strong translate>general.until</strong>
                 <h3 class="mat-h3">{{ indicator['available_time_end_date'] | date: 'dd/MM/yyyy' }}</h3>
+                <strong translate>mitigationAction.ghgIndicatorBaseView</strong>
+                <h3 class="mat-h3">{{ indicator['ghg_indicator_base'] }}</h3>
+                <strong translate>mitigationAction.ghgIndicatorGoalView</strong>
+                <h3 class="mat-h3">{{ indicator['ghg_indicator_goal'] }}</h3>
                 <strong translate>mitigationAction.geographicCoverage</strong>
                 <h3 class="mat-h3">{{ indicator['geographic_coverage'] }}</h3>
                 <strong translate>general.other</strong>
@@ -638,7 +642,7 @@
               }}
             </h3>
             <h3 class="mat-h3">
-              <strong translate>mitigationAction.dataEntryMonitoring</strong>
+              <strong translate>mitigationAction.dataEntryMonitoringView</strong>
               {{
                 mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator
                   ? (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]?.updated_data
@@ -669,7 +673,7 @@
               }}
             </h3>
             <h3 class="mat-h3">
-              <strong translate>mitigationAction.beenProgressActionPeriod</strong>
+              <strong translate>mitigationAction.beenProgressActionPeriodView</strong>
               {{
                 mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator &&
                   (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator
