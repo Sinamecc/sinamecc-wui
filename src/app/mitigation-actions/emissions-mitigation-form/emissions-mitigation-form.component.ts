@@ -1,7 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, AbstractControl } from '@angular/forms';
-import { finalize, tap } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
@@ -33,7 +33,6 @@ export class EmissionsMitigationFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
   form: UntypedFormGroup;
-  maFileType = MAFileType;
   @Output() state = new EventEmitter<States>();
 
   @Input() stepper: any;
@@ -50,12 +49,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
   sectorCatalog: MADataCatalogItem[] = [];
   sectorIppc2006: SectorIpcc2006[][] = [];
   categoryIppc2006: CategoryIppc2006[][] = [];
-  impact_documentation: FileUpload = {
-    type: '',
-    filesToUpload: [],
-    filesUploaded: [],
-    filesToRemove: [],
-  };
+  maFileType = MAFileType.IMPACT_DOCUMENTATION;
+  files = [];
 
   gasList = ['CO2', 'CH4', 'N2O', 'HFC*', 'SF6', 'CO', 'NOx', 'NMVOC', 'SO2', 'C Negro', 'Otro'];
 
@@ -82,7 +77,6 @@ export class EmissionsMitigationFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
-        this.impact_documentation.filesUploaded = this.getFilesByType(this.maFileType.IMPACT_DOCUMENTATION);
       });
     }
   }
@@ -332,8 +326,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
         }),
       )
       .subscribe(
-        (response) => {
-          this.successSendForm(response.id, response.state as States);
+        async (response) => {
+          await this.successSendForm(response.id, response.state as States);
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -347,13 +341,9 @@ export class EmissionsMitigationFormComponent implements OnInit {
       );
   }
 
-  successSendForm(id: string, state: States) {
-    if (this.impact_documentation.filesToUpload && this.impact_documentation.filesToUpload.length > 0) {
-      this.submitFiles(id, this.impact_documentation);
-    }
-
-    if (this.impact_documentation.filesToRemove && this.impact_documentation.filesToRemove.length > 0) {
-      this.deleteFiles(id, this.impact_documentation.filesToRemove);
+  async successSendForm(id: string, state: States) {
+    if (this.files.length) {
+      await this.service.submitFiles(id, this.maFileType, this.files);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -377,8 +367,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
     this.form.get('formArray').get([2]).get('methodologyUsedCtrl').updateValueAndValidity();
   }
 
-  uploadFile(event: FileUpload) {
-    this.impact_documentation = event;
+  addFiles(files: File[]) {
+    this.files = files;
   }
 
   async submitFiles(id: string, file: FileUpload) {

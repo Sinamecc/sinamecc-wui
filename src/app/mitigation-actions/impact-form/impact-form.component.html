@@ -51,11 +51,13 @@
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
                 <div class="w-full xl:w-auto flex items-start justify-start">
-                  <app-upload-button
+                  <app-mitigation-action-file-upload
                     class="w-full"
                     [type]="maFileType.INDICATOR_METHODOLOGICAL_DETAIL"
-                    [filesUploaded]="files[i].methodologicalDetail.filesUploaded"
-                    (fileChange)="uploadFile($event, i)"
+                    [entityId]="getEntityId(i)"
+                    [maId]="mitigationAction.id"
+                    [entityType]="entityType.INDICATOR"
+                    (filesToUpload)="onFileChange($event, i, maFileType.INDICATOR_METHODOLOGICAL_DETAIL)"
                   />
                 </div>
 
@@ -187,11 +189,13 @@
                   <mat-error translate>errorLabel.fieldRequired</mat-error>
                 </mat-form-field>
                 <div class="w-full xl:w-auto flex items-start justify-start">
-                  <app-upload-button
+                  <app-mitigation-action-file-upload
                     class="w-full"
                     [type]="maFileType.INDICATOR_SUSTAINABILITY"
-                    [filesUploaded]="files[i].howSustainability.filesUploaded"
-                    (fileChange)="uploadFile($event, i)"
+                    [entityId]="getEntityId(i)"
+                    [entityType]="entityType.INDICATOR"
+                    [maId]="mitigationAction.id"
+                    (filesToUpload)="onFileChange($event, i, maFileType.INDICATOR_SUSTAINABILITY)"
                   />
                 </div>
                 <br />

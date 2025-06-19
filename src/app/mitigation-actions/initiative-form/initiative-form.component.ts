@@ -1,18 +1,16 @@
 import { Component, OnInit, ViewChild, Input, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl, UntypedFormArray } from '@angular/forms';
-import { finalize, tap } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { MitigationActionNewFormData, InitiativeType } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { MAFileType, MitigationAction, States } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 const log = new Logger('MitigationAction');
 
@@ -38,23 +36,11 @@ export class InitiativeFormComponent implements OnInit {
   mitigationAction: MitigationAction;
   initiativeGoalList: string[] = [];
   deploymentCompletionSubscription: any;
+  id: string;
 
-  files: {
-    geographic_location: FileUpload;
-    initiative: FileUpload;
-  } = {
-    geographic_location: {
-      type: '',
-      filesToUpload: [],
-      filesUploaded: [],
-      filesToRemove: [],
-    },
-    initiative: {
-      type: '',
-      filesToUpload: [],
-      filesUploaded: [],
-      filesToRemove: [],
-    },
+  files = {
+    [MAFileType.INITIATIVE]: [],
+    [MAFileType.GEOGRAPHIC_LOCATION]: [],
   };
 
   @Input() stepper: any;
@@ -155,8 +141,6 @@ export class InitiativeFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
-        this.files.initiative.filesUploaded = this.getFilesByType(this.maFileType.INITIATIVE);
-        this.files.geographic_location.filesUploaded = this.getFilesByType(this.maFileType.GEOGRAPHIC_LOCATION);
       });
     }
   }
@@ -526,8 +510,8 @@ export class InitiativeFormComponent implements OnInit {
           }),
         )
         .subscribe(
-          (response) => {
-            this.successSendForm(response.id);
+          async (response) => {
+            await this.successSendForm(response);
             this.state.emit(response.state as States);
           },
           (error) => {
@@ -539,6 +523,7 @@ export class InitiativeFormComponent implements OnInit {
             this.errorComponent.parseErrors(error);
             this.error = error;
             this.wasSubmittedSuccessfully = false;
+            this.isLoading = false;
           },
         );
     } else {
@@ -550,8 +535,9 @@ export class InitiativeFormComponent implements OnInit {
           }),
         )
         .subscribe(
-          (response) => {
-            this.successSendForm(response.id);
+          async (response) => {
+            this.state.emit(response.state as States);
+            await this.successSendForm(response);
           },
           (error) => {
             this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -561,23 +547,22 @@ export class InitiativeFormComponent implements OnInit {
             this.errorComponent.parseErrors(error);
             this.error = error;
             this.wasSubmittedSuccessfully = false;
+            this.isLoading = false;
           },
         );
     }
   }
 
-  successSendForm(id: string) {
-    const { initiative, geographic_location } = this.files;
-    [initiative, geographic_location].forEach((section) => {
-      if (section.filesToUpload?.length) {
-        this.submitFiles(id, section);
+  async successSendForm(response: any): Promise<void> {
+    const fileUploadPromises: Promise<any>[] = [];
+    for (const [type, files] of Object.entries(this.files)) {
+      if (files.length) {
+        fileUploadPromises.push(lastValueFrom(this.service.submitFiles(response.id, type, files)));
       }
-    });
-
-    const filesToRemove = [...(initiative.filesToRemove || []), ...(geographic_location.filesToRemove || [])];
-    if (filesToRemove.length) {
-      this.deleteFiles(id, filesToRemove);
     }
+
+    await Promise.all(fileUploadPromises);
+    this.id = response.id;
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
       this.snackBar.open(res, null, { duration: 3000 });
@@ -585,6 +570,10 @@ export class InitiativeFormComponent implements OnInit {
     });
     this.isLoading = false;
     this.wasSubmittedSuccessfully = true;
+  }
+
+  addFiles(files: File[], type: MAFileType) {
+    this.files[type] = files;
   }
 
   financialSourceInputShown($event: any) {
@@ -612,27 +601,6 @@ export class InitiativeFormComponent implements OnInit {
     window.open(
       'https://docs.google.com/spreadsheets/d/17rrTYpiLsargiTnARd29HLoSOaRUYtXd/edit?usp=sharing&ouid=100093507902776240980&rtpof=true&sd=true',
     );
-  }
-
-  onFileChange(event: FileUpload) {
-    const name = event.type;
-    if (name === this.maFileType.INITIATIVE) {
-      this.files.initiative = event;
-    } else if (name === this.maFileType.GEOGRAPHIC_LOCATION) {
-      this.files.geographic_location = event;
-    }
-  }
-
-  async submitFiles(id: string, file: FileUpload) {
-    await this.service.submitFiles(id, file.type, file.filesToUpload).toPromise();
-  }
-
-  async deleteFiles(id: string, files: string[]) {
-    await this.service.deleteFile(id, files).toPromise();
-  }
-
-  getFilesByType(type: string) {
-    return this.mitigationAction.files.filter((file) => file.type === type);
   }
 
   onStepChange() {

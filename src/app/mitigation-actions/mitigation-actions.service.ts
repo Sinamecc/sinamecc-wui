@@ -307,6 +307,21 @@ export class MitigationActionsService {
       );
   }
 
+  public getFiles(id: string, entityId?: string, entityType?: MAEntityType) {
+    let params: any = {};
+
+    if (entityId && entityType) {
+      params.entity_id = entityId;
+      params.entity_type = entityType;
+    }
+
+    return this.httpClient.get(routes.files(id), { params }).pipe(
+      map((body: any) => {
+        return body;
+      }),
+    );
+  }
+
   public downloadFile(file: string) {
     this.httpClient.get(file, { responseType: 'blob' }).subscribe((blob) => {
       const url = window.URL.createObjectURL(blob);

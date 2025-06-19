@@ -60,11 +60,11 @@
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <div class="w-full xl:w-auto flex items-start justify-start">
-                <app-upload-button
+                <app-mitigation-action-file-upload
                   class="w-full"
                   [type]="maFileType.INITIATIVE"
-                  [filesUploaded]="files.initiative.filesUploaded"
-                  (fileChange)="onFileChange($event)"
+                  [maId]="(mitigationAction && mitigationAction.id) || id"
+                  (filesToUpload)="addFiles($event, maFileType.INITIATIVE)"
                 />
               </div>
             </div>
@@ -309,11 +309,11 @@
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
               <div class="w-full xl:w-auto flex items-start justify-start">
-                <app-upload-button
+                <app-mitigation-action-file-upload
                   class="w-full"
                   [type]="maFileType.GEOGRAPHIC_LOCATION"
-                  [filesUploaded]="files.geographic_location.filesUploaded"
-                  (fileChange)="onFileChange($event)"
+                  [maId]="(mitigationAction && mitigationAction.id) || id"
+                  (filesToUpload)="addFiles($event, maFileType.GEOGRAPHIC_LOCATION)"
                 />
               </div>
             </div>

@@ -16,7 +16,6 @@ import { ErrorReportingComponent } from '@shared';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 export const MY_FORMATS = {
   parse: {
@@ -55,15 +54,10 @@ export class KeyAspectsFormComponent implements OnInit {
   displayFinancialSource: boolean;
   isLoading = false;
   wasSubmittedSuccessfully = false;
-  maFileType = MAFileType;
   mitigationAction: MitigationAction;
 
-  ghg_information: FileUpload = {
-    type: '',
-    filesToUpload: [],
-    filesUploaded: [],
-    filesToRemove: [],
-  };
+  maFileType = MAFileType.GHG_INFORMATION;
+  files = [];
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -97,7 +91,6 @@ export class KeyAspectsFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
-        this.ghg_information.filesUploaded = this.getFilesByType(this.maFileType.GHG_INFORMATION);
       });
     }
   }
@@ -164,9 +157,9 @@ export class KeyAspectsFormComponent implements OnInit {
         }),
       )
       .subscribe(
-        (response) => {
+        async (response) => {
           this.state.emit(response.state as States);
-          this.successSendForm(response.id);
+          await this.successSendForm(response.id);
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -180,13 +173,9 @@ export class KeyAspectsFormComponent implements OnInit {
       );
   }
 
-  successSendForm(id: string) {
-    if (this.ghg_information.filesToUpload && this.ghg_information.filesToUpload.length > 0) {
-      this.submitFiles(id, this.ghg_information);
-    }
-
-    if (this.ghg_information.filesToRemove && this.ghg_information.filesToRemove.length > 0) {
-      this.deleteFiles(id, this.ghg_information.filesToRemove);
+  async successSendForm(id: string) {
+    if (this.files.length) {
+      await this.service.submitFiles(id, this.maFileType, this.files);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -196,28 +185,16 @@ export class KeyAspectsFormComponent implements OnInit {
     this.stepper.next();
   }
 
+  addFiles(files: File[]) {
+    this.files = files;
+  }
+
   financialSourceInputShown($event: any) {
     // todo: when we traslate in the backend we need to traslate this hardcoded value here
     const insuredSourceTypeId = this.processedNewFormData.finance_status
       .filter((financeSource) => financeSource.status === 'Asegurado' || financeSource.status === 'Insured')
       .map(({ id }) => id);
     this.displayFinancialSource = $event.value === insuredSourceTypeId;
-  }
-
-  uploadFile(event: FileUpload) {
-    this.ghg_information = event;
-  }
-
-  async submitFiles(id: string, file: FileUpload) {
-    await this.service.submitFiles(id, file.type, file.filesToUpload).toPromise();
-  }
-
-  async deleteFiles(id: string, files: string[]) {
-    await this.service.deleteFile(id, files).toPromise();
-  }
-
-  getFilesByType(type: string) {
-    return this.mitigationAction.files.filter((file) => file.type === type);
   }
 
   onStepChange() {

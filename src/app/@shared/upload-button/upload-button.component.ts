@@ -8,6 +8,7 @@ import { FileUpload, FileUploaded } from './file-upload';
   standalone: false,
 })
 export class UploadButtonComponent {
+  @Input() loading: boolean = false;
   @Input() accept: string = '';
   @Input() type: string = '';
   @Output() fileChange = new EventEmitter<FileUpload>();
