@@ -234,7 +234,21 @@
 
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
-              <button [disabled]="wasSubmittedSuccessfully" type="submit" matRipple class="primary-button">
+              <button
+                [disabled]="isLoading || wasSubmittedSuccessfully"
+                type="submit"
+                matRipple
+                class="primary-button flex flex-row gap-1"
+              >
+                <mat-progress-spinner
+                  *ngIf="isLoading"
+                  diameter="18"
+                  mode="indeterminate"
+                  color="accent"
+                  [style.marginRight.px]="8"
+                  style="vertical-align: middle"
+                ></mat-progress-spinner>
+
                 <span translate>general.dondeReview</span>
               </button>
             </div>

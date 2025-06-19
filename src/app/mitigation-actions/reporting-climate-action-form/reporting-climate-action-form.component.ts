@@ -146,45 +146,51 @@ export class ReportingClimateActionFormComponent implements OnInit {
   submitForm() {
     const context = this.buildPayload();
 
-    this.service
-      .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
-      .pipe(
-        finalize(() => {
+    this.isLoading = true;
+
+    this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id).subscribe({
+      next: async (response) => {
+        try {
+          await this.successSendForm(response.id, response.monitoring);
           this.form.markAsPristine();
-          this.isLoading = false;
-        }),
-      )
-      .subscribe(
-        (response) => {
-          this.successSendForm(response.id, response.monitoring);
-        },
-        (error) => {
-          this.translateService.get('Error submitting form').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
-          this.error = error;
-          this.errorComponent.parseErrors(error);
+          this.wasSubmittedSuccessfully = true;
+        } catch (err) {
+          this.error = err;
+          this.errorComponent.parseErrors(err);
           this.wasSubmittedSuccessfully = false;
-        },
-      );
+        } finally {
+          this.isLoading = false;
+        }
+      },
+      error: (error) => {
+        this.translateService.get('Error submitting form').subscribe((res: string) => {
+          this.snackBar.open(res, null, { duration: 3000 });
+        });
+        this.error = error;
+        this.errorComponent.parseErrors(error);
+        this.wasSubmittedSuccessfully = false;
+        this.isLoading = false;
+      },
+    });
   }
 
-  successSendForm(id: string, monitoringId: string) {
+  async successSendForm(id: string, monitoringId: string) {
     if (this.files.filesToUpload && this.files.filesToUpload.length > 0) {
-      this.submitFiles(id, this.files, monitoringId);
+      await this.submitFiles(id, this.files, monitoringId);
     }
 
     if (this.files.filesToRemove && this.files.filesToRemove.length > 0) {
-      this.deleteFiles(id, this.files.filesToRemove);
+      console.log(this.files.filesToRemove);
+      await this.deleteFiles(id, this.files.filesToRemove);
     }
 
     this.translateService.get('specificLabel.sucessfullySubmittedForm').subscribe((res: string) => {
       this.snackBar.open(res, null, { duration: 3000 });
     });
+
     this.wasSubmittedSuccessfully = true;
-    setTimeout(() => {
-      this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
-    }, 2000);
+
+    this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
   }
 
   private createForm() {
@@ -277,13 +283,13 @@ export class ReportingClimateActionFormComponent implements OnInit {
   }
 
   async submitFiles(id: string, file: FileUpload, monitoringId: string) {
-    await this.service
+    return this.service
       .submitFiles(id, file.type, file.filesToUpload, monitoringId, MAEntityType.MONITORING_INDICATOR)
       .toPromise();
   }
 
   async deleteFiles(id: string, files: string[]) {
-    await this.service.deleteFile(id, files).toPromise();
+    return this.service.deleteFile(id, files).toPromise();
   }
 
   getFilesByType(type: string) {
