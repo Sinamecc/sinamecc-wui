@@ -11,6 +11,7 @@ import { MAFileType, MitigationAction, States } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MAFile } from '../mitigation-action-file-upload/file-upload';
 
 const log = new Logger('MitigationAction');
 
@@ -38,9 +39,14 @@ export class InitiativeFormComponent implements OnInit {
   deploymentCompletionSubscription: any;
   id: string;
 
+  newFiles = {
+    [MAFileType.INITIATIVE]: [] as File[],
+    [MAFileType.GEOGRAPHIC_LOCATION]: [] as File[],
+  };
+
   files = {
-    [MAFileType.INITIATIVE]: [],
-    [MAFileType.GEOGRAPHIC_LOCATION]: [],
+    [MAFileType.INITIATIVE]: [] as MAFile[],
+    [MAFileType.GEOGRAPHIC_LOCATION]: [] as MAFile[],
   };
 
   @Input() stepper: any;
@@ -141,6 +147,8 @@ export class InitiativeFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
+        this.files[MAFileType.INITIATIVE] = this.getFilesByType(this.maFileType.INITIATIVE);
+        this.files[MAFileType.GEOGRAPHIC_LOCATION] = this.getFilesByType(this.maFileType.GEOGRAPHIC_LOCATION);
       });
     }
   }
@@ -555,7 +563,7 @@ export class InitiativeFormComponent implements OnInit {
 
   async successSendForm(response: any): Promise<void> {
     const fileUploadPromises: Promise<any>[] = [];
-    for (const [type, files] of Object.entries(this.files)) {
+    for (const [type, files] of Object.entries(this.newFiles)) {
       if (files.length) {
         fileUploadPromises.push(lastValueFrom(this.service.submitFiles(response.id, type, files)));
       }
@@ -573,7 +581,7 @@ export class InitiativeFormComponent implements OnInit {
   }
 
   addFiles(files: File[], type: MAFileType) {
-    this.files[type] = files;
+    this.newFiles[type] = files;
   }
 
   financialSourceInputShown($event: any) {
@@ -605,5 +613,9 @@ export class InitiativeFormComponent implements OnInit {
 
   onStepChange() {
     this.wasSubmittedSuccessfully = false;
+  }
+
+  getFilesByType(type: string) {
+    return this.mitigationAction.files.filter((file) => file.type === type);
   }
 }

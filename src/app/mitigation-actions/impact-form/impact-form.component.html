@@ -57,6 +57,7 @@
                     [entityId]="getEntityId(i)"
                     [maId]="mitigationAction.id"
                     [entityType]="entityType.INDICATOR"
+                    [filesUploaded]="files[i][maFileType.INDICATOR_METHODOLOGICAL_DETAIL]"
                     (filesToUpload)="onFileChange($event, i, maFileType.INDICATOR_METHODOLOGICAL_DETAIL)"
                   />
                 </div>
@@ -195,6 +196,7 @@
                     [entityId]="getEntityId(i)"
                     [entityType]="entityType.INDICATOR"
                     [maId]="mitigationAction.id"
+                    [filesUploaded]="files[i][maFileType.INDICATOR_SUSTAINABILITY]"
                     (filesToUpload)="onFileChange($event, i, maFileType.INDICATOR_SUSTAINABILITY)"
                   />
                 </div>

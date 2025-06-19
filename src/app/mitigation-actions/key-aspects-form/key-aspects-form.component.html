@@ -44,6 +44,7 @@
                 <app-mitigation-action-file-upload
                   class="w-full"
                   [type]="maFileType"
+                  [filesUploaded]="files"
                   [maId]="mitigationAction && mitigationAction.id"
                   (filesToUpload)="addFiles($event)"
                 />

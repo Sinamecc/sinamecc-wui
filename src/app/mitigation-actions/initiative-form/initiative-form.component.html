@@ -64,6 +64,7 @@
                   class="w-full"
                   [type]="maFileType.INITIATIVE"
                   [maId]="(mitigationAction && mitigationAction.id) || id"
+                  [filesUploaded]="files[maFileType.INITIATIVE]"
                   (filesToUpload)="addFiles($event, maFileType.INITIATIVE)"
                 />
               </div>
@@ -313,6 +314,7 @@
                   class="w-full"
                   [type]="maFileType.GEOGRAPHIC_LOCATION"
                   [maId]="(mitigationAction && mitigationAction.id) || id"
+                  [filesUploaded]="files[maFileType.GEOGRAPHIC_LOCATION]"
                   (filesToUpload)="addFiles($event, maFileType.GEOGRAPHIC_LOCATION)"
                 />
               </div>

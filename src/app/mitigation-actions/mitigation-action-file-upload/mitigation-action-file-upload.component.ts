@@ -20,16 +20,11 @@ export class MitigationActionFileUploadComponent {
 
   @Output() filesToUpload = new EventEmitter<File[]>();
 
+  files: MAFile[] = [];
   filesUploading: File[] = [];
   loading: boolean = false;
 
   constructor(private service: MitigationActionsService) {}
-
-  ngOnInit() {
-    if (this.maId) {
-      this.loadFiles();
-    }
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['maId']) {
@@ -38,6 +33,9 @@ export class MitigationActionFileUploadComponent {
       if (currId && prevId !== currId) {
         this.filesUploading = [];
         this.filesToUpload.emit([]);
+        if (!this.entityType && this.maId) {
+          this.files = this.filesUploaded;
+        }
       }
     }
 
@@ -47,12 +45,15 @@ export class MitigationActionFileUploadComponent {
       if (this.entityType && currEntityId && prevEntityId !== currEntityId) {
         this.filesUploading = [];
         this.filesToUpload.emit([]);
+        if (this.entityType && this.maId) {
+          this.files = this.filesUploaded;
+        }
       }
     }
   }
 
   get filesToShow(): (MAFile | File)[] {
-    return [...this.filesUploaded, ...this.filesUploading];
+    return [...this.files, ...this.filesUploading];
   }
 
   async loadFiles(): Promise<void> {
@@ -108,7 +109,7 @@ export class MitigationActionFileUploadComponent {
     } else if (!(file instanceof File)) {
       try {
         await firstValueFrom(this.service.deleteFile(this.maId, [file.toString()]));
-        this.filesUploaded = this.filesUploaded.filter((f) => f.id !== file);
+        this.files = this.files.filter((f) => f.id !== file);
       } catch (error) {
         console.error('Error deleting file:', error);
       }
@@ -126,12 +127,12 @@ export class MitigationActionFileUploadComponent {
 
   private async refreshFiles(): Promise<void> {
     const files = await firstValueFrom(this.service.getFiles(this.maId));
-    this.filesUploaded = files.filter((file: MAFile) => file.type === this.type);
+    this.files = files.filter((file: MAFile) => file.type === this.type);
   }
 
   private async refreshEntityFiles(): Promise<void> {
     if (!this.entityId || !this.entityType) return;
     const files = await firstValueFrom(this.service.getFiles(this.maId, this.entityId, this.entityType));
-    this.filesUploaded = files.filter((file: MAFile) => file.type === this.type);
+    this.files = files.filter((file: MAFile) => file.type === this.type);
   }
 }

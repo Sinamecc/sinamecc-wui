@@ -13,6 +13,7 @@ import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MAFile } from '../mitigation-action-file-upload/file-upload';
 
 const log = new Logger('MitigationAction');
 
@@ -35,6 +36,11 @@ export class ImpactFormComponent implements OnInit {
   @Output() state = new EventEmitter<States>();
 
   files: {
+    [MAFileType.INDICATOR_METHODOLOGICAL_DETAIL]: MAFile[];
+    [MAFileType.INDICATOR_SUSTAINABILITY]: MAFile[];
+  }[] = [];
+
+  newFiles: {
     files: File[];
     type: MAFileType;
   }[] = [];
@@ -80,6 +86,21 @@ export class ImpactFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
+        if (this.mitigationAction.monitoring_information && this.mitigationAction.monitoring_information.indicator)
+          this.mitigationAction.monitoring_information.indicator.forEach((indicator: any) => {
+            const files = {
+              [MAFileType.INDICATOR_METHODOLOGICAL_DETAIL]: this.getFilesByType(
+                MAFileType.INDICATOR_METHODOLOGICAL_DETAIL,
+                indicator.id,
+              ),
+              [MAFileType.INDICATOR_SUSTAINABILITY]: this.getFilesByType(
+                MAFileType.INDICATOR_SUSTAINABILITY,
+                indicator.id,
+              ),
+            };
+
+            this.files.push(files);
+          });
       });
     }
   }
@@ -314,7 +335,7 @@ export class ImpactFormComponent implements OnInit {
   }
 
   async successSendForm(state: string) {
-    const hasAnyFiles = this.files.some((entry) => Array.isArray(entry.files) && entry.files.length > 0);
+    const hasAnyFiles = this.newFiles.some((entry) => Array.isArray(entry.files) && entry.files.length > 0);
 
     if (hasAnyFiles) {
       await this.uploadFiles();
@@ -339,8 +360,8 @@ export class ImpactFormComponent implements OnInit {
   async uploadFiles() {
     const fileUploadPromises: Promise<any>[] = [];
 
-    for (let index = 0; index < this.files.length; index++) {
-      const fileGroup = this.files[index];
+    for (let index = 0; index < this.newFiles.length; index++) {
+      const fileGroup = this.newFiles[index];
 
       if (Array.isArray(fileGroup.files) && fileGroup.files.length > 0) {
         const entityId = this.getEntityId(index);
@@ -369,10 +390,15 @@ export class ImpactFormComponent implements OnInit {
   }
 
   onFileChange(files: File[], index: number, type: MAFileType) {
-    this.files[index] = {
+    this.newFiles[index] = {
       files: files,
       type: type,
     };
+  }
+
+  getFilesByType(type: string, id: string) {
+    const indicator = this.mitigationAction?.monitoring_information?.indicator?.find((i) => i.id === id);
+    return indicator?.files?.filter((file) => file.type === type) || [];
   }
 
   onStepChange() {

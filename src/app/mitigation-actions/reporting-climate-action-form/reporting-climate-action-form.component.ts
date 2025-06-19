@@ -5,13 +5,12 @@ import { Router } from '@angular/router';
 import { ErrorReportingComponent } from '@shared';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-
-import { finalize } from 'rxjs/operators';
 import { MAEntityType, MAFileType, MitigationAction } from '../mitigation-action';
 import { MitigationActionNewFormData } from '../mitigation-action-new-form-data';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileUpload } from '@app/@shared/upload-button/file-upload';
+import { MAFile } from '../mitigation-action-file-upload/file-upload';
 
 @Component({
   selector: 'app-reporting-climate-action-form',
@@ -28,7 +27,8 @@ export class ReportingClimateActionFormComponent implements OnInit {
   wasSubmittedSuccessfully = false;
   mitigationAction: MitigationAction;
   stateLabel = 'submitted';
-  files: File[] = [];
+  newFiles: File[] = [];
+  files: MAFile[] = [];
 
   maFileType = MAFileType.MONITORING_UPDATED_DATA;
   entityType = MAEntityType.MONITORING_INDICATOR;
@@ -64,6 +64,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
+        this.files = this.getFiles();
       });
     }
   }
@@ -171,7 +172,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
   }
 
   async successSendForm() {
-    if (this.files.length) {
+    if (this.newFiles.length) {
       this.uploadFiles();
     }
 
@@ -271,11 +272,11 @@ export class ReportingClimateActionFormComponent implements OnInit {
 
   async uploadFiles() {
     const entityId = this.getEntityId();
-    this.service.submitFiles(this.mitigationAction.id, this.maFileType, this.files, entityId, this.entityType);
+    this.service.submitFiles(this.mitigationAction.id, this.maFileType, this.newFiles, entityId, this.entityType);
   }
 
   onFileChange(files: File[]) {
-    this.files = files;
+    this.newFiles = files;
   }
 
   getEntityId() {
@@ -288,9 +289,11 @@ export class ReportingClimateActionFormComponent implements OnInit {
       .toPromise();
   }
 
-  getFilesByType(type: string) {
-    return this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].files.filter(
-      (file) => file.type === type,
+  getFiles() {
+    return (
+      this.mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator?.[0]?.files?.filter(
+        (file) => file.type === this.maFileType,
+      ) || []
     );
   }
 }

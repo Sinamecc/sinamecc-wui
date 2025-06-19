@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
@@ -14,8 +13,8 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as _moment from 'moment';
 import { ErrorReportingComponent } from '@shared';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MAFile } from '../mitigation-action-file-upload/file-upload';
 
 export const MY_FORMATS = {
   parse: {
@@ -57,7 +56,8 @@ export class KeyAspectsFormComponent implements OnInit {
   mitigationAction: MitigationAction;
 
   maFileType = MAFileType.GHG_INFORMATION;
-  files = [];
+  newFiles: File[] = [];
+  files: MAFile[] = [];
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -73,11 +73,9 @@ export class KeyAspectsFormComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private i18nService: I18nService,
     private service: MitigationActionsService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
-    private router: Router,
   ) {
     // this.formData = new FormData();
     this.service.currentMitigationAction.subscribe((message) => (this.mitigationAction = message));
@@ -91,6 +89,7 @@ export class KeyAspectsFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
+        this.files = this.getFiles();
       });
     }
   }
@@ -174,8 +173,8 @@ export class KeyAspectsFormComponent implements OnInit {
   }
 
   async successSendForm(id: string) {
-    if (this.files.length) {
-      await this.service.submitFiles(id, this.maFileType, this.files);
+    if (this.newFiles.length) {
+      await this.service.submitFiles(id, this.maFileType, this.newFiles);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -186,7 +185,7 @@ export class KeyAspectsFormComponent implements OnInit {
   }
 
   addFiles(files: File[]) {
-    this.files = files;
+    this.newFiles = files;
   }
 
   financialSourceInputShown($event: any) {
@@ -199,5 +198,9 @@ export class KeyAspectsFormComponent implements OnInit {
 
   onStepChange() {
     this.wasSubmittedSuccessfully = false;
+  }
+
+  getFiles() {
+    return this.mitigationAction.files.filter((file) => file.type === this.maFileType);
   }
 }

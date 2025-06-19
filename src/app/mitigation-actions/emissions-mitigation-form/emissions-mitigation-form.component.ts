@@ -20,7 +20,7 @@ import {
 import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FileUpload } from '@app/@shared/upload-button/file-upload';
+import { MAFile } from '../mitigation-action-file-upload/file-upload';
 
 const log = new Logger('MitigationAction');
 @Component({
@@ -50,7 +50,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
   sectorIppc2006: SectorIpcc2006[][] = [];
   categoryIppc2006: CategoryIppc2006[][] = [];
   maFileType = MAFileType.IMPACT_DOCUMENTATION;
-  files = [];
+  newFiles: File[] = [];
+  files: MAFile[] = [];
 
   gasList = ['CO2', 'CH4', 'N2O', 'HFC*', 'SF6', 'CO', 'NOx', 'NMVOC', 'SO2', 'C Negro', 'Otro'];
 
@@ -77,6 +78,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
+        this.files = this.getFiles();
       });
     }
   }
@@ -342,8 +344,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   async successSendForm(id: string, state: States) {
-    if (this.files.length) {
-      await this.service.submitFiles(id, this.maFileType, this.files);
+    if (this.newFiles.length) {
+      await this.service.submitFiles(id, this.maFileType, this.newFiles);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
@@ -368,19 +370,11 @@ export class EmissionsMitigationFormComponent implements OnInit {
   }
 
   addFiles(files: File[]) {
-    this.files = files;
+    this.newFiles = files;
   }
 
-  async submitFiles(id: string, file: FileUpload) {
-    await this.service.submitFiles(id, file.type, file.filesToUpload).toPromise();
-  }
-
-  async deleteFiles(id: string, files: string[]) {
-    await this.service.deleteFile(id, files).toPromise();
-  }
-
-  getFilesByType(type: string) {
-    return this.mitigationAction.files.filter((file) => file.type === type);
+  getFiles() {
+    return this.mitigationAction.files.filter((file) => file.type === this.maFileType);
   }
 
   onStepChange() {
