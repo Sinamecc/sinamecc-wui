@@ -52,8 +52,9 @@ export class EmissionsMitigationFormComponent implements OnInit {
   categoryIppc2006: CategoryIppc2006[][] = [];
   impact_documentation: FileUpload = {
     type: '',
-    filesToUpload: null,
-    filesUploaded: null,
+    filesToUpload: [],
+    filesUploaded: [],
+    filesToRemove: [],
   };
 
   gasList = ['CO2', 'CH4', 'N2O', 'HFC*', 'SF6', 'CO', 'NOx', 'NMVOC', 'SO2', 'C Negro', 'Otro'];

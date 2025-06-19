@@ -45,13 +45,15 @@ export class InitiativeFormComponent implements OnInit {
   } = {
     geographic_location: {
       type: '',
-      filesToUpload: null,
-      filesUploaded: null,
+      filesToUpload: [],
+      filesUploaded: [],
+      filesToRemove: [],
     },
     initiative: {
       type: '',
-      filesToUpload: null,
-      filesUploaded: null,
+      filesToUpload: [],
+      filesUploaded: [],
+      filesToRemove: [],
     },
   };
 

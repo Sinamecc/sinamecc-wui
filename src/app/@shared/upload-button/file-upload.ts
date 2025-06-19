@@ -2,7 +2,7 @@ export type FileUpload = {
   type: string;
   filesToUpload: File[];
   filesUploaded: FileUploaded[];
-  filesToRemove?: string[];
+  filesToRemove: string[];
 };
 
 export type FileUploaded = {

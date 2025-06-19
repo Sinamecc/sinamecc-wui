@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 import { finalize } from 'rxjs/operators';
-import { MAFileType, MitigationAction } from '../mitigation-action';
+import { MAEntityType, MAFileType, MitigationAction } from '../mitigation-action';
 import { MitigationActionNewFormData } from '../mitigation-action-new-form-data';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -29,9 +29,11 @@ export class ReportingClimateActionFormComponent implements OnInit {
   stateLabel = 'submitted';
   files: FileUpload = {
     type: '',
-    filesToUpload: null,
-    filesUploaded: null,
+    filesToUpload: [],
+    filesUploaded: [],
+    filesToRemove: [],
   };
+
   maFileType = MAFileType;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
@@ -65,7 +67,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
-        this.files.filesUploaded = this.getFilesByType(this.maFileType.TO_UPDATE_FILE);
+        this.files.filesUploaded = this.getFilesByType(this.maFileType.MONITORING_UPDATED_DATA);
       });
     }
   }
@@ -154,7 +156,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.successSendForm(response.id);
+          this.successSendForm(response.id, response.monitoring);
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -167,9 +169,9 @@ export class ReportingClimateActionFormComponent implements OnInit {
       );
   }
 
-  successSendForm(id: string) {
+  successSendForm(id: string, monitoringId: string) {
     if (this.files.filesToUpload && this.files.filesToUpload.length > 0) {
-      this.submitFiles(id, this.files);
+      this.submitFiles(id, this.files, monitoringId);
     }
 
     if (this.files.filesToRemove && this.files.filesToRemove.length > 0) {
@@ -274,8 +276,10 @@ export class ReportingClimateActionFormComponent implements OnInit {
     this.files = event;
   }
 
-  async submitFiles(id: string, file: FileUpload) {
-    await this.service.submitFiles(id, file.type, file.filesToUpload).toPromise();
+  async submitFiles(id: string, file: FileUpload, monitoringId: string) {
+    await this.service
+      .submitFiles(id, file.type, file.filesToUpload, monitoringId, MAEntityType.MONITORING_INDICATOR)
+      .toPromise();
   }
 
   async deleteFiles(id: string, files: string[]) {
@@ -283,6 +287,8 @@ export class ReportingClimateActionFormComponent implements OnInit {
   }
 
   getFilesByType(type: string) {
-    return this.mitigationAction.files.filter((file) => file.type === type);
+    return this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].files.filter(
+      (file) => file.type === type,
+    );
   }
 }

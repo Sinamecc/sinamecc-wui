@@ -60,8 +60,9 @@ export class KeyAspectsFormComponent implements OnInit {
 
   ghg_information: FileUpload = {
     type: '',
-    filesToUpload: null,
-    filesUploaded: null,
+    filesToUpload: [],
+    filesUploaded: [],
+    filesToRemove: [],
   };
 
   @Input() stepper: any;

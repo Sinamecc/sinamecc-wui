@@ -8,6 +8,7 @@ import {
   MADataCatalogs,
   SectorIpcc2006,
   CategoryIppc2006,
+  MAEntityType,
 } from '@app/mitigation-actions/mitigation-action';
 import { MitigationActionReview } from '@app/mitigation-actions/mitigation-action-review';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
@@ -47,7 +48,7 @@ export interface MAResponse {
 export interface MAFileResponse extends MAResponse {
   data: {
     number_of_files: number;
-    mitigation_action_id: string;
+    mitigation_action_id: number;
   };
 }
 
@@ -57,6 +58,7 @@ export interface Response {
   message: string;
   state: string;
   id?: string;
+  monitoring?: string; // TODO: temp value, should be corrected in issue SIN-I75
 }
 
 export interface ReportContext {
@@ -126,6 +128,7 @@ export class MitigationActionsService {
           statusCode: 200,
           id: body.id,
           state: body.fsm_state.state,
+          monitoring: body.monitoring_reporting_indicator.monitoring_indicator[0].id, // TODO: related to issue SIN-I75
           message: 'Form submitted correctly',
         };
         return response;
@@ -271,12 +274,18 @@ export class MitigationActionsService {
     return this.s3.downloadResource(filePath);
   }
 
-  public submitFiles(id: string, type: string, files: File[]) {
+  public submitFiles(id: string, type: string, files: File[], entityId?: string, entityType?: MAEntityType) {
     const formData: FormData = new FormData();
     formData.append('type', type);
     files.forEach((file) => {
       formData.append('files', file);
     });
+
+    if (entityId && entityType) {
+      formData.append('entity_id', entityId.toString());
+      formData.append('entity_type', entityType);
+    }
+
     return this.httpClient.post(routes.files(id), formData, {}).pipe(
       map((body: MAFileResponse) => {
         return body;

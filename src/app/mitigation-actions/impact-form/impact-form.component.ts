@@ -8,7 +8,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { DECIMAL_NUMBER_REGEX, MitigationAction, States, MAFileType } from '../mitigation-action';
+import { DECIMAL_NUMBER_REGEX, MitigationAction, States, MAFileType, MAEntityType } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { I18nService } from '@app/i18n';
@@ -34,21 +34,7 @@ export class ImpactFormComponent implements OnInit {
   maFileType = MAFileType;
   @Output() state = new EventEmitter<States>();
 
-  files: {
-    methodologicalDetail: FileUpload;
-    howSustainability: FileUpload;
-  } = {
-    methodologicalDetail: {
-      type: '',
-      filesToUpload: null,
-      filesUploaded: null,
-    },
-    howSustainability: {
-      type: '',
-      filesToUpload: null,
-      filesUploaded: null,
-    },
-  };
+  files: any[] = [];
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -91,8 +77,25 @@ export class ImpactFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
-        this.files.methodologicalDetail.filesUploaded = this.getFilesByType(MAFileType.METHODOLOGICAL_INDICATOR_FILE);
-        this.files.howSustainability.filesUploaded = this.getFilesByType(MAFileType.SUSTAINABILITY_INDICATOR_FILE);
+        this.mitigationAction.monitoring_information.indicator.forEach((indicator: any) => {
+          const files = {
+            id: indicator.id,
+            methodologicalDetail: {
+              type: '',
+              filesToUpload: [],
+              filesToRemove: [],
+              filesUploaded: this.getFilesByType(MAFileType.INDICATOR_METHODOLOGICAL_DETAIL, indicator.id),
+            },
+            howSustainability: {
+              type: '',
+              filesToUpload: [],
+              filesToRemove: [],
+              filesUploaded: this.getFilesByType(MAFileType.INDICATOR_SUSTAINABILITY, indicator.id),
+            },
+          };
+
+          this.files.push(files);
+        });
       });
     }
   }
@@ -326,24 +329,52 @@ export class ImpactFormComponent implements OnInit {
     }
   }
 
-  successSendForm(id: string, state: string) {
-    const { howSustainability, methodologicalDetail } = this.files;
-    [howSustainability, methodologicalDetail].forEach((section) => {
-      if (section.filesToUpload?.length) {
-        this.submitFiles(id, section);
-      }
+  successSendForm(mitigationId: string, state: string) {
+    const filesToRemove: string[] = [];
+
+    this.files.forEach(({ id: indicatorId, methodologicalDetail, howSustainability }) => {
+      const sections = [
+        {
+          type: MAFileType.INDICATOR_METHODOLOGICAL_DETAIL,
+          files: methodologicalDetail?.filesToUpload || [],
+          toRemove: methodologicalDetail?.filesToRemove || [],
+        },
+        {
+          type: MAFileType.INDICATOR_SUSTAINABILITY,
+          files: howSustainability?.filesToUpload || [],
+          toRemove: howSustainability?.filesToRemove || [],
+        },
+      ];
+
+      sections.forEach(({ type, files, toRemove }) => {
+        if (files.length) {
+          const fileUpload: FileUpload = {
+            type,
+            filesToUpload: files,
+            filesUploaded: [],
+            filesToRemove: [],
+          };
+
+          this.submitFiles(mitigationId, fileUpload, indicatorId, MAEntityType.INDICATOR);
+        }
+
+        if (toRemove.length) {
+          filesToRemove.push(...toRemove);
+        }
+      });
     });
 
-    const filesToRemove = [...(howSustainability.filesToRemove || []), ...(methodologicalDetail.filesToRemove || [])];
     if (filesToRemove.length) {
-      this.deleteFiles(id, filesToRemove);
+      this.deleteFiles(mitigationId, filesToRemove);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
       this.snackBar.open(res, null, { duration: 3000 });
     });
+
     this.wasSubmittedSuccessfully = true;
     this.state.emit(state as States);
+
     if (state === States.ACCEPTED_BY_DCC) {
       this.stepper.next();
     } else {
@@ -353,25 +384,46 @@ export class ImpactFormComponent implements OnInit {
     }
   }
 
-  uploadFile(event: FileUpload) {
-    const name = event.type;
-    if (name === this.maFileType.METHODOLOGICAL_INDICATOR_FILE) {
-      this.files.methodologicalDetail = event;
-    } else if (name === this.maFileType.SUSTAINABILITY_INDICATOR_FILE) {
-      this.files.howSustainability = event;
+  uploadFile(event: FileUpload, index: number) {
+    const indicator = this.mitigationAction.monitoring_information.indicator[index];
+    const id = indicator.id;
+    const type = event.type;
+    const newFiles = event.filesToUpload || [];
+    const removedFiles = event.filesToRemove || [];
+    console.log(removedFiles);
+
+    if (!this.files[index]) {
+      this.files[index] = {
+        id,
+        methodologicalDetail: { filesToUpload: [], filesToRemove: [] },
+        howSustainability: { filesToUpload: [], filesToRemove: [] },
+      };
     }
+
+    const fileGroup =
+      type === this.maFileType.INDICATOR_METHODOLOGICAL_DETAIL
+        ? this.files[index].methodologicalDetail
+        : type === this.maFileType.INDICATOR_SUSTAINABILITY
+          ? this.files[index].howSustainability
+          : null;
+
+    if (!fileGroup) return;
+    fileGroup.filesToUpload = [...(fileGroup.filesToUpload || []), ...newFiles];
+    fileGroup.filesToRemove = [...(fileGroup.filesToRemove || []), ...removedFiles];
+    fileGroup.filesUploaded = event.filesUploaded || [];
   }
 
-  async submitFiles(id: string, file: FileUpload) {
-    await this.service.submitFiles(id, file.type, file.filesToUpload).toPromise();
+  async submitFiles(id: string, file: FileUpload, entityId: string, entityType: MAEntityType) {
+    await this.service.submitFiles(id, file.type, file.filesToUpload, entityId, entityType).toPromise();
   }
 
   async deleteFiles(id: string, files: string[]) {
     await this.service.deleteFile(id, files).toPromise();
   }
 
-  getFilesByType(type: string) {
-    return this.mitigationAction.files.filter((file) => file.type === type);
+  getFilesByType(type: string, id: string) {
+    const indicator = this.mitigationAction.monitoring_information.indicator.find((indicator) => indicator.id === id);
+    return !indicator ? [] : indicator.files.filter((file) => file.type === type);
   }
 
   onStepChange() {

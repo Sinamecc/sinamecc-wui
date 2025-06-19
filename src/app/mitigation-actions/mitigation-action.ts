@@ -284,10 +284,17 @@ export enum MAFileType {
   IMPACT_DOCUMENTATION = 'impact-documentation',
   INITIATIVE = 'initiative',
   GEOGRAPHIC_LOCATION = 'geographic-location',
-  METHODOLOGICAL_INDICATOR_FILE = 'methodological-indicator-file',
-  SUSTAINABILITY_INDICATOR_FILE = 'sustainability-indicator-file',
   GHG_INFORMATION = 'ghg-information',
-  TO_UPDATE_FILE = 'to-update-file',
+  INDICATOR_SUSTAINABILITY = 'indicator-sustainability',
+  INDICATOR_METHODOLOGICAL_DETAIL = 'indicator-methodological-detail',
+  MONITORING_REPORT_LINE_TEXT = 'monitoring-report-line-text',
+  MONITORING_UPDATED_DATA = 'monitoring-updated-data',
+  MONITORING_WEB_SERVICE_CONNECTION = 'monitoring-web-service-connection',
+}
+
+export enum MAEntityType {
+  MONITORING_INDICATOR = 'monitoring-indicator',
+  INDICATOR = 'indicator',
 }
 
 export enum States {

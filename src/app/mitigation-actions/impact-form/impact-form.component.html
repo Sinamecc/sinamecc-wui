@@ -53,9 +53,9 @@
                 <div class="w-full xl:w-auto flex items-start justify-start">
                   <app-upload-button
                     class="w-full"
-                    [type]="maFileType.METHODOLOGICAL_INDICATOR_FILE"
-                    [filesUploaded]="files.methodologicalDetail.filesUploaded"
-                    (fileChange)="uploadFile($event)"
+                    [type]="maFileType.INDICATOR_METHODOLOGICAL_DETAIL"
+                    [filesUploaded]="files[i].methodologicalDetail.filesUploaded"
+                    (fileChange)="uploadFile($event, i)"
                   />
                 </div>
 
@@ -189,9 +189,9 @@
                 <div class="w-full xl:w-auto flex items-start justify-start">
                   <app-upload-button
                     class="w-full"
-                    [type]="maFileType.SUSTAINABILITY_INDICATOR_FILE"
-                    [filesUploaded]="files.howSustainability.filesUploaded"
-                    (fileChange)="uploadFile($event)"
+                    [type]="maFileType.INDICATOR_SUSTAINABILITY"
+                    [filesUploaded]="files[i].howSustainability.filesUploaded"
+                    (fileChange)="uploadFile($event, i)"
                   />
                 </div>
                 <br />

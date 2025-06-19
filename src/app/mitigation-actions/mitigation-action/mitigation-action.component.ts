@@ -121,7 +121,8 @@ export class MitigationActionComponent implements OnInit {
         this.mitigationAction = response;
 
         Object.values(MAFileType).forEach((type: MAFileType) => {
-          this.files[type] = this.getFilesByType(type);
+          if (type !== MAFileType.INDICATOR_METHODOLOGICAL_DETAIL && type !== MAFileType.INDICATOR_SUSTAINABILITY)
+            this.files[type] = this.getFilesByType(type);
         });
       });
   }
@@ -174,8 +175,18 @@ export class MitigationActionComponent implements OnInit {
     return commentList;
   }
 
-  getFilesByType(type: MAFileType) {
-    return this.mitigationAction.files.filter((file) => file.type === type);
+  getFilesByType(type: MAFileType, id?: string) {
+    if (type === MAFileType.INDICATOR_METHODOLOGICAL_DETAIL || type === MAFileType.INDICATOR_SUSTAINABILITY) {
+      const indicator = this.mitigationAction.monitoring_information.indicator.find((indicator) => indicator.id === id);
+      return !indicator ? [] : indicator.files.filter((file) => file.type === type);
+    } else if (type === MAFileType.MONITORING_UPDATED_DATA) {
+      // TODO: add id when issue SIN-I75 is solved
+      return this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].files.filter(
+        (file) => file.type === type,
+      );
+    } else {
+      return this.mitigationAction.files.filter((file) => file.type === type);
+    }
   }
 
   hasFiles(type: MAFileType): boolean {

@@ -34,11 +34,11 @@ export class UploadButtonComponent {
   }
 
   get filesToShow() {
-    return [...this.filesUploaded, ...this.filesToUpload];
+    return [...(this.filesUploaded ?? []), ...this.filesToUpload];
   }
 
   clearFiles() {
-    this.fileChange.emit({ filesToUpload: [], filesUploaded: [], type: this.type });
+    this.fileChange.emit({ filesToUpload: [], filesUploaded: [], filesToRemove: [], type: this.type });
     this.filesToUpload = [];
   }
 
