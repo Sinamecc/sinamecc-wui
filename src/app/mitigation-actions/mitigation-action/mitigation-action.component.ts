@@ -192,8 +192,4 @@ export class MitigationActionComponent implements OnInit {
   hasFiles(type: MAFileType): boolean {
     return this.files && this.files[type] && this.files[type].length > 0;
   }
-
-  downloadFile(url: string): void {
-    this.service.downloadFile(url);
-  }
 }

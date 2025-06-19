@@ -321,14 +321,4 @@ export class MitigationActionsService {
       }),
     );
   }
-
-  public downloadFile(file: string) {
-    this.httpClient.get(file, { responseType: 'blob' }).subscribe((blob) => {
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.click();
-      window.URL.revokeObjectURL(url);
-    });
-  }
 }
