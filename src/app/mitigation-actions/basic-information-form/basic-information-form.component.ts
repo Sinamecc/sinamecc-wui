@@ -258,4 +258,8 @@ export class BasicInformationFormComponent implements OnInit {
     }
     this.form.get('formArray').get([1]).get('entityProjectCtrl').updateValueAndValidity();
   }
+
+  onStepChange() {
+    this.wasSubmittedSuccessfully = false;
+  }
 }

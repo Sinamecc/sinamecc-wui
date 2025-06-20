@@ -1,18 +1,19 @@
-import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
-import { finalize, tap } from 'rxjs/operators';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { DECIMAL_NUMBER_REGEX, MAFile, MitigationAction, States } from '../mitigation-action';
+import { DECIMAL_NUMBER_REGEX, MitigationAction, States, MAFileType, MAEntityType } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MAFile } from '../mitigation-action-file-upload/file-upload';
 
 const log = new Logger('MitigationAction');
 
@@ -30,21 +31,19 @@ export class ImpactFormComponent implements OnInit {
   wasSubmittedSuccessfully = false;
   startDate = new Date();
   mitigationAction: MitigationAction;
+  maFileType = MAFileType;
+  entityType = MAEntityType;
   @Output() state = new EventEmitter<States>();
 
   files: {
-    methodologicalDetail: MAFile;
-    howSustainability: MAFile;
-  } = {
-    methodologicalDetail: {
-      file: null,
-      name: '',
-    },
-    howSustainability: {
-      file: null,
-      name: '',
-    },
-  };
+    [MAFileType.INDICATOR_METHODOLOGICAL_DETAIL]: MAFile[];
+    [MAFileType.INDICATOR_SUSTAINABILITY]: MAFile[];
+  }[] = [];
+
+  newFiles: {
+    files: File[];
+    type: MAFileType;
+  }[] = [];
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -87,6 +86,21 @@ export class ImpactFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
+        if (this.mitigationAction.monitoring_information && this.mitigationAction.monitoring_information.indicator)
+          this.mitigationAction.monitoring_information.indicator.forEach((indicator: any) => {
+            const files = {
+              [MAFileType.INDICATOR_METHODOLOGICAL_DETAIL]: this.getFilesByType(
+                MAFileType.INDICATOR_METHODOLOGICAL_DETAIL,
+                indicator.id,
+              ),
+              [MAFileType.INDICATOR_SUSTAINABILITY]: this.getFilesByType(
+                MAFileType.INDICATOR_SUSTAINABILITY,
+                indicator.id,
+              ),
+            };
+
+            this.files.push(files);
+          });
       });
     }
   }
@@ -305,7 +319,7 @@ export class ImpactFormComponent implements OnInit {
         )
         .subscribe(
           (response) => {
-            this.successSendForm(response.id, response.state);
+            this.successSendForm(response.state);
           },
           (error) => {
             this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -320,20 +334,20 @@ export class ImpactFormComponent implements OnInit {
     }
   }
 
-  successSendForm(id: string, state: string) {
-    if (this.files.methodologicalDetail.file) {
-      this.submitFile(id, this.files.methodologicalDetail.name, this.files.methodologicalDetail.file);
-    }
+  async successSendForm(state: string) {
+    const hasAnyFiles = this.newFiles.some((entry) => Array.isArray(entry.files) && entry.files.length > 0);
 
-    if (this.files.howSustainability.file) {
-      this.submitFile(id, this.files.howSustainability.name, this.files.howSustainability.file);
+    if (hasAnyFiles) {
+      await this.uploadFiles();
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
       this.snackBar.open(res, null, { duration: 3000 });
     });
+
     this.wasSubmittedSuccessfully = true;
     this.state.emit(state as States);
+
     if (state === States.ACCEPTED_BY_DCC) {
       this.stepper.next();
     } else {
@@ -343,26 +357,51 @@ export class ImpactFormComponent implements OnInit {
     }
   }
 
-  uploadFile(event: Event) {
-    // TODO: correct names
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      const file = {
-        file: fileList[0],
-        name: name,
-      };
+  async uploadFiles() {
+    const fileUploadPromises: Promise<any>[] = [];
 
-      if (name === 'methodologicalDetailIndicatorFile') {
-        this.files.methodologicalDetail = file;
-      } else if (name === 'howSustainabilityIndicatorFile') {
-        this.files.howSustainability = file;
+    for (let index = 0; index < this.newFiles.length; index++) {
+      const fileGroup = this.newFiles[index];
+
+      if (Array.isArray(fileGroup.files) && fileGroup.files.length > 0) {
+        const entityId = this.getEntityId(index);
+
+        if (entityId) {
+          fileUploadPromises.push(
+            firstValueFrom(
+              this.service.submitFiles(
+                this.mitigationAction.id,
+                fileGroup.type,
+                fileGroup.files,
+                entityId,
+                MAEntityType.INDICATOR,
+              ),
+            ),
+          );
+        }
       }
     }
+
+    await Promise.all(fileUploadPromises);
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
+  getEntityId(index: number): string | null {
+    return this.mitigationAction.monitoring_information?.indicator?.[index]?.id ?? null;
+  }
+
+  onFileChange(files: File[], index: number, type: MAFileType) {
+    this.newFiles[index] = {
+      files: files,
+      type: type,
+    };
+  }
+
+  getFilesByType(type: string, id: string) {
+    const indicator = this.mitigationAction?.monitoring_information?.indicator?.find((i) => i.id === id);
+    return indicator?.files?.filter((file) => file.type === type) || [];
+  }
+
+  onStepChange() {
+    this.wasSubmittedSuccessfully = false;
   }
 }

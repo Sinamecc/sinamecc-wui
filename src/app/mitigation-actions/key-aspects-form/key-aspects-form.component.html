@@ -7,14 +7,12 @@
   <mat-card-content>
     <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
       <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
-        <span translate>errorLabel.errorSubmittingForm</span>
-        <br />
-        <app-error-reporting #errorComponent></app-error-reporting>
+        <app-error-reporting #errorComponent [errorMessage]="'errorLabel.errorSubmittingForm'"></app-error-reporting>
       </div>
 
       <br />
       <div class="flex flex-col">
-        <mat-vertical-stepper formArrayName="formArray" linear #stepper>
+        <mat-vertical-stepper formArrayName="formArray" linear #stepper (selectedIndexChange)="onStepChange()">
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
               <span>3.1 - </span><span translate>mitigationAction.overviewImpactEmissionsRemovals</span>
@@ -28,30 +26,29 @@
             </mat-form-field>
             <br />
 
-            <div class="flex flex-col xl:flex-row gap-1 xl:gap-6 justify-center w-full">
-              <div class="flex flex-col">
+            <div class="flex flex-col xl:flex-row gap-2 xl:gap-6 justify-center w-full">
+              <mat-form-field class="field-ppcn w-full xl:flex-1 min-w-[250px] mb-0 xl:mb-0">
                 <mat-label translate
                   >3.1.2 - <span translate>mitigationAction.graphicLogicImpactEmissionsRemovals</span></mat-label
                 >
-                <mat-form-field class="field-ppcn w-full xl:flex-1 min-w-[250px] mb-0 xl:mb-0">
-                  <input matInput formControlName="graphicLogicImpactEmissionsRemovalsCtrl" />
-                  <mat-hint
-                    ><span translate>mitigationAction.graphicLogicImpactEmissionsRemovalsHint</span>
-                    <a target="_blank" href="https://drive.google.com/file/d/10IMk4cghz5CuCQzjgYPDBGoot-8Y82FA/view"
-                      >Link</a
-                    ></mat-hint
-                  >
-                  <mat-error translate>errorLabel.fieldRequired</mat-error>
-                </mat-form-field>
+                <input matInput formControlName="graphicLogicImpactEmissionsRemovalsCtrl" />
+                <mat-hint
+                  ><span translate>mitigationAction.graphicLogicImpactEmissionsRemovalsHint</span>
+                  <a target="_blank" href="https://drive.google.com/file/d/10IMk4cghz5CuCQzjgYPDBGoot-8Y82FA/view"
+                    >Link</a
+                  ></mat-hint
+                >
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <div class="w-full xl:w-auto flex items-start justify-start">
+                <app-mitigation-action-file-upload
+                  class="w-full"
+                  [type]="maFileType"
+                  [filesUploaded]="files"
+                  [maId]="mitigationAction && mitigationAction.id"
+                  (filesToUpload)="addFiles($event)"
+                />
               </div>
-
-              <input
-                type="file"
-                accept=".rar,application/pdf,.zip"
-                name="ghg-information"
-                class="block w-full xl:w-auto mb-4 mt-6"
-                (change)="uploadFile($event)"
-              />
               <br />
             </div>
 

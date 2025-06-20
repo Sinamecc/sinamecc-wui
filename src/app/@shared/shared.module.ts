@@ -23,7 +23,9 @@ import { S3Service } from './s3.service';
 import { CommentsViewComponent } from './comments-view/comments-view.component';
 import { CommentsAddComponent } from './comments-add/comments-add.component';
 import { ChangeLogViewComponent } from './change-log-view/change-log-view.component';
+import { UploadButtonComponent } from './upload-button/upload-button.component';
 import { AmountInputComponent } from './amount-input/amount-input.component';
+import { FileListComponent } from './file-list/file-list.component';
 
 @NgModule({
   imports: [MaterialModule, CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
@@ -42,6 +44,8 @@ import { AmountInputComponent } from './amount-input/amount-input.component';
     CommentsViewComponent,
     CommentsAddComponent,
     ChangeLogViewComponent,
+    UploadButtonComponent,
+    FileListComponent,
     AmountInputComponent,
   ],
   providers: [UploadProposalService, UpdateStatusService, ViewPdfService, S3Service],
@@ -60,6 +64,8 @@ import { AmountInputComponent } from './amount-input/amount-input.component';
     CommentsViewComponent,
     CommentsAddComponent,
     ChangeLogViewComponent,
+    UploadButtonComponent,
+    FileListComponent,
     AmountInputComponent,
   ],
 })

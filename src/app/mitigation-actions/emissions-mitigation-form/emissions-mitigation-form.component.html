@@ -6,14 +6,12 @@
   <mat-card-content>
     <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
       <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
-        <span translate>errorLabel.errorSubmittingForm</span>
-        <br />
-        <app-error-reporting #errorComponent></app-error-reporting>
+        <app-error-reporting #errorComponent [errorMessage]="'errorLabel.errorSubmittingForm'"></app-error-reporting>
       </div>
 
       <br />
       <div class="flex flex-col">
-        <mat-vertical-stepper formArrayName="formArray" linear #stepper>
+        <mat-vertical-stepper formArrayName="formArray" linear #stepper (selectedIndexChange)="onStepChange()">
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
               <span>4.1 - </span><span translate>specificLabel.documentationImpactEstimate</span>
@@ -146,26 +144,25 @@
             <br />
 
             <div class="flex flex-col xl:flex-row gap-1 xl:gap-6 justify-center w-full">
-              <div class="flex flex-col">
+              <mat-form-field class="field-ppcn w-full xl:flex-1 min-w-[250px] mb-0 xl:mb-0">
                 <mat-label translate
                   >4.1.7 -
                   <span translate
                     >mitigationAction.documentationCalculationsEstimateReductionEmissionsCO2</span
                   ></mat-label
                 >
-                <mat-form-field class="field-ppcn w-full xl:flex-1 min-w-[250px] mb-0 xl:mb-0">
-                  <input matInput formControlName="documentationCalculationsEstimateReductionEmissionsCO2Ctrl" />
-                  <mat-error translate>errorLabel.fieldRequired</mat-error>
-                </mat-form-field>
+                <input matInput formControlName="documentationCalculationsEstimateReductionEmissionsCO2Ctrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
+              <div class="w-full xl:w-auto flex items-start justify-start">
+                <app-mitigation-action-file-upload
+                  class="w-full"
+                  [type]="maFileType"
+                  [filesUploaded]="files"
+                  [maId]="mitigationAction && mitigationAction.id"
+                  (filesToUpload)="addFiles($event)"
+                />
               </div>
-
-              <input
-                type="file"
-                accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/msword,"
-                name="impact-documentation"
-                class="block w-full xl:w-auto mb-4"
-                (change)="uploadFile($event)"
-              />
               <br />
             </div>
 

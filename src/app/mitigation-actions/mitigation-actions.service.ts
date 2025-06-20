@@ -8,6 +8,7 @@ import {
   MADataCatalogs,
   SectorIpcc2006,
   CategoryIppc2006,
+  MAEntityType,
 } from '@app/mitigation-actions/mitigation-action';
 import { MitigationActionReview } from '@app/mitigation-actions/mitigation-action-review';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
@@ -36,8 +37,20 @@ const routes = {
   allData: () => `/v1/mitigation-action/data/`,
   sectorIppc2006: (sectorID: string) => `/v1/mitigation-action/data/sector/${sectorID}/sector-ipcc/`,
   categoryIppc2006: (CategoryId: string) => `/v1/mitigation-action/data/sector-ipcc/${CategoryId}/category-ipcc/`,
-  submitFile: (id: string, key: string) => `/v1/mitigation-action/${id}/file/${key}/`,
+  files: (id: string) => `/v1/mitigation-action/${id}/attachments`,
 };
+
+export interface MAResponse {
+  data: any;
+  code: number;
+}
+
+export interface MAFileResponse extends MAResponse {
+  data: {
+    number_of_files: number;
+    mitigation_action_id: number;
+  };
+}
 
 export interface Response {
   // Customize received credentials here
@@ -45,6 +58,7 @@ export interface Response {
   message: string;
   state: string;
   id?: string;
+  monitoring?: string; // TODO: temp value, should be corrected in issue SIN-I75
 }
 
 export interface ReportContext {
@@ -90,6 +104,7 @@ export class MitigationActionsService {
         const response = {
           statusCode: 200,
           message: 'Form submitted correctly',
+          id: body.id,
           state: body.fsm_state.state,
         };
         return response;
@@ -113,6 +128,7 @@ export class MitigationActionsService {
           statusCode: 200,
           id: body.id,
           state: body.fsm_state.state,
+          monitoring: body.monitoring_reporting_indicator.monitoring_indicator[0].id, // TODO: related to issue SIN-I75
           message: 'Form submitted correctly',
         };
         return response;
@@ -258,11 +274,48 @@ export class MitigationActionsService {
     return this.s3.downloadResource(filePath);
   }
 
-  public submitMitigationFile(key: string, file: File, id: string) {
+  public submitFiles(id: string, type: string, files: File[], entityId?: string, entityType?: MAEntityType) {
     const formData: FormData = new FormData();
-    formData.append('file', file);
+    formData.append('type', type);
+    files.forEach((file) => {
+      formData.append('files', file);
+    });
 
-    return this.httpClient.put(routes.submitFile(id, key), formData, {}).pipe(
+    if (entityId && entityType) {
+      formData.append('entity_id', entityId.toString());
+      formData.append('entity_type', entityType);
+    }
+
+    return this.httpClient.post(routes.files(id), formData, {}).pipe(
+      map((body: MAFileResponse) => {
+        return body;
+      }),
+    );
+  }
+
+  public deleteFile(id: string, files: string[]) {
+    return this.httpClient
+      .delete(routes.files(id), {
+        body: {
+          file_ids: files,
+        },
+      })
+      .pipe(
+        map((body: MAFileResponse) => {
+          return body;
+        }),
+      );
+  }
+
+  public getFiles(id: string, entityId?: string, entityType?: MAEntityType) {
+    let params: any = {};
+
+    if (entityId && entityType) {
+      params.entity_id = entityId;
+      params.entity_type = entityType;
+    }
+
+    return this.httpClient.get(routes.files(id), { params }).pipe(
       map((body: any) => {
         return body;
       }),

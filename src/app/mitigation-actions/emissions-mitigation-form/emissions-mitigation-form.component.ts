@@ -1,17 +1,26 @@
-import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, AbstractControl } from '@angular/forms';
-import { finalize, tap } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { CategoryIppc2006, MADataCatalogItem, MitigationAction, SectorIpcc2006, States } from '../mitigation-action';
+
+import {
+  CategoryIppc2006,
+  MADataCatalogItem,
+  MAFileType,
+  MitigationAction,
+  SectorIpcc2006,
+  States,
+} from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MAFile } from '../mitigation-action-file-upload/file-upload';
 
 const log = new Logger('MitigationAction');
 @Component({
@@ -40,13 +49,9 @@ export class EmissionsMitigationFormComponent implements OnInit {
   sectorCatalog: MADataCatalogItem[] = [];
   sectorIppc2006: SectorIpcc2006[][] = [];
   categoryIppc2006: CategoryIppc2006[][] = [];
-  impact_documentation: {
-    file: File;
-    name: string;
-  } = {
-    file: null,
-    name: '',
-  };
+  maFileType = MAFileType.IMPACT_DOCUMENTATION;
+  newFiles: File[] = [];
+  files: MAFile[] = [];
 
   gasList = ['CO2', 'CH4', 'N2O', 'HFC*', 'SF6', 'CO', 'NOx', 'NMVOC', 'SO2', 'C Negro', 'Otro'];
 
@@ -73,6 +78,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
+        this.files = this.getFiles();
       });
     }
   }
@@ -322,13 +328,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
         }),
       )
       .subscribe(
-        (response) => {
-          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
-          this.wasSubmittedSuccessfully = true;
-          this.state.emit(response.state as States);
-          this.stepper.next();
+        async (response) => {
+          await this.successSendForm(response.id, response.state as States);
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -342,15 +343,16 @@ export class EmissionsMitigationFormComponent implements OnInit {
       );
   }
 
-  successSendForm(id: string) {
-    if (this.impact_documentation.file) {
-      this.submitFile(id, this.impact_documentation.name, this.impact_documentation.file);
+  async successSendForm(id: string, state: States) {
+    if (this.newFiles.length) {
+      await this.service.submitFiles(id, this.maFileType, this.newFiles);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
       this.snackBar.open(res, null, { duration: 3000 });
     });
     this.wasSubmittedSuccessfully = true;
+    this.state.emit(state);
     this.stepper.next();
   }
 
@@ -367,20 +369,15 @@ export class EmissionsMitigationFormComponent implements OnInit {
     this.form.get('formArray').get([2]).get('methodologyUsedCtrl').updateValueAndValidity();
   }
 
-  uploadFile(event: Event) {
-    // TODO: fix names
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      this.impact_documentation = {
-        file: fileList[0],
-        name: name,
-      };
-    }
+  addFiles(files: File[]) {
+    this.newFiles = files;
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
+  getFiles() {
+    return this.mitigationAction.files.filter((file) => file.type === this.maFileType);
+  }
+
+  onStepChange() {
+    this.wasSubmittedSuccessfully = false;
   }
 }

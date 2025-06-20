@@ -1,0 +1,34 @@
+<div class="flex flex-row xl:flex-col items-start xl:justify-center justify-between space-y-2 w-full">
+  <input hidden type="file" [accept]="accept" [name]="type" #fileInput (change)="uploadFile($event)" multiple />
+  <button
+    [disabled]="loading"
+    class="primary-button flex flex-row gap-1 items-center"
+    type="button"
+    matRipple
+    color="primary"
+    (click)="fileInput.click()"
+  >
+    <span translate>general.fileUpload</span>
+    <mat-progress-spinner
+      *ngIf="loading"
+      diameter="18"
+      mode="indeterminate"
+      color="accent"
+      style="vertical-align: middle"
+    ></mat-progress-spinner>
+  </button>
+  <div class="flex flex-col items-start justify-between">
+    <div *ngFor="let file of filesToShow" class="flex items-center justify-end xl:justify-start space-x-2">
+      <mat-icon color="primary">attach_file</mat-icon>
+      <span class="truncate w-40 xl:w-20">{{ file.metadata ? file.metadata.filename : file.name }}</span>
+      <ng-container *ngIf="file.id || !maId || (maId && !entityId); else uploading">
+        <mat-icon class="cursor-pointer" color="warn" (click)="removeFile(maId ? file.id : file)" type="button"
+          >close</mat-icon
+        >
+      </ng-container>
+      <ng-template #uploading>
+        <mat-progress-spinner diameter="16" mode="indeterminate" strokeWidth="3" color="primary"></mat-progress-spinner>
+      </ng-template>
+    </div>
+  </div>
+</div>
