@@ -9,6 +9,19 @@
         <mat-divider class="divider-custom"></mat-divider>
       </mat-card-title>
     </div>
+    <div class="p-2">
+      <div class="flex flex-col justify-center items-start rounded bg-gray-100 border-2 border-gray-200 p-2">
+        <div translate>adaptationAction.help.help</div>
+        <div>
+          <span translate>adaptationAction.help.guide</span>:<a
+            class="ms-1 hover:underline text-[#1e5674]"
+            href="https://sinamecc.go.cr/recursos/docs/Gu%C3%ADa%20de%20Registro%20y%20Reporte%20de%20Acciones%20de%20Adaptaci%C3%B3n.pdf"
+            target="_blank"
+            >https://sinamecc.go.cr/</a
+          >
+        </div>
+      </div>
+    </div>
 
     <form *ngIf="!loading" [formGroup]="mainGroup">
       <mat-horizontal-stepper formArrayName="formArray" #stepper>
