@@ -44,6 +44,15 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
   adaptationAction: AdaptationAction;
   edit: boolean;
 
+  completed = {
+    generalRegister: false,
+    report: false,
+    financing: false,
+    indicators: false,
+    climateMonitoring: false,
+    actionImpact: false,
+  };
+
   constructor(
     private _formBuilder: UntypedFormBuilder,
     private cdRef: ChangeDetectorRef,
