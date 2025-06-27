@@ -16,6 +16,7 @@ import { AdaptationActionsListComponent } from './adaptation-actions-list/adapta
 import { AdaptationActionsViewComponent } from './adaptation-actions-view/adaptation-actions-view.component';
 import { SharedModule } from '@app/@shared';
 import { AdaptationActionReviewComponent } from './adaptation-action-review/adaptation-action-review.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { AdaptationActionReviewComponent } from './adaptation-action-review/adap
     AdaptationActionsListComponent,
     AdaptationActionsViewComponent,
     AdaptationActionReviewComponent,
+    ProgressBarComponent,
   ],
   providers: [AdaptationActionService],
 })

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdaptationActionService } from '../adaptation-actions-service';
@@ -14,6 +14,8 @@ import { FileUpload } from '@app/@shared/upload-button/file-upload';
   standalone: false,
 })
 export class AdaptationActionsActionImpactComponent implements OnInit {
+  @Output() onComplete = new EventEmitter<boolean>();
+
   form: UntypedFormGroup;
   durationInSeconds = 3;
   adaptationAction: AdaptationAction;
@@ -33,6 +35,9 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
+      if (this.adaptationAction && this.adaptationAction.action_impact?.id) {
+        this.onComplete.emit(true);
+      }
     });
   }
 
@@ -143,6 +148,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
       (_) => {
         this.openSnackBar('Formulario creado correctamente', '');
+        this.onComplete.emit(true);
         this.router.navigate([`/adaptation/actions`], {
           replaceUrl: true,
         });

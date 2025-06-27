@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class GeneralRegisterComponent implements OnInit {
   form: UntypedFormGroup;
   @Input() mainStepper: any;
+  @Output() onComplete = new EventEmitter<boolean>();
   id: string | null;
   adaptationAction: AdaptationAction;
 
@@ -43,6 +44,7 @@ export class GeneralRegisterComponent implements OnInit {
     this.service.updateCurrentAdaptationAction(response);
     this.adaptationAction = response;
     this.createUpdatedForm();
+    this.onComplete.emit(true);
   }
 
   get formArray(): AbstractControl | null {
@@ -139,6 +141,7 @@ export class GeneralRegisterComponent implements OnInit {
         (res) => {
           payload.id = this.id;
           this.service.updateCurrentAdaptationAction(payload);
+          this.onComplete.emit(true);
           this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
             this.snackBar.open(res, null, { duration: 3000 });
             this.mainStepper.next();
@@ -155,6 +158,7 @@ export class GeneralRegisterComponent implements OnInit {
           this.service.updateCurrentAdaptationAction(payload);
           this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
             this.snackBar.open(res, null, { duration: 3000 });
+            this.onComplete.emit(true);
             this.mainStepper.next();
           });
         },
