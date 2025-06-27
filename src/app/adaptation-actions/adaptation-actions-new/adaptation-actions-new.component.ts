@@ -44,7 +44,7 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
   adaptationAction: AdaptationAction;
   edit: boolean;
 
-  completed = {
+  completed: Record<string, boolean> = {
     generalRegister: false,
     report: false,
     financing: false,
@@ -76,6 +76,13 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.openStartMessages();
+  }
+
+  onComplete(key: string, completed: boolean) {
+    this.completed = {
+      ...this.completed,
+      [key]: completed,
+    };
   }
 
   loadAdaptationActions(id: string) {

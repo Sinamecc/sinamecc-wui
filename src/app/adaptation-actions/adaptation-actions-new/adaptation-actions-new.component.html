@@ -11,91 +11,115 @@
     </div>
     <div class="p-2">
       <div class="flex flex-col justify-center items-start rounded bg-gray-100 border-2 border-gray-200 p-2">
-        <div translate>adaptationAction.help.help</div>
         <div>
-          <span translate>adaptationAction.help.guide</span>:<a
+          <span translate>adaptationAction.help.help</span>
+          <span class="font-medium text-gray-700">&lt;EMAIL&gt;</span>
+        </div>
+        <div>
+          <span translate>adaptationAction.help.guide</span>:
+          <a
             class="ms-1 hover:underline text-[#1e5674]"
             href="https://sinamecc.go.cr/recursos/docs/Gu%C3%ADa%20de%20Registro%20y%20Reporte%20de%20Acciones%20de%20Adaptaci%C3%B3n.pdf"
             target="_blank"
-            >https://sinamecc.go.cr/</a
+            rel="noopener noreferrer"
           >
+            https://sinamecc.go.cr/
+          </a>
         </div>
       </div>
     </div>
-
-    <form *ngIf="!loading">
-      <mat-horizontal-stepper #stepper>
-        <ng-template matStepperIcon="edit">
-          <mat-icon>check_circle</mat-icon>
-        </ng-template>
-        <ng-template matStepperIcon="done">
-          <mat-icon>download</mat-icon>
-        </ng-template>
-        <mat-step [completed]="completed.generalRegister">
-          <ng-template matStepLabel>
-            <span translate>adaptationAction.form1.title</span>
+    <ng-container *ngIf="!loading">
+      <form>
+        <mat-horizontal-stepper #stepper>
+          <ng-template matStepperIcon="edit">
+            <mat-icon>check_circle</mat-icon>
           </ng-template>
-          <app-general-register
-            [mainStepper]="stepper"
-            (onComplete)="completed.generalRegister = $event"
-          ></app-general-register>
-        </mat-step>
-
-        <mat-step>
-          <ng-template matStepLabel>
-            <span translate>adaptationAction.form2.title</span>
+          <ng-template matStepperIcon="done">
+            <mat-icon>download</mat-icon>
           </ng-template>
-          <app-adaptation-actions-report
-            [adaptationActionUpdated]="adaptationAction"
-            [edit]="edit"
-            [mainStepper]="stepper"
-          ></app-adaptation-actions-report>
-        </mat-step>
 
-        <mat-step>
-          <ng-template matStepLabel>
-            <span translate>adaptationAction.form3.title</span>
-          </ng-template>
-          <app-adaptation-actions-financing
-            [edit]="edit"
-            [adaptationActionUpdated]="adaptationAction"
-            [mainStepper]="stepper"
-          ></app-adaptation-actions-financing>
-        </mat-step>
+          <mat-step [completed]="completed.generalRegister">
+            <app-progress-bar [completed]="completed"></app-progress-bar>
+            <ng-template matStepLabel>
+              <span translate>adaptationAction.form1.title</span>
+            </ng-template>
+            <app-general-register
+              [mainStepper]="stepper"
+              (onComplete)="onComplete('generalRegister', $event)"
+            ></app-general-register>
+          </mat-step>
 
-        <mat-step>
-          <ng-template matStepLabel>
-            <span translate>adaptationAction.form4.title</span>
-          </ng-template>
-          <app-adaptation-actions-indicators
-            [edit]="edit"
-            [adaptationActionUpdated]="adaptationAction"
-            [mainStepper]="stepper"
-          ></app-adaptation-actions-indicators>
-        </mat-step>
+          <mat-step [completed]="completed.report">
+            <app-progress-bar [completed]="completed"></app-progress-bar>
 
-        <mat-step>
-          <ng-template matStepLabel>
-            <span translate>adaptationAction.form5.title</span>
-          </ng-template>
-          <app-adaptation-actions-climate-monitoring
-            [mainStepper]="stepper"
-            [edit]="edit"
-            [adaptationActionUpdated]="adaptationAction"
-          ></app-adaptation-actions-climate-monitoring>
-        </mat-step>
+            <ng-template matStepLabel>
+              <span translate>adaptationAction.form2.title</span>
+            </ng-template>
+            <app-adaptation-actions-report
+              [adaptationActionUpdated]="adaptationAction"
+              [edit]="edit"
+              [mainStepper]="stepper"
+              (onComplete)="onComplete('report', $event)"
+            ></app-adaptation-actions-report>
+          </mat-step>
 
-        <mat-step>
-          <ng-template matStepLabel>
-            <span translate>adaptationAction.form6.title</span>
-          </ng-template>
-          <app-adaptation-actions-action-impact
-            [edit]="edit"
-            [adaptationActionUpdated]="adaptationAction"
-          ></app-adaptation-actions-action-impact>
-        </mat-step>
-      </mat-horizontal-stepper>
-    </form>
+          <mat-step [completed]="completed.financing">
+            <app-progress-bar [completed]="completed"></app-progress-bar>
+
+            <ng-template matStepLabel>
+              <span translate>adaptationAction.form3.title</span>
+            </ng-template>
+            <app-adaptation-actions-financing
+              [edit]="edit"
+              [adaptationActionUpdated]="adaptationAction"
+              [mainStepper]="stepper"
+              (onComplete)="onComplete('financing', $event)"
+            ></app-adaptation-actions-financing>
+          </mat-step>
+
+          <mat-step [completed]="completed.indicators">
+            <app-progress-bar [completed]="completed"></app-progress-bar>
+
+            <ng-template matStepLabel>
+              <span translate>adaptationAction.form4.title</span>
+            </ng-template>
+            <app-adaptation-actions-indicators
+              [edit]="edit"
+              [adaptationActionUpdated]="adaptationAction"
+              [mainStepper]="stepper"
+              (onComplete)="onComplete('indicators', $event)"
+            ></app-adaptation-actions-indicators>
+          </mat-step>
+
+          <mat-step [completed]="completed.climateMonitoring">
+            <app-progress-bar [completed]="completed"></app-progress-bar>
+
+            <ng-template matStepLabel>
+              <span translate>adaptationAction.form5.title</span>
+            </ng-template>
+            <app-adaptation-actions-climate-monitoring
+              [mainStepper]="stepper"
+              [edit]="edit"
+              [adaptationActionUpdated]="adaptationAction"
+              (onComplete)="onComplete('climateMonitoring', $event)"
+            ></app-adaptation-actions-climate-monitoring>
+          </mat-step>
+
+          <mat-step [completed]="completed.actionImpact">
+            <app-progress-bar [completed]="completed"></app-progress-bar>
+
+            <ng-template matStepLabel>
+              <span translate>adaptationAction.form6.title</span>
+            </ng-template>
+            <app-adaptation-actions-action-impact
+              [edit]="edit"
+              [adaptationActionUpdated]="adaptationAction"
+              (onComplete)="onComplete('actionImpact', $event)"
+            ></app-adaptation-actions-action-impact>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </form>
+    </ng-container>
 
     <div class="flex-fill flex flex-col justify-center items-center" *ngIf="loading">
       <mat-spinner color="accent"></mat-spinner>
