@@ -10,22 +10,34 @@
       </mat-card-title>
     </div>
     <div class="p-2">
-      <div class="flex flex-col justify-center items-start rounded bg-gray-100 border-2 border-gray-200 p-2">
-        <div>
-          <span translate>adaptationAction.help.help</span>
-          <span class="font-medium text-gray-700">&lt;EMAIL&gt;</span>
-        </div>
-        <div>
-          <span translate>adaptationAction.help.guide</span>:
-          <a
-            class="ms-1 hover:underline text-[#1e5674]"
-            href="https://sinamecc.go.cr/recursos/docs/Gu%C3%ADa%20de%20Registro%20y%20Reporte%20de%20Acciones%20de%20Adaptaci%C3%B3n.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+      <div class="flex flex-col justify-center items-start rou nded bg-gray-100 border-2 border-gray-200 p-2">
+        <div class="flex flex-row justify-between w-full">
+          <div translate>adaptationAction.help.title</div>
+          <div
+            mat-icon-button
+            (click)="handleAssistantOpen()"
+            class="h-6 w-6 min-w-0 p-0 flex justify-center items-center hover:cursor-pointer hover:bg-gray-300 rounded-full"
           >
-            https://sinamecc.go.cr/
-          </a>
+            <mat-icon>{{ assistantOpen ? 'expand_more' : 'chevron_right' }}</mat-icon>
+          </div>
         </div>
+        <ng-container *ngIf="assistantOpen">
+          <div>
+            <span translate>adaptationAction.help.help</span>
+            <span class="font-medium text-gray-700">&lt;EMAIL&gt;</span>
+          </div>
+          <div>
+            <span translate>adaptationAction.help.guide</span>:
+            <a
+              class="ms-1 hover:underline text-[#1e5674]"
+              href="https://sinamecc.go.cr/recursos/docs/Gu%C3%ADa%20de%20Registro%20y%20Reporte%20de%20Acciones%20de%20Adaptaci%C3%B3n.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://sinamecc.go.cr/
+            </a>
+          </div>
+        </ng-container>
       </div>
     </div>
     <ng-container *ngIf="!loading">

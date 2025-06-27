@@ -681,7 +681,8 @@
     "newButton": "Nuevo reporte Acción de Adaptación",
     "help": {
       "help": "Para consultas o dudas contactar al correo ",
-      "guide": "Guía de registro"
+      "guide": "Guía de registro",
+      "title": "Asistencia"
     },
     "form1": {
       "title": "Registro general",

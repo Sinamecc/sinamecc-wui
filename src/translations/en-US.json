@@ -692,7 +692,8 @@
     "newButton": "New Adaptation Action report",
     "help": {
       "help": "For inquiries or questions, contact the email ",
-      "guide": "Registration Guide"
+      "guide": "Registration Guide",
+      "title": "User assistance"
     },
     "form1": {
       "title": "General Registration",

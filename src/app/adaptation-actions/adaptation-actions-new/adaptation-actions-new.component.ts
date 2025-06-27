@@ -53,6 +53,8 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
     actionImpact: false,
   };
 
+  assistantOpen = true;
+
   constructor(
     private _formBuilder: UntypedFormBuilder,
     private cdRef: ChangeDetectorRef,
@@ -66,12 +68,17 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
     if (this.edit) {
       this.loading = true;
       this.loadAdaptationActions(id);
+      this.assistantOpen = false;
     }
     this.createForm();
   }
 
   get formArray(): AbstractControl | null {
     return this.mainGroup.get('formArray');
+  }
+
+  handleAssistantOpen() {
+    this.assistantOpen = !this.assistantOpen;
   }
 
   ngOnInit() {
