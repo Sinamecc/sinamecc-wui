@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
@@ -13,6 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: false,
 })
 export class AdaptationActionsIndicatorsComponent implements OnInit {
+  @Output() onComplete = new EventEmitter<boolean>();
+
   form: UntypedFormGroup;
   @Input() mainStepper: any;
   @Input() adaptationActionUpdated: AdaptationAction;
@@ -33,6 +35,9 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
+      if (this.adaptationAction && this.adaptationAction.indicator_list.length) {
+        this.onComplete.emit(true);
+      }
     });
   }
 
@@ -226,6 +231,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
         this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
           this.snackBar.open(res, null, { duration: 3000 });
+          this.onComplete.emit(true);
           this.mainStepper.next();
         });
       },

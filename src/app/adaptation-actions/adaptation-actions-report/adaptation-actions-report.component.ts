@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
@@ -21,6 +21,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: false,
 })
 export class AdaptationActionsReportComponent implements OnInit {
+  @Output() onComplete = new EventEmitter<boolean>();
+
   form: UntypedFormGroup;
   topics: Topic[][] = [];
   subTopics: SubTopics[] = [];
@@ -73,6 +75,9 @@ export class AdaptationActionsReportComponent implements OnInit {
   async ngOnInit() {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
+      if (this.isComplete()) {
+        this.onComplete.emit(true);
+      }
     });
 
     this.loadBenefitedPopulation();
@@ -92,6 +97,14 @@ export class AdaptationActionsReportComponent implements OnInit {
 
   get formArray(): AbstractControl | null {
     return this.form.get('formArray');
+  }
+
+  private isComplete(): boolean {
+    return (
+      this.adaptationAction &&
+      !!this.adaptationAction.adaptation_action_information?.id &&
+      !!this.adaptationAction.address?.id
+    );
   }
 
   private createForm() {
@@ -528,6 +541,7 @@ export class AdaptationActionsReportComponent implements OnInit {
     this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
       (_) => {
         this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
+        this.onComplete.emit(true);
         this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
           this.snackBar.open(res, null, { duration: 3000 });
           this.mainStepper.next();
