@@ -23,27 +23,71 @@
                   >adaptationAction.form4.indicatorName
                 </mat-label>
                 <input matInput formControlName="adaptationActionIndicatorNameCtrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
+                <mat-error
+                  *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorNameCtrl')?.hasError('required')"
+                  translate
+                >
+                  errorLabel.fieldRequired
+                </mat-error>
+                <mat-error
+                  *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorNameCtrl')?.hasError('maxlength')"
+                  translate
+                >
+                  errorLabel.maxLengthExceeded
+                </mat-error>
               </mat-form-field>
             </div>
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>adaptationAction.form4.indicatorDescription </mat-label>
               <input matInput formControlName="adaptationActionIndicatorDescriptionCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
+              <mat-error
+                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorDescriptionCtrl')?.hasError('required')"
+                translate
+              >
+                errorLabel.fieldRequired
+              </mat-error>
+              <mat-error
+                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorDescriptionCtrl')?.hasError('maxlength')"
+                translate
+              >
+                errorLabel.maxLengthExceeded
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>mitigationAction.indicatorUnit </mat-label>
               <input matInput formControlName="adaptationActionIndicatorUnitCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
+              <mat-error
+                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorUnitCtrl')?.hasError('required')"
+                translate
+              >
+                errorLabel.fieldRequired
+              </mat-error>
+              <mat-error
+                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorUnitCtrl')?.hasError('maxlength')"
+                translate
+              >
+                errorLabel.maxLengthExceeded
+              </mat-error>
             </mat-form-field>
 
             <div class="flex flex-row justify-center">
               <mat-form-field class="field-ppcn">
                 <mat-label translate>adaptationAction.form4.calculationMethodology</mat-label>
                 <input matInput formControlName="adaptationActionIndicatorMetodologyCtrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
+                <mat-error
+                  *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorMetodologyCtrl')?.hasError('required')"
+                  translate
+                >
+                  errorLabel.fieldRequired
+                </mat-error>
+                <mat-error
+                  *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorMetodologyCtrl')?.hasError('maxlength')"
+                  translate
+                >
+                  errorLabel.maxLengthExceeded
+                </mat-error>
               </mat-form-field>
               <input formControlName="adaptationActionIndicatorUnitFileCtrl" type="file" />
             </div>
@@ -159,14 +203,21 @@
             <mat-form-field class="field-ppcn">
               <mat-label translate>mitigationAction.observationsComments </mat-label>
               <input matInput formControlName="adaptationActionIndicatorDetailsCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
+              <mat-error
+                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorDetailsCtrl')?.hasError('maxlength')"
+                translate
+              >
+                errorLabel.maxLengthExceeded
+              </mat-error>
             </mat-form-field>
 
             <div class="flex flex-row justify-center">
               <mat-form-field class="field-ppcn">
                 <mat-label translate>adaptationAction.form4.indicatorBaseline</mat-label>
                 <input matInput formControlName="indicatorBaselineCtrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
+                <mat-error *ngIf="formArray?.get([0])?.get('indicatorBaselineCtrl')?.hasError('maxlength')" translate>
+                  errorLabel.maxLengthExceeded
+                </mat-error>
               </mat-form-field>
               <app-upload-button />
             </div>
@@ -375,14 +426,39 @@
             <mat-form-field class="field-ppcn">
               <mat-label translate>admin.email</mat-label>
               <input matInput formControlName="adaptationActionIndicatorContactEmailCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
+              <mat-error
+                *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactEmailCtrl')?.hasError('required')"
+                translate
+              >
+                errorLabel.fieldRequired
+              </mat-error>
+              <mat-error
+                *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactEmailCtrl')?.hasError('email')"
+                translate
+              >
+                errorLabel.invalidEmail
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field class="field-ppcn">
               <span matPrefix>+506 &nbsp;</span>
               <mat-label translate>info.telephone</mat-label>
               <input matInput type="tel" maxlength="8" formControlName="adaptationActionIndicatorContactPhoneCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
+              <mat-error
+                *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('required')"
+                translate
+              >
+                errorLabel.fieldRequired
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('maxlength') ||
+                  formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('minlength')
+                "
+                translate
+              >
+                errorLabel.invalidLength
+              </mat-error>
             </mat-form-field>
           </mat-step>
         </mat-vertical-stepper>
