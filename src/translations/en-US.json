@@ -413,7 +413,8 @@
     "home": "Home",
     "energy": "Energy",
     "person": "Person",
-    "entity": "Entity"
+    "entity": "Entity",
+    "fileUpload": "File upload"
   },
 
   "info": {

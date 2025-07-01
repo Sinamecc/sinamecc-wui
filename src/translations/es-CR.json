@@ -407,7 +407,8 @@
     "home": "Inicio",
     "energy": "Energía",
     "person": "Persona",
-    "entity": "Entidad"
+    "entity": "Entidad",
+    "fileUpload": "Subir archivo"
   },
 
   "info": {

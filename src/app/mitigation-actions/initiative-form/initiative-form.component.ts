@@ -1,17 +1,17 @@
 import { Component, OnInit, ViewChild, Input, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl, UntypedFormArray } from '@angular/forms';
-import { finalize, tap } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { MitigationActionNewFormData, InitiativeType } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MAFile, MitigationAction, MAStates } from '../mitigation-action';
+import { MAFileType, MitigationAction, MAStates } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MAFile } from '../mitigation-action-file-upload/file-upload';
 
 const log = new Logger('MitigationAction');
 
@@ -32,23 +32,21 @@ export class InitiativeFormComponent implements OnInit {
   initiativeTypes: InitiativeType[];
   displayFinancialSource: boolean;
   startDate = new Date();
+  maFileType = MAFileType;
 
   mitigationAction: MitigationAction;
   initiativeGoalList: string[] = [];
   deploymentCompletionSubscription: any;
+  id: string;
 
-  files: {
-    geographic_location: MAFile;
-    initiative: MAFile;
-  } = {
-    geographic_location: {
-      name: '',
-      file: null,
-    },
-    initiative: {
-      name: '',
-      file: null,
-    },
+  newFiles = {
+    [MAFileType.INITIATIVE]: [] as File[],
+    [MAFileType.GEOGRAPHIC_LOCATION]: [] as File[],
+  };
+
+  files = {
+    [MAFileType.INITIATIVE]: [] as MAFile[],
+    [MAFileType.GEOGRAPHIC_LOCATION]: [] as MAFile[],
   };
 
   @Input() stepper: any;
@@ -149,6 +147,8 @@ export class InitiativeFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as MAStates);
+        this.files[MAFileType.INITIATIVE] = this.getFilesByType(this.maFileType.INITIATIVE);
+        this.files[MAFileType.GEOGRAPHIC_LOCATION] = this.getFilesByType(this.maFileType.GEOGRAPHIC_LOCATION);
       });
     }
   }
@@ -515,12 +515,11 @@ export class InitiativeFormComponent implements OnInit {
         .pipe(
           finalize(() => {
             this.form.markAsPristine();
-            this.isLoading = false;
           }),
         )
         .subscribe(
-          (response) => {
-            this.successSendForm(response.id);
+          async (response) => {
+            await this.successSendForm(response);
             this.state.emit(response.state as MAStates);
           },
           (error) => {
@@ -532,6 +531,7 @@ export class InitiativeFormComponent implements OnInit {
             this.errorComponent.parseErrors(error);
             this.error = error;
             this.wasSubmittedSuccessfully = false;
+            this.isLoading = false;
           },
         );
     } else {
@@ -540,12 +540,12 @@ export class InitiativeFormComponent implements OnInit {
         .pipe(
           finalize(() => {
             this.form.markAsPristine();
-            this.isLoading = false;
           }),
         )
         .subscribe(
-          (response) => {
-            this.successSendForm(response.id);
+          async (response) => {
+            this.state.emit(response.state as MAStates);
+            await this.successSendForm(response);
           },
           (error) => {
             this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -555,25 +555,33 @@ export class InitiativeFormComponent implements OnInit {
             this.errorComponent.parseErrors(error);
             this.error = error;
             this.wasSubmittedSuccessfully = false;
+            this.isLoading = false;
           },
         );
     }
   }
 
-  successSendForm(id: string) {
-    if (this.files.initiative.file) {
-      this.submitFile(id, this.files.initiative.name, this.files.initiative.file);
+  async successSendForm(response: any): Promise<void> {
+    const fileUploadPromises: Promise<any>[] = [];
+    for (const [type, files] of Object.entries(this.newFiles)) {
+      if (files.length) {
+        fileUploadPromises.push(lastValueFrom(this.service.submitFiles(response.id, type, files)));
+      }
     }
 
-    if (this.files.geographic_location.file) {
-      this.submitFile(id, this.files.geographic_location.name, this.files.geographic_location.file);
-    }
+    await Promise.all(fileUploadPromises);
+    this.id = response.id;
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
       this.snackBar.open(res, null, { duration: 3000 });
       this.stepper.next();
     });
+    this.isLoading = false;
     this.wasSubmittedSuccessfully = true;
+  }
+
+  addFiles(files: File[], type: MAFileType) {
+    this.newFiles[type] = files;
   }
 
   financialSourceInputShown($event: any) {
@@ -603,25 +611,11 @@ export class InitiativeFormComponent implements OnInit {
     );
   }
 
-  uploadFile(event: Event) {
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      const file = {
-        file: fileList[0],
-        name: name,
-      };
-
-      if (name === 'initiative') {
-        this.files.initiative = file;
-      } else if (name === 'geographic_location') {
-        this.files.geographic_location = file;
-      }
-    }
+  onStepChange() {
+    this.wasSubmittedSuccessfully = false;
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
+  getFilesByType(type: string) {
+    return this.mitigationAction.files.filter((file) => file.type === type);
   }
 }

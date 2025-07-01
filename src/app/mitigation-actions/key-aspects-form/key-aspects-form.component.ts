@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
@@ -8,14 +7,14 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { ImpactEmission, MAFile, MitigationAction, MAStates } from '../mitigation-action';
+import { ImpactEmission, MAFileType, MitigationAction, MAStates } from '../mitigation-action';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 import * as _moment from 'moment';
 import { ErrorReportingComponent } from '@shared';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MAFile } from '../mitigation-action-file-upload/file-upload';
 
 export const MY_FORMATS = {
   parse: {
@@ -28,7 +27,6 @@ export const MY_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
-
 const log = new Logger('MitigationAction');
 
 @Component({
@@ -55,13 +53,11 @@ export class KeyAspectsFormComponent implements OnInit {
   displayFinancialSource: boolean;
   isLoading = false;
   wasSubmittedSuccessfully = false;
-
   mitigationAction: MitigationAction;
 
-  ghg_information: MAFile = {
-    file: null,
-    name: '',
-  };
+  maFileType = MAFileType.GHG_INFORMATION;
+  newFiles: File[] = [];
+  files: MAFile[] = [];
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -77,11 +73,9 @@ export class KeyAspectsFormComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private i18nService: I18nService,
     private service: MitigationActionsService,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
-    private router: Router,
   ) {
     // this.formData = new FormData();
     this.service.currentMitigationAction.subscribe((message) => (this.mitigationAction = message));
@@ -95,6 +89,7 @@ export class KeyAspectsFormComponent implements OnInit {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as MAStates);
+        this.files = this.getFiles();
       });
     }
   }
@@ -161,9 +156,9 @@ export class KeyAspectsFormComponent implements OnInit {
         }),
       )
       .subscribe(
-        (response) => {
+        async (response) => {
           this.state.emit(response.state as MAStates);
-          this.successSendForm(response.id);
+          await this.successSendForm(response.id);
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -177,17 +172,20 @@ export class KeyAspectsFormComponent implements OnInit {
       );
   }
 
-  successSendForm(id: string) {
-    if (this.ghg_information.file) {
-      this.submitFile(id, this.ghg_information.name, this.ghg_information.file);
+  async successSendForm(id: string) {
+    if (this.newFiles.length) {
+      await this.service.submitFiles(id, this.maFileType, this.newFiles);
     }
 
     this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
       this.snackBar.open(res, null, { duration: 3000 });
     });
     this.wasSubmittedSuccessfully = true;
-
     this.stepper.next();
+  }
+
+  addFiles(files: File[]) {
+    this.newFiles = files;
   }
 
   financialSourceInputShown($event: any) {
@@ -198,19 +196,11 @@ export class KeyAspectsFormComponent implements OnInit {
     this.displayFinancialSource = $event.value === insuredSourceTypeId;
   }
 
-  uploadFile(event: Event) {
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      this.ghg_information = {
-        file: fileList[0],
-        name: name,
-      };
-    }
+  onStepChange() {
+    this.wasSubmittedSuccessfully = false;
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
+  getFiles() {
+    return this.mitigationAction.files.filter((file) => file.type === this.maFileType);
   }
 }

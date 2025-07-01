@@ -5,12 +5,11 @@
   <mat-card-content>
     <form *ngIf="newFormData | async" [formGroup]="form" (ngSubmit)="submitForm()">
       <div class="report-error" [hidden]="!error || isLoading || !errorComponent.showErrors" translate>
-        <span translate>errorLabel.errorSubmittingForm</span>
-        <app-error-reporting #errorComponent></app-error-reporting>
+        <app-error-reporting #errorComponent [errorMessage]="'errorLabel.errorSubmittingForm'"></app-error-reporting>
       </div>
       <br />
       <div class="flex flex-col">
-        <mat-vertical-stepper formArrayName="formArray" linear #stepper>
+        <mat-vertical-stepper formArrayName="formArray" linear #stepper (selectedIndexChange)="onStepChange()">
           <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel> <span>1.1 - </span><span translate>specificLabel.initiative</span> </ng-template>
 
@@ -48,7 +47,7 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
-            <div class="flex flex-col xl:flex-row gap-1 xl:gap-6 justify-center w-full">
+            <div class="flex flex-col xl:flex-row xl:gap-6 justify-center w-full gap-4">
               <mat-form-field class="field-ppcn w-full xl:flex-1 min-w-[250px] mb-0 xl:mb-0">
                 <mat-label translate> 1.1.4 - <span translate>specificLabel.initiativeDescription</span> </mat-label>
                 <textarea
@@ -60,7 +59,15 @@
                 ></textarea>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <input type="file" name="initiative" (change)="uploadFile($event)" class="block w-full xl:w-auto mb-4" />
+              <div class="w-full xl:w-auto flex items-start justify-start">
+                <app-mitigation-action-file-upload
+                  class="w-full"
+                  [type]="maFileType.INITIATIVE"
+                  [maId]="(mitigationAction && mitigationAction.id) || id"
+                  [filesUploaded]="files[maFileType.INITIATIVE]"
+                  (filesToUpload)="addFiles($event, maFileType.INITIATIVE)"
+                />
+              </div>
             </div>
 
             <div>
@@ -106,7 +113,7 @@
             <ng-template matStepLabel>
               <span>1.2 - </span><span translate>specificLabel.initiativeContactInfo</span>
             </ng-template>
-            <mat-form-field class="field-ppcn">
+            <mat-form-field class="field-ppcn mt-2">
               <mat-label translate>1.2.1 - <span translate>mitigationAction.entityReporting</span></mat-label>
               <input maxlength="50" matInput formControlName="entityReportingCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -277,7 +284,7 @@
               <span>1.4 - </span><span translate>general.GeographicLocation</span>
             </ng-template>
 
-            <div>
+            <div class="mt-2">
               <label class="radio-grup-label" translate>1.4.1 - <span translate>general.geographicScale</span></label>
               <mat-radio-group formControlName="geographicScaleCtrl" class="custom-radio-group">
                 <mat-radio-button
@@ -302,12 +309,15 @@
                 ></textarea>
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
-              <input
-                type="file"
-                name="geographic-location"
-                (change)="uploadFile($event)"
-                class="block w-full xl:w-auto mb-4"
-              />
+              <div class="w-full xl:w-auto flex items-start justify-start">
+                <app-mitigation-action-file-upload
+                  class="w-full"
+                  [type]="maFileType.GEOGRAPHIC_LOCATION"
+                  [maId]="(mitigationAction && mitigationAction.id) || id"
+                  [filesUploaded]="files[maFileType.GEOGRAPHIC_LOCATION]"
+                  (filesToUpload)="addFiles($event, maFileType.GEOGRAPHIC_LOCATION)"
+                />
+              </div>
             </div>
 
             <div class="box-button">

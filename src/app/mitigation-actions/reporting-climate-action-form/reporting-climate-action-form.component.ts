@@ -5,12 +5,12 @@ import { Router } from '@angular/router';
 import { ErrorReportingComponent } from '@shared';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-
-import { finalize } from 'rxjs/operators';
-import { MAFile, MitigationAction } from '../mitigation-action';
+import { MAEntityType, MAFileType, MitigationAction } from '../mitigation-action';
 import { MitigationActionNewFormData } from '../mitigation-action-new-form-data';
 import { MitigationActionsService } from '../mitigation-actions.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
+import { MAFile } from '../mitigation-action-file-upload/file-upload';
 
 @Component({
   selector: 'app-reporting-climate-action-form',
@@ -23,13 +23,15 @@ export class ReportingClimateActionFormComponent implements OnInit {
   error: string;
   form: UntypedFormGroup;
   isLoading = false;
+  fileLoading = false;
   wasSubmittedSuccessfully = false;
   mitigationAction: MitigationAction;
   stateLabel = 'submitted';
-  file: MAFile = {
-    file: null,
-    name: '',
-  };
+  newFiles: File[] = [];
+  files: MAFile[] = [];
+
+  maFileType = MAFileType.MONITORING_UPDATED_DATA;
+  entityType = MAEntityType.MONITORING_INDICATOR;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
@@ -62,6 +64,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
+        this.files = this.getFiles();
       });
     }
   }
@@ -140,41 +143,46 @@ export class ReportingClimateActionFormComponent implements OnInit {
   submitForm() {
     const context = this.buildPayload();
 
-    this.service
-      .submitMitigationActionUpdateForm(context, this.mitigationAction.id)
-      .pipe(
-        finalize(() => {
+    this.isLoading = true;
+
+    this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id).subscribe({
+      next: async (response) => {
+        try {
+          this.successSendForm();
           this.form.markAsPristine();
-          this.isLoading = false;
-        }),
-      )
-      .subscribe(
-        (response) => {
-          this.successSendForm(response.id);
-        },
-        (error) => {
-          this.translateService.get('Error submitting form').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
-          this.error = error;
-          this.errorComponent.parseErrors(error);
+          this.wasSubmittedSuccessfully = true;
+        } catch (err) {
+          this.error = err;
+          this.errorComponent.parseErrors(err);
           this.wasSubmittedSuccessfully = false;
-        },
-      );
+        } finally {
+          this.isLoading = false;
+        }
+      },
+      error: (error) => {
+        this.translateService.get('Error submitting form').subscribe((res: string) => {
+          this.snackBar.open(res, null, { duration: 3000 });
+        });
+        this.error = error;
+        this.errorComponent.parseErrors(error);
+        this.wasSubmittedSuccessfully = false;
+        this.isLoading = false;
+      },
+    });
   }
 
-  successSendForm(id: string) {
-    if (this.file.file) {
-      this.submitFile(id, this.file.name, this.file.file);
+  async successSendForm() {
+    if (this.newFiles.length) {
+      this.uploadFiles();
     }
 
     this.translateService.get('specificLabel.sucessfullySubmittedForm').subscribe((res: string) => {
       this.snackBar.open(res, null, { duration: 3000 });
     });
+
     this.wasSubmittedSuccessfully = true;
-    setTimeout(() => {
-      this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
-    }, 2000);
+
+    this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
   }
 
   private createForm() {
@@ -262,19 +270,30 @@ export class ReportingClimateActionFormComponent implements OnInit {
     });
   }
 
-  uploadFile(event: Event) {
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    const name = element.name;
-    if (fileList) {
-      this.file = {
-        file: fileList[0],
-        name: name,
-      };
-    }
+  async uploadFiles() {
+    const entityId = this.getEntityId();
+    this.service.submitFiles(this.mitigationAction.id, this.maFileType, this.newFiles, entityId, this.entityType);
   }
 
-  async submitFile(id: string, key: string, file: File) {
-    await this.service.submitMitigationFile(key, file, id).toPromise();
+  onFileChange(files: File[]) {
+    this.newFiles = files;
+  }
+
+  getEntityId() {
+    return this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].id;
+  }
+
+  async submitFiles(id: string, file: FileUpload, monitoringId: string) {
+    return this.service
+      .submitFiles(id, file.type, file.filesToUpload, monitoringId, MAEntityType.MONITORING_INDICATOR)
+      .toPromise();
+  }
+
+  getFiles() {
+    return (
+      this.mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator?.[0]?.files?.filter(
+        (file) => file.type === this.maFileType,
+      ) || []
+    );
   }
 }

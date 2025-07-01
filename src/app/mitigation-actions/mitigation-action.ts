@@ -1,3 +1,4 @@
+import { FileUploaded } from '@app/@shared/upload-button/file-upload';
 import { GeographicScale } from './mitigation-action-new-form-data';
 import { NextState } from '@shared/next-state';
 
@@ -36,7 +37,7 @@ export interface MitigationAction {
     state: string;
     label: string;
   };
-  files: Files[];
+  files: FileUploaded[];
   status_information: StatusInformation;
   geographic_location: GeographicLocation;
   categorization: any; //waiting BE have this data
@@ -231,7 +232,8 @@ export interface ReviewStatus {
 }
 
 export interface Files {
-  name: string;
+  id: number;
+  type: string;
   file: string;
 }
 
@@ -278,9 +280,21 @@ export interface MADataCatalogs {
   sector: MADataCatalogItem[];
 }
 
-export interface MAFile {
-  file: File;
-  name: string;
+export enum MAFileType {
+  IMPACT_DOCUMENTATION = 'impact-documentation',
+  INITIATIVE = 'initiative',
+  GEOGRAPHIC_LOCATION = 'geographic-location',
+  GHG_INFORMATION = 'ghg-information',
+  INDICATOR_SUSTAINABILITY = 'indicator-sustainability',
+  INDICATOR_METHODOLOGICAL_DETAIL = 'indicator-methodological-detail',
+  MONITORING_REPORT_LINE_TEXT = 'monitoring-report-line-text',
+  MONITORING_UPDATED_DATA = 'monitoring-updated-data',
+  MONITORING_WEB_SERVICE_CONNECTION = 'monitoring-web-service-connection',
+}
+
+export enum MAEntityType {
+  MONITORING_INDICATOR = 'monitoring-indicator',
+  INDICATOR = 'indicator',
 }
 
 export enum MAStates {
