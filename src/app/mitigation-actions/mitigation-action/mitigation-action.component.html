@@ -577,7 +577,7 @@
                 </h3>
                 <strong translate>mitigationAction.changesLastupdate</strong>
                 <h3 class="mat-h3">
-                  {{ (indicator?.change_log ? (indicator?.change_log)[0]?.changes : '') | date: 'dd/MM/yyyy' }}
+                  {{ indicator?.change_log ? (indicator?.change_log)[0]?.changes : '' }}
                 </h3>
                 <strong translate>mitigationAction.descriptionChanges</strong>
                 <h3 class="mat-h3">
@@ -706,7 +706,7 @@
   <div style="width: 25%; margin-left: 1em" *ngIf="reviews && !edit">
     <app-change-log-view [reviews]="reviews"></app-change-log-view>
     <div class="box">
-      <button mat-raised-button color="primary" (click)="onEdit(mitigationAction.id)">
+      <button *ngIf="canEdit(state)" mat-raised-button color="primary" (click)="onEdit(mitigationAction.id)">
         <mat-icon>edit</mat-icon> <span translate>general.edit</span>
       </button>
       <button mat-raised-button color="accent" (click)="view(mitigationAction.id)">

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { MAFileType, MitigationAction } from '@app/mitigation-actions/mitigation-action';
+import { EDITABLE_MA, MAFileType, MAStates, MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { I18nService } from '@app/i18n';
 import {
   commentsStructureModule1,
@@ -52,6 +52,10 @@ export class MitigationActionComponent implements OnInit {
     private router: Router,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
+  }
+
+  get state() {
+    return this.mitigationAction && this.mitigationAction.fsm_state.state;
   }
 
   findQuestion(id: string, check = false) {
@@ -125,6 +129,10 @@ export class MitigationActionComponent implements OnInit {
             this.files[type] = this.getFilesByType(type);
         });
       });
+  }
+
+  canEdit(state: MAStates): boolean {
+    return EDITABLE_MA.includes(state);
   }
 
   loadReviews() {
