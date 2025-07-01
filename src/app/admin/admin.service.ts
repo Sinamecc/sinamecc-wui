@@ -14,17 +14,17 @@ export interface Response {
 }
 
 const routes = {
-  permissions: () => `/v1/user/permission/`,
-  groups: () => `/v1/user/group/`,
+  permissions: () => `/v1/users/permission/`,
+  groups: () => `/v1/users/group/`,
   roles: () => `/v1/users/roles`,
   submitUser: () => `/v1/users`,
-  submitPermissions: (userName: string) => `/v1/user/${userName}/permission/`,
-  submitGroups: (userName: string) => `/v1/user/${userName}/group/`,
+  submitPermissions: (userName: string) => `/v1/users/${userName}/permission/`,
+  submitGroups: (userName: string) => `/v1/users/${userName}/group/`,
   users: () => `/v1/users`,
-  user: (userName: string) => `/v1/user/${userName}`,
-  editUser: (userId: string) => `/v1/user/${userId}`,
-  submitImage: () => `/v1/user/1/profile_picture/`,
-  assignRoles: (userId: string) => `/v1/user/${userId}/roles/`,
+  user: (userName: string) => `/v1/users/${userName}`,
+  editUser: (userId: string) => `/v1/users/${userId}`,
+  submitImage: () => `/v1/users/1/profile_picture/`,
+  assignRoles: (userId: string) => `/v1/users/${userId}/roles`,
 };
 
 @Injectable({
@@ -162,9 +162,13 @@ export class AdminService {
 
   assignRoles(context: any) {
     const userId = context.userId;
-    const formData: FormData = new FormData();
-    formData.append('roles', JSON.stringify(context.roles));
-    return this.httpClient.post(routes.assignRoles(userId), formData, {});
+    return this.httpClient.post(
+      routes.assignRoles(userId),
+      {
+        roles: context.roles,
+      },
+      {},
+    );
   }
 
   submitCreatePermissions(context: any): Observable<Response> {
