@@ -309,8 +309,5 @@ export enum MAStates {
   END = 'end',
 }
 
-export const EDITABLE_MA = [MAStates.NEW, MAStates.REQUESTED_CHANGES_BY_DCC];
-export const DELETABLE_MA = [MAStates.NEW, MAStates.REJECTED_BY_DCC];
-
 export const DECIMAL_NUMBER_REGEX = '^\\d{1,18}(\\.\\d{1,2})?$';
 export const AMOUNT_REGEX_STRING = '^\\d{0,15}(\\.\\d{0,2})?$';

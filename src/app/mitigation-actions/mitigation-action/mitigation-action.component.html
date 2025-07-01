@@ -706,7 +706,12 @@
   <div style="width: 25%; margin-left: 1em" *ngIf="reviews && !edit">
     <app-change-log-view [reviews]="reviews"></app-change-log-view>
     <div class="box">
-      <button *ngIf="canEdit(state)" mat-raised-button color="primary" (click)="onEdit(mitigationAction.id)">
+      <button
+        *ngIf="permissions.canEditMA(state)"
+        mat-raised-button
+        color="primary"
+        (click)="onEdit(mitigationAction.id)"
+      >
         <mat-icon>edit</mat-icon> <span translate>general.edit</span>
       </button>
       <button mat-raised-button color="accent" (click)="view(mitigationAction.id)">

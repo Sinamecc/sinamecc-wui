@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { EDITABLE_MA, MAFileType, MAStates, MitigationAction } from '@app/mitigation-actions/mitigation-action';
+import { MAFileType, MAStates, MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { I18nService } from '@app/i18n';
 import {
   commentsStructureModule1,
@@ -19,6 +19,7 @@ import { CommentsStructure, Comments } from '@app/@shared/comment';
 import { CommentsViewComponent } from '@app/@shared/comments-view/comments-view.component';
 import { MitigationActionReview } from '../mitigation-action-review';
 import { MatDialog } from '@angular/material/dialog';
+import { PermissionService } from '@app/@core/permissions.service';
 
 @Component({
   selector: 'app-mitigation-action',
@@ -47,6 +48,7 @@ export class MitigationActionComponent implements OnInit {
   constructor(
     private i18nService: I18nService,
     private service: MitigationActionsService,
+    public permissions: PermissionService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router,
@@ -129,10 +131,6 @@ export class MitigationActionComponent implements OnInit {
             this.files[type] = this.getFilesByType(type);
         });
       });
-  }
-
-  canEdit(state: MAStates): boolean {
-    return EDITABLE_MA.includes(state);
   }
 
   loadReviews() {
