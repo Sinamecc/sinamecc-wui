@@ -405,7 +405,7 @@ export class ImpactFormComponent implements OnInit {
   }
 
   getEntityId(index: number): string | null {
-    return this.mitigationAction.monitoring_information?.indicator?.[index]?.id ?? null;
+    return this.mitigationAction?.monitoring_information?.indicator?.[index]?.id ?? null;
   }
 
   onFileChange(files: File[], index: number, type: MAFileType) {

@@ -44,6 +44,17 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
   adaptationAction: AdaptationAction;
   edit: boolean;
 
+  completed: Record<string, boolean> = {
+    generalRegister: false,
+    report: false,
+    financing: false,
+    indicators: false,
+    climateMonitoring: false,
+    actionImpact: false,
+  };
+
+  assistantOpen = true;
+
   constructor(
     private _formBuilder: UntypedFormBuilder,
     private cdRef: ChangeDetectorRef,
@@ -57,6 +68,7 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
     if (this.edit) {
       this.loading = true;
       this.loadAdaptationActions(id);
+      this.assistantOpen = false;
     }
     this.createForm();
   }
@@ -65,8 +77,19 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
     return this.mainGroup.get('formArray');
   }
 
+  handleAssistantOpen() {
+    this.assistantOpen = !this.assistantOpen;
+  }
+
   ngOnInit() {
     this.openStartMessages();
+  }
+
+  onComplete(key: string, completed: boolean) {
+    this.completed = {
+      ...this.completed,
+      [key]: completed,
+    };
   }
 
   loadAdaptationActions(id: string) {

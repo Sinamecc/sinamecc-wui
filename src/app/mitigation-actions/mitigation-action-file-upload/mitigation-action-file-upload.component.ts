@@ -11,7 +11,7 @@ import { firstValueFrom } from 'rxjs';
   standalone: false,
 })
 export class MitigationActionFileUploadComponent {
-  @Input() maId: string = '';
+  @Input() maId: string | null = null;
   @Input() type: string = '';
   @Input() entityType?: MAEntityType; // optional
   @Input() entityId: string | null = null;
