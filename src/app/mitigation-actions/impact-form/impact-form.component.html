@@ -54,10 +54,10 @@
                   <app-mitigation-action-file-upload
                     class="w-full"
                     [type]="maFileType.INDICATOR_METHODOLOGICAL_DETAIL"
-                    [entityId]="getEntityId(i)"
-                    [maId]="mitigationAction.id"
+                    [entityId]="mitigationAction ? getEntityId(i) : null"
+                    [maId]="mitigationAction ? mitigationAction.id : null"
                     [entityType]="entityType.INDICATOR"
-                    [filesUploaded]="files[i][maFileType.INDICATOR_METHODOLOGICAL_DETAIL]"
+                    [filesUploaded]="files[i] ? files[i][maFileType.INDICATOR_METHODOLOGICAL_DETAIL] : []"
                     (filesToUpload)="onFileChange($event, i, maFileType.INDICATOR_METHODOLOGICAL_DETAIL)"
                   />
                 </div>
@@ -193,10 +193,10 @@
                   <app-mitigation-action-file-upload
                     class="w-full"
                     [type]="maFileType.INDICATOR_SUSTAINABILITY"
-                    [entityId]="getEntityId(i)"
+                    [entityId]="mitigationAction ? getEntityId(i) : null"
                     [entityType]="entityType.INDICATOR"
-                    [maId]="mitigationAction.id"
-                    [filesUploaded]="files[i][maFileType.INDICATOR_SUSTAINABILITY]"
+                    [maId]="mitigationAction ? mitigationAction.id : null"
+                    [filesUploaded]="files[i] ? files[i][maFileType.INDICATOR_SUSTAINABILITY] : []"
                     (filesToUpload)="onFileChange($event, i, maFileType.INDICATOR_SUSTAINABILITY)"
                   />
                 </div>
