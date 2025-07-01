@@ -17,19 +17,22 @@ export class PermissionService {
   }
 
   hasAllPermissions(): boolean {
-    return this.permissions.all.admin || this.permissions.all.provider || this.permissions.all.reviewer;
+    return (
+      this.permissions.all &&
+      (this.permissions.all.admin || this.permissions.all.provider || this.permissions.all.reviewer)
+    );
   }
 
   hasAdminPermission(): boolean {
-    return this.permissions.all.admin;
+    return this.permissions.all && this.permissions.all.admin;
   }
 
   hasReviewerPermission(): boolean {
-    return this.permissions.all.reviewer;
+    return this.permissions.all && this.permissions.all.reviewer;
   }
 
   hasProviderPermission(): boolean {
-    return this.permissions.all.provider || this.permissions.ma.provider;
+    return (this.permissions.all && this.permissions.all.provider) || this.permissions.ma.provider;
   }
 
   hasMAPermission(): boolean {
@@ -41,7 +44,7 @@ export class PermissionService {
   }
 
   canChangeMAState(state: MAStates) {
-    if (state !== 'end') {
+    if (state !== MAStates.END) {
       if (this.credentialsService.credentials.permissions.all) {
         return true;
       } else {
@@ -55,7 +58,6 @@ export class PermissionService {
 
   canEditMA(state: MAStates): boolean {
     if (this.hasAllPermissions()) return true;
-
     return this.permissions.ma.provider && EDITABLE_MA.includes(state);
   }
 
