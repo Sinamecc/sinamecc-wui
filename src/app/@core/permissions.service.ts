@@ -17,53 +17,44 @@ export class PermissionService {
   }
 
   hasAllPermissions(): boolean {
-    return (
-      this.permissions.all &&
-      (this.permissions.all.admin || this.permissions.all.provider || this.permissions.all.reviewer)
-    );
+    const all = this.permissions.all;
+    return Boolean(all?.admin || all?.provider || all?.reviewer);
   }
 
   hasAdminPermission(): boolean {
-    return this.permissions.all && this.permissions.all.admin;
+    return Boolean(this.permissions.all?.admin);
   }
 
   hasReviewerPermission(): boolean {
-    return this.permissions.all && this.permissions.all.reviewer;
+    return Boolean(this.permissions.all?.reviewer);
   }
 
   hasProviderPermission(): boolean {
-    return (this.permissions.all && this.permissions.all.provider) || this.permissions.ma.provider;
+    return Boolean(this.permissions.all?.provider);
   }
 
   hasMAPermission(): boolean {
-    return this.hasAllPermissions() || this.permissions.ma.provider || this.permissions.ma.reviewer;
+    return this.hasAllPermissions() || Boolean(this.permissions.ma?.provider || this.permissions.ma?.reviewer);
   }
 
-  isMAProvider() {
-    return Boolean(this.hasAdminPermission() || this.credentialsService.credentials.permissions.ma.provider);
+  // Mitigation Actions Permissions
+
+  isMAProvider(): boolean {
+    return Boolean(this.hasAdminPermission() || this.hasProviderPermission() || this.permissions.ma?.provider);
   }
 
-  canChangeMAState(state: MAStates) {
-    if (state !== MAStates.END) {
-      if (this.credentialsService.credentials.permissions.all) {
-        return true;
-      } else {
-        if (!this.credentialsService.credentials.permissions.ma.provider) {
-          return true;
-        }
-      }
-    }
-    return false;
+  canChangeMAState(state: MAStates): boolean {
+    if (state === MAStates.END) return false;
+    return Boolean(this.hasAdminPermission() || this.hasReviewerPermission() || this.permissions.ma?.reviewer);
   }
 
   canEditMA(state: MAStates): boolean {
     if (this.hasAllPermissions()) return true;
-    return this.permissions.ma.provider && EDITABLE_MA.includes(state);
+    return Boolean(this.permissions.ma?.provider && EDITABLE_MA.includes(state));
   }
 
   canDeleteMA(state: MAStates): boolean {
     if (this.hasAllPermissions()) return true;
-
-    return this.permissions.ma.provider && DELETABLE_MA.includes(state);
+    return Boolean(this.permissions.ma?.provider && DELETABLE_MA.includes(state));
   }
 }
