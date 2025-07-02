@@ -8,14 +8,13 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-
 import {
+  MAStates,
   CategoryIppc2006,
   MADataCatalogItem,
   MAFileType,
   MitigationAction,
   SectorIpcc2006,
-  States,
 } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
 import { I18nService } from '@app/i18n';
@@ -33,7 +32,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
   form: UntypedFormGroup;
-  @Output() state = new EventEmitter<States>();
+  @Output() state = new EventEmitter<MAStates>();
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -77,7 +76,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
-        this.state.emit(this.mitigationAction.fsm_state.state as States);
+        this.state.emit(this.mitigationAction.fsm_state.state as MAStates);
         this.files = this.getFiles();
       });
     }
@@ -329,7 +328,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
       )
       .subscribe(
         async (response) => {
-          await this.successSendForm(response.id, response.state as States);
+          await this.successSendForm(response.id, response.state as MAStates);
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -343,7 +342,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
       );
   }
 
-  async successSendForm(id: string, state: States) {
+  async successSendForm(id: string, state: MAStates) {
     if (this.newFiles.length) {
       await this.service.submitFiles(id, this.maFileType, this.newFiles);
     }

@@ -7,7 +7,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom, Observable } from 'rxjs';
 import { MitigationActionNewFormData, InitiativeType } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MAFileType, MitigationAction, States } from '../mitigation-action';
+import { MAFileType, MitigationAction, MAStates } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,7 +22,7 @@ const log = new Logger('MitigationAction');
   standalone: false,
 })
 export class InitiativeFormComponent implements OnInit {
-  @Output() state = new EventEmitter<States>();
+  @Output() state = new EventEmitter<MAStates>();
   version: string = environment.version;
   error: string;
   form: UntypedFormGroup;
@@ -146,7 +146,7 @@ export class InitiativeFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
-        this.state.emit(this.mitigationAction.fsm_state.state as States);
+        this.state.emit(this.mitigationAction.fsm_state.state as MAStates);
         this.files[MAFileType.INITIATIVE] = this.getFilesByType(this.maFileType.INITIATIVE);
         this.files[MAFileType.GEOGRAPHIC_LOCATION] = this.getFilesByType(this.maFileType.GEOGRAPHIC_LOCATION);
       });
@@ -520,7 +520,7 @@ export class InitiativeFormComponent implements OnInit {
         .subscribe(
           async (response) => {
             await this.successSendForm(response);
-            this.state.emit(response.state as States);
+            this.state.emit(response.state as MAStates);
           },
           (error) => {
             this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -544,7 +544,7 @@ export class InitiativeFormComponent implements OnInit {
         )
         .subscribe(
           async (response) => {
-            this.state.emit(response.state as States);
+            this.state.emit(response.state as MAStates);
             await this.successSendForm(response);
           },
           (error) => {
