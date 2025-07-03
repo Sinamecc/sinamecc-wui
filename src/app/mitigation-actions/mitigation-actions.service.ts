@@ -124,13 +124,20 @@ export class MitigationActionsService {
     return this.httpClient.put(routes.submitNewMitigationAction(uuid + '/'), context, {}).pipe(
       map((body: any) => {
         this.updateCurrentMitigationAction(body);
+
+        // TODO: related to issue SIN-I75
+        const monitoringIndicators = body?.monitoring_reporting_indicator?.monitoring_indicator;
+        const monitoringId =
+          Array.isArray(monitoringIndicators) && monitoringIndicators.length > 0 ? monitoringIndicators[0].id : null;
+
         const response = {
           statusCode: 200,
           id: body.id,
           state: body.fsm_state.state,
-          monitoring: body.monitoring_reporting_indicator.monitoring_indicator[0].id, // TODO: related to issue SIN-I75
+          monitoring: monitoringId,
           message: 'Form submitted correctly',
         };
+
         return response;
       }),
     );
