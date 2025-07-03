@@ -3,7 +3,7 @@ import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } fro
 import { Router } from '@angular/router';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
-import { ODS, TemporalityImpact } from '../interfaces/catalogs';
+import { AAType, ODS, TemporalityImpact } from '../interfaces/catalogs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
@@ -14,6 +14,7 @@ import { FileUpload } from '@app/@shared/upload-button/file-upload';
   standalone: false,
 })
 export class AdaptationActionsActionImpactComponent implements OnInit {
+  @Input() type: AAType;
   form: UntypedFormGroup;
   durationInSeconds = 3;
   adaptationAction: AdaptationAction;

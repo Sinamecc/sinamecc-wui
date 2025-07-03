@@ -11,6 +11,7 @@ import { AdaptationActionService } from '../adaptation-actions-service';
 import { GeneralRegisterComponent } from '../general-register/general-register.component';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AAType } from '../interfaces/catalogs';
 
 @Component({
   selector: 'app-adaptation-actions-new',
@@ -43,6 +44,8 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
   mainGroup: UntypedFormGroup;
   adaptationAction: AdaptationAction;
   edit: boolean;
+
+  aaType: AAType | null;
 
   constructor(
     private _formBuilder: UntypedFormBuilder,

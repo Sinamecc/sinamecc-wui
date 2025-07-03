@@ -27,6 +27,7 @@
             [adaptationActionUpdated]="adaptationAction"
             [edit]="edit"
             [mainStepper]="stepper"
+            (onTypeSet)="aaType = $event"
           ></app-adaptation-actions-report>
         </mat-step>
 
@@ -35,6 +36,7 @@
             <span translate>adaptationAction.form3.title</span>
           </ng-template>
           <app-adaptation-actions-financing
+            [type]="aaType"
             [edit]="edit"
             [adaptationActionUpdated]="adaptationAction"
             [mainStepper]="stepper"
@@ -68,6 +70,7 @@
             <span translate>adaptationAction.form6.title</span>
           </ng-template>
           <app-adaptation-actions-action-impact
+            [type]="aaType"
             [edit]="edit"
             [adaptationActionUpdated]="adaptationAction"
           ></app-adaptation-actions-action-impact>
