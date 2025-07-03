@@ -28,6 +28,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: false,
 })
 export class AdaptationActionsReportComponent implements OnInit {
+  @Output() onComplete = new EventEmitter<boolean>();
+
   form: UntypedFormGroup;
   topics: Topic[][] = [];
   subTopics: SubTopics[] = [];
@@ -84,6 +86,9 @@ export class AdaptationActionsReportComponent implements OnInit {
       if (this.adaptationAction) {
         const type = this.getType(this.adaptationAction);
         this.onTypeSet.emit(type);
+      }
+      if (this.isComplete()) {
+        this.onComplete.emit(true);
       }
     });
 
@@ -210,6 +215,14 @@ export class AdaptationActionsReportComponent implements OnInit {
       this.setRequiredValidators();
     }
     this.updateFormValuesAndValidity();
+  }
+
+  private isComplete(): boolean {
+    return (
+      this.adaptationAction &&
+      !!this.adaptationAction.adaptation_action_information?.id &&
+      !!this.adaptationAction.address?.id
+    );
   }
 
   private createForm() {
@@ -648,7 +661,7 @@ export class AdaptationActionsReportComponent implements OnInit {
         this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
         let type = this.getType(res.body);
         this.onTypeSet.emit(type);
-
+        this.onComplete.emit(true);
         this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
           this.snackBar.open(res, null, { duration: 3000 });
           this.mainStepper.next();

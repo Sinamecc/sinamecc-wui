@@ -27,6 +27,7 @@ export interface ContactIndicator {
 }
 
 export interface Adress {
+  id?: number;
   description: string;
   GIS: string;
   district: any;
@@ -35,6 +36,7 @@ export interface Adress {
 }
 
 export interface AdaptationActionInformation {
+  id?: number;
   name: string;
   objective: string;
   description: string;
@@ -91,6 +93,7 @@ export interface Mideplan {
 }
 
 export interface Finance {
+  id?: number;
   administration: string;
   budget: string;
   status: Status;
@@ -134,6 +137,7 @@ export interface Indicator {
 }
 
 export interface ProgressLog {
+  id?: number;
   action_status: string;
   progress_monitoring: string;
 }
@@ -147,6 +151,7 @@ export interface IndicatorMonitoring {
 }
 
 export interface ActionImpact {
+  id?: number;
   gender_equality: string;
   gender_equality_description: string;
   unwanted_action: string;

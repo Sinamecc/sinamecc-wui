@@ -1,6 +1,6 @@
 import { I } from '@angular/cdk/keycodes';
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,6 +16,8 @@ import { FileUpload } from '@app/@shared/upload-button/file-upload';
   standalone: false,
 })
 export class AdaptationActionsClimateMonitoringComponent implements OnInit {
+  @Output() onComplete = new EventEmitter<boolean>();
+
   form: UntypedFormGroup;
   adaptationAction: AdaptationAction;
   @Input() mainStepper: any;
@@ -34,6 +36,9 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
+      if (this.adaptationAction && this.adaptationAction.progress_log?.id) {
+        this.onComplete.emit(true);
+      }
     });
   }
 
@@ -165,6 +170,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
     this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
       (_) => {
+        this.onComplete.emit(true);
         this.mainStepper.next();
         this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
           this.snackBar.open(res, null, { duration: 3000 });

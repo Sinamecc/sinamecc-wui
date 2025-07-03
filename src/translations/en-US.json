@@ -693,6 +693,11 @@
     "mesage1": "It is suggested to have on hand the Guide for the registration of climate actions with adaptation impacts in the National System of Metrics for Climate Change (SINAMECC) when completing this registration",
     "addReview": "Add a new review for this adaptation action",
     "newButton": "New Adaptation Action report",
+    "help": {
+      "help": "For inquiries or questions, contact the email ",
+      "guide": "Registration Guide",
+      "title": "User assistance"
+    },
     "form1": {
       "title": "General Registration",
       "subtitle": "In this section we invite you to complete the general identification data to start with the report of your action",

@@ -9,74 +9,130 @@
         <mat-divider class="divider-custom"></mat-divider>
       </mat-card-title>
     </div>
-
-    <form *ngIf="!loading" [formGroup]="mainGroup">
-      <mat-horizontal-stepper formArrayName="formArray" #stepper>
-        <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
-          <ng-template matStepLabel>
-            <span translate>adaptationAction.form1.title</span>
+    <div class="p-2">
+      <div class="flex flex-col justify-center items-start rou nded bg-gray-100 border-2 border-gray-200 p-2">
+        <div class="flex flex-row justify-between w-full">
+          <div translate>adaptationAction.help.title</div>
+          <div
+            mat-icon-button
+            (click)="handleAssistantOpen()"
+            class="h-6 w-6 min-w-0 p-0 flex justify-center items-center hover:cursor-pointer hover:bg-gray-300 rounded-full"
+          >
+            <mat-icon>{{ assistantOpen ? 'expand_more' : 'chevron_right' }}</mat-icon>
+          </div>
+        </div>
+        <ng-container *ngIf="assistantOpen">
+          <div>
+            <span translate>adaptationAction.help.help</span>
+            <span class="font-medium text-gray-700">&lt;EMAIL&gt;</span>
+          </div>
+          <div>
+            <span translate>adaptationAction.help.guide</span>:
+            <a
+              class="ms-1 hover:underline text-[#1e5674]"
+              href="https://sinamecc.go.cr/recursos/docs/Gu%C3%ADa%20de%20Registro%20y%20Reporte%20de%20Acciones%20de%20Adaptaci%C3%B3n.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://sinamecc.go.cr/
+            </a>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <ng-container *ngIf="!loading">
+      <form>
+        <mat-horizontal-stepper #stepper>
+          <ng-template matStepperIcon="edit">
+            <mat-icon>check_circle</mat-icon>
           </ng-template>
-          <app-general-register [mainStepper]="stepper"></app-general-register>
-        </mat-step>
-
-        <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
-          <ng-template matStepLabel>
-            <span translate>adaptationAction.form2.title</span>
+          <ng-template matStepperIcon="done">
+            <mat-icon>download</mat-icon>
           </ng-template>
-          <app-adaptation-actions-report
-            [adaptationActionUpdated]="adaptationAction"
-            [edit]="edit"
-            [mainStepper]="stepper"
-            (onTypeSet)="aaType = $event"
-          ></app-adaptation-actions-report>
-        </mat-step>
 
-        <mat-step [stepControl]="formArray?.get([2])">
-          <ng-template matStepLabel>
-            <span translate>adaptationAction.form3.title</span>
-          </ng-template>
-          <app-adaptation-actions-financing
-            [type]="aaType"
-            [edit]="edit"
-            [adaptationActionUpdated]="adaptationAction"
-            [mainStepper]="stepper"
-          ></app-adaptation-actions-financing>
-        </mat-step>
+          <!-- section 1 -->
+          <mat-step [completed]="completed.generalRegister">
+            <app-progress-bar [completed]="completed"></app-progress-bar>
+            <ng-template matStepLabel>
+              <span translate>adaptationAction.form1.title</span>
+            </ng-template>
+            <app-general-register
+              [mainStepper]="stepper"
+              (onComplete)="onComplete('generalRegister', $event)"
+            ></app-general-register>
+          </mat-step>
 
-        <mat-step [stepControl]="formArray?.get([3])">
-          <ng-template matStepLabel>
-            <span translate>adaptationAction.form4.title</span>
-          </ng-template>
-          <app-adaptation-actions-indicators
-            [edit]="edit"
-            [adaptationActionUpdated]="adaptationAction"
-            [mainStepper]="stepper"
-          ></app-adaptation-actions-indicators>
-        </mat-step>
+          <!-- section 2 -->
+          <mat-step [completed]="completed.report">
+            <app-progress-bar [completed]="completed"></app-progress-bar>
+            <app-adaptation-actions-report
+              [adaptationActionUpdated]="adaptationAction"
+              [edit]="edit"
+              [mainStepper]="stepper"
+              (onTypeSet)="aaType = $event"
+              (onComplete)="onComplete('report', $event)"
+            ></app-adaptation-actions-report>
+          </mat-step>
 
-        <mat-step [stepControl]="formArray?.get([4])">
-          <ng-template matStepLabel>
-            <span translate>adaptationAction.form5.title</span>
-          </ng-template>
-          <app-adaptation-actions-climate-monitoring
-            [mainStepper]="stepper"
-            [edit]="edit"
-            [adaptationActionUpdated]="adaptationAction"
-          ></app-adaptation-actions-climate-monitoring>
-        </mat-step>
+          <!-- section 3 -->
+          <mat-step [completed]="completed.financing">
+            <app-progress-bar [completed]="completed"></app-progress-bar>
+            <ng-template matStepLabel>
+              <span translate>adaptationAction.form3.title</span>
+            </ng-template>
+            <app-adaptation-actions-financing
+              [type]="aaType"
+              [edit]="edit"
+              [adaptationActionUpdated]="adaptationAction"
+              [mainStepper]="stepper"
+              (onComplete)="onComplete('financing', $event)"
+            ></app-adaptation-actions-financing>
+          </mat-step>
 
-        <mat-step [stepControl]="formArray?.get([5])">
-          <ng-template matStepLabel>
-            <span translate>adaptationAction.form6.title</span>
-          </ng-template>
-          <app-adaptation-actions-action-impact
-            [type]="aaType"
-            [edit]="edit"
-            [adaptationActionUpdated]="adaptationAction"
-          ></app-adaptation-actions-action-impact>
-        </mat-step>
-      </mat-horizontal-stepper>
-    </form>
+          <!-- section 4 -->
+          <mat-step [completed]="completed.indicators">
+            <app-progress-bar [completed]="completed"></app-progress-bar>
+            <ng-template matStepLabel>
+              <span translate>adaptationAction.form4.title</span>
+            </ng-template>
+            <app-adaptation-actions-indicators
+              [edit]="edit"
+              [adaptationActionUpdated]="adaptationAction"
+              [mainStepper]="stepper"
+              (onComplete)="onComplete('indicators', $event)"
+            ></app-adaptation-actions-indicators>
+          </mat-step>
+
+          <!-- section 5 -->
+          <mat-step [completed]="completed.climateMonitoring">
+            <app-progress-bar [completed]="completed"></app-progress-bar>
+            <ng-template matStepLabel>
+              <span translate>adaptationAction.form5.title</span>
+            </ng-template>
+            <app-adaptation-actions-climate-monitoring
+              [mainStepper]="stepper"
+              [edit]="edit"
+              [adaptationActionUpdated]="adaptationAction"
+              (onComplete)="onComplete('climateMonitoring', $event)"
+            ></app-adaptation-actions-climate-monitoring>
+          </mat-step>
+
+          <!-- section 6 -->
+          <mat-step [completed]="completed.actionImpact">
+            <app-progress-bar [completed]="completed"></app-progress-bar>
+            <ng-template matStepLabel>
+              <span translate>adaptationAction.form6.title</span>
+            </ng-template>
+            <app-adaptation-actions-action-impact
+              [type]="aaType"
+              [edit]="edit"
+              [adaptationActionUpdated]="adaptationAction"
+              (onComplete)="onComplete('actionImpact', $event)"
+            ></app-adaptation-actions-action-impact>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </form>
+    </ng-container>
 
     <div class="flex-fill flex flex-col justify-center items-center" *ngIf="loading">
       <mat-spinner color="accent"></mat-spinner>
