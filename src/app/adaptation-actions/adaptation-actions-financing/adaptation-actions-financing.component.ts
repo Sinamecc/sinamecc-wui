@@ -15,7 +15,7 @@ import { AAType } from '../interfaces/catalogs';
 export class AdaptationActionsFinancingComponent implements OnInit {
   @Input() type: AAType;
   @Output() onComplete = new EventEmitter<boolean>();
-
+  types = AAType;
   form: UntypedFormGroup;
 
   durationInSeconds = 3;

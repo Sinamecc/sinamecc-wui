@@ -414,7 +414,8 @@
     "energy": "Energy",
     "person": "Person",
     "entity": "Entity",
-    "fileUpload": "File upload"
+    "fileUpload": "File upload",
+    "optional": "This section is optional"
   },
 
   "info": {
@@ -690,6 +691,7 @@
   },
 
   "adaptationAction": {
+    "typeOptional": "If the user decides to complete a section that is optional, based on their selection of the adaptation action type, all required fields shown must be completed.",
     "mesage1": "It is suggested to have on hand the Guide for the registration of climate actions with adaptation impacts in the National System of Metrics for Climate Change (SINAMECC) when completing this registration",
     "addReview": "Add a new review for this adaptation action",
     "newButton": "New Adaptation Action report",

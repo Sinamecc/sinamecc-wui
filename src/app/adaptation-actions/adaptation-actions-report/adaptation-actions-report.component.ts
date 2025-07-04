@@ -680,7 +680,7 @@ export class AdaptationActionsReportComponent implements OnInit {
         objective: this.form.value.formArray[0].adaptationActionTargetCtrl,
         description: this.form.value.formArray[0].adaptationActionDescriptionCtrl,
         meta: this.form.value.formArray[0].adaptationActionGoalCtrl,
-        adaptation_action_type: this.form.value.formArray[0].adaptationActionTypeCtrl,
+        adaptation_action_type: Number(this.form.value.formArray[0].adaptationActionTypeCtrl),
         ods: this.form.value.formArray[0].adaptationActionODSCtrl,
         expected_result: this.form.value.formArray[0].expectedResultsCtrl,
         potential_co_benefits: this.form.value.formArray[0].potentialCoBenefitsCtrl,

@@ -408,7 +408,8 @@
     "energy": "Energía",
     "person": "Persona",
     "entity": "Entidad",
-    "fileUpload": "Subir archivo"
+    "fileUpload": "Subir archivo",
+    "optional": "Esta sección es opcional"
   },
 
   "info": {
@@ -679,6 +680,7 @@
   },
 
   "adaptationAction": {
+    "typeOptional": "Si el usuario decide completar una sección que es opcional, de acuerdo a su selección del tipo acción de adaptación, se debe completar todos los campos obligatorios que muestra",
     "mesage1": "Se sugiere tener a la mano la Guía para el registro de acciones climáticas con impactos de adaptación en el Sistema Nacional de Métricas de Cambio Climático (SINAMECC) al momento de completar este registro",
     "addReview": "Agregar una nueva revisión para esta acción de adaptación",
     "newButton": "Nuevo reporte Acción de Adaptación",
