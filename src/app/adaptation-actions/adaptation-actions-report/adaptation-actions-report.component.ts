@@ -1,6 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import {
@@ -11,7 +18,7 @@ import {
   District,
   Province,
 } from '../interfaces/adaptationAction';
-import { Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
+import { AAType, Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -61,6 +68,7 @@ export class AdaptationActionsReportComponent implements OnInit {
 
   adaptationActions = 0;
   adaptationActionsExtension = '';
+  @Output() onTypeSet = new EventEmitter();
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -75,6 +83,10 @@ export class AdaptationActionsReportComponent implements OnInit {
   async ngOnInit() {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
+      if (this.adaptationAction) {
+        const type = this.getType(this.adaptationAction);
+        this.onTypeSet.emit(type);
+      }
       if (this.isComplete()) {
         this.onComplete.emit(true);
       }
@@ -92,11 +104,121 @@ export class AdaptationActionsReportComponent implements OnInit {
     this.loadAdaptationActions();
     if (this.edit) {
       this.createForm();
+      if (this.adaptationAction) {
+        const id = this.adaptationAction.adaptation_action_information?.adaptation_action_type?.id;
+        if (id) this.changeAdaptationType(id);
+      }
     }
   }
 
   get formArray(): AbstractControl | null {
     return this.form.get('formArray');
+  }
+
+  private getType(aa: AdaptationAction): AAType {
+    const { adaptation_action_information } = aa;
+    let type = adaptation_action_information?.adaptation_action_type;
+    if (type && typeof type === 'object' && 'code' in type) {
+      type = type.code;
+    }
+    return type;
+  }
+
+  setRequiredValidators() {
+    // section 3
+    const section3 = this.form.get('formArray').get([2]);
+    const themeArray = section3.get('themeCtrl') as FormArray;
+    themeArray.controls.forEach((group: AbstractControl) => {
+      group.get('adaptationActionThemeCtrl').setValidators(Validators.required);
+      group.get('adaptationActionTypologyCtrl').setValidators(Validators.required);
+      group.get('adaptationActionTypeCtrl').setValidators(Validators.required);
+      group.get('adaptationActionRelationCtrl').setValidators(Validators.required);
+      group.get('adaptationActionGoalRelationCtrl').setValidators(Validators.required);
+      group.get('adaptationActionEjeRelationCtrl').setValidators(Validators.required);
+      group.get('adaptationActionLinealRelationCtrl').setValidators(Validators.required);
+    });
+
+    // section 4
+    this.form
+      .get('formArray')
+      .get([3])
+      .get('adaptationActionInstrumentCtrl')
+      .setValidators([Validators.required, Validators.maxLength(250)]);
+
+    // section 6
+    const section6 = this.form.get('formArray').get([5]);
+    section6.get('adaptationActionStartDateCtrl').setValidators([Validators.required]);
+    section6.get('adaptationActionEndDateCtrl').setValidators([Validators.required]);
+    section6.get('adaptationActionEntityCtrl').setValidators([Validators.required, Validators.maxLength(250)]);
+    section6.get('adaptationActionEntityOthersCtrl').setValidators([Validators.required, Validators.maxLength(250)]);
+    section6.get('adaptationActionCodeCtrl').setValidators([Validators.required, Validators.maxLength(50)]);
+  }
+
+  setOptionalValidators() {
+    // section 3
+    const section3 = this.form.get('formArray').get([2]);
+    const themeArray = section3.get('themeCtrl') as FormArray;
+    themeArray.controls.forEach((group: AbstractControl) => {
+      group.get('adaptationActionThemeCtrl').setValidators(null);
+      group.get('adaptationActionTypologyCtrl').setValidators(null);
+      group.get('adaptationActionTypeCtrl').setValidators(null);
+      group.get('adaptationActionRelationCtrl').setValidators(null);
+      group.get('adaptationActionGoalRelationCtrl').setValidators(null);
+      group.get('adaptationActionEjeRelationCtrl').setValidators(null);
+      group.get('adaptationActionLinealRelationCtrl').setValidators(null);
+    });
+
+    // section 4
+    this.form
+      .get('formArray')
+      .get([3])
+      .get('adaptationActionInstrumentCtrl')
+      .setValidators([Validators.maxLength(250)]);
+
+    // section 6
+    const section6 = this.form.get('formArray').get([5]);
+    section6.get('adaptationActionStartDateCtrl').setValidators(null);
+    section6.get('adaptationActionEndDateCtrl').setValidators(null);
+    section6.get('adaptationActionEntityCtrl').setValidators([Validators.maxLength(250)]);
+    section6.get('adaptationActionEntityOthersCtrl').setValidators([Validators.maxLength(250)]);
+    section6.get('adaptationActionCodeCtrl').setValidators([Validators.maxLength(50)]);
+  }
+
+  updateFormValuesAndValidity() {
+    // section 3
+    const section3 = this.form.get('formArray').get([2]);
+    const themeArray = section3.get('themeCtrl') as FormArray;
+    themeArray.controls.forEach((group: AbstractControl) => {
+      group.get('adaptationActionThemeCtrl').updateValueAndValidity();
+      group.get('adaptationActionTypologyCtrl').updateValueAndValidity();
+      group.get('adaptationActionTypeCtrl').updateValueAndValidity();
+      group.get('adaptationActionRelationCtrl').updateValueAndValidity();
+      group.get('adaptationActionGoalRelationCtrl').updateValueAndValidity();
+      group.get('adaptationActionEjeRelationCtrl').updateValueAndValidity();
+      group.get('adaptationActionLinealRelationCtrl').updateValueAndValidity();
+    });
+
+    // section 4
+    const section4 = this.form.get('formArray').get([3]);
+    section4.get('adaptationActionInstrumentCtrl').updateValueAndValidity();
+
+    // section 6
+    const section6 = this.form.get('formArray').get([5]);
+    section6.get('adaptationActionStartDateCtrl').updateValueAndValidity();
+    section6.get('adaptationActionEndDateCtrl').updateValueAndValidity();
+    section6.get('adaptationActionEntityCtrl').updateValueAndValidity();
+    section6.get('adaptationActionEntityOthersCtrl').updateValueAndValidity();
+    section6.get('adaptationActionCodeCtrl').updateValueAndValidity();
+  }
+
+  public changeAdaptationType(id: string) {
+    this.onTypeSet.emit(id);
+    if (parseInt(id) === 1) {
+      this.setOptionalValidators();
+    } else {
+      this.setRequiredValidators();
+    }
+    this.updateFormValuesAndValidity();
   }
 
   private isComplete(): boolean {
@@ -316,7 +438,7 @@ export class AdaptationActionsReportComponent implements OnInit {
           this.formBuilder.group({
             adaptationActionThemeCtrl: [element?.sub_topic?.topic?.id, Validators.required],
             adaptationActionTypologyCtrl: [element?.sub_topic?.id, Validators.required],
-            adaptationActionTypeCtrl: [element?.id, Validators.required],
+            adaptationActionTypeCtrl: [element?.id?.toString(), Validators.required],
             adaptationActionRelationCtrl: [adaptationActionRelationValue, Validators.required],
             adaptationActionGoalRelationCtrl: [adaptationActionGoalRelationValue, Validators.required],
             adaptationActionEjeRelationCtrl: [adaptationActionEjeRelationValue, Validators.required],
@@ -539,8 +661,10 @@ export class AdaptationActionsReportComponent implements OnInit {
     const payload: AdaptationAction = this.buildPayload();
 
     this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
-      (_) => {
+      (res) => {
         this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
+        let type = this.getType(res.body);
+        this.onTypeSet.emit(type);
         this.onComplete.emit(true);
         this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
           this.snackBar.open(res, null, { duration: 3000 });
@@ -552,6 +676,9 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
     );
   }
+  private clean(value: any): any {
+    return value === '' ? null : value;
+  }
 
   buildPayload() {
     const context = {
@@ -560,7 +687,7 @@ export class AdaptationActionsReportComponent implements OnInit {
         objective: this.form.value.formArray[0].adaptationActionTargetCtrl,
         description: this.form.value.formArray[0].adaptationActionDescriptionCtrl,
         meta: this.form.value.formArray[0].adaptationActionGoalCtrl,
-        adaptation_action_type: this.form.value.formArray[0].adaptationActionTypeCtrl,
+        adaptation_action_type: Number(this.form.value.formArray[0].adaptationActionTypeCtrl),
         ods: this.form.value.formArray[0].adaptationActionODSCtrl,
         expected_result: this.form.value.formArray[0].expectedResultsCtrl,
         potential_co_benefits: this.form.value.formArray[0].potentialCoBenefitsCtrl,
@@ -581,12 +708,17 @@ export class AdaptationActionsReportComponent implements OnInit {
             : [],
       },
 
-      activity: this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls.map(
-        (x: { value: { adaptationActionTypeCtrl: number } }) => x.value.adaptationActionTypeCtrl,
-      ),
+      activity: this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls
+        .filter(
+          (x: { value: { adaptationActionTypeCtrl: number | null | undefined | '' } }) =>
+            x.value?.adaptationActionTypeCtrl !== null &&
+            x.value?.adaptationActionTypeCtrl !== undefined &&
+            x.value?.adaptationActionTypeCtrl !== '',
+        )
+        .map((x: { value: { adaptationActionTypeCtrl: number } }) => x.value.adaptationActionTypeCtrl),
 
       instrument: {
-        name: this.form.value.formArray[3].adaptationActionInstrumentCtrl,
+        name: this.clean(this.form.value.formArray[3].adaptationActionInstrumentCtrl),
       },
 
       climate_threat: {
@@ -604,8 +736,8 @@ export class AdaptationActionsReportComponent implements OnInit {
       implementation: {
         start_date: this.datePipe.transform(this.form.value.formArray[5].adaptationActionStartDateCtrl, 'yyyy-MM-dd'),
         end_date: this.datePipe.transform(this.form.value.formArray[5].adaptationActionEndDateCtrl, 'yyyy-MM-dd'),
-        responsible_entity: this.form.value.formArray[5].adaptationActionEntityCtrl,
-        other_entity: this.form.value.formArray[5].adaptationActionEntityOthersCtrl,
+        responsible_entity: this.clean(this.form.value.formArray[5].adaptationActionEntityCtrl),
+        other_entity: this.clean(this.form.value.formArray[5].adaptationActionEntityOthersCtrl),
         action_code: this.form.value.formArray[5].adaptationActionCodeCtrl,
       },
     };
@@ -707,22 +839,5 @@ export class AdaptationActionsReportComponent implements OnInit {
     this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').updateValueAndValidity();
     this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').updateValueAndValidity();
     this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').updateValueAndValidity();
-  }
-
-  public changeAdaptationType(id: string) {
-    if (parseInt(id) === 1) {
-      this.form
-        .get('formArray')
-        .get([3])
-        .get('adaptationActionInstrumentCtrl')
-        .setValidators([Validators.maxLength(250)]);
-    } else {
-      this.form
-        .get('formArray')
-        .get([3])
-        .get('adaptationActionInstrumentCtrl')
-        .setValidators([Validators.required, Validators.maxLength(250)]);
-    }
-    this.form.get('formArray').get([3]).get('adaptationActionInstrumentCtrl').updateValueAndValidity();
   }
 }

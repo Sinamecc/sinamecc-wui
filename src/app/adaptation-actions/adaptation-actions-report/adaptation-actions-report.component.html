@@ -35,36 +35,62 @@
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.AAName</mat-label>
           <input type="text" matInput formControlName="adaptationActionNameCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
+          <mat-error *ngIf="formArray?.get([0])?.get('adaptationActionNameCtrl')?.hasError('required')" translate>
+            errorLabel.fieldRequired
+          </mat-error>
+          <mat-error *ngIf="formArray?.get([0])?.get('adaptationActionNameCtrl')?.hasError('maxlength')" translate>
+            errorLabel.maxLengthExceeded
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.AAObjective</mat-label>
           <input type="text" matInput formControlName="adaptationActionTargetCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
+          <mat-error *ngIf="formArray?.get([0])?.get('adaptationActionTargetCtrl')?.hasError('required')" translate>
+            errorLabel.fieldRequired
+          </mat-error>
+          <mat-error *ngIf="formArray?.get([0])?.get('adaptationActionTargetCtrl')?.hasError('maxlength')" translate>
+            errorLabel.maxLengthExceeded
+          </mat-error>
         </mat-form-field>
 
-        <div class="flex flex-row justify-center">
-          <mat-form-field class="field-ppcn">
-            <mat-label translate>adaptationAction.form2.AADescription</mat-label>
-            <input type="text" matInput formControlName="adaptationActionDescriptionCtrl" />
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
-          </mat-form-field>
-          <div class="w-full xl:w-auto flex items-start justify-start">
-            <app-upload-button class="w-full" />
-          </div>
-        </div>
+        <mat-form-field class="field-ppcn">
+          <mat-label translate>adaptationAction.form2.AADescription</mat-label>
+          <input type="text" matInput formControlName="adaptationActionDescriptionCtrl" />
+          <mat-error
+            *ngIf="formArray?.get([0])?.get('adaptationActionDescriptionCtrl')?.hasError('required')"
+            translate
+          >
+            errorLabel.fieldRequired
+          </mat-error>
+          <mat-error
+            *ngIf="formArray?.get([0])?.get('adaptationActionDescriptionCtrl')?.hasError('maxlength')"
+            translate
+          >
+            errorLabel.maxLengthExceeded
+          </mat-error>
+        </mat-form-field>
 
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.AAGoal</mat-label>
           <input type="text" matInput formControlName="adaptationActionGoalCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
+          <mat-error *ngIf="formArray?.get([0])?.get('adaptationActionGoalCtrl')?.hasError('required')" translate>
+            errorLabel.fieldRequired
+          </mat-error>
+          <mat-error *ngIf="formArray?.get([0])?.get('adaptationActionGoalCtrl')?.hasError('maxlength')" translate>
+            errorLabel.maxLengthExceeded
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.expectedResults</mat-label>
           <input type="text" matInput formControlName="expectedResultsCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
+          <mat-error *ngIf="formArray?.get([0])?.get('expectedResultsCtrl')?.hasError('required')" translate>
+            errorLabel.fieldRequired
+          </mat-error>
+          <mat-error *ngIf="formArray?.get([0])?.get('expectedResultsCtrl')?.hasError('maxlength')" translate>
+            errorLabel.maxLengthExceeded
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn" appearance="fill">
@@ -79,7 +105,12 @@
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.potentialCoBenefits</mat-label>
           <input type="text" matInput formControlName="potentialCoBenefitsCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
+          <mat-error *ngIf="formArray?.get([0])?.get('potentialCoBenefitsCtrl')?.hasError('required')" translate>
+            errorLabel.fieldRequired
+          </mat-error>
+          <mat-error *ngIf="formArray?.get([0])?.get('potentialCoBenefitsCtrl')?.hasError('maxlength')" translate>
+            errorLabel.maxLengthExceeded
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn" appearance="fill">
@@ -177,7 +208,18 @@
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.narrativeActionPlace</mat-label>
           <input type="text" matInput formControlName="adaptationActionDescriptionNarrativeCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
+          <mat-error
+            *ngIf="formArray?.get([1])?.get('adaptationActionDescriptionNarrativeCtrl')?.hasError('required')"
+            translate
+          >
+            errorLabel.fieldRequired
+          </mat-error>
+          <mat-error
+            *ngIf="formArray?.get([1])?.get('adaptationActionDescriptionNarrativeCtrl')?.hasError('maxlength')"
+            translate
+          >
+            errorLabel.maxLengthExceeded
+          </mat-error>
         </mat-form-field>
 
         <div class="flex flex-row justify-center">
@@ -203,6 +245,7 @@
         </div>
       </mat-step>
 
+      <!-- optional for type 1 -->
       <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
         <ng-template matStepLabel>
           <span translate>adaptationAction.form2.categorizationNationalIntruments</span>
@@ -216,7 +259,9 @@
             >info</mat-icon
           >
         </ng-template>
-
+        <div class="my-2 flex flex-col justify-center items-start rounded bg-gray-100 border-2 border-gray-200 p-2">
+          <span translate>general.optional</span>
+        </div>
         <div class="finance-container flex flex-col justify-start items-start" formArrayName="themeCtrl">
           <div
             class="max-container"
@@ -298,11 +343,14 @@
         </div>
       </mat-step>
 
+      <!-- optional for type 1 -->
       <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
         <ng-template matStepLabel>
           <span translate>adaptationAction.form2.relationshipInstruments</span>
         </ng-template>
-
+        <div class="my-2 flex flex-col justify-center items-start rounded bg-gray-100 border-2 border-gray-200 p-2">
+          <span translate>general.optional</span>
+        </div>
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.namePlanningInstrument</mat-label>
           <input type="text" matInput formControlName="adaptationActionInstrumentCtrl" />
@@ -359,7 +407,15 @@
           <mat-form-field class="field-ppcn">
             <mat-label translate>adaptationAction.form2.descriptionVulnerability</mat-label>
             <input matInput formControlName="descriptionVulnerabilityCtrl" />
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
+            <mat-error *ngIf="formArray?.get([4])?.get('descriptionVulnerabilityCtrl')?.hasError('required')" translate>
+              errorLabel.fieldRequired
+            </mat-error>
+            <mat-error
+              *ngIf="formArray?.get([4])?.get('descriptionVulnerabilityCtrl')?.hasError('maxlength')"
+              translate
+            >
+              errorLabel.maxLengthExceeded
+            </mat-error>
           </mat-form-field>
           <div class="w-full xl:w-auto flex items-start justify-start">
             <app-upload-button class="w-full" name="filename2" />
@@ -371,7 +427,18 @@
           <mat-form-field class="field-ppcn">
             <mat-label translate>adaptationAction.form2.descriptionElementsExposed</mat-label>
             <input matInput formControlName="descriptionElementsExposedCtrl" />
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
+            <mat-error
+              *ngIf="formArray?.get([4])?.get('descriptionElementsExposedCtrl')?.hasError('required')"
+              translate
+            >
+              errorLabel.fieldRequired
+            </mat-error>
+            <mat-error
+              *ngIf="formArray?.get([4])?.get('descriptionElementsExposedCtrl')?.hasError('maxlength')"
+              translate
+            >
+              errorLabel.maxLengthExceeded
+            </mat-error>
           </mat-form-field>
           <div class="w-full xl:w-auto flex items-start justify-start">
             <app-upload-button class="w-full" name="filename3" />
@@ -383,7 +450,15 @@
           <mat-form-field class="field-ppcn">
             <mat-label translate>adaptationAction.form2.descriptionLossesDamages</mat-label>
             <input matInput formControlName="descriptionLossesDamagesCtrl" />
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
+            <mat-error *ngIf="formArray?.get([4])?.get('descriptionLossesDamagesCtrl')?.hasError('required')" translate>
+              errorLabel.fieldRequired
+            </mat-error>
+            <mat-error
+              *ngIf="formArray?.get([4])?.get('descriptionLossesDamagesCtrl')?.hasError('maxlength')"
+              translate
+            >
+              errorLabel.maxLengthExceeded
+            </mat-error>
           </mat-form-field>
           <div class="w-full xl:w-auto flex items-start justify-start">
             <app-upload-button class="w-full" name="filename4" />
@@ -395,7 +470,18 @@
           <mat-form-field class="field-ppcn">
             <mat-label translate>adaptationAction.form2.descriptionClimateRelatedRisks</mat-label>
             <input matInput formControlName="descriptionClimateRelatedRisksCtrl" />
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
+            <mat-error
+              *ngIf="formArray?.get([4])?.get('descriptionClimateRelatedRisksCtrl')?.hasError('required')"
+              translate
+            >
+              errorLabel.fieldRequired
+            </mat-error>
+            <mat-error
+              *ngIf="formArray?.get([4])?.get('descriptionClimateRelatedRisksCtrl')?.hasError('maxlength')"
+              translate
+            >
+              errorLabel.maxLengthExceeded
+            </mat-error>
           </mat-form-field>
           <div class="w-full xl:w-auto flex items-start justify-start">
             <app-upload-button class="w-full" name="filename4" />
@@ -417,11 +503,14 @@
         </div>
       </mat-step>
 
+      <!-- optional for type 1 -->
       <mat-step formGroupName="5" [stepControl]="formArray?.get([5])">
         <ng-template matStepLabel>
           <span translate>adaptationAction.form2.implementation</span>
         </ng-template>
-
+        <div class="my-2 flex flex-col justify-center items-start rounded bg-gray-100 border-2 border-gray-200 p-2">
+          <span translate>general.optional</span>
+        </div>
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.startImplementation</mat-label>
           <input
@@ -455,13 +544,29 @@
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.responsibleExecuting</mat-label>
           <input type="text" matInput formControlName="adaptationActionEntityCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
+          <mat-error *ngIf="formArray?.get([5])?.get('adaptationActionEntityCtrl')?.hasError('required')" translate>
+            errorLabel.fieldRequired
+          </mat-error>
+          <mat-error *ngIf="formArray?.get([5])?.get('adaptationActionEntityCtrl')?.hasError('maxlength')" translate>
+            errorLabel.maxLengthExceeded
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
           <mat-label translate>adaptationAction.form2.otherEntitiesInvolved</mat-label>
           <input type="text" matInput formControlName="adaptationActionEntityOthersCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
+          <mat-error
+            *ngIf="formArray?.get([5])?.get('adaptationActionEntityOthersCtrl')?.hasError('required')"
+            translate
+          >
+            errorLabel.fieldRequired
+          </mat-error>
+          <mat-error
+            *ngIf="formArray?.get([5])?.get('adaptationActionEntityOthersCtrl')?.hasError('maxlength')"
+            translate
+          >
+            errorLabel.maxLengthExceeded
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="field-ppcn">
@@ -477,6 +582,12 @@
             "
           />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
+          <mat-error *ngIf="formArray?.get([5])?.get('adaptationActionCodeCtrl')?.hasError('required')" translate>
+            errorLabel.fieldRequired
+          </mat-error>
+          <mat-error *ngIf="formArray?.get([5])?.get('adaptationActionCodeCtrl')?.hasError('maxlength')" translate>
+            errorLabel.maxLengthExceeded
+          </mat-error>
         </mat-form-field>
 
         <div class="button-box flex flex-row justify-end items-center">

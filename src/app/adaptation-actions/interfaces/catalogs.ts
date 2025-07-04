@@ -126,3 +126,9 @@ export const geographicCoverageMap = {
   PROVINCIAL: 'Provincial',
   CANTONAL: 'Cantonal',
 };
+
+export enum AAType {
+  A = '1',
+  B = '2',
+  C = '3',
+}

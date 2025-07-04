@@ -414,7 +414,8 @@
     "energy": "Energy",
     "person": "Person",
     "entity": "Entity",
-    "fileUpload": "File upload"
+    "fileUpload": "File upload",
+    "optional": "This section is optional"
   },
 
   "info": {
@@ -483,7 +484,11 @@
     "errorProcessing": "Error processing the request, please try again later",
     "requiredInput": "Required input",
     "errorSubmittingForm": "Error submitting the form",
-    "fieldRequired": "This field is required",
+    "fieldRequired": "Este campo es obligatorio.",
+    "invalidEmail": "El correo electrónico no es válido.",
+    "maxLengthExceeded": "Se ha excedido la longitud máxima permitida.",
+    "minLengthNotMet": "La longitud mínima no se ha alcanzado.",
+    "inputOrLengthIncorrect": "La entrada o la longitud no es correcta.",
     "formatyInvalid": "This field has an incorrect format",
     "lastNameRequired": "Last Name is required",
     "firstNameRequired": "First Name is required",
@@ -493,7 +498,6 @@
     "error404": "404 PAGE NOT FOUND",
     "noPage": "The Page you are looking for might have been removed",
     "IDUserRequired": "ID User is required",
-    "inputOrLengthIncorrect": "The input is required or length is incorrect.",
     "mustDownloadFile": "You must download the file, fill it and load your proposal for review",
     "devAccountNumRequired": "Developer account number is required",
     "buyerAccountNumRequired": "Buyer account number is required",
@@ -687,6 +691,7 @@
   },
 
   "adaptationAction": {
+    "typeOptional": "If the user decides to complete a section that is optional, based on their selection of the adaptation action type, all required fields shown must be completed.",
     "mesage1": "It is suggested to have on hand the Guide for the registration of climate actions with adaptation impacts in the National System of Metrics for Climate Change (SINAMECC) when completing this registration",
     "addReview": "Add a new review for this adaptation action",
     "newButton": "New Adaptation Action report",

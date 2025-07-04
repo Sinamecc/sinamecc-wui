@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction, InstrumentDetail } from '../interfaces/adaptationAction';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AAType } from '../interfaces/catalogs';
 
 @Component({
   selector: 'app-adaptation-actions-financing',
@@ -12,8 +13,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: false,
 })
 export class AdaptationActionsFinancingComponent implements OnInit {
+  @Input() type: AAType;
   @Output() onComplete = new EventEmitter<boolean>();
-
+  types = AAType;
   form: UntypedFormGroup;
 
   durationInSeconds = 3;

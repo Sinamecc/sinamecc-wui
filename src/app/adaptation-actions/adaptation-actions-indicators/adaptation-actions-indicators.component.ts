@@ -35,7 +35,11 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
-      if (this.adaptationAction && this.adaptationAction.indicator_list.length) {
+      if (
+        this.adaptationAction &&
+        this.adaptationAction.indicator_list &&
+        this.adaptationAction.indicator_list.length
+      ) {
         this.onComplete.emit(true);
       }
     });

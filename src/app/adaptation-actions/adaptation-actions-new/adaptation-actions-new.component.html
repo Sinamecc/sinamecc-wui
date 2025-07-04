@@ -10,7 +10,7 @@
       </mat-card-title>
     </div>
     <div class="p-2">
-      <div class="flex flex-col justify-center items-start rou nded bg-gray-100 border-2 border-gray-200 p-2">
+      <div class="flex flex-col justify-center items-start rounded bg-gray-100 border-2 border-gray-200 p-2">
         <div class="flex flex-row justify-between w-full">
           <div translate>adaptationAction.help.title</div>
           <div
@@ -50,6 +50,7 @@
             <mat-icon>download</mat-icon>
           </ng-template>
 
+          <!-- section 1 -->
           <mat-step [completed]="completed.generalRegister">
             <app-progress-bar [completed]="completed"></app-progress-bar>
             <ng-template matStepLabel>
@@ -61,27 +62,26 @@
             ></app-general-register>
           </mat-step>
 
+          <!-- section 2 -->
           <mat-step [completed]="completed.report">
             <app-progress-bar [completed]="completed"></app-progress-bar>
-
-            <ng-template matStepLabel>
-              <span translate>adaptationAction.form2.title</span>
-            </ng-template>
             <app-adaptation-actions-report
               [adaptationActionUpdated]="adaptationAction"
               [edit]="edit"
               [mainStepper]="stepper"
+              (onTypeSet)="aaType = $event"
               (onComplete)="onComplete('report', $event)"
             ></app-adaptation-actions-report>
           </mat-step>
 
+          <!-- section 3 -->
           <mat-step [completed]="completed.financing">
             <app-progress-bar [completed]="completed"></app-progress-bar>
-
             <ng-template matStepLabel>
               <span translate>adaptationAction.form3.title</span>
             </ng-template>
             <app-adaptation-actions-financing
+              [type]="aaType"
               [edit]="edit"
               [adaptationActionUpdated]="adaptationAction"
               [mainStepper]="stepper"
@@ -89,9 +89,9 @@
             ></app-adaptation-actions-financing>
           </mat-step>
 
+          <!-- section 4 -->
           <mat-step [completed]="completed.indicators">
             <app-progress-bar [completed]="completed"></app-progress-bar>
-
             <ng-template matStepLabel>
               <span translate>adaptationAction.form4.title</span>
             </ng-template>
@@ -103,9 +103,9 @@
             ></app-adaptation-actions-indicators>
           </mat-step>
 
+          <!-- section 5 -->
           <mat-step [completed]="completed.climateMonitoring">
             <app-progress-bar [completed]="completed"></app-progress-bar>
-
             <ng-template matStepLabel>
               <span translate>adaptationAction.form5.title</span>
             </ng-template>
@@ -117,13 +117,14 @@
             ></app-adaptation-actions-climate-monitoring>
           </mat-step>
 
+          <!-- section 6 -->
           <mat-step [completed]="completed.actionImpact">
             <app-progress-bar [completed]="completed"></app-progress-bar>
-
             <ng-template matStepLabel>
               <span translate>adaptationAction.form6.title</span>
             </ng-template>
             <app-adaptation-actions-action-impact
+              [type]="aaType"
               [edit]="edit"
               [adaptationActionUpdated]="adaptationAction"
               (onComplete)="onComplete('actionImpact', $event)"

@@ -1,3 +1,5 @@
+import { AAType } from './catalogs';
+
 export interface ReportOrganization {
   responsible_entity: string;
   legal_identification: string;
