@@ -104,6 +104,10 @@ export class AdaptationActionsReportComponent implements OnInit {
     this.loadAdaptationActions();
     if (this.edit) {
       this.createForm();
+      if (this.adaptationAction) {
+        const id = this.adaptationAction.adaptation_action_information?.adaptation_action_type?.id;
+        if (id) this.changeAdaptationType(id);
+      }
     }
   }
 
@@ -434,7 +438,7 @@ export class AdaptationActionsReportComponent implements OnInit {
           this.formBuilder.group({
             adaptationActionThemeCtrl: [element?.sub_topic?.topic?.id, Validators.required],
             adaptationActionTypologyCtrl: [element?.sub_topic?.id, Validators.required],
-            adaptationActionTypeCtrl: [element?.id, Validators.required],
+            adaptationActionTypeCtrl: [element?.id?.toString(), Validators.required],
             adaptationActionRelationCtrl: [adaptationActionRelationValue, Validators.required],
             adaptationActionGoalRelationCtrl: [adaptationActionGoalRelationValue, Validators.required],
             adaptationActionEjeRelationCtrl: [adaptationActionEjeRelationValue, Validators.required],
@@ -672,6 +676,9 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
     );
   }
+  private clean(value: any): any {
+    return value === '' ? null : value;
+  }
 
   buildPayload() {
     const context = {
@@ -701,12 +708,17 @@ export class AdaptationActionsReportComponent implements OnInit {
             : [],
       },
 
-      activity: this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls.map(
-        (x: { value: { adaptationActionTypeCtrl: number } }) => x.value.adaptationActionTypeCtrl,
-      ),
+      activity: this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls
+        .filter(
+          (x: { value: { adaptationActionTypeCtrl: number | null | undefined | '' } }) =>
+            x.value?.adaptationActionTypeCtrl !== null &&
+            x.value?.adaptationActionTypeCtrl !== undefined &&
+            x.value?.adaptationActionTypeCtrl !== '',
+        )
+        .map((x: { value: { adaptationActionTypeCtrl: number } }) => x.value.adaptationActionTypeCtrl),
 
       instrument: {
-        name: this.form.value.formArray[3].adaptationActionInstrumentCtrl,
+        name: this.clean(this.form.value.formArray[3].adaptationActionInstrumentCtrl),
       },
 
       climate_threat: {
@@ -724,8 +736,8 @@ export class AdaptationActionsReportComponent implements OnInit {
       implementation: {
         start_date: this.datePipe.transform(this.form.value.formArray[5].adaptationActionStartDateCtrl, 'yyyy-MM-dd'),
         end_date: this.datePipe.transform(this.form.value.formArray[5].adaptationActionEndDateCtrl, 'yyyy-MM-dd'),
-        responsible_entity: this.form.value.formArray[5].adaptationActionEntityCtrl,
-        other_entity: this.form.value.formArray[5].adaptationActionEntityOthersCtrl,
+        responsible_entity: this.clean(this.form.value.formArray[5].adaptationActionEntityCtrl),
+        other_entity: this.clean(this.form.value.formArray[5].adaptationActionEntityOthersCtrl),
         action_code: this.form.value.formArray[5].adaptationActionCodeCtrl,
       },
     };
