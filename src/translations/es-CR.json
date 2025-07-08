@@ -703,7 +703,7 @@
       "dataRegister": "Registro de datos",
       "responsibleReportingEntity": "Entidad responsable de reporte",
       "legalID": "Cédula jurídica (en caso de ser una empresa u organización)",
-      "reportData": "Fecha de elaboración del reporte",
+      "reportData": "Fecha de registro en SINAMECC",
       "positionResponsiblePerson": "Cargo de la persona responsable de reporte",
       "entityAddress": "Dirección de la entidad"
     },

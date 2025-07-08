@@ -714,7 +714,7 @@
       "reportingEntityType": "Reporting Entity Type",
       "responsibleReportingEntity": "Responsible reporting entity",
       "legalID": "Legal ID (in case of being a company or organization)",
-      "reportData": "Date of preparation of the report",
+      "reportData": "Registration date in SINAMECC",
       "positionResponsiblePerson": "Position of the person responsible for reporting",
       "entityAddress": "Entity Address"
     },
