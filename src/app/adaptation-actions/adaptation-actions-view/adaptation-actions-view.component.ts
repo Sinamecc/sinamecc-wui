@@ -69,16 +69,18 @@ export class AdaptationActionsViewComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.loadAdaptationAction();
+    if (this.id) {
+      this.loadAdaptationAction();
+    }
   }
 
   loadAdaptationAction() {
     this.loading = true;
     this.service
-      .loadAdaptationActions()
+      .loadOneAdaptationActions(this.id)
       .subscribe(
         (response) => {
-          this.adaptationAction = response.find((element: any) => element.id == this.id);
+          this.adaptationAction = response;
         },
         (error) => {
           this.adaptationAction = {};

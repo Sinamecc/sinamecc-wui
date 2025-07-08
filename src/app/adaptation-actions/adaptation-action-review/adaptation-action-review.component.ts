@@ -35,14 +35,16 @@ export class AdaptationActionReviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadAdaptationAction();
+    if (this.id) {
+      this.loadAdaptationAction();
+    }
   }
 
   loadAdaptationAction() {
     this.isLoading = true;
-    this.service.loadAdaptationActions().subscribe(
-      (x) => {
-        this.adaptationAction = x.find((element) => element.id === this.id);
+    this.service.loadOneAdaptationActions(this.id).subscribe(
+      (response) => {
+        this.adaptationAction = response;
         this.statuses = this.adaptationAction.next_state;
       },
       (complete) => {
