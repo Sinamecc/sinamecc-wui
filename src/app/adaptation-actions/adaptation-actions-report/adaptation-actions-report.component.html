@@ -205,30 +205,34 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="field-ppcn">
-          <mat-label translate>adaptationAction.form2.narrativeActionPlace</mat-label>
-          <input type="text" matInput formControlName="adaptationActionDescriptionNarrativeCtrl" />
-          <mat-error
-            *ngIf="formArray?.get([1])?.get('adaptationActionDescriptionNarrativeCtrl')?.hasError('required')"
-            translate
-          >
-            errorLabel.fieldRequired
-          </mat-error>
-          <mat-error
-            *ngIf="formArray?.get([1])?.get('adaptationActionDescriptionNarrativeCtrl')?.hasError('maxlength')"
-            translate
-          >
-            errorLabel.maxLengthExceeded
-          </mat-error>
-        </mat-form-field>
-
-        <div class="flex flex-row justify-center">
+        <div class="flex flex-col gap-2">
+          <label translate>adaptationAction.form2.narrativeActionPlace</label>
           <mat-form-field class="field-ppcn">
-            <mat-label translate>adaptationAction.form2.attachGeographicalLocation</mat-label>
-            <input type="text" matInput formControlName="adaptationActionLocationCtrl" />
-            <mat-error translate>errorLabel.fieldRequired</mat-error>
+            <input type="text" matInput formControlName="adaptationActionDescriptionNarrativeCtrl" />
+            <mat-error
+              *ngIf="formArray?.get([1])?.get('adaptationActionDescriptionNarrativeCtrl')?.hasError('required')"
+              translate
+            >
+              errorLabel.fieldRequired
+            </mat-error>
+            <mat-error
+              *ngIf="formArray?.get([1])?.get('adaptationActionDescriptionNarrativeCtrl')?.hasError('maxlength')"
+              translate
+            >
+              errorLabel.maxLengthExceeded
+            </mat-error>
           </mat-form-field>
-          <input formControlName="adaptationActionLocationOtherCtrl" type="file" />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label translate>adaptationAction.form2.attachGeographicalLocation</label>
+          <div class="flex flex-row justify-center">
+            <mat-form-field class="field-ppcn">
+              <input type="text" matInput formControlName="adaptationActionLocationCtrl" />
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+            <input formControlName="adaptationActionLocationOtherCtrl" type="file" />
+          </div>
         </div>
 
         <div class="button-box flex flex-row justify-end items-center">
@@ -351,8 +355,8 @@
         <div class="my-2 flex flex-col justify-center items-start rounded bg-gray-100 border-2 border-gray-200 p-2">
           <span translate>general.optional</span>
         </div>
+        <label translate>adaptationAction.form2.namePlanningInstrument</label>
         <mat-form-field class="field-ppcn">
-          <mat-label translate>adaptationAction.form2.namePlanningInstrument</mat-label>
           <input type="text" matInput formControlName="adaptationActionInstrumentCtrl" />
           <mat-error translate>errorLabel.fieldRequired</mat-error>
         </mat-form-field>
@@ -376,117 +380,137 @@
           <span translate>adaptationAction.form2.climateRelatedHazard</span>
         </ng-template>
 
-        <mat-form-field class="field-ppcn" appearance="fill">
-          <mat-label translate>adaptationAction.form2.relatedClimateThreat</mat-label>
-          <mat-select multiple #climateValue formControlName="adaptationActionClimateThreatCtrl">
-            <mat-option *ngFor="let climate of climateThreat" [value]="climate.id">
-              <label translate>{{ climate.name }}</label>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="flex flex-col gap-2 mt-2">
+          <label translate>adaptationAction.form2.relatedClimateThreat</label>
+          <mat-form-field class="field-ppcn" appearance="fill">
+            <mat-select multiple #climateValue formControlName="adaptationActionClimateThreatCtrl">
+              <mat-option *ngFor="let climate of climateThreat" [value]="climate.id">
+                <label translate>{{ climate.name }}</label>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-        <mat-form-field *ngIf="climateValue?.value?.includes(climateThreat.length)" class="field-ppcn">
+        <div class="flex flex-col gap-2">
           <mat-label translate>adaptationAction.form2.relatedClimateThreatOther</mat-label>
-          <input type="text" matInput formControlName="adaptationActionClimateThreatOtherCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
-        </mat-form-field>
-
-        <div class="flex flex-row justify-center">
-          <mat-form-field class="field-ppcn">
-            <mat-label translate>adaptationAction.form2.descriptionRelatedClimateThreat</mat-label>
-            <input matInput formControlName="adaptationActionInfoSourceCtrl" />
+          <mat-form-field *ngIf="climateValue?.value?.includes(climateThreat.length)" class="field-ppcn">
+            <input type="text" matInput formControlName="adaptationActionClimateThreatOtherCtrl" />
             <mat-error translate>errorLabel.fieldRequired</mat-error>
           </mat-form-field>
-          <div class="w-full xl:w-auto flex items-start justify-start">
-            <app-upload-button class="w-full" name="filename1" />
-          </div>
-          <br />
         </div>
 
-        <div class="flex flex-row justify-center">
-          <mat-form-field class="field-ppcn">
-            <mat-label translate>adaptationAction.form2.descriptionVulnerability</mat-label>
-            <input matInput formControlName="descriptionVulnerabilityCtrl" />
-            <mat-error *ngIf="formArray?.get([4])?.get('descriptionVulnerabilityCtrl')?.hasError('required')" translate>
-              errorLabel.fieldRequired
-            </mat-error>
-            <mat-error
-              *ngIf="formArray?.get([4])?.get('descriptionVulnerabilityCtrl')?.hasError('maxlength')"
-              translate
-            >
-              errorLabel.maxLengthExceeded
-            </mat-error>
-          </mat-form-field>
-          <div class="w-full xl:w-auto flex items-start justify-start">
-            <app-upload-button class="w-full" name="filename2" />
+        <div class="flex flex-col gap-2">
+          <label translate>adaptationAction.form2.descriptionRelatedClimateThreat</label>
+          <div class="flex flex-row justify-center">
+            <mat-form-field class="field-ppcn">
+              <input matInput formControlName="adaptationActionInfoSourceCtrl" />
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+            <div class="w-full xl:w-auto flex items-start justify-start">
+              <app-upload-button class="w-full" name="filename1" />
+            </div>
+            <br />
           </div>
-          <br />
         </div>
 
-        <div class="flex flex-row justify-center">
-          <mat-form-field class="field-ppcn">
-            <mat-label translate>adaptationAction.form2.descriptionElementsExposed</mat-label>
-            <input matInput formControlName="descriptionElementsExposedCtrl" />
-            <mat-error
-              *ngIf="formArray?.get([4])?.get('descriptionElementsExposedCtrl')?.hasError('required')"
-              translate
-            >
-              errorLabel.fieldRequired
-            </mat-error>
-            <mat-error
-              *ngIf="formArray?.get([4])?.get('descriptionElementsExposedCtrl')?.hasError('maxlength')"
-              translate
-            >
-              errorLabel.maxLengthExceeded
-            </mat-error>
-          </mat-form-field>
-          <div class="w-full xl:w-auto flex items-start justify-start">
-            <app-upload-button class="w-full" name="filename3" />
+        <div class="flex flex-col gap-2">
+          <label translate>adaptationAction.form2.descriptionVulnerability</label>
+          <div class="flex flex-row justify-center">
+            <mat-form-field class="field-ppcn">
+              <input matInput formControlName="descriptionVulnerabilityCtrl" />
+              <mat-error
+                *ngIf="formArray?.get([4])?.get('descriptionVulnerabilityCtrl')?.hasError('required')"
+                translate
+              >
+                errorLabel.fieldRequired
+              </mat-error>
+              <mat-error
+                *ngIf="formArray?.get([4])?.get('descriptionVulnerabilityCtrl')?.hasError('maxlength')"
+                translate
+              >
+                errorLabel.maxLengthExceeded
+              </mat-error>
+            </mat-form-field>
+            <div class="w-full xl:w-auto flex items-start justify-start">
+              <app-upload-button class="w-full" name="filename2" />
+            </div>
+            <br />
           </div>
-          <br />
         </div>
 
-        <div class="flex flex-row justify-center">
-          <mat-form-field class="field-ppcn">
-            <mat-label translate>adaptationAction.form2.descriptionLossesDamages</mat-label>
-            <input matInput formControlName="descriptionLossesDamagesCtrl" />
-            <mat-error *ngIf="formArray?.get([4])?.get('descriptionLossesDamagesCtrl')?.hasError('required')" translate>
-              errorLabel.fieldRequired
-            </mat-error>
-            <mat-error
-              *ngIf="formArray?.get([4])?.get('descriptionLossesDamagesCtrl')?.hasError('maxlength')"
-              translate
-            >
-              errorLabel.maxLengthExceeded
-            </mat-error>
-          </mat-form-field>
-          <div class="w-full xl:w-auto flex items-start justify-start">
-            <app-upload-button class="w-full" name="filename4" />
+        <div class="flex flex-col gap-2">
+          <label translate>adaptationAction.form2.descriptionElementsExposed</label>
+          <div class="flex flex-row justify-center">
+            <mat-form-field class="field-ppcn">
+              <input matInput formControlName="descriptionElementsExposedCtrl" />
+              <mat-error
+                *ngIf="formArray?.get([4])?.get('descriptionElementsExposedCtrl')?.hasError('required')"
+                translate
+              >
+                errorLabel.fieldRequired
+              </mat-error>
+              <mat-error
+                *ngIf="formArray?.get([4])?.get('descriptionElementsExposedCtrl')?.hasError('maxlength')"
+                translate
+              >
+                errorLabel.maxLengthExceeded
+              </mat-error>
+            </mat-form-field>
+            <div class="w-full xl:w-auto flex items-start justify-start">
+              <app-upload-button class="w-full" name="filename3" />
+            </div>
+            <br />
           </div>
-          <br />
         </div>
 
-        <div class="flex flex-row justify-center">
-          <mat-form-field class="field-ppcn">
-            <mat-label translate>adaptationAction.form2.descriptionClimateRelatedRisks</mat-label>
-            <input matInput formControlName="descriptionClimateRelatedRisksCtrl" />
-            <mat-error
-              *ngIf="formArray?.get([4])?.get('descriptionClimateRelatedRisksCtrl')?.hasError('required')"
-              translate
-            >
-              errorLabel.fieldRequired
-            </mat-error>
-            <mat-error
-              *ngIf="formArray?.get([4])?.get('descriptionClimateRelatedRisksCtrl')?.hasError('maxlength')"
-              translate
-            >
-              errorLabel.maxLengthExceeded
-            </mat-error>
-          </mat-form-field>
-          <div class="w-full xl:w-auto flex items-start justify-start">
-            <app-upload-button class="w-full" name="filename4" />
+        <div class="flex flex-col gap-2">
+          <label translate>adaptationAction.form2.descriptionLossesDamages</label>
+          <div class="flex flex-row justify-center">
+            <mat-form-field class="field-ppcn">
+              <input matInput formControlName="descriptionLossesDamagesCtrl" />
+              <mat-error
+                *ngIf="formArray?.get([4])?.get('descriptionLossesDamagesCtrl')?.hasError('required')"
+                translate
+              >
+                errorLabel.fieldRequired
+              </mat-error>
+              <mat-error
+                *ngIf="formArray?.get([4])?.get('descriptionLossesDamagesCtrl')?.hasError('maxlength')"
+                translate
+              >
+                errorLabel.maxLengthExceeded
+              </mat-error>
+            </mat-form-field>
+            <div class="w-full xl:w-auto flex items-start justify-start">
+              <app-upload-button class="w-full" name="filename4" />
+            </div>
+            <br />
           </div>
-          <br />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label translate>adaptationAction.form2.descriptionClimateRelatedRisks</label>
+          <div class="flex flex-row justify-center">
+            <mat-form-field class="field-ppcn">
+              <input matInput formControlName="descriptionClimateRelatedRisksCtrl" />
+              <mat-error
+                *ngIf="formArray?.get([4])?.get('descriptionClimateRelatedRisksCtrl')?.hasError('required')"
+                translate
+              >
+                errorLabel.fieldRequired
+              </mat-error>
+              <mat-error
+                *ngIf="formArray?.get([4])?.get('descriptionClimateRelatedRisksCtrl')?.hasError('maxlength')"
+                translate
+              >
+                errorLabel.maxLengthExceeded
+              </mat-error>
+            </mat-form-field>
+            <div class="w-full xl:w-auto flex items-start justify-start">
+              <app-upload-button class="w-full" name="filename4" />
+            </div>
+            <br />
+          </div>
         </div>
 
         <div class="button-box flex flex-row justify-end items-center">
