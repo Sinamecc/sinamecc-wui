@@ -158,6 +158,7 @@
   },
 
   "reportData": {
+    "title": "Data reported",
     "form1": {
       "title": "Data for reporting and analysis",
       "reportBaselineIndicator": "How do you want to report the baseline of the indicator?",
@@ -240,6 +241,7 @@
   },
 
   "ppcn": {
+    "title": "PPCN Register",
     "ppcnSaveError": "Error saving ppcn",
     "ppcnSave": "PPCN saved successfully",
     "ppcnUpdateSuccess": "The PPCN form was updated successfully",
@@ -322,6 +324,10 @@
   },
 
   "general": {
+    "newApplication": "New Application",
+    "viewApplications": "View Applications",
+    "pendingForReview": "Application pending review",
+    "appInReview": "Application under review",
     "close": "Close",
     "newReview": "New review",
     "addRelationships": "Add additional relationships",
@@ -691,6 +697,7 @@
   },
 
   "adaptationAction": {
+    "title": "Adaptation actions",
     "typeOptional": "If the user decides to complete a section that is optional, based on their selection of the adaptation action type, all required fields shown must be completed.",
     "mesage1": "It is suggested to have on hand the Guide for the registration of climate actions with adaptation impacts in the National System of Metrics for Climate Change (SINAMECC) when completing this registration",
     "addReview": "Add a new review for this adaptation action",
