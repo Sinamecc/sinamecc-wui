@@ -691,6 +691,12 @@
     "mesage1": "Se sugiere tener a la mano la Guía para el registro de acciones climáticas con impactos de adaptación en el Sistema Nacional de Métricas de Cambio Climático (SINAMECC) al momento de completar este registro",
     "addReview": "Agregar una nueva revisión para esta acción de adaptación",
     "newButton": "Nuevo reporte Acción de Adaptación",
+    "funding": {
+      "public": "Presupuesto público nacional",
+      "private": "Fondos privados",
+      "international": "Cooperación internacional",
+      "undefined": "Por definir"
+    },
     "help": {
       "help": "Para consultas o dudas contactar al correo ",
       "guide": "Guía de registro",

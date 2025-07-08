@@ -707,6 +707,12 @@
       "guide": "Registration Guide",
       "title": "User assistance"
     },
+    "funding": {
+      "public": "National public budget",
+      "private": "Private funds",
+      "international": "International cooperation",
+      "undefined": "To be defined"
+    },
     "form1": {
       "title": "General Registration",
       "subtitle": "In this section we invite you to complete the general identification data to start with the report of your action",
