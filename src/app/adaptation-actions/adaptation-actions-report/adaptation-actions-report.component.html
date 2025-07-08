@@ -391,9 +391,9 @@
           </mat-form-field>
         </div>
 
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2" *ngIf="climateValue?.value?.includes(climateThreat.length)">
           <mat-label translate>adaptationAction.form2.relatedClimateThreatOther</mat-label>
-          <mat-form-field *ngIf="climateValue?.value?.includes(climateThreat.length)" class="field-ppcn">
+          <mat-form-field class="field-ppcn">
             <input type="text" matInput formControlName="adaptationActionClimateThreatOtherCtrl" />
             <mat-error translate>errorLabel.fieldRequired</mat-error>
           </mat-form-field>
@@ -401,14 +401,12 @@
 
         <div class="flex flex-col gap-2">
           <label translate>adaptationAction.form2.descriptionRelatedClimateThreat</label>
-          <div class="flex flex-row justify-center gap-4">
+          <div class="flex flex-row justify-center items-stretch gap-4">
             <mat-form-field class="field-ppcn">
               <input matInput formControlName="adaptationActionInfoSourceCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
-            <div class="w-full xl:w-auto flex items-start justify-start">
-              <app-upload-button class="w-full" name="filename1" />
-            </div>
+            <app-upload-button name="filename1" />
             <br />
           </div>
         </div>
@@ -431,9 +429,7 @@
                 errorLabel.maxLengthExceeded
               </mat-error>
             </mat-form-field>
-            <div class="w-full xl:w-auto flex items-start justify-start">
-              <app-upload-button class="w-full" name="filename2" />
-            </div>
+            <app-upload-button name="filename2" />
             <br />
           </div>
         </div>
@@ -456,9 +452,7 @@
                 errorLabel.maxLengthExceeded
               </mat-error>
             </mat-form-field>
-            <div class="w-full xl:w-auto flex items-start justify-start">
-              <app-upload-button class="w-full" name="filename3" />
-            </div>
+            <app-upload-button name="filename3" />
             <br />
           </div>
         </div>
@@ -481,16 +475,14 @@
                 errorLabel.maxLengthExceeded
               </mat-error>
             </mat-form-field>
-            <div class="w-full xl:w-auto flex items-start justify-start">
-              <app-upload-button class="w-full" name="filename4" />
-            </div>
+            <app-upload-button name="filename4" />
             <br />
           </div>
         </div>
 
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2 w-full">
           <label translate>adaptationAction.form2.descriptionClimateRelatedRisks</label>
-          <div class="flex flex-row justify-center gap-4">
+          <div class="flex flex-row justify-center gap-4 w-full">
             <mat-form-field class="field-ppcn">
               <input matInput formControlName="descriptionClimateRelatedRisksCtrl" />
               <mat-error
@@ -506,9 +498,7 @@
                 errorLabel.maxLengthExceeded
               </mat-error>
             </mat-form-field>
-            <div class="w-full xl:w-auto flex items-start justify-start">
-              <app-upload-button class="w-full" name="filename4" />
-            </div>
+            <app-upload-button name="filename4" />
             <br />
           </div>
         </div>
