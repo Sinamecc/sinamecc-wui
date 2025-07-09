@@ -148,7 +148,13 @@
     "descriptionReviewMA": "Descripción de la revisión de la Acción de Mitigación",
     "changelogMA": "Historial de cambios de la revision para la acción de mitigación",
     "MAt": "ACCIONES DE MITIGACIÓN",
-    "dataEntryMonitoring": "Ingreso de datos de monitoreo"
+    "dataEntryMonitoring": "Ingreso de datos de monitoreo",
+    "monitoringIndicatorName": "Nombre del indicador de monitoreo",
+    "monitoringUpdateDate": "Fecha de actualización",
+    "monitoringGHG": "Línea base del indicador",
+    "monitoringGHGGoal": "Meta del indicador",
+    "monitoringData": "Dato monitoreado",
+    "monitoringAdvance": "Descripción narrativa del avance durante el período de reporte"
   },
 
   "reportData": {
@@ -413,6 +419,7 @@
   },
 
   "info": {
+    "confidential": "Confidencial",
     "contact": "Contacto",
     "contactName": "Nombre de la persona de contacto",
     "contactPosition": "Posicion",
@@ -778,7 +785,8 @@
       "indicatorVerificationSource": "Fuente de verificación del indicador",
       "attachSupportMonitoring": "Adjunte la información de soporte para el proceso de monitoreo y seguimiento",
       "descriptiveWay": "A modo descriptivo ¿cuál ha sido el avance de su acción en el periodo?",
-      "indicatorBaseline": "Línea base del indicador (adjunte información de respaldo)"
+      "indicatorBaseline": "Línea base del indicador (adjunte información de respaldo)",
+      "sameContactQuestion": "La información de contacto responsable del dato indicador es la misma información de contacto registrada en la sección 1 Registro general?"
     },
     "form5": {
       "selectIndicador": "Seleccione el indicador",
