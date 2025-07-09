@@ -786,7 +786,8 @@
       "attachSupportMonitoring": "Attach supporting information for the monitoring and follow-up process",
       "descriptiveWay": "In a descriptive way, what progress has your action made during the period?",
       "indicatorBaseline": "Indicator baseline (attach supporting information)",
-      "sameContactQuestion": "Is the contact information responsible for the indicator data the same as the contact information registered in Section 1 - General Registration?"
+      "sameContactQuestion": "Is the contact information responsible for the indicator data the same as the contact information registered in Section 1 - General Registration?",
+      "indicatorGoal": "Indicator Goal"
     },
     "form5": {
       "title": "Monitoring and follow-up of climate actions through the SINAMECC",

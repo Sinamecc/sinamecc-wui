@@ -153,6 +153,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
             adaptationActionIndicatorCoverageOtherCtrl: [''],
             adaptationActionIndicatorDisintegrationCtrl: [indicator.disaggregation, [Validators.maxLength(1000)]],
             adaptationActionIndicatorLimitCtrl: [indicator.limitation, [Validators.maxLength(1000)]],
+            adaptationActionIndicatorGoalCtrl: ['', [Validators.maxLength(100)]], // TODO: integrate with backend
             adaptationActionIndicatorMeasurementCtrl: [indicator.additional_information, [Validators.maxLength(1000)]],
             adaptationActionIndicatorDetailsCtrl: [indicator.comments, [Validators.maxLength(1000)]],
             indicatorBaselineCtrl: [indicator.indicator_base_line, [Validators.maxLength(500)]],
@@ -220,6 +221,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         adaptationActionIndicatorCoverageOtherCtrl: [''],
         adaptationActionIndicatorDisintegrationCtrl: ['', [Validators.maxLength(1000)]],
         adaptationActionIndicatorLimitCtrl: ['', [Validators.maxLength(1000)]],
+        adaptationActionIndicatorGoalCtrl: ['', [Validators.maxLength(100)]],
         adaptationActionIndicatorMeasurementCtrl: ['', [Validators.maxLength(1000)]],
         adaptationActionIndicatorDetailsCtrl: ['', [Validators.maxLength(1000)]],
         indicatorBaselineCtrl: ['', [Validators.maxLength(500)]],

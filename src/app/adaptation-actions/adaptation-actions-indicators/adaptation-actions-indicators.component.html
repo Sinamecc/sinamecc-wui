@@ -195,6 +195,22 @@
             </mat-form-field>
 
             <mat-form-field class="field-ppcn">
+              <mat-label translate>adaptationAction.form4.indicatorGoal </mat-label>
+              <input matInput formControlName="adaptationActionIndicatorGoalCtrl" />
+              <mat-error
+                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorGoalCtrl')?.hasError('required')"
+                translate
+                >errorLabel.fieldRequired</mat-error
+              >
+              <mat-error
+                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorGoalCtrl')?.hasError('maxlength')"
+                translate
+              >
+                errorLabel.maxLengthExceeded
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="field-ppcn">
               <mat-label translate>mitigationAction.howSustainabilityIndicator </mat-label>
               <input matInput formControlName="adaptationActionIndicatorMeasurementCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -472,6 +488,7 @@
             </ng-container>
           </mat-step>
         </mat-vertical-stepper>
+
         <div>
           <button mat-mini-fab color="warn" *ngIf="i > 0" (click)="removeForm(formElement)" type="button">
             <mat-icon>delete forever</mat-icon>
