@@ -405,61 +405,71 @@
               <span translate>adaptationAction.form4.contactInfo</span>
             </ng-template>
 
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>adaptationAction.form4.contactName</mat-label>
-              <input matInput formControlName="adaptationActionIndicatorContactNameCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            <mat-form-field appearance="fill" class="field-ppcn">
+              <mat-label translate>adaptationAction.form4.sameContactQuestion</mat-label>
+              <mat-select formControlName="sameContactCtrl">
+                <mat-option [value]="true" translate>general.yes</mat-option>
+                <mat-option [value]="false" translate>general.no</mat-option>
+              </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>reportData.institution</mat-label>
-              <input matInput formControlName="adaptationActionIndicatorContactInstitutionCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
+            <ng-container *ngIf="formArray?.get([3])?.get('sameContactCtrl').value === false">
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>adaptationAction.form4.contactName</mat-label>
+                <input matInput formControlName="adaptationActionIndicatorContactNameCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
 
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>reportData.department</mat-label>
-              <input matInput formControlName="adaptationActionIndicatorContactDepartmentCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>reportData.institution</mat-label>
+                <input matInput formControlName="adaptationActionIndicatorContactInstitutionCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
 
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>admin.email</mat-label>
-              <input matInput formControlName="adaptationActionIndicatorContactEmailCtrl" />
-              <mat-error
-                *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactEmailCtrl')?.hasError('required')"
-                translate
-              >
-                errorLabel.fieldRequired
-              </mat-error>
-              <mat-error
-                *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactEmailCtrl')?.hasError('email')"
-                translate
-              >
-                errorLabel.invalidEmail
-              </mat-error>
-            </mat-form-field>
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>reportData.department</mat-label>
+                <input matInput formControlName="adaptationActionIndicatorContactDepartmentCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
 
-            <mat-form-field class="field-ppcn">
-              <span matPrefix>+506 &nbsp;</span>
-              <mat-label translate>info.telephone</mat-label>
-              <input matInput type="tel" maxlength="8" formControlName="adaptationActionIndicatorContactPhoneCtrl" />
-              <mat-error
-                *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('required')"
-                translate
-              >
-                errorLabel.fieldRequired
-              </mat-error>
-              <mat-error
-                *ngIf="
-                  formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('maxlength') ||
-                  formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('minlength')
-                "
-                translate
-              >
-                errorLabel.invalidLength
-              </mat-error>
-            </mat-form-field>
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>admin.email</mat-label>
+                <input matInput formControlName="adaptationActionIndicatorContactEmailCtrl" />
+                <mat-error
+                  *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactEmailCtrl')?.hasError('required')"
+                  translate
+                >
+                  errorLabel.fieldRequired
+                </mat-error>
+                <mat-error
+                  *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactEmailCtrl')?.hasError('email')"
+                  translate
+                >
+                  errorLabel.invalidEmail
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="field-ppcn">
+                <span matPrefix>+506 &nbsp;</span>
+                <mat-label translate>info.telephone</mat-label>
+                <input matInput type="tel" maxlength="8" formControlName="adaptationActionIndicatorContactPhoneCtrl" />
+                <mat-error
+                  *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('required')"
+                  translate
+                >
+                  errorLabel.fieldRequired
+                </mat-error>
+                <mat-error
+                  *ngIf="
+                    formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('maxlength') ||
+                    formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('minlength')
+                  "
+                  translate
+                >
+                  errorLabel.invalidLength
+                </mat-error>
+              </mat-form-field>
+            </ng-container>
           </mat-step>
         </mat-vertical-stepper>
         <div>
