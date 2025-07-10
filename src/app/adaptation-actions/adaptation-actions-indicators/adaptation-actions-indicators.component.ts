@@ -153,7 +153,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
             adaptationActionIndicatorCoverageOtherCtrl: [''],
             adaptationActionIndicatorDisintegrationCtrl: [indicator.disaggregation, [Validators.maxLength(1000)]],
             adaptationActionIndicatorLimitCtrl: [indicator.limitation, [Validators.maxLength(1000)]],
-            adaptationActionIndicatorGoalCtrl: ['', [Validators.maxLength(100)]], // TODO: integrate with backend
+            adaptationActionIndicatorGoalCtrl: [indicator.associated_meta, [Validators.maxLength(100)]],
             adaptationActionIndicatorMeasurementCtrl: [indicator.additional_information, [Validators.maxLength(1000)]],
             adaptationActionIndicatorDetailsCtrl: [indicator.comments, [Validators.maxLength(1000)]],
             indicatorBaselineCtrl: [indicator.indicator_base_line, [Validators.maxLength(500)]],
@@ -180,7 +180,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
             adaptationActionIndicatorClassifiersOtherCtrl: [indicator.other_classifier],
           }),
           this.formBuilder.group({
-            sameContactCtrl: [false, [Validators.required]], // TODO: integrate with backend
+            sameContactCtrl: [indicator.same_contact_info_as_registration, [Validators.required]],
             adaptationActionIndicatorContactNameCtrl: [indicator.contact.contact_name],
             adaptationActionIndicatorContactInstitutionCtrl: [indicator.contact.institution],
             adaptationActionIndicatorContactDepartmentCtrl: [indicator.contact.contact_position],
@@ -336,7 +336,6 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     }
 
     const context = {
-      indicatorList: indicatorList,
       indicator_list: indicatorList,
     };
 
