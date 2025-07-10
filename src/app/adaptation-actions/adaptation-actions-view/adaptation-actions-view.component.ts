@@ -78,6 +78,11 @@ export class AdaptationActionsViewComponent implements OnInit {
     this.loading = true;
     this.service
       .loadOneAdaptationActions(this.id)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        })
+      )
       .subscribe(
         (response) => {
           this.adaptationAction = response;
