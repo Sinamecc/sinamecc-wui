@@ -117,6 +117,8 @@ export interface Indicator {
   description: string;
   unit: string;
   methodological_detail: string;
+  same_contact_info_as_registration: boolean;
+  associated_meta: string;
   reporting_periodicity: string;
   geographic_coverage: string;
   other_geographic_coverage: string;
