@@ -424,8 +424,8 @@
             <mat-form-field appearance="fill" class="field-ppcn">
               <mat-label translate>adaptationAction.form4.sameContactQuestion</mat-label>
               <mat-select formControlName="sameContactCtrl">
-                <mat-option [value]="true" translate>general.yes</mat-option>
-                <mat-option [value]="false" translate>general.no</mat-option>
+                <mat-option [value]="true">{{ 'general.yes' | translate }}</mat-option>
+                <mat-option [value]="false">{{ 'general.no' | translate }}</mat-option>
               </mat-select>
             </mat-form-field>
 

@@ -180,7 +180,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
             adaptationActionIndicatorClassifiersOtherCtrl: [indicator.other_classifier],
           }),
           this.formBuilder.group({
-            sameContactCtrl: [indicator.same_contact_info_as_registration, [Validators.required]],
+            sameContactCtrl: [Boolean(indicator.same_contact_info_as_registration), [Validators.required]],
             adaptationActionIndicatorContactNameCtrl: [indicator.contact.contact_name],
             adaptationActionIndicatorContactInstitutionCtrl: [indicator.contact.institution],
             adaptationActionIndicatorContactDepartmentCtrl: [indicator.contact.contact_position],
@@ -291,6 +291,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         reporting_periodicity: form[0].adaptationActionIndicatorFrecuenceCtrl,
         available_time_end_date: this.datePipe.transform(form[0].timeSeriesAvailableEndCtrl, 'yyyy-MM-dd'),
         geographic_coverage: form[0].adaptationActionIndicatorCoverageCtrl,
+        associated_meta: form[0].adaptationActionIndicatorGoalCtrl,
         other_geographic_coverage: form[0].adaptationActionIndicatorCoverageOtherCtrl
           ? form[0].adaptationActionIndicatorCoverageOtherCtrl
           : null,
@@ -320,12 +321,13 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         other_classifier: form[2].adaptationActionIndicatorClassifiersOtherCtrl
           ? form[2].adaptationActionIndicatorClassifiersOtherCtrl
           : null,
+        same_contact_info_as_registration: form[3].sameContactCtrl,
         contact: {
-          institution: form[3].adaptationActionIndicatorContactInstitutionCtrl,
-          contact_name: form[3].adaptationActionIndicatorContactNameCtrl,
-          contact_position: form[3].adaptationActionIndicatorContactDepartmentCtrl,
-          email: form[3].adaptationActionIndicatorContactEmailCtrl,
-          phone: form[3].adaptationActionIndicatorContactPhoneCtrl,
+          contact_name: form[3].sameContactCtrl ? null : form[3].adaptationActionIndicatorContactNameCtrl,
+          institution: form[3].sameContactCtrl ? null : form[3].adaptationActionIndicatorContactInstitutionCtrl,
+          contact_position: form[3].sameContactCtrl ? null : form[3].adaptationActionIndicatorContactDepartmentCtrl,
+          email: form[3].sameContactCtrl ? null : form[3].adaptationActionIndicatorContactEmailCtrl,
+          phone: form[3].sameContactCtrl ? null : form[3].adaptationActionIndicatorContactPhoneCtrl,
         },
       };
 
