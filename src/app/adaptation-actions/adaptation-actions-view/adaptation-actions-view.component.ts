@@ -81,7 +81,7 @@ export class AdaptationActionsViewComponent implements OnInit {
           (response) => {
             this.adaptationAction = response;
             if (this.adaptationAction && this.adaptationAction.indicator_list.length) {
-              this.adaptationAction.indicator_list.map((indicator: any) => {
+              this.adaptationAction.indicator_list.forEach((indicator: any) => {
                 if (indicator.same_contact_info_as_registration) {
                   indicator.contact = {
                     institution: this.adaptationAction.report_organization?.contact?.institution,
