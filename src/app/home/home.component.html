@@ -1,7 +1,7 @@
 <div class="main-div flex flex-col justify-start items-start" [@fadeInOut]>
   <div class="module-container" *ngFor="let card of data">
     <div *ngIf="showModule(permissions, card.module)" class="module-container">
-      <h2 class="mat-h2">{{ card.name }}</h2>
+      <h2 class="mat-h2">{{ card.name | translate }}</h2>
       <hr />
       <div class="flex flex-row justify-start items-stretch">
         <!--
@@ -18,7 +18,9 @@
           <mat-icon color="primary" class="mb-2">
             {{ hasPermProvider(card.module) ? 'add' : 'visibility' }}
           </mat-icon>
-          <span>{{ hasPermProvider(card.module) ? 'Nueva solicitud' : 'Ver solicitudes' }}</span>
+          <span>{{
+            (hasPermProvider(card.module) ? 'general.newApplication' : 'general.viewApplications') | translate
+          }}</span>
         </mat-card>
       </div>
     </div>

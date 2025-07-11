@@ -21,7 +21,7 @@
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef translate>info.name</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{ element.adaptation_action_information.name ? element.adaptation_action_information.name : '-' }}
+        {{ element.adaptation_action_information.name ? element.adaptation_action_information.name.slice(0, 50) : '-' }}
       </mat-cell>
     </ng-container>
 
@@ -39,7 +39,11 @@
     <ng-container matColumnDef="objetive">
       <mat-header-cell *matHeaderCellDef translate>general.objective</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{ element.adaptation_action_information.objective ? element.adaptation_action_information.objective : '-' }}
+        {{
+          element.adaptation_action_information.objective
+            ? element.adaptation_action_information.objective.slice(0, 50)
+            : '-'
+        }}
       </mat-cell>
     </ng-container>
 

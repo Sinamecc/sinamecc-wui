@@ -44,35 +44,43 @@
         </mat-radio-group>
         <br />
 
-        <mat-form-field class="field-ppcn" *ngIf="genderEquityElementsControl.value === 1">
-          <mat-label translate>adaptationAction.form6.contributesGenderEquity</mat-label>
-          <input matInput formControlName="genderEquityElementsQuestionCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="field-ppcn" appearance="fill">
-          <mat-label translate>adaptationAction.form6.sustainableDevelopment</mat-label>
-          <mat-select multiple formControlName="objectivesCtrl">
-            <mat-option *ngFor="let element of ods" [value]="element.id">
-              <label translate>{{ element.name }}</label>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field class="field-ppcn">
-          <mat-label translate>adaptationAction.form6.generatedImpact</mat-label>
-          <input matInput formControlName="actionNegativeImpactCtrl" />
-          <mat-error translate>errorLabel.fieldRequired</mat-error>
-        </mat-form-field>
-
-        <div class="flex flex-row justify-center">
+        <div class="flex flex-col gap-2" *ngIf="genderEquityElementsControl.value === 1">
+          <label translate>adaptationAction.form6.contributesGenderEquity</label>
           <mat-form-field class="field-ppcn">
-            <mat-label translate>adaptationAction.form6.annexSupporting</mat-label>
-            <input matInput formControlName="AnnexSupportingInformationCtrl" />
+            <input matInput formControlName="genderEquityElementsQuestionCtrl" />
             <mat-error translate>errorLabel.fieldRequired</mat-error>
           </mat-form-field>
-          <app-upload-button (fileChange)="uploadFile($event)" name="annexSupporting" />
-          <br />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label translate>adaptationAction.form6.sustainableDevelopment</label>
+          <mat-form-field class="field-ppcn" appearance="fill">
+            <mat-select multiple formControlName="objectivesCtrl">
+              <mat-option *ngFor="let element of ods" [value]="element.id">
+                <label translate>{{ element.name }}</label>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label translate>adaptationAction.form6.generatedImpact</label>
+          <mat-form-field class="field-ppcn">
+            <input matInput formControlName="actionNegativeImpactCtrl" />
+            <mat-error translate>errorLabel.fieldRequired</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label translate>adaptationAction.form6.annexSupporting</label>
+          <div class="flex flex-row justify-center gap-4">
+            <mat-form-field class="field-ppcn">
+              <input matInput formControlName="AnnexSupportingInformationCtrl" />
+              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            </mat-form-field>
+            <app-upload-button (fileChange)="uploadFile($event)" name="annexSupporting" />
+            <br />
+          </div>
         </div>
 
         <div class="button-box flex flex-row justify-end items-center">
