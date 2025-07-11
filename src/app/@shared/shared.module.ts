@@ -26,6 +26,7 @@ import { ChangeLogViewComponent } from './change-log-view/change-log-view.compon
 import { UploadButtonComponent } from './upload-button/upload-button.component';
 import { AmountInputComponent } from './amount-input/amount-input.component';
 import { FileListComponent } from './file-list/file-list.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
   imports: [MaterialModule, CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
@@ -47,6 +48,7 @@ import { FileListComponent } from './file-list/file-list.component';
     UploadButtonComponent,
     FileListComponent,
     AmountInputComponent,
+    UnauthorizedComponent,
   ],
   providers: [UploadProposalService, UpdateStatusService, ViewPdfService, S3Service],
   exports: [
@@ -67,6 +69,7 @@ import { FileListComponent } from './file-list/file-list.component';
     UploadButtonComponent,
     FileListComponent,
     AmountInputComponent,
+    UnauthorizedComponent,
   ],
 })
 export class SharedModule {}
