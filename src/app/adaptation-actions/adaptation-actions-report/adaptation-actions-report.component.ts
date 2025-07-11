@@ -508,10 +508,6 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   buildUpdatedRegisterForm() {
-    let provinceList: Province[] = [];
-    let cantonList: Canton[] = [];
-    let districtList: District[] = [];
-
     const adaptationActionStartDate = new Date(this.adaptationActionUpdated.implementation.start_date);
     const adaptationActionEndDate = new Date(this.adaptationActionUpdated.implementation.end_date);
 
@@ -525,29 +521,11 @@ export class AdaptationActionsReportComponent implements OnInit {
 
     const { address } = this.adaptationActionUpdated;
 
-    if (address.app_scale === '2') {
-      const provinceList = this.loadProvinceSByCantonSelected(address.canton);
-      this.selectProvince(provinceList.map((x) => x.id.toString()));
-    }
+    const appScale = parseInt(address.app_scale);
 
-    if (address.app_scale === '3') {
-      const provinceList = this.loadProvinceSByCantonSelected(address.canton);
-      this.selectProvince(provinceList.map((x) => x.id.toString()));
-
-      const cantonList = address.canton;
-      this.selectCanton(cantonList.map((x) => x.id.toString()));
-    }
-
-    if (address.app_scale === '4') {
-      const districtList = address.district;
-      const cantonList = this.loadCantonByDistrictSelected(districtList);
-      const provinceList = this.loadProvinceSByCantonSelected(cantonList);
-
-      this.selectProvince(provinceList.map((x) => x.id.toString()));
-      this.selectCanton(cantonList.map((x) => x.id.toString()));
-    }
-
-    this.changeLocationValidations(Number(this.adaptationActionUpdated.address.app_scale));
+    const provinceIds = ['2', '3', '4'].includes(address.app_scale) ? address.province.map((x) => x.id) : [];
+    const cantonIds = ['3', '4'].includes(address.app_scale) ? address.canton.map((x) => x.id) : [];
+    const districtIds = address.app_scale === '4' ? address.district.map((x) => x.id) : [];
 
     return this.formBuilder.array([
       this.formBuilder.group({
@@ -591,24 +569,10 @@ export class AdaptationActionsReportComponent implements OnInit {
         ],
       }),
       this.formBuilder.group({
-        appScaleCtrl: [parseInt(this.adaptationActionUpdated.address.app_scale), Validators.required],
-        adaptationActionProvinceCtrl: [
-          this.adaptationActionUpdated.address.app_scale === '2' ||
-          this.adaptationActionUpdated.address.app_scale === '3'
-            ? provinceList.map((x) => x.id) // ? this.adaptationActionUpdated.address.district[0].canton.province.id
-            : [],
-        ],
-        adaptationActionCantonCtrl: [
-          this.adaptationActionUpdated.address.app_scale === '2' ||
-          this.adaptationActionUpdated.address.app_scale === '3'
-            ? cantonList.map((x) => x.id) // ? this.adaptationActionUpdated.address.district[0].canton.province.id
-            : [], //? this.adaptationActionUpdated.address.district[0].canton.id
-        ],
-        adaptationActionDistritCtrl: [
-          this.adaptationActionUpdated.address.app_scale === '3'
-            ? districtList.map((x) => x.id) // ? this.adaptationActionUpdated.address.district[0].id
-            : [],
-        ],
+        appScaleCtrl: [appScale, Validators.required],
+        adaptationActionProvinceCtrl: [provinceIds],
+        adaptationActionCantonCtrl: [cantonIds],
+        adaptationActionDistritCtrl: [districtIds],
         adaptationActionDescriptionNarrativeCtrl: [
           this.adaptationActionUpdated.address.description,
           [Validators.required, Validators.maxLength(3000)],
@@ -764,15 +728,14 @@ export class AdaptationActionsReportComponent implements OnInit {
   loadAddress() {
     if (this.adaptationActionUpdated.address) {
       const { address } = this.adaptationActionUpdated;
-      const provinceList = this.loadProvinceSByCantonSelected(address.canton);
-      this.selectProvince(provinceList.map((x) => x.id.toString()));
-      if (address.app_scale === '3' || address.app_scale === '4') {
-        const cantonList = address.canton;
-        this.selectCanton(cantonList.map((x) => x.id.toString()));
-      }
-      if (address.app_scale === '4') {
+      if (address.app_scale === '1') {
+      } else if (address.app_scale === '2') {
+        this.selectProvince(address.province.map((x) => x.id.toString()));
+      } else if (address.app_scale === '3') {
+        const provinceList = this.loadProvinceSByCantonSelected(address.canton);
+        this.selectProvince(provinceList.map((x) => x.id.toString()));
+      } else if (address.app_scale === '4') {
         const districtList = address.district;
-        this.cdistrictsToShow = [];
         this.selectCanton(this.loadCantonByDistrictSelected(districtList).map((x) => x.id.toString()));
         this.selectProvince(this.loadProvinceSByCantonSelected(this.cantones).map((x) => x.id.toString()));
       }
@@ -857,5 +820,13 @@ export class AdaptationActionsReportComponent implements OnInit {
       control.setValidators(requiredFields[index] ? Validators.required : null);
       control.updateValueAndValidity();
     });
+
+    const provinces = formGroup.get('adaptationActionProvinceCtrl').value;
+    const cantons = formGroup.get('adaptationActionCantonCtrl').value;
+    if (id === 3 && provinces && provinces.length > 0) {
+      this.selectProvince(provinces.map((x: string) => x.toString()));
+    } else if (id === 4 && cantons && cantons.length > 0) {
+      this.selectCanton(cantons.map((x: string) => x.toString()));
+    }
   }
 }
