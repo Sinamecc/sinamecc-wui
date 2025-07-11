@@ -30,8 +30,9 @@ export interface Adress {
   id?: number;
   description: string;
   GIS: string;
-  district: any;
-  canton: any;
+  province: any[];
+  district: any[];
+  canton: any[];
   app_scale: string;
 }
 

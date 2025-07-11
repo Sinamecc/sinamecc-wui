@@ -20,6 +20,7 @@ import {
 } from '../interfaces/adaptationAction';
 import { AAType, Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-adaptation-actions-report',
@@ -107,6 +108,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       if (this.adaptationAction) {
         const id = this.adaptationAction.adaptation_action_information?.adaptation_action_type?.id;
         if (id) this.changeAdaptationType(id);
+        this.loadAddress();
       }
     }
   }
@@ -506,10 +508,6 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   buildUpdatedRegisterForm() {
-    let provinceList: Province[] = [];
-    let cantonList: Canton[] = [];
-    let districtList: District[] = [];
-
     const adaptationActionStartDate = new Date(this.adaptationActionUpdated.implementation.start_date);
     const adaptationActionEndDate = new Date(this.adaptationActionUpdated.implementation.end_date);
 
@@ -521,20 +519,13 @@ export class AdaptationActionsReportComponent implements OnInit {
       adaptationActionEndDate.getMinutes() + adaptationActionEndDate.getTimezoneOffset(),
     );
 
-    if (this.adaptationActionUpdated.address.app_scale === '2') {
-      provinceList = this.loadProvinceSByCantonSelected(this.adaptationActionUpdated.address.canton);
-      cantonList = this.adaptationActionUpdated.address.canton;
-      this.selectProvince(provinceList.map((x) => x.id.toString()));
-      this.selectCanton(cantonList.map((x) => x.id.toString()));
-    }
+    const { address } = this.adaptationActionUpdated;
 
-    if (this.adaptationActionUpdated.address.app_scale === '3') {
-      cantonList = this.loadCantonByDistrictSelected(this.adaptationActionUpdated.address.district);
-      provinceList = this.loadProvinceSByCantonSelected(cantonList);
-      districtList = this.adaptationActionUpdated.address.district;
-      this.selectProvince(provinceList.map((x) => x.id.toString()));
-      this.selectCanton(cantonList.map((x) => x.id.toString()));
-    }
+    const appScale = parseInt(address.app_scale);
+
+    const provinceIds = ['2', '3', '4'].includes(address.app_scale) ? address.province.map((x) => x.id) : [];
+    const cantonIds = ['3', '4'].includes(address.app_scale) ? address.canton.map((x) => x.id) : [];
+    const districtIds = address.app_scale === '4' ? address.district.map((x) => x.id) : [];
 
     return this.formBuilder.array([
       this.formBuilder.group({
@@ -578,24 +569,10 @@ export class AdaptationActionsReportComponent implements OnInit {
         ],
       }),
       this.formBuilder.group({
-        appScaleCtrl: [parseInt(this.adaptationActionUpdated.address.app_scale), Validators.required],
-        adaptationActionProvinceCtrl: [
-          this.adaptationActionUpdated.address.app_scale === '2' ||
-          this.adaptationActionUpdated.address.app_scale === '3'
-            ? provinceList.map((x) => x.id) // ? this.adaptationActionUpdated.address.district[0].canton.province.id
-            : [],
-        ],
-        adaptationActionCantonCtrl: [
-          this.adaptationActionUpdated.address.app_scale === '2' ||
-          this.adaptationActionUpdated.address.app_scale === '3'
-            ? cantonList.map((x) => x.id) // ? this.adaptationActionUpdated.address.district[0].canton.province.id
-            : [], //? this.adaptationActionUpdated.address.district[0].canton.id
-        ],
-        adaptationActionDistritCtrl: [
-          this.adaptationActionUpdated.address.app_scale === '3'
-            ? districtList.map((x) => x.id) // ? this.adaptationActionUpdated.address.district[0].id
-            : [],
-        ],
+        appScaleCtrl: [appScale, Validators.required],
+        adaptationActionProvinceCtrl: [provinceIds],
+        adaptationActionCantonCtrl: [cantonIds],
+        adaptationActionDistritCtrl: [districtIds],
         adaptationActionDescriptionNarrativeCtrl: [
           this.adaptationActionUpdated.address.description,
           [Validators.required, Validators.maxLength(3000)],
@@ -681,6 +658,7 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   buildPayload() {
+    const scale = this.form.value.formArray[1].appScaleCtrl;
     const context = {
       adaptation_action_information: {
         name: this.form.value.formArray[0].adaptationActionNameCtrl,
@@ -694,18 +672,17 @@ export class AdaptationActionsReportComponent implements OnInit {
         benefited_population: this.form.value.formArray[0].beneficiaryPopulationCtrl,
       },
       address: {
-        app_scale: this.form.value.formArray[1].appScaleCtrl,
+        app_scale: scale,
         description: this.form.value.formArray[1].adaptationActionDescriptionNarrativeCtrl,
         GIS: this.form.value.formArray[1].adaptationActionLocationCtrl
           ? this.form.value.formArray[1].adaptationActionLocationCtrl
           : null,
-        district: this.form.value.formArray[1].adaptationActionDistritCtrl
-          ? this.form.value.formArray[1].adaptationActionDistritCtrl
-          : [],
-        canton:
-          this.form.value.formArray[1].appScaleCtrl === 2
-            ? this.form.value.formArray[1].adaptationActionCantonCtrl
+        province:
+          scale === 2 || scale === 3 || scale === 4
+            ? this.form.value.formArray[1].adaptationActionProvinceCtrl || []
             : [],
+        canton: scale === 3 || scale === 4 ? this.form.value.formArray[1].adaptationActionCantonCtrl || [] : [],
+        district: scale === 4 ? this.form.value.formArray[1].adaptationActionDistritCtrl || [] : [],
       },
 
       activity: this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls
@@ -748,6 +725,24 @@ export class AdaptationActionsReportComponent implements OnInit {
     window.open(url, '_blank');
   }
 
+  loadAddress() {
+    if (this.adaptationActionUpdated.address) {
+      const { address } = this.adaptationActionUpdated;
+      if (address.app_scale === '1') {
+      } else if (address.app_scale === '2') {
+        this.selectProvince(address.province.map((x) => x.id.toString()));
+      } else if (address.app_scale === '3') {
+        const provinceList = this.loadProvinceSByCantonSelected(address.canton);
+        this.selectProvince(provinceList.map((x) => x.id.toString()));
+      } else if (address.app_scale === '4') {
+        const districtList = address.district;
+        this.selectCanton(this.loadCantonByDistrictSelected(districtList).map((x) => x.id.toString()));
+        this.selectProvince(this.loadProvinceSByCantonSelected(this.cantones).map((x) => x.id.toString()));
+      }
+      this.changeLocationValidations(Number(address.app_scale));
+    }
+  }
+
   selectProvince(ids: string[]) {
     const cantonListGroup = [];
     for (const provinceId of ids) {
@@ -764,9 +759,6 @@ export class AdaptationActionsReportComponent implements OnInit {
     }
 
     this.cantonesToShow = cantonListGroup;
-
-    //this.actualProvince = parseInt(id);
-    //this.loadCanton(parseInt(id));
   }
 
   public selectCanton(ids: string[]) {
@@ -784,34 +776,21 @@ export class AdaptationActionsReportComponent implements OnInit {
       districListGroup.push(element);
     }
     this.cdistrictsToShow = districListGroup;
-    // this.loadDistrict(parseInt(id));
   }
 
   public async loadProvinces() {
-    const provinces = await this.service.loadProvince().toPromise();
+    const provinces = await firstValueFrom(this.service.loadProvince());
     this.provinces = provinces;
   }
 
-  public loadCanton(provinceID: number) {
-    this.service.loadCanton(provinceID).subscribe((response) => {
-      this.canton = response;
-    });
-  }
-
   public async loadCantones() {
-    const cantones = await this.service.loadCantones().toPromise();
+    const cantones = await firstValueFrom(this.service.loadCantones());
     this.cantones = cantones;
   }
 
   public async loadDistricts() {
-    const districts = await this.service.loadDistricts().toPromise();
+    const districts = await firstValueFrom(this.service.loadDistricts());
     this.districtsList = districts;
-  }
-
-  public loadDistrict(cantonID: number) {
-    this.service.loadDistrict(cantonID, this.actualProvince).subscribe((response) => {
-      this.districts = response;
-    });
   }
 
   public loadClimateThreat() {
@@ -821,23 +800,33 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   public changeLocationValidations(id: number) {
-    if (id === 1) {
-      this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').setValidators(null);
-      this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').setValidators(null);
-      this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').setValidators(null);
-    } else {
-      if (id == 2) {
-        this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').setValidators(Validators.required);
-        this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').setValidators(Validators.required);
-        this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').setValidators(null);
-      } else {
-        this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').setValidators(Validators.required);
-        this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').setValidators(Validators.required);
-        this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').setValidators(Validators.required);
-      }
+    const locationFields = [
+      'adaptationActionProvinceCtrl',
+      'adaptationActionCantonCtrl',
+      'adaptationActionDistritCtrl',
+    ];
+    const formGroup = this.form.get('formArray').get([1]);
+
+    const validationMap: Record<number, boolean[]> = {
+      1: [false, false, false],
+      2: [true, false, false],
+      3: [true, true, false],
+    };
+
+    const requiredFields = validationMap[id] ?? [true, true, true];
+
+    locationFields.forEach((field, index) => {
+      const control = formGroup.get(field);
+      control.setValidators(requiredFields[index] ? Validators.required : null);
+      control.updateValueAndValidity();
+    });
+
+    const provinces = formGroup.get('adaptationActionProvinceCtrl').value;
+    const cantons = formGroup.get('adaptationActionCantonCtrl').value;
+    if (id === 3 && provinces && provinces.length > 0) {
+      this.selectProvince(provinces.map((x: string) => x.toString()));
+    } else if (id === 4 && cantons && cantons.length > 0) {
+      this.selectCanton(cantons.map((x: string) => x.toString()));
     }
-    this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').updateValueAndValidity();
-    this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').updateValueAndValidity();
-    this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').updateValueAndValidity();
   }
 }
