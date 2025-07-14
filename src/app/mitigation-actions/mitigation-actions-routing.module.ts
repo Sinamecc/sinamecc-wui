@@ -14,6 +14,8 @@ import { ConceptualIntegrationComponent } from '@app/mitigation-actions/conceptu
 import { IngeiHarmonizationComponent } from '@app/mitigation-actions/ingei-harmonization/ingei-harmonization.component';
 import { ConceptualIntegrationNewComponent } from '@app/mitigation-actions/conceptual-integration-new/conceptual-integration-new.component';
 import { HarmonizationProposalNewComponent } from '@app/mitigation-actions/harmonization-proposal-new/harmonization-proposal-new.component';
+import { CanEditMAGuard } from './can-edit-ma.guard';
+import { UnauthorizedComponent } from '@app/@shared/unauthorized/unauthorized.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -36,6 +38,7 @@ const routes: Routes = [
     {
       path: 'mitigation/actions/:id/edit',
       component: MitigationActionsUpdateComponent,
+      canActivate: [CanEditMAGuard],
       data: { id: extract('id') },
     },
     {
@@ -67,6 +70,10 @@ const routes: Routes = [
       path: 'mitigation/actions/:id/harmonization/proposal/new',
       component: HarmonizationProposalNewComponent,
       data: { id: extract('id') },
+    },
+    {
+      path: 'unauthorized',
+      component: UnauthorizedComponent,
     },
   ]),
 ];
