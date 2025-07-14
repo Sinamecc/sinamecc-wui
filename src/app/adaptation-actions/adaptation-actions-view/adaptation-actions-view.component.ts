@@ -26,6 +26,7 @@ import {
   ReportingPeriodicity,
 } from '../interfaces/catalogs';
 import { MatDialog } from '@angular/material/dialog';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-adaptation-actions-view',
@@ -79,6 +80,7 @@ export class AdaptationActionsViewComponent implements OnInit {
     if (this.id) {
       this.service
         .loadOneAdaptationActions(this.id)
+        .pipe(finalize(() => (this.loading = false)))
         .subscribe(
           (response) => {
             this.adaptationAction = response;
@@ -97,10 +99,9 @@ export class AdaptationActionsViewComponent implements OnInit {
             }
           },
           (error) => {
-            this.adaptationAction = {};
+            console.error(error);
           },
-        )
-        .add(() => (this.loading = false));
+        );
     }
   }
 
