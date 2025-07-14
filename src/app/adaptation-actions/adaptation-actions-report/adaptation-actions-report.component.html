@@ -151,18 +151,17 @@
             <label translate>Nacional </label>
           </mat-radio-button>
           <mat-radio-button [value]="2">
-            <label translate>Regional</label>
+            <label translate>Provincia</label>
           </mat-radio-button>
           <mat-radio-button [value]="3">
-            <label translate>Local</label>
+            <label translate>Cantón</label>
+          </mat-radio-button>
+          <mat-radio-button [value]="4">
+            <label translate>Distrito</label>
           </mat-radio-button>
         </mat-radio-group>
 
-        <mat-form-field
-          *ngIf="appScaleControl.value == 2 || appScaleControl.value == 3"
-          class="field-ppcn"
-          appearance="fill"
-        >
+        <mat-form-field *ngIf="appScaleControl.value !== 1" class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form2.AAProvince</mat-label>
           <mat-select
             (selectionChange)="selectProvince($event.value)"
@@ -176,7 +175,7 @@
         </mat-form-field>
 
         <mat-form-field
-          *ngIf="appScaleControl.value == 2 || appScaleControl.value == 3"
+          *ngIf="appScaleControl.value === 3 || appScaleControl.value === 4"
           class="field-ppcn"
           appearance="fill"
         >
@@ -194,7 +193,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="appScaleControl.value == 3" class="field-ppcn" appearance="fill">
+        <mat-form-field *ngIf="appScaleControl.value === 4" class="field-ppcn" appearance="fill">
           <mat-label translate>adaptationAction.form2.AADistrict</mat-label>
           <mat-select multiple formControlName="adaptationActionDistritCtrl">
             <mat-optgroup *ngFor="let group of cdistrictsToShow" [label]="group.cantonName">

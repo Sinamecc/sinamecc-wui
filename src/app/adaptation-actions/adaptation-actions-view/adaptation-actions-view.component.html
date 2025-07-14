@@ -202,22 +202,43 @@
               </h3>
             </div>
 
-            <div *ngIf="adaptationAction?.address?.district" class="flex flex-row">
+            <div
+              *ngIf="adaptationAction?.address?.province && adaptationAction.address.province.length"
+              class="flex flex-row"
+            >
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.AAProvince</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">{{ (adaptationAction?.address?.district)[0]?.canton?.province?.name }}</h3>
+              <div class="flex flex-row gap-2">
+                <ng-container *ngFor="let province of adaptationAction?.address?.province; let last = last">
+                  <span class="mat-h3">{{ province.name }}<span *ngIf="!last">, </span></span>
+                </ng-container>
+              </div>
             </div>
 
-            <div *ngIf="adaptationAction?.address?.district" class="flex flex-row">
+            <div
+              *ngIf="adaptationAction?.address?.canton && adaptationAction.address.canton.length"
+              class="flex flex-row"
+            >
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.AACanton</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">{{ (adaptationAction?.address?.district)[0]?.canton?.name }}</h3>
+              <div class="flex flex-row gap-2">
+                <ng-container *ngFor="let canton of adaptationAction?.address?.canton; let last = last">
+                  <span class="mat-h3">{{ canton.name }}<span *ngIf="!last">, </span></span>
+                </ng-container>
+              </div>
             </div>
 
-            <div *ngIf="adaptationAction?.address?.district" class="flex flex-row">
+            <div
+              *ngIf="adaptationAction?.address?.district && adaptationAction.address.district.length"
+              class="flex flex-row"
+            >
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.AADistrict</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
-              <h3 class="mat-h3">{{ (adaptationAction?.address?.district)[0]?.name }}</h3>
+              <div class="flex flex-row gap-2">
+                <ng-container *ngFor="let district of adaptationAction?.address?.district; let last = last">
+                  <span class="mat-h3">{{ district.name }}<span *ngIf="!last">, </span></span>
+                </ng-container>
+              </div>
             </div>
 
             <div class="flex flex-row">
