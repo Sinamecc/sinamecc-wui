@@ -78,7 +78,6 @@ export class MitigationActionFileUploadComponent {
     const files = input?.files ? Array.from(input.files) : [];
     if (!files.length) return;
     if (this.noId()) {
-      console.log('noId');
       this.filesUploading = [...this.filesUploading, ...files];
       this.filesToUpload.emit(this.filesUploading);
     } else {
