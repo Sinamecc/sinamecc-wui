@@ -208,14 +208,16 @@
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
-              <div class="indicator-container flex flex-row justify-center">
-                <mat-form-field class="field-ppcn">
-                  <mat-label translate>adaptationAction.form4.attachSupportMonitoring</mat-label>
-                  <input matInput formControlName="attachSupportingInformationCtrl" />
-                  <mat-error translate>errorLabel.fieldRequired</mat-error>
-                </mat-form-field>
-                <app-upload-button (fileChange)="uploadFile($event)" name="attachSupportMonitoring" />
-                <br />
+              <div class="flex flex-col gap-2">
+                <label translate>adaptationAction.form4.attachSupportMonitoring</label>
+                <div class="indicator-container flex flex-row justify-center">
+                  <mat-form-field class="field-ppcn">
+                    <input matInput formControlName="attachSupportingInformationCtrl" />
+                    <mat-error translate>errorLabel.fieldRequired</mat-error>
+                  </mat-form-field>
+                  <app-upload-button (fileChange)="uploadFile($event)" name="attachSupportMonitoring" />
+                  <br />
+                </div>
               </div>
 
               <div class="box-button">
