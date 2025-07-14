@@ -76,22 +76,32 @@ export class AdaptationActionsViewComponent implements OnInit {
 
   loadAdaptationAction() {
     this.loading = true;
-    this.service
-      .loadOneAdaptationActions(this.id)
-      .pipe(
-        finalize(() => {
-          this.loading = false;
-        })
-      )
-      .subscribe(
-        (response) => {
-          this.adaptationAction = response;
-        },
-        (error) => {
-          this.adaptationAction = {};
-        },
-      )
-      .add(() => (this.loading = false));
+    if (this.id) {
+      this.service
+        .loadOneAdaptationActions(this.id)
+        .subscribe(
+          (response) => {
+            this.adaptationAction = response;
+            if (this.adaptationAction && this.adaptationAction.indicator_list.length) {
+              this.adaptationAction.indicator_list.forEach((indicator: any) => {
+                if (indicator.same_contact_info_as_registration) {
+                  indicator.contact = {
+                    institution: this.adaptationAction.report_organization?.contact?.institution,
+                    contact_name: this.adaptationAction.report_organization?.contact?.contact_name,
+                    contact_position: this.adaptationAction.report_organization?.contact?.contact_position,
+                    email: this.adaptationAction.report_organization?.contact?.email,
+                    phone: this.adaptationAction.report_organization?.contact?.phone,
+                  };
+                }
+              });
+            }
+          },
+          (error) => {
+            this.adaptationAction = {};
+          },
+        )
+        .add(() => (this.loading = false));
+    }
   }
 
   buildCommentList(moduleIndex: number) {

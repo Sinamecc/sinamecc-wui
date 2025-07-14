@@ -47,6 +47,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    this.changeContactValidators();
   }
 
   get formArray(): AbstractControl | null {
@@ -61,6 +62,41 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     } else {
       this.buildUpdateRegisterForm();
     }
+  }
+
+  private changeContactValidators() {
+    const group = this.formArray?.get([3]);
+    const sameContactCtrl = group?.get('sameContactCtrl');
+
+    sameContactCtrl?.valueChanges.subscribe((value: boolean) => {
+      const fieldsToUpdate = [
+        'adaptationActionIndicatorContactNameCtrl',
+        'adaptationActionIndicatorContactInstitutionCtrl',
+        'adaptationActionIndicatorContactDepartmentCtrl',
+        'adaptationActionIndicatorContactEmailCtrl',
+        'adaptationActionIndicatorContactPhoneCtrl',
+      ];
+
+      fieldsToUpdate.forEach((fieldName) => {
+        const control = group?.get(fieldName);
+        if (!control) return;
+
+        if (value === true) {
+          control.clearValidators();
+          control.reset();
+        } else {
+          if (fieldName === 'adaptationActionIndicatorContactEmailCtrl') {
+            control.setValidators([Validators.required, Validators.email]);
+          } else if (fieldName === 'adaptationActionIndicatorContactPhoneCtrl') {
+            control.setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
+          } else {
+            control.setValidators([Validators.required]);
+          }
+        }
+
+        control.updateValueAndValidity();
+      });
+    });
   }
 
   addNewForm() {
@@ -81,8 +117,6 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
   }
 
   buildUpdateRegisterForm() {
-    const builderGroup = [];
-
     if (this.adaptationActionUpdated.indicator_list.length > 0) {
       let index = 0;
       for (const indicator of this.adaptationActionUpdated.indicator_list) {
@@ -119,6 +153,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
             adaptationActionIndicatorCoverageOtherCtrl: [''],
             adaptationActionIndicatorDisintegrationCtrl: [indicator.disaggregation, [Validators.maxLength(1000)]],
             adaptationActionIndicatorLimitCtrl: [indicator.limitation, [Validators.maxLength(1000)]],
+            adaptationActionIndicatorGoalCtrl: [indicator.associated_meta, [Validators.maxLength(100), Validators.required]],
             adaptationActionIndicatorMeasurementCtrl: [indicator.additional_information, [Validators.maxLength(1000)]],
             adaptationActionIndicatorDetailsCtrl: [indicator.comments, [Validators.maxLength(1000)]],
             indicatorBaselineCtrl: [indicator.indicator_base_line, [Validators.maxLength(500)]],
@@ -145,17 +180,12 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
             adaptationActionIndicatorClassifiersOtherCtrl: [indicator.other_classifier],
           }),
           this.formBuilder.group({
-            adaptationActionIndicatorContactNameCtrl: [indicator.contact.contact_name, [Validators.required]],
-            adaptationActionIndicatorContactInstitutionCtrl: [indicator.contact.institution, [Validators.required]],
-            adaptationActionIndicatorContactDepartmentCtrl: [indicator.contact.contact_position, [Validators.required]],
-            adaptationActionIndicatorContactEmailCtrl: [
-              indicator.contact.email,
-              [Validators.required, Validators.email],
-            ],
-            adaptationActionIndicatorContactPhoneCtrl: [
-              indicator.contact.phone,
-              [Validators.required, Validators.maxLength(8), Validators.minLength(8)],
-            ],
+            sameContactCtrl: [Boolean(indicator.same_contact_info_as_registration), [Validators.required]],
+            adaptationActionIndicatorContactNameCtrl: [indicator.contact.contact_name],
+            adaptationActionIndicatorContactInstitutionCtrl: [indicator.contact.institution],
+            adaptationActionIndicatorContactDepartmentCtrl: [indicator.contact.contact_position],
+            adaptationActionIndicatorContactEmailCtrl: [indicator.contact.email],
+            adaptationActionIndicatorContactPhoneCtrl: [indicator.contact.phone],
           }),
         ]);
         if (index === 0) {
@@ -191,6 +221,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         adaptationActionIndicatorCoverageOtherCtrl: [''],
         adaptationActionIndicatorDisintegrationCtrl: ['', [Validators.maxLength(1000)]],
         adaptationActionIndicatorLimitCtrl: ['', [Validators.maxLength(1000)]],
+        adaptationActionIndicatorGoalCtrl: ['', [Validators.maxLength(100), Validators.required]],
         adaptationActionIndicatorMeasurementCtrl: ['', [Validators.maxLength(1000)]],
         adaptationActionIndicatorDetailsCtrl: ['', [Validators.maxLength(1000)]],
         indicatorBaselineCtrl: ['', [Validators.maxLength(500)]],
@@ -208,6 +239,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         adaptationActionIndicatorClassifiersOtherCtrl: [''],
       }),
       this.formBuilder.group({
+        sameContactCtrl: [false, [Validators.required]],
         adaptationActionIndicatorContactNameCtrl: ['', [Validators.required]],
         adaptationActionIndicatorContactInstitutionCtrl: ['', [Validators.required]],
         adaptationActionIndicatorContactDepartmentCtrl: ['', [Validators.required]],
@@ -259,6 +291,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         reporting_periodicity: form[0].adaptationActionIndicatorFrecuenceCtrl,
         available_time_end_date: this.datePipe.transform(form[0].timeSeriesAvailableEndCtrl, 'yyyy-MM-dd'),
         geographic_coverage: form[0].adaptationActionIndicatorCoverageCtrl,
+        associated_meta: form[0].adaptationActionIndicatorGoalCtrl,
         other_geographic_coverage: form[0].adaptationActionIndicatorCoverageOtherCtrl
           ? form[0].adaptationActionIndicatorCoverageOtherCtrl
           : null,
@@ -288,12 +321,13 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         other_classifier: form[2].adaptationActionIndicatorClassifiersOtherCtrl
           ? form[2].adaptationActionIndicatorClassifiersOtherCtrl
           : null,
+        same_contact_info_as_registration: form[3].sameContactCtrl,
         contact: {
-          institution: form[3].adaptationActionIndicatorContactInstitutionCtrl,
-          contact_name: form[3].adaptationActionIndicatorContactNameCtrl,
-          contact_position: form[3].adaptationActionIndicatorContactDepartmentCtrl,
-          email: form[3].adaptationActionIndicatorContactEmailCtrl,
-          phone: form[3].adaptationActionIndicatorContactPhoneCtrl,
+          contact_name: form[3].sameContactCtrl ? null : form[3].adaptationActionIndicatorContactNameCtrl,
+          institution: form[3].sameContactCtrl ? null : form[3].adaptationActionIndicatorContactInstitutionCtrl,
+          contact_position: form[3].sameContactCtrl ? null : form[3].adaptationActionIndicatorContactDepartmentCtrl,
+          email: form[3].sameContactCtrl ? null : form[3].adaptationActionIndicatorContactEmailCtrl,
+          phone: form[3].sameContactCtrl ? null : form[3].adaptationActionIndicatorContactPhoneCtrl,
         },
       };
 
@@ -304,7 +338,6 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     }
 
     const context = {
-      indicatorList: indicatorList,
       indicator_list: indicatorList,
     };
 
