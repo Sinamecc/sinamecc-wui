@@ -8,12 +8,13 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom, Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { DECIMAL_NUMBER_REGEX, MitigationAction, MAFileType, MAEntityType, MAStates } from '../mitigation-action';
+import { DECIMAL_NUMBER_REGEX, MitigationAction, MAFileType, MAEntityType } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAFile } from '../mitigation-action-file-upload/file-upload';
+import { States } from '@app/@shared/next-state';
 
 const log = new Logger('MitigationAction');
 
@@ -31,7 +32,7 @@ export class ImpactFormComponent implements OnInit {
   wasSubmittedSuccessfully = false;
   startDate = new Date();
   mitigationAction: MitigationAction;
-  @Output() state = new EventEmitter<MAStates>();
+  @Output() state = new EventEmitter<States>();
   maFileType = MAFileType;
   entityType = MAEntityType;
 
@@ -91,7 +92,7 @@ export class ImpactFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
-        this.state.emit(this.mitigationAction.fsm_state.state as MAStates);
+        this.state.emit(this.mitigationAction.fsm_state.state as States);
         if (this.mitigationAction.monitoring_information && this.mitigationAction.monitoring_information.indicator)
           this.mitigationAction.monitoring_information.indicator.forEach((indicator: any) => {
             const files = {
@@ -325,7 +326,7 @@ export class ImpactFormComponent implements OnInit {
         )
         .subscribe(
           (response) => {
-            this.state.emit(response.state as MAStates);
+            this.state.emit(response.state as States);
             this.successSendForm(response.state);
           },
           (error) => {
@@ -356,8 +357,8 @@ export class ImpactFormComponent implements OnInit {
     });
 
     this.wasSubmittedSuccessfully = true;
-    this.state.emit(state as MAStates);
-    if (state === MAStates.ACCEPTED_BY_DCC) {
+    this.state.emit(state as States);
+    if (state === States.ACCEPTED_BY_DCC) {
       this.stepper.next();
     } else {
       setTimeout(() => {

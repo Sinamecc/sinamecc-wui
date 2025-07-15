@@ -9,7 +9,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import {
-  MAStates,
   CategoryIppc2006,
   MADataCatalogItem,
   MAFileType,
@@ -20,6 +19,7 @@ import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting
 import { I18nService } from '@app/i18n';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAFile } from '../mitigation-action-file-upload/file-upload';
+import { States } from '@app/@shared/next-state';
 
 const log = new Logger('MitigationAction');
 @Component({
@@ -32,7 +32,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
   version: string = environment.version;
   error: string;
   form: UntypedFormGroup;
-  @Output() state = new EventEmitter<MAStates>();
+  @Output() state = new EventEmitter<States>();
 
   @Input() stepper: any;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
@@ -76,7 +76,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
-        this.state.emit(this.mitigationAction.fsm_state.state as MAStates);
+        this.state.emit(this.mitigationAction.fsm_state.state as States);
         this.files = this.getFiles();
       });
     }
@@ -328,7 +328,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
       )
       .subscribe(
         async (response) => {
-          await this.successSendForm(response.id, response.state as MAStates);
+          await this.successSendForm(response.id, response.state as States);
         },
         (error) => {
           this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -342,7 +342,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
       );
   }
 
-  async successSendForm(id: string, state: MAStates) {
+  async successSendForm(id: string, state: States) {
     if (this.newFiles.length) {
       await this.service.submitFiles(id, this.maFileType, this.newFiles);
     }

@@ -7,11 +7,12 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom, Observable } from 'rxjs';
 import { MitigationActionNewFormData, InitiativeType } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { MAFileType, MitigationAction, MAStates } from '../mitigation-action';
+import { MAFileType, MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAFile } from '../mitigation-action-file-upload/file-upload';
+import { States } from '@app/@shared/next-state';
 
 const log = new Logger('MitigationAction');
 
@@ -22,7 +23,7 @@ const log = new Logger('MitigationAction');
   standalone: false,
 })
 export class InitiativeFormComponent implements OnInit {
-  @Output() state = new EventEmitter<MAStates>();
+  @Output() state = new EventEmitter<States>();
   version: string = environment.version;
   error: string;
   form: UntypedFormGroup;
@@ -146,7 +147,7 @@ export class InitiativeFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
-        this.state.emit(this.mitigationAction.fsm_state.state as MAStates);
+        this.state.emit(this.mitigationAction.fsm_state.state as States);
         this.files[MAFileType.INITIATIVE] = this.getFilesByType(this.maFileType.INITIATIVE);
         this.files[MAFileType.GEOGRAPHIC_LOCATION] = this.getFilesByType(this.maFileType.GEOGRAPHIC_LOCATION);
       });
@@ -520,7 +521,7 @@ export class InitiativeFormComponent implements OnInit {
         .subscribe(
           async (response) => {
             await this.successSendForm(response);
-            this.state.emit(response.state as MAStates);
+            this.state.emit(response.state as States);
           },
           (error) => {
             this.translateService.get('Error submitting form').subscribe((res: string) => {
@@ -544,7 +545,7 @@ export class InitiativeFormComponent implements OnInit {
         )
         .subscribe(
           async (response) => {
-            this.state.emit(response.state as MAStates);
+            this.state.emit(response.state as States);
             await this.successSendForm(response);
           },
           (error) => {

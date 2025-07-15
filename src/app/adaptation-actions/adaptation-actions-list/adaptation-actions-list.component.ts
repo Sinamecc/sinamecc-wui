@@ -6,6 +6,9 @@ import { AdaptationAction } from '../interfaces/adaptationAction';
 import { adaptationsActionsTypeMap } from '../interfaces/catalogs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { PermissionService } from '@app/@core/permissions.service';
+import { States } from '@app/@shared/next-state';
+import { MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-adaptation-actions-list',
@@ -24,7 +27,7 @@ export class AdaptationActionsListComponent implements OnInit {
   constructor(
     private service: AdaptationActionService,
     private router: Router,
-    private credentialsService: CredentialsService,
+    public permissions: PermissionService,
   ) {}
 
   ngOnInit() {
@@ -41,18 +44,12 @@ export class AdaptationActionsListComponent implements OnInit {
     this.router.navigate([`adaptation/actions/${uuid}/update`], { replaceUrl: true });
   }
 
-  hasPermProvider() {
-    return Boolean(
-      this.credentialsService.credentials.permissions.all ||
-        this.credentialsService.credentials.permissions.aa.provider,
-    );
+  canEdit(state: States): boolean {
+    return this.permissions.canEditAA(state);
   }
 
-  hasPermReviewer() {
-    return Boolean(
-      this.credentialsService.credentials.permissions.all ||
-        this.credentialsService.credentials.permissions.aa.reviewer,
-    );
+  canDelete(state: States): boolean {
+    return this.permissions.canDeleteAA(state);
   }
 
   loadData() {
