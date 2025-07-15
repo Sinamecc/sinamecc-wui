@@ -4,7 +4,7 @@ import { environment } from '@env/environment';
 import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { MAStates, MitigationAction } from '@app/mitigation-actions/mitigation-action';
+import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { Logger } from '@app/@core';
@@ -14,6 +14,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PermissionService } from '@app/@core/permissions.service';
+import { States } from '@app/@shared/next-state';
 
 const log = new Logger('Report');
 
@@ -72,7 +73,7 @@ export class MitigationActionsListComponent implements OnInit {
     this.router.navigate([`/mitigation/actions/${uuid}`], { replaceUrl: true });
   }
 
-  edit(uuid: string, state: MAStates) {
+  edit(uuid: string, state: States) {
     if (this.canEdit(state)) {
       this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
     }
@@ -88,11 +89,11 @@ export class MitigationActionsListComponent implements OnInit {
     });
   }
 
-  canEdit(state: MAStates): boolean {
+  canEdit(state: States): boolean {
     return this.permissions.canEditMA(state);
   }
 
-  canDelete(state: MAStates): boolean {
+  canDelete(state: States): boolean {
     return this.permissions.canDeleteMA(state);
   }
 
