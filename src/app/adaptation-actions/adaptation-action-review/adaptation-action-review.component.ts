@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CredentialsService } from '@app/auth';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-adaptation-action-review',
@@ -42,8 +43,9 @@ export class AdaptationActionReviewComponent implements OnInit {
 
   loadAdaptationAction() {
     this.isLoading = true;
-    this.service.loadOneAdaptationActions(this.id)
-      .pipe(finalize(() => this.isLoading = false))
+    this.service
+      .loadOneAdaptationActions(this.id)
+      .pipe(finalize(() => (this.isLoading = false)))
       .subscribe(
         (response) => {
           this.adaptationAction = response;
@@ -51,7 +53,7 @@ export class AdaptationActionReviewComponent implements OnInit {
         },
         (error) => {
           console.error(error);
-        }
+        },
       );
   }
 
