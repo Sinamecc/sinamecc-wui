@@ -11,7 +11,7 @@
       <br />
       <div class="flex flex-col">
         <mat-vertical-stepper formArrayName="formArray" linear #stepper>
-          <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+          <mat-step *ngIf="permissions.canEditAcceptedMA(state)" formGroupName="0" [stepControl]="formArray?.get([0])">
             <ng-template matStepLabel>
               <span>6.1 - </span><span translate>mitigationAction.monitoringProgressLog</span>
             </ng-template>
@@ -42,7 +42,10 @@
           </mat-step>
 
           <mat-step
-            *ngIf="form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl"
+            *ngIf="
+              permissions.canEditAcceptedMA(state) &&
+              form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl
+            "
             formGroupName="1"
             [stepControl]="formArray?.get([1])"
           >
@@ -177,7 +180,10 @@
           </mat-step>
 
           <mat-step
-            *ngIf="form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl"
+            *ngIf="
+              permissions.canEditAcceptedMA(state) &&
+              form.value.formArray[0].anyProgressMonitoringRecordedClimateActionsCtrl
+            "
             formGroupName="2"
             [stepControl]="formArray?.get([2])"
           >
@@ -230,11 +236,34 @@
             </div>
           </mat-step>
 
+          <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
+            <ng-template matStepLabel>
+              <span>6.4 - </span><span translate>mitigationAction.includeImpactInfoTitle</span>
+            </ng-template>
+            <div>
+              <label class="radio-grup-label" translate
+                ><span translate>mitigationAction.includeImpactInfo</span></label
+              >
+              <mat-radio-group class="custom-radio-group" formControlName="includeImpactInfoCtrl">
+                <mat-radio-button [style.margin.px]="5" [value]="true">
+                  <label translate>general.yes</label>
+                </mat-radio-button>
+                <mat-radio-button [style.margin.px]="5" [value]="false">
+                  <label translate>No</label>
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="box-button">
+              <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+                <span translate>general.next</span>
+              </button>
+            </div>
+          </mat-step>
+
           <mat-step>
             <ng-template matStepLabel> <span translate> specificLabel.confirmInformation </span></ng-template>
 
             <div *ngIf="form.valid; else elseBlock" translate>specificLabel.everythingCorrect</div>
-
             <ng-template #elseBlock translate>Check the form for any errors marked in red</ng-template>
             <div class="align-right">
               <button
@@ -252,7 +281,11 @@
                   style="vertical-align: middle"
                 ></mat-progress-spinner>
 
-                <span translate>general.dondeReview</span>
+                <span>
+                  {{
+                    (form.value.formArray[3].includeImpactInfoCtrl ? 'general.done' : 'general.dondeReview') | translate
+                  }}
+                </span>
               </button>
             </div>
           </mat-step>

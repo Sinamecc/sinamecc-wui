@@ -83,14 +83,31 @@
           </div>
         </div>
 
+        <div class="box-button">
+          <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+            <span translate>general.next</span>
+          </button>
+        </div>
+      </mat-step>
+
+      <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+        <ng-template matStepLabel>
+          <span translate>mitigationAction.includeImpactInfoTitle</span>
+        </ng-template>
+        <div>
+          <label class="radio-grup-label" translate><span translate>mitigationAction.includeImpactInfo</span></label>
+          <mat-radio-group class="custom-radio-group" formControlName="includeImpactInfoCtrl">
+            <mat-radio-button [style.margin.px]="5" [value]="true">
+              <label translate>general.yes</label>
+            </mat-radio-button>
+            <mat-radio-button [style.margin.px]="5" [value]="false">
+              <label translate>No</label>
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
         <div class="button-box flex flex-row justify-end items-center">
-          <button
-            mat-raised-button
-            color="primary"
-            type="button"
-            [disabled]="!(type === types.A && isEmpty()) && (formArray?.get([0]).invalid || !annexSupportingFile)"
-            (click)="submitForm()"
-          >
+          <button mat-raised-button color="primary" type="button" [disabled]="isDisabled()" (click)="submitForm()">
             <span translate>general.done</span>
           </button>
         </div>

@@ -358,13 +358,7 @@ export class ImpactFormComponent implements OnInit {
 
     this.wasSubmittedSuccessfully = true;
     this.state.emit(state as States);
-    if (state === States.ACCEPTED_BY_DCC) {
-      this.stepper.next();
-    } else {
-      setTimeout(() => {
-        this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
-      }, 2000);
-    }
+    this.stepper.next();
   }
 
   async uploadFiles() {

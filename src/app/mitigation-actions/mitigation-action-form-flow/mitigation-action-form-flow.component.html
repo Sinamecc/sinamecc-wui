@@ -11,7 +11,12 @@
     <form [formGroup]="mainGroup">
       <!-- {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}} -->
       <mat-horizontal-stepper formArrayName="formArray" linear #stepper>
-        <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+        <!-- Section 1 -->
+        <mat-step
+          *ngIf="state ? permissions.canEditMA(state) : true"
+          formGroupName="0"
+          [stepControl]="formArray?.get([0])"
+        >
           <ng-template matStepLabel><span translate>specificLabel.registerInitiatives</span></ng-template>
           <app-initiative-form
             [newFormData]="newFormData"
@@ -23,7 +28,12 @@
           ></app-initiative-form>
         </mat-step>
 
-        <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+        <!-- Section 2 -->
+        <mat-step
+          *ngIf="state ? permissions.canEditMA(state) : true"
+          formGroupName="1"
+          [stepControl]="formArray?.get([1])"
+        >
           <ng-template matStepLabel><span translate>info.financingInformation</span></ng-template>
           <app-basic-information-form
             [newFormData]="newFormData"
@@ -56,7 +66,12 @@
           </div>
         </mat-step>
 
-        <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
+        <!-- Section 3 -->
+        <mat-step
+          *ngIf="state ? permissions.canEditMA(state) : true"
+          formGroupName="2"
+          [stepControl]="formArray?.get([2])"
+        >
           <ng-template matStepLabel><span translate>general.keyAspects</span></ng-template>
           <app-key-aspects-form
             [stepper]="stepper"
@@ -89,7 +104,12 @@
           </div>
         </mat-step>
 
-        <mat-step formGroupName="3" [stepControl]="formArray?.get([3])">
+        <!-- Section 4 -->
+        <mat-step
+          *ngIf="state ? permissions.canEditMA(state) : true"
+          formGroupName="3"
+          [stepControl]="formArray?.get([3])"
+        >
           <ng-template matStepLabel><span translate>specificLabel.mitigationEmissions</span></ng-template>
           <app-emissions-mitigation-form
             [newFormData]="newFormData"
@@ -124,7 +144,12 @@
           </div>
         </mat-step>
 
-        <mat-step formGroupName="4" [stepControl]="formArray?.get([4])">
+        <!-- Section 5 -->
+        <mat-step
+          *ngIf="state ? permissions.canEditMA(state) : true"
+          formGroupName="4"
+          [stepControl]="formArray?.get([4])"
+        >
           <ng-template matStepLabel><span translate>specificLabel.informationMonitoring</span></ng-template>
           <app-impact-form
             [newFormData]="newFormData"
@@ -135,7 +160,7 @@
           >
           </app-impact-form>
 
-          <div *ngIf="state === accepted" class="align-right">
+          <div class="align-right">
             <button
               [disabled]="!impactForm?.wasSubmittedSuccessfully"
               (click)="stepper.next()"
@@ -147,7 +172,12 @@
           </div>
         </mat-step>
 
-        <mat-step *ngIf="state === accepted" formGroupName="5" [stepControl]="formArray?.get([5])">
+        <!-- Section 6 -->
+        <mat-step
+          *ngIf="state ? permissions.canEditMA(state) : true"
+          formGroupName="5"
+          [stepControl]="formArray?.get([5])"
+        >
           <ng-template matStepLabel
             ><span translate>mitigationAction.monitoringReportingClimateActions</span>
           </ng-template>
@@ -155,7 +185,24 @@
             [newFormData]="newFormData"
             [processedNewFormData]="processedNewFormData"
             [isUpdating]="isUpdating"
+            [stepper]="stepper"
+            (wantsImpactEval)="wantsImpactEval = $event"
           ></app-reporting-climate-action-form>
+        </mat-step>
+
+        <!-- Section 7 -->
+        <mat-step
+          *ngIf="
+            wantsImpactEval && (state ? permissions.canEditMA(state) || permissions.canEditAcceptedMA(state) : true)
+          "
+          formGroupName="6"
+          [stepControl]="formArray?.get([6])"
+        >
+          <ng-template matStepLabel>
+            <span translate>mitigationAction.impactEvaluation</span>
+          </ng-template>
+
+          <app-impact-evaluation></app-impact-evaluation>
         </mat-step>
       </mat-horizontal-stepper>
     </form>

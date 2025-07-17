@@ -8,6 +8,7 @@ import { AdaptationActionsNewComponent } from './adaptation-actions-new/adaptati
 import { AdaptationActionsViewComponent } from './adaptation-actions-view/adaptation-actions-view.component';
 import { UnauthorizedComponent } from '@app/@shared/unauthorized/unauthorized.component';
 import { CanEditAAGuard } from './can-edit-aa.guard';
+import { AdaptationActionUpdateComponent } from './adaptation-action-update/adaptation-action-update.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -34,7 +35,7 @@ const routes: Routes = [
     },
     {
       path: 'adaptation/actions/:id/update',
-      component: AdaptationActionsNewComponent,
+      component: AdaptationActionUpdateComponent,
       canActivate: [CanEditAAGuard],
       data: { id: extract('id') },
     },

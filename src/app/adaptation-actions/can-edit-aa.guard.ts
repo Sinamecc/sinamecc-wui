@@ -15,17 +15,34 @@ export class CanEditAAGuard implements CanActivate {
     private router: Router,
   ) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot,
-  ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
     const id = route.params['id'];
+    const queryState = route.queryParams['state'] as States | undefined;
 
     return new Promise((resolve) => {
       this.adaptationActionService.loadOneAdaptationActions(id).subscribe({
         next: (aa) => {
-          const canEdit = this.permissionService.canEditAA(aa.fsm_state.state as States);
-          resolve(canEdit || this.router.createUrlTree(['/unauthorized']));
+          const currentState = aa.fsm_state.state as States;
+
+          const canEdit =
+            this.permissionService.canEditAA(currentState) || this.permissionService.canEditAcceptedAA(currentState);
+          if (!canEdit) {
+            resolve(this.router.createUrlTree(['/unauthorized']));
+            return;
+          }
+
+          if (queryState) {
+            resolve(true);
+          } else {
+            resolve(
+              this.router.createUrlTree(['/adaptation/actions', id, 'update'], {
+                queryParams: {
+                  ...route.queryParams,
+                  state: currentState,
+                },
+              }),
+            );
+          }
         },
         error: () => resolve(this.router.createUrlTree(['/unauthorized'])),
       });

@@ -1,11 +1,20 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { AAType, ODS, TemporalityImpact } from '../interfaces/catalogs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileUpload } from '@app/@shared/upload-button/file-upload';
+import { States } from '@app/@shared/next-state';
+import { PermissionService } from '@app/@core/permissions.service';
 
 @Component({
   selector: 'app-adaptation-actions-action-impact',
@@ -14,6 +23,7 @@ import { FileUpload } from '@app/@shared/upload-button/file-upload';
   standalone: false,
 })
 export class AdaptationActionsActionImpactComponent implements OnInit {
+  @Input() stepper: any;
   @Input() type: AAType;
   @Output() onComplete = new EventEmitter<boolean>();
 
@@ -28,15 +38,19 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   @Input() adaptationActionUpdated: AdaptationAction;
   stateLabel = 'submitted';
   types = AAType;
+  state: States;
+  @Output() wantsImpactEval = new EventEmitter<boolean>();
 
   constructor(
     private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
     private service: AdaptationActionService,
+    public permissions: PermissionService,
     private router: Router,
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
+      this.state = this.adaptationAction.fsm_state.state as States;
       if (this.adaptationAction && this.adaptationAction.action_impact?.id) {
         this.onComplete.emit(true);
       }
@@ -52,44 +66,24 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['type'] && this.form) {
-      const type = changes['type'].currentValue;
-
-      if (type === AAType.A) {
-        this.removeValidators();
-      } else {
-        this.resetValidators();
-      }
-      this.updateValidity();
+      this.setValidators(this.type !== AAType.A);
     }
   }
 
-  private removeValidators() {
-    const section = this.form.get('formArray').get([0]);
-    section.get('adaptationTemporalityImpactCtrl').setValidators(null);
-    section.get('genderEquityElementsCtrl').setValidators(null);
-    section.get('actionNegativeImpactCtrl').setValidators(null);
-    section.get('objectivesCtrl').setValidators(null);
-    section.get('impactsAccordingIndicatorsCtrl').setValidators(null);
-    section.get('genderEquityElementsQuestionCtrl').setValidators(null);
-    section.get('AnnexSupportingInformationCtrl').setValidators(null);
-  }
+  private setValidators(required: boolean) {
+    const section = (this.form.get('formArray') as FormArray).at(0) as FormGroup;
+    const validators = required ? Validators.required : null;
 
-  private resetValidators() {
-    const section = this.form.get('formArray').get([0]);
-    section.get('adaptationTemporalityImpactCtrl').setValidators(Validators.required);
-    section.get('genderEquityElementsCtrl').setValidators(Validators.required);
-    section.get('actionNegativeImpactCtrl').setValidators(Validators.required);
-    section.get('objectivesCtrl').setValidators(Validators.required);
-    section.get('impactsAccordingIndicatorsCtrl').setValidators(null);
-    section.get('genderEquityElementsQuestionCtrl').setValidators(null);
-    section.get('AnnexSupportingInformationCtrl').setValidators(null);
-  }
+    section.get('adaptationTemporalityImpactCtrl')?.setValidators(validators);
+    section.get('genderEquityElementsCtrl')?.setValidators(validators);
+    section.get('actionNegativeImpactCtrl')?.setValidators(validators);
+    section.get('objectivesCtrl')?.setValidators(validators);
 
-  private updateValidity() {
-    const section = this.form.get('formArray').get([0]);
-    Object.keys((section as FormGroup).controls).forEach((controlName) => {
-      section.get(controlName).updateValueAndValidity();
-    });
+    section.get('impactsAccordingIndicatorsCtrl')?.setValidators(null);
+    section.get('genderEquityElementsQuestionCtrl')?.setValidators(null);
+    section.get('AnnexSupportingInformationCtrl')?.setValidators(null);
+
+    section.updateValueAndValidity();
   }
 
   get formArray(): AbstractControl | null {
@@ -100,6 +94,13 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     this.form = this.formBuilder.group({
       formArray: !this.edit ? this.buildRegisterForm() : this.buildUpdateRegisterForm(),
     });
+
+    const includeImpactControl = this.form.get(['formArray', 1, 'includeImpactInfoCtrl']);
+    if (includeImpactControl) {
+      includeImpactControl.valueChanges.subscribe((value) => {
+        this.wantsImpactEval.emit(value);
+      });
+    }
   }
 
   loadODS() {
@@ -159,7 +160,13 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
         objectivesCtrl: [
           this.adaptationActionUpdated.action_impact.ods.map((x) => parseInt(x.id)),
           Validators.required,
-        ], // new field
+        ],
+      }),
+      this.formBuilder.group({
+        includeImpactInfoCtrl: [
+          false, // TODO: adjust when BE available
+          Validators.required,
+        ],
       }),
     ]);
   }
@@ -175,6 +182,9 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
         AnnexSupportingInformationCtrl: [''],
         objectivesCtrl: ['', Validators.required], // new field
       }),
+      this.formBuilder.group({
+        includeImpactInfoCtrl: [false, Validators.required],
+      }),
     ]);
   }
 
@@ -185,26 +195,56 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   }
 
   submitForm() {
-    if (!(this.type === this.types.A && this.isEmpty())) {
-      const payload: any = this.buildPayload();
-      this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
-      this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
-        (_) => {
-          this.openSnackBar('Formulario creado correctamente', '');
-          this.onComplete.emit(true);
-          this.router.navigate([`/adaptation/actions`], {
-            replaceUrl: true,
-          });
-        },
-        (error) => {
-          this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-        },
-      );
-    } else {
-      this.router.navigate([`/adaptation/actions`], {
-        replaceUrl: true,
-      });
+    const formArray = this.form.get('formArray') as FormArray;
+    const group1 = formArray?.at(1) as FormGroup;
+    const includeImpactInfo = group1?.get('includeImpactInfoCtrl')?.value;
+    if (this.type === this.types.A && this.isEmpty() && !includeImpactInfo) {
+      this.router.navigate(['/adaptation/actions'], { replaceUrl: true });
+      return;
     }
+
+    const payload = this.buildPayload();
+    this.service.updateCurrentAdaptationAction({ ...this.adaptationAction, ...payload });
+    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe({
+      next: () => this.handleSubmissionSuccess(includeImpactInfo),
+      error: () => this.openSnackBar('Error al crear el formulario, inténtelo de nuevo más tarde'),
+    });
+  }
+
+  private handleSubmissionSuccess(includeImpactInfo: boolean) {
+    this.openSnackBar('Formulario creado correctamente');
+    this.onComplete.emit(true);
+
+    if (includeImpactInfo) {
+      this.stepper.next();
+    } else {
+      this.router.navigate(['/adaptation/actions'], { replaceUrl: true });
+    }
+  }
+
+  isDisabled(): boolean {
+    const formArray = this.form.get('formArray') as FormArray;
+    const group0 = formArray?.at(0) as FormGroup;
+    const group1 = formArray?.at(1) as FormGroup;
+
+    const hasAnnex = !!this.annexSupportingFile;
+    const isTypeA = this.type === this.types.A;
+
+    const group0IsComplete = group0 && group0.valid && !this.isEmpty() && hasAnnex;
+    const group0Condition = this.permissions.canEditAcceptedAA(this.state)
+      ? true
+      : isTypeA
+        ? this.isEmpty() || group0IsComplete
+        : group0IsComplete;
+    const group1Valid = group1.get('includeImpactInfoCtrl')?.value !== null;
+    const allValid = group0Condition && group1Valid;
+    console.log('isDisabled', {
+      perm: this.permissions.canEditAcceptedAA(this.state),
+      group0Condition,
+      group0IsComplete,
+      group1Valid,
+    });
+    return !allValid;
   }
 
   isEmpty(): boolean {

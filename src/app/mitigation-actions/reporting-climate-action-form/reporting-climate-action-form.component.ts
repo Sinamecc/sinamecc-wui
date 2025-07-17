@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AbstractControl, FormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ErrorReportingComponent } from '@shared';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,6 +11,8 @@ import { MitigationActionsService } from '../mitigation-actions.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileUpload } from '@app/@shared/upload-button/file-upload';
 import { MAFile } from '../mitigation-action-file-upload/file-upload';
+import { States } from '@app/@shared/next-state';
+import { PermissionService } from '@app/@core/permissions.service';
 
 @Component({
   selector: 'app-reporting-climate-action-form',
@@ -19,6 +21,8 @@ import { MAFile } from '../mitigation-action-file-upload/file-upload';
   standalone: false,
 })
 export class ReportingClimateActionFormComponent implements OnInit {
+  @Input() stepper: any;
+
   indicator: any = [];
   error: string;
   form: UntypedFormGroup;
@@ -29,6 +33,8 @@ export class ReportingClimateActionFormComponent implements OnInit {
   stateLabel = 'submitted';
   newFiles: File[] = [];
   files: MAFile[] = [];
+  state: States;
+  @Output() wantsImpactEval = new EventEmitter<boolean>();
 
   maFileType = MAFileType.MONITORING_UPDATED_DATA;
   entityType = MAEntityType.MONITORING_INDICATOR;
@@ -44,6 +50,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private service: MitigationActionsService,
     private translateService: TranslateService,
+    public permissions: PermissionService,
     public snackBar: MatSnackBar,
     private datePipe: DatePipe,
     private router: Router,
@@ -52,21 +59,24 @@ export class ReportingClimateActionFormComponent implements OnInit {
       this.mitigationAction = message;
     });
     this.isUpdating = this.action === 'update';
-    this.createForm();
   }
 
   ngOnInit() {
     if (!this.isUpdating) {
       this.openStartMessages();
     }
-
-    if (this.isUpdating) {
-      this.service.currentMitigationAction.subscribe((message) => {
-        this.mitigationAction = message;
-        this.updateFormData();
-        this.files = this.getFiles();
-      });
-    }
+    this.service.currentMitigationAction.subscribe((message) => {
+      this.mitigationAction = message;
+      this.state = this.mitigationAction.fsm_state.state as States;
+      this.buildForm();
+      this.files = this.getFiles();
+      const includeImpactControl = this.form.get(['formArray', 3, 'includeImpactInfoCtrl']);
+      if (includeImpactControl) {
+        includeImpactControl.valueChanges.subscribe((value) => {
+          this.wantsImpactEval.emit(value);
+        });
+      }
+    });
   }
 
   get formArray(): AbstractControl | null {
@@ -142,38 +152,35 @@ export class ReportingClimateActionFormComponent implements OnInit {
 
   submitForm() {
     const context = this.buildPayload();
-
+    const includeImpactControl = this.form.get(['formArray', 3, 'includeImpactInfoCtrl']);
+    const includeImpact = includeImpactControl?.value ?? false;
     this.isLoading = true;
-
-    this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id).subscribe({
-      next: async (response) => {
-        try {
-          this.successSendForm();
-          this.form.markAsPristine();
-          this.wasSubmittedSuccessfully = true;
-        } catch (err) {
-          this.error = err;
-          this.errorComponent.parseErrors(err);
-          this.wasSubmittedSuccessfully = false;
-        } finally {
+    if (this.permissions.canEditAcceptedMA(this.state)) {
+      this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id).subscribe({
+        next: async () => {
+          try {
+            await this.successSendForm(includeImpact);
+            this.form.markAsPristine();
+          } catch (err) {
+            this.handleError(err);
+          } finally {
+            this.isLoading = false;
+          }
+        },
+        error: (error) => {
+          this.handleError(error, 'Error submitting form');
           this.isLoading = false;
-        }
-      },
-      error: (error) => {
-        this.translateService.get('Error submitting form').subscribe((res: string) => {
-          this.snackBar.open(res, null, { duration: 3000 });
-        });
-        this.error = error;
-        this.errorComponent.parseErrors(error);
-        this.wasSubmittedSuccessfully = false;
-        this.isLoading = false;
-      },
-    });
+        },
+      });
+    } else {
+      this.navigateBasedOnImpact(includeImpact);
+      this.isLoading = false;
+    }
   }
 
-  async successSendForm() {
+  private async successSendForm(includeImpact: boolean) {
     if (this.newFiles.length) {
-      this.uploadFiles();
+      await this.uploadFiles();
     }
 
     this.translateService.get('specificLabel.sucessfullySubmittedForm').subscribe((res: string) => {
@@ -181,87 +188,65 @@ export class ReportingClimateActionFormComponent implements OnInit {
     });
 
     this.wasSubmittedSuccessfully = true;
-
-    this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
+    this.navigateBasedOnImpact(includeImpact);
   }
 
-  private createForm() {
+  private navigateBasedOnImpact(includeImpact: boolean) {
+    if (includeImpact) {
+      this.stepper.next();
+    } else {
+      this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
+    }
+  }
+
+  private handleError(error: any, fallbackMessage: string = '') {
+    this.error = error;
+    this.errorComponent.parseErrors(error);
+    this.wasSubmittedSuccessfully = false;
+
+    if (fallbackMessage) {
+      this.translateService.get(fallbackMessage).subscribe((res: string) => {
+        this.snackBar.open(res, null, { duration: 3000 });
+      });
+    }
+  }
+
+  private buildForm() {
+    const monitoringIndicator = this.mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator;
+    const canEdit = this.permissions.canEditAcceptedMA(this.state);
+    console.log(this.mitigationAction);
+
+    const indicator = monitoringIndicator?.[0] ?? {};
+
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
-          anyProgressMonitoringRecordedClimateActionsCtrl: ['', Validators.required],
+          anyProgressMonitoringRecordedClimateActionsCtrl: [
+            this.mitigationAction?.monitoring_reporting_indicator?.progress_in_monitoring ?? '',
+            canEdit ? Validators.required : [],
+          ],
         }),
         this.formBuilder.group({
-          indicatorSelectionCtrl: [''],
-          indicatorDataUpdateDateCtrl: ['', Validators.required],
-          reportingPeriodStartCtrl: ['', Validators.required],
-          reportingPeriodEndCtrl: ['', Validators.required],
-          reportTypeCtrl: ['', Validators.required],
-          informationToUpdateCtrl: ['', Validators.required],
+          indicatorSelectionCtrl: [indicator.indicator ?? ''],
+          indicatorDataUpdateDateCtrl: [indicator.data_updated_date ?? '', canEdit ? Validators.required : []],
+          reportingPeriodStartCtrl: [indicator.initial_date_report_period ?? '', canEdit ? Validators.required : []],
+          reportingPeriodEndCtrl: [indicator.final_date_report_period ?? '', canEdit ? Validators.required : []],
+          reportTypeCtrl: [parseInt(indicator.report_type ?? '0'), canEdit ? Validators.required : []],
+          informationToUpdateCtrl: [indicator.updated_data ?? '', canEdit ? Validators.required : []],
         }),
-
         this.formBuilder.group({
-          reportingPeriodCtrl: ['', Validators.required],
-          reportingPeriodUntilCtrl: ['', Validators.required],
-          beenProgressActionPeriodCtrl: ['', Validators.required],
+          reportingPeriodCtrl: [indicator.progress_report_period ?? '', canEdit ? Validators.required : []],
+          reportingPeriodUntilCtrl: [indicator.progress_report_period_until ?? '', canEdit ? Validators.required : []],
+          beenProgressActionPeriodCtrl: [indicator.progress_report ?? '', canEdit ? Validators.required : []],
+        }),
+        this.formBuilder.group({
+          includeImpactInfoCtrl: [
+            indicator.include_impact_info ?? '', // Replace with actual server value when available
+            Validators.required,
+          ],
         }),
       ]),
     });
-  }
-
-  private updateFormData() {
-    const monitoring_indicator = this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator;
-    if (monitoring_indicator && monitoring_indicator.length > 0) {
-      this.form = this.formBuilder.group({
-        formArray: this.formBuilder.array([
-          this.formBuilder.group({
-            anyProgressMonitoringRecordedClimateActionsCtrl: [
-              this.mitigationAction.monitoring_reporting_indicator.progress_in_monitoring,
-              Validators.required,
-            ],
-          }),
-
-          this.formBuilder.group({
-            indicatorSelectionCtrl: [monitoring_indicator ? monitoring_indicator[0].indicator : ''],
-            indicatorDataUpdateDateCtrl: [
-              monitoring_indicator ? monitoring_indicator[0].data_updated_date : '',
-              Validators.required,
-            ],
-            reportingPeriodStartCtrl: [
-              monitoring_indicator ? monitoring_indicator[0].initial_date_report_period : '',
-              Validators.required,
-            ],
-            reportingPeriodEndCtrl: [
-              monitoring_indicator ? monitoring_indicator[0].final_date_report_period : '',
-              Validators.required,
-            ],
-            reportTypeCtrl: [
-              parseInt(monitoring_indicator ? monitoring_indicator[0].report_type : '0'),
-              Validators.required,
-            ],
-            informationToUpdateCtrl: [
-              monitoring_indicator ? monitoring_indicator[0].updated_data : '',
-              Validators.required,
-            ],
-          }),
-
-          this.formBuilder.group({
-            reportingPeriodCtrl: [
-              monitoring_indicator ? monitoring_indicator[0].progress_report_period : '',
-              Validators.required,
-            ],
-            reportingPeriodUntilCtrl: [
-              monitoring_indicator ? monitoring_indicator[0].progress_report_period_until : '',
-              Validators.required,
-            ],
-            beenProgressActionPeriodCtrl: [
-              monitoring_indicator ? monitoring_indicator[0].progress_report : '',
-              Validators.required,
-            ],
-          }),
-        ]),
-      });
-    }
   }
 
   public openStartMessages() {

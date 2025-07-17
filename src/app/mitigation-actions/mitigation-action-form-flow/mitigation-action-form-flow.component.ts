@@ -8,7 +8,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators, FormControl } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
@@ -30,6 +30,8 @@ import { ImpactFormComponent } from '@app/mitigation-actions/impact-form/impact-
 import { ReportingClimateActionFormComponent } from '../reporting-climate-action-form/reporting-climate-action-form.component';
 import { I18nService } from '@app/i18n';
 import { States } from '@app/@shared/next-state';
+import { PermissionService } from '@app/@core/permissions.service';
+import { ImpactEvaluationComponent } from '@app/@shared/form/impact-evaluation/impact-evaluation.component';
 
 @Component({
   selector: 'app-mitigation-action-form-flow',
@@ -48,13 +50,14 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
 
   @ViewChild(ReportingClimateActionFormComponent)
   reportingClimateFormComponent: ReportingClimateActionFormComponent;
+  impactEvaluationFormComponent: ImpactEvaluationComponent;
   state: States;
-  accepted = States.ACCEPTED_BY_DCC;
 
   @Input()
   title: string;
   // @Input() isLinear: boolean;
   @Input() action: string;
+  wantsImpactEval: boolean = false;
 
   mainGroup: UntypedFormGroup;
   formData: FormData;
@@ -82,10 +85,20 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     private service: MitigationActionsService,
     private i18nService: I18nService,
     private cdRef: ChangeDetectorRef,
+    public permissions: PermissionService,
+    private route: ActivatedRoute,
   ) {
     this.formData = new FormData();
     this.isLoading = true;
     this.createForm();
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id) {
+      this.route.queryParams.subscribe((params) => {
+        if (params['state']) {
+          this.state = params['state'] as States;
+        }
+      });
+    }
   }
 
   ngOnInit() {
@@ -97,7 +110,6 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     this.isUpdating = this.action === 'update';
     this.isLinear = true;
     this.isLoading = false;
-    // this.state = this.initiativeForm ? this.initiativeForm
   }
 
   createForm() {
@@ -109,6 +121,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
         this.emissionsMitigationFrm,
         this.impactFrm,
         this.reportingClimateFrmComponent,
+        this.impactEvaluationFrm,
       ]),
     });
   }
@@ -158,6 +171,10 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
 
   get reportingClimateFrmComponent() {
     return this.reportingClimateFormComponent ? this.reportingClimateFormComponent.form : null;
+  }
+
+  get impactEvaluationFrm() {
+    return this.impactEvaluationFormComponent ? this.impactEvaluationFormComponent.form : null;
   }
 
   ngAfterViewInit() {

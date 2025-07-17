@@ -12,6 +12,9 @@ import { GeneralRegisterComponent } from '../general-register/general-register.c
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AAType } from '../interfaces/catalogs';
+import { PermissionService } from '@app/@core/permissions.service';
+import { States } from '@app/@shared/next-state';
+import { ImpactEvaluationComponent } from '@app/@shared/form/impact-evaluation/impact-evaluation.component';
 
 @Component({
   selector: 'app-adaptation-actions-new',
@@ -40,11 +43,13 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
 
   @ViewChild(AdaptationActionsActionImpactComponent)
   impactForm: AdaptationActionsActionImpactComponent;
-
+  impactEvaluationFormComponent: ImpactEvaluationComponent;
   mainGroup: UntypedFormGroup;
   adaptationAction: AdaptationAction;
   edit: boolean;
-
+  state: States;
+  wantsImpactEval: boolean = false;
+  isLoading = false;
   aaType: AAType | null;
   completed: Record<string, boolean> = {
     generalRegister: false,
@@ -64,6 +69,7 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
     private service: AdaptationActionService,
     public snackBar: MatSnackBar,
     private translateService: TranslateService,
+    public permissions: PermissionService,
   ) {
     const id = this.route.snapshot.paramMap.get('id');
     this.edit = id ? true : false;
@@ -71,6 +77,11 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
       this.loading = true;
       this.loadAdaptationActions(id);
       this.assistantOpen = false;
+      this.route.queryParams.subscribe((params) => {
+        if (params['state']) {
+          this.state = params['state'] as States;
+        }
+      });
     }
     this.createForm();
   }
@@ -111,6 +122,7 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
         this.indicatorFrm,
         this.climateMoniotoringFrm,
         this.impactFrm,
+        this.impactEvaluationFrm,
       ]),
     });
   }
@@ -137,6 +149,10 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
 
   get impactFrm() {
     return this.impactForm ? this.impactForm.form : null;
+  }
+
+  get impactEvaluationFrm() {
+    return this.impactEvaluationFormComponent ? this.impactEvaluationFormComponent.form : null;
   }
 
   ngAfterViewInit() {

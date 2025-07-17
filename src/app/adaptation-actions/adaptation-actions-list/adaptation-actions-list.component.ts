@@ -45,7 +45,7 @@ export class AdaptationActionsListComponent implements OnInit {
   }
 
   canEdit(state: States): boolean {
-    return this.permissions.canEditAA(state);
+    return this.permissions.canEditAA(state) || this.permissions.canEditAcceptedAA(state);
   }
 
   canDelete(state: States): boolean {

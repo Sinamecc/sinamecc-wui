@@ -73,10 +73,8 @@ export class MitigationActionsListComponent implements OnInit {
     this.router.navigate([`/mitigation/actions/${uuid}`], { replaceUrl: true });
   }
 
-  edit(uuid: string, state: States) {
-    if (this.canEdit(state)) {
-      this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
-    }
+  edit(uuid: string) {
+    this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
   }
 
   review(uuid: string) {
@@ -90,7 +88,7 @@ export class MitigationActionsListComponent implements OnInit {
   }
 
   canEdit(state: States): boolean {
-    return this.permissions.canEditMA(state);
+    return this.permissions.canEditMA(state) || this.permissions.canEditAcceptedMA(state);
   }
 
   canDelete(state: States): boolean {

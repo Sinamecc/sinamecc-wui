@@ -154,7 +154,10 @@
     "monitoringGHG": "Línea base del indicador",
     "monitoringGHGGoal": "Meta del indicador",
     "monitoringData": "Dato monitoreado",
-    "monitoringAdvance": "Descripción narrativa del avance durante el período de reporte"
+    "monitoringAdvance": "Descripción narrativa del avance durante el período de reporte",
+    "includeImpactInfo": "Desea incluir la identificación de impactos en Desarrollo Sostenible y Cambio Tranformacional para este registro?",
+    "includeImpactInfoTitle": "Incluir Identificación de Impactos",
+    "impactEvaluation": "Evaluación de Impacto"
   },
 
   "reportData": {

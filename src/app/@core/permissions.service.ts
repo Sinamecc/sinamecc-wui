@@ -56,6 +56,11 @@ export class PermissionService {
     return Boolean(this.permissions.ma?.provider && EDITABLE_MA.includes(state));
   }
 
+  canEditAcceptedMA(state: States): boolean {
+    if (this.hasAllPermissions()) return true;
+    return Boolean(this.permissions.ma?.provider && state === States.ACCEPTED_BY_DCC);
+  }
+
   canDeleteMA(state: States): boolean {
     if (this.hasAllPermissions()) return true;
     return Boolean(this.permissions.ma?.provider && DELETABLE_MA.includes(state));
@@ -74,6 +79,11 @@ export class PermissionService {
   canEditAA(state: States): boolean {
     if (this.hasAllPermissions()) return true;
     return Boolean(this.permissions.aa?.provider && EDITABLE_AA.includes(state));
+  }
+
+  canEditAcceptedAA(state: States): boolean {
+    if (this.hasAllPermissions()) return true;
+    return Boolean(this.permissions.aa?.provider && state === States.ACCEPTED_BY_DCC);
   }
 
   canDeleteAA(state: States): boolean {

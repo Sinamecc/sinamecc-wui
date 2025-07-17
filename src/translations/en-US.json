@@ -154,7 +154,10 @@
     "monitoringGHG": "Indicator baseline",
     "monitoringGHGGoal": "Indicator target",
     "monitoringData": "Monitored data",
-    "monitoringAdvance": "Narrative progress update for the reporting period"
+    "monitoringAdvance": "Narrative progress update for the reporting period",
+    "includeImpactInfo": "Do you want to include the identification of impacts on Sustainable Development and Transformational Change for this record?",
+    "includeImpactInfoTitle": "Include Impact Identification",
+    "impactEvaluation": "Impact Evaluation"
   },
 
   "reportData": {
