@@ -217,7 +217,7 @@ export class AdaptationActionsReportComponent implements OnInit {
   public changeAdaptationType(id: AAType) {
     this.onTypeSet.emit(id);
     this.type = id;
-    if (parseInt(id) === 1) {
+    if (id === this.types.A) {
       this.setOptionalValidators();
     } else {
       this.setRequiredValidators();
