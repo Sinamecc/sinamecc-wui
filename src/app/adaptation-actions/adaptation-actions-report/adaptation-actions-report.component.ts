@@ -43,7 +43,8 @@ export class AdaptationActionsReportComponent implements OnInit {
   @Input() edit: boolean;
   durationInSeconds = 3;
   actualProvince = 0;
-
+  types = AAType;
+  type: AAType;
   provinces: Province[] = [];
   canton: Canton[] = [];
   districts: District[] = [];
@@ -213,8 +214,9 @@ export class AdaptationActionsReportComponent implements OnInit {
     section6.get('adaptationActionCodeCtrl').updateValueAndValidity();
   }
 
-  public changeAdaptationType(id: string) {
+  public changeAdaptationType(id: AAType) {
     this.onTypeSet.emit(id);
+    this.type = id;
     if (parseInt(id) === 1) {
       this.setOptionalValidators();
     } else {
