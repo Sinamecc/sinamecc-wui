@@ -38,6 +38,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
 
   maFileType = MAFileType.MONITORING_UPDATED_DATA;
   entityType = MAEntityType.MONITORING_INDICATOR;
+  includeImpactInfo = false;
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
@@ -137,7 +138,8 @@ export class ReportingClimateActionFormComponent implements OnInit {
           : [],
       },
     };
-    if (this.mitigationAction.next_state[0].state === this.stateLabel) {
+
+    if (this.mitigationAction.next_state.length && this.mitigationAction.next_state[0].state === this.stateLabel) {
       context['is_complete'] = true;
     }
     const monitoringReporting = this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'];
@@ -152,14 +154,12 @@ export class ReportingClimateActionFormComponent implements OnInit {
 
   submitForm() {
     const context = this.buildPayload();
-    const includeImpactControl = this.form.get(['formArray', 3, 'includeImpactInfoCtrl']);
-    const includeImpact = includeImpactControl?.value ?? false;
     this.isLoading = true;
     if (this.permissions.canEditAcceptedMA(this.state)) {
       this.service.submitMitigationActionUpdateForm(context, this.mitigationAction.id).subscribe({
         next: async () => {
           try {
-            await this.successSendForm(includeImpact);
+            await this.successSendForm();
             this.form.markAsPristine();
           } catch (err) {
             this.handleError(err);
@@ -173,12 +173,12 @@ export class ReportingClimateActionFormComponent implements OnInit {
         },
       });
     } else {
-      this.navigateBasedOnImpact(includeImpact);
+      this.navigateBasedOnImpact();
       this.isLoading = false;
     }
   }
 
-  private async successSendForm(includeImpact: boolean) {
+  private async successSendForm() {
     if (this.newFiles.length) {
       await this.uploadFiles();
     }
@@ -188,11 +188,11 @@ export class ReportingClimateActionFormComponent implements OnInit {
     });
 
     this.wasSubmittedSuccessfully = true;
-    this.navigateBasedOnImpact(includeImpact);
+    this.navigateBasedOnImpact();
   }
 
-  private navigateBasedOnImpact(includeImpact: boolean) {
-    if (includeImpact) {
+  private navigateBasedOnImpact() {
+    if (this.includeImpactInfo) {
       this.stepper.next();
     } else {
       this.router.navigate(['/mitigation/actions'], { replaceUrl: true });

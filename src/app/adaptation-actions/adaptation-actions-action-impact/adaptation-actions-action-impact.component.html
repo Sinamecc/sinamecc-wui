@@ -92,16 +92,24 @@
 
       <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
         <ng-template matStepLabel>
-          <span translate>mitigationAction.includeImpactInfoTitle</span>
+          <span translate>impactEvaluation.includeImpactInfoTitle</span>
         </ng-template>
-        <div>
-          <label class="radio-grup-label" translate><span translate>mitigationAction.includeImpactInfo</span></label>
-          <mat-radio-group class="custom-radio-group" formControlName="includeImpactInfoCtrl">
-            <mat-radio-button [style.margin.px]="5" [value]="true">
-              <label translate>general.yes</label>
+        <div class="flex flex-col gap-1">
+          <label class="text-sm font-medium text-gray-700" translate>
+            <span translate>impactEvaluation.includeImpactInfo</span>
+          </label>
+
+          <mat-radio-group
+            class="flex gap-4 items-center"
+            formControlName="includeImpactInfoCtrl"
+            [(ngModel)]="includeImpactInfo"
+            name="includeImpactInfo"
+          >
+            <mat-radio-button [value]="true" class="flex items-center gap-1">
+              <span translate>general.yes</span>
             </mat-radio-button>
-            <mat-radio-button [style.margin.px]="5" [value]="false">
-              <label translate>No</label>
+            <mat-radio-button [value]="false" class="flex items-center gap-1">
+              <span translate>No</span>
             </mat-radio-button>
           </mat-radio-group>
         </div>

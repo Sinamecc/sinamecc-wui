@@ -40,6 +40,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   types = AAType;
   state: States;
   @Output() wantsImpactEval = new EventEmitter<boolean>();
+  includeImpactInfo;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -197,8 +198,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   submitForm() {
     const formArray = this.form.get('formArray') as FormArray;
     const group1 = formArray?.at(1) as FormGroup;
-    const includeImpactInfo = group1?.get('includeImpactInfoCtrl')?.value;
-    if (this.type === this.types.A && this.isEmpty() && !includeImpactInfo) {
+    if (this.type === this.types.A && this.isEmpty() && !this.includeImpactInfo) {
       this.router.navigate(['/adaptation/actions'], { replaceUrl: true });
       return;
     }
@@ -206,16 +206,16 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     const payload = this.buildPayload();
     this.service.updateCurrentAdaptationAction({ ...this.adaptationAction, ...payload });
     this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe({
-      next: () => this.handleSubmissionSuccess(includeImpactInfo),
+      next: () => this.handleSubmissionSuccess(),
       error: () => this.openSnackBar('Error al crear el formulario, inténtelo de nuevo más tarde'),
     });
   }
 
-  private handleSubmissionSuccess(includeImpactInfo: boolean) {
+  private handleSubmissionSuccess() {
     this.openSnackBar('Formulario creado correctamente');
     this.onComplete.emit(true);
 
-    if (includeImpactInfo) {
+    if (this.includeImpactInfo) {
       this.stepper.next();
     } else {
       this.router.navigate(['/adaptation/actions'], { replaceUrl: true });
@@ -224,26 +224,19 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
 
   isDisabled(): boolean {
     const formArray = this.form.get('formArray') as FormArray;
-    const group0 = formArray?.at(0) as FormGroup;
-    const group1 = formArray?.at(1) as FormGroup;
+    const group = formArray?.at(0) as FormGroup;
 
     const hasAnnex = !!this.annexSupportingFile;
     const isTypeA = this.type === this.types.A;
 
-    const group0IsComplete = group0 && group0.valid && !this.isEmpty() && hasAnnex;
-    const group0Condition = this.permissions.canEditAcceptedAA(this.state)
+    const groupIsComplete = group && group.valid && !this.isEmpty() && hasAnnex;
+    const groupCondition = this.permissions.canEditAcceptedAA(this.state)
       ? true
       : isTypeA
-        ? this.isEmpty() || group0IsComplete
-        : group0IsComplete;
-    const group1Valid = group1.get('includeImpactInfoCtrl')?.value !== null;
-    const allValid = group0Condition && group1Valid;
-    console.log('isDisabled', {
-      perm: this.permissions.canEditAcceptedAA(this.state),
-      group0Condition,
-      group0IsComplete,
-      group1Valid,
-    });
+        ? this.isEmpty() || groupIsComplete
+        : groupIsComplete;
+    const validIncludeImpactInfo = this.includeImpactInfo !== null;
+    const allValid = groupCondition && validIncludeImpactInfo;
     return !allValid;
   }
 

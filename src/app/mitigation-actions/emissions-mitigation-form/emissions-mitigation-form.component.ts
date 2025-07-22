@@ -225,7 +225,7 @@ export class EmissionsMitigationFormComponent implements OnInit {
           standardizedCalculationMethodologyUsedCtrl: [question ? question[0].is_checked : false],
           standardizedCalculationMethodologyUsedDetailCtrl: [question ? question[0].detail : '', Validators.required],
           calculationsDocumentedCtrl: [question ? question[1].is_checked : false],
-          calculationsDocumentedDetailCtrl: [question ? question[1].is_checked : '', Validators.required],
+          calculationsDocumentedDetailCtrl: [question ? question[1].detail : '', Validators.required],
           emissionFactorsUsedCalculationDocumentedCtrl: [question ? question[2].is_checked : false],
           emissionFactorsUsedCalculationDocumentedDetailCtrl: [question ? question[2].detail : '', Validators.required],
           assumptionsDocumentedCtrl: [question ? question[3].is_checked : false],

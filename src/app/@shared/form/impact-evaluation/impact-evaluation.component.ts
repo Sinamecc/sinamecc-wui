@@ -15,6 +15,8 @@ export class ImpactEvaluationComponent {
   form: UntypedFormGroup;
   selectedCategories: string[][] = [];
 
+  OTHER = 'other';
+
   IMPACT_EVAL_CATEGORIES = {
     SCALE: 1,
     SCALE_TERM: 2,
@@ -67,7 +69,7 @@ export class ImpactEvaluationComponent {
           dimensionCtrl: ['', Validators.required],
           categoryGroupCtrl: ['', Validators.required],
           categoryCtrl: ['', Validators.required],
-          categoryOtherCtrl: ['', [Validators.minLength(1), Validators.maxLength(100)]],
+          categoryOtherCtrl: [''],
           descriptionCtrl: this.formBuilder.array([]),
           impactTypeCtrl: ['', Validators.required],
           pertinentCtrl: ['', Validators.required],
@@ -93,6 +95,12 @@ export class ImpactEvaluationComponent {
 
   private updateForm() {}
 
+  private getSection(section: number) {
+    const formArray = this.form.get('formArray') as FormArray;
+    const sectionGroup = formArray.at(section) as UntypedFormGroup;
+    return sectionGroup;
+  }
+
   submitForm() {}
 
   descriptionControls(section: number) {
@@ -102,23 +110,35 @@ export class ImpactEvaluationComponent {
     return descriptions.controls;
   }
 
-  onCategoryChange(event: any) {
+  onSectionOneCategoryChange(event: any) {
     const value = event.value;
-    const formArray = this.form.get('formArray') as FormArray;
-    if (value === this.IMPACT_EVAL_CATEGORIES.SCALE) {
-      formArray?.get('impactScaleCtrl')?.setValidators([Validators.required]);
-      formArray?.get('impactScaleTermCtrl')?.clearValidators();
-    } else if (value === this.IMPACT_EVAL_CATEGORIES.SCALE_TERM) {
-      formArray?.get('impactScaleCtrl')?.clearValidators();
-      formArray?.get('impactScaleTermCtrl')?.setValidators([Validators.required]);
+    const sectionGroup = this.getSection(0);
+
+    if (value === this.OTHER) {
+      sectionGroup?.get('categoryOtherCtrl')?.setValidators([Validators.minLength(1), Validators.maxLength(100)]);
+    } else {
+      sectionGroup?.get('categoryOtherCtrl')?.setValidators([]);
     }
-    formArray?.get('impactScaleCtrl')?.updateValueAndValidity();
-    formArray?.get('impactScaleTermCtrl')?.updateValueAndValidity();
+    sectionGroup?.get('categoryOtherCtrl')?.updateValueAndValidity();
+  }
+
+  onCategoryChange(event: any, section: number) {
+    const value = event.value;
+    const sectionGroup = this.getSection(section);
+
+    if (value === this.IMPACT_EVAL_CATEGORIES.SCALE) {
+      sectionGroup?.get('impactScaleCtrl')?.setValidators([Validators.required]);
+      sectionGroup?.get('impactScaleTermCtrl')?.clearValidators();
+    } else if (value === this.IMPACT_EVAL_CATEGORIES.SCALE_TERM) {
+      sectionGroup?.get('impactScaleCtrl')?.clearValidators();
+      sectionGroup?.get('impactScaleTermCtrl')?.setValidators([Validators.required]);
+    }
+    sectionGroup?.get('impactScaleCtrl')?.updateValueAndValidity();
+    sectionGroup?.get('impactScaleTermCtrl')?.updateValueAndValidity();
   }
 
   private watchCategorySelection(section: number) {
-    const formArray = this.form.get('formArray') as FormArray;
-    const sectionGroup = formArray.at(section) as UntypedFormGroup;
+    const sectionGroup = this.getSection(section);
     const categoryCtrl = sectionGroup.get('categoryCtrl');
     const descriptionArray = sectionGroup.get('descriptionCtrl') as FormArray;
     categoryCtrl?.valueChanges.subscribe((values: any[]) => {
