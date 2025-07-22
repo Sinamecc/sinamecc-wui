@@ -1,1 +1,236 @@
-<p>impact-evaluation works!</p>
+<div class="container-custom">
+  <div class="header-container flex flex-col justify-center items-center">
+    <h2 translate>impactEvaluation.title</h2>
+  </div>
+</div>
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+  <mat-vertical-stepper #stepper formArrayName="formArray">
+    <!-- CATEGORIES 7.1.1 -->
+    <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+      <ng-template matStepLabel>
+        <span translate>impactEvaluation.categories</span>
+      </ng-template>
+
+      <!-- 7.1.1.1 -->
+      <mat-form-field class="field-ppcn mt-4" appearance="fill">
+        <mat-label><span translate>impactEvaluation.dimension</span></mat-label>
+        <mat-select formControlName="dimensionCtrl" multiple>
+          <mat-option [value]="IMPACT_DIMENSION.AMBIENTAL">
+            <label translate>impactEvaluation.select.ambiental</label>
+          </mat-option>
+
+          <mat-option [value]="IMPACT_DIMENSION.ECONOMIC">
+            <label translate>impactEvaluation.select.economic</label>
+          </mat-option>
+
+          <mat-option [value]="IMPACT_DIMENSION.SOCIAL">
+            <label translate>impactEvaluation.select.social</label>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- 7.1.1.2 -->
+      <mat-form-field class="field-ppcn" appearance="fill">
+        <mat-label><span translate>impactEvaluation.categoryGroup</span></mat-label>
+        <mat-select formControlName="categoryGroupCtrl" multiple> </mat-select>
+        <mat-error translate> errorLabel.fieldRequired </mat-error>
+      </mat-form-field>
+
+      <!-- 7.1.1.3 -->
+      <mat-form-field class="field-ppcn" appearance="fill">
+        <mat-label><span translate>impactEvaluation.category</span></mat-label>
+        <mat-select formControlName="categoryCtrl" multiple> </mat-select>
+        <mat-error translate> errorLabel.fieldRequired </mat-error>
+      </mat-form-field>
+
+      <!-- 7.1.1.4 (only if other selected in 7.1.1.3) -->
+      <mat-form-field class="field-ppcn" appearance="fill">
+        <mat-label><span translate>impactEvaluation.categoryOther</span></mat-label>
+        <mat-select formControlName="categoryOtherCtrl" multiple> </mat-select>
+        <mat-error translate> errorLabel.fieldRequired </mat-error>
+      </mat-form-field>
+
+      <!-- 7.1.1.5 -->
+      <div formArrayName="descriptionCtrl">
+        <div *ngFor="let descCtrl of descriptionControls(0); let i = index" [formGroupName]="i" class="mb-4">
+          <mat-form-field class="field-ppcn flex-1" appearance="fill">
+            <mat-label>{{ selectedCategories[0][i] }}: <span translate>impactEvaluation.description</span></mat-label>
+            <textarea
+              matInput
+              formControlName="text"
+              rows="3"
+              required
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="3"
+              cdkAutosizeMaxRows="6"
+            ></textarea>
+            <mat-error *ngIf="descCtrl.get('text')?.hasError('required')" translate>
+              errorLabel.fieldRequired
+            </mat-error>
+            <mat-error *ngIf="descCtrl.get('text')?.hasError('minlength')" translate
+              >errorLabel.minLengthNotMet</mat-error
+            >
+            <mat-error *ngIf="descCtrl.get('text')?.hasError('maxlength')" translate
+              >errorLabel.maxLengthExceeded</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- 7.1.1.6 -->
+      <mat-form-field class="field-ppcn" appearance="fill">
+        <mat-label><span translate>impactEvaluation.impactType</span></mat-label>
+        <mat-select formControlName="impactTypeCtrl" multiple>
+          <mat-option [value]="IMPACT_TYPE.POSITIVE">
+            <label translate>impactEvaluation.select.positive</label>
+          </mat-option>
+
+          <mat-option [value]="IMPACT_TYPE.NEGATIVE">
+            <label translate>impactEvaluation.select.negative</label>
+          </mat-option>
+        </mat-select>
+        <mat-error translate> errorLabel.fieldRequired </mat-error>
+      </mat-form-field>
+
+      <!--  7.1.1.6 pertinent -->
+      <div class="flex flex-col gap-0">
+        <div class="flex flex-row items-center">
+          <label class="radio-grup-label" translate>impactEvaluation.pertinent</label>
+          <mat-radio-group class="custom-radio-group" formControlName="pertinentCtrl">
+            <mat-radio-button [style.margin.px]="5" [value]="true">
+              <label translate>general.yes</label>
+            </mat-radio-button>
+            <mat-radio-button [style.margin.px]="5" [value]="false">
+              <label translate>No</label>
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <span class="text-xs text-gray-500 mt-1" translate>impactEvaluation.pertinentHint</span>
+      </div>
+
+      <!--  7.1.1.6 relevant -->
+      <div class="flex flex-col gap-0">
+        <div class="flex flex-row items-center">
+          <label class="radio-grup-label" translate>impactEvaluation.relevant</label>
+          <mat-radio-group class="custom-radio-group" formControlName="relevantCtrl">
+            <mat-radio-button [style.margin.px]="5" [value]="true">
+              <label translate>general.yes</label>
+            </mat-radio-button>
+            <mat-radio-button [style.margin.px]="5" [value]="false">
+              <label translate>No</label>
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <span class="text-xs text-gray-500 mt-1" translate>impactEvaluation.relevantHint</span>
+      </div>
+
+      <!-- 7.1.1.7 -->
+
+      <div class="box-button">
+        <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+          <span translate>general.next</span>
+        </button>
+      </div>
+    </mat-step>
+
+    <!-- RESULTS 7.2.1 -->
+    <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+      <ng-template matStepLabel>
+        <span translate>impactEvaluation.results</span>
+      </ng-template>
+
+      <!-- 7.2.1.1 -->
+      <mat-form-field class="field-ppcn mt-4" appearance="fill">
+        <mat-label><span translate>impactEvaluation.category</span></mat-label>
+        <mat-select #category formControlName="categoryCtrl" multiple (valueChange)="onCategoryChange($event)">
+          <mat-option [value]="IMPACT_EVAL_CATEGORIES.SCALE">
+            <label translate>impactEvaluation.select.scale</label>
+          </mat-option>
+          <mat-option [value]="IMPACT_EVAL_CATEGORIES.SCALE_TERM">
+            <label translate>impactEvaluation.select.scaleTerm</label>
+          </mat-option>
+        </mat-select>
+        <mat-error translate> errorLabel.fieldRequired </mat-error>
+      </mat-form-field>
+
+      <!-- 7.2.1.1.1  -->
+      <ng-container *ngIf="category.value.includes(1)">
+        <mat-form-field class="field-ppcn" appearance="fill">
+          <mat-label translate>impactEvaluation.impactScale</mat-label>
+          <mat-select formControlName="impactScaleCtrl" multiple>
+            <mat-option [value]="IMPACT_SCALE.MACRO">
+              <label translate>impactEvaluation.select.macro</label>
+            </mat-option>
+            <mat-option [value]="IMPACT_SCALE.MESO">
+              <label translate>impactEvaluation.select.mid</label>
+            </mat-option>
+            <mat-option [value]="IMPACT_SCALE.MICRO">
+              <label translate>impactEvaluation.select.micro</label>
+            </mat-option>
+          </mat-select>
+          <mat-error translate> errorLabel.fieldRequired </mat-error>
+          <mat-hint>
+            <span translate>impactEvaluation.impactScaleHint</span>
+          </mat-hint>
+        </mat-form-field>
+      </ng-container>
+
+      <!-- 7.2.1.1.2 -->
+      <ng-container *ngIf="category.value.includes(2)">
+        <mat-form-field class="field-ppcn" appearance="fill">
+          <mat-label translate>impactEvaluation.impactScaleTerm</mat-label>
+          <mat-select formControlName="impactScaleTermCtrl" multiple>
+            <mat-option [value]="IMPACT_SCALE_TERM.LONG">
+              <label translate>impactEvaluation.select.long</label>
+            </mat-option>
+            <mat-option [value]="IMPACT_SCALE_TERM.MEDIUM">
+              <label translate>impactEvaluation.select.medium</label>
+            </mat-option>
+            <mat-option [value]="IMPACT_SCALE_TERM.SHORT">
+              <label translate>impactEvaluation.select.short</label>
+            </mat-option>
+          </mat-select>
+          <mat-error translate> errorLabel.fieldRequired </mat-error>
+          <mat-hint>
+            <span translate>impactEvaluation.impactScaleTermHint</span>
+          </mat-hint>
+        </mat-form-field>
+      </ng-container>
+
+      <!-- 7.2.1.2 -->
+      <div formArrayName="descriptionCtrl">
+        <div *ngFor="let descCtrl of descriptionControls(1); let i = index" [formGroupName]="i" class="mb-4">
+          <mat-form-field class="field-ppcn flex-1" appearance="fill">
+            <mat-label>{{ selectedCategories[1][i] }}: <span translate>impactEvaluation.description</span></mat-label>
+            <textarea
+              matInput
+              formControlName="text"
+              rows="3"
+              required
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="3"
+              cdkAutosizeMaxRows="6"
+            ></textarea>
+            <mat-error *ngIf="descCtrl.get('text')?.hasError('required')" translate>
+              errorLabel.fieldRequired
+            </mat-error>
+            <mat-error *ngIf="descCtrl.get('text')?.hasError('minlength')" translate
+              >errorLabel.minLengthNotMet</mat-error
+            >
+            <mat-error *ngIf="descCtrl.get('text')?.hasError('maxlength')" translate
+              >errorLabel.maxLengthExceeded</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="box-button">
+        <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
+        </app-generic-button-secondary>
+        <button type="submit" matRipple class="primary-button">
+          <span translate>general.next</span>
+        </button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</form>

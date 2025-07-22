@@ -138,9 +138,9 @@
           <!-- section 7 -->
           <mat-step *ngIf="wantsImpactEval && (state ? permissions.canEditAcceptedAA(state) : true)">
             <ng-template matStepLabel>
-              <span translate>mitigationAction.impactEvaluation</span>
+              <span translate>impactEvaluation.title</span>
             </ng-template>
-            <app-impact-evaluation></app-impact-evaluation>
+            <app-impact-evaluation [adaptation]="true"></app-impact-evaluation>
           </mat-step>
         </mat-horizontal-stepper>
       </form>

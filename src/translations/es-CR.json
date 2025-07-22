@@ -154,10 +154,7 @@
     "monitoringGHG": "Línea base del indicador",
     "monitoringGHGGoal": "Meta del indicador",
     "monitoringData": "Dato monitoreado",
-    "monitoringAdvance": "Descripción narrativa del avance durante el período de reporte",
-    "includeImpactInfo": "Desea incluir la identificación de impactos en Desarrollo Sostenible y Cambio Tranformacional para este registro?",
-    "includeImpactInfoTitle": "Incluir Identificación de Impactos",
-    "impactEvaluation": "Evaluación de Impacto"
+    "monitoringAdvance": "Descripción narrativa del avance durante el período de reporte"
   },
 
   "reportData": {
@@ -820,6 +817,47 @@
       "generatedImpact": "¿La acción ha generado algún impacto no deseado/inesperado/negativo?",
       "annexSupporting": "Adjunte información de soporte asociada al impacto de la acción reportada"
     }
+  },
+
+  "impactEvaluation": {
+    "title": "Evaluación de Impacto",
+    "results": "Resultados",
+    "categories": "Categorías",
+    "select": {
+      "ambiental": "Ambiental",
+      "social": "Social",
+      "economic": "Económica",
+      "positive": "Positivo",
+      "negative": "Negativo",
+      "scale": "Escala de impacto",
+      "scaleTerm": "Plazo en el que se mantiene el impacto",
+      "macro": "Nivel macro",
+      "mid": "Nivel medio",
+      "micro": "Nivel micro",
+      "long": "Largo plazo",
+      "short": "Corto plazo",
+      "medium": "Mediano plazo"
+    },
+    "includeImpactInfo": "Desea incluir la identificación de impactos en Desarrollo Sostenible y Cambio Tranformacional para este registro?",
+    "includeImpactInfoTitle": "Incluir Identificación de Impactos",
+    "dimension": "Dimensión",
+    "categoryGroup": "Grupo de categoría",
+    "category": "Categoría",
+    "categoryOther": "Otros",
+    "description": "Descripción",
+    "impactType": "Tipo de impacto",
+    "pertinent": "Pertinente",
+    "relevant": "Relevante",
+    "baseValue": "Valor base del indicador",
+    "expectedValue": "Valor esperado del indicador",
+    "accumulatedValue": "Valor acumulado del indicador",
+    "impactScale": "Escala del impacto en Desarrollo Sostenible",
+    "impactScaleTerm": "Plazo en el que se mantiene el impacto en Desarrollo Sostenible",
+    "quantifiedIndicator": "Indicador cuantificado definido",
+    "impactScaleHint": "XXXXXX",
+    "impactScaleTermHint": "XXXXXX",
+    "pertinentHint": "XXXXXX",
+    "relevantHint": "XXXXXX"
   },
 
   "APP_NAME": "sinamecc wui"

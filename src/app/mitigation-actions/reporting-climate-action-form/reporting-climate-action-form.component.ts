@@ -214,7 +214,6 @@ export class ReportingClimateActionFormComponent implements OnInit {
   private buildForm() {
     const monitoringIndicator = this.mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator;
     const canEdit = this.permissions.canEditAcceptedMA(this.state);
-    console.log(this.mitigationAction);
 
     const indicator = monitoringIndicator?.[0] ?? {};
 

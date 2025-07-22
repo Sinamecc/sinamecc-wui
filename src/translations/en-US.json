@@ -154,10 +154,7 @@
     "monitoringGHG": "Indicator baseline",
     "monitoringGHGGoal": "Indicator target",
     "monitoringData": "Monitored data",
-    "monitoringAdvance": "Narrative progress update for the reporting period",
-    "includeImpactInfo": "Do you want to include the identification of impacts on Sustainable Development and Transformational Change for this record?",
-    "includeImpactInfoTitle": "Include Impact Identification",
-    "impactEvaluation": "Impact Evaluation"
+    "monitoringAdvance": "Narrative progress update for the reporting period"
   },
 
   "reportData": {
@@ -820,6 +817,41 @@
       "generatedImpact": "Has the action generated any unwanted/unexpected/negative impact?",
       "annexSupporting": "Attach supporting information associated with the impact of the reported action"
     }
+  },
+
+  "impactEvaluation": {
+    "title": "Impact Evaluation",
+    "results": "Results",
+    "categories": "Categories",
+    "select": {
+      "ambiental": "Environmental",
+      "social": "Social",
+      "economic": "Economic",
+      "positive": "Positive",
+      "negative": "Negative",
+      "scale": "Impact scale",
+      "scaleTerm": "Duration of the impact"
+    },
+    "includeImpactInfo": "Do you want to include the identification of impacts in Sustainable Development and Transformational Change for this record?",
+    "includeImpactInfoTitle": "Include Impact Identification",
+    "dimension": "Dimension",
+    "categoryGroup": "Category group",
+    "category": "Category",
+    "categoryOther": "Other",
+    "description": "Description",
+    "impactType": "Type of impact",
+    "pertinent": "Pertinent",
+    "relevant": "Relevant",
+    "baseValue": "Indicator base value",
+    "expectedValue": "Expected indicator value",
+    "accumulatedValue": "Accumulated indicator value",
+    "impactScale": "Scale of the impact on Sustainable Development",
+    "impactScaleTerm": "Duration of the impact on Sustainable Development",
+    "quantifiedIndicator": "Defined quantified indicator",
+    "impactScaleHint": "XXXXXX",
+    "impactScaleTermHint": "XXXXXX",
+    "pertinentHint": "XXXXXX",
+    "relevantHint": "XXXXXX"
   },
 
   "APP_NAME": "sinamecc wui"

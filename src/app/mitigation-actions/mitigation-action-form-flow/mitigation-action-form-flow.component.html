@@ -191,15 +191,9 @@
         </mat-step>
 
         <!-- Section 7 -->
-        <mat-step
-          *ngIf="
-            wantsImpactEval && (state ? permissions.canEditMA(state) || permissions.canEditAcceptedMA(state) : true)
-          "
-          formGroupName="6"
-          [stepControl]="formArray?.get([6])"
-        >
+        <mat-step formGroupName="6" [stepControl]="formArray?.get([6])">
           <ng-template matStepLabel>
-            <span translate>mitigationAction.impactEvaluation</span>
+            <span translate>impactEvaluation.title</span>
           </ng-template>
 
           <app-impact-evaluation></app-impact-evaluation>
