@@ -736,6 +736,7 @@
       "AADistrict": "District where the action is executed",
       "narrativeActionPlace": "Narrative description location where the action takes place",
       "attachGeographicalLocation": "Attach the georeferenced location of the action in case you have this",
+      "attachGeographicalLocationHint": "The georeferenced location of the action refers to a GIS point (if possible, allowing the location to be marked on a map), shapes, among others.",
       "categorizationNationalIntruments": "Categorization with national instruments",
       "categorizationNationalIntrumentsTooltip": "For more information on categorization",
       "selectTopic": "Select the topic to which the action belongs",
