@@ -116,6 +116,7 @@
     "registeredNonReimbursableCooperationMideplan": "Is the action registered in the Mideplan registry of non-reimbursable international cooperation projects?",
     "financedSourcesInternationalCooperation": "Actions financed with international cooperation sources",
     "referenceYear": "Reference year",
+    "referenceYearHint": "The reference year corresponds to the year in which the budget for the adaptation action is planned.",
     "emissionSourceSector": "Emission source sector",
     "mitigationActionBudget": "Description of the financing source",
     "financingSourceApplying": "Describe the financing source you are applying to",
