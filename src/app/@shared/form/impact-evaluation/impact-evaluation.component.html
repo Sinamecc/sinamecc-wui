@@ -15,15 +15,15 @@
       <mat-form-field class="field-ppcn mt-4" appearance="fill">
         <mat-label><span translate>impactEvaluation.dimension</span></mat-label>
         <mat-select formControlName="dimensionCtrl" multiple>
-          <mat-option [value]="IMPACT_DIMENSION.AMBIENTAL">
+          <mat-option [value]="impactDimension.AMBIENTAL">
             <label translate>impactEvaluation.select.ambiental</label>
           </mat-option>
 
-          <mat-option [value]="IMPACT_DIMENSION.ECONOMIC">
+          <mat-option [value]="impactDimension.ECONOMIC">
             <label translate>impactEvaluation.select.economic</label>
           </mat-option>
 
-          <mat-option [value]="IMPACT_DIMENSION.SOCIAL">
+          <mat-option [value]="impactDimension.SOCIAL">
             <label translate>impactEvaluation.select.social</label>
           </mat-option>
         </mat-select>
@@ -45,13 +45,13 @@
           multiple
           (valueChange)="onSectionOneCategoryChange($event)"
         >
-          <mat-option [value]="OTHER" translate>general.other</mat-option>
+          <mat-option [value]="other" translate>general.other</mat-option>
         </mat-select>
         <mat-error translate> errorLabel.fieldRequired </mat-error>
       </mat-form-field>
 
       <!-- 7.1.1.4 (only if other selected in 7.1.1.3) -->
-      <ng-container *ngIf="categories.value === OTHER">
+      <ng-container *ngIf="categories.value === other">
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label><span translate>impactEvaluation.categoryOther</span></mat-label>
           <input matInput formControlName="categoryOtherCtrl" />
@@ -90,11 +90,11 @@
       <mat-form-field class="field-ppcn" appearance="fill">
         <mat-label><span translate>impactEvaluation.impactType</span></mat-label>
         <mat-select formControlName="impactTypeCtrl" multiple>
-          <mat-option [value]="IMPACT_TYPE.POSITIVE">
+          <mat-option [value]="impactType.POSITIVE">
             <label translate>impactEvaluation.select.positive</label>
           </mat-option>
 
-          <mat-option [value]="IMPACT_TYPE.NEGATIVE">
+          <mat-option [value]="impactType.NEGATIVE">
             <label translate>impactEvaluation.select.negative</label>
           </mat-option>
         </mat-select>
@@ -152,11 +152,8 @@
       <mat-form-field class="field-ppcn mt-4" appearance="fill">
         <mat-label><span translate>impactEvaluation.category</span></mat-label>
         <mat-select #category formControlName="categoryCtrl" multiple (valueChange)="onCategoryChange($event, 1)">
-          <mat-option [value]="IMPACT_EVAL_CATEGORIES.SCALE">
-            <label translate>impactEvaluation.select.scale</label>
-          </mat-option>
-          <mat-option [value]="IMPACT_EVAL_CATEGORIES.SCALE_TERM">
-            <label translate>impactEvaluation.select.scaleTerm</label>
+          <mat-option *ngFor="let option of categoriesScale" [value]="option.value">
+            <label>{{ option.name | translate }}</label>
           </mat-option>
         </mat-select>
         <mat-error translate> errorLabel.fieldRequired </mat-error>
@@ -167,13 +164,13 @@
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>impactEvaluation.impactScale</mat-label>
           <mat-select formControlName="impactScaleCtrl" multiple>
-            <mat-option [value]="IMPACT_SCALE.MACRO">
+            <mat-option [value]="impactScale.MACRO">
               <label translate>impactEvaluation.select.macro</label>
             </mat-option>
-            <mat-option [value]="IMPACT_SCALE.MESO">
+            <mat-option [value]="impactScale.MESO">
               <label translate>impactEvaluation.select.mid</label>
             </mat-option>
-            <mat-option [value]="IMPACT_SCALE.MICRO">
+            <mat-option [value]="impactScale.MICRO">
               <label translate>impactEvaluation.select.micro</label>
             </mat-option>
           </mat-select>
@@ -189,13 +186,13 @@
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>impactEvaluation.impactScaleTerm</mat-label>
           <mat-select formControlName="impactScaleTermCtrl" multiple>
-            <mat-option [value]="IMPACT_SCALE_TERM.LONG">
+            <mat-option [value]="impactScaleTerm.LONG">
               <label translate>impactEvaluation.select.long</label>
             </mat-option>
-            <mat-option [value]="IMPACT_SCALE_TERM.MEDIUM">
+            <mat-option [value]="impactScaleTerm.MEDIUM">
               <label translate>impactEvaluation.select.medium</label>
             </mat-option>
-            <mat-option [value]="IMPACT_SCALE_TERM.SHORT">
+            <mat-option [value]="impactScaleTerm.SHORT">
               <label translate>impactEvaluation.select.short</label>
             </mat-option>
           </mat-select>
@@ -210,7 +207,9 @@
       <div formArrayName="descriptionCtrl">
         <div *ngFor="let descCtrl of descriptionControls(1); let i = index" [formGroupName]="i" class="mb-4">
           <mat-form-field class="field-ppcn flex-1" appearance="fill">
-            <mat-label>{{ selectedCategories[1][i] }}: <span translate>impactEvaluation.description</span></mat-label>
+            <mat-label
+              ><span translate>impactEvaluation.description</span>: {{ selectedCategories[1][i] | translate }}
+            </mat-label>
             <textarea
               matInput
               formControlName="text"

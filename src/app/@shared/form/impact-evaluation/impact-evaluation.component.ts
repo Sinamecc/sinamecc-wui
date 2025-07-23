@@ -1,8 +1,15 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl, FormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { AdaptationActionService } from '@app/adaptation-actions/adaptation-actions-service';
-import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
+import {
+  CATEGORIES_SCALE,
+  IMPACT_DIMENSION,
+  IMPACT_EVAL_CATEGORIES,
+  IMPACT_SCALE,
+  IMPACT_SCALE_TERM,
+  IMPACT_TYPE,
+  OTHER,
+} from './constants';
 
 @Component({
   selector: 'app-impact-evaluation',
@@ -12,43 +19,20 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ImpactEvaluationComponent {
   @Input() adaptation: boolean = false;
+  @Input() service: any;
   form: UntypedFormGroup;
-  selectedCategories: string[][] = [];
+  selectedCategories: any[][] = [];
 
-  OTHER = 'other';
-
-  IMPACT_EVAL_CATEGORIES = {
-    SCALE: 1,
-    SCALE_TERM: 2,
-  };
-
-  IMPACT_SCALE = {
-    MACRO: 1,
-    MESO: 2,
-    MICRO: 3,
-  };
-
-  IMPACT_SCALE_TERM = {
-    LONG: 1,
-    MEDIUM: 2,
-    SHORT: 3,
-  };
-
-  IMPACT_TYPE = {
-    POSITIVE: 1,
-    NEGATIVE: 2,
-  };
-
-  IMPACT_DIMENSION = {
-    AMBIENTAL: 1,
-    ECONOMIC: 2,
-    SOCIAL: 3,
-  };
+  other = OTHER;
+  impactEvalCategories = IMPACT_EVAL_CATEGORIES;
+  impactScale = IMPACT_SCALE;
+  impactScaleTerm = IMPACT_SCALE_TERM;
+  impactType = IMPACT_TYPE;
+  impactDimension = IMPACT_DIMENSION;
+  categoriesScale = CATEGORIES_SCALE;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private aaService: AdaptationActionService,
-    private maService: MitigationActionsService,
     private translateService: TranslateService,
   ) {}
 
@@ -114,7 +98,7 @@ export class ImpactEvaluationComponent {
     const value = event.value;
     const sectionGroup = this.getSection(0);
 
-    if (value === this.OTHER) {
+    if (value === this.other) {
       sectionGroup?.get('categoryOtherCtrl')?.setValidators([Validators.minLength(1), Validators.maxLength(100)]);
     } else {
       sectionGroup?.get('categoryOtherCtrl')?.setValidators([]);
@@ -126,10 +110,10 @@ export class ImpactEvaluationComponent {
     const value = event.value;
     const sectionGroup = this.getSection(section);
 
-    if (value === this.IMPACT_EVAL_CATEGORIES.SCALE) {
+    if (value === this.impactEvalCategories.SCALE) {
       sectionGroup?.get('impactScaleCtrl')?.setValidators([Validators.required]);
       sectionGroup?.get('impactScaleTermCtrl')?.clearValidators();
-    } else if (value === this.IMPACT_EVAL_CATEGORIES.SCALE_TERM) {
+    } else if (value === this.impactEvalCategories.SCALE_TERM) {
       sectionGroup?.get('impactScaleCtrl')?.clearValidators();
       sectionGroup?.get('impactScaleTermCtrl')?.setValidators([Validators.required]);
     }
@@ -142,7 +126,10 @@ export class ImpactEvaluationComponent {
     const categoryCtrl = sectionGroup.get('categoryCtrl');
     const descriptionArray = sectionGroup.get('descriptionCtrl') as FormArray;
     categoryCtrl?.valueChanges.subscribe((values: any[]) => {
-      this.selectedCategories[section] = values;
+      this.selectedCategories[section] =
+        section === 0
+          ? values
+          : values.map((val) => this.categoriesScale.find((opt) => opt.value === val)?.name ?? val);
       while (descriptionArray.length > 0) {
         descriptionArray.removeAt(0);
       }

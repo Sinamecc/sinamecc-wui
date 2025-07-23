@@ -82,7 +82,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
 
   constructor(
     private _formBuilder: UntypedFormBuilder,
-    private service: MitigationActionsService,
+    public service: MitigationActionsService,
     private i18nService: I18nService,
     private cdRef: ChangeDetectorRef,
     public permissions: PermissionService,

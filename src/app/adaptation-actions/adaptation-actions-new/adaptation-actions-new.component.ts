@@ -66,7 +66,7 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
     private _formBuilder: UntypedFormBuilder,
     private cdRef: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private service: AdaptationActionService,
+    public service: AdaptationActionService,
     public snackBar: MatSnackBar,
     private translateService: TranslateService,
     public permissions: PermissionService,

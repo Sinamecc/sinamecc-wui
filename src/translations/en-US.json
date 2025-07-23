@@ -830,7 +830,13 @@
       "positive": "Positive",
       "negative": "Negative",
       "scale": "Impact scale",
-      "scaleTerm": "Duration of the impact"
+      "scaleTerm": "Duration of the impact",
+      "macro": "Macro level",
+      "mid": "Mid level",
+      "micro": "Micro level",
+      "long": "Long term",
+      "short": "Short term",
+      "medium": "Medium term"
     },
     "includeImpactInfo": "Do you want to include the identification of impacts in Sustainable Development and Transformational Change for this record?",
     "includeImpactInfoTitle": "Include Impact Identification",
