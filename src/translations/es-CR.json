@@ -818,6 +818,13 @@
       "sustainableDevelopment": "Seleccione los objetivos de desarrollo sostenible que más se identifican con la acción",
       "generatedImpact": "¿La acción ha generado algún impacto no deseado/inesperado/negativo?",
       "annexSupporting": "Adjunte información de soporte asociada al impacto de la acción reportada"
+    },
+    "location": {
+      "national": "Nacional",
+      "provincial": "Provincial",
+      "cantonal": "Cantonal",
+      "district": "Distrital",
+      "other": "Otro"
     }
   },
 

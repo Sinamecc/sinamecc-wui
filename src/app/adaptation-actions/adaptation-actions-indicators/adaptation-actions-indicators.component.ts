@@ -26,6 +26,14 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
   indicatorToolTipTxt =
     'Un indicador es una expresión cualitativa o cuantitativa, que es observable y permite describir las características de la realidad, a través de la evolución de una variable';
 
+  LOCATION = {
+    NATIONAL: 'NATIONAL',
+    PROVINCIAL: 'PROVINCIAL',
+    CANTONAL: 'CANTONAL',
+    DISTRICT: 'DISTRICT',
+    OTHER: 'OTHER',
+  };
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     public snackBar: MatSnackBar,
@@ -153,7 +161,10 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
             adaptationActionIndicatorCoverageOtherCtrl: [''],
             adaptationActionIndicatorDisintegrationCtrl: [indicator.disaggregation, [Validators.maxLength(1000)]],
             adaptationActionIndicatorLimitCtrl: [indicator.limitation, [Validators.maxLength(1000)]],
-            adaptationActionIndicatorGoalCtrl: [indicator.associated_meta, [Validators.maxLength(100), Validators.required]],
+            adaptationActionIndicatorGoalCtrl: [
+              indicator.associated_meta,
+              [Validators.maxLength(100), Validators.required],
+            ],
             adaptationActionIndicatorMeasurementCtrl: [indicator.additional_information, [Validators.maxLength(1000)]],
             adaptationActionIndicatorDetailsCtrl: [indicator.comments, [Validators.maxLength(1000)]],
             indicatorBaselineCtrl: [indicator.indicator_base_line, [Validators.maxLength(500)]],

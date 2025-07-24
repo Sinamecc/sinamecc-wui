@@ -818,6 +818,13 @@
       "sustainableDevelopment": "Select the sustainable development goals that most identify with the action",
       "generatedImpact": "Has the action generated any unwanted/unexpected/negative impact?",
       "annexSupporting": "Attach supporting information associated with the impact of the reported action"
+    },
+    "location": {
+      "national": "Nacional",
+      "provincial": "Provincial",
+      "cantonal": "Cantonal",
+      "district": "District",
+      "other": "Other"
     }
   },
 
