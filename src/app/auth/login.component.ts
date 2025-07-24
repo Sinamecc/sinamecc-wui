@@ -5,7 +5,6 @@ import { finalize, tap } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { emailRegex } from '@app/utils/regex';
 import { environment } from '@env/environment';
-import { I18nService } from '@app/i18n';
 import { AuthenticationService } from './authentication.service';
 
 @Component({
@@ -28,7 +27,6 @@ export class LoginComponent implements OnInit {
     private location: Location,
     private router: Router,
     private formBuilder: UntypedFormBuilder,
-    private i18nService: I18nService,
     private authenticationService: AuthenticationService,
   ) {
     this.createForm();
@@ -59,10 +57,6 @@ export class LoginComponent implements OnInit {
       .subscribe();
   }
 
-  setLanguage(language: string) {
-    this.i18nService.language = language;
-  }
-
   sendEmailRestarPassword(email: string) {
     this.authenticationService.sendEmailRestarPassword(email).subscribe((response) => {
       this.sendEmail = true;
@@ -72,14 +66,6 @@ export class LoginComponent implements OnInit {
   validateEmail(email: string) {
     const re = emailRegex;
     return re.test(String(email).toLowerCase());
-  }
-
-  get currentLanguage(): string {
-    return this.i18nService.language;
-  }
-
-  get languages(): string[] {
-    return this.i18nService.supportedLanguages;
   }
 
   private createForm() {

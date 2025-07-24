@@ -4,7 +4,6 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Permissions } from '@app/@core/permissions';
 import { AuthenticationService, CredentialsService, Credentials } from '@app/auth';
 import { untilDestroyed } from '@core';
-import { I18nService } from '@app/i18n';
 import { Router } from '@angular/router';
 
 @Component({
@@ -74,7 +73,6 @@ export class ShellComponent implements OnInit, OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private authenticationService: AuthenticationService,
     private credentialsService: CredentialsService,
-    private i18nService: I18nService,
   ) {}
 
   ngOnInit() {
@@ -127,18 +125,6 @@ export class ShellComponent implements OnInit, OnDestroy {
   get email(): string | null {
     const credentials = this.credentialsService.credentials;
     return credentials ? credentials.email : null;
-  }
-
-  get currentLanguage(): string {
-    return this.i18nService.language;
-  }
-
-  get languages(): string[] {
-    return this.i18nService.supportedLanguages;
-  }
-
-  setLanguage(language: string) {
-    this.i18nService.language = language;
   }
 
   logout() {

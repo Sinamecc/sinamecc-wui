@@ -33,6 +33,7 @@ import localeEsCR from '@angular/common/locales/es-CR';
 
 import { MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { Languages } from './i18n/languages';
 
 registerLocaleData(localeEsCR);
 
@@ -83,11 +84,11 @@ export const DATE_FORMATS = {
     },
     {
       provide: LOCALE_ID,
-      useValue: 'es-CR',
+      useValue: Languages.SPANISH,
     },
     {
       provide: MAT_DATE_LOCALE,
-      useValue: 'es-CR',
+      useValue: Languages.SPANISH,
     },
     {
       provide: DateAdapter,

@@ -25,14 +25,7 @@
         <button *ngIf="showModule(permissions, 'admin')" routerLink="/admin/users" mat-mini-fab color="primary">
           <mat-icon>supervised_user_circle</mat-icon>
         </button>
-        <button class="icon-button" mat-icon-button [matMenuTriggerFor]="languageMenu">
-          <mat-icon>language</mat-icon>
-        </button>
-        <mat-menu #languageMenu="matMenu">
-          <button mat-menu-item *ngFor="let language of languages" (click)="setLanguage(language)">
-            {{ language }}
-          </button>
-        </mat-menu>
+        <app-language-selector [icon]="true"></app-language-selector>
         <div class="user-data">
           <h3 class="mat-h3 no-margin">{{ fullName }}</h3>
           <h3 class="mat-h3">{{ email }}</h3>
