@@ -158,21 +158,20 @@
               formControlName="adaptationActionIndicatorCoverageCtrl"
               class="custom-radio-group"
             >
-              <mat-radio-button value="NATIONAL">
-                <label translate>Nacional</label>
+              <mat-radio-button [value]="LOCATION.NATIONAL">
+                <label translate>adaptationAction.location.national</label>
               </mat-radio-button>
-              <mat-radio-button value="REGIONAL">
-                <label translate>Regional</label>
+              <mat-radio-button [value]="LOCATION.PROVINCIAL">
+                <label translate>adaptationAction.location.provincial</label>
               </mat-radio-button>
-              <mat-radio-button value="PROVINCIAL">
-                <label translate>Provincial</label>
+              <mat-radio-button [value]="LOCATION.CANTONAL">
+                <label translate>adaptationAction.location.cantonal</label>
               </mat-radio-button>
-              <mat-radio-button value="CANTONAL">
-                <label translate>Cantonal</label>
+              <mat-radio-button [value]="LOCATION.DISTRICT">
+                <label translate>adaptationAction.location.district</label>
               </mat-radio-button>
-
-              <mat-radio-button value="OTHER">
-                <label translate>Otro</label>
+              <mat-radio-button [value]="LOCATION.OTHER">
+                <label translate>adaptationAction.location.other</label>
               </mat-radio-button>
             </mat-radio-group>
 

@@ -116,6 +116,7 @@
     "registeredNonReimbursableCooperationMideplan": "¿Se encuentra la acción registrada en el registro de proyectos de cooperación internacional no reembolsable de Mideplan?",
     "financedSourcesInternationalCooperation": "Acciones financiadas con fuentes de cooperación internacional",
     "referenceYear": "Año de referencia",
+    "referenceYearHint": "El año de referencia corresponde al año donde se tiene presupuestado el monto de la acción de adaptación",
     "emissionSourceSector": "Sector fuente de emisiones",
     "mitigationActionBudget": "Descripción de la fuente de financiamiento",
     "financingSourceApplying": "Describa la fuente financiamiento a la que está aplicando",
@@ -421,7 +422,8 @@
     "person": "Persona",
     "entity": "Entidad",
     "fileUpload": "Subir archivo",
-    "optional": "Esta sección es opcional"
+    "optional": "Esta sección es opcional",
+    "requiredFile": "Es obligatorio subir un archivo para poder continuar"
   },
 
   "info": {
@@ -736,6 +738,7 @@
       "AADistrict": "Distrito donde se ejecuta la acción",
       "narrativeActionPlace": "Descripción narrativa localización donde se desarrolla la acción",
       "attachGeographicalLocation": "Adjunte la localización georeferenciada de la acción en caso de contar con esta",
+      "attachGeographicalLocationHint": "La localización georeferenciada de la acción se refiere a un Punto GIS (de ser posible que se pueda marcar la ubicación en un mapa), shapes, entre otros",
       "categorizationNationalIntruments": "Categorización con instrumentos nacionales",
       "categorizationNationalIntrumentsTooltip": "Para más información sobre la categorización",
       "selectTopic": "Seleccione el tema al que pertenece la acción",
@@ -813,9 +816,16 @@
       "impactsAction": "Impactos de la acción según los indicadores definidos",
       "genderEquity": "La acción incorporó elementos de equidad de género",
       "contributesGenderEquity": "En caso positivo, describa como la acción aporta a la equidad de género frente al cambio climático",
-      "sustainableDevelopment": "Seleccione los objetivos de desarrollo sostenible que más se identifican con la acción",
+      "sustainableDevelopment": "Seleccione los objetivos de desarrollo sostenible que efectivamente si impactó la acción",
       "generatedImpact": "¿La acción ha generado algún impacto no deseado/inesperado/negativo?",
       "annexSupporting": "Adjunte información de soporte asociada al impacto de la acción reportada"
+    },
+    "location": {
+      "national": "Nacional",
+      "provincial": "Provincial",
+      "cantonal": "Cantonal",
+      "district": "Distrital",
+      "other": "Otro"
     }
   },
 

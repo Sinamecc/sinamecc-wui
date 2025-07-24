@@ -116,6 +116,7 @@
     "registeredNonReimbursableCooperationMideplan": "Is the action registered in the Mideplan registry of non-reimbursable international cooperation projects?",
     "financedSourcesInternationalCooperation": "Actions financed with international cooperation sources",
     "referenceYear": "Reference year",
+    "referenceYearHint": "The reference year corresponds to the year in which the budget for the adaptation action is planned.",
     "emissionSourceSector": "Emission source sector",
     "mitigationActionBudget": "Description of the financing source",
     "financingSourceApplying": "Describe the financing source you are applying to",
@@ -421,7 +422,8 @@
     "person": "Person",
     "entity": "Entity",
     "fileUpload": "File upload",
-    "optional": "This section is optional"
+    "optional": "This section is optional",
+    "requiredFile": "File is requried to continue"
   },
 
   "info": {
@@ -736,6 +738,7 @@
       "AADistrict": "District where the action is executed",
       "narrativeActionPlace": "Narrative description location where the action takes place",
       "attachGeographicalLocation": "Attach the georeferenced location of the action in case you have this",
+      "attachGeographicalLocationHint": "The georeferenced location of the action refers to a GIS point (if possible, allowing the location to be marked on a map), shapes, among others.",
       "categorizationNationalIntruments": "Categorization with national instruments",
       "categorizationNationalIntrumentsTooltip": "For more information on categorization",
       "selectTopic": "Select the topic to which the action belongs",
@@ -813,9 +816,16 @@
       "impactsAction": "Impacts of the action according to the defined indicators",
       "genderEquity": "The action incorporated elements of gender equity",
       "contributesGenderEquity": "If so, describe how the action contributes to gender equity in the face of climate change",
-      "sustainableDevelopment": "Select the sustainable development goals that most identify with the action",
+      "sustainableDevelopment": "Select the Sustainable Development Goals that were effectively impacted by the action",
       "generatedImpact": "Has the action generated any unwanted/unexpected/negative impact?",
       "annexSupporting": "Attach supporting information associated with the impact of the reported action"
+    },
+    "location": {
+      "national": "Nacional",
+      "provincial": "Provincial",
+      "cantonal": "Cantonal",
+      "district": "District",
+      "other": "Other"
     }
   },
 
