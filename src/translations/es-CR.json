@@ -422,7 +422,8 @@
     "person": "Persona",
     "entity": "Entidad",
     "fileUpload": "Subir archivo",
-    "optional": "Esta sección es opcional"
+    "optional": "Esta sección es opcional",
+    "requiredFile": "Es obligatorio subir un archivo para poder continuar"
   },
 
   "info": {
