@@ -90,6 +90,11 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
     return this.mainGroup.get('formArray');
   }
 
+  get shouldShowImpactEvalStep() {
+    if (!this.state || !this.wantsImpactEval) return false;
+    return this.permissions.canEditAA(this.state) || this.permissions.canEditAcceptedAA(this.state);
+  }
+
   handleAssistantOpen() {
     this.assistantOpen = !this.assistantOpen;
   }

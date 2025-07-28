@@ -80,6 +80,11 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     return this.mainGroup.get('formArray');
   }
 
+  get shouldShowImpactEvalStep() {
+    if (!this.state || !this.wantsImpactEval) return false;
+    return this.permissions.canEditMA(this.state) || this.permissions.canEditAcceptedMA(this.state);
+  }
+
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public service: MitigationActionsService,

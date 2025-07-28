@@ -1,5 +1,3 @@
-import { AAType } from './catalogs';
-
 export interface ReportOrganization {
   responsible_entity: string;
   legal_identification: string;
@@ -198,6 +196,7 @@ export interface AdaptationAction {
   next_state?: State[];
   fsm_state?: State;
   general_report?: any;
+  sustainable_development_impact?: any;
 }
 
 export interface Province {

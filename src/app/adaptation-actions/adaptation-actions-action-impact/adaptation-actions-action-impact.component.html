@@ -9,7 +9,7 @@
   </div>
   <form [formGroup]="form">
     <mat-vertical-stepper #stepper linear formArrayName="formArray">
-      <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+      <mat-step *ngIf="permissions.canEditAA(state)" formGroupName="0" [stepControl]="formArray?.get([0])">
         <ng-template matStepLabel>
           <span translate>adaptationAction.form6.actionImpact</span>
         </ng-template>

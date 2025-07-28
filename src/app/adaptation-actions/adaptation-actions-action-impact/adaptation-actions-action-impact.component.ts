@@ -196,19 +196,25 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   }
 
   submitForm() {
-    const formArray = this.form.get('formArray') as FormArray;
-    const group1 = formArray?.at(1) as FormGroup;
-    if (this.type === this.types.A && this.isEmpty() && !this.includeImpactInfo) {
-      this.router.navigate(['/adaptation/actions'], { replaceUrl: true });
-      return;
-    }
+    if (this.permissions.canEditAA(this.state)) {
+      if (this.type === this.types.A && this.isEmpty() && !this.includeImpactInfo) {
+        this.router.navigate(['/adaptation/actions'], { replaceUrl: true });
+        return;
+      }
 
-    const payload = this.buildPayload();
-    this.service.updateCurrentAdaptationAction({ ...this.adaptationAction, ...payload });
-    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe({
-      next: () => this.handleSubmissionSuccess(),
-      error: () => this.openSnackBar('Error al crear el formulario, inténtelo de nuevo más tarde'),
-    });
+      const payload = this.buildPayload();
+      this.service.updateCurrentAdaptationAction({ ...this.adaptationAction, ...payload });
+      this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe({
+        next: () => this.handleSubmissionSuccess(),
+        error: () => this.openSnackBar('Error al crear el formulario, inténtelo de nuevo más tarde'),
+      });
+    } else if (this.permissions.canEditAcceptedAA(this.state)) {
+      if (this.includeImpactInfo) {
+        this.stepper.next();
+      } else {
+        this.router.navigate(['/adaptation/actions'], { replaceUrl: true });
+      }
+    }
   }
 
   private handleSubmissionSuccess() {
