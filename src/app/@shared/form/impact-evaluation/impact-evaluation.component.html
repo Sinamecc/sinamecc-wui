@@ -70,9 +70,10 @@
         >
           <mat-form-field class="field-ppcn flex-1" appearance="fill">
             <mat-label
-              >{{ selectedCategories[impactEvaluation.categories][i] || ('general.other' | translate) }}:
-              <span translate>impactEvaluation.description</span></mat-label
-            >
+              ><span translate>impactEvaluation.description</span>:{{
+                selectedCategories[impactEvaluation.categories][i] | translate
+              }}
+            </mat-label>
             <textarea
               matInput
               formControlName="text"

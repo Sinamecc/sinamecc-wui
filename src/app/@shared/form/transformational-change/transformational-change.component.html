@@ -142,9 +142,10 @@
         >
           <mat-form-field class="field-ppcn flex-1" appearance="fill">
             <mat-label
-              >{{ selectedOptions[transformationalChange.identification][i] || 'general.other' | translate }}:
-              <span translate>impactEvaluation.description</span></mat-label
-            >
+              ><span translate>impactEvaluation.description</span>:{{
+                selectedOptions[transformationalChange.identification][i] || 'general.other' | translate
+              }}
+            </mat-label>
             <textarea
               matInput
               formControlName="text"
@@ -218,9 +219,10 @@
         >
           <mat-form-field class="field-ppcn flex-1" appearance="fill">
             <mat-label
-              >{{ selectedOptions[transformationalChange.processes][i] || ('general.other' | translate) }}:
-              <span translate>impactEvaluation.description</span></mat-label
-            >
+              ><span translate>impactEvaluation.description</span>:{{
+                selectedOptions[transformationalChange.processes][i] || ('general.other' | translate)
+              }}
+            </mat-label>
             <textarea
               matInput
               formControlName="text"

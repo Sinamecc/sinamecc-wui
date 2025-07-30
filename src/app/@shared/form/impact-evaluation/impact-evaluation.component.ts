@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AbstractControl, FormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import {
   CATEGORIES_SCALE,
@@ -74,8 +74,8 @@ export class ImpactEvaluationComponent {
     return this.categories.filter((cat) => selectedGroupCodes.includes(cat.category_group.code));
   }
 
-  get formArray(): AbstractControl | null {
-    return this.form.get('formArray');
+  get formArray(): FormArray {
+    return this.form.get('formArray') as FormArray;
   }
 
   private createForm() {
