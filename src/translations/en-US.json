@@ -857,7 +857,8 @@
     "impactScaleHint": "XXXXXX",
     "impactScaleTermHint": "XXXXXX",
     "pertinentHint": "XXXXXX",
-    "relevantHint": "XXXXXX"
+    "relevantHint": "XXXXXX",
+    "optional": "Note that although the information on Sustainable Development and Transformational Change impacts is voluntary, if you choose to complete it, all mandatory fields must be filled in."
   },
 
   "APP_NAME": "sinamecc wui"

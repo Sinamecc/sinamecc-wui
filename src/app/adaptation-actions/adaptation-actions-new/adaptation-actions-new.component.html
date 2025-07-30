@@ -50,98 +50,26 @@
             <mat-icon>download</mat-icon>
           </ng-template>
 
-          <!-- section 1 -->
-          <mat-step *ngIf="!state || permissions.canEditAA(state)" [completed]="completed.generalRegister">
-            <app-progress-bar [completed]="completed"></app-progress-bar>
-            <ng-template matStepLabel>
-              <span translate>adaptationAction.form1.title</span>
-            </ng-template>
-            <app-general-register
-              [mainStepper]="stepper"
-              (onComplete)="onComplete('generalRegister', $event)"
-            ></app-general-register>
-          </mat-step>
-
-          <!-- section 2 -->
-          <mat-step *ngIf="!state || permissions.canEditAA(state)" [completed]="completed.report">
-            <app-progress-bar [completed]="completed"></app-progress-bar>
-            <app-adaptation-actions-report
-              [adaptationActionUpdated]="adaptationAction"
-              [edit]="edit"
-              [mainStepper]="stepper"
-              (onTypeSet)="aaType = $event"
-              (onComplete)="onComplete('report', $event)"
-            ></app-adaptation-actions-report>
-          </mat-step>
-
-          <!-- section 3 -->
-          <mat-step *ngIf="!state || permissions.canEditAA(state)" [completed]="completed.financing">
-            <app-progress-bar [completed]="completed"></app-progress-bar>
-            <ng-template matStepLabel>
-              <span translate>adaptationAction.form3.title</span>
-            </ng-template>
-            <app-adaptation-actions-financing
-              [type]="aaType"
-              [edit]="edit"
-              [adaptationActionUpdated]="adaptationAction"
-              [mainStepper]="stepper"
-              (onComplete)="onComplete('financing', $event)"
-            ></app-adaptation-actions-financing>
-          </mat-step>
-
-          <!-- section 4 -->
-          <mat-step *ngIf="!state || permissions.canEditAA(state)" [completed]="completed.indicators">
-            <app-progress-bar [completed]="completed"></app-progress-bar>
-            <ng-template matStepLabel>
-              <span translate>adaptationAction.form4.title</span>
-            </ng-template>
-            <app-adaptation-actions-indicators
-              [edit]="edit"
-              [adaptationActionUpdated]="adaptationAction"
-              [mainStepper]="stepper"
-              (onComplete)="onComplete('indicators', $event)"
-            ></app-adaptation-actions-indicators>
-          </mat-step>
-
-          <!-- section 5 -->
-          <mat-step *ngIf="!state || permissions.canEditAA(state)" [completed]="completed.climateMonitoring">
-            <app-progress-bar [completed]="completed"></app-progress-bar>
-            <ng-template matStepLabel>
-              <span translate>adaptationAction.form5.title</span>
-            </ng-template>
-            <app-adaptation-actions-climate-monitoring
-              [mainStepper]="stepper"
-              [edit]="edit"
-              [adaptationActionUpdated]="adaptationAction"
-              (onComplete)="onComplete('climateMonitoring', $event)"
-            ></app-adaptation-actions-climate-monitoring>
-          </mat-step>
-
-          <!-- section 6 -->
-          <mat-step
-            *ngIf="!state || permissions.canEditAA(state) || permissions.canEditAcceptedAA(state)"
-            [completed]="completed.actionImpact"
-          >
-            <app-progress-bar [completed]="completed"></app-progress-bar>
-            <ng-template matStepLabel>
-              <span translate>adaptationAction.form6.title</span>
-            </ng-template>
-            <app-adaptation-actions-action-impact
-              [type]="aaType"
-              [edit]="edit"
-              [stepper]="stepper"
-              [adaptationActionUpdated]="adaptationAction"
-              (onComplete)="onComplete('actionImpact', $event)"
-              (wantsImpactEval)="wantsImpactEval = $event"
-            ></app-adaptation-actions-action-impact>
-          </mat-step>
-
           <!-- section 7 -->
           <mat-step *ngIf="shouldShowImpactEvalStep">
             <ng-template matStepLabel>
               <span translate>impactEvaluation.title</span>
             </ng-template>
-            <app-impact-evaluation [adaptation]="true" [service]="service"></app-impact-evaluation>
+            <app-impact-evaluation
+              [adaptation]="true"
+              [service]="service"
+              [stepper]="stepper"
+              [id]="id"
+            ></app-impact-evaluation>
+          </mat-step>
+
+          <!-- Section 8 -->
+          <mat-step *ngIf="shouldShowImpactEvalStep">
+            <ng-template matStepLabel>
+              <span translate>impactEvaluation.title</span>
+            </ng-template>
+            <app-transformational-change [adaptation]="true" [service]="service" [id]="id">
+            </app-transformational-change>
           </mat-step>
         </mat-horizontal-stepper>
       </form>

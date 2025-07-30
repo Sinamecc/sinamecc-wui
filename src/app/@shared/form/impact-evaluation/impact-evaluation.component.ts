@@ -11,7 +11,7 @@ import {
   MOCK_CATEGORIES,
   MOCK_CATEGORY_GROUP,
   OTHER,
-} from './constants';
+} from '../constants';
 import { Category, SustainableDevelopmentImpactPayload } from './interface';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { AdaptationActionService } from '@app/adaptation-actions/adaptation-actions-service';
@@ -100,7 +100,7 @@ export class ImpactEvaluationComponent {
           // quantifiedIndicatorCtrl: ['', Validators.maxLength(200)], // TODO: later version
           // baseValueCtrl: ['', [Validators.minLength(1), Validators.maxLength(70)]],
           // expectedValueCtrl: ['', [Validators.minLength(1), Validators.maxLength(70)]],
-          // accumulatedValueCtrl: ['', [Validators.minLength(1), Validators.maxLength(70
+          // accumulatedValueCtrl: ['', [Validators.minLength(1), Validators.maxLength(70)],
         }),
       ]),
     });
@@ -159,7 +159,6 @@ export class ImpactEvaluationComponent {
       )
       .subscribe({
         next: (response) => {
-          console.log(response);
           if (this.service instanceof AdaptationActionService) {
             (this.service as AdaptationActionService).updateCurrentAdaptationAction(
               Object.assign(response.body, payload),

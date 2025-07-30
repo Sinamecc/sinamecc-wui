@@ -1,4 +1,4 @@
-import { Category } from './interface';
+import { Category } from './impact-evaluation/interface';
 
 export const OTHER = 'other';
 
@@ -20,8 +20,8 @@ export const IMPACT_SCALE_TERM = {
 };
 
 export const IMPACT_TYPE = {
-  POSITIVE: '1',
-  NEGATIVE: '2',
+  POSITIVE: true,
+  NEGATIVE: false,
 };
 
 export const IMPACT_DIMENSION = {

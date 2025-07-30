@@ -28,6 +28,7 @@ import { AmountInputComponent } from './amount-input/amount-input.component';
 import { FileListComponent } from './file-list/file-list.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { ImpactEvaluationComponent } from './form/impact-evaluation/impact-evaluation.component';
+import { TransformationalChangeComponent } from './form/transformational-change/transformational-change.component';
 
 @NgModule({
   imports: [MaterialModule, CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
@@ -51,6 +52,7 @@ import { ImpactEvaluationComponent } from './form/impact-evaluation/impact-evalu
     AmountInputComponent,
     UnauthorizedComponent,
     ImpactEvaluationComponent,
+    TransformationalChangeComponent,
   ],
   providers: [UploadProposalService, UpdateStatusService, ViewPdfService, S3Service],
   exports: [
@@ -73,6 +75,7 @@ import { ImpactEvaluationComponent } from './form/impact-evaluation/impact-evalu
     AmountInputComponent,
     UnauthorizedComponent,
     ImpactEvaluationComponent,
+    TransformationalChangeComponent,
   ],
 })
 export class SharedModule {}
