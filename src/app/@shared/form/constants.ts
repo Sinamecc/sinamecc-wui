@@ -41,6 +41,17 @@ export const CATEGORIES_SCALE = [
   },
 ];
 
+export const TRANSFORMATION_CHANGE = {
+  identification: 0,
+  processes: 1,
+  results: 2,
+};
+
+export const IMPACT_EVALUATION = {
+  categories: 0,
+  results: 1,
+};
+
 // MOCK: DELETE: TODO
 export const MOCK_CATEGORY_GROUP = [
   {
@@ -52,6 +63,45 @@ export const MOCK_CATEGORY_GROUP = [
     code: 'GRP002',
     name: 'Social Development',
     dimension: IMPACT_DIMENSION.SOCIAL,
+  },
+];
+
+export const MOCK_BARRIERS = [
+  {
+    name: 'transformationalChange.select.politicalInstitutional',
+    code: 1,
+  },
+  {
+    name: 'transformationalChange.select.regulatory',
+    code: 2,
+  },
+  {
+    name: 'transformationalChange.select.social',
+    code: 3,
+  },
+  {
+    name: 'transformationalChange.select.technological',
+    code: 4,
+  },
+  {
+    name: 'transformationalChange.select.capacity',
+    code: 5,
+  },
+  {
+    name: 'transformationalChange.select.financialInvestment',
+    code: 6,
+  },
+  {
+    name: 'transformationalChange.select.marketEconomicIncentives',
+    code: 7,
+  },
+  {
+    name: 'transformationalChange.select.structuralInequalities',
+    code: 8,
+  },
+  {
+    name: 'transformationalChange.select.other',
+    code: 9,
   },
 ];
 

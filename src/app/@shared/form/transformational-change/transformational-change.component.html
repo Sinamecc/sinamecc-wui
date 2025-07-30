@@ -11,6 +11,162 @@
         <span translate>transformationalChange.general</span>
       </ng-template>
 
+      <!-- 8.1.1 -->
+      <label translate>transformationalChange.vision.title</label>
+      <!-- Short -->
+      <mat-form-field class="field-ppcn flex-1" appearance="fill">
+        <mat-label> <span translate>transformationalChange.vision.short</span></mat-label>
+        <textarea
+          matInput
+          formControlName="visionShortCtrl"
+          rows="3"
+          required
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="3"
+          cdkAutosizeMaxRows="6"
+        ></textarea>
+        <mat-error
+          *ngIf="formArray.at(transformationalChange.identification).get('visionShortCtrl')?.hasError('required')"
+          translate
+        >
+          errorLabel.fieldRequired
+        </mat-error>
+        <mat-error
+          *ngIf="formArray.at(transformationalChange.identification).get('visionShortCtrl')?.hasError('minlength')"
+          translate
+          >errorLabel.minLengthNotMet</mat-error
+        >
+        <mat-error
+          *ngIf="formArray.at(transformationalChange.identification).get('visionShortCtrl')?.hasError('maxlength')"
+          translate
+          >errorLabel.maxLengthExceeded</mat-error
+        >
+      </mat-form-field>
+      <!-- Medium -->
+      <mat-form-field class="field-ppcn flex-1" appearance="fill">
+        <mat-label> <span translate>transformationalChange.vision.mid</span></mat-label>
+        <textarea
+          matInput
+          formControlName="visionMidCtrl"
+          rows="3"
+          required
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="3"
+          cdkAutosizeMaxRows="6"
+        ></textarea>
+        <mat-error
+          *ngIf="formArray.at(transformationalChange.identification).get('visionMidCtrl')?.hasError('required')"
+          translate
+        >
+          errorLabel.fieldRequired
+        </mat-error>
+        <mat-error
+          *ngIf="formArray.at(transformationalChange.identification).get('visionMidCtrl')?.hasError('minlength')"
+          translate
+          >errorLabel.minLengthNotMet</mat-error
+        >
+        <mat-error
+          *ngIf="formArray.at(transformationalChange.identification).get('visionMidCtrl')?.hasError('maxlength')"
+          translate
+          >errorLabel.maxLengthExceeded</mat-error
+        >
+      </mat-form-field>
+      <!-- Long -->
+      <mat-form-field class="field-ppcn flex-1" appearance="fill">
+        <mat-label> <span translate>transformationalChange.vision.long</span></mat-label>
+        <textarea
+          matInput
+          formControlName="visionLongCtrl"
+          rows="3"
+          required
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="3"
+          cdkAutosizeMaxRows="6"
+        ></textarea>
+        <mat-error
+          *ngIf="formArray.at(transformationalChange.identification).get('visionLongCtrl')?.hasError('required')"
+          translate
+        >
+          errorLabel.fieldRequired
+        </mat-error>
+        <mat-error
+          *ngIf="formArray.at(transformationalChange.identification).get('visionLongCtrl')?.hasError('minlength')"
+          translate
+          >errorLabel.minLengthNotMet</mat-error
+        >
+        <mat-error
+          *ngIf="formArray.at(transformationalChange.identification).get('visionLongCtrl')?.hasError('maxlength')"
+          translate
+          >errorLabel.maxLengthExceeded</mat-error
+        >
+      </mat-form-field>
+
+      <!-- 8.1.2 -->
+      <div class="flex flex-col justify-center gap-4 mb-4">
+        <label translate>transformationalChange.chainResult</label>
+        <app-upload-button class="w-full" />
+      </div>
+
+      <!-- 8.1.3 -->
+      <mat-form-field class="field-ppcn" appearance="fill">
+        <mat-label><span translate>transformationalChange.barriers</span></mat-label>
+        <mat-select
+          #barriersSelect
+          formControlName="optionCtrl"
+          multiple
+          (valueChange)="onOtherOptionChange($event, transformationalChange.identification)"
+        >
+          <mat-option *ngFor="let option of barriers" [value]="option">
+            <label>{{ option.name | translate }}</label>
+          </mat-option>
+          <mat-option [value]="other"><span translate>general.other</span></mat-option>
+        </mat-select>
+        <mat-error translate> errorLabel.fieldRequired </mat-error>
+      </mat-form-field>
+
+      <!-- 8.1.4 (only if other selected in 8.1.4) -->
+      <ng-container *ngIf="barriersSelect.value === other">
+        <mat-form-field class="field-ppcn" appearance="fill">
+          <mat-label><span translate>impactEvaluation.categoryOther</span></mat-label>
+          <input matInput formControlName="optionOtherCtrl" />
+          <mat-error translate> errorLabel.fieldRequired </mat-error>
+        </mat-form-field>
+      </ng-container>
+
+      <!-- 8.1.5 -->
+      <div formArrayName="descriptionCtrl">
+        <div
+          *ngFor="let descCtrl of descriptionControls(transformationalChange.identification); let i = index"
+          [formGroupName]="i"
+          class="mb-4"
+        >
+          <mat-form-field class="field-ppcn flex-1" appearance="fill">
+            <mat-label
+              >{{ selectedOptions[transformationalChange.identification][i] || 'general.other' | translate }}:
+              <span translate>impactEvaluation.description</span></mat-label
+            >
+            <textarea
+              matInput
+              formControlName="text"
+              rows="3"
+              required
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="3"
+              cdkAutosizeMaxRows="6"
+            ></textarea>
+            <mat-error *ngIf="descCtrl.get('text')?.hasError('required')" translate>
+              errorLabel.fieldRequired
+            </mat-error>
+            <mat-error *ngIf="descCtrl.get('text')?.hasError('minlength')" translate
+              >errorLabel.minLengthNotMet</mat-error
+            >
+            <mat-error *ngIf="descCtrl.get('text')?.hasError('maxlength')" translate
+              >errorLabel.maxLengthExceeded</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+
       <div class="box-button">
         <button type="button" matRipple (click)="stepper.next()" class="primary-button">
           <span translate>general.next</span>
@@ -30,9 +186,9 @@
         <mat-label><span translate>impactEvaluation.category</span></mat-label>
         <mat-select
           #categories
-          formControlName="categoryCtrl"
+          formControlName="optionCtrl"
           multiple
-          (valueChange)="onProcessesCategoryChange($event)"
+          (valueChange)="onOtherOptionChange($event, transformationalChange.processes)"
         >
           <mat-option *ngFor="let option of processesCategories" [value]="option">
             <label>{{ option.name | translate }}</label>
@@ -46,7 +202,7 @@
       <ng-container *ngIf="categories.value === other">
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label><span translate>impactEvaluation.categoryOther</span></mat-label>
-          <input matInput formControlName="categoryOtherCtrl" />
+          <input matInput formControlName="optionOtherCtrl" />
           <mat-error translate> errorLabel.fieldRequired </mat-error>
         </mat-form-field>
       </ng-container>
@@ -55,10 +211,14 @@
 
       <!-- 8.2.1.4 -->
       <div formArrayName="descriptionCtrl">
-        <div *ngFor="let descCtrl of descriptionControls(processes); let i = index" [formGroupName]="i" class="mb-4">
+        <div
+          *ngFor="let descCtrl of descriptionControls(transformationalChange.processes); let i = index"
+          [formGroupName]="i"
+          class="mb-4"
+        >
           <mat-form-field class="field-ppcn flex-1" appearance="fill">
             <mat-label
-              >{{ selectedCategories[processes][i] || ('general.other' | translate) }}:
+              >{{ selectedOptions[transformationalChange.processes][i] || ('general.other' | translate) }}:
               <span translate>impactEvaluation.description</span></mat-label
             >
             <textarea
@@ -99,7 +259,7 @@
       <!-- 8.2.2.1 -->
       <mat-form-field class="field-ppcn mt-4" appearance="fill">
         <mat-label><span translate>impactEvaluation.category</span></mat-label>
-        <mat-select #category formControlName="categoryCtrl" multiple (valueChange)="onCategoryChange($event, 1)">
+        <mat-select #category formControlName="optionCtrl" multiple (valueChange)="onScaleChange($event)">
           <mat-option *ngFor="let option of categoriesScale" [value]="option">
             <label>{{ option.name | translate }}</label>
           </mat-option>
@@ -108,7 +268,7 @@
       </mat-form-field>
 
       <!-- 8.2.2.1.1  -->
-      <ng-container *ngIf="category.value.includes(1)">
+      <ng-container *ngIf="category.value.includes(impactEvalCategories.SCALE)">
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>impactEvaluation.impactScale</mat-label>
           <mat-select formControlName="impactScaleCtrl" multiple>
@@ -130,7 +290,7 @@
       </ng-container>
 
       <!-- 8.2.2.1.2 -->
-      <ng-container *ngIf="category.value.includes(2)">
+      <ng-container *ngIf="category.value.includes(impactEvalCategories.SCALE_TERM)">
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>impactEvaluation.impactScaleTerm</mat-label>
           <mat-select formControlName="impactScaleTermCtrl" multiple>
@@ -153,10 +313,15 @@
 
       <!-- 8.2.2.2 -->
       <div formArrayName="descriptionCtrl">
-        <div *ngFor="let descCtrl of descriptionControls(results); let i = index" [formGroupName]="i" class="mb-4">
+        <div
+          *ngFor="let descCtrl of descriptionControls(transformationalChange.results); let i = index"
+          [formGroupName]="i"
+          class="mb-4"
+        >
           <mat-form-field class="field-ppcn flex-1" appearance="fill">
             <mat-label
-              ><span translate>impactEvaluation.description</span>: {{ selectedCategories[results][i] | translate }}
+              ><span translate>impactEvaluation.description</span>:
+              {{ selectedOptions[transformationalChange.results][i] | translate }}
             </mat-label>
             <textarea
               matInput

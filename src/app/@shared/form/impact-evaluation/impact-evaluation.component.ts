@@ -5,6 +5,7 @@ import {
   CATEGORIES_SCALE,
   IMPACT_DIMENSION,
   IMPACT_EVAL_CATEGORIES,
+  IMPACT_EVALUATION,
   IMPACT_SCALE,
   IMPACT_SCALE_TERM,
   IMPACT_TYPE,
@@ -43,6 +44,7 @@ export class ImpactEvaluationComponent {
   impactType = IMPACT_TYPE;
   impactDimension = IMPACT_DIMENSION;
   categoriesScale = CATEGORIES_SCALE;
+  impactEvaluation = IMPACT_EVALUATION;
 
   categories = MOCK_CATEGORIES; // TODO: delete
   categoryGroups = MOCK_CATEGORY_GROUP; // TODO: delete
@@ -55,18 +57,19 @@ export class ImpactEvaluationComponent {
 
   ngOnInit() {
     this.createForm();
-    this.watchCategorySelection(0);
-    this.watchCategorySelection(1);
+    this.watchCategorySelection(this.impactEvaluation.categories);
+    this.watchCategorySelection(this.impactEvaluation.results);
   }
 
   get categoryGroupsToView(): any[] {
-    const selectedDimensions: string[] = this.form?.value?.formArray?.[0]?.dimensionCtrl;
+    const selectedDimensions: string[] = this.form?.value?.formArray?.[this.impactEvaluation.categories]?.dimensionCtrl;
     if (!selectedDimensions || selectedDimensions.length === 0) return [];
     return this.categoryGroups.filter((group) => selectedDimensions.includes(group.dimension));
   }
 
   get categoriesToView(): Category[] {
-    const selectedGroupCodes: string[] = this.form?.value?.formArray?.[0]?.categoryGroupCtrl;
+    const selectedGroupCodes: string[] =
+      this.form?.value?.formArray?.[this.impactEvaluation.categories]?.categoryGroupCtrl;
     if (!selectedGroupCodes || selectedGroupCodes.length === 0) return [];
     return this.categories.filter((cat) => selectedGroupCodes.includes(cat.category_group.code));
   }
@@ -132,9 +135,9 @@ export class ImpactEvaluationComponent {
     const payload: { sustainable_development_impact: SustainableDevelopmentImpactPayload } = {
       sustainable_development_impact: {
         category: this.buildCategoryPayload(),
-        impact_type: this.form.value.formArray[0].impactTypeCtrl,
-        pertinent: this.form.value.formArray[0].pertinentCtrl,
-        relevant: this.form.value.formArray[0].relevantCtrl,
+        impact_type: this.form.value.formArray[this.impactEvaluation.categories].impactTypeCtrl,
+        pertinent: this.form.value.formArray[this.impactEvaluation.categories].pertinentCtrl,
+        relevant: this.form.value.formArray[this.impactEvaluation.categories].relevantCtrl,
         result: '',
       },
     };
@@ -194,9 +197,9 @@ export class ImpactEvaluationComponent {
     return descriptions.controls;
   }
 
-  onSectionOneCategoryChange(event: any) {
+  onOtherCategoryChange(event: any) {
     const value = event.value;
-    const sectionGroup = this.getSection(0);
+    const sectionGroup = this.getSection(this.impactEvaluation.categories);
 
     if (value === this.other) {
       sectionGroup?.get('categoryOtherCtrl')?.setValidators([Validators.minLength(1), Validators.maxLength(100)]);

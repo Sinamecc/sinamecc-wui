@@ -884,9 +884,11 @@
       "title": "Visión de transformación",
       "long": "Largo plazo",
       "short": "Corto plazo",
-      "medium": "Mediano plazo"
+      "mid": "Mediano plazo"
     },
-    "barriers": "Barreras para el cambio transformacional"
+    "chainResult": "Cadena de resultados",
+    "barriers": "Barreras para el cambio transformacional",
+    "addressed": "¿Se aborda directamente?"
   },
 
   "APP_NAME": "sinamecc wui"

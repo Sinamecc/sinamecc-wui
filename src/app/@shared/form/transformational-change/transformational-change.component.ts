@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AbstractControl, FormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { States } from '@app/@shared/next-state';
 import { AdaptationActionService } from '@app/adaptation-actions/adaptation-actions-service';
@@ -10,8 +10,10 @@ import {
   IMPACT_EVAL_CATEGORIES,
   IMPACT_SCALE,
   IMPACT_SCALE_TERM,
+  MOCK_BARRIERS,
   MOCK_CATEGORIES,
   OTHER,
+  TRANSFORMATION_CHANGE,
 } from '../constants';
 
 @Component({
@@ -28,7 +30,7 @@ export class TransformationalChangeComponent {
   @Input() adaptation: boolean = false;
   @Input() service: MitigationActionsService | AdaptationActionService;
   form: UntypedFormGroup;
-  selectedCategories: string[][] = [];
+  selectedOptions: string[][] = [];
 
   other = OTHER;
   impactEvalCategories = IMPACT_EVAL_CATEGORIES;
@@ -36,9 +38,8 @@ export class TransformationalChangeComponent {
   impactScaleTerm = IMPACT_SCALE_TERM;
   categoriesScale = CATEGORIES_SCALE;
   processesCategories = MOCK_CATEGORIES;
-
-  processes = 1;
-  results = 2;
+  transformationalChange = TRANSFORMATION_CHANGE;
+  barriers = MOCK_BARRIERS;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -48,8 +49,9 @@ export class TransformationalChangeComponent {
 
   ngOnInit() {
     this.createForm();
-    this.watchCategorySelection(this.processes);
-    this.watchCategorySelection(this.results);
+    this.watchOptionSelection(this.transformationalChange.processes);
+    this.watchOptionSelection(this.transformationalChange.results);
+    this.watchOptionSelection(this.transformationalChange.identification);
   }
 
   private createForm() {
@@ -57,17 +59,17 @@ export class TransformationalChangeComponent {
       formArray: this.formBuilder.array([
         this.formBuilder.group({
           visionShortCtrl: ['', [Validators.required, Validators.minLength(300), Validators.maxLength(1000)]],
-          visionMediumCtrl: ['', [Validators.required, Validators.minLength(300), Validators.maxLength(1000)]],
+          visionMidCtrl: ['', [Validators.required, Validators.minLength(300), Validators.maxLength(1000)]],
           visionLongCtrl: ['', [Validators.required, Validators.minLength(300), Validators.maxLength(1000)]],
           chainResultCtrl: ['', Validators.required],
-          barriersCtrl: ['', Validators.required],
-          barrierDescriptionCtrl: this.formBuilder.array([]),
-          barrierOtherCtrl: [''],
+          optionCtrl: ['', Validators.required], // barriers
+          optionOtherCtrl: [''], // barriers other
+          descriptionCtrl: this.formBuilder.array([]), // barrier description
           addressedCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
-          categoryCtrl: ['', Validators.required],
-          categoryOtherCtrl: ['', [Validators.minLength(8), Validators.maxLength(70)]],
+          optionCtrl: ['', Validators.required],
+          optionOtherCtrl: ['', [Validators.minLength(8), Validators.maxLength(70)]],
           descriptionCtrl: this.formBuilder.array([]),
           // quantifiedIndicatorCtrl: ['', Validators.maxLength(200)],
           // baseValueCtrl: ['', Validators.maxLength(70)],
@@ -75,7 +77,7 @@ export class TransformationalChangeComponent {
           // accumulatedValueCtrl: ['', Validators.maxLength(70)],
         }),
         this.formBuilder.group({
-          categoryCtrl: ['', Validators.required],
+          optionCtrl: ['', Validators.required],
           impactScaleCtrl: ['', Validators.required],
           impactScaleTermCtrl: ['', Validators.required],
           descriptionCtrl: this.formBuilder.array([]),
@@ -90,15 +92,14 @@ export class TransformationalChangeComponent {
 
   private updateForm() {}
 
-  get formArray(): AbstractControl | null {
-    return this.form.get('formArray');
+  get formArray(): FormArray {
+    return this.form.get('formArray') as FormArray;
   }
 
   submitForm() {}
 
   descriptionControls(section: number) {
-    const formArray = this.form.get('formArray') as FormArray;
-    const sectionGroup = formArray.at(section) as UntypedFormGroup;
+    const sectionGroup = this.formArray.at(section) as UntypedFormGroup;
     const descriptions = sectionGroup.get('descriptionCtrl') as FormArray;
     return descriptions.controls;
   }
@@ -109,21 +110,21 @@ export class TransformationalChangeComponent {
     return sectionGroup;
   }
 
-  onProcessesCategoryChange(event: any) {
-    const value = event.value;
-    const sectionGroup = this.getSection(this.processes);
-
-    if (value === this.other) {
-      sectionGroup?.get('categoryOtherCtrl')?.setValidators([Validators.minLength(1), Validators.maxLength(100)]);
-    } else {
-      sectionGroup?.get('categoryOtherCtrl')?.setValidators([]);
-    }
-    sectionGroup?.get('categoryOtherCtrl')?.updateValueAndValidity();
-  }
-
-  onCategoryChange(event: any, section: number) {
+  onOtherOptionChange(event: any, section: number) {
     const value = event.value;
     const sectionGroup = this.getSection(section);
+
+    if (value === this.other) {
+      sectionGroup?.get('optionOtherCtrl')?.setValidators([Validators.minLength(1), Validators.maxLength(100)]);
+    } else {
+      sectionGroup?.get('optionOtherCtrl')?.setValidators([]);
+    }
+    sectionGroup?.get('optionOtherCtrl')?.updateValueAndValidity();
+  }
+
+  onScaleChange(event: any) {
+    const value = event.value;
+    const sectionGroup = this.getSection(this.transformationalChange.results);
 
     if (value === this.impactEvalCategories.SCALE) {
       sectionGroup?.get('impactScaleCtrl')?.setValidators([Validators.required]);
@@ -136,12 +137,12 @@ export class TransformationalChangeComponent {
     sectionGroup?.get('impactScaleTermCtrl')?.updateValueAndValidity();
   }
 
-  private watchCategorySelection(section: number) {
+  private watchOptionSelection(section: number) {
     const sectionGroup = this.getSection(section);
-    const categoryCtrl = sectionGroup.get('categoryCtrl');
+    const optionCtrl = sectionGroup.get('optionCtrl');
     const descriptionArray = sectionGroup.get('descriptionCtrl') as FormArray;
-    categoryCtrl?.valueChanges.subscribe((values: any[]) => {
-      this.selectedCategories[section] = values.map((value) => value.name);
+    optionCtrl?.valueChanges.subscribe((values: any[]) => {
+      this.selectedOptions[section] = values.map((value) => value.name);
       while (descriptionArray.length > 0) {
         descriptionArray.removeAt(0);
       }

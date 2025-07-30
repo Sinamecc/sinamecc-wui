@@ -6,7 +6,7 @@
 <form [formGroup]="form" (ngSubmit)="submitForm()">
   <mat-vertical-stepper #stepper formArrayName="formArray">
     <!-- CATEGORIES 7.1.1 -->
-    <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+    <mat-step formGroupName="0" [stepControl]="formArray?.get([impactEvaluation.categories])">
       <ng-template matStepLabel>
         <span translate>impactEvaluation.categories</span>
       </ng-template>
@@ -43,12 +43,7 @@
       <!-- 7.1.1.3 -->
       <mat-form-field class="field-ppcn" appearance="fill">
         <mat-label><span translate>impactEvaluation.category</span></mat-label>
-        <mat-select
-          #categories
-          formControlName="categoryCtrl"
-          multiple
-          (valueChange)="onSectionOneCategoryChange($event)"
-        >
+        <mat-select #categories formControlName="categoryCtrl" multiple (valueChange)="onOtherCategoryChange($event)">
           <mat-option *ngFor="let option of categoriesToView" [value]="option">
             <label>{{ option.name | translate }}</label>
           </mat-option>
@@ -68,10 +63,14 @@
 
       <!-- 7.1.1.5 -->
       <div formArrayName="descriptionCtrl">
-        <div *ngFor="let descCtrl of descriptionControls(0); let i = index" [formGroupName]="i" class="mb-4">
+        <div
+          *ngFor="let descCtrl of descriptionControls(impactEvaluation.categories); let i = index"
+          [formGroupName]="i"
+          class="mb-4"
+        >
           <mat-form-field class="field-ppcn flex-1" appearance="fill">
             <mat-label
-              >{{ selectedCategories[0][i] || ('general.other' | translate) }}:
+              >{{ selectedCategories[impactEvaluation.categories][i] || ('general.other' | translate) }}:
               <span translate>impactEvaluation.description</span></mat-label
             >
             <textarea
@@ -153,7 +152,7 @@
     </mat-step>
 
     <!-- RESULTS 7.2.1 -->
-    <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+    <mat-step formGroupName="1" [stepControl]="formArray?.get([impactEvaluation.results])">
       <ng-template matStepLabel>
         <span translate>impactEvaluation.results</span>
       </ng-template>
@@ -161,7 +160,12 @@
       <!-- 7.2.1.1 -->
       <mat-form-field class="field-ppcn mt-4" appearance="fill">
         <mat-label><span translate>impactEvaluation.category</span></mat-label>
-        <mat-select #category formControlName="categoryCtrl" multiple (valueChange)="onCategoryChange($event, 1)">
+        <mat-select
+          #category
+          formControlName="categoryCtrl"
+          multiple
+          (valueChange)="onCategoryChange($event, impactEvaluation.results)"
+        >
           <mat-option *ngFor="let option of categoriesScale" [value]="option">
             <label>{{ option.name | translate }}</label>
           </mat-option>
@@ -170,7 +174,7 @@
       </mat-form-field>
 
       <!-- 7.2.1.1.1  -->
-      <ng-container *ngIf="category.value.includes(1)">
+      <ng-container *ngIf="category.value.includes(impactEvalCategories.SCALE)">
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>impactEvaluation.impactScale</mat-label>
           <mat-select formControlName="impactScaleCtrl" multiple>
@@ -192,7 +196,7 @@
       </ng-container>
 
       <!-- 7.2.1.1.2 -->
-      <ng-container *ngIf="category.value.includes(2)">
+      <ng-container *ngIf="category.value.includes(impactEvalCategories.SCALE_TERM)">
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>impactEvaluation.impactScaleTerm</mat-label>
           <mat-select formControlName="impactScaleTermCtrl" multiple>
