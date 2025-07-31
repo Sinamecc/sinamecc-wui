@@ -65,7 +65,6 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   isUpdating: boolean;
   isLinear: boolean;
 
-  id: string;
   institutions: Institution[];
   ingeis: IngeiCompliance[];
   statusses: Status[];
@@ -96,8 +95,8 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     this.formData = new FormData();
     this.isLoading = true;
     this.createForm();
-    this.id = this.route.snapshot.paramMap.get('id');
-    if (this.id) {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
       this.route.queryParams.subscribe((params) => {
         if (params['state']) {
           this.state = params['state'] as States;

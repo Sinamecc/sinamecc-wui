@@ -1,6 +1,6 @@
 <div class="container-custom">
   <div class="header-container flex flex-col justify-center items-center">
-    <h2 translate>transformationalChange.title</h2>
+    <h2 translate>impactEvaluation.transformationalChange</h2>
   </div>
 </div>
 <form [formGroup]="form" (ngSubmit)="submitForm()">
@@ -8,14 +8,14 @@
     <!-- Impact Identification 8.1 -->
     <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
       <ng-template matStepLabel>
-        <span translate>transformationalChange.general</span>
+        <span translate>impactEvaluation.general</span>
       </ng-template>
 
       <!-- 8.1.1 -->
-      <label translate>transformationalChange.vision.title</label>
-      <!-- Short -->
+      <label translate>impactEvaluation.vision.title</label>
+      socialTransformation
       <mat-form-field class="field-ppcn flex-1" appearance="fill">
-        <mat-label> <span translate>transformationalChange.vision.short</span></mat-label>
+        <mat-label> <span translate>impactEvaluation.vision.short</span></mat-label>
         <textarea
           matInput
           formControlName="visionShortCtrl"
@@ -44,7 +44,7 @@
       </mat-form-field>
       <!-- Medium -->
       <mat-form-field class="field-ppcn flex-1" appearance="fill">
-        <mat-label> <span translate>transformationalChange.vision.mid</span></mat-label>
+        <mat-label> <span translate>impactEvaluation.vision.mid</span></mat-label>
         <textarea
           matInput
           formControlName="visionMidCtrl"
@@ -73,7 +73,7 @@
       </mat-form-field>
       <!-- Long -->
       <mat-form-field class="field-ppcn flex-1" appearance="fill">
-        <mat-label> <span translate>transformationalChange.vision.long</span></mat-label>
+        <mat-label> <span translate>impactEvaluation.vision.long</span></mat-label>
         <textarea
           matInput
           formControlName="visionLongCtrl"
@@ -103,13 +103,13 @@
 
       <!-- 8.1.2 -->
       <div class="flex flex-col justify-center gap-4 mb-4">
-        <label translate>transformationalChange.chainResult</label>
+        <label translate>impactEvaluation.chainResult</label>
         <app-upload-button class="w-full" />
       </div>
 
       <!-- 8.1.3 -->
       <mat-form-field class="field-ppcn" appearance="fill">
-        <mat-label><span translate>transformationalChange.barriers</span></mat-label>
+        <mat-label><span translate>impactEvaluation.barriers</span></mat-label>
         <mat-select
           #barriersSelect
           formControlName="optionCtrl"
@@ -139,7 +139,7 @@
           *ngFor="let categoryCtrl of categoriesControls(transformationalChange.identification); let i = index"
           [formGroupName]="i"
         >
-          <app-category [categoryGroup]="categoryCtrl"></app-category>
+          <app-category [categoryGroup]="categoryCtrl" [service]="service" [item]="item"></app-category>
         </ng-container>
       </div>
 
@@ -153,8 +153,8 @@
     <!-- Characteristics 8.2 -->
     <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
       <ng-template matStepLabel>
-        <span translate>transformationalChange.characteristics</span>:
-        <span translate>transformationalChange.processes</span>
+        <span translate>impactEvaluation.characteristics</span>:
+        <span translate>impactEvaluation.processes</span>
       </ng-template>
 
       <!-- 8.2.1.1 -->
@@ -191,7 +191,7 @@
           *ngFor="let categoryCtrl of categoriesControls(transformationalChange.processes); let i = index"
           [formGroupName]="i"
         >
-          <app-category [categoryGroup]="categoryCtrl"></app-category>
+          <app-category [categoryGroup]="categoryCtrl" [service]="service" [item]="item"></app-category>
         </ng-container>
       </div>
 
@@ -204,8 +204,8 @@
 
     <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
       <ng-template matStepLabel>
-        <span translate>transformationalChange.characteristics</span>:
-        <span translate>transformationalChange.results</span>
+        <span translate>impactEvaluation.characteristics</span>:
+        <span translate>impactEvaluation.results</span>
       </ng-template>
 
       <!-- 8.2.2.1 -->
@@ -269,7 +269,7 @@
           *ngFor="let categoryCtrl of categoriesControls(transformationalChange.results); let i = index"
           [formGroupName]="i"
         >
-          <app-category [categoryGroup]="categoryCtrl"></app-category>
+          <app-category [categoryGroup]="categoryCtrl" [service]="service" [item]="item"></app-category>
         </ng-container>
       </div>
 

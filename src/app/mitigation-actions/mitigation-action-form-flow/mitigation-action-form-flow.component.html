@@ -176,7 +176,7 @@
             <span translate>impactEvaluation.title</span>
           </ng-template>
 
-          <app-impact-evaluation [service]="service" [stepper]="stepper" (state)="state = $event" [id]="id">
+          <app-impact-evaluation [service]="service" [stepper]="stepper" (state)="state = $event">
           </app-impact-evaluation>
         </mat-step>
 
@@ -186,7 +186,7 @@
             <span translate>impactEvaluation.title</span>
           </ng-template>
 
-          <app-transformational-change [service]="service" [stepper]="stepper" (state)="state = $event" [id]="id">
+          <app-transformational-change [service]="service" [stepper]="stepper" (state)="state = $event">
           </app-transformational-change>
         </mat-step>
       </mat-horizontal-stepper>

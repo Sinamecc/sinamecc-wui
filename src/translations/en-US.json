@@ -821,6 +821,7 @@
 
   "impactEvaluation": {
     "title": "Impact Evaluation",
+    "identification": "Identification of impacts on Sustainable Development",
     "results": "Results",
     "categories": "Categories",
     "select": {
@@ -832,13 +833,22 @@
       "scale": "Impact scale",
       "scaleTerm": "Duration of the impact",
       "macro": "Macro level",
-      "mid": "Mid level",
+      "mid": "Meso level",
       "micro": "Micro level",
       "long": "Long term",
       "short": "Short term",
-      "medium": "Medium term"
+      "medium": "Medium term",
+      "politicalInstitutional": "Political and institutional",
+      "regulatory": "Regulatory",
+      "socialTransformation": "Social",
+      "technological": "Technological",
+      "capacity": "Capacity",
+      "financialInvestment": "Financial and investment",
+      "marketEconomicIncentives": "Market/Economic incentives",
+      "structuralInequalities": "Structural inequalities",
+      "other": "Other"
     },
-    "includeImpactInfo": "Do you want to include the identification of impacts in Sustainable Development and Transformational Change for this record?",
+    "includeImpactInfo": "Do you want to include the identification of impacts on Sustainable Development and Transformational Change for this record?",
     "includeImpactInfoTitle": "Include Impact Identification",
     "dimension": "Dimension",
     "categoryGroup": "Category group",
@@ -848,7 +858,7 @@
     "impactType": "Type of impact",
     "pertinent": "Pertinent",
     "relevant": "Relevant",
-    "baseValue": "Indicator base value",
+    "baseValue": "Baseline indicator value",
     "expectedValue": "Expected indicator value",
     "accumulatedValue": "Accumulated indicator value",
     "impactScale": "Scale of the impact on Sustainable Development",
@@ -858,7 +868,28 @@
     "impactScaleTermHint": "XXXXXX",
     "pertinentHint": "XXXXXX",
     "relevantHint": "XXXXXX",
-    "optional": "Note that although the information on Sustainable Development and Transformational Change impacts is voluntary, if you choose to complete it, all mandatory fields must be filled in."
+    "optional": "Note that although the information on Sustainable Development and Transformational Change impacts is voluntary, if you choose to complete it, all mandatory fields must be filled in.",
+    "transformationalChange": "Identification of impacts on Transformational Change",
+    "general": "General impact identification",
+    "characteristics": "Characteristics and impacts on Transformational Change",
+    "popUp": "In this section, you will record your action’s contributions to generating a structural, sustained, irreversible, and long-term change in Costa Rican society.",
+    "processes": "Processes",
+    "vision": {
+      "title": "Transformation vision",
+      "long": "Long term",
+      "short": "Short term",
+      "mid": "Medium term"
+    },
+    "chainResult": "Results chain",
+    "barriers": "Barriers to transformational change",
+    "addressed": "Is it addressed directly?",
+    "indicator": {
+      "name": "Indicator name",
+      "title": "Defined quantified indicator",
+      "base": "Baseline indicator value",
+      "expected": "Expected value",
+      "accumulated": "Accumulated value"
+    }
   },
 
   "APP_NAME": "sinamecc wui"

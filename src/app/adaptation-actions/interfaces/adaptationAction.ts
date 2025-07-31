@@ -175,7 +175,6 @@ export interface GeneralReport {
 }
 
 export interface AdaptationAction {
-  indicatorList?: any;
   report_organization?: ReportOrganization;
   address?: Adress;
   adaptation_action_information?: AdaptationActionInformation;

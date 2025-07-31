@@ -1,4 +1,4 @@
-import { Category } from './impact-evaluation/interface';
+import { Category } from './interface';
 
 export const OTHER = 'other';
 
@@ -73,39 +73,39 @@ export const MOCK_CATEGORY_GROUP = [
 
 export const MOCK_BARRIERS = [
   {
-    name: 'transformationalChange.select.politicalInstitutional',
+    name: 'impactEvaluation.select.politicalInstitutional',
     code: 1,
   },
   {
-    name: 'transformationalChange.select.regulatory',
+    name: 'impactEvaluation.select.regulatory',
     code: 2,
   },
   {
-    name: 'transformationalChange.select.social',
+    name: 'impactEvaluation.select.socialTransformation',
     code: 3,
   },
   {
-    name: 'transformationalChange.select.technological',
+    name: 'impactEvaluation.select.technological',
     code: 4,
   },
   {
-    name: 'transformationalChange.select.capacity',
+    name: 'impactEvaluation.select.capacity',
     code: 5,
   },
   {
-    name: 'transformationalChange.select.financialInvestment',
+    name: 'impactEvaluation.select.financialInvestment',
     code: 6,
   },
   {
-    name: 'transformationalChange.select.marketEconomicIncentives',
+    name: 'impactEvaluation.select.marketEconomicIncentives',
     code: 7,
   },
   {
-    name: 'transformationalChange.select.structuralInequalities',
+    name: 'impactEvaluation.select.structuralInequalities',
     code: 8,
   },
   {
-    name: 'transformationalChange.select.other',
+    name: 'impactEvaluation.select.other',
     code: 9,
   },
 ];

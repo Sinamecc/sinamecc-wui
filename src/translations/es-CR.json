@@ -837,7 +837,16 @@
       "micro": "Nivel micro",
       "long": "Largo plazo",
       "short": "Corto plazo",
-      "medium": "Mediano plazo"
+      "medium": "Mediano plazo",
+      "politicalInstitutional": "Políticas e institucionales",
+      "regulatory": "Normativas",
+      "socialTransformation": "Sociales",
+      "technological": "Tecnológicas",
+      "capacity": "Capacidades",
+      "financialInvestment": "Financieras y de inversión",
+      "marketEconomicIncentives": "Mercado/Incentivos económicos",
+      "structuralInequalities": "Desigualdades estructurales",
+      "other": "Otras"
     },
     "includeImpactInfo": "Desea incluir la identificación de impactos en Desarrollo Sostenible y Cambio Tranformacional para este registro?",
     "includeImpactInfoTitle": "Incluir Identificación de Impactos",
@@ -859,27 +868,12 @@
     "impactScaleTermHint": "XXXXXX",
     "pertinentHint": "XXXXXX",
     "relevantHint": "XXXXXX",
-    "optional": "Considerar que aunque la información de impactos en Desarrollo Sostenible y Cambio Tranformacional es voluntaria, si se decide completar se deben registrar todos los campos obligatorios"
-  },
-
-  "transformationalChange": {
-    "title": "Identificación de impactos en Cambio Transformacional",
+    "optional": "Considerar que aunque la información de impactos en Desarrollo Sostenible y Cambio Tranformacional es voluntaria, si se decide completar se deben registrar todos los campos obligatorios",
+    "transformationalChange": "Identificación de impactos en Cambio Transformacional",
     "general": "Identificación de impactos general",
     "characteristics": "Características e impactos en Cambio Tranformacional",
     "popUp": "En esta sección se registrarán las contribuciones de su acción para generar un cambio estructural, sostenido, irreversible y de largo plazo en la sociedad costarricense",
     "processes": "Procesos",
-    "results": "Resultados",
-    "select": {
-      "politicalInstitutional": "Políticas e institucionales",
-      "regulatory": "Normativas",
-      "social": "Sociales",
-      "technological": "Tecnológicas",
-      "capacity": "Capacidades",
-      "financialInvestment": "Financieras y de inversión",
-      "marketEconomicIncentives": "Mercado/Incentivos económicos",
-      "structuralInequalities": "Desigualdades estructurales",
-      "other": "Otras"
-    },
     "vision": {
       "title": "Visión de transformación",
       "long": "Largo plazo",
@@ -888,7 +882,14 @@
     },
     "chainResult": "Cadena de resultados",
     "barriers": "Barreras para el cambio transformacional",
-    "addressed": "¿Se aborda directamente?"
+    "addressed": "¿Se aborda directamente?",
+    "indicator": {
+      "name": "Nombre del indicador",
+      "title": "Indicador cuantificado definido",
+      "base": "Valor base del indicador",
+      "expected": "Valor esperado del indicador",
+      "accumulated": "Valor acumulado"
+    }
   },
 
   "APP_NAME": "sinamecc wui"

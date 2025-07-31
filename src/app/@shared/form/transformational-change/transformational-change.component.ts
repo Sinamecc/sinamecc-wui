@@ -15,6 +15,8 @@ import {
   OTHER,
   TRANSFORMATION_CHANGE,
 } from '../constants';
+import { AdaptationAction } from '@app/adaptation-actions/interfaces/adaptationAction';
+import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 
 @Component({
   selector: 'app-transformational-change',
@@ -26,9 +28,9 @@ export class TransformationalChangeComponent {
   @Output() onComplete = new EventEmitter<boolean>();
   @Output() state = new EventEmitter<States>();
   @Input() stepper: any;
-  @Input() id: string;
   @Input() adaptation: boolean = false;
   @Input() service: MitigationActionsService | AdaptationActionService;
+  item: AdaptationAction | MitigationAction;
   form: UntypedFormGroup;
 
   other = OTHER;
@@ -47,6 +49,16 @@ export class TransformationalChangeComponent {
   ) {}
 
   ngOnInit() {
+    if (!this.adaptation) {
+      (this.service as MitigationActionsService).currentMitigationAction.subscribe((message) => {
+        this.item = message;
+      });
+    } else {
+      (this.service as AdaptationActionService).currentAdaptationActionSource.subscribe((message) => {
+        this.item = message;
+      });
+    }
+
     this.createForm();
     this.watchOptionSelection(this.transformationalChange.processes);
     this.watchOptionSelection(this.transformationalChange.results);
@@ -70,20 +82,12 @@ export class TransformationalChangeComponent {
           optionCtrl: ['', Validators.required],
           optionOtherCtrl: ['', [Validators.minLength(8), Validators.maxLength(70)]],
           categoriesCtrl: this.formBuilder.array([]),
-          // quantifiedIndicatorCtrl: ['', Validators.maxLength(200)],
-          // baseValueCtrl: ['', Validators.maxLength(70)],
-          // expectedValueCtrl: ['', Validators.maxLength(70)],
-          // accumulatedValueCtrl: ['', Validators.maxLength(70)],
         }),
         this.formBuilder.group({
           optionCtrl: ['', Validators.required],
           impactScaleCtrl: ['', Validators.required],
           impactScaleTermCtrl: ['', Validators.required],
           categoriesCtrl: this.formBuilder.array([]),
-          // quantifiedIndicatorCtrl: ['', Validators.maxLength(200)], // TODO: later version
-          // baseValueCtrl: ['', [Validators.minLength(1), Validators.maxLength(70)]],
-          // expectedValueCtrl: ['', [Validators.minLength(1), Validators.maxLength(70)]],
-          // accumulatedValueCtrl: ['', [Validators.minLength(1), Validators.maxLength(70)],
         }),
       ]),
     });
@@ -151,7 +155,10 @@ export class TransformationalChangeComponent {
             name: [value.name],
             description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
             indicator: ['', [Validators.required]],
-            indicatorOther: [''],
+            indicatorOther: ['', [Validators.maxLength(200)]],
+            baseValue: ['', Validators.maxLength(70)],
+            expectedValue: ['', Validators.maxLength(70)],
+            accumulatedValue: ['', Validators.maxLength(70)],
           }),
         );
       });

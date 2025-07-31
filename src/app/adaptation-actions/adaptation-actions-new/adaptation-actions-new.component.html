@@ -141,12 +141,7 @@
             <ng-template matStepLabel>
               <span translate>impactEvaluation.title</span>
             </ng-template>
-            <app-impact-evaluation
-              [adaptation]="true"
-              [service]="service"
-              [stepper]="stepper"
-              [id]="id"
-            ></app-impact-evaluation>
+            <app-impact-evaluation [adaptation]="true" [service]="service" [stepper]="stepper"></app-impact-evaluation>
           </mat-step>
 
           <!-- Section 8 -->
@@ -154,8 +149,7 @@
             <ng-template matStepLabel>
               <span translate>impactEvaluation.title</span>
             </ng-template>
-            <app-transformational-change [adaptation]="true" [service]="service" [id]="id">
-            </app-transformational-change>
+            <app-transformational-change [adaptation]="true" [service]="service"> </app-transformational-change>
           </mat-step>
         </mat-horizontal-stepper>
       </form>

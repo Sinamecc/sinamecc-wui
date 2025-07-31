@@ -51,7 +51,6 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
   wantsImpactEval: boolean = true;
   isLoading = false;
   aaType: AAType | null;
-  id: string;
   completed: Record<string, boolean> = {
     generalRegister: false,
     report: false,
@@ -72,11 +71,11 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
     private translateService: TranslateService,
     public permissions: PermissionService,
   ) {
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.edit = this.id ? true : false;
+    const id = this.route.snapshot.paramMap.get('id');
+    this.edit = id ? true : false;
     if (this.edit) {
       this.loading = true;
-      this.loadAdaptationActions(this.id);
+      this.loadAdaptationActions(id);
       this.assistantOpen = false;
       this.route.queryParams.subscribe((params) => {
         if (params['state']) {

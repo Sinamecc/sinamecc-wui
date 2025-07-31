@@ -29,3 +29,8 @@ export interface Category {
   created: string;
   updated: string;
 }
+
+export interface IndicatorOption {
+  name: string;
+  id: string;
+}

@@ -53,7 +53,7 @@
       </mat-form-field>
 
       <!-- 7.1.1.4 (only if other selected in 7.1.1.3) -->
-      <ng-container *ngIf="categories.value === other">
+      <ng-container *ngIf="categories.value.includes(other)">
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label><span translate>impactEvaluation.categoryOther</span></mat-label>
           <input matInput formControlName="categoryOtherCtrl" />
@@ -67,7 +67,7 @@
           *ngFor="let categoryCtrl of categoriesControls(impactEvaluation.categories); let i = index"
           [formGroupName]="i"
         >
-          <app-category [categoryGroup]="categoryCtrl"></app-category>
+          <app-category [categoryGroup]="categoryCtrl" [service]="service" [item]="item"></app-category>
         </ng-container>
       </div>
 
@@ -199,7 +199,7 @@
           *ngFor="let categoryCtrl of categoriesControls(impactEvaluation.results); let i = index"
           [formGroupName]="i"
         >
-          <app-category [categoryGroup]="categoryCtrl"></app-category>
+          <app-category [categoryGroup]="categoryCtrl" [service]="service" [item]="item"></app-category>
         </ng-container>
       </div>
 
