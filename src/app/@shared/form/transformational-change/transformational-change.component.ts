@@ -30,7 +30,6 @@ export class TransformationalChangeComponent {
   @Input() adaptation: boolean = false;
   @Input() service: MitigationActionsService | AdaptationActionService;
   form: UntypedFormGroup;
-  selectedOptions: string[][] = [];
 
   other = OTHER;
   impactEvalCategories = IMPACT_EVAL_CATEGORIES;
@@ -64,13 +63,13 @@ export class TransformationalChangeComponent {
           chainResultCtrl: ['', Validators.required],
           optionCtrl: ['', Validators.required], // barriers
           optionOtherCtrl: [''], // barriers other
-          descriptionCtrl: this.formBuilder.array([]), // barrier description
+          categoriesCtrl: this.formBuilder.array([]), // barrier description
           addressedCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
           optionCtrl: ['', Validators.required],
           optionOtherCtrl: ['', [Validators.minLength(8), Validators.maxLength(70)]],
-          descriptionCtrl: this.formBuilder.array([]),
+          categoriesCtrl: this.formBuilder.array([]),
           // quantifiedIndicatorCtrl: ['', Validators.maxLength(200)],
           // baseValueCtrl: ['', Validators.maxLength(70)],
           // expectedValueCtrl: ['', Validators.maxLength(70)],
@@ -80,7 +79,7 @@ export class TransformationalChangeComponent {
           optionCtrl: ['', Validators.required],
           impactScaleCtrl: ['', Validators.required],
           impactScaleTermCtrl: ['', Validators.required],
-          descriptionCtrl: this.formBuilder.array([]),
+          categoriesCtrl: this.formBuilder.array([]),
           // quantifiedIndicatorCtrl: ['', Validators.maxLength(200)], // TODO: later version
           // baseValueCtrl: ['', [Validators.minLength(1), Validators.maxLength(70)]],
           // expectedValueCtrl: ['', [Validators.minLength(1), Validators.maxLength(70)]],
@@ -98,10 +97,10 @@ export class TransformationalChangeComponent {
 
   submitForm() {}
 
-  descriptionControls(section: number) {
+  categoriesControls(section: number) {
     const sectionGroup = this.formArray.at(section) as UntypedFormGroup;
-    const descriptions = sectionGroup.get('descriptionCtrl') as FormArray;
-    return descriptions.controls;
+    const categories = sectionGroup.get('categoriesCtrl') as FormArray;
+    return categories.controls;
   }
 
   private getSection(section: number) {
@@ -139,18 +138,20 @@ export class TransformationalChangeComponent {
 
   private watchOptionSelection(section: number) {
     const sectionGroup = this.getSection(section);
-    const optionCtrl = sectionGroup.get('optionCtrl');
-    const descriptionArray = sectionGroup.get('descriptionCtrl') as FormArray;
-    optionCtrl?.valueChanges.subscribe((values: any[]) => {
-      this.selectedOptions[section] = values.map((value) => value.name);
-      while (descriptionArray.length > 0) {
-        descriptionArray.removeAt(0);
+    const categoryCtrl = sectionGroup.get('optionCtrl');
+    const categoriesArray = sectionGroup.get('categoriesCtrl') as FormArray;
+    categoryCtrl?.valueChanges.subscribe((values: any[]) => {
+      while (categoriesArray.length > 0) {
+        categoriesArray.removeAt(0);
       }
 
-      values?.forEach(() => {
-        descriptionArray.push(
+      values?.forEach((value) => {
+        categoriesArray.push(
           this.formBuilder.group({
-            text: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
+            name: [value.name],
+            description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
+            indicator: ['', [Validators.required]],
+            indicatorOther: [''],
           }),
         );
       });

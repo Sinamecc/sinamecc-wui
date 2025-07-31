@@ -62,38 +62,13 @@
       </ng-container>
 
       <!-- 7.1.1.5 -->
-      <div formArrayName="descriptionCtrl">
-        <div
-          *ngFor="let descCtrl of descriptionControls(impactEvaluation.categories); let i = index"
+      <div formArrayName="categoriesCtrl">
+        <ng-container
+          *ngFor="let categoryCtrl of categoriesControls(impactEvaluation.categories); let i = index"
           [formGroupName]="i"
-          class="mb-4"
         >
-          <mat-form-field class="field-ppcn flex-1" appearance="fill">
-            <mat-label
-              ><span translate>impactEvaluation.description</span>:{{
-                selectedCategories[impactEvaluation.categories][i] | translate
-              }}
-            </mat-label>
-            <textarea
-              matInput
-              formControlName="text"
-              rows="3"
-              required
-              cdkTextareaAutosize
-              cdkAutosizeMinRows="3"
-              cdkAutosizeMaxRows="6"
-            ></textarea>
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('required')" translate>
-              errorLabel.fieldRequired
-            </mat-error>
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('minlength')" translate
-              >errorLabel.minLengthNotMet</mat-error
-            >
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('maxlength')" translate
-              >errorLabel.maxLengthExceeded</mat-error
-            >
-          </mat-form-field>
-        </div>
+          <app-category [categoryGroup]="categoryCtrl"></app-category>
+        </ng-container>
       </div>
 
       <!-- 7.1.1.6 -->
@@ -219,32 +194,13 @@
       </ng-container>
 
       <!-- 7.2.1.2 -->
-      <div formArrayName="descriptionCtrl">
-        <div *ngFor="let descCtrl of descriptionControls(1); let i = index" [formGroupName]="i" class="mb-4">
-          <mat-form-field class="field-ppcn flex-1" appearance="fill">
-            <mat-label
-              ><span translate>impactEvaluation.description</span>: {{ selectedCategories[1][i] | translate }}
-            </mat-label>
-            <textarea
-              matInput
-              formControlName="text"
-              rows="3"
-              required
-              cdkTextareaAutosize
-              cdkAutosizeMinRows="3"
-              cdkAutosizeMaxRows="6"
-            ></textarea>
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('required')" translate>
-              errorLabel.fieldRequired
-            </mat-error>
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('minlength')" translate
-              >errorLabel.minLengthNotMet</mat-error
-            >
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('maxlength')" translate
-              >errorLabel.maxLengthExceeded</mat-error
-            >
-          </mat-form-field>
-        </div>
+      <div formArrayName="categoriesCtrl">
+        <ng-container
+          *ngFor="let categoryCtrl of categoriesControls(impactEvaluation.results); let i = index"
+          [formGroupName]="i"
+        >
+          <app-category [categoryGroup]="categoryCtrl"></app-category>
+        </ng-container>
       </div>
 
       <div class="box-button">

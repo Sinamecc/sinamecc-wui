@@ -34,7 +34,6 @@ export class ImpactEvaluationComponent {
   @Input() adaptation: boolean = false;
   @Input() service: MitigationActionsService | AdaptationActionService;
   form: UntypedFormGroup;
-  selectedCategories: string[][] = [];
   loading = false;
 
   other = OTHER;
@@ -86,7 +85,7 @@ export class ImpactEvaluationComponent {
           categoryGroupCtrl: ['', Validators.required],
           categoryCtrl: ['', Validators.required],
           categoryOtherCtrl: [''],
-          descriptionCtrl: this.formBuilder.array([]),
+          categoriesCtrl: this.formBuilder.array([]),
           impactTypeCtrl: ['', Validators.required],
           pertinentCtrl: ['', Validators.required],
           relevantCtrl: ['', Validators.required],
@@ -99,7 +98,7 @@ export class ImpactEvaluationComponent {
           categoryCtrl: ['', Validators.required],
           impactScaleCtrl: ['', Validators.required],
           impactScaleTermCtrl: ['', Validators.required],
-          descriptionCtrl: this.formBuilder.array([]),
+          categoriesCtrl: this.formBuilder.array([]),
           // quantifiedIndicatorCtrl: ['', Validators.maxLength(200)], // TODO: later version
           // baseValueCtrl: ['', [Validators.minLength(1), Validators.maxLength(70)]],
           // expectedValueCtrl: ['', [Validators.minLength(1), Validators.maxLength(70)]],
@@ -121,7 +120,7 @@ export class ImpactEvaluationComponent {
     let categories: Category[] = [];
     for (let section = 0; section < this.form.value.formArray.length; section++) {
       const selectedValues: Category[] = this.form.value.formArray[section].categoryCtrl;
-      const descriptions: string[] = this.form.value.formArray[section].descriptionCtrl.map((desc: any) => desc.text);
+      const descriptions: string[] = this.form.value.formArray[section].categoriesCtrl.map((desc: any) => desc.text);
 
       categories = selectedValues.map((value, index) => ({
         ...value,
@@ -190,11 +189,10 @@ export class ImpactEvaluationComponent {
       });
   }
 
-  descriptionControls(section: number) {
-    const formArray = this.form.get('formArray') as FormArray;
-    const sectionGroup = formArray.at(section) as UntypedFormGroup;
-    const descriptions = sectionGroup.get('descriptionCtrl') as FormArray;
-    return descriptions.controls;
+  categoriesControls(section: number) {
+    const sectionGroup = this.formArray.at(section) as UntypedFormGroup;
+    const categories = sectionGroup.get('categoriesCtrl') as FormArray;
+    return categories.controls;
   }
 
   onOtherCategoryChange(event: any) {
@@ -227,17 +225,19 @@ export class ImpactEvaluationComponent {
   private watchCategorySelection(section: number) {
     const sectionGroup = this.getSection(section);
     const categoryCtrl = sectionGroup.get('categoryCtrl');
-    const descriptionArray = sectionGroup.get('descriptionCtrl') as FormArray;
+    const categoriesArray = sectionGroup.get('categoriesCtrl') as FormArray;
     categoryCtrl?.valueChanges.subscribe((values: any[]) => {
-      this.selectedCategories[section] = values.map((value) => value.name);
-      while (descriptionArray.length > 0) {
-        descriptionArray.removeAt(0);
+      while (categoriesArray.length > 0) {
+        categoriesArray.removeAt(0);
       }
 
-      values?.forEach(() => {
-        descriptionArray.push(
+      values?.forEach((value) => {
+        categoriesArray.push(
           this.formBuilder.group({
-            text: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
+            name: [value.name],
+            description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
+            indicator: ['', [Validators.required]],
+            indicatorOther: [''],
           }),
         );
       });

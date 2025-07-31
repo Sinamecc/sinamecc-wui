@@ -134,38 +134,13 @@
       </ng-container>
 
       <!-- 8.1.5 -->
-      <div formArrayName="descriptionCtrl">
-        <div
-          *ngFor="let descCtrl of descriptionControls(transformationalChange.identification); let i = index"
+      <div formArrayName="categoriesCtrl">
+        <ng-container
+          *ngFor="let categoryCtrl of categoriesControls(transformationalChange.identification); let i = index"
           [formGroupName]="i"
-          class="mb-4"
         >
-          <mat-form-field class="field-ppcn flex-1" appearance="fill">
-            <mat-label
-              ><span translate>impactEvaluation.description</span>:{{
-                selectedOptions[transformationalChange.identification][i] || 'general.other' | translate
-              }}
-            </mat-label>
-            <textarea
-              matInput
-              formControlName="text"
-              rows="3"
-              required
-              cdkTextareaAutosize
-              cdkAutosizeMinRows="3"
-              cdkAutosizeMaxRows="6"
-            ></textarea>
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('required')" translate>
-              errorLabel.fieldRequired
-            </mat-error>
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('minlength')" translate
-              >errorLabel.minLengthNotMet</mat-error
-            >
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('maxlength')" translate
-              >errorLabel.maxLengthExceeded</mat-error
-            >
-          </mat-form-field>
-        </div>
+          <app-category [categoryGroup]="categoryCtrl"></app-category>
+        </ng-container>
       </div>
 
       <div class="box-button">
@@ -211,38 +186,13 @@
       <!-- 8.2.1.3 -->
 
       <!-- 8.2.1.4 -->
-      <div formArrayName="descriptionCtrl">
-        <div
-          *ngFor="let descCtrl of descriptionControls(transformationalChange.processes); let i = index"
+      <div formArrayName="categoriesCtrl">
+        <ng-container
+          *ngFor="let categoryCtrl of categoriesControls(transformationalChange.processes); let i = index"
           [formGroupName]="i"
-          class="mb-4"
         >
-          <mat-form-field class="field-ppcn flex-1" appearance="fill">
-            <mat-label
-              ><span translate>impactEvaluation.description</span>:{{
-                selectedOptions[transformationalChange.processes][i] || ('general.other' | translate)
-              }}
-            </mat-label>
-            <textarea
-              matInput
-              formControlName="text"
-              rows="3"
-              required
-              cdkTextareaAutosize
-              cdkAutosizeMinRows="3"
-              cdkAutosizeMaxRows="6"
-            ></textarea>
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('required')" translate>
-              errorLabel.fieldRequired
-            </mat-error>
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('minlength')" translate
-              >errorLabel.minLengthNotMet</mat-error
-            >
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('maxlength')" translate
-              >errorLabel.maxLengthExceeded</mat-error
-            >
-          </mat-form-field>
-        </div>
+          <app-category [categoryGroup]="categoryCtrl"></app-category>
+        </ng-container>
       </div>
 
       <div class="box-button">
@@ -314,37 +264,13 @@
       </ng-container>
 
       <!-- 8.2.2.2 -->
-      <div formArrayName="descriptionCtrl">
-        <div
-          *ngFor="let descCtrl of descriptionControls(transformationalChange.results); let i = index"
+      <div formArrayName="categoriesCtrl">
+        <ng-container
+          *ngFor="let categoryCtrl of categoriesControls(transformationalChange.results); let i = index"
           [formGroupName]="i"
-          class="mb-4"
         >
-          <mat-form-field class="field-ppcn flex-1" appearance="fill">
-            <mat-label
-              ><span translate>impactEvaluation.description</span>:
-              {{ selectedOptions[transformationalChange.results][i] | translate }}
-            </mat-label>
-            <textarea
-              matInput
-              formControlName="text"
-              rows="3"
-              required
-              cdkTextareaAutosize
-              cdkAutosizeMinRows="3"
-              cdkAutosizeMaxRows="6"
-            ></textarea>
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('required')" translate>
-              errorLabel.fieldRequired
-            </mat-error>
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('minlength')" translate
-              >errorLabel.minLengthNotMet</mat-error
-            >
-            <mat-error *ngIf="descCtrl.get('text')?.hasError('maxlength')" translate
-              >errorLabel.maxLengthExceeded</mat-error
-            >
-          </mat-form-field>
-        </div>
+          <app-category [categoryGroup]="categoryCtrl"></app-category>
+        </ng-container>
       </div>
 
       <div class="box-button">

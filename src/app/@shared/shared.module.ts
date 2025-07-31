@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { MaterialModule } from '@app/material.module';
 import { LoaderComponent } from './loader/loader.component';
-
 import { CustomSearchBarComponent } from './custom-search-bar/custom-search-bar.component';
 import { GenericButtonComponent } from './generic-button/generic-button.component';
 import { GenericButtonSecondaryComponent } from './generic-button-secondary/generic-button-secondary.component';
@@ -29,6 +27,7 @@ import { FileListComponent } from './file-list/file-list.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { ImpactEvaluationComponent } from './form/impact-evaluation/impact-evaluation.component';
 import { TransformationalChangeComponent } from './form/transformational-change/transformational-change.component';
+import { CategoryComponent } from './form/category/category.component';
 
 @NgModule({
   imports: [MaterialModule, CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
@@ -53,6 +52,7 @@ import { TransformationalChangeComponent } from './form/transformational-change/
     UnauthorizedComponent,
     ImpactEvaluationComponent,
     TransformationalChangeComponent,
+    CategoryComponent,
   ],
   providers: [UploadProposalService, UpdateStatusService, ViewPdfService, S3Service],
   exports: [
@@ -76,6 +76,7 @@ import { TransformationalChangeComponent } from './form/transformational-change/
     UnauthorizedComponent,
     ImpactEvaluationComponent,
     TransformationalChangeComponent,
+    CategoryComponent,
   ],
 })
 export class SharedModule {}

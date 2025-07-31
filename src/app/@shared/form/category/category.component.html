@@ -1,0 +1,42 @@
+<div [formGroup]="categoryGroup" class="mb-4">
+  <label translate>{{ categoryGroup.get('name')?.value }}</label>
+
+  <!-- description -->
+  <mat-form-field class="field-ppcn flex-1" appearance="fill">
+    <mat-label class="mb-2">
+      <span translate>impactEvaluation.description</span>
+    </mat-label>
+    <textarea
+      matInput
+      formControlName="description"
+      rows="3"
+      required
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="3"
+      cdkAutosizeMaxRows="6"
+    ></textarea>
+    <mat-error *ngIf="categoryGroup.get('description')?.hasError('required')" translate>
+      errorLabel.fieldRequired
+    </mat-error>
+    <mat-error *ngIf="categoryGroup.get('description')?.hasError('minlength')" translate>
+      errorLabel.minLengthNotMet
+    </mat-error>
+    <mat-error *ngIf="categoryGroup.get('description')?.hasError('maxlength')" translate>
+      errorLabel.maxLengthExceeded
+    </mat-error>
+  </mat-form-field>
+
+  <!-- indicator -->
+  <mat-form-field class="field-ppcn" appearance="fill">
+    <mat-label><span translate>impactEvaluation.indicator</span></mat-label>
+    <mat-select formControlName="indicator">
+      <mat-option [value]="1">
+        <label translate>impactEvaluation.select.positive</label>
+      </mat-option>
+      <mat-option [value]="2">
+        <label translate>impactEvaluation.select.negative</label>
+      </mat-option>
+    </mat-select>
+    <mat-error translate>errorLabel.fieldRequired</mat-error>
+  </mat-form-field>
+</div>
