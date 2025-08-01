@@ -95,15 +95,15 @@ export class ImpactEvaluationComponent {
         this.formBuilder.group({
           dimensionCtrl: ['', Validators.required],
           categoryGroupCtrl: ['', Validators.required],
-          categoryCtrl: ['', Validators.required],
-          categoryOtherCtrl: [''],
+          optionCtrl: ['', Validators.required],
+          optionOtherCtrl: this.formBuilder.array([]),
           categoriesCtrl: this.formBuilder.array([]),
           impactTypeCtrl: ['', Validators.required],
           pertinentCtrl: ['', Validators.required],
           relevantCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
-          categoryCtrl: ['', Validators.required],
+          optionCtrl: ['', Validators.required],
           impactScaleCtrl: ['', Validators.required],
           impactScaleTermCtrl: ['', Validators.required],
           categoriesCtrl: this.formBuilder.array([]),
@@ -123,7 +123,7 @@ export class ImpactEvaluationComponent {
   buildCategoryPayload() {
     let categories: Category[] = [];
     for (let section = 0; section < this.form.value.formArray.length; section++) {
-      const selectedValues: Category[] = this.form.value.formArray[section].categoryCtrl;
+      const selectedValues: Category[] = this.form.value.formArray[section].optionCtrl;
       const descriptions: string[] = this.form.value.formArray[section].categoriesCtrl.map((desc: any) => desc.text);
 
       categories = selectedValues.map((value, index) => ({
@@ -193,22 +193,48 @@ export class ImpactEvaluationComponent {
       });
   }
 
-  categoriesControls(section: number) {
+  arrayControls(section: number, control: string) {
     const sectionGroup = this.formArray.at(section) as UntypedFormGroup;
-    const categories = sectionGroup.get('categoriesCtrl') as FormArray;
+    const categories = sectionGroup.get(control) as FormArray;
     return categories.controls;
   }
 
-  onOtherCategoryChange(event: any) {
-    const value = event.value;
-    const sectionGroup = this.getSection(this.impactEvaluation.categories);
+  addAnotherOption(section: number) {
+    const sectionGroup = this.getSection(section);
+    const othersArray = sectionGroup.get('optionOtherCtrl') as FormArray;
+    this.addOtherOption(othersArray);
+  }
 
-    if (value === this.other) {
-      sectionGroup?.get('categoryOtherCtrl')?.setValidators([Validators.minLength(1), Validators.maxLength(100)]);
-    } else {
-      sectionGroup?.get('categoryOtherCtrl')?.setValidators([]);
+  addOtherOption(othersArray: FormArray) {
+    othersArray.push(
+      this.formBuilder.group({
+        name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+        description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
+        indicator: ['', [Validators.required]],
+        indicatorOther: ['', [Validators.maxLength(200)]],
+        baseValue: ['', Validators.maxLength(70)],
+        expectedValue: ['', Validators.maxLength(70)],
+        accumulatedValue: ['', Validators.maxLength(70)],
+      }),
+    );
+  }
+
+  removeOtherOption(index: number, section: number) {
+    const sectionGroup = this.getSection(section);
+    const othersArray = sectionGroup.get('optionOtherCtrl') as FormArray;
+    othersArray.removeAt(index);
+  }
+
+  onOtherOptionChange(event: any, section: number) {
+    const sectionGroup = this.getSection(section);
+    const othersArray = sectionGroup.get('optionOtherCtrl') as FormArray;
+    if (event.includes(this.other) && !othersArray.length) {
+      this.addOtherOption(othersArray);
+    } else if (!event.includes(this.other)) {
+      while (othersArray.length > 0) {
+        othersArray.removeAt(0);
+      }
     }
-    sectionGroup?.get('categoryOtherCtrl')?.updateValueAndValidity();
   }
 
   onCategoryChange(event: any, section: number) {
@@ -228,26 +254,28 @@ export class ImpactEvaluationComponent {
 
   private watchCategorySelection(section: number) {
     const sectionGroup = this.getSection(section);
-    const categoryCtrl = sectionGroup.get('categoryCtrl');
+    const optionCtrl = sectionGroup.get('optionCtrl');
     const categoriesArray = sectionGroup.get('categoriesCtrl') as FormArray;
-    categoryCtrl?.valueChanges.subscribe((values: any[]) => {
+    optionCtrl?.valueChanges.subscribe((values: any[]) => {
       while (categoriesArray.length > 0) {
         categoriesArray.removeAt(0);
       }
 
-      values?.forEach((value) => {
-        categoriesArray.push(
-          this.formBuilder.group({
-            name: [value.name],
-            description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
-            indicator: ['', [Validators.required]],
-            indicatorOther: ['', [Validators.maxLength(200)]],
-            baseValue: ['', Validators.maxLength(70)],
-            expectedValue: ['', Validators.maxLength(70)],
-            accumulatedValue: ['', Validators.maxLength(70)],
-          }),
-        );
-      });
+      values
+        ?.filter((value) => value !== this.other)
+        .forEach((value) => {
+          categoriesArray.push(
+            this.formBuilder.group({
+              name: [value.name],
+              description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
+              indicator: ['', [Validators.required]],
+              indicatorOther: ['', [Validators.maxLength(200)]],
+              baseValue: ['', Validators.maxLength(70)],
+              expectedValue: ['', Validators.maxLength(70)],
+              accumulatedValue: ['', Validators.maxLength(70)],
+            }),
+          );
+        });
     });
   }
 }

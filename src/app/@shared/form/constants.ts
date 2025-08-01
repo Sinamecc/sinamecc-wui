@@ -104,10 +104,6 @@ export const MOCK_BARRIERS = [
     name: 'impactEvaluation.select.structuralInequalities',
     code: 8,
   },
-  {
-    name: 'impactEvaluation.select.other',
-    code: 9,
-  },
 ];
 
 export const MOCK_CATEGORIES: Category[] = [

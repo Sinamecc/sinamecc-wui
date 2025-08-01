@@ -17,6 +17,7 @@ export class CategoryComponent {
   @Input() categoryGroup!: FormGroup;
   @Input() service!: MitigationActionsService | AdaptationActionService;
   @Input() item: AdaptationAction | MitigationAction;
+  @Input() isOther: boolean;
   indicators: IndicatorOption[];
   other = OTHER;
 
@@ -31,7 +32,7 @@ export class CategoryComponent {
   onOtherCategoryChange(event: any) {
     const value = event.value;
     if (value === this.other) {
-      this.categoryGroup?.get('indicatorOther')?.setValidators([Validators.minLength(1), Validators.maxLength(100)]);
+      this.categoryGroup?.get('indicatorOther')?.setValidators([Validators.minLength(20), Validators.maxLength(200)]);
     } else {
       this.categoryGroup?.get('indicatorOther')?.setValidators([]);
     }

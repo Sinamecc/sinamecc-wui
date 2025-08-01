@@ -1,5 +1,7 @@
 <div [formGroup]="categoryGroup" class="mb-4">
-  <label translate>{{ categoryGroup.get('name')?.value }}</label>
+  <ng-container *ngIf="!isOther">
+    <label translate>{{ categoryGroup.get('name')?.value }}</label>
+  </ng-container>
 
   <!-- description -->
   <mat-form-field class="field-ppcn flex-1" appearance="fill">

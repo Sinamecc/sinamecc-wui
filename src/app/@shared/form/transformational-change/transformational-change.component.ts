@@ -74,13 +74,13 @@ export class TransformationalChangeComponent {
           visionLongCtrl: ['', [Validators.required, Validators.minLength(300), Validators.maxLength(1000)]],
           chainResultCtrl: ['', Validators.required],
           optionCtrl: ['', Validators.required], // barriers
-          optionOtherCtrl: [''], // barriers other
+          optionOtherCtrl: this.formBuilder.array([]), // barriers other
           categoriesCtrl: this.formBuilder.array([]), // barrier description
           addressedCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
           optionCtrl: ['', Validators.required],
-          optionOtherCtrl: ['', [Validators.minLength(8), Validators.maxLength(70)]],
+          optionOtherCtrl: this.formBuilder.array([]),
           categoriesCtrl: this.formBuilder.array([]),
         }),
         this.formBuilder.group({
@@ -101,9 +101,9 @@ export class TransformationalChangeComponent {
 
   submitForm() {}
 
-  categoriesControls(section: number) {
+  arrayControls(section: number, control: string) {
     const sectionGroup = this.formArray.at(section) as UntypedFormGroup;
-    const categories = sectionGroup.get('categoriesCtrl') as FormArray;
+    const categories = sectionGroup.get(control) as FormArray;
     return categories.controls;
   }
 
@@ -113,16 +113,42 @@ export class TransformationalChangeComponent {
     return sectionGroup;
   }
 
-  onOtherOptionChange(event: any, section: number) {
-    const value = event.value;
+  addAnotherOption(section: number) {
     const sectionGroup = this.getSection(section);
+    const othersArray = sectionGroup.get('optionOtherCtrl') as FormArray;
+    this.addOtherOption(othersArray);
+  }
 
-    if (value === this.other) {
-      sectionGroup?.get('optionOtherCtrl')?.setValidators([Validators.minLength(1), Validators.maxLength(100)]);
-    } else {
-      sectionGroup?.get('optionOtherCtrl')?.setValidators([]);
+  addOtherOption(othersArray: FormArray) {
+    othersArray.push(
+      this.formBuilder.group({
+        name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+        description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
+        indicator: ['', [Validators.required]],
+        indicatorOther: ['', [Validators.maxLength(200)]],
+        baseValue: ['', Validators.maxLength(70)],
+        expectedValue: ['', Validators.maxLength(70)],
+        accumulatedValue: ['', Validators.maxLength(70)],
+      }),
+    );
+  }
+
+  removeOtherOption(index: number, section: number) {
+    const sectionGroup = this.getSection(section);
+    const othersArray = sectionGroup.get('optionOtherCtrl') as FormArray;
+    othersArray.removeAt(index);
+  }
+
+  onOtherOptionChange(event: any, section: number) {
+    const sectionGroup = this.getSection(section);
+    const othersArray = sectionGroup.get('optionOtherCtrl') as FormArray;
+    if (event.includes(this.other) && !othersArray.length) {
+      this.addOtherOption(othersArray);
+    } else if (!event.includes(this.other)) {
+      while (othersArray.length > 0) {
+        othersArray.removeAt(0);
+      }
     }
-    sectionGroup?.get('optionOtherCtrl')?.updateValueAndValidity();
   }
 
   onScaleChange(event: any) {

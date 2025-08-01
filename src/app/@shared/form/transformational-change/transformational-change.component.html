@@ -125,18 +125,53 @@
       </mat-form-field>
 
       <!-- 8.1.4 (only if other selected in 8.1.4) -->
-      <ng-container *ngIf="barriersSelect.value === other">
-        <mat-form-field class="field-ppcn" appearance="fill">
+      <ng-container *ngIf="barriersSelect.value.includes(other)">
+        <div formArrayName="optionOtherCtrl">
           <mat-label><span translate>impactEvaluation.categoryOther</span></mat-label>
-          <input matInput formControlName="optionOtherCtrl" />
-          <mat-error translate> errorLabel.fieldRequired </mat-error>
-        </mat-form-field>
+          <ng-container
+            *ngFor="
+              let otherCtrl of arrayControls(transformationalChange.identification, 'optionOtherCtrl');
+              let i = index
+            "
+            [formGroupName]="i"
+          >
+            <div class="flex flex-row gap-2">
+              <mat-form-field class="field-ppcn" appearance="fill">
+                <mat-label><span translate>info.name</span></mat-label>
+                <input matInput formControlName="name" />
+                <mat-error translate> errorLabel.fieldRequired </mat-error>
+              </mat-form-field>
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="removeOtherOption(i, transformationalChange.identification)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+
+            <app-category [isOther]="true" [categoryGroup]="otherCtrl" [service]="service" [item]="item"></app-category>
+          </ng-container>
+          <div class="align-right mb-1">
+            <button
+              (click)="addAnotherOption(transformationalChange.identification)"
+              type="button"
+              matRipple
+              class="primary-button"
+            >
+              <span translate>general.addOther</span>
+            </button>
+          </div>
+        </div>
       </ng-container>
 
       <!-- 8.1.5 -->
       <div formArrayName="categoriesCtrl">
         <ng-container
-          *ngFor="let categoryCtrl of categoriesControls(transformationalChange.identification); let i = index"
+          *ngFor="
+            let categoryCtrl of arrayControls(transformationalChange.identification, 'categoriesCtrl');
+            let i = index
+          "
           [formGroupName]="i"
         >
           <app-category [categoryGroup]="categoryCtrl" [service]="service" [item]="item"></app-category>
@@ -175,12 +210,37 @@
       </mat-form-field>
 
       <!-- 8.2.1.2 (only if other selected in 8.2.1.1) -->
-      <ng-container *ngIf="categories.value === other">
-        <mat-form-field class="field-ppcn" appearance="fill">
+      <ng-container *ngIf="categories.value.includes(other)">
+        <div formArrayName="optionOtherCtrl">
           <mat-label><span translate>impactEvaluation.categoryOther</span></mat-label>
-          <input matInput formControlName="optionOtherCtrl" />
-          <mat-error translate> errorLabel.fieldRequired </mat-error>
-        </mat-form-field>
+          <ng-container
+            *ngFor="let otherCtrl of arrayControls(transformationalChange.processes, 'optionOtherCtrl'); let i = index"
+            [formGroupName]="i"
+          >
+            <div class="flex flex-row gap-2">
+              <mat-form-field class="field-ppcn" appearance="fill">
+                <mat-label><span translate>info.name</span></mat-label>
+                <input matInput formControlName="name" />
+                <mat-error translate> errorLabel.fieldRequired </mat-error>
+              </mat-form-field>
+              <button mat-icon-button color="warn" (click)="removeOtherOption(i, transformationalChange.processes)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+
+            <app-category [isOther]="true" [categoryGroup]="otherCtrl" [service]="service" [item]="item"></app-category>
+          </ng-container>
+          <div class="align-right mb-1">
+            <button
+              (click)="addAnotherOption(transformationalChange.processes)"
+              type="button"
+              matRipple
+              class="primary-button"
+            >
+              <span translate>general.addOther</span>
+            </button>
+          </div>
+        </div>
       </ng-container>
 
       <!-- 8.2.1.3 -->
@@ -188,7 +248,7 @@
       <!-- 8.2.1.4 -->
       <div formArrayName="categoriesCtrl">
         <ng-container
-          *ngFor="let categoryCtrl of categoriesControls(transformationalChange.processes); let i = index"
+          *ngFor="let categoryCtrl of arrayControls(transformationalChange.processes, 'categoriesCtrl'); let i = index"
           [formGroupName]="i"
         >
           <app-category [categoryGroup]="categoryCtrl" [service]="service" [item]="item"></app-category>
@@ -266,7 +326,7 @@
       <!-- 8.2.2.2 -->
       <div formArrayName="categoriesCtrl">
         <ng-container
-          *ngFor="let categoryCtrl of categoriesControls(transformationalChange.results); let i = index"
+          *ngFor="let categoryCtrl of arrayControls(transformationalChange.results, 'categoriesCtrl'); let i = index"
           [formGroupName]="i"
         >
           <app-category [categoryGroup]="categoryCtrl" [service]="service" [item]="item"></app-category>
