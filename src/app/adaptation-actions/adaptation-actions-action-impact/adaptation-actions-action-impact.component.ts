@@ -51,7 +51,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
-      this.state = this.adaptationAction.fsm_state.state as States;
+      this.state = this.adaptationAction?.fsm_state.state as States;
       if (this.adaptationAction && this.adaptationAction.action_impact?.id) {
         this.onComplete.emit(true);
       }

@@ -68,7 +68,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
     }
     this.service.currentMitigationAction.subscribe((message) => {
       this.mitigationAction = message;
-      this.state = this.mitigationAction.fsm_state.state as States;
+      this.state = this.mitigationAction?.fsm_state.state as States;
       this.buildForm();
       this.files = this.getFiles();
       const includeImpactControl = this.form.get(['formArray', 3, 'includeImpactInfoCtrl']);

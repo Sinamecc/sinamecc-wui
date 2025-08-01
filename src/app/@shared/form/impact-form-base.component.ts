@@ -1,5 +1,5 @@
 import { UntypedFormBuilder, UntypedFormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
-import { CATEGORIES_SCALE, IMPACT_EVAL_CATEGORIES, IMPACT_SCALE, IMPACT_SCALE_TERM, OTHER } from './constants';
+import { IMPACT_EVAL_CATEGORIES, IMPACT_SCALE, IMPACT_SCALE_TERM, OTHER } from './constants';
 
 export abstract class ImpactFormBaseComponent {
   form: UntypedFormGroup;
@@ -8,7 +8,7 @@ export abstract class ImpactFormBaseComponent {
   impactEvalCategories = IMPACT_EVAL_CATEGORIES;
   impactScale = IMPACT_SCALE;
   impactScaleTerm = IMPACT_SCALE_TERM;
-  categoriesScale = CATEGORIES_SCALE;
+  categoriesScale = [];
 
   constructor(protected fb: UntypedFormBuilder) {}
 

@@ -30,16 +30,18 @@ export const IMPACT_DIMENSION = {
   SOCIAL: '3',
 };
 
-export const CATEGORIES_SCALE = [
-  {
-    name: 'impactEvaluation.select.scale',
-    code: IMPACT_EVAL_CATEGORIES.SCALE,
-  },
-  {
-    name: 'impactEvaluation.select.scaleTerm',
-    code: IMPACT_EVAL_CATEGORIES.SCALE_TERM,
-  },
-];
+export const getCategoriesScale = (adaptation: boolean) => {
+  return [
+    {
+      name: `impactEvaluation.select.scale${adaptation ? 'AA' : 'MA'}`,
+      code: IMPACT_EVAL_CATEGORIES.SCALE,
+    },
+    {
+      name: `impactEvaluation.select.scaleTerm${adaptation ? 'AA' : 'MA'}`,
+      code: IMPACT_EVAL_CATEGORIES.SCALE_TERM,
+    },
+  ];
+};
 
 export const TRANSFORMATION_CHANGE = {
   identification: 0,

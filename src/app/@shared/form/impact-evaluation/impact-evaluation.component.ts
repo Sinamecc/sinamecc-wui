@@ -1,7 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { IMPACT_DIMENSION, IMPACT_EVALUATION, IMPACT_TYPE, MOCK_CATEGORIES, MOCK_CATEGORY_GROUP } from '../constants';
+import {
+  getCategoriesScale,
+  IMPACT_DIMENSION,
+  IMPACT_EVALUATION,
+  IMPACT_TYPE,
+  MOCK_CATEGORIES,
+  MOCK_CATEGORY_GROUP,
+} from '../constants';
 import { Category, SustainableDevelopmentImpactPayload } from '../interface';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { AdaptationActionService } from '@app/adaptation-actions/adaptation-actions-service';
@@ -57,6 +64,7 @@ export class ImpactEvaluationComponent extends ImpactFormBaseComponent {
     this.createForm();
     this.watchOptionSelection(this.impactEvaluation.categories);
     this.watchOptionSelection(this.impactEvaluation.results);
+    this.categoriesScale = getCategoriesScale(this.adaptation);
   }
 
   get categoryGroupsToView(): any[] {

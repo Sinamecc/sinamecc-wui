@@ -25,7 +25,7 @@ export class CategoryComponent {
     if (this.isAdaptationAction(this.item)) {
       this.indicators = this.mapAAIndicators();
     } else {
-      console.log('mitigation');
+      this.indicators = this.mapMAIndicators();
     }
   }
 
@@ -44,13 +44,19 @@ export class CategoryComponent {
   }
 
   private mapAAIndicators(): IndicatorOption[] {
-    const adaptationAction: AdaptationAction = this.item as AdaptationAction;
-    return (
-      adaptationAction.indicator_list &&
-      adaptationAction.indicator_list.map((indicator) => ({
-        name: indicator.name,
-        id: indicator.id,
-      }))
-    );
+    const adaptationAction = this.item as AdaptationAction;
+    return this.mapIndicators(adaptationAction?.indicator_list ?? []);
+  }
+
+  private mapMAIndicators(): IndicatorOption[] {
+    const mitigationAction = this.item as MitigationAction;
+    return this.mapIndicators(mitigationAction?.monitoring_information?.indicator ?? []);
+  }
+
+  private mapIndicators(indicators: any[]): IndicatorOption[] {
+    return indicators.map((indicator) => ({
+      id: indicator.id,
+      name: indicator.name,
+    }));
   }
 }

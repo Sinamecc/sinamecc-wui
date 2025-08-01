@@ -5,7 +5,13 @@ import { States } from '@app/@shared/next-state';
 import { AdaptationActionService } from '@app/adaptation-actions/adaptation-actions-service';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import { CHARACTERISTICS_MOCK, MOCK_BARRIERS, TRANSFORMATION_CHANGE, TRANSFORMATIONAL_CATEGORIES } from '../constants';
+import {
+  CHARACTERISTICS_MOCK,
+  getCategoriesScale,
+  MOCK_BARRIERS,
+  TRANSFORMATION_CHANGE,
+  TRANSFORMATIONAL_CATEGORIES,
+} from '../constants';
 import { AdaptationAction } from '@app/adaptation-actions/interfaces/adaptationAction';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { ImpactFormBaseComponent } from '../impact-form-base.component';
@@ -55,6 +61,7 @@ export class TransformationalChangeComponent extends ImpactFormBaseComponent {
     this.watchOptionSelection(this.transformationalChange.processes);
     this.watchOptionSelection(this.transformationalChange.results);
     this.watchOptionSelection(this.transformationalChange.identification);
+    this.categoriesScale = getCategoriesScale(this.adaptation);
   }
 
   get characteristicsToView(): any[] {

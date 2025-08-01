@@ -32,6 +32,7 @@ import { I18nService } from '@app/i18n';
 import { States } from '@app/@shared/next-state';
 import { PermissionService } from '@app/@core/permissions.service';
 import { ImpactEvaluationComponent } from '@app/@shared/form/impact-evaluation/impact-evaluation.component';
+import { TransformationalChangeComponent } from '@app/@shared/form/transformational-change/transformational-change.component';
 
 @Component({
   selector: 'app-mitigation-action-form-flow',
@@ -51,6 +52,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   @ViewChild(ReportingClimateActionFormComponent)
   reportingClimateFormComponent: ReportingClimateActionFormComponent;
   impactEvaluationFormComponent: ImpactEvaluationComponent;
+  transformationalChange: TransformationalChangeComponent;
   state: States;
 
   @Input()
@@ -126,6 +128,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
         this.impactFrm,
         this.reportingClimateFrmComponent,
         this.impactEvaluationFrm,
+        this.transformationalChange,
       ]),
     });
   }
