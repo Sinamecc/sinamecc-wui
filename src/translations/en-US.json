@@ -846,7 +846,11 @@
       "financialInvestment": "Financial and investment",
       "marketEconomicIncentives": "Market/Economic incentives",
       "structuralInequalities": "Structural inequalities",
-      "other": "Other"
+      "other": "Other",
+      "technology": "Technology",
+      "changeAgents": "Change agents",
+      "incentives": "Incentives",
+      "rules": "Rules"
     },
     "includeImpactInfo": "Do you want to include the identification of impacts on Sustainable Development and Transformational Change for this record?",
     "includeImpactInfoTitle": "Include Impact Identification",
@@ -871,6 +875,7 @@
     "optional": "Note that although the information on Sustainable Development and Transformational Change impacts is voluntary, if you choose to complete it, all mandatory fields must be filled in.",
     "transformationalChange": "Identification of impacts on Transformational Change",
     "general": "General impact identification",
+    "characteristic": "Characteristics",
     "characteristics": "Characteristics and impacts on Transformational Change",
     "popUp": "In this section, you will record your action’s contributions to generating a structural, sustained, irreversible, and long-term change in Costa Rican society.",
     "processes": "Processes",

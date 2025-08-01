@@ -52,6 +52,13 @@ export const IMPACT_EVALUATION = {
   results: 1,
 };
 
+export const TRANSFORMATIONAL_CATEGORIES = {
+  technology: 1,
+  changeAgents: 2,
+  incentives: 3,
+  rules: 4,
+};
+
 // MOCK: DELETE: TODO
 export const MOCK_CATEGORY_GROUP = [
   {
@@ -166,5 +173,56 @@ export const MOCK_CATEGORIES: Category[] = [
     description: null,
     created: '2025-03-07T07:40:00Z',
     updated: '2025-07-26T10:15:00Z',
+  },
+];
+
+export const CHARACTERISTICS_MOCK = [
+  {
+    category: TRANSFORMATIONAL_CATEGORIES.technology,
+    name: 'Acceso a tecnologías limpias',
+  },
+  {
+    category: TRANSFORMATIONAL_CATEGORIES.technology,
+    name: 'Implementación de soluciones digitales',
+  },
+  {
+    category: TRANSFORMATIONAL_CATEGORIES.technology,
+    name: 'Innovación en procesos productivos',
+  },
+  {
+    category: TRANSFORMATIONAL_CATEGORIES.changeAgents,
+    name: 'Participación activa de comunidades',
+  },
+  {
+    category: TRANSFORMATIONAL_CATEGORIES.changeAgents,
+    name: 'Liderazgo local fortalecido',
+  },
+  {
+    category: TRANSFORMATIONAL_CATEGORIES.changeAgents,
+    name: 'Colaboración interinstitucional',
+  },
+  {
+    category: TRANSFORMATIONAL_CATEGORIES.incentives,
+    name: 'Subsidios verdes',
+  },
+  {
+    category: TRANSFORMATIONAL_CATEGORIES.incentives,
+    name: 'Bonificaciones por resultados',
+  },
+  {
+    category: TRANSFORMATIONAL_CATEGORIES.incentives,
+    name: 'Reducción de tasas o impuestos',
+  },
+  {
+    category: TRANSFORMATIONAL_CATEGORIES.rules,
+    name: 'Reformas normativas específicas',
+  },
+  {
+    category: TRANSFORMATIONAL_CATEGORIES.rules,
+    name: 'Actualización de planes sectoriales',
+  },
+  {
+    category: TRANSFORMATIONAL_CATEGORIES.rules,
+    name: 'Creación de nuevas regulaciones',
   },
 ];

@@ -1,22 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { States } from '@app/@shared/next-state';
 import { AdaptationActionService } from '@app/adaptation-actions/adaptation-actions-service';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  CATEGORIES_SCALE,
-  IMPACT_EVAL_CATEGORIES,
-  IMPACT_SCALE,
-  IMPACT_SCALE_TERM,
-  MOCK_BARRIERS,
-  MOCK_CATEGORIES,
-  OTHER,
-  TRANSFORMATION_CHANGE,
-} from '../constants';
+import { CHARACTERISTICS_MOCK, MOCK_BARRIERS, TRANSFORMATION_CHANGE, TRANSFORMATIONAL_CATEGORIES } from '../constants';
 import { AdaptationAction } from '@app/adaptation-actions/interfaces/adaptationAction';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
+import { ImpactFormBaseComponent } from '../impact-form-base.component';
 
 @Component({
   selector: 'app-transformational-change',
@@ -24,7 +16,7 @@ import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
   styleUrl: './transformational-change.component.scss',
   standalone: false,
 })
-export class TransformationalChangeComponent {
+export class TransformationalChangeComponent extends ImpactFormBaseComponent {
   @Output() onComplete = new EventEmitter<boolean>();
   @Output() state = new EventEmitter<States>();
   @Input() stepper: any;
@@ -33,20 +25,20 @@ export class TransformationalChangeComponent {
   item: AdaptationAction | MitigationAction;
   form: UntypedFormGroup;
 
-  other = OTHER;
-  impactEvalCategories = IMPACT_EVAL_CATEGORIES;
-  impactScale = IMPACT_SCALE;
-  impactScaleTerm = IMPACT_SCALE_TERM;
-  categoriesScale = CATEGORIES_SCALE;
-  processesCategories = MOCK_CATEGORIES;
   transformationalChange = TRANSFORMATION_CHANGE;
+  transCategories = TRANSFORMATIONAL_CATEGORIES;
+
+  // TODO: delete mocks
   barriers = MOCK_BARRIERS;
+  characteristics = CHARACTERISTICS_MOCK;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
     private translateService: TranslateService,
     private snackBar: MatSnackBar,
-  ) {}
+  ) {
+    super(formBuilder);
+  }
 
   ngOnInit() {
     if (!this.adaptation) {
@@ -65,6 +57,13 @@ export class TransformationalChangeComponent {
     this.watchOptionSelection(this.transformationalChange.identification);
   }
 
+  get characteristicsToView(): any[] {
+    const selectedCategory: number[] =
+      this.form?.value?.formArray?.[this.transformationalChange.processes]?.categoryCtrl;
+    if (!selectedCategory || selectedCategory.length === 0) return [];
+    return this.characteristics.filter((group) => selectedCategory.includes(group.category));
+  }
+
   private createForm() {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
@@ -79,12 +78,13 @@ export class TransformationalChangeComponent {
           addressedCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
-          optionCtrl: ['', Validators.required],
+          categoryCtrl: ['', Validators.required],
+          optionCtrl: ['', Validators.required], // characteristic
           optionOtherCtrl: this.formBuilder.array([]),
           categoriesCtrl: this.formBuilder.array([]),
         }),
         this.formBuilder.group({
-          optionCtrl: ['', Validators.required],
+          optionCtrl: ['', Validators.required], // category
           impactScaleCtrl: ['', Validators.required],
           impactScaleTermCtrl: ['', Validators.required],
           categoriesCtrl: this.formBuilder.array([]),
@@ -95,99 +95,5 @@ export class TransformationalChangeComponent {
 
   private updateForm() {}
 
-  get formArray(): FormArray {
-    return this.form.get('formArray') as FormArray;
-  }
-
   submitForm() {}
-
-  arrayControls(section: number, control: string) {
-    const sectionGroup = this.formArray.at(section) as UntypedFormGroup;
-    const categories = sectionGroup.get(control) as FormArray;
-    return categories.controls;
-  }
-
-  private getSection(section: number) {
-    const formArray = this.form.get('formArray') as FormArray;
-    const sectionGroup = formArray.at(section) as UntypedFormGroup;
-    return sectionGroup;
-  }
-
-  addAnotherOption(section: number) {
-    const sectionGroup = this.getSection(section);
-    const othersArray = sectionGroup.get('optionOtherCtrl') as FormArray;
-    this.addOtherOption(othersArray);
-  }
-
-  addOtherOption(othersArray: FormArray) {
-    othersArray.push(
-      this.formBuilder.group({
-        name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-        description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
-        indicator: ['', [Validators.required]],
-        indicatorOther: ['', [Validators.maxLength(200)]],
-        baseValue: ['', Validators.maxLength(70)],
-        expectedValue: ['', Validators.maxLength(70)],
-        accumulatedValue: ['', Validators.maxLength(70)],
-      }),
-    );
-  }
-
-  removeOtherOption(index: number, section: number) {
-    const sectionGroup = this.getSection(section);
-    const othersArray = sectionGroup.get('optionOtherCtrl') as FormArray;
-    othersArray.removeAt(index);
-  }
-
-  onOtherOptionChange(event: any, section: number) {
-    const sectionGroup = this.getSection(section);
-    const othersArray = sectionGroup.get('optionOtherCtrl') as FormArray;
-    if (event.includes(this.other) && !othersArray.length) {
-      this.addOtherOption(othersArray);
-    } else if (!event.includes(this.other)) {
-      while (othersArray.length > 0) {
-        othersArray.removeAt(0);
-      }
-    }
-  }
-
-  onScaleChange(event: any) {
-    const value = event.value;
-    const sectionGroup = this.getSection(this.transformationalChange.results);
-
-    if (value === this.impactEvalCategories.SCALE) {
-      sectionGroup?.get('impactScaleCtrl')?.setValidators([Validators.required]);
-      sectionGroup?.get('impactScaleTermCtrl')?.clearValidators();
-    } else if (value === this.impactEvalCategories.SCALE_TERM) {
-      sectionGroup?.get('impactScaleCtrl')?.clearValidators();
-      sectionGroup?.get('impactScaleTermCtrl')?.setValidators([Validators.required]);
-    }
-    sectionGroup?.get('impactScaleCtrl')?.updateValueAndValidity();
-    sectionGroup?.get('impactScaleTermCtrl')?.updateValueAndValidity();
-  }
-
-  private watchOptionSelection(section: number) {
-    const sectionGroup = this.getSection(section);
-    const categoryCtrl = sectionGroup.get('optionCtrl');
-    const categoriesArray = sectionGroup.get('categoriesCtrl') as FormArray;
-    categoryCtrl?.valueChanges.subscribe((values: any[]) => {
-      while (categoriesArray.length > 0) {
-        categoriesArray.removeAt(0);
-      }
-
-      values?.forEach((value) => {
-        categoriesArray.push(
-          this.formBuilder.group({
-            name: [value.name],
-            description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
-            indicator: ['', [Validators.required]],
-            indicatorOther: ['', [Validators.maxLength(200)]],
-            baseValue: ['', Validators.maxLength(70)],
-            expectedValue: ['', Validators.maxLength(70)],
-            accumulatedValue: ['', Validators.maxLength(70)],
-          }),
-        );
-      });
-    });
-  }
 }
