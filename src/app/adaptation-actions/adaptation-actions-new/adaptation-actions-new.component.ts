@@ -48,7 +48,7 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
   adaptationAction: AdaptationAction;
   edit: boolean;
   state: States;
-  wantsImpactEval: boolean = true;
+  wantsImpactEval: boolean = false;
   isLoading = false;
   aaType: AAType | null;
   completed: Record<string, boolean> = {
@@ -91,8 +91,7 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
   }
 
   get shouldShowImpactEvalStep() {
-    if (!this.state || !this.wantsImpactEval) return false;
-    return this.permissions.canEditAA(this.state) || this.permissions.canEditAcceptedAA(this.state);
+    return this.wantsImpactEval && this.permissions.isAAProvider();
   }
 
   handleAssistantOpen() {
@@ -108,6 +107,7 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
       ...this.completed,
       [key]: completed,
     };
+    this.cdRef.detectChanges();
   }
 
   loadAdaptationActions(id: string) {

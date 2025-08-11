@@ -50,7 +50,7 @@
           <mat-icon>visibility</mat-icon>
         </button>
 
-        <button *ngIf="canEdit(element.fsm_state.state)" mat-icon-button color="accent" (click)="edit(element.id)">
+        <button *ngIf="canEdit()" mat-icon-button color="accent" (click)="edit(element.id)">
           <mat-icon>edit</mat-icon>
         </button>
 

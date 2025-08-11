@@ -118,10 +118,7 @@
           </mat-step>
 
           <!-- section 6 -->
-          <mat-step
-            *ngIf="!state || permissions.canEditAA(state) || permissions.canEditAcceptedAA(state)"
-            [completed]="completed.actionImpact"
-          >
+          <mat-step *ngIf="permissions.isAAProvider()" [completed]="completed.actionImpact">
             <app-progress-bar [completed]="completed"></app-progress-bar>
             <ng-template matStepLabel>
               <span translate>adaptationAction.form6.title</span>

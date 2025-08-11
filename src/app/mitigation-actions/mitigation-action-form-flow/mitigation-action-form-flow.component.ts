@@ -82,8 +82,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
   }
 
   get shouldShowImpactEvalStep() {
-    if (!this.state || !this.wantsImpactEval) return false;
-    return this.permissions.canEditMA(this.state) || this.permissions.canEditAcceptedMA(this.state);
+    return this.wantsImpactEval && this.permissions.isMAProvider();
   }
 
   constructor(

@@ -87,8 +87,8 @@ export class MitigationActionsListComponent implements OnInit {
     });
   }
 
-  canEdit(state: States): boolean {
-    return this.permissions.canEditMA(state) || this.permissions.canEditAcceptedMA(state);
+  canEdit(): boolean {
+    return this.permissions.isMAProvider();
   }
 
   canDelete(state: States): boolean {

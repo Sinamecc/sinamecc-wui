@@ -707,7 +707,7 @@
     <app-change-log-view [reviews]="reviews"></app-change-log-view>
     <div class="box">
       <button
-        *ngIf="permissions.canEditMA(state)"
+        *ngIf="permissions.isMAProvider()"
         mat-raised-button
         color="primary"
         (click)="onEdit(mitigationAction.id)"

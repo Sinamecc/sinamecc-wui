@@ -44,8 +44,8 @@ export class AdaptationActionsListComponent implements OnInit {
     this.router.navigate([`adaptation/actions/${uuid}/update`], { replaceUrl: true });
   }
 
-  canEdit(state: States): boolean {
-    return this.permissions.canEditAA(state) || this.permissions.canEditAcceptedAA(state);
+  canEdit(): boolean {
+    return this.permissions.isAAProvider();
   }
 
   canDelete(state: States): boolean {

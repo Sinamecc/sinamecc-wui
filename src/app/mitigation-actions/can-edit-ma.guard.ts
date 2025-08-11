@@ -25,10 +25,7 @@ export class CanEditMAGuard implements CanActivate {
         next: (ma) => {
           const currentState = ma.fsm_state.state as States;
 
-          const canEdit =
-            this.permissionService.canEditMA(currentState) || this.permissionService.canEditAcceptedMA(currentState);
-
-          if (!canEdit) {
+          if (!this.permissionService.isMAProvider()) {
             resolve(this.router.createUrlTree(['/unauthorized']));
             return;
           }
