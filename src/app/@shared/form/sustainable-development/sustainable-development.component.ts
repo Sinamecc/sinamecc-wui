@@ -18,6 +18,7 @@ import { AdaptationAction } from '@app/adaptation-actions/interfaces/adaptationA
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { ImpactEvaluationComponent } from '../impact-evaluation.component';
 import { ImpactEvaluationService } from '../impact-evaluation.service';
+import { getImpactEvalCategoryKey } from '../utils';
 
 @Component({
   selector: 'app-sustainable-development',
@@ -174,32 +175,49 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
     const categorySection = this.form.value.formArray[this.impactEvaluation.categories];
     return [
       {
-        categories: categorySection.optionCtrl.map((cat) => cat.id),
+        category_section: categorySection.categoriesCtrl.map((cat) => ({
+          category: cat.id,
+          description: cat.description,
+        })),
+        other: categorySection.optionOtherCtrl.map((cat) => ({
+          name: cat.name,
+          description: cat.description,
+        })),
         impact_type: categorySection.impactTypeCtrl,
         pertinent: categorySection.pertinentCtrl,
         relevant: categorySection.relevantCtrl,
         description: null,
-        other: null,
       },
     ];
   }
 
   buildResultPayload() {
     const resultSection = this.form.value.formArray[this.impactEvaluation.results];
-    return resultSection.optionCtrl.map((option) => {
-      let categoryResult = [];
-      if (option.code === this.impactEvalCategories.SCALE) {
-        categoryResult = resultSection.impactScaleCtrl;
-      } else if (option.code === this.impactEvalCategories.SCALE_TERM) {
-        categoryResult = resultSection.impactScaleTermCtrl;
-      }
+    return [
+      {
+        scale: resultSection.categoriesCtrl.map((option) => {
+          let categoryResult = [];
+          if (option.code === this.impactEvalCategories.SCALE) {
+            categoryResult = resultSection.impactScaleCtrl.map((key) => ({
+              code: key,
+              name: getImpactEvalCategoryKey(key),
+            }));
+          } else if (option.code === this.impactEvalCategories.SCALE_TERM) {
+            categoryResult = resultSection.impactScaleTermCtrl.map((key) => ({
+              code: key,
+              name: getImpactEvalCategoryKey(key),
+            }));
+          }
 
-      return {
-        code: option.code,
-        name: option.name,
-        category_result: categoryResult,
-      };
-    });
+          return {
+            code: option.code,
+            name: option.name,
+            category_result: categoryResult,
+            description: option.description,
+          };
+        }),
+      },
+    ];
   }
 
   buildPayload() {

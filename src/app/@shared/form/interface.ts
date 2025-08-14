@@ -13,12 +13,17 @@ export interface ScalePayload {
 }
 
 export interface CategoryOptionPayload {
-  categories: number[];
+  category_section: {
+    category: number;
+    description: string;
+  }[];
+  other: {
+    name: string;
+    description: string;
+  }[];
   impact_type: boolean;
   pertinent: boolean;
   relevant: boolean;
-  description: string;
-  other: string;
 }
 
 export interface SustainableDevelopmentImpactResult {

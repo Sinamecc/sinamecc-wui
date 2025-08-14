@@ -102,6 +102,8 @@ export abstract class ImpactEvaluationComponent {
         .forEach((value) => {
           categoriesArray.push(
             this.fb.group({
+              id: [value.id],
+              code: [value.code],
               name: [value.name],
               description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
               indicator: ['', [Validators.required]],
