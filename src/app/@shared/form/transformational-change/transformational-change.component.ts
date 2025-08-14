@@ -79,19 +79,19 @@ export class TransformationalChangeComponent extends ImpactFormBaseComponent {
           visionMidCtrl: ['', [Validators.required, Validators.minLength(300), Validators.maxLength(1000)]],
           visionLongCtrl: ['', [Validators.required, Validators.minLength(300), Validators.maxLength(1000)]],
           chainResultCtrl: ['', Validators.required],
-          optionCtrl: ['', Validators.required], // barriers
+          optionCtrl: [[], Validators.required], // barriers
           optionOtherCtrl: this.formBuilder.array([]), // barriers other
           categoriesCtrl: this.formBuilder.array([]), // barrier description
           addressedCtrl: ['', Validators.required],
         }),
         this.formBuilder.group({
           categoryCtrl: ['', Validators.required],
-          optionCtrl: ['', Validators.required], // characteristic
+          optionCtrl: [[], Validators.required], // characteristic
           optionOtherCtrl: this.formBuilder.array([]),
           categoriesCtrl: this.formBuilder.array([]),
         }),
         this.formBuilder.group({
-          optionCtrl: ['', Validators.required], // category
+          optionCtrl: [[], Validators.required], // category
           impactScaleCtrl: ['', Validators.required],
           impactScaleTermCtrl: ['', Validators.required],
           categoriesCtrl: this.formBuilder.array([]),

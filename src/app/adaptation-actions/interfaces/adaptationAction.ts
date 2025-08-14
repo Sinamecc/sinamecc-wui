@@ -195,7 +195,10 @@ export interface AdaptationAction {
   next_state?: State[];
   fsm_state?: State;
   general_report?: any;
-  sustainable_development_impact?: any;
+  // section 7
+  result?: any;
+  category_option?: any;
+  // section 8
 }
 
 export interface Province {

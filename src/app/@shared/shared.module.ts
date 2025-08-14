@@ -28,6 +28,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { ImpactEvaluationComponent } from './form/impact-evaluation/impact-evaluation.component';
 import { TransformationalChangeComponent } from './form/transformational-change/transformational-change.component';
 import { CategoryComponent } from './form/category/category.component';
+import { ImpactEvaluationService } from './form/impact-evaluation.service';
 
 @NgModule({
   imports: [MaterialModule, CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
@@ -54,7 +55,7 @@ import { CategoryComponent } from './form/category/category.component';
     TransformationalChangeComponent,
     CategoryComponent,
   ],
-  providers: [UploadProposalService, UpdateStatusService, ViewPdfService, S3Service],
+  providers: [UploadProposalService, UpdateStatusService, ViewPdfService, S3Service, ImpactEvaluationService],
   exports: [
     LoaderComponent,
     InputFileComponent,

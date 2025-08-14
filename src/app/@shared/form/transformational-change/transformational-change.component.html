@@ -298,7 +298,7 @@
       <mat-form-field class="field-ppcn mt-4" appearance="fill">
         <mat-label><span translate>impactEvaluation.category</span></mat-label>
         <mat-select
-          #category
+          #categoryScaleSelect
           formControlName="optionCtrl"
           multiple
           (valueChange)="onScaleChange($event, transformationalChange.processes)"
@@ -311,7 +311,7 @@
       </mat-form-field>
 
       <!-- 8.2.2.1.1  -->
-      <ng-container *ngIf="category.value.includes(impactEvalCategories.SCALE)">
+      <ng-container *ngIf="hasImpactEvalCategory(categoryScaleSelect.value, impactEvalCategories.SCALE)">
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>impactEvaluation.impactScale</mat-label>
           <mat-select formControlName="impactScaleCtrl" multiple>
@@ -333,7 +333,7 @@
       </ng-container>
 
       <!-- 8.2.2.1.2 -->
-      <ng-container *ngIf="category.value.includes(impactEvalCategories.SCALE_TERM)">
+      <ng-container *ngIf="hasImpactEvalCategory(categoryScaleSelect.value, impactEvalCategories.SCALE_TERM)">
         <mat-form-field class="field-ppcn" appearance="fill">
           <mat-label translate>impactEvaluation.impactScaleTerm</mat-label>
           <mat-select formControlName="impactScaleTermCtrl" multiple>

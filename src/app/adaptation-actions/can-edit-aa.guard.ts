@@ -23,7 +23,6 @@ export class CanEditAAGuard implements CanActivate {
       this.adaptationActionService.loadOneAdaptationActions(id).subscribe({
         next: (aa) => {
           const currentState = aa.fsm_state.state as States;
-
           if (!this.permissionService.isAAProvider()) {
             resolve(this.router.createUrlTree(['/unauthorized']));
             return;

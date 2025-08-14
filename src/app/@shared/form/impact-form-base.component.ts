@@ -8,12 +8,19 @@ export abstract class ImpactFormBaseComponent {
   impactEvalCategories = IMPACT_EVAL_CATEGORIES;
   impactScale = IMPACT_SCALE;
   impactScaleTerm = IMPACT_SCALE_TERM;
-  categoriesScale = [];
+  categoriesScale: {
+    code: string;
+    name: string;
+  }[] = [];
 
   constructor(protected fb: UntypedFormBuilder) {}
 
   get formArray(): FormArray {
     return this.form.get('formArray') as FormArray;
+  }
+
+  hasImpactEvalCategory(values: any[], code: string) {
+    return values.some((value) => value.code === code);
   }
 
   arrayControls(section: number, control: string) {

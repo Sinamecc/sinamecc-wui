@@ -58,6 +58,8 @@ export class AdaptationActionReviewComponent implements OnInit {
   }
 
   onSubmission(context: any) {
+    // TODO: fix this
+    console.log(context);
     this.formData.append('comment', context.descriptionCtrl);
     this.formData.append('fsm_state', context.context.statusCtrl.state);
     this.formData.append('user', String(this.credentialsService.credentials.id));

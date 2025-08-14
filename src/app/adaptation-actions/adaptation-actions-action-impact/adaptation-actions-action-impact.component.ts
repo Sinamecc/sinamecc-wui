@@ -51,8 +51,8 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
-      this.state = this.adaptationAction?.fsm_state.state as States;
-      if (!this.type) this.type = this.adaptationAction.adaptation_action_information?.adaptation_action_type;
+      this.state = this.adaptationAction?.fsm_state?.state as States;
+      if (!this.type) this.type = this.adaptationAction?.adaptation_action_information?.adaptation_action_type?.code;
       if (this.adaptationAction && this.adaptationAction.action_impact?.id) {
         this.onComplete.emit(true);
       }
@@ -71,8 +71,12 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['type'] && this.form) {
-      this.setValidators(this.type !== AAType.A);
+      this.setValidators(this.typeStr !== AAType.A);
     }
+  }
+
+  get typeStr(): string {
+    return this.type != null ? String(this.type) : '';
   }
 
   private isImpactEvalOnly(): boolean {
@@ -232,8 +236,8 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   }
 
   private handleEditableAASubmission(): void {
-    const isTypeA = this.type === this.types.A;
-
+    const isTypeA = this.type.toString() === this.types.A;
+    console.log(isTypeA, this.isEmpty());
     if (isTypeA && this.isEmpty()) {
       this.handleSubmissionSuccess();
       return;

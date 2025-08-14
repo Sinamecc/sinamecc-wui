@@ -91,7 +91,8 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
   }
 
   get shouldShowImpactEvalStep() {
-    return this.wantsImpactEval && this.permissions.isAAProvider();
+    if (!this.wantsImpactEval) return false;
+    return this.permissions.isAAProvider();
   }
 
   handleAssistantOpen() {
