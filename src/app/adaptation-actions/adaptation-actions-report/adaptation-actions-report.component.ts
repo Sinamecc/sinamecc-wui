@@ -21,6 +21,7 @@ import {
 import { AAType, Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { firstValueFrom } from 'rxjs';
+import { PNA_RELATIONSHIP } from '../constants';
 
 @Component({
   selector: 'app-adaptation-actions-report',
@@ -55,6 +56,7 @@ export class AdaptationActionsReportComponent implements OnInit {
   cantonesToShow: any[] = [];
   districtsList: District[] = [];
   cdistrictsToShow: any[] = [];
+  pnaOptions = PNA_RELATIONSHIP;
 
   adaptationActionMap = {
     '1': 'A',
@@ -142,11 +144,9 @@ export class AdaptationActionsReportComponent implements OnInit {
     });
 
     // section 4
-    this.form
-      .get('formArray')
-      .get([3])
-      .get('adaptationActionInstrumentCtrl')
-      .setValidators([Validators.required, Validators.maxLength(250)]);
+    const section4 = this.form.get('formArray').get([3]);
+    section4.get('adaptationActionInstrumentCtrl').setValidators([Validators.required]);
+    section4.get('pnaRelationshipCtrl').setValidators([Validators.required, Validators.maxLength(250)]);
 
     // section 6
     const section6 = this.form.get('formArray').get([5]);
@@ -172,11 +172,9 @@ export class AdaptationActionsReportComponent implements OnInit {
     });
 
     // section 4
-    this.form
-      .get('formArray')
-      .get([3])
-      .get('adaptationActionInstrumentCtrl')
-      .setValidators([Validators.maxLength(250)]);
+    const section4 = this.form.get('formArray').get([3]);
+    section4.get('adaptationActionInstrumentCtrl').setValidators([]);
+    section4.get('pnaRelationshipCtrl').setValidators([Validators.maxLength(250)]);
 
     // section 6
     const section6 = this.form.get('formArray').get([5]);
@@ -204,6 +202,7 @@ export class AdaptationActionsReportComponent implements OnInit {
     // section 4
     const section4 = this.form.get('formArray').get([3]);
     section4.get('adaptationActionInstrumentCtrl').updateValueAndValidity();
+    section4.get('pnaRelationshipCtrl').updateValueAndValidity();
 
     // section 6
     const section6 = this.form.get('formArray').get([5]);
@@ -399,6 +398,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       }),
       this.formBuilder.group({
         adaptationActionInstrumentCtrl: [''],
+        pnaRelationshipCtrl: [''],
       }),
       this.formBuilder.group({
         adaptationActionClimateThreatCtrl: ['', Validators.required],
@@ -587,6 +587,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       }),
       this.formBuilder.group({
         adaptationActionInstrumentCtrl: [this.adaptationActionUpdated.instrument.name],
+        pnaRelationshipCtrl: [], // TODO: add BE
       }),
       this.formBuilder.group({
         adaptationActionClimateThreatCtrl: [
@@ -698,6 +699,7 @@ export class AdaptationActionsReportComponent implements OnInit {
 
       instrument: {
         name: this.clean(this.form.value.formArray[3].adaptationActionInstrumentCtrl),
+        pnaRelationship: this.form.value.formArray[3].pnaRelationshipCtrl,
       },
 
       climate_threat: {

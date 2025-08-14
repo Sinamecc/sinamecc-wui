@@ -360,6 +360,16 @@
         >
           <span translate>general.optional</span>
         </div>
+
+        <label translate>adaptationAction.</label>
+        <mat-form-field class="field-ppcn">
+          <mat-select formControlName="pnaRelationshipCtrl">
+            <mat-option *ngFor="let rel of pnaOptions" [value]="rel.id" multiple>
+              <label translate>{{ rel.label | translate }}</label>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <label translate>adaptationAction.form2.namePlanningInstrument</label>
         <mat-form-field class="field-ppcn">
           <input type="text" matInput formControlName="adaptationActionInstrumentCtrl" />
