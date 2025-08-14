@@ -25,10 +25,10 @@ import { UploadButtonComponent } from './upload-button/upload-button.component';
 import { AmountInputComponent } from './amount-input/amount-input.component';
 import { FileListComponent } from './file-list/file-list.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-import { ImpactEvaluationComponent } from './form/impact-evaluation/impact-evaluation.component';
 import { TransformationalChangeComponent } from './form/transformational-change/transformational-change.component';
 import { CategoryComponent } from './form/category/category.component';
 import { ImpactEvaluationService } from './form/impact-evaluation.service';
+import { SustainableDevelopmentComponent } from './form/sustainable-development/sustainable-development.component';
 
 @NgModule({
   imports: [MaterialModule, CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
@@ -51,7 +51,7 @@ import { ImpactEvaluationService } from './form/impact-evaluation.service';
     FileListComponent,
     AmountInputComponent,
     UnauthorizedComponent,
-    ImpactEvaluationComponent,
+    SustainableDevelopmentComponent,
     TransformationalChangeComponent,
     CategoryComponent,
   ],
@@ -75,7 +75,7 @@ import { ImpactEvaluationService } from './form/impact-evaluation.service';
     FileListComponent,
     AmountInputComponent,
     UnauthorizedComponent,
-    ImpactEvaluationComponent,
+    SustainableDevelopmentComponent,
     TransformationalChangeComponent,
     CategoryComponent,
   ],

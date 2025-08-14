@@ -16,16 +16,16 @@ import { States } from '@app/@shared/next-state';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdaptationAction } from '@app/adaptation-actions/interfaces/adaptationAction';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
-import { ImpactFormBaseComponent } from '../impact-form-base.component';
+import { ImpactEvaluationComponent } from '../impact-evaluation.component';
 import { ImpactEvaluationService } from '../impact-evaluation.service';
 
 @Component({
-  selector: 'app-impact-evaluation',
-  templateUrl: './impact-evaluation.component.html',
-  styleUrl: './impact-evaluation.component.scss',
+  selector: 'app-sustainable-development',
+  templateUrl: './sustainable-development.component.html',
+  styleUrl: './sustainable-development.component.scss',
   standalone: false,
 })
-export class ImpactEvaluationComponent extends ImpactFormBaseComponent {
+export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
   @Output() onComplete = new EventEmitter<boolean>();
   @Output() state = new EventEmitter<States>();
   @Input() stepper: any;

@@ -14,7 +14,7 @@ import {
 } from '../constants';
 import { AdaptationAction } from '@app/adaptation-actions/interfaces/adaptationAction';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
-import { ImpactFormBaseComponent } from '../impact-form-base.component';
+import { ImpactEvaluationComponent } from '../impact-evaluation.component';
 
 @Component({
   selector: 'app-transformational-change',
@@ -22,7 +22,7 @@ import { ImpactFormBaseComponent } from '../impact-form-base.component';
   styleUrl: './transformational-change.component.scss',
   standalone: false,
 })
-export class TransformationalChangeComponent extends ImpactFormBaseComponent {
+export class TransformationalChangeComponent extends ImpactEvaluationComponent {
   @Output() onComplete = new EventEmitter<boolean>();
   @Output() state = new EventEmitter<States>();
   @Input() stepper: any;

@@ -31,8 +31,8 @@ import { ReportingClimateActionFormComponent } from '../reporting-climate-action
 import { I18nService } from '@app/i18n';
 import { States } from '@app/@shared/next-state';
 import { PermissionService } from '@app/@core/permissions.service';
-import { ImpactEvaluationComponent } from '@app/@shared/form/impact-evaluation/impact-evaluation.component';
 import { TransformationalChangeComponent } from '@app/@shared/form/transformational-change/transformational-change.component';
+import { SustainableDevelopmentComponent } from '@app/@shared/form/sustainable-development/sustainable-development.component';
 
 @Component({
   selector: 'app-mitigation-action-form-flow',
@@ -51,7 +51,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
 
   @ViewChild(ReportingClimateActionFormComponent)
   reportingClimateFormComponent: ReportingClimateActionFormComponent;
-  impactEvaluationFormComponent: ImpactEvaluationComponent;
+  impactEvaluationFormComponent: SustainableDevelopmentComponent;
   transformationalChange: TransformationalChangeComponent;
   state: States;
 

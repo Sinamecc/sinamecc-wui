@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AAType } from '../interfaces/catalogs';
 import { PermissionService } from '@app/@core/permissions.service';
 import { States } from '@app/@shared/next-state';
-import { ImpactEvaluationComponent } from '@app/@shared/form/impact-evaluation/impact-evaluation.component';
+import { SustainableDevelopmentComponent } from '@app/@shared/form/sustainable-development/sustainable-development.component';
 
 @Component({
   selector: 'app-adaptation-actions-new',
@@ -43,7 +43,7 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
 
   @ViewChild(AdaptationActionsActionImpactComponent)
   impactForm: AdaptationActionsActionImpactComponent;
-  impactEvaluationFormComponent: ImpactEvaluationComponent;
+  impactEvaluationFormComponent: SustainableDevelopmentComponent;
   mainGroup: UntypedFormGroup;
   adaptationAction: AdaptationAction;
   edit: boolean;

@@ -237,7 +237,6 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
 
   private handleEditableAASubmission(): void {
     const isTypeA = this.type.toString() === this.types.A;
-    console.log(isTypeA, this.isEmpty());
     if (isTypeA && this.isEmpty()) {
       this.handleSubmissionSuccess();
       return;

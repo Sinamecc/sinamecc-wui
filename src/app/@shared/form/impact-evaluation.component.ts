@@ -1,7 +1,7 @@
 import { UntypedFormBuilder, UntypedFormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
 import { IMPACT_EVAL_CATEGORIES, IMPACT_SCALE, IMPACT_SCALE_TERM, OTHER } from './constants';
 
-export abstract class ImpactFormBaseComponent {
+export abstract class ImpactEvaluationComponent {
   form: UntypedFormGroup;
 
   other = OTHER;
