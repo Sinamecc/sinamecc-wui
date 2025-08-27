@@ -67,6 +67,10 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     if (this.isImpactEvalOnly()) {
       this.changePermissions();
     }
+
+    if (this.type) {
+      this.setValidators(this.typeStr !== AAType.A);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -272,7 +276,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
       const group = formArray?.at(0) as FormGroup;
 
       const hasAnnex = !!this.annexSupportingFile;
-      const isTypeA = this.type === this.types.A;
+      const isTypeA = this.typeStr === this.types.A;
 
       const groupIsComplete = group && group.valid && !this.isEmpty() && hasAnnex;
       const groupCondition = isTypeA ? this.isEmpty() || groupIsComplete : groupIsComplete;
