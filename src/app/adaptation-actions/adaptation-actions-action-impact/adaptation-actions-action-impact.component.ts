@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { AbstractControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
-import { ODS, TemporalityImpact } from '../interfaces/catalogs';
+import { AAType, ODS, TemporalityImpact } from '../interfaces/catalogs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 @Component({
   selector: 'app-adaptation-actions-action-impact',
@@ -13,16 +14,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: false,
 })
 export class AdaptationActionsActionImpactComponent implements OnInit {
+  @Input() type: AAType;
+  @Output() onComplete = new EventEmitter<boolean>();
+
   form: UntypedFormGroup;
   durationInSeconds = 3;
   adaptationAction: AdaptationAction;
   temporalityImpact: TemporalityImpact[] = [];
   generalImpact: TemporalityImpact[] = [];
   ods: ODS[];
-  annexSupportingFile: any;
+  annexSupportingFile: FileUpload;
   @Input() edit: boolean;
   @Input() adaptationActionUpdated: AdaptationAction;
   stateLabel = 'submitted';
+  types = AAType;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -32,6 +37,9 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
+      if (this.adaptationAction && this.adaptationAction.action_impact?.id) {
+        this.onComplete.emit(true);
+      }
     });
   }
 
@@ -40,6 +48,48 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     this.getTemporallyInpacts();
     this.createForm();
     this.loadODS();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['type'] && this.form) {
+      const type = changes['type'].currentValue;
+
+      if (type === AAType.A) {
+        this.removeValidators();
+      } else {
+        this.resetValidators();
+      }
+      this.updateValidity();
+    }
+  }
+
+  private removeValidators() {
+    const section = this.form.get('formArray').get([0]);
+    section.get('adaptationTemporalityImpactCtrl').setValidators(null);
+    section.get('genderEquityElementsCtrl').setValidators(null);
+    section.get('actionNegativeImpactCtrl').setValidators(null);
+    section.get('objectivesCtrl').setValidators(null);
+    section.get('impactsAccordingIndicatorsCtrl').setValidators(null);
+    section.get('genderEquityElementsQuestionCtrl').setValidators(null);
+    section.get('AnnexSupportingInformationCtrl').setValidators(null);
+  }
+
+  private resetValidators() {
+    const section = this.form.get('formArray').get([0]);
+    section.get('adaptationTemporalityImpactCtrl').setValidators(Validators.required);
+    section.get('genderEquityElementsCtrl').setValidators(Validators.required);
+    section.get('actionNegativeImpactCtrl').setValidators(Validators.required);
+    section.get('objectivesCtrl').setValidators(Validators.required);
+    section.get('impactsAccordingIndicatorsCtrl').setValidators(null);
+    section.get('genderEquityElementsQuestionCtrl').setValidators(null);
+    section.get('AnnexSupportingInformationCtrl').setValidators(null);
+  }
+
+  private updateValidity() {
+    const section = this.form.get('formArray').get([0]);
+    Object.keys((section as FormGroup).controls).forEach((controlName) => {
+      section.get(controlName).updateValueAndValidity();
+    });
   }
 
   get formArray(): AbstractControl | null {
@@ -86,7 +136,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   }
 
   buildUpdateRegisterForm() {
-    this.annexSupportingFile = 'file';
+    // this.annexSupportingFile = 'file'; // TODO: remove this line when the file upload is implemented
     return this.formBuilder.array([
       this.formBuilder.group({
         adaptationTemporalityImpactCtrl: [
@@ -135,21 +185,42 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   }
 
   submitForm() {
-    const payload: any = this.buildPayload();
+    if (!(this.type === this.types.A && this.isEmpty())) {
+      const payload: any = this.buildPayload();
+      this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
+      this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
+        (_) => {
+          this.openSnackBar('Formulario creado correctamente', '');
+          this.onComplete.emit(true);
+          this.router.navigate([`/adaptation/actions`], {
+            replaceUrl: true,
+          });
+        },
+        (error) => {
+          this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+        },
+      );
+    } else {
+      this.router.navigate([`/adaptation/actions`], {
+        replaceUrl: true,
+      });
+    }
+  }
 
-    this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
+  isEmpty(): boolean {
+    const section = this.form.get('formArray').get([0]) as FormGroup;
+    const empty = Object.values(section.controls).every((control) => {
+      const value = control.value;
 
-    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
-      (_) => {
-        this.openSnackBar('Formulario creado correctamente', '');
-        this.router.navigate([`/adaptation/actions`], {
-          replaceUrl: true,
-        });
-      },
-      (error) => {
-        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      },
-    );
+      return (
+        value === null ||
+        value === undefined ||
+        (typeof value === 'string' && value.trim() === '') ||
+        (typeof value === 'number' && isNaN(value)) ||
+        (Array.isArray(value) && value.length === 0)
+      );
+    });
+    return empty;
   }
 
   buildPayload() {
@@ -174,7 +245,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     return context;
   }
 
-  uploadFile(event: any) {
+  uploadFile(event: FileUpload) {
     this.annexSupportingFile = event;
   }
 }

@@ -4,16 +4,16 @@ import { environment } from '@env/environment';
 import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
+import { MAStates, MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { Logger } from '@app/@core';
 import { I18nService } from '@app/i18n';
-import { CredentialsService } from '@app/auth';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PermissionService } from '@app/@core/permissions.service';
 
 const log = new Logger('Report');
 
@@ -61,7 +61,7 @@ export class MitigationActionsListComponent implements OnInit {
     private dialog: MatDialog,
     private translateService: TranslateService,
     public snackBar: MatSnackBar,
-    private credentialsService: CredentialsService,
+    public permissions: PermissionService,
   ) {}
 
   ngOnInit() {
@@ -72,8 +72,10 @@ export class MitigationActionsListComponent implements OnInit {
     this.router.navigate([`/mitigation/actions/${uuid}`], { replaceUrl: true });
   }
 
-  edit(uuid: string) {
-    this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
+  edit(uuid: string, state: MAStates) {
+    if (this.canEdit(state)) {
+      this.router.navigate([`mitigation/actions/${uuid}/edit`], { replaceUrl: true });
+    }
   }
 
   review(uuid: string) {
@@ -84,6 +86,14 @@ export class MitigationActionsListComponent implements OnInit {
     this.router.navigate([`mitigation/actions/${uuid}/edit`], {
       replaceUrl: true,
     });
+  }
+
+  canEdit(state: MAStates): boolean {
+    return this.permissions.canEditMA(state);
+  }
+
+  canDelete(state: MAStates): boolean {
+    return this.permissions.canDeleteMA(state);
   }
 
   loadMAData() {
@@ -152,26 +162,5 @@ export class MitigationActionsListComponent implements OnInit {
         this.delete(uuid);
       }
     });
-  }
-
-  hasPermProvider() {
-    return Boolean(
-      this.credentialsService.credentials.permissions.all ||
-        this.credentialsService.credentials.permissions.ma.provider,
-    );
-  }
-
-  canChangeState(element: MitigationAction) {
-    if (element.fsm_state.state !== 'end') {
-      // is admin
-      if (this.credentialsService.credentials.permissions.all) {
-        return true;
-      } else {
-        if (!this.credentialsService.credentials.permissions.ma.provider) {
-          return true;
-        }
-      }
-    }
-    return false;
   }
 }

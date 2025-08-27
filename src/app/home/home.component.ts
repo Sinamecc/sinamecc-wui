@@ -25,72 +25,72 @@ import { Permissions } from '@app/@core/permissions';
 export class HomeComponent implements OnInit {
   data = [
     {
-      name: 'Acciones de mitigación',
+      name: 'mitigationAction.MAs',
       module: 'ma',
       urlNew: '/mitigation/actions/new',
       urlView: '/mitigation/actions',
       cards: [
         {
-          name: 'Solicutudes pendientes de revisión',
+          name: 'general.pendingForReview',
           value: '2',
           icon: '',
         },
         {
-          name: 'Solicitud en revisión',
+          name: 'general.appInReview',
           value: '',
           icon: 'schedule',
         },
       ],
     },
     {
-      name: 'Acciones de adaptación',
+      name: 'adaptationAction.title',
       module: 'aa',
       urlNew: '/adaptation/actions/new',
       urlView: '/adaptation/actions',
       cards: [
         {
-          name: 'Solicutudes pendientes de revisión',
+          name: 'general.pendingForReview',
           value: '2',
           icon: '',
         },
         {
-          name: 'Solicitud en revisión',
+          name: 'general.appInReview',
           value: '',
           icon: 'schedule',
         },
       ],
     },
     {
-      name: 'Reportes de datos',
+      name: 'reportData.title',
       module: 'rd',
       urlNew: '/report/new',
       urlView: '/report',
       cards: [
         {
-          name: 'Solicutudes pendientes de revisión',
+          name: 'general.pendingForReview',
           value: '2',
           icon: '',
         },
         {
-          name: 'Solicitud en revisión',
+          name: 'general.appInReview',
           value: '',
           icon: 'schedule',
         },
       ],
     },
     {
-      name: 'Registro PPCN',
+      name: 'ppcn.title',
       module: 'ppcn',
       urlNew: '/ppcn/registries/new',
       urlView: '/ppcn/registries',
       cards: [
         {
-          name: 'Solicutudes pendientes de revisión',
+          name: 'general.pendingForReview',
           value: '2',
           icon: '',
         },
         {
-          name: 'Solicitud en revisión',
+          name: 'general.appInReview',
           value: '',
           icon: 'schedule',
         },
@@ -103,12 +103,12 @@ export class HomeComponent implements OnInit {
       urlView: '/mccr/registries',
       cards: [
         {
-          name: 'Solicutudes pendientes de revisión',
+          name: 'general.pendingForReview',
           value: '2',
           icon: '',
         },
         {
-          name: 'Solicitud en revisión',
+          name: 'general.appInReview',
           value: '',
           icon: 'schedule',
         },

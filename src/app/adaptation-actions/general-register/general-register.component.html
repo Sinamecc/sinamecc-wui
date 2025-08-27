@@ -1,106 +1,133 @@
-<div class="container-custom">
-  <div class="header-container flex flex-col justify-center items-center">
-    <h2 translate>adaptationAction.form1.title</h2>
-    <p translate>adaptationAction.form1.subtitle</p>
-  </div>
-  <label class="mat-h1" translate>adaptationAction.form1.dataRegister</label>
-  <br />
-  <br />
-  <form class="flex flex-col justify-around items-start" [formGroup]="formArray?.get([0])">
-    <span translate>adaptationAction.form1.reportingEntityType</span>
-    <mat-radio-group
-      #reportingEntityTypeControl="matRadioGroup"
-      formControlName="reportingEntityTypeCtrl"
-      class="custom-radio-group"
-    >
-      <mat-radio-button [value]="1">
-        <label translate>Entidad pública</label>
-      </mat-radio-button>
-      <mat-radio-button [value]="2">
-        <label translate>Entidad privada</label>
-      </mat-radio-button>
-      <mat-radio-button [value]="3">
-        <label translate>Municipalidad</label>
-      </mat-radio-button>
-      <mat-radio-button [value]="4">
-        <label translate>ONG</label>
-      </mat-radio-button>
-      <mat-radio-button [value]="5">
-        <label translate>general.other</label>
-      </mat-radio-button>
-    </mat-radio-group>
-
-    <mat-form-field *ngIf="reportingEntityTypeControl.value === 5" class="field-ppcn">
-      <mat-label translate
-        ><span translate>adaptationAction.form1.reportingEntityType</span> (<span translate>general.other</span
-        >)</mat-label
-      >
-      <input matInput formControlName="reportingEntityTypeOtherCtrl" />
-      <mat-error translate>errorLabel.fieldRequired</mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="field-ppcn">
-      <mat-label translate>adaptationAction.form1.responsibleReportingEntity</mat-label>
-      <input matInput formControlName="entityResponsibleReportingCtrl" />
-      <mat-error translate>errorLabel.fieldRequired</mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="field-ppcn">
-      <mat-label translate>adaptationAction.form1.legalID</mat-label>
-      <input matInput type="txt" formControlName="legalIdentificationCtrl" />
-      <mat-error translate>errorLabel.fieldRequired</mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="field-ppcn">
-      <mat-label translate>adaptationAction.form1.reportData</mat-label>
-      <input
-        matInput
-        [placeholder]="'Choose a date' | translate"
-        [matDatepicker]="reportPreparationDateControl"
-        formControlName="reportPreparationDateCtrl"
-      />
-
-      <mat-datepicker-toggle matSuffix [for]="reportPreparationDateControl"></mat-datepicker-toggle>
-      <mat-datepicker #reportPreparationDateControl startView="year"></mat-datepicker>
-
-      <mat-error translate>errorLabel.fieldRequired</mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="field-ppcn">
-      <mat-label translate>ppcn.nameContactPerson</mat-label>
-      <input matInput formControlName="nameContactPersonCtrl" />
-      <mat-error translate>errorLabel.fieldRequired</mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="field-ppcn">
-      <mat-label translate>adaptationAction.form1.positionResponsiblePerson</mat-label>
-      <input matInput formControlName="titleResponsibleReportingCtrl" />
-      <mat-error translate>errorLabel.fieldRequired</mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="field-ppcn">
-      <mat-label translate>info.emailAddress</mat-label>
-      <input matInput type="email" formControlName="emailCtrl" />
-      <mat-error translate>errorLabel.fieldRequired</mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="field-ppcn">
-      <mat-label translate>info.phone</mat-label>
-      <span matPrefix>+506 &nbsp;</span>
-      <input matInput formControlName="phoneCtrl" type="tel" maxlength="8" />
-      <mat-error translate>errorLabel.inputOrLengthIncorrect</mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="field-ppcn">
-      <mat-label translate>adaptationAction.form1.entityAddress </mat-label>
-      <input matInput formControlName="entityAddress" />
-      <mat-error translate>errorLabel.fieldRequired</mat-error>
-    </mat-form-field>
-
-    <div class="button-box flex flex-row justify-end items-center">
-      <button mat-raised-button color="primary" type="button" [disabled]="form.invalid" (click)="submitForm()">
-        <span translate>general.done</span>
-      </button>
-    </div>
-  </form>
+<div class="mt-2 flex flex-col justify-center items-start rounded bg-gray-100 border-2 border-gray-200 p-2">
+  <span translate>adaptationAction.typeOptional</span>
 </div>
+
+<form class="flex flex-col justify-around items-start" [formGroup]="formArray?.get([0])">
+  <span translate>adaptationAction.form1.reportingEntityType</span>
+  <mat-radio-group
+    #reportingEntityTypeControl="matRadioGroup"
+    formControlName="reportingEntityTypeCtrl"
+    class="custom-radio-group"
+  >
+    <mat-radio-button [value]="1"><label translate>Entidad pública</label></mat-radio-button>
+    <mat-radio-button [value]="2"><label translate>Entidad privada</label></mat-radio-button>
+    <mat-radio-button [value]="3"><label translate>Municipalidad</label></mat-radio-button>
+    <mat-radio-button [value]="4"><label translate>ONG</label></mat-radio-button>
+    <mat-radio-button [value]="5"><label translate>general.other</label></mat-radio-button>
+  </mat-radio-group>
+  <mat-error *ngIf="formArray?.get([0])?.get('reportingEntityTypeCtrl')?.hasError('required')" translate>
+    errorLabel.fieldRequired
+  </mat-error>
+
+  <mat-form-field *ngIf="reportingEntityTypeControl.value === 5" class="field-ppcn">
+    <mat-label translate>
+      <span translate>adaptationAction.form1.reportingEntityType</span> (<span translate>general.other</span>)
+    </mat-label>
+    <input matInput formControlName="reportingEntityTypeOtherCtrl" />
+    <mat-error *ngIf="formArray?.get([0])?.get('reportingEntityTypeOtherCtrl')?.hasError('required')" translate>
+      errorLabel.fieldRequired
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field-ppcn">
+    <mat-label translate>adaptationAction.form1.responsibleReportingEntity</mat-label>
+    <input matInput formControlName="entityResponsibleReportingCtrl" />
+    <mat-error *ngIf="formArray?.get([0])?.get('entityResponsibleReportingCtrl')?.hasError('required')" translate>
+      errorLabel.fieldRequired
+    </mat-error>
+    <mat-error *ngIf="formArray?.get([0])?.get('entityResponsibleReportingCtrl')?.hasError('maxlength')" translate>
+      errorLabel.maxLengthExceeded
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field-ppcn">
+    <mat-label translate>adaptationAction.form1.legalID</mat-label>
+    <input matInput type="text" formControlName="legalIdentificationCtrl" />
+    <mat-error *ngIf="formArray?.get([0])?.get('legalIdentificationCtrl')?.hasError('maxlength')" translate>
+      errorLabel.maxLengthExceeded
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field-ppcn">
+    <mat-label translate>adaptationAction.form1.reportData</mat-label>
+    <input
+      matInput
+      [placeholder]="'Choose a date' | translate"
+      [matDatepicker]="reportPreparationDateControl"
+      formControlName="reportPreparationDateCtrl"
+    />
+    <mat-datepicker-toggle matSuffix [for]="reportPreparationDateControl"></mat-datepicker-toggle>
+    <mat-datepicker #reportPreparationDateControl startView="year"></mat-datepicker>
+    <mat-error *ngIf="formArray?.get([0])?.get('reportPreparationDateCtrl')?.hasError('required')" translate>
+      errorLabel.fieldRequired
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field-ppcn">
+    <mat-label translate>ppcn.nameContactPerson</mat-label>
+    <input matInput formControlName="nameContactPersonCtrl" />
+    <mat-error *ngIf="formArray?.get([0])?.get('nameContactPersonCtrl')?.hasError('required')" translate>
+      errorLabel.fieldRequired
+    </mat-error>
+    <mat-error *ngIf="formArray?.get([0])?.get('nameContactPersonCtrl')?.hasError('maxlength')" translate>
+      errorLabel.maxLengthExceeded
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field-ppcn">
+    <mat-label translate>adaptationAction.form1.positionResponsiblePerson</mat-label>
+    <input matInput formControlName="titleResponsibleReportingCtrl" />
+    <mat-error *ngIf="formArray?.get([0])?.get('titleResponsibleReportingCtrl')?.hasError('required')" translate>
+      errorLabel.fieldRequired
+    </mat-error>
+    <mat-error *ngIf="formArray?.get([0])?.get('titleResponsibleReportingCtrl')?.hasError('maxlength')" translate>
+      errorLabel.maxLengthExceeded
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field-ppcn">
+    <mat-label translate>info.emailAddress</mat-label>
+    <input matInput type="email" formControlName="emailCtrl" />
+    <mat-error *ngIf="formArray?.get([0])?.get('emailCtrl')?.hasError('required')" translate>
+      errorLabel.fieldRequired
+    </mat-error>
+    <mat-error *ngIf="formArray?.get([0])?.get('emailCtrl')?.hasError('email')" translate>
+      errorLabel.invalidEmail
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field-ppcn">
+    <mat-label translate>info.phone</mat-label>
+    <span matPrefix>+506 &nbsp;</span>
+    <input matInput formControlName="phoneCtrl" type="tel" maxlength="8" />
+    <mat-error *ngIf="formArray?.get([0])?.get('phoneCtrl')?.hasError('required')" translate>
+      errorLabel.fieldRequired
+    </mat-error>
+    <mat-error
+      *ngIf="
+        formArray?.get([0])?.get('phoneCtrl')?.hasError('minlength') ||
+        formArray?.get([0])?.get('phoneCtrl')?.hasError('maxlength')
+      "
+      translate
+    >
+      errorLabel.inputOrLengthIncorrect
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="field-ppcn">
+    <mat-label translate>adaptationAction.form1.entityAddress</mat-label>
+    <input matInput formControlName="entityAddress" />
+    <mat-error *ngIf="formArray?.get([0])?.get('entityAddress')?.hasError('required')" translate>
+      errorLabel.fieldRequired
+    </mat-error>
+    <mat-error *ngIf="formArray?.get([0])?.get('entityAddress')?.hasError('maxlength')" translate>
+      errorLabel.maxLengthExceeded
+    </mat-error>
+  </mat-form-field>
+
+  <div class="button-box flex flex-row justify-end items-center">
+    <button mat-raised-button color="primary" type="button" [disabled]="form.invalid" (click)="submitForm()">
+      <span translate>general.done</span>
+    </button>
+  </div>
+</form>

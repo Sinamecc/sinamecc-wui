@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
+import { MAFileType, MAStates, MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { I18nService } from '@app/i18n';
 import {
   commentsStructureModule1,
@@ -19,6 +19,7 @@ import { CommentsStructure, Comments } from '@app/@shared/comment';
 import { CommentsViewComponent } from '@app/@shared/comments-view/comments-view.component';
 import { MitigationActionReview } from '../mitigation-action-review';
 import { MatDialog } from '@angular/material/dialog';
+import { PermissionService } from '@app/@core/permissions.service';
 
 @Component({
   selector: 'app-mitigation-action',
@@ -41,15 +42,22 @@ export class MitigationActionComponent implements OnInit {
   commentsByModule = {};
   reviews: MitigationActionReview[];
   typeDataMapDict = TypeDataMap;
+  fileType = MAFileType;
+  files: { [key: string]: any } = {};
 
   constructor(
     private i18nService: I18nService,
     private service: MitigationActionsService,
+    public permissions: PermissionService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
+  }
+
+  get state() {
+    return this.mitigationAction && this.mitigationAction.fsm_state.state;
   }
 
   findQuestion(id: string, check = false) {
@@ -117,6 +125,11 @@ export class MitigationActionComponent implements OnInit {
       )
       .subscribe((response: MitigationAction) => {
         this.mitigationAction = response;
+
+        Object.values(MAFileType).forEach((type: MAFileType) => {
+          if (type !== MAFileType.INDICATOR_METHODOLOGICAL_DETAIL && type !== MAFileType.INDICATOR_SUSTAINABILITY)
+            this.files[type] = this.getFilesByType(type);
+        });
       });
   }
 
@@ -166,5 +179,23 @@ export class MitigationActionComponent implements OnInit {
     }
 
     return commentList;
+  }
+
+  getFilesByType(type: MAFileType, id?: string) {
+    if (type === MAFileType.INDICATOR_METHODOLOGICAL_DETAIL || type === MAFileType.INDICATOR_SUSTAINABILITY) {
+      const indicator = this.mitigationAction.monitoring_information.indicator.find((indicator) => indicator.id === id);
+      return !indicator ? [] : indicator.files.filter((file) => file.type === type);
+    } else if (type === MAFileType.MONITORING_UPDATED_DATA) {
+      // TODO: add id when issue SIN-I75 is solved
+      return this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].files.filter(
+        (file) => file.type === type,
+      );
+    } else {
+      return this.mitigationAction.files.filter((file) => file.type === type);
+    }
+  }
+
+  hasFiles(type: MAFileType): boolean {
+    return this.files && this.files[type] && this.files[type].length > 0;
   }
 }

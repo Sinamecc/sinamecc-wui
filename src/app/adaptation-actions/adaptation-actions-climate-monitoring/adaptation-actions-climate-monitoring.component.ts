@@ -1,12 +1,13 @@
 import { I } from '@angular/cdk/keycodes';
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileUpload } from '@app/@shared/upload-button/file-upload';
 
 @Component({
   selector: 'app-adaptation-actions-climate-monitoring',
@@ -15,12 +16,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: false,
 })
 export class AdaptationActionsClimateMonitoringComponent implements OnInit {
+  @Output() onComplete = new EventEmitter<boolean>();
+
   form: UntypedFormGroup;
   adaptationAction: AdaptationAction;
   @Input() mainStepper: any;
   @Input() adaptationActionUpdated: AdaptationAction;
   @Input() edit: boolean;
-  attachSupportMonitoringFile: any;
+  attachSupportMonitoringFile: FileUpload;
   durationInSeconds = 3;
 
   constructor(
@@ -33,6 +36,9 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
+      if (this.adaptationAction && this.adaptationAction.progress_log?.id) {
+        this.onComplete.emit(true);
+      }
     });
   }
 
@@ -95,7 +101,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
 
   updatedIndicatorCtrl(indicatorMonitoringList: any[]) {
     const indicatorList = [];
-    this.attachSupportMonitoringFile = 'file';
+    // this.attachSupportMonitoringFile = 'file'; // TODO: remove this line when the file upload is implemented
 
     for (const indicator of indicatorMonitoringList) {
       const indicatorDataUpdateDate = new Date(indicator.update_date);
@@ -164,6 +170,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
     this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
       (_) => {
+        this.onComplete.emit(true);
         this.mainStepper.next();
         this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
           this.snackBar.open(res, null, { duration: 3000 });
@@ -474,7 +481,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     this.form.get('formArray').get([0]).get('progressMonitoringRecordedClimateActionsCtrl').updateValueAndValidity();
   }
 
-  uploadFile(event: any) {
+  uploadFile(event: FileUpload) {
     this.attachSupportMonitoringFile = event;
   }
 }

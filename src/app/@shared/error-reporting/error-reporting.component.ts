@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ErrorDetail } from '../error';
 
 @Component({
@@ -8,6 +8,7 @@ import { ErrorDetail } from '../error';
   standalone: false,
 })
 export class ErrorReportingComponent implements OnInit {
+  @Input() errorMessage: string | null = null;
   constructor() {}
 
   generalError = 'errorLabel.generalError';

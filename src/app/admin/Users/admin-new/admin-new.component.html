@@ -19,7 +19,14 @@
                 <label for="file-upload" class="custom-file-upload">
                   <mat-icon>cloud_upload</mat-icon>
                 </label>
-                <input id="file-upload" type="file" accept="image/*" (change)="uploadImage($event)" />
+                <div class="w-full xl:w-auto flex items-start justify-start">
+                  <app-upload-button
+                    class="w-full"
+                    id="file-upload"
+                    accept="image/*"
+                    (fileChange)="uploadImage($event)"
+                  />
+                </div>
               </div>
 
               <div class="report-error" [hidden]="!error || isLoading" translate>

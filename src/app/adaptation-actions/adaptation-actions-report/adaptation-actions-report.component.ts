@@ -1,6 +1,13 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AbstractControl,
+  FormArray,
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import {
@@ -11,8 +18,9 @@ import {
   District,
   Province,
 } from '../interfaces/adaptationAction';
-import { Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
+import { AAType, Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-adaptation-actions-report',
@@ -21,6 +29,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: false,
 })
 export class AdaptationActionsReportComponent implements OnInit {
+  @Output() onComplete = new EventEmitter<boolean>();
+
   form: UntypedFormGroup;
   topics: Topic[][] = [];
   subTopics: SubTopics[] = [];
@@ -33,7 +43,8 @@ export class AdaptationActionsReportComponent implements OnInit {
   @Input() edit: boolean;
   durationInSeconds = 3;
   actualProvince = 0;
-
+  types = AAType;
+  type: AAType;
   provinces: Province[] = [];
   canton: Canton[] = [];
   districts: District[] = [];
@@ -59,6 +70,7 @@ export class AdaptationActionsReportComponent implements OnInit {
 
   adaptationActions = 0;
   adaptationActionsExtension = '';
+  @Output() onTypeSet = new EventEmitter();
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -73,6 +85,13 @@ export class AdaptationActionsReportComponent implements OnInit {
   async ngOnInit() {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
+      if (this.adaptationAction) {
+        const type = this.getType(this.adaptationAction);
+        this.onTypeSet.emit(type);
+      }
+      if (this.isComplete()) {
+        this.onComplete.emit(true);
+      }
     });
 
     this.loadBenefitedPopulation();
@@ -87,11 +106,131 @@ export class AdaptationActionsReportComponent implements OnInit {
     this.loadAdaptationActions();
     if (this.edit) {
       this.createForm();
+      if (this.adaptationAction) {
+        const id = this.adaptationAction.adaptation_action_information?.adaptation_action_type?.id;
+        if (id) this.changeAdaptationType(id);
+        this.loadAddress();
+      }
     }
   }
 
   get formArray(): AbstractControl | null {
     return this.form.get('formArray');
+  }
+
+  private getType(aa: AdaptationAction): AAType {
+    const { adaptation_action_information } = aa;
+    let type = adaptation_action_information?.adaptation_action_type;
+    if (type && typeof type === 'object' && 'code' in type) {
+      type = type.code;
+    }
+    return type;
+  }
+
+  setRequiredValidators() {
+    // section 3
+    const section3 = this.form.get('formArray').get([2]);
+    const themeArray = section3.get('themeCtrl') as FormArray;
+    themeArray.controls.forEach((group: AbstractControl) => {
+      group.get('adaptationActionThemeCtrl').setValidators(Validators.required);
+      group.get('adaptationActionTypologyCtrl').setValidators(Validators.required);
+      group.get('adaptationActionTypeCtrl').setValidators(Validators.required);
+      group.get('adaptationActionRelationCtrl').setValidators(Validators.required);
+      group.get('adaptationActionGoalRelationCtrl').setValidators(Validators.required);
+      group.get('adaptationActionEjeRelationCtrl').setValidators(Validators.required);
+      group.get('adaptationActionLinealRelationCtrl').setValidators(Validators.required);
+    });
+
+    // section 4
+    this.form
+      .get('formArray')
+      .get([3])
+      .get('adaptationActionInstrumentCtrl')
+      .setValidators([Validators.required, Validators.maxLength(250)]);
+
+    // section 6
+    const section6 = this.form.get('formArray').get([5]);
+    section6.get('adaptationActionStartDateCtrl').setValidators([Validators.required]);
+    section6.get('adaptationActionEndDateCtrl').setValidators([Validators.required]);
+    section6.get('adaptationActionEntityCtrl').setValidators([Validators.required, Validators.maxLength(250)]);
+    section6.get('adaptationActionEntityOthersCtrl').setValidators([Validators.required, Validators.maxLength(250)]);
+    section6.get('adaptationActionCodeCtrl').setValidators([Validators.required, Validators.maxLength(50)]);
+  }
+
+  setOptionalValidators() {
+    // section 3
+    const section3 = this.form.get('formArray').get([2]);
+    const themeArray = section3.get('themeCtrl') as FormArray;
+    themeArray.controls.forEach((group: AbstractControl) => {
+      group.get('adaptationActionThemeCtrl').setValidators(null);
+      group.get('adaptationActionTypologyCtrl').setValidators(null);
+      group.get('adaptationActionTypeCtrl').setValidators(null);
+      group.get('adaptationActionRelationCtrl').setValidators(null);
+      group.get('adaptationActionGoalRelationCtrl').setValidators(null);
+      group.get('adaptationActionEjeRelationCtrl').setValidators(null);
+      group.get('adaptationActionLinealRelationCtrl').setValidators(null);
+    });
+
+    // section 4
+    this.form
+      .get('formArray')
+      .get([3])
+      .get('adaptationActionInstrumentCtrl')
+      .setValidators([Validators.maxLength(250)]);
+
+    // section 6
+    const section6 = this.form.get('formArray').get([5]);
+    section6.get('adaptationActionStartDateCtrl').setValidators(null);
+    section6.get('adaptationActionEndDateCtrl').setValidators(null);
+    section6.get('adaptationActionEntityCtrl').setValidators([Validators.maxLength(250)]);
+    section6.get('adaptationActionEntityOthersCtrl').setValidators([Validators.maxLength(250)]);
+    section6.get('adaptationActionCodeCtrl').setValidators([Validators.maxLength(50)]);
+  }
+
+  updateFormValuesAndValidity() {
+    // section 3
+    const section3 = this.form.get('formArray').get([2]);
+    const themeArray = section3.get('themeCtrl') as FormArray;
+    themeArray.controls.forEach((group: AbstractControl) => {
+      group.get('adaptationActionThemeCtrl').updateValueAndValidity();
+      group.get('adaptationActionTypologyCtrl').updateValueAndValidity();
+      group.get('adaptationActionTypeCtrl').updateValueAndValidity();
+      group.get('adaptationActionRelationCtrl').updateValueAndValidity();
+      group.get('adaptationActionGoalRelationCtrl').updateValueAndValidity();
+      group.get('adaptationActionEjeRelationCtrl').updateValueAndValidity();
+      group.get('adaptationActionLinealRelationCtrl').updateValueAndValidity();
+    });
+
+    // section 4
+    const section4 = this.form.get('formArray').get([3]);
+    section4.get('adaptationActionInstrumentCtrl').updateValueAndValidity();
+
+    // section 6
+    const section6 = this.form.get('formArray').get([5]);
+    section6.get('adaptationActionStartDateCtrl').updateValueAndValidity();
+    section6.get('adaptationActionEndDateCtrl').updateValueAndValidity();
+    section6.get('adaptationActionEntityCtrl').updateValueAndValidity();
+    section6.get('adaptationActionEntityOthersCtrl').updateValueAndValidity();
+    section6.get('adaptationActionCodeCtrl').updateValueAndValidity();
+  }
+
+  public changeAdaptationType(id: AAType) {
+    this.onTypeSet.emit(id);
+    this.type = id;
+    if (id === this.types.A) {
+      this.setOptionalValidators();
+    } else {
+      this.setRequiredValidators();
+    }
+    this.updateFormValuesAndValidity();
+  }
+
+  private isComplete(): boolean {
+    return (
+      this.adaptationAction &&
+      !!this.adaptationAction.adaptation_action_information?.id &&
+      !!this.adaptationAction.address?.id
+    );
   }
 
   private createForm() {
@@ -303,7 +442,7 @@ export class AdaptationActionsReportComponent implements OnInit {
           this.formBuilder.group({
             adaptationActionThemeCtrl: [element?.sub_topic?.topic?.id, Validators.required],
             adaptationActionTypologyCtrl: [element?.sub_topic?.id, Validators.required],
-            adaptationActionTypeCtrl: [element?.id, Validators.required],
+            adaptationActionTypeCtrl: [element?.id?.toString(), Validators.required],
             adaptationActionRelationCtrl: [adaptationActionRelationValue, Validators.required],
             adaptationActionGoalRelationCtrl: [adaptationActionGoalRelationValue, Validators.required],
             adaptationActionEjeRelationCtrl: [adaptationActionEjeRelationValue, Validators.required],
@@ -371,10 +510,6 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   buildUpdatedRegisterForm() {
-    let provinceList: Province[] = [];
-    let cantonList: Canton[] = [];
-    let districtList: District[] = [];
-
     const adaptationActionStartDate = new Date(this.adaptationActionUpdated.implementation.start_date);
     const adaptationActionEndDate = new Date(this.adaptationActionUpdated.implementation.end_date);
 
@@ -386,20 +521,13 @@ export class AdaptationActionsReportComponent implements OnInit {
       adaptationActionEndDate.getMinutes() + adaptationActionEndDate.getTimezoneOffset(),
     );
 
-    if (this.adaptationActionUpdated.address.app_scale === '2') {
-      provinceList = this.loadProvinceSByCantonSelected(this.adaptationActionUpdated.address.canton);
-      cantonList = this.adaptationActionUpdated.address.canton;
-      this.selectProvince(provinceList.map((x) => x.id.toString()));
-      this.selectCanton(cantonList.map((x) => x.id.toString()));
-    }
+    const { address } = this.adaptationActionUpdated;
 
-    if (this.adaptationActionUpdated.address.app_scale === '3') {
-      cantonList = this.loadCantonByDistrictSelected(this.adaptationActionUpdated.address.district);
-      provinceList = this.loadProvinceSByCantonSelected(cantonList);
-      districtList = this.adaptationActionUpdated.address.district;
-      this.selectProvince(provinceList.map((x) => x.id.toString()));
-      this.selectCanton(cantonList.map((x) => x.id.toString()));
-    }
+    const appScale = parseInt(address.app_scale);
+
+    const provinceIds = ['2', '3', '4'].includes(address.app_scale) ? address.province.map((x) => x.id) : [];
+    const cantonIds = ['3', '4'].includes(address.app_scale) ? address.canton.map((x) => x.id) : [];
+    const districtIds = address.app_scale === '4' ? address.district.map((x) => x.id) : [];
 
     return this.formBuilder.array([
       this.formBuilder.group({
@@ -443,24 +571,10 @@ export class AdaptationActionsReportComponent implements OnInit {
         ],
       }),
       this.formBuilder.group({
-        appScaleCtrl: [parseInt(this.adaptationActionUpdated.address.app_scale), Validators.required],
-        adaptationActionProvinceCtrl: [
-          this.adaptationActionUpdated.address.app_scale === '2' ||
-          this.adaptationActionUpdated.address.app_scale === '3'
-            ? provinceList.map((x) => x.id) // ? this.adaptationActionUpdated.address.district[0].canton.province.id
-            : [],
-        ],
-        adaptationActionCantonCtrl: [
-          this.adaptationActionUpdated.address.app_scale === '2' ||
-          this.adaptationActionUpdated.address.app_scale === '3'
-            ? cantonList.map((x) => x.id) // ? this.adaptationActionUpdated.address.district[0].canton.province.id
-            : [], //? this.adaptationActionUpdated.address.district[0].canton.id
-        ],
-        adaptationActionDistritCtrl: [
-          this.adaptationActionUpdated.address.app_scale === '3'
-            ? districtList.map((x) => x.id) // ? this.adaptationActionUpdated.address.district[0].id
-            : [],
-        ],
+        appScaleCtrl: [appScale, Validators.required],
+        adaptationActionProvinceCtrl: [provinceIds],
+        adaptationActionCantonCtrl: [cantonIds],
+        adaptationActionDistritCtrl: [districtIds],
         adaptationActionDescriptionNarrativeCtrl: [
           this.adaptationActionUpdated.address.description,
           [Validators.required, Validators.maxLength(3000)],
@@ -526,8 +640,11 @@ export class AdaptationActionsReportComponent implements OnInit {
     const payload: AdaptationAction = this.buildPayload();
 
     this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
-      (_) => {
+      (res) => {
         this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
+        let type = this.getType(res.body);
+        this.onTypeSet.emit(type);
+        this.onComplete.emit(true);
         this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
           this.snackBar.open(res, null, { duration: 3000 });
           this.mainStepper.next();
@@ -538,41 +655,49 @@ export class AdaptationActionsReportComponent implements OnInit {
       },
     );
   }
+  private clean(value: any): any {
+    return value === '' ? null : value;
+  }
 
   buildPayload() {
+    const scale = this.form.value.formArray[1].appScaleCtrl;
     const context = {
       adaptation_action_information: {
         name: this.form.value.formArray[0].adaptationActionNameCtrl,
         objective: this.form.value.formArray[0].adaptationActionTargetCtrl,
         description: this.form.value.formArray[0].adaptationActionDescriptionCtrl,
         meta: this.form.value.formArray[0].adaptationActionGoalCtrl,
-        adaptation_action_type: this.form.value.formArray[0].adaptationActionTypeCtrl,
+        adaptation_action_type: Number(this.form.value.formArray[0].adaptationActionTypeCtrl),
         ods: this.form.value.formArray[0].adaptationActionODSCtrl,
         expected_result: this.form.value.formArray[0].expectedResultsCtrl,
         potential_co_benefits: this.form.value.formArray[0].potentialCoBenefitsCtrl,
         benefited_population: this.form.value.formArray[0].beneficiaryPopulationCtrl,
       },
       address: {
-        app_scale: this.form.value.formArray[1].appScaleCtrl,
+        app_scale: scale,
         description: this.form.value.formArray[1].adaptationActionDescriptionNarrativeCtrl,
         GIS: this.form.value.formArray[1].adaptationActionLocationCtrl
           ? this.form.value.formArray[1].adaptationActionLocationCtrl
           : null,
-        district: this.form.value.formArray[1].adaptationActionDistritCtrl
-          ? this.form.value.formArray[1].adaptationActionDistritCtrl
-          : [],
-        canton:
-          this.form.value.formArray[1].appScaleCtrl === 2
-            ? this.form.value.formArray[1].adaptationActionCantonCtrl
+        province:
+          scale === 2 || scale === 3 || scale === 4
+            ? this.form.value.formArray[1].adaptationActionProvinceCtrl || []
             : [],
+        canton: scale === 3 || scale === 4 ? this.form.value.formArray[1].adaptationActionCantonCtrl || [] : [],
+        district: scale === 4 ? this.form.value.formArray[1].adaptationActionDistritCtrl || [] : [],
       },
 
-      activity: this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls.map(
-        (x: { value: { adaptationActionTypeCtrl: number } }) => x.value.adaptationActionTypeCtrl,
-      ),
+      activity: this.form.controls.formArray['controls'][2].controls['themeCtrl'].controls
+        .filter(
+          (x: { value: { adaptationActionTypeCtrl: number | null | undefined | '' } }) =>
+            x.value?.adaptationActionTypeCtrl !== null &&
+            x.value?.adaptationActionTypeCtrl !== undefined &&
+            x.value?.adaptationActionTypeCtrl !== '',
+        )
+        .map((x: { value: { adaptationActionTypeCtrl: number } }) => x.value.adaptationActionTypeCtrl),
 
       instrument: {
-        name: this.form.value.formArray[3].adaptationActionInstrumentCtrl,
+        name: this.clean(this.form.value.formArray[3].adaptationActionInstrumentCtrl),
       },
 
       climate_threat: {
@@ -590,8 +715,8 @@ export class AdaptationActionsReportComponent implements OnInit {
       implementation: {
         start_date: this.datePipe.transform(this.form.value.formArray[5].adaptationActionStartDateCtrl, 'yyyy-MM-dd'),
         end_date: this.datePipe.transform(this.form.value.formArray[5].adaptationActionEndDateCtrl, 'yyyy-MM-dd'),
-        responsible_entity: this.form.value.formArray[5].adaptationActionEntityCtrl,
-        other_entity: this.form.value.formArray[5].adaptationActionEntityOthersCtrl,
+        responsible_entity: this.clean(this.form.value.formArray[5].adaptationActionEntityCtrl),
+        other_entity: this.clean(this.form.value.formArray[5].adaptationActionEntityOthersCtrl),
         action_code: this.form.value.formArray[5].adaptationActionCodeCtrl,
       },
     };
@@ -600,6 +725,24 @@ export class AdaptationActionsReportComponent implements OnInit {
 
   public goToLink(url: string) {
     window.open(url, '_blank');
+  }
+
+  loadAddress() {
+    if (this.adaptationActionUpdated.address) {
+      const { address } = this.adaptationActionUpdated;
+      if (address.app_scale === '1') {
+      } else if (address.app_scale === '2') {
+        this.selectProvince(address.province.map((x) => x.id.toString()));
+      } else if (address.app_scale === '3') {
+        const provinceList = this.loadProvinceSByCantonSelected(address.canton);
+        this.selectProvince(provinceList.map((x) => x.id.toString()));
+      } else if (address.app_scale === '4') {
+        const districtList = address.district;
+        this.selectCanton(this.loadCantonByDistrictSelected(districtList).map((x) => x.id.toString()));
+        this.selectProvince(this.loadProvinceSByCantonSelected(this.cantones).map((x) => x.id.toString()));
+      }
+      this.changeLocationValidations(Number(address.app_scale));
+    }
   }
 
   selectProvince(ids: string[]) {
@@ -618,9 +761,6 @@ export class AdaptationActionsReportComponent implements OnInit {
     }
 
     this.cantonesToShow = cantonListGroup;
-
-    //this.actualProvince = parseInt(id);
-    //this.loadCanton(parseInt(id));
   }
 
   public selectCanton(ids: string[]) {
@@ -638,34 +778,21 @@ export class AdaptationActionsReportComponent implements OnInit {
       districListGroup.push(element);
     }
     this.cdistrictsToShow = districListGroup;
-    // this.loadDistrict(parseInt(id));
   }
 
   public async loadProvinces() {
-    const provinces = await this.service.loadProvince().toPromise();
+    const provinces = await firstValueFrom(this.service.loadProvince());
     this.provinces = provinces;
   }
 
-  public loadCanton(provinceID: number) {
-    this.service.loadCanton(provinceID).subscribe((response) => {
-      this.canton = response;
-    });
-  }
-
   public async loadCantones() {
-    const cantones = await this.service.loadCantones().toPromise();
+    const cantones = await firstValueFrom(this.service.loadCantones());
     this.cantones = cantones;
   }
 
   public async loadDistricts() {
-    const districts = await this.service.loadDistricts().toPromise();
+    const districts = await firstValueFrom(this.service.loadDistricts());
     this.districtsList = districts;
-  }
-
-  public loadDistrict(cantonID: number) {
-    this.service.loadDistrict(cantonID, this.actualProvince).subscribe((response) => {
-      this.districts = response;
-    });
   }
 
   public loadClimateThreat() {
@@ -675,40 +802,33 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   public changeLocationValidations(id: number) {
-    if (id === 1) {
-      this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').setValidators(null);
-      this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').setValidators(null);
-      this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').setValidators(null);
-    } else {
-      if (id == 2) {
-        this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').setValidators(Validators.required);
-        this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').setValidators(Validators.required);
-        this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').setValidators(null);
-      } else {
-        this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').setValidators(Validators.required);
-        this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').setValidators(Validators.required);
-        this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').setValidators(Validators.required);
-      }
-    }
-    this.form.get('formArray').get([1]).get('adaptationActionProvinceCtrl').updateValueAndValidity();
-    this.form.get('formArray').get([1]).get('adaptationActionCantonCtrl').updateValueAndValidity();
-    this.form.get('formArray').get([1]).get('adaptationActionDistritCtrl').updateValueAndValidity();
-  }
+    const locationFields = [
+      'adaptationActionProvinceCtrl',
+      'adaptationActionCantonCtrl',
+      'adaptationActionDistritCtrl',
+    ];
+    const formGroup = this.form.get('formArray').get([1]);
 
-  public changeAdaptationType(id: string) {
-    if (parseInt(id) === 1) {
-      this.form
-        .get('formArray')
-        .get([3])
-        .get('adaptationActionInstrumentCtrl')
-        .setValidators([Validators.maxLength(250)]);
-    } else {
-      this.form
-        .get('formArray')
-        .get([3])
-        .get('adaptationActionInstrumentCtrl')
-        .setValidators([Validators.required, Validators.maxLength(250)]);
+    const validationMap: Record<number, boolean[]> = {
+      1: [false, false, false],
+      2: [true, false, false],
+      3: [true, true, false],
+    };
+
+    const requiredFields = validationMap[id] ?? [true, true, true];
+
+    locationFields.forEach((field, index) => {
+      const control = formGroup.get(field);
+      control.setValidators(requiredFields[index] ? Validators.required : null);
+      control.updateValueAndValidity();
+    });
+
+    const provinces = formGroup.get('adaptationActionProvinceCtrl').value;
+    const cantons = formGroup.get('adaptationActionCantonCtrl').value;
+    if (id === 3 && provinces && provinces.length > 0) {
+      this.selectProvince(provinces.map((x: string) => x.toString()));
+    } else if (id === 4 && cantons && cantons.length > 0) {
+      this.selectCanton(cantons.map((x: string) => x.toString()));
     }
-    this.form.get('formArray').get([3]).get('adaptationActionInstrumentCtrl').updateValueAndValidity();
   }
 }

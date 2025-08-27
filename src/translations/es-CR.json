@@ -119,6 +119,7 @@
     "registeredNonReimbursableCooperationMideplan": "¿Se encuentra la acción registrada en el registro de proyectos de cooperación internacional no reembolsable de Mideplan?",
     "financedSourcesInternationalCooperation": "Acciones financiadas con fuentes de cooperación internacional",
     "referenceYear": "Año de referencia",
+    "referenceYearHint": "El año de referencia corresponde al año donde se tiene presupuestado el monto de la acción de adaptación",
     "emissionSourceSector": "Sector fuente de emisiones",
     "mitigationActionBudget": "Descripción de la fuente de financiamiento",
     "financingSourceApplying": "Describa la fuente financiamiento a la que está aplicando",
@@ -152,10 +153,17 @@
     "changelogMA": "Historial de cambios de la revision para la acción de mitigación",
     "MAt": "ACCIONES DE MITIGACIÓN",
     "dataEntryMonitoring": "Ingreso de datos de monitoreo",
-    "dataEntryMonitoringView": "Datos monitoreados"
+    "dataEntryMonitoringView": "Datos monitoreados",
+    "monitoringIndicatorName": "Nombre del indicador de monitoreo",
+    "monitoringUpdateDate": "Fecha de actualización",
+    "monitoringGHG": "Línea base del indicador",
+    "monitoringGHGGoal": "Meta del indicador",
+    "monitoringData": "Dato monitoreado",
+    "monitoringAdvance": "Descripción narrativa del avance durante el período de reporte"
   },
 
   "reportData": {
+    "title": "Reportes de datos",
     "form1": {
       "title": "Datos para reportes y análisis",
       "reportBaselineIndicator": "¿Cómo se desea reportar la línea base del indicador?",
@@ -238,6 +246,7 @@
   },
 
   "ppcn": {
+    "title": "Registro PPCN",
     "ppcnSaveError": "Error al guardar ppcn",
     "ppcnSave": "PPCN guardado correctamente",
     "ppcnUpdateSuccess": "El formulario PPCN se actualizó correctamente",
@@ -320,6 +329,10 @@
   },
 
   "general": {
+    "newApplication": "Nueva Solicitud",
+    "viewApplications": "Ver Solicitudes",
+    "pendingForReview": "Solicitudes pendientes de revisión",
+    "appInReview": "Solicitud en revisión",
     "close": "Cerrar",
     "newReview": "Nueva revisión",
     "addRelationships": "Agregue relaciones adicionales",
@@ -411,13 +424,17 @@
     "home": "Inicio",
     "energy": "Energía",
     "person": "Persona",
-    "entity": "Entidad"
+    "entity": "Entidad",
+    "fileUpload": "Subir archivo",
+    "optional": "Esta sección es opcional",
+    "requiredFile": "Es obligatorio subir un archivo para poder continuar"
   },
 
   "info": {
+    "confidential": "Confidencial",
     "contact": "Contacto",
     "contactName": "Nombre de la persona de contacto",
-    "contactPosition": "Posicion",
+    "contactPosition": "Posición",
     "contactPhone": "Télefono de Contacto",
     "contactEmail": "Correo de Contacto",
     "contactInfo": "Información de Contacto",
@@ -479,7 +496,11 @@
     "errorProcessing": "Error procesando la solicitud, intentelo de nuevo más tarde",
     "requiredInput": "Archivo requerido",
     "errorSubmittingForm": "Error subiendo el formulario.",
-    "fieldRequired": "Este campo es requerido",
+    "fieldRequired": "Este campo es obligatorio.",
+    "invalidEmail": "El correo electrónico no es válido.",
+    "maxLengthExceeded": "Se ha excedido la longitud máxima permitida.",
+    "minLengthNotMet": "La longitud mínima no se ha alcanzado.",
+    "inputOrLengthIncorrect": "La entrada o la longitud no es correcta.",
     "formatyInvalid": "Este campo tiene un formato incorrecto",
     "firstNameRequired": "Nombre es requerido",
     "lastNameRequired": "Apellido requerido",
@@ -489,7 +510,6 @@
     "error404": "404 PAGINA NO ENCONTRADA",
     "noPage": "La página que estás buscando podría haber sido eliminada.",
     "IDUserRequired": "El ID del usuario es requerido",
-    "inputOrLengthIncorrect": "Este campo es requerido o tamaño incorrecto",
     "mustDownloadFile": "Debe descargar el formulario, posteriormente debe llenarlo y cargar su propuesta para ser revisada",
     "devAccountNumRequired": "Se requiere el número de cuenta del desarrollador",
     "buyerAccountNumRequired": "Se requiere el número de cuenta del comprador",
@@ -679,9 +699,22 @@
   },
 
   "adaptationAction": {
+    "title": "Acciones de Adaptación",
+    "typeOptional": "Si el usuario decide completar una sección que es opcional, de acuerdo a su selección del tipo acción de adaptación, se debe completar todos los campos obligatorios que muestra",
     "mesage1": "Se sugiere tener a la mano la Guía para el registro de acciones climáticas con impactos de adaptación en el Sistema Nacional de Métricas de Cambio Climático (SINAMECC) al momento de completar este registro",
     "addReview": "Agregar una nueva revisión para esta acción de adaptación",
     "newButton": "Nuevo reporte Acción de Adaptación",
+    "funding": {
+      "public": "Presupuesto público nacional",
+      "private": "Fondos privados",
+      "international": "Cooperación internacional",
+      "undefined": "Por definir"
+    },
+    "help": {
+      "help": "Para consultas o dudas contactar al correo ",
+      "guide": "Guía de registro",
+      "title": "Asistencia"
+    },
     "form1": {
       "title": "Registro general",
       "subtitle": "En esta sección le invitamos a completar los datos generales de identificación para iniciar con el reporte de su acción",
@@ -689,7 +722,7 @@
       "dataRegister": "Registro de datos",
       "responsibleReportingEntity": "Entidad responsable de reporte",
       "legalID": "Cédula jurídica (en caso de ser una empresa u organización)",
-      "reportData": "Fecha de elaboración del reporte",
+      "reportData": "Fecha de registro en SINAMECC",
       "positionResponsiblePerson": "Cargo de la persona responsable de reporte",
       "entityAddress": "Dirección de la entidad"
     },
@@ -709,6 +742,7 @@
       "AADistrict": "Distrito donde se ejecuta la acción",
       "narrativeActionPlace": "Descripción narrativa localización donde se desarrolla la acción",
       "attachGeographicalLocation": "Adjunte la localización georeferenciada de la acción en caso de contar con esta",
+      "attachGeographicalLocationHint": "La localización georeferenciada de la acción se refiere a un Punto GIS (de ser posible que se pueda marcar la ubicación en un mapa), shapes, entre otros",
       "categorizationNationalIntruments": "Categorización con instrumentos nacionales",
       "categorizationNationalIntrumentsTooltip": "Para más información sobre la categorización",
       "selectTopic": "Seleccione el tema al que pertenece la acción",
@@ -771,7 +805,9 @@
       "indicatorVerificationSource": "Fuente de verificación del indicador",
       "attachSupportMonitoring": "Adjunte la información de soporte para el proceso de monitoreo y seguimiento",
       "descriptiveWay": "A modo descriptivo ¿cuál ha sido el avance de su acción en el periodo?",
-      "indicatorBaseline": "Línea base del indicador (adjunte información de respaldo)"
+      "indicatorBaseline": "Línea base del indicador (adjunte información de respaldo)",
+      "sameContactQuestion": "La información de contacto responsable del dato indicador es la misma información de contacto registrada en la sección 1 Registro general?",
+      "indicatorGoal": "Meta asociada al indicador"
     },
     "form5": {
       "selectIndicador": "Seleccione el indicador",
@@ -784,9 +820,16 @@
       "impactsAction": "Impactos de la acción según los indicadores definidos",
       "genderEquity": "La acción incorporó elementos de equidad de género",
       "contributesGenderEquity": "En caso positivo, describa como la acción aporta a la equidad de género frente al cambio climático",
-      "sustainableDevelopment": "Seleccione los objetivos de desarrollo sostenible que más se identifican con la acción",
+      "sustainableDevelopment": "Seleccione los objetivos de desarrollo sostenible que efectivamente si impactó la acción",
       "generatedImpact": "¿La acción ha generado algún impacto no deseado/inesperado/negativo?",
       "annexSupporting": "Adjunte información de soporte asociada al impacto de la acción reportada"
+    },
+    "location": {
+      "national": "Nacional",
+      "provincial": "Provincial",
+      "cantonal": "Cantonal",
+      "district": "Distrital",
+      "other": "Otro"
     }
   },
 

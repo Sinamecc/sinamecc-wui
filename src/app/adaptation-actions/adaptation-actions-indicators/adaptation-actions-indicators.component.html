@@ -23,27 +23,71 @@
                   >adaptationAction.form4.indicatorName
                 </mat-label>
                 <input matInput formControlName="adaptationActionIndicatorNameCtrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
+                <mat-error
+                  *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorNameCtrl')?.hasError('required')"
+                  translate
+                >
+                  errorLabel.fieldRequired
+                </mat-error>
+                <mat-error
+                  *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorNameCtrl')?.hasError('maxlength')"
+                  translate
+                >
+                  errorLabel.maxLengthExceeded
+                </mat-error>
               </mat-form-field>
             </div>
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>adaptationAction.form4.indicatorDescription </mat-label>
               <input matInput formControlName="adaptationActionIndicatorDescriptionCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
+              <mat-error
+                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorDescriptionCtrl')?.hasError('required')"
+                translate
+              >
+                errorLabel.fieldRequired
+              </mat-error>
+              <mat-error
+                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorDescriptionCtrl')?.hasError('maxlength')"
+                translate
+              >
+                errorLabel.maxLengthExceeded
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field class="field-ppcn">
               <mat-label translate>mitigationAction.indicatorUnit </mat-label>
               <input matInput formControlName="adaptationActionIndicatorUnitCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
+              <mat-error
+                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorUnitCtrl')?.hasError('required')"
+                translate
+              >
+                errorLabel.fieldRequired
+              </mat-error>
+              <mat-error
+                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorUnitCtrl')?.hasError('maxlength')"
+                translate
+              >
+                errorLabel.maxLengthExceeded
+              </mat-error>
             </mat-form-field>
 
-            <div class="flex flex-row justify-center">
+            <div class="flex flex-row justify-center gap-4">
               <mat-form-field class="field-ppcn">
                 <mat-label translate>adaptationAction.form4.calculationMethodology</mat-label>
                 <input matInput formControlName="adaptationActionIndicatorMetodologyCtrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
+                <mat-error
+                  *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorMetodologyCtrl')?.hasError('required')"
+                  translate
+                >
+                  errorLabel.fieldRequired
+                </mat-error>
+                <mat-error
+                  *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorMetodologyCtrl')?.hasError('maxlength')"
+                  translate
+                >
+                  errorLabel.maxLengthExceeded
+                </mat-error>
               </mat-form-field>
               <input formControlName="adaptationActionIndicatorUnitFileCtrl" type="file" />
             </div>
@@ -114,21 +158,20 @@
               formControlName="adaptationActionIndicatorCoverageCtrl"
               class="custom-radio-group"
             >
-              <mat-radio-button value="NATIONAL">
-                <label translate>Nacional</label>
+              <mat-radio-button [value]="LOCATION.NATIONAL">
+                <label translate>adaptationAction.location.national</label>
               </mat-radio-button>
-              <mat-radio-button value="REGIONAL">
-                <label translate>Regional</label>
+              <mat-radio-button [value]="LOCATION.PROVINCIAL">
+                <label translate>adaptationAction.location.provincial</label>
               </mat-radio-button>
-              <mat-radio-button value="PROVINCIAL">
-                <label translate>Provincial</label>
+              <mat-radio-button [value]="LOCATION.CANTONAL">
+                <label translate>adaptationAction.location.cantonal</label>
               </mat-radio-button>
-              <mat-radio-button value="CANTONAL">
-                <label translate>Cantonal</label>
+              <mat-radio-button [value]="LOCATION.DISTRICT">
+                <label translate>adaptationAction.location.district</label>
               </mat-radio-button>
-
-              <mat-radio-button value="OTHER">
-                <label translate>Otro</label>
+              <mat-radio-button [value]="LOCATION.OTHER">
+                <label translate>adaptationAction.location.other</label>
               </mat-radio-button>
             </mat-radio-group>
 
@@ -151,6 +194,22 @@
             </mat-form-field>
 
             <mat-form-field class="field-ppcn">
+              <mat-label translate>adaptationAction.form4.indicatorGoal </mat-label>
+              <input matInput formControlName="adaptationActionIndicatorGoalCtrl" />
+              <mat-error
+                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorGoalCtrl')?.hasError('required')"
+                translate
+                >errorLabel.fieldRequired</mat-error
+              >
+              <mat-error
+                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorGoalCtrl')?.hasError('maxlength')"
+                translate
+              >
+                errorLabel.maxLengthExceeded
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="field-ppcn">
               <mat-label translate>mitigationAction.howSustainabilityIndicator </mat-label>
               <input matInput formControlName="adaptationActionIndicatorMeasurementCtrl" />
               <mat-error translate>errorLabel.fieldRequired</mat-error>
@@ -159,16 +218,23 @@
             <mat-form-field class="field-ppcn">
               <mat-label translate>mitigationAction.observationsComments </mat-label>
               <input matInput formControlName="adaptationActionIndicatorDetailsCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
+              <mat-error
+                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorDetailsCtrl')?.hasError('maxlength')"
+                translate
+              >
+                errorLabel.maxLengthExceeded
+              </mat-error>
             </mat-form-field>
 
-            <div class="flex flex-row justify-center">
+            <div class="flex flex-row justify-center gap-4">
               <mat-form-field class="field-ppcn">
                 <mat-label translate>adaptationAction.form4.indicatorBaseline</mat-label>
                 <input matInput formControlName="indicatorBaselineCtrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
+                <mat-error *ngIf="formArray?.get([0])?.get('indicatorBaselineCtrl')?.hasError('maxlength')" translate>
+                  errorLabel.maxLengthExceeded
+                </mat-error>
               </mat-form-field>
-              <input type="file" />
+              <app-upload-button />
             </div>
 
             <div class="button-box flex flex-row justify-end items-center">
@@ -354,38 +420,74 @@
               <span translate>adaptationAction.form4.contactInfo</span>
             </ng-template>
 
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>adaptationAction.form4.contactName</mat-label>
-              <input matInput formControlName="adaptationActionIndicatorContactNameCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
+            <mat-form-field appearance="fill" class="field-ppcn">
+              <mat-label translate>adaptationAction.form4.sameContactQuestion</mat-label>
+              <mat-select formControlName="sameContactCtrl">
+                <mat-option [value]="true">{{ 'general.yes' | translate }}</mat-option>
+                <mat-option [value]="false">{{ 'general.no' | translate }}</mat-option>
+              </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>reportData.institution</mat-label>
-              <input matInput formControlName="adaptationActionIndicatorContactInstitutionCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
+            <ng-container *ngIf="formArray?.get([3])?.get('sameContactCtrl').value === false">
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>adaptationAction.form4.contactName</mat-label>
+                <input matInput formControlName="adaptationActionIndicatorContactNameCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
 
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>reportData.department</mat-label>
-              <input matInput formControlName="adaptationActionIndicatorContactDepartmentCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>reportData.institution</mat-label>
+                <input matInput formControlName="adaptationActionIndicatorContactInstitutionCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
 
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>admin.email</mat-label>
-              <input matInput formControlName="adaptationActionIndicatorContactEmailCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>reportData.department</mat-label>
+                <input matInput formControlName="adaptationActionIndicatorContactDepartmentCtrl" />
+                <mat-error translate>errorLabel.fieldRequired</mat-error>
+              </mat-form-field>
 
-            <mat-form-field class="field-ppcn">
-              <span matPrefix>+506 &nbsp;</span>
-              <mat-label translate>info.telephone</mat-label>
-              <input matInput type="tel" maxlength="8" formControlName="adaptationActionIndicatorContactPhoneCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
+              <mat-form-field class="field-ppcn">
+                <mat-label translate>admin.email</mat-label>
+                <input matInput formControlName="adaptationActionIndicatorContactEmailCtrl" />
+                <mat-error
+                  *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactEmailCtrl')?.hasError('required')"
+                  translate
+                >
+                  errorLabel.fieldRequired
+                </mat-error>
+                <mat-error
+                  *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactEmailCtrl')?.hasError('email')"
+                  translate
+                >
+                  errorLabel.invalidEmail
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="field-ppcn">
+                <span matPrefix>+506 &nbsp;</span>
+                <mat-label translate>info.telephone</mat-label>
+                <input matInput type="tel" maxlength="8" formControlName="adaptationActionIndicatorContactPhoneCtrl" />
+                <mat-error
+                  *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('required')"
+                  translate
+                >
+                  errorLabel.fieldRequired
+                </mat-error>
+                <mat-error
+                  *ngIf="
+                    formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('maxlength') ||
+                    formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('minlength')
+                  "
+                  translate
+                >
+                  errorLabel.invalidLength
+                </mat-error>
+              </mat-form-field>
+            </ng-container>
           </mat-step>
         </mat-vertical-stepper>
+
         <div>
           <button mat-mini-fab color="warn" *ngIf="i > 0" (click)="removeForm(formElement)" type="button">
             <mat-icon>delete forever</mat-icon>

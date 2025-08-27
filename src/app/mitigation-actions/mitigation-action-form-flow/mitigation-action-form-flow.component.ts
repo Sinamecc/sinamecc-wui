@@ -29,7 +29,7 @@ import { EmissionsMitigationFormComponent } from '@app/mitigation-actions/emissi
 import { ImpactFormComponent } from '@app/mitigation-actions/impact-form/impact-form.component';
 import { ReportingClimateActionFormComponent } from '../reporting-climate-action-form/reporting-climate-action-form.component';
 import { I18nService } from '@app/i18n';
-import { States } from '../mitigation-action';
+import { MAStates } from '../mitigation-action';
 
 @Component({
   selector: 'app-mitigation-action-form-flow',
@@ -48,8 +48,8 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
 
   @ViewChild(ReportingClimateActionFormComponent)
   reportingClimateFormComponent: ReportingClimateActionFormComponent;
-  state: States;
-  accepted = States.ACCEPTED_BY_DCC;
+  state: MAStates;
+  accepted = MAStates.ACCEPTED_BY_DCC;
 
   @Input()
   title: string;
