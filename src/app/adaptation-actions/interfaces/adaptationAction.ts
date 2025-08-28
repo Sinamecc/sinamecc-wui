@@ -199,6 +199,8 @@ export interface AdaptationAction {
   result?: any;
   category_option?: any;
   // section 8
+  final_result?: any;
+  process?: any;
 }
 
 export interface Province {

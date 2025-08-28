@@ -199,20 +199,8 @@
       <mat-form-field class="field-ppcn mt-4" appearance="fill">
         <mat-label><span translate>impactEvaluation.category</span></mat-label>
         <mat-select formControlName="categoryCtrl" multiple>
-          <mat-option [value]="transCategories.technology">
-            <label translate>impactEvaluation.select.technology</label>
-          </mat-option>
-
-          <mat-option [value]="transCategories.changeAgents">
-            <label translate>impactEvaluation.select.changeAgents</label>
-          </mat-option>
-
-          <mat-option [value]="transCategories.incentives">
-            <label translate>impactEvaluation.select.incentives</label>
-          </mat-option>
-
-          <mat-option [value]="transCategories.rules">
-            <label translate>impactEvaluation.select.rules</label>
+          <mat-option *ngFor="let option of categoriesCT" [value]="option">
+            <label>{{ option.name | translate }}</label>
           </mat-option>
         </mat-select>
       </mat-form-field>

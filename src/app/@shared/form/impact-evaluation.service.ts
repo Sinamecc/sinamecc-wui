@@ -1,12 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
-import { Category, CategoryGroup, CategoryGroupInput, CategoryInput, Dimension } from './interface';
+import {
+  Category,
+  CategoryCT,
+  CategoryGroup,
+  CategoryGroupInput,
+  CategoryInput,
+  Characteristic,
+  Dimension,
+} from './interface';
 
 const routes = {
   dimension: () => `/v1/general/dimension/`,
   categoryGroup: () => `/v1/general/category_group/`,
   category: () => `/v1/general/category/`,
+  categoryCT: () => `/v1/general/category_ct/`,
+  characteristics: () => `/v1/general/characteristic/`,
 };
 
 @Injectable()
@@ -48,6 +58,22 @@ export class ImpactEvaluationService {
   getCategories() {
     return this.httpClient.get(routes.category()).pipe(
       map((response: Category[]) => {
+        return response;
+      }),
+    );
+  }
+
+  getCategoryCT() {
+    return this.httpClient.get(routes.categoryCT()).pipe(
+      map((response: CategoryCT[]) => {
+        return response;
+      }),
+    );
+  }
+
+  getCharacteristics() {
+    return this.httpClient.get(routes.characteristics()).pipe(
+      map((response: Characteristic[]) => {
         return response;
       }),
     );

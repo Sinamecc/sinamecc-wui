@@ -5,16 +5,14 @@ import { States } from '@app/@shared/next-state';
 import { AdaptationActionService } from '@app/adaptation-actions/adaptation-actions-service';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  CHARACTERISTICS_MOCK,
-  getCategoriesScale,
-  MOCK_BARRIERS,
-  TRANSFORMATION_CHANGE,
-  TRANSFORMATIONAL_CATEGORIES,
-} from '../constants';
+import { getCategoriesScale, MOCK_BARRIERS, TRANSFORMATION_CHANGE, TRANSFORMATIONAL_CATEGORIES } from '../constants';
 import { AdaptationAction } from '@app/adaptation-actions/interfaces/adaptationAction';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { ImpactEvaluationComponent } from '../impact-evaluation.component';
+import { ImpactEvaluationService } from '../impact-evaluation.service';
+import { CategoryCT, Characteristic, TransformationalChangePayload } from '../interface';
+import { getImpactEvalCategoryKey } from '../utils';
+import { finalize, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-transformational-change',
@@ -30,16 +28,18 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
   @Input() service: MitigationActionsService | AdaptationActionService;
   item: AdaptationAction | MitigationAction;
   form: UntypedFormGroup;
+  characteristics: Characteristic[];
+  categoriesCT: CategoryCT[];
+  loading = false;
 
   transformationalChange = TRANSFORMATION_CHANGE;
   transCategories = TRANSFORMATIONAL_CATEGORIES;
 
-  // TODO: delete mocks
   barriers = MOCK_BARRIERS;
-  characteristics = CHARACTERISTICS_MOCK;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
+    private impactService: ImpactEvaluationService,
     private translateService: TranslateService,
     private snackBar: MatSnackBar,
   ) {
@@ -62,13 +62,30 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
     this.watchOptionSelection(this.transformationalChange.results);
     this.watchOptionSelection(this.transformationalChange.identification);
     this.categoriesScale = getCategoriesScale(this.adaptation);
+    this.loadCategoriesCT();
+    this.loadCharacteristics();
   }
 
-  get characteristicsToView(): any[] {
-    const selectedCategory: number[] =
+  get characteristicsToView(): Characteristic[] {
+    const selectedCategory: CategoryCT[] =
       this.form?.value?.formArray?.[this.transformationalChange.processes]?.categoryCtrl;
+
     if (!selectedCategory || selectedCategory.length === 0) return [];
-    return this.characteristics.filter((group) => selectedCategory.includes(group.category));
+
+    const selectedIds = selectedCategory.map((c) => c.id);
+    return this.characteristics.filter((ch) => selectedIds.includes(ch.category_ct.id));
+  }
+
+  private loadCategoriesCT() {
+    this.impactService.getCategoryCT().subscribe((categories: CategoryCT[]) => {
+      this.categoriesCT = categories;
+    });
+  }
+
+  private loadCharacteristics() {
+    this.impactService.getCharacteristics().subscribe((characteristics: Characteristic[]) => {
+      this.characteristics = characteristics;
+    });
   }
 
   private createForm() {
@@ -100,7 +117,101 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
     });
   }
 
+  buildFinalResultPayload() {
+    const resultSection = this.form.value.formArray[this.transformationalChange.results];
+    return [
+      {
+        scale: resultSection.categoriesCtrl.map((option) => {
+          let categoryResult = [];
+          if (option.code === this.impactEvalCategories.SCALE) {
+            categoryResult = resultSection.impactScaleCtrl.map((key) => ({
+              code: key,
+              name: getImpactEvalCategoryKey(key),
+            }));
+          } else if (option.code === this.impactEvalCategories.SCALE_TERM) {
+            categoryResult = resultSection.impactScaleTermCtrl.map((key) => ({
+              code: key,
+              name: getImpactEvalCategoryKey(key),
+            }));
+          }
+
+          return {
+            code: option.code,
+            name: option.name,
+            category_result: categoryResult,
+            description: option.description,
+          };
+        }),
+      },
+    ];
+  }
+
+  buildProcessPayload() {
+    const process = this.form.value.formArray[this.transformationalChange.processes];
+    return {
+      characteristics: process.optionCtrl.map((char) => char.id),
+      other: null,
+      specific_impact: null,
+    };
+  }
+
+  buildIdenfiticationPayload() {
+    const process = this.form.value.formArray[this.transformationalChange.identification];
+  }
+
+  buildPayload() {
+    const payload: TransformationalChangePayload = {
+      final_result: this.buildFinalResultPayload(),
+      process: this.buildProcessPayload(),
+    };
+    return payload;
+  }
+
   private updateForm() {}
 
-  submitForm() {}
+  submitForm() {
+    if (this.loading) return;
+    this.loading = true;
+    const payload = this.buildPayload();
+    const observable: Observable<any> =
+      this.service instanceof AdaptationActionService
+        ? (this.service as AdaptationActionService).updateNewAdaptationAction(payload, this.item.id)
+        : (this.service as MitigationActionsService).submitMitigationActionUpdateForm(payload, this.item.id);
+
+    observable
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          this.form?.markAsPristine();
+        }),
+      )
+      .subscribe({
+        next: (response) => {
+          if (this.service instanceof AdaptationActionService) {
+            (this.service as AdaptationActionService).updateCurrentAdaptationAction(
+              Object.assign(response.body, payload),
+            );
+          } else {
+            (this.service as MitigationActionsService).updateCurrentMitigationAction(
+              Object.assign(response.body, payload),
+            );
+          }
+
+          this.state.emit(response.state as States);
+          this.onComplete?.emit(true);
+
+          this.translateService.get('form.success').subscribe((res: string) => {
+            this.snackBar.open(res, null, { duration: 3000 });
+          });
+
+          this.stepper?.next();
+        },
+
+        error: (error) => {
+          this.translateService.get('errorLabel.errorProcessing').subscribe((res: string) => {
+            this.snackBar.open(res, null, { duration: 3000 });
+          });
+        },
+      });
+  }
 }

@@ -3,6 +3,11 @@ export interface SustainableDevelopmentImpactPayload {
   category_option: CategoryOptionPayload[];
 }
 
+export interface TransformationalChangePayload {
+  final_result: { scale: ScalePayload[] }[];
+  process: ProcessPayload;
+}
+
 export interface ScalePayload {
   code: string;
   name: string;
@@ -10,6 +15,12 @@ export interface ScalePayload {
     code: string;
     name: string;
   }[];
+}
+
+export interface ProcessPayload {
+  characteristics: number[];
+  other: string;
+  specific_impact: null; // TODO: fix
 }
 
 export interface CategoryOptionPayload {
@@ -40,43 +51,41 @@ export interface IndicatorOption {
   id: string;
 }
 
-export interface Dimension {
-  id: number;
-  code: string;
-  name: string;
-  created: string;
-  updated: string;
-}
-
 export interface CategoryGroupInput {
   dimension_list: {
     code_dimension: string;
   }[];
 }
 
-export interface CategoryGroup {
+export interface CategoryInput {
+  category_group_list: { code_category_group: string; code_dimension: string }[];
+}
+
+export interface CategoryGroupInput {
+  dimension_list: { code_dimension: string }[];
+}
+
+export interface BaseEntity {
   id: number;
   code: string;
   name: string;
-  dimension: Dimension;
   created: string;
   updated: string;
 }
+export interface Dimension extends BaseEntity {}
 
-export interface CategoryInput {
-  category_group_list: {
-    code_category_group: string;
-    code_dimension: string;
-  }[];
+export interface CategoryGroup extends BaseEntity {
+  dimension: Dimension;
 }
 
-export interface Category {
-  id?: number;
-  code: string;
-  name: string;
+export interface Category extends BaseEntity {
   category_group: CategoryGroup;
   other_category: string | null;
   description: string;
-  created: string;
-  updated: string;
+}
+
+export interface CategoryCT extends BaseEntity {}
+
+export interface Characteristic extends BaseEntity {
+  category_ct: CategoryCT;
 }
