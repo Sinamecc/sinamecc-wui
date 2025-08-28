@@ -1,3 +1,5 @@
+import { CategoryOption, ImpactProcess, ImpactScale } from '@app/@shared/form/interface';
+
 export interface ReportOrganization {
   responsible_entity: string;
   legal_identification: string;
@@ -196,11 +198,11 @@ export interface AdaptationAction {
   fsm_state?: State;
   general_report?: any;
   // section 7
-  result?: any;
-  category_option?: any;
+  result?: { scale: ImpactScale[] }[];
+  category_option?: CategoryOption;
   // section 8
-  final_result?: any;
-  process?: any;
+  final_result?: { scale: ImpactScale[] }[];
+  process?: ImpactProcess;
 }
 
 export interface Province {

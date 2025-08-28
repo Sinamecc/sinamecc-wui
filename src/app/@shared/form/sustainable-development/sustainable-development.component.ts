@@ -1,14 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { getCategoriesScale, IMPACT_DIMENSION, IMPACT_EVALUATION, IMPACT_TYPE } from '../constants';
-import {
-  Category,
-  CategoryGroup,
-  CategoryOptionPayload,
-  Dimension,
-  SustainableDevelopmentImpactPayload,
-} from '../interface';
+import { getCategoriesScale, IMPACT_EVALUATION, IMPACT_TYPE } from '../constants';
+import { Category, CategoryGroup, Dimension, SustainableDevelopmentImpactPayload } from '../interface';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { AdaptationActionService } from '@app/adaptation-actions/adaptation-actions-service';
 import { finalize, Observable } from 'rxjs';
@@ -64,6 +58,10 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
     }
 
     this.createForm();
+    if (this.item.category_option?.id) {
+      this.updateForm();
+    }
+
     this.watchOptionSelection(this.impactEvaluation.categories);
     this.watchOptionSelection(this.impactEvaluation.results);
     this.categoriesScale = getCategoriesScale(this.adaptation);
@@ -169,26 +167,59 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
     });
   }
 
-  private updateForm() {}
+  private updateForm() {
+    const category = this.item.category_option[0];
+    const result = this.item.result;
+
+    console.log('CATEGORY OPTION', category);
+    console.log('Result ', result);
+
+    return;
+    this.form = this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          dimensionCtrl: [, Validators.required],
+          categoryGroupCtrl: [[], Validators.required],
+          optionCtrl: [[], Validators.required], // category
+          optionOtherCtrl: this.formBuilder.array([]), // category other
+          categoriesCtrl: this.formBuilder.array([]),
+          impactTypeCtrl: [category.impact_type, Validators.required],
+          pertinentCtrl: [category.pertinent, Validators.required],
+          relevantCtrl: [category.relevant, Validators.required],
+        }),
+        this.formBuilder.group({
+          optionCtrl: [[], Validators.required], // category
+          impactScaleCtrl: ['', Validators.required],
+          impactScaleTermCtrl: ['', Validators.required],
+          categoriesCtrl: this.formBuilder.array([]),
+        }),
+      ]),
+    });
+  }
 
   buildCategoryPayload() {
     const categorySection = this.form.value.formArray[this.impactEvaluation.categories];
-    return [
-      {
-        category_section: categorySection.categoriesCtrl.map((cat) => ({
-          category: cat.id,
-          description: cat.description,
-        })),
-        other: categorySection.optionOtherCtrl.map((cat) => ({
-          name: cat.name,
-          description: cat.description,
-        })),
-        impact_type: categorySection.impactTypeCtrl,
-        pertinent: categorySection.pertinentCtrl,
-        relevant: categorySection.relevantCtrl,
-        description: null,
-      },
-    ];
+    return {
+      category_section: categorySection.categoriesCtrl.map((cat) => ({
+        category: cat.id,
+        description: cat.description,
+        indicator: cat.indicator || cat.indicatorOther,
+        base_value: cat.baseValue,
+        expected_value: cat.expectedValue,
+        accumulated_value: cat.accumulatedValue,
+      })),
+      other: categorySection.optionOtherCtrl.map((cat) => ({
+        name: cat.name,
+        description: cat.description,
+        indicator: cat.indicator || cat.indicatorOther,
+        base_value: cat.baseValue,
+        expected_value: cat.expectedValue,
+        accumulated_value: cat.accumulatedValue,
+      })),
+      impact_type: categorySection.impactTypeCtrl,
+      pertinent: categorySection.pertinentCtrl,
+      relevant: categorySection.relevantCtrl,
+    };
   }
 
   buildResultPayload() {

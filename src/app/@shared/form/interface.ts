@@ -1,29 +1,33 @@
 export interface SustainableDevelopmentImpactPayload {
-  result: { scale: ScalePayload[] }[];
-  category_option: CategoryOptionPayload[];
+  result: { scale: ImpactScale[] }[];
+  category_option: CategoryOption;
 }
 
 export interface TransformationalChangePayload {
-  final_result: { scale: ScalePayload[] }[];
-  process: ProcessPayload;
+  final_result: { scale: ImpactScale[] }[];
+  process: ImpactProcess;
 }
 
-export interface ScalePayload {
+export interface ImpactScale {
+  id?: number;
   code: string;
   name: string;
   category_result: {
+    id?: number;
     code: string;
     name: string;
   }[];
 }
 
-export interface ProcessPayload {
+export interface ImpactProcess {
+  id?: number;
   characteristics: number[];
   other: string;
   specific_impact: null; // TODO: fix
 }
 
-export interface CategoryOptionPayload {
+export interface CategoryOption {
+  id?: number;
   category_section: {
     category: number;
     description: string;

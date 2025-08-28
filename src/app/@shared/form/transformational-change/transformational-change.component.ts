@@ -140,6 +140,10 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
             name: option.name,
             category_result: categoryResult,
             description: option.description,
+            indicator: option.indicator || option.indicatorOther,
+            base_value: option.baseValue,
+            expected_value: option.expectedValue,
+            accumulated_value: option.accumulatedValue,
           };
         }),
       },

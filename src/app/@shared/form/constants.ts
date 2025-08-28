@@ -22,12 +22,6 @@ export const IMPACT_TYPE = {
   NEGATIVE: false,
 };
 
-export const IMPACT_DIMENSION = {
-  AMBIENTAL: '1',
-  ECONOMIC: '2',
-  SOCIAL: '3',
-};
-
 export const getCategoriesScale = (adaptation: boolean) => {
   return [
     {
