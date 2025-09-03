@@ -35,6 +35,10 @@ export const getCategoriesScale = (adaptation: boolean) => {
   ];
 };
 
+export const getCategoriesScaleByCode = (adaptation: boolean, code: string) => {
+  return getCategoriesScale(adaptation).find((cat) => cat.code === code);
+};
+
 export const TRANSFORMATION_CHANGE = {
   identification: 0,
   processes: 1,

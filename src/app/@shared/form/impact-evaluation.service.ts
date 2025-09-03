@@ -1,15 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
-import {
-  Category,
-  CategoryCT,
-  CategoryGroup,
-  CategoryGroupInput,
-  CategoryInput,
-  Characteristic,
-  Dimension,
-} from './interface';
+import { Category, CategoryCT, CategoryGroup, Characteristic, Dimension } from './types/results';
+import { CategoryGroupInput, CategoryInput } from './types/payload';
 
 const routes = {
   dimension: () => `/v1/general/dimension/`,

@@ -10,9 +10,10 @@ import { AdaptationAction } from '@app/adaptation-actions/interfaces/adaptationA
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { ImpactEvaluationComponent } from '../impact-evaluation.component';
 import { ImpactEvaluationService } from '../impact-evaluation.service';
-import { CategoryCT, Characteristic, TransformationalChangePayload } from '../interface';
 import { getImpactEvalCategoryKey } from '../utils';
 import { finalize, Observable } from 'rxjs';
+import { ImpactProcessResult, TransformationalChangePayload } from '../types/payload';
+import { CategoryCT, Characteristic } from '../types/results';
 
 @Component({
   selector: 'app-transformational-change',
@@ -58,12 +59,20 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
     }
 
     this.createForm();
+    if ((this.item.process as ImpactProcessResult).id) {
+      this.updateForm();
+    }
     this.watchOptionSelection(this.transformationalChange.processes);
     this.watchOptionSelection(this.transformationalChange.results);
     this.watchOptionSelection(this.transformationalChange.identification);
     this.categoriesScale = getCategoriesScale(this.adaptation);
     this.loadCategoriesCT();
     this.loadCharacteristics();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   get characteristicsToView(): Characteristic[] {
@@ -171,7 +180,15 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
     return payload;
   }
 
-  private updateForm() {}
+  private updateForm() {
+    if (this.item.process) {
+      // patch process
+    }
+
+    if (this.item.final_result) {
+      this.patchResults(this.item.final_result, this.adaptation, this.transformationalChange.results);
+    }
+  }
 
   submitForm() {
     if (this.loading) return;

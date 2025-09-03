@@ -116,6 +116,7 @@
           formControlName="optionCtrl"
           multiple
           (valueChange)="onOtherOptionChange($event, transformationalChange.identification)"
+          [compareWith]="compareCategory"
         >
           <mat-option *ngFor="let option of barriers" [value]="option">
             <label>{{ option.name | translate }}</label>
@@ -198,7 +199,7 @@
       <!-- 8.2.1.1 -->
       <mat-form-field class="field-ppcn mt-4" appearance="fill">
         <mat-label><span translate>impactEvaluation.category</span></mat-label>
-        <mat-select formControlName="categoryCtrl" multiple>
+        <mat-select formControlName="categoryCtrl" multiple [compareWith]="compareCategory">
           <mat-option *ngFor="let option of categoriesCT" [value]="option">
             <label>{{ option.name | translate }}</label>
           </mat-option>
@@ -213,6 +214,7 @@
           formControlName="optionCtrl"
           multiple
           (valueChange)="onOtherOptionChange($event, transformationalChange.processes)"
+          [compareWith]="compareCategory"
         >
           <mat-option *ngFor="let option of characteristicsToView" [value]="option">
             <label>{{ option.name | translate }}</label>
@@ -290,6 +292,7 @@
           formControlName="optionCtrl"
           multiple
           (valueChange)="onScaleChange($event, transformationalChange.processes)"
+          [compareWith]="compareCategory"
         >
           <mat-option *ngFor="let option of categoriesScale" [value]="option">
             <label>{{ option.name | translate }}</label>

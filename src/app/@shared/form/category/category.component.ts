@@ -4,8 +4,8 @@ import { AdaptationActionService } from '@app/adaptation-actions/adaptation-acti
 import { AdaptationAction } from '@app/adaptation-actions/interfaces/adaptationAction';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { IndicatorOption } from '../interface';
 import { OTHER } from '../constants';
+import { IndicatorOption } from '../types/payload';
 
 @Component({
   selector: 'app-category',

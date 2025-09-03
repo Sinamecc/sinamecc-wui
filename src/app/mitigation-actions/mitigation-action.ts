@@ -1,7 +1,8 @@
 import { FileUploaded } from '@app/@shared/upload-button/file-upload';
 import { GeographicScale } from './mitigation-action-new-form-data';
 import { NextState } from '@shared/next-state';
-import { CategoryOption, ImpactProcess, ImpactScale } from '@app/@shared/form/interface';
+import { CategoryOptionResult, ResultResult } from '@app/@shared/form/types/results';
+import { CategoryOption, ImpactProcess, ImpactProcessResult, ImpactScale } from '@app/@shared/form/types/payload';
 
 export interface MitigationAction {
   initiative: Initiative;
@@ -47,11 +48,11 @@ export interface MitigationAction {
   monitoring_information: MonitoringInformation;
   monitoring_reporting_indicator: any;
   // section 7
-  result?: { scale: ImpactScale[] }[];
-  category_option?: CategoryOption;
+  result?: { scale: ImpactScale[] }[] | ResultResult[];
+  category_option?: CategoryOption | CategoryOptionResult;
   // section 8
-  final_result?: { scale: ImpactScale[] }[];
-  process?: ImpactProcess;
+  final_result?: { scale: ImpactScale[] }[] | ResultResult[];
+  process?: ImpactProcess | ImpactProcessResult;
 }
 
 export interface MonitoringInformation {
