@@ -326,6 +326,15 @@
           </div>
 
           <div class="flex flex-col justify-between items-center">
+            <h3 class="mat-h3 txt-title mb-1" translate>adaptationAction.form2.PNARelationship</h3>
+            <div class="flex flex-col justify-start items-start gap-1">
+              <span class="mat-h3 m-0" *ngFor="let rel of adaptationAction?.instrument?.adaptation_axis_relation">
+                - {{ 'adaptationAction.pnaRelationship.' + rel.value | translate }}
+              </span>
+            </div>
+          </div>
+
+          <div class="flex flex-col justify-between items-center mt-2">
             <div class="flex flex-row">
               <h3 class="mat-h3 txt-title" translate>adaptationAction.form2.namePlanningInstrument</h3>
               <h3 class="mat-h3 txt-separator">:</h3>
