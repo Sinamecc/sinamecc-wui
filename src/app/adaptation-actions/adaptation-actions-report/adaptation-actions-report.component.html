@@ -362,11 +362,11 @@
           <span translate>general.optional</span>
         </div>
 
-        <label translate>adaptationAction.</label>
+        <label translate>adaptationAction.form2.PNARelationship</label>
         <mat-form-field class="field-ppcn">
-          <mat-select formControlName="pnaRelationshipCtrl">
-            <mat-option *ngFor="let rel of pnaOptions" [value]="rel.id" multiple>
-              <label translate>{{ rel.label | translate }}</label>
+          <mat-select formControlName="pnaRelationshipCtrl" multiple [compareWith]="compareRelationship">
+            <mat-option *ngFor="let rel of pnaOptions" [value]="rel">
+              <label translate>{{ 'adaptationAction.pnaRelationship.' + rel.value | translate }}</label>
             </mat-option>
           </mat-select>
         </mat-form-field>

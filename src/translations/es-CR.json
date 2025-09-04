@@ -744,6 +744,7 @@
       "AAProvince": "Provincia donde se ejecuta la acción",
       "AACanton": "Cantón donde se ejecuta la acción",
       "AADistrict": "Distrito donde se ejecuta la acción",
+      "PNARelationship": "Relación de la acción de adaptación con los ejes del Plan Nacional de Adaptación 2022-2026",
       "narrativeActionPlace": "Descripción narrativa localización donde se desarrolla la acción",
       "attachGeographicalLocation": "Adjunte la localización georeferenciada de la acción en caso de contar con esta",
       "attachGeographicalLocationHint": "La localización georeferenciada de la acción se refiere a un Punto GIS (de ser posible que se pueda marcar la ubicación en un mapa), shapes, entre otros",

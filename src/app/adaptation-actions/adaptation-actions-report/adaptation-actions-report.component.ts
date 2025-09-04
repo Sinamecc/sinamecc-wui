@@ -109,8 +109,10 @@ export class AdaptationActionsReportComponent implements OnInit {
     if (this.edit) {
       this.createForm();
       if (this.adaptationAction) {
-        const id = this.adaptationAction.adaptation_action_information?.adaptation_action_type?.id;
-        if (id) this.changeAdaptationType(id);
+        const typeCode = this.adaptationAction.adaptation_action_information?.adaptation_action_type?.code;
+        if (typeCode) {
+          this.changeAdaptationType(typeCode);
+        }
         this.loadAddress();
       }
     }
@@ -213,10 +215,10 @@ export class AdaptationActionsReportComponent implements OnInit {
     section6.get('adaptationActionCodeCtrl').updateValueAndValidity();
   }
 
-  public changeAdaptationType(id: AAType) {
-    this.onTypeSet.emit(id);
-    this.type = id;
-    if (id === this.types.A) {
+  public changeAdaptationType(type: AAType) {
+    this.onTypeSet.emit(type);
+    this.type = type;
+    if (type === this.types.A) {
       this.setOptionalValidators();
     } else {
       this.setRequiredValidators();
@@ -237,6 +239,10 @@ export class AdaptationActionsReportComponent implements OnInit {
       formArray: !this.edit ? this.buildRegisterForm() : this.buildUpdatedRegisterForm(),
     });
   }
+
+  compareRelationship = (o1: any, o2: any): boolean => {
+    return o1 && o2 ? o1.code === o2.code : o1 === o2;
+  };
 
   loadAdaptationActions() {
     this.service.loadAdaptationActions().subscribe((response) => {
@@ -398,7 +404,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       }),
       this.formBuilder.group({
         adaptationActionInstrumentCtrl: [''],
-        pnaRelationshipCtrl: [''],
+        pnaRelationshipCtrl: [[]],
       }),
       this.formBuilder.group({
         adaptationActionClimateThreatCtrl: ['', Validators.required],
@@ -587,7 +593,7 @@ export class AdaptationActionsReportComponent implements OnInit {
       }),
       this.formBuilder.group({
         adaptationActionInstrumentCtrl: [this.adaptationActionUpdated.instrument.name],
-        pnaRelationshipCtrl: [], // TODO: add BE
+        pnaRelationshipCtrl: [this.adaptationAction.instrument.adaptation_axis_relation],
       }),
       this.formBuilder.group({
         adaptationActionClimateThreatCtrl: [
@@ -699,7 +705,7 @@ export class AdaptationActionsReportComponent implements OnInit {
 
       instrument: {
         name: this.clean(this.form.value.formArray[3].adaptationActionInstrumentCtrl),
-        pnaRelationship: this.form.value.formArray[3].pnaRelationshipCtrl,
+        adaptation_axis_relation: this.form.value.formArray[3].pnaRelationshipCtrl,
       },
 
       climate_threat: {

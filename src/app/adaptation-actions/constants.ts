@@ -1,8 +1,10 @@
-export const PNA_RELATIONSHIP = [
-  { id: 'knowledgeManagement', label: 'adaptationAction.pnaRelationship.knowledgeManagement' },
-  { id: 'resilienceConditions', label: 'adaptationAction.pnaRelationship.resilienceConditions' },
-  { id: 'ecosystemManagement', label: 'adaptationAction.pnaRelationship.ecosystemManagement' },
-  { id: 'adaptedServices', label: 'adaptationAction.pnaRelationship.adaptedServices' },
-  { id: 'adaptedProductiveSystems', label: 'adaptationAction.pnaRelationship.adaptedProductiveSystems' },
-  { id: 'investmentSecurity', label: 'adaptationAction.pnaRelationship.investmentSecurity' },
+import { AxisRelation } from './interfaces/adaptationAction';
+
+export const PNA_RELATIONSHIP: AxisRelation[] = [
+  { code: '01', value: 'knowledgeManagement' },
+  { code: '02', value: 'resilienceConditions' },
+  { code: '03', value: 'ecosystemManagement' },
+  { code: '04', value: 'adaptedServices' },
+  { code: '05', value: 'adaptedProductiveSystems' },
+  { code: '06', value: 'investmentSecurity' },
 ];
