@@ -804,7 +804,8 @@
       "descriptiveWay": "A modo descriptivo ¿cuál ha sido el avance de su acción en el periodo?",
       "indicatorBaseline": "Línea base del indicador (adjunte información de respaldo)",
       "sameContactQuestion": "La información de contacto responsable del dato indicador es la misma información de contacto registrada en la sección 1 Registro general?",
-      "indicatorGoal": "Meta asociada al indicador"
+      "indicatorGoal": "Meta asociada al indicador",
+      "add": "Agregar nuevo indicador"
     },
     "form5": {
       "selectIndicador": "Seleccione el indicador",

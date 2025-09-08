@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {
   AdaptationAction,
   BenefitedPopulation,
   Canton,
-  ClimateThreat,
   ClimateThreatCatalog,
   District,
+  Indicator,
   InstrumentDetail,
   Province,
 } from './interfaces/adaptationAction';
@@ -31,6 +31,7 @@ const routes = {
   getClimateThreat: () => `/v1/adaptation-action/type_climate_threat/`,
   instrumentDetail: () => `/v1/adaptation-action/instrument_detail/`,
   benefitedPopulations: () => `/v1/adaptation-action/get_benefited_population/`,
+  indicator: () => `/v1/adaptation-action/indicator/`,
 };
 
 @Injectable()
@@ -43,6 +44,19 @@ export class AdaptationActionService {
   }
 
   constructor(private httpClient: HttpClient) {}
+
+  public createIndicator(payload: Indicator) {
+    return this.httpClient.post(routes.indicator(), payload).pipe(
+      map((body: Indicator) => {
+        const response = {
+          statusCode: 200,
+          message: 'Form submitted correctly',
+          body: body,
+        };
+        return response;
+      }),
+    );
+  }
 
   public createNewAdaptationAction(payload: AdaptationAction) {
     return this.httpClient.post(routes.adaptationAction(), payload).pipe(
