@@ -11,9 +11,9 @@ import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { ImpactEvaluationComponent } from '../impact-evaluation.component';
 import { ImpactEvaluationService } from '../impact-evaluation.service';
 import { getImpactEvalCategoryKey } from '../utils';
-import { finalize, Observable } from 'rxjs';
-import { ImpactProcessResult, TransformationalChangePayload } from '../types/payload';
-import { CategoryCT, Characteristic } from '../types/results';
+import { finalize, Observable, takeUntil } from 'rxjs';
+import { TransformationalChangePayload } from '../types/payload';
+import { CategoryCT, Characteristic, ImpactProcessResult } from '../types/results';
 
 @Component({
   selector: 'app-transformational-change',
@@ -32,6 +32,7 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
   characteristics: Characteristic[];
   categoriesCT: CategoryCT[];
   loading = false;
+  IS_BARRIER = true;
 
   transformationalChange = TRANSFORMATION_CHANGE;
   transCategories = TRANSFORMATIONAL_CATEGORIES;
@@ -49,13 +50,17 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
 
   ngOnInit() {
     if (!this.adaptation) {
-      (this.service as MitigationActionsService).currentMitigationAction.subscribe((message) => {
-        this.item = message;
-      });
+      (this.service as MitigationActionsService).currentMitigationAction
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((message) => {
+          this.item = message;
+        });
     } else {
-      (this.service as AdaptationActionService).currentAdaptationActionSource.subscribe((message) => {
-        this.item = message;
-      });
+      (this.service as AdaptationActionService).currentAdaptationActionSource
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((message) => {
+          this.item = message;
+        });
     }
 
     this.createForm();
@@ -64,7 +69,7 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
     }
     this.watchOptionSelection(this.transformationalChange.processes);
     this.watchOptionSelection(this.transformationalChange.results);
-    this.watchOptionSelection(this.transformationalChange.identification);
+    this.watchOptionSelection(this.transformationalChange.identification, this.IS_BARRIER);
     this.categoriesScale = getCategoriesScale(this.adaptation);
     this.loadCategoriesCT();
     this.loadCharacteristics();
@@ -86,20 +91,27 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
   }
 
   private loadCategoriesCT() {
-    this.impactService.getCategoryCT().subscribe((categories: CategoryCT[]) => {
-      this.categoriesCT = categories;
-    });
+    this.impactService
+      .getCategoryCT()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((categories: CategoryCT[]) => {
+        this.categoriesCT = categories;
+      });
   }
 
   private loadCharacteristics() {
-    this.impactService.getCharacteristics().subscribe((characteristics: Characteristic[]) => {
-      this.characteristics = characteristics;
-    });
+    this.impactService
+      .getCharacteristics()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((characteristics: Characteristic[]) => {
+        this.characteristics = characteristics;
+      });
   }
 
   private createForm() {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
+        // identification
         this.formBuilder.group({
           visionShortCtrl: ['', [Validators.required, Validators.minLength(300), Validators.maxLength(1000)]],
           visionMidCtrl: ['', [Validators.required, Validators.minLength(300), Validators.maxLength(1000)]],
@@ -110,12 +122,14 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
           categoriesCtrl: this.formBuilder.array([]), // barrier description
           addressedCtrl: ['', Validators.required],
         }),
+        // process
         this.formBuilder.group({
           categoryCtrl: ['', Validators.required],
           optionCtrl: [[], Validators.required], // characteristic
-          optionOtherCtrl: this.formBuilder.array([]),
+          optionOtherCtrl: ['', Validators.required],
           categoriesCtrl: this.formBuilder.array([]),
         }),
+        // results
         this.formBuilder.group({
           optionCtrl: [[], Validators.required], // category
           impactScaleCtrl: ['', Validators.required],
@@ -162,20 +176,47 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
   buildProcessPayload() {
     const process = this.form.value.formArray[this.transformationalChange.processes];
     return {
-      characteristics: process.optionCtrl.map((char) => char.id),
-      other: null,
-      specific_impact: null,
+      characteristic: process.optionCtrl.filter((cat) => cat !== this.other).map((char) => char.id),
+      other: process.optionOtherCtrl,
+      specific_impact: process.categoriesCtrl.map((cat) => ({
+        category: cat.id,
+        code: cat.code,
+        name: cat.name,
+        description: cat.description,
+        indicator: cat.indicator || cat.indicatorOther,
+        base_value: cat.baseValue,
+        expected_value: cat.expectedValue,
+        accumulated_value: cat.accumulatedValue,
+      })),
     };
   }
 
   buildIdenfiticationPayload() {
-    const process = this.form.value.formArray[this.transformationalChange.identification];
+    const identification = this.form.value.formArray[this.transformationalChange.identification];
+
+    return {
+      vision: null,
+      short_term: identification.visionShortCtrl,
+      medium_term: identification.visionMidCtrl,
+      long_term: identification.visionLongCtrl,
+      barrier_option: identification.categoriesCtrl.map((barrier) => ({
+        code: barrier.code,
+        name: barrier.name,
+        description: barrier.description,
+      })),
+      other_barrier_option: identification.optionOtherCtrl.map((barrier) => ({
+        name: barrier.name,
+        description: barrier.description,
+      })),
+      is_directly_addressed: identification.addressedCtrl,
+    };
   }
 
   buildPayload() {
     const payload: TransformationalChangePayload = {
       final_result: this.buildFinalResultPayload(),
       process: this.buildProcessPayload(),
+      impact_identification: this.buildIdenfiticationPayload(),
     };
     return payload;
   }
@@ -206,6 +247,7 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
           this.form?.markAsPristine();
         }),
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           if (this.service instanceof AdaptationActionService) {
@@ -221,17 +263,23 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
           this.state.emit(response.state as States);
           this.onComplete?.emit(true);
 
-          this.translateService.get('form.success').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.translateService
+            .get('form.success')
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((res: string) => {
+              this.snackBar.open(res, null, { duration: 3000 });
+            });
 
           this.stepper?.next();
         },
 
         error: (error) => {
-          this.translateService.get('errorLabel.errorProcessing').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.translateService
+            .get('errorLabel.errorProcessing')
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((res: string) => {
+              this.snackBar.open(res, null, { duration: 3000 });
+            });
         },
       });
   }

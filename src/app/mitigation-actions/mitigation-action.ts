@@ -1,8 +1,8 @@
 import { FileUploaded } from '@app/@shared/upload-button/file-upload';
 import { GeographicScale } from './mitigation-action-new-form-data';
 import { NextState } from '@shared/next-state';
-import { CategoryOptionResult, ResultResult } from '@app/@shared/form/types/results';
-import { CategoryOption, ImpactProcess, ImpactProcessResult, ImpactScale } from '@app/@shared/form/types/payload';
+import { CategoryOptionResult, ImpactProcessResult, ResultResult } from '@app/@shared/form/types/results';
+import { CategoryOption, ImpactProcess, ImpactScale } from '@app/@shared/form/types/payload';
 
 export interface MitigationAction {
   initiative: Initiative;

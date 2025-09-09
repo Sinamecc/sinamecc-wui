@@ -18,6 +18,7 @@ export class CategoryComponent {
   @Input() service!: MitigationActionsService | AdaptationActionService;
   @Input() item: AdaptationAction | MitigationAction;
   @Input() isOther: boolean;
+  @Input() barrier: boolean;
   indicators: IndicatorOption[];
   other = OTHER;
 

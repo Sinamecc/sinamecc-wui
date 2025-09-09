@@ -49,13 +49,17 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
 
   ngOnInit() {
     if (!this.adaptation) {
-      (this.service as MitigationActionsService).currentMitigationAction.subscribe((message) => {
-        this.item = message;
-      });
+      (this.service as MitigationActionsService).currentMitigationAction
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((message) => {
+          this.item = message;
+        });
     } else {
-      (this.service as AdaptationActionService).currentAdaptationActionSource.subscribe((message) => {
-        this.item = message;
-      });
+      (this.service as AdaptationActionService).currentAdaptationActionSource
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((message) => {
+          this.item = message;
+        });
     }
 
     this.createForm();
@@ -75,9 +79,12 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
   }
 
   loadDimensions() {
-    this.impactService.getDimensions().subscribe((dimensions: Dimension[]) => {
-      this.dimensions = dimensions;
-    });
+    this.impactService
+      .getDimensions()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((dimensions: Dimension[]) => {
+        this.dimensions = dimensions;
+      });
   }
 
   onDimensionChange(event: any) {
@@ -93,6 +100,7 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
       .getCategoryGroupsByDimensions({
         dimension_list: event.map((code: string) => ({ code_dimension: code })),
       })
+      .pipe(takeUntil(this.destroy$))
       .subscribe((groups: CategoryGroup[]) => {
         const grouped = this.groupOptions(groups);
         this.categoryGroups = Object.entries(grouped).map(([dimension, items]) => ({
@@ -119,6 +127,7 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
           code_dimension: category.dimension.code,
         })),
       })
+      .pipe(takeUntil(this.destroy$))
       .subscribe((categories: Category[]) => {
         const grouped = this.groupOptions(categories);
         this.categories = Object.entries(grouped).map(([category, items]) => ({
@@ -340,6 +349,7 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
           this.form?.markAsPristine();
         }),
       )
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           if (this.service instanceof AdaptationActionService) {
@@ -355,17 +365,23 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
           this.state.emit(response.state as States);
           this.onComplete?.emit(true);
 
-          this.translateService.get('form.success').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.translateService
+            .get('form.success')
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((res: string) => {
+              this.snackBar.open(res, null, { duration: 3000 });
+            });
 
           this.stepper?.next();
         },
 
         error: (error) => {
-          this.translateService.get('errorLabel.errorProcessing').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.translateService
+            .get('errorLabel.errorProcessing')
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((res: string) => {
+              this.snackBar.open(res, null, { duration: 3000 });
+            });
         },
       });
   }

@@ -4,9 +4,9 @@
   </div>
 </div>
 <form [formGroup]="form" (ngSubmit)="submitForm()">
-  <mat-vertical-stepper #stepper formArrayName="formArray">
+  <mat-vertical-stepper #stepper linear formArrayName="formArray">
     <!-- CATEGORIES 7.1.1 -->
-    <mat-step formGroupName="0" [stepControl]="formArray?.get([impactEvaluation.categories])">
+    <mat-step formGroupName="0" [stepControl]="formArray.at(0)">
       <ng-template matStepLabel>
         <span translate>impactEvaluation.categories</span>
       </ng-template>
@@ -164,7 +164,7 @@
     </mat-step>
 
     <!-- RESULTS 7.2.1 -->
-    <mat-step formGroupName="1" [stepControl]="formArray?.get([impactEvaluation.results])">
+    <mat-step formGroupName="1" [stepControl]="formArray.at(1)">
       <ng-template matStepLabel>
         <span translate>impactEvaluation.results</span>
       </ng-template>
@@ -243,7 +243,7 @@
       <div class="box-button">
         <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
         </app-generic-button-secondary>
-        <button type="submit" matRipple class="primary-button">
+        <button [disabled]="formArray.invalid" type="submit" matRipple class="primary-button">
           <span translate>general.dondeReview</span>
         </button>
       </div>

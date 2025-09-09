@@ -26,7 +26,7 @@ export abstract class ImpactEvaluationComponent {
   }
 
   arrayControls(section: number, control: string) {
-    const sectionGroup = this.formArray.at(section) as UntypedFormGroup;
+    const sectionGroup = this.getSection(section);
     const categories = sectionGroup.get(control) as FormArray;
     return categories.controls;
   }
@@ -62,39 +62,53 @@ export abstract class ImpactEvaluationComponent {
     this.addOtherOption(othersArray);
   }
 
-  protected addOtherOption(othersArray: FormArray) {
-    othersArray.push(
-      this.fb.group({
-        name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
-        description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
-        indicator: ['', [Validators.required]],
-        indicatorOther: ['', [Validators.maxLength(200)]],
-        baseValue: ['', Validators.maxLength(70)],
-        expectedValue: ['', Validators.maxLength(70)],
-        accumulatedValue: ['', Validators.maxLength(70)],
-      }),
-    );
+  protected addOtherOption(othersArray: FormArray, barrier: boolean = false) {
+    const groupConfig = barrier
+      ? {
+          name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+          description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
+        }
+      : {
+          name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
+          description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
+          indicator: ['', [Validators.required]],
+          indicatorOther: ['', [Validators.maxLength(200)]],
+          baseValue: ['', Validators.maxLength(70)],
+          expectedValue: ['', Validators.maxLength(70)],
+          accumulatedValue: ['', Validators.maxLength(70)],
+        };
+    othersArray.push(this.fb.group(groupConfig));
   }
 
   protected addCategoryIndicator(section: number, values?: any, control: string = 'categoriesCtrl') {
     const sectionGroup = this.getSection(section);
     const array = sectionGroup.get(control) as FormArray;
-    array.push(
-      this.fb.group({
-        id: [values?.id || ''],
-        code: [values?.code || ''],
-        name: [values?.name || ''],
-        description: [
-          values?.description || '',
-          [Validators.required, Validators.minLength(50), Validators.maxLength(600)],
-        ],
-        indicator: [values.indicator || '', [Validators.required]],
-        indicatorOther: [values.indicatorOther || '', [Validators.maxLength(200)]],
-        baseValue: [values.baseValue || '', Validators.maxLength(70)],
-        expectedValue: [values.expectedValue || '', Validators.maxLength(70)],
-        accumulatedValue: [values.accumulatedValue || '', Validators.maxLength(70)],
-      }),
-    );
+
+    const groupConfig = values?.barrier
+      ? {
+          code: [values?.code || ''],
+          name: [values?.name || ''],
+          description: [
+            values?.description || '',
+            [Validators.required, Validators.minLength(50), Validators.maxLength(600)],
+          ],
+        }
+      : {
+          id: [values?.id || ''],
+          code: [values?.code || ''],
+          name: [values?.name || ''],
+          description: [
+            values?.description || '',
+            [Validators.required, Validators.minLength(50), Validators.maxLength(600)],
+          ],
+          indicator: [values?.indicator || '', [Validators.required]],
+          indicatorOther: [values?.indicatorOther || '', [Validators.maxLength(200)]],
+          baseValue: [values?.baseValue || '', Validators.maxLength(70)],
+          expectedValue: [values?.expectedValue || '', Validators.maxLength(70)],
+          accumulatedValue: [values?.accumulatedValue || '', Validators.maxLength(70)],
+        };
+
+    array.push(this.fb.group(groupConfig));
   }
 
   removeOtherOption(index: number, section: number) {
@@ -103,11 +117,11 @@ export abstract class ImpactEvaluationComponent {
     othersArray.removeAt(index);
   }
 
-  onOtherOptionChange(event: any, section: number) {
+  onOtherOptionChange(event: any, section: number, barrier: boolean = false) {
     const sectionGroup = this.getSection(section);
     const othersArray = sectionGroup.get('optionOtherCtrl') as FormArray;
     if (event.includes(this.other) && !othersArray.length) {
-      this.addOtherOption(othersArray);
+      this.addOtherOption(othersArray, barrier);
     } else if (!event.includes(this.other)) {
       while (othersArray.length > 0) {
         othersArray.removeAt(0);
@@ -152,28 +166,36 @@ export abstract class ImpactEvaluationComponent {
     optionCtrl.setValue(options);
   }
 
-  protected watchOptionSelection(section: number) {
+  protected watchOptionSelection(section: number, barrier?: boolean) {
     const sectionGroup = this.getSection(section);
     const optionCtrl = sectionGroup.get('optionCtrl');
     const categoriesArray = sectionGroup.get('categoriesCtrl') as FormArray;
 
     optionCtrl?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((values: any[]) => {
-      const selected = (values || []).filter((v) => v !== this.other);
+      const selected = values?.filter((value) => value !== this.other);
 
       selected.forEach((value) => {
-        const exists = categoriesArray.value.some((cat: any) => cat.id === value.id);
+        const exists = categoriesArray.value.some((cat: any) => cat.code === value.code);
         if (!exists) {
-          this.addCategoryIndicator(section, {
-            id: value.id,
-            code: value.code,
-            name: value.name,
-          });
+          if (barrier) {
+            this.addCategoryIndicator(section, {
+              code: value.code,
+              name: value.name,
+              barrier: barrier,
+            });
+          } else {
+            this.addCategoryIndicator(section, {
+              id: value.id,
+              code: value.code,
+              name: value.name,
+            });
+          }
         }
       });
 
       for (let i = categoriesArray.length - 1; i >= 0; i--) {
         const cat = categoriesArray.at(i).value;
-        const stillSelected = selected.some((v) => v.id === cat.id);
+        const stillSelected = selected.some((v) => v.code === cat.code);
         if (!stillSelected) {
           categoriesArray.removeAt(i);
         }

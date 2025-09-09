@@ -11,16 +11,9 @@ export interface ImpactCategoryResult {
 }
 
 export interface ImpactProcess {
-  characteristics: number[];
+  characteristic: number[];
   other: string;
-  specific_impact: any; // TODO: fix this
-}
-
-export interface ImpactProcessResult {
-  id: number;
-  characteristics: number[];
-  other: string;
-  specific_impact: any; // TODO: fix this
+  specific_impact: SpecficImpact[];
 }
 
 export interface CategoryOption {
@@ -53,6 +46,7 @@ export interface ImpactResultInput {
 export interface TransformationalChangePayload {
   final_result: ImpactResultInput[];
   process: ImpactProcess;
+  impact_identification: ImpactIdentification;
 }
 
 export interface CategoryGroupInput {
@@ -75,4 +69,33 @@ export interface CategoryGroupListInput {
 export interface IndicatorOption {
   id: string;
   name: string;
+}
+
+export interface SpecficImpact {
+  description: string;
+  category_ct: number;
+  indicator: number;
+  base_value: string;
+  expected_value: string;
+  accumulated_value: string;
+}
+
+export interface BarrierOption {
+  code: string;
+  name: string;
+  description: string;
+}
+
+export interface OtherBarrierOption {
+  description: string;
+}
+
+export interface ImpactIdentification {
+  vision: string;
+  short_term: string;
+  medium_term: string;
+  long_term: string;
+  barrier_option: BarrierOption[];
+  other_barrier_option: OtherBarrierOption[];
+  is_directly_addressed: boolean;
 }

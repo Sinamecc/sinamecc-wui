@@ -85,3 +85,10 @@ export interface ResultResult extends Timestamps {
   id: number;
   scale: ScaleResult[];
 }
+
+export interface ImpactProcessResult {
+  id: number;
+  characteristics: number[];
+  other: string;
+  specific_impact: any; // TODO: fix this
+}

@@ -1,5 +1,5 @@
-import { CategoryOption, ImpactProcess, ImpactProcessResult, ImpactScale } from '@app/@shared/form/types/payload';
-import { CategoryOptionResult, ResultResult } from '@app/@shared/form/types/results';
+import { CategoryOption, ImpactProcess, ImpactScale } from '@app/@shared/form/types/payload';
+import { CategoryOptionResult, ImpactProcessResult, ResultResult } from '@app/@shared/form/types/results';
 
 export interface ReportOrganization {
   responsible_entity: string;
