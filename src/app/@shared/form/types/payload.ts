@@ -53,6 +53,12 @@ export interface CategoryGroupInput {
   dimension_list: DimensionInput[];
 }
 
+export interface CharacteristicInput {
+  category_ct_list: {
+    code_category_ct: string;
+  }[];
+}
+
 export interface DimensionInput {
   code_dimension: string;
 }

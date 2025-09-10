@@ -46,7 +46,7 @@
           #categorySelect
           formControlName="optionCtrl"
           multiple
-          (valueChange)="onOtherOptionChange($event, impactEvaluation.categories)"
+          (valueChange)="onOptionChange($event, impactEvaluation.categories)"
           [compareWith]="compareCategory"
         >
           <mat-optgroup *ngFor="let group of categories" [label]="group.category">
@@ -157,7 +157,13 @@
       <!-- 7.1.1.7 -->
 
       <div class="box-button">
-        <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="stepper.next()"
+          [disabled]="formArray?.at(0).invalid"
+        >
           <span translate>general.next</span>
         </button>
       </div>
@@ -243,7 +249,7 @@
       <div class="box-button">
         <app-generic-button-secondary type="button" (click)="stepper.previous()" name="general.back">
         </app-generic-button-secondary>
-        <button [disabled]="formArray.invalid" type="submit" matRipple class="primary-button">
+        <button [disabled]="formArray.invalid" type="submit" mat-raised-button color="primary">
           <span translate>general.dondeReview</span>
         </button>
       </div>

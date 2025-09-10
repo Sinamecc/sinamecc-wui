@@ -1,11 +1,24 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { States } from '@app/@shared/next-state';
 import { AdaptationActionService } from '@app/adaptation-actions/adaptation-actions-service';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { TranslateService } from '@ngx-translate/core';
-import { getCategoriesScale, MOCK_BARRIERS, TRANSFORMATION_CHANGE, TRANSFORMATIONAL_CATEGORIES } from '../constants';
+import {
+  getCategoriesScale,
+  MOCK_BARRIERS,
+  OTHER,
+  TRANSFORMATION_CHANGE,
+  TRANSFORMATIONAL_CATEGORIES,
+} from '../constants';
 import { AdaptationAction } from '@app/adaptation-actions/interfaces/adaptationAction';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { ImpactEvaluationComponent } from '../impact-evaluation.component';
@@ -13,7 +26,16 @@ import { ImpactEvaluationService } from '../impact-evaluation.service';
 import { getImpactEvalCategoryKey } from '../utils';
 import { finalize, Observable, takeUntil } from 'rxjs';
 import { TransformationalChangePayload } from '../types/payload';
-import { CategoryCT, Characteristic, ImpactProcessResult } from '../types/results';
+import {
+  BarrierOptionResult,
+  CategoryCT,
+  Characteristic,
+  ImpactIdentificationResult,
+  ImpactProcessResult,
+  SpecificImpactResult,
+} from '../types/results';
+import { requireOtherIfSelected } from '../validators/other';
+import { requireCategoriesIfOptionsSelected } from '../validators/categories';
 
 @Component({
   selector: 'app-transformational-change',
@@ -29,12 +51,17 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
   @Input() service: MitigationActionsService | AdaptationActionService;
   item: AdaptationAction | MitigationAction;
   form: UntypedFormGroup;
-  characteristics: Characteristic[];
   categoriesCT: CategoryCT[];
+  characteristics: {
+    ct: string;
+    items: Characteristic[];
+  }[] = [];
+
   loading = false;
   IS_BARRIER = true;
+  IS_CT = true;
 
-  transformationalChange = TRANSFORMATION_CHANGE;
+  section = TRANSFORMATION_CHANGE;
   transCategories = TRANSFORMATIONAL_CATEGORIES;
 
   barriers = MOCK_BARRIERS;
@@ -67,27 +94,17 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
     if ((this.item.process as ImpactProcessResult).id) {
       this.updateForm();
     }
-    this.watchOptionSelection(this.transformationalChange.processes);
-    this.watchOptionSelection(this.transformationalChange.results);
-    this.watchOptionSelection(this.transformationalChange.identification, this.IS_BARRIER);
+    this.applyConditionalValidators();
+    this.watchOptionSelection(this.section.processes, !this.IS_BARRIER, this.IS_CT);
+    this.watchOptionSelection(this.section.results);
+    this.watchOptionSelection(this.section.identification, this.IS_BARRIER);
     this.categoriesScale = getCategoriesScale(this.adaptation);
     this.loadCategoriesCT();
-    this.loadCharacteristics();
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  get characteristicsToView(): Characteristic[] {
-    const selectedCategory: CategoryCT[] =
-      this.form?.value?.formArray?.[this.transformationalChange.processes]?.categoryCtrl;
-
-    if (!selectedCategory || selectedCategory.length === 0) return [];
-
-    const selectedIds = selectedCategory.map((c) => c.id);
-    return this.characteristics.filter((ch) => selectedIds.includes(ch.category_ct.id));
   }
 
   private loadCategoriesCT() {
@@ -99,16 +116,44 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
       });
   }
 
-  private loadCharacteristics() {
+  onCategoryCTChange(event: any) {
+    if (!event || event.length === 0) {
+      this.characteristics = [];
+      this.formArray?.get([this.section.processes])?.get('categoryGroupCtrl')?.setValue([]);
+      return;
+    }
     this.impactService
-      .getCharacteristics()
+      .getCharacteristics({
+        category_ct_list: event.map((cat) => ({
+          code_category_ct: cat.code,
+        })),
+      })
       .pipe(takeUntil(this.destroy$))
       .subscribe((characteristics: Characteristic[]) => {
-        this.characteristics = characteristics;
+        const grouped = this.groupOptions(characteristics);
+        this.characteristics = Object.entries(grouped).map(([ct, items]) => ({
+          ct: ct,
+          items: items,
+        }));
       });
   }
 
-  private createForm() {
+  groupOptions(options: Characteristic[]): { [key: string]: Characteristic[] } {
+    const grouped: { [key: string]: Characteristic[] } = {};
+
+    options.forEach((item) => {
+      const groupName = item.category_ct?.name || 'general.other';
+
+      if (!grouped[groupName]) {
+        grouped[groupName] = [];
+      }
+
+      grouped[groupName].push(item);
+    });
+    return grouped;
+  }
+
+  private createForm(): void {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
         // identification
@@ -116,17 +161,16 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
           visionShortCtrl: ['', [Validators.required, Validators.minLength(300), Validators.maxLength(1000)]],
           visionMidCtrl: ['', [Validators.required, Validators.minLength(300), Validators.maxLength(1000)]],
           visionLongCtrl: ['', [Validators.required, Validators.minLength(300), Validators.maxLength(1000)]],
-          chainResultCtrl: ['', Validators.required],
           optionCtrl: [[], Validators.required], // barriers
-          optionOtherCtrl: this.formBuilder.array([]), // barriers other
-          categoriesCtrl: this.formBuilder.array([]), // barrier description
+          optionOtherCtrl: this.formBuilder.array([]),
+          categoriesCtrl: this.formBuilder.array([]),
           addressedCtrl: ['', Validators.required],
         }),
         // process
         this.formBuilder.group({
           categoryCtrl: ['', Validators.required],
           optionCtrl: [[], Validators.required], // characteristic
-          optionOtherCtrl: ['', Validators.required],
+          optionOtherCtrl: [''],
           categoriesCtrl: this.formBuilder.array([]),
         }),
         // results
@@ -140,19 +184,61 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
     });
   }
 
+  private applyConditionalValidators(): void {
+    const identificationGroup = this.formArray.at(this.section.identification);
+    const processGroup = this.formArray.at(this.section.processes);
+    const resultsGroup = this.formArray.at(this.section.results);
+
+    // identification
+    const optionOtherCtrl = identificationGroup.get('optionOtherCtrl') as FormArray;
+    optionOtherCtrl.setValidators([requireOtherIfSelected(() => this.isOtherSelected(this.section.identification))]);
+    optionOtherCtrl.updateValueAndValidity();
+
+    const identificationCategoriesCtrl = identificationGroup.get('categoriesCtrl') as FormArray;
+    identificationCategoriesCtrl.setValidators([
+      requireCategoriesIfOptionsSelected(() => this.getSelectedOptions(this.section.identification)),
+    ]);
+    identificationCategoriesCtrl.updateValueAndValidity();
+
+    // process
+    const otherCtrl = processGroup.get('optionOtherCtrl') as FormArray;
+    otherCtrl.setValidators([requireOtherIfSelected(() => this.isOtherSelected(this.section.identification))]);
+    otherCtrl.updateValueAndValidity();
+
+    const processCategoriesCtrl = processGroup.get('categoriesCtrl') as FormArray;
+    processCategoriesCtrl.setValidators([
+      requireCategoriesIfOptionsSelected(() => this.getSelectedOptions(this.section.processes)),
+    ]);
+    processCategoriesCtrl.updateValueAndValidity();
+
+    // results
+    const resultsCategoriesCtrl = resultsGroup.get('categoriesCtrl') as FormArray;
+    resultsCategoriesCtrl.setValidators([
+      requireCategoriesIfOptionsSelected(() => this.getSelectedOptions(this.section.identification)),
+    ]);
+    resultsCategoriesCtrl.updateValueAndValidity();
+  }
+
   buildFinalResultPayload() {
-    const resultSection = this.form.value.formArray[this.transformationalChange.results];
+    const resultSection = this.formArray.at(this.section.results) as FormGroup;
+
+    const categoriesArray = resultSection.get('categoriesCtrl') as FormArray;
+    const impactScaleValues = resultSection.get('impactScaleCtrl')?.value || [];
+    const impactScaleTermValues = resultSection.get('impactScaleTermCtrl')?.value || [];
+
     return [
       {
-        scale: resultSection.categoriesCtrl.map((option) => {
+        scale: categoriesArray.controls.map((ctrl: AbstractControl) => {
+          const option = ctrl.value;
+
           let categoryResult = [];
           if (option.code === this.impactEvalCategories.SCALE) {
-            categoryResult = resultSection.impactScaleCtrl.map((key) => ({
+            categoryResult = impactScaleValues.map((key: string) => ({
               code: key,
               name: getImpactEvalCategoryKey(key),
             }));
           } else if (option.code === this.impactEvalCategories.SCALE_TERM) {
-            categoryResult = resultSection.impactScaleTermCtrl.map((key) => ({
+            categoryResult = impactScaleTermValues.map((key: string) => ({
               code: key,
               name: getImpactEvalCategoryKey(key),
             }));
@@ -174,41 +260,53 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
   }
 
   buildProcessPayload() {
-    const process = this.form.value.formArray[this.transformationalChange.processes];
+    const process = this.formArray.at(this.section.processes) as FormGroup;
+
+    const optionCtrlValue = process.get('optionCtrl')?.value || [];
+    const optionOtherValue = process.get('optionOtherCtrl')?.value || '';
+    const categoriesArray = process.get('categoriesCtrl') as FormArray;
     return {
-      characteristic: process.optionCtrl.filter((cat) => cat !== this.other).map((char) => char.id),
-      other: process.optionOtherCtrl,
-      specific_impact: process.categoriesCtrl.map((cat) => ({
-        category: cat.id,
-        code: cat.code,
-        name: cat.name,
-        description: cat.description,
-        indicator: cat.indicator || cat.indicatorOther,
-        base_value: cat.baseValue,
-        expected_value: cat.expectedValue,
-        accumulated_value: cat.accumulatedValue,
-      })),
+      characteristic: optionCtrlValue.filter((cat: any) => cat !== this.other).map((char: any) => char.id),
+      other: optionOtherValue,
+      specific_impact: categoriesArray.controls.map((ctrl: AbstractControl) => {
+        const cat = ctrl.value;
+        return {
+          category_ct: cat.ct,
+          description: cat.description,
+          indicator: cat.indicator || cat.indicatorOther,
+          base_value: cat.baseValue,
+          expected_value: cat.expectedValue,
+          accumulated_value: cat.accumulatedValue,
+        };
+      }),
     };
   }
 
   buildIdenfiticationPayload() {
-    const identification = this.form.value.formArray[this.transformationalChange.identification];
+    const identification = this.formArray.at(this.section.identification) as FormGroup;
+    const categoriesArray = identification.get('categoriesCtrl') as FormArray;
+    const optionOtherArray = identification.get('optionOtherCtrl') as FormArray;
 
     return {
       vision: null,
-      short_term: identification.visionShortCtrl,
-      medium_term: identification.visionMidCtrl,
-      long_term: identification.visionLongCtrl,
-      barrier_option: identification.categoriesCtrl.map((barrier) => ({
-        code: barrier.code,
-        name: barrier.name,
-        description: barrier.description,
-      })),
-      other_barrier_option: identification.optionOtherCtrl.map((barrier) => ({
-        name: barrier.name,
-        description: barrier.description,
-      })),
-      is_directly_addressed: identification.addressedCtrl,
+      short_term: identification.get('visionShortCtrl')?.value,
+      medium_term: identification.get('visionMidCtrl')?.value,
+      long_term: identification.get('visionLongCtrl')?.value,
+      barrier_option: categoriesArray.controls.map((ctrl: AbstractControl) => {
+        const barrier = ctrl.value;
+        return {
+          code: barrier.code,
+          name: barrier.name,
+          description: barrier.description,
+        };
+      }),
+      other_barrier_option: optionOtherArray.controls.map((ctrl: AbstractControl) => {
+        const barrier = ctrl.value;
+        return {
+          description: barrier.description,
+        };
+      }),
+      is_directly_addressed: identification.get('addressedCtrl')?.value,
     };
   }
 
@@ -222,19 +320,113 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
   }
 
   private updateForm() {
+    if (this.item.impact_identification) {
+      this.patchIdentification(this.item.impact_identification as ImpactIdentificationResult);
+    }
+
     if (this.item.process) {
-      // patch process
+      this.patchProcess(this.item.process as ImpactProcessResult);
     }
 
     if (this.item.final_result) {
-      this.patchResults(this.item.final_result, this.adaptation, this.transformationalChange.results);
+      this.patchResults(this.item.final_result, this.adaptation, this.section.results);
     }
   }
+
+  private patchProcess(process: ImpactProcessResult): void {
+    const sectionGroup = this.getSection(this.section.processes);
+    const specificImpact = process.specific_impact;
+    const characteristic = process.characteristic;
+    const categoryCT = characteristic.map((char) => char.category_ct);
+    const hasOthers = process.other && process.other.trim() != '';
+
+    this.impactService
+      .getCharacteristics({
+        category_ct_list: categoryCT.map((ct) => ({ code_category_ct: ct.code })),
+      })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((fetched: Characteristic[]) => {
+        const grouped = this.groupOptions(fetched);
+
+        this.characteristics = Object.entries(grouped).map(([ct, items]) => ({
+          ct,
+          items,
+        }));
+
+        const selectedOptions: (string | Characteristic)[] = [...characteristic];
+        if (hasOthers) {
+          selectedOptions.push('other');
+          sectionGroup.get('optionOtherCtrl')?.patchValue(process.other);
+        }
+
+        sectionGroup.get('optionCtrl')?.patchValue(selectedOptions);
+      });
+
+    sectionGroup.patchValue({
+      categoryCtrl: categoryCT,
+    });
+
+    specificImpact.forEach((char: SpecificImpactResult) => {
+      this.addCategoryIndicator(this.section.processes, {
+        id: char.id,
+        ct: char.category_ct.id,
+        code: char.category_ct.code,
+        name: char.category_ct.name,
+        description: char.description,
+        indicator: char.indicator?.id,
+        indicatorOther: char.indicator?.name,
+        baseValue: char.base_value,
+        expectedValue: char.expected_value,
+        accumulatedValue: char.accumulated_value,
+      });
+    });
+  }
+
+  private patchIdentification(identification: ImpactIdentificationResult) {
+    const sectionGroup = this.getSection(this.section.identification);
+    const hasOthers = identification.other_barrier_option.length;
+
+    let barriers = [];
+    identification.barrier_option.forEach((barrier: BarrierOptionResult) => {
+      barriers.push(barrier);
+      this.addCategoryIndicator(this.section.identification, {
+        id: barrier.id,
+        code: barrier.code,
+        name: barrier.name,
+        description: barrier.description,
+        barrier: true,
+      });
+    });
+    if (hasOthers) barriers.push(OTHER);
+    identification.other_barrier_option.forEach((other: any) => {
+      this.addCategoryIndicator(
+        this.section.identification,
+        {
+          description: other.description,
+          barrier: true,
+        },
+        'optionOtherCtrl',
+      );
+    });
+
+    sectionGroup.patchValue({
+      visionShortCtrl: identification.short_term,
+      visionMidCtrl: identification.medium_term,
+      visionLongCtrl: identification.long_term,
+      optionCtrl: barriers,
+      addressedCtrl: identification.is_directly_addressed,
+    });
+  }
+
+  compareBarrier = (o1: any, o2: any): boolean => {
+    return o1 && o2 ? o1.name === o2.name : o1 === o2;
+  };
 
   submitForm() {
     if (this.loading) return;
     this.loading = true;
     const payload = this.buildPayload();
+
     const observable: Observable<any> =
       this.service instanceof AdaptationActionService
         ? (this.service as AdaptationActionService).updateNewAdaptationAction(payload, this.item.id)

@@ -17,8 +17,8 @@ export interface CategoryGroup extends BaseEntity {
 
 export interface Category extends BaseEntity {
   category_group: CategoryGroup;
-  other_category: string | null;
   description: string;
+  other_category?: string | null;
 }
 
 export interface CategoryCT extends BaseEntity {}
@@ -54,12 +54,13 @@ export interface ScaleResult extends ScaleBase {
   indicator: Indicator;
 }
 
+// Category sections
 export interface CategorySectionBase extends Timestamps {
+  description: string;
   indicator: Indicator;
   base_value: string;
   expected_value: string;
   accumulated_value: string;
-  description: string;
 }
 
 export interface CategorySectionResult extends CategorySectionBase {
@@ -72,6 +73,7 @@ export interface OtherCategoryResult extends CategorySectionBase {
   name: string;
 }
 
+// Option results
 export interface CategoryOptionResult extends Timestamps {
   id: number;
   category_section: CategorySectionResult[];
@@ -86,9 +88,37 @@ export interface ResultResult extends Timestamps {
   scale: ScaleResult[];
 }
 
-export interface ImpactProcessResult {
+export interface ImpactProcessResult extends Timestamps {
   id: number;
-  characteristics: number[];
+  characteristic: Characteristic[];
   other: string;
-  specific_impact: any; // TODO: fix this
+  specific_impact: SpecificImpactResult[];
+}
+
+export interface SpecificImpactResult extends Timestamps {
+  id: number;
+  category_ct: CategoryCT;
+  description: string;
+  indicator: Indicator;
+  base_value: string;
+  expected_value: string;
+  accumulated_value: string;
+}
+
+export interface BarrierOptionResult extends BaseEntity {
+  description: string;
+}
+
+export interface OtherBarrierOptionResult {
+  description: string;
+}
+
+export interface ImpactIdentificationResult extends Timestamps {
+  id: number;
+  short_term: string;
+  medium_term: string;
+  long_term: string;
+  barrier_option: BarrierOptionResult[];
+  other_barrier_option: OtherBarrierOptionResult[];
+  is_directly_addressed: boolean;
 }

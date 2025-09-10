@@ -1,5 +1,10 @@
-import { CategoryOption, ImpactProcess, ImpactScale } from '@app/@shared/form/types/payload';
-import { CategoryOptionResult, ImpactProcessResult, ResultResult } from '@app/@shared/form/types/results';
+import { CategoryOption, ImpactIdentification, ImpactProcess, ImpactScale } from '@app/@shared/form/types/payload';
+import {
+  CategoryOptionResult,
+  ImpactIdentificationResult,
+  ImpactProcessResult,
+  ResultResult,
+} from '@app/@shared/form/types/results';
 
 export interface ReportOrganization {
   responsible_entity: string;
@@ -204,6 +209,7 @@ export interface AdaptationAction {
   // section 8
   final_result?: { scale: ImpactScale[] }[] | ResultResult[];
   process?: ImpactProcess | ImpactProcessResult;
+  impact_identification?: ImpactIdentification | ImpactIdentificationResult;
 }
 
 export interface Province {

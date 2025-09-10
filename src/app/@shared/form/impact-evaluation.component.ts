@@ -32,8 +32,7 @@ export abstract class ImpactEvaluationComponent {
   }
 
   protected getSection(section: number) {
-    const formArray = this.form.get('formArray') as FormArray;
-    const sectionGroup = formArray.at(section) as UntypedFormGroup;
+    const sectionGroup = this.formArray.at(section) as UntypedFormGroup;
     return sectionGroup;
   }
 
@@ -41,31 +40,46 @@ export abstract class ImpactEvaluationComponent {
     return o1 && o2 ? o1.id === o2.id : o1 === o2;
   };
 
-  onScaleChange(event: any, section: number) {
-    const value = event.value;
-    const sectionGroup = this.getSection(section);
-
-    if (value === this.impactEvalCategories.SCALE) {
-      sectionGroup?.get('impactScaleCtrl')?.setValidators([Validators.required]);
-      sectionGroup?.get('impactScaleTermCtrl')?.clearValidators();
-    } else if (value === this.impactEvalCategories.SCALE_TERM) {
-      sectionGroup?.get('impactScaleCtrl')?.clearValidators();
-      sectionGroup?.get('impactScaleTermCtrl')?.setValidators([Validators.required]);
-    }
-    sectionGroup?.get('impactScaleCtrl')?.updateValueAndValidity();
-    sectionGroup?.get('impactScaleTermCtrl')?.updateValueAndValidity();
+  onScaleChange(event: any[], section: number): void {
+    this.applyScaleValidators(section, event);
+    this.changeValidators(section);
   }
 
-  addAnotherOption(section: number) {
+  private applyScaleValidators(section: number, selectedOptions: any[]): void {
+    const sectionGroup = this.formArray.at(section) as FormGroup;
+    const impactScaleCtrl = sectionGroup.get('impactScaleCtrl');
+    const impactScaleTermCtrl = sectionGroup.get('impactScaleTermCtrl');
+
+    const selectedCodes = selectedOptions.map((opt) => opt.code);
+
+    const hasScale = selectedCodes.includes(this.impactEvalCategories.SCALE);
+    const hasScaleTerm = selectedCodes.includes(this.impactEvalCategories.SCALE_TERM);
+
+    if (hasScale) {
+      impactScaleCtrl?.setValidators([Validators.required]);
+    } else {
+      impactScaleCtrl?.clearValidators();
+    }
+
+    if (hasScaleTerm) {
+      impactScaleTermCtrl?.setValidators([Validators.required]);
+    } else {
+      impactScaleTermCtrl?.clearValidators();
+    }
+
+    impactScaleCtrl?.updateValueAndValidity();
+    impactScaleTermCtrl?.updateValueAndValidity();
+  }
+
+  addAnotherOption(section: number, barrier: boolean = false) {
     const sectionGroup = this.getSection(section);
     const othersArray = sectionGroup.get('optionOtherCtrl') as FormArray;
-    this.addOtherOption(othersArray);
+    this.addOtherOption(othersArray, barrier);
   }
 
   protected addOtherOption(othersArray: FormArray, barrier: boolean = false) {
     const groupConfig = barrier
       ? {
-          name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]],
           description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(600)]],
         }
       : {
@@ -78,6 +92,17 @@ export abstract class ImpactEvaluationComponent {
           accumulatedValue: ['', Validators.maxLength(70)],
         };
     othersArray.push(this.fb.group(groupConfig));
+  }
+
+  protected isOtherSelected(section: number): boolean {
+    const sectionGroup = this.getSection(section);
+    const selectedOptions = sectionGroup.get('optionCtrl')?.value || [];
+    return selectedOptions.includes(this.other);
+  }
+
+  protected getSelectedOptions(section: number): any[] {
+    const sectionGroup = this.getSection(section);
+    return sectionGroup.get('optionCtrl')?.value || [];
   }
 
   protected addCategoryIndicator(section: number, values?: any, control: string = 'categoriesCtrl') {
@@ -97,6 +122,7 @@ export abstract class ImpactEvaluationComponent {
           id: [values?.id || ''],
           code: [values?.code || ''],
           name: [values?.name || ''],
+          ct: [values?.ct || ''],
           description: [
             values?.description || '',
             [Validators.required, Validators.minLength(50), Validators.maxLength(600)],
@@ -117,7 +143,13 @@ export abstract class ImpactEvaluationComponent {
     othersArray.removeAt(index);
   }
 
-  onOtherOptionChange(event: any, section: number, barrier: boolean = false) {
+  changeValidators(section: number) {
+    const sectionGroup = this.getSection(section);
+    sectionGroup.get('optionOtherCtrl')?.updateValueAndValidity();
+    sectionGroup.get('categoriesCtrl')?.updateValueAndValidity();
+  }
+
+  onOptionChange(event: any, section: number, barrier: boolean = false) {
     const sectionGroup = this.getSection(section);
     const othersArray = sectionGroup.get('optionOtherCtrl') as FormArray;
     if (event.includes(this.other) && !othersArray.length) {
@@ -127,15 +159,18 @@ export abstract class ImpactEvaluationComponent {
         othersArray.removeAt(0);
       }
     }
+    this.changeValidators(section);
   }
 
-  protected patchResults(results: any[], adaptation: boolean, section: number) {
+  protected patchResults(results: any[], adaptation: boolean, section: number): void {
     const sectionGroup = this.formArray.at(section) as FormGroup;
-
     if (!results?.length) return;
-    const result = results[0];
 
+    const result = results[0];
     const optionCtrl = sectionGroup.get('optionCtrl');
+    const impactScaleCtrl = sectionGroup.get('impactScaleCtrl');
+    const impactScaleTermCtrl = sectionGroup.get('impactScaleTermCtrl');
+
     const options: any[] = [];
 
     result.scale.forEach((scale: any) => {
@@ -153,20 +188,25 @@ export abstract class ImpactEvaluationComponent {
 
       if (scale.category_result) {
         const codes = scale.category_result.map((cr: any) => cr.code);
+
         if (scale.category_result.some((cr: any) => cr.name === 'SCALE')) {
-          sectionGroup.get('impactScaleCtrl')?.setValue(codes);
+          impactScaleCtrl?.setValue(codes);
           options.push(getCategoriesScaleByCode(adaptation, this.impactEvalCategories.SCALE));
         }
+
         if (scale.category_result.some((cr: any) => cr.name === 'SCALE_TERM')) {
-          sectionGroup.get('impactScaleTermCtrl')?.setValue(codes);
+          impactScaleTermCtrl?.setValue(codes);
           options.push(getCategoriesScaleByCode(adaptation, this.impactEvalCategories.SCALE_TERM));
         }
       }
     });
-    optionCtrl.setValue(options);
+
+    optionCtrl?.setValue(options);
+
+    this.applyScaleValidators(section, options);
   }
 
-  protected watchOptionSelection(section: number, barrier?: boolean) {
+  protected watchOptionSelection(section: number, barrier?: boolean, ct?: boolean) {
     const sectionGroup = this.getSection(section);
     const optionCtrl = sectionGroup.get('optionCtrl');
     const categoriesArray = sectionGroup.get('categoriesCtrl') as FormArray;
@@ -182,6 +222,14 @@ export abstract class ImpactEvaluationComponent {
               code: value.code,
               name: value.name,
               barrier: barrier,
+            });
+          }
+          if (ct) {
+            this.addCategoryIndicator(section, {
+              id: value.id,
+              code: value.code,
+              name: value.name,
+              ct: value.category_ct.id,
             });
           } else {
             this.addCategoryIndicator(section, {

@@ -1,5 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormArray, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { getCategoriesScale, IMPACT_EVALUATION, IMPACT_TYPE, OTHER } from '../constants';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
@@ -14,6 +21,8 @@ import { ImpactEvaluationService } from '../impact-evaluation.service';
 import { getImpactEvalCategoryKey } from '../utils';
 import { Category, CategoryGroup, CategoryOptionResult, Dimension } from '../types/results';
 import { SustainableDevelopmentImpactPayload } from '../types/payload';
+import { requireOtherIfSelected } from '../validators/other';
+import { requireCategoriesIfOptionsSelected } from '../validators/categories';
 
 @Component({
   selector: 'app-sustainable-development',
@@ -37,6 +46,7 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
   dimensions: Dimension[] = [];
   categories: { category: string; items: Category[] }[] = [];
   categoryGroups: { dimension: string; items: CategoryGroup[] }[] = [];
+  section = this.impactEvaluation;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -66,9 +76,9 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
     if ((this.item.category_option as CategoryOptionResult)?.id) {
       this.updateForm();
     }
-
-    this.watchOptionSelection(this.impactEvaluation.categories);
-    this.watchOptionSelection(this.impactEvaluation.results);
+    this.applyConditionalValidators();
+    this.watchOptionSelection(this.section.categories);
+    this.watchOptionSelection(this.section.results);
     this.categoriesScale = getCategoriesScale(this.adaptation);
     this.loadDimensions();
   }
@@ -91,8 +101,8 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
     if (!event || event.length === 0) {
       this.categoryGroups = [];
       this.categories = [];
-      this.form?.get('formArray')?.get([this.impactEvaluation.categories])?.get('categoryGroupCtrl')?.setValue([]);
-      this.form?.get('formArray')?.get([this.impactEvaluation.categories])?.get('optionCtrl')?.setValue([]);
+      this.formArray?.get([this.section.categories])?.get('categoryGroupCtrl')?.setValue([]);
+      this.formArray?.get([this.section.categories])?.get('optionCtrl')?.setValue([]);
       return;
     }
 
@@ -107,16 +117,16 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
           dimension,
           items: items as CategoryGroup[],
         }));
-        this.form?.get('formArray')?.get([this.impactEvaluation.categories])?.get('categoryGroupCtrl')?.setValue([]);
+        this.formArray?.get([this.section.categories])?.get('categoryGroupCtrl')?.setValue([]);
         this.categories = [];
-        this.form?.get('formArray')?.get([this.impactEvaluation.categories])?.get('optionCtrl')?.setValue([]);
+        this.formArray?.get([this.section.categories])?.get('optionCtrl')?.setValue([]);
       });
   }
 
   onCategoryGroupChange(event: CategoryGroup[]) {
     if (!event || event.length === 0) {
       this.categories = [];
-      this.form?.get('formArray')?.get([this.impactEvaluation.categories])?.get('optionCtrl')?.setValue([]);
+      this.formArray?.get([this.section.categories])?.get('optionCtrl')?.setValue([]);
       return;
     }
 
@@ -134,7 +144,7 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
           category,
           items: items as Category[],
         }));
-        this.form?.get('formArray')?.get([this.impactEvaluation.categories])?.get('optionCtrl')?.setValue([]);
+        this.formArray?.get([this.section.categories])?.get('optionCtrl')?.setValue([]);
       });
   }
 
@@ -159,21 +169,23 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
     return grouped;
   }
 
-  private createForm() {
+  private createForm(): void {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([
+        // categories
         this.formBuilder.group({
           dimensionCtrl: ['', Validators.required],
           categoryGroupCtrl: [[], Validators.required],
-          optionCtrl: [[], Validators.required], // category
-          optionOtherCtrl: this.formBuilder.array([]), // category other
+          optionCtrl: [[], Validators.required],
+          optionOtherCtrl: this.formBuilder.array([]),
           categoriesCtrl: this.formBuilder.array([]),
           impactTypeCtrl: ['', Validators.required],
           pertinentCtrl: ['', Validators.required],
           relevantCtrl: ['', Validators.required],
         }),
+        // results
         this.formBuilder.group({
-          optionCtrl: [[], Validators.required], // category
+          optionCtrl: [[], Validators.required],
           impactScaleCtrl: ['', Validators.required],
           impactScaleTermCtrl: ['', Validators.required],
           categoriesCtrl: this.formBuilder.array([]),
@@ -182,17 +194,38 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
     });
   }
 
+  private applyConditionalValidators(): void {
+    const categoriesGroup = this.formArray.at(this.section.categories);
+    const resultsGroup = this.formArray.at(this.section.results);
+
+    const optionOtherCtrl = categoriesGroup.get('optionOtherCtrl') as FormArray;
+    optionOtherCtrl.setValidators([requireOtherIfSelected(() => this.isOtherSelected(this.section.categories))]);
+    optionOtherCtrl.updateValueAndValidity();
+
+    const categoriesCtrl = categoriesGroup.get('categoriesCtrl') as FormArray;
+    categoriesCtrl.setValidators([
+      requireCategoriesIfOptionsSelected(() => this.getSelectedOptions(this.section.categories)),
+    ]);
+    categoriesCtrl.updateValueAndValidity();
+
+    const resultsCategoriesCtrl = resultsGroup.get('categoriesCtrl') as FormArray;
+    resultsCategoriesCtrl.setValidators([
+      requireCategoriesIfOptionsSelected(() => this.getSelectedOptions(this.section.results)),
+    ]);
+    resultsCategoriesCtrl.updateValueAndValidity();
+  }
+
   public updateForm() {
     if (this.item.category_option) {
       this.patchCategoryOption(this.item.category_option);
     }
     if (this.item.result) {
-      this.patchResults(this.item.result, this.adaptation, this.impactEvaluation.results);
+      this.patchResults(this.item.result, this.adaptation, this.section.results);
     }
   }
 
   private patchCategoryOption(categoryOption: any) {
-    const sectionGroup = this.formArray.at(this.impactEvaluation.categories) as FormGroup;
+    const sectionGroup = this.formArray.at(this.section.categories) as FormGroup;
     const category = categoryOption.category_section.map((cat) => cat.category);
     const categoryGroup = category.map((cat) => cat.category_group);
     const dimension = categoryGroup.map((cat) => cat.dimension);
@@ -238,7 +271,7 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
     });
 
     categoryOption.category_section.forEach((cat: any) => {
-      this.addCategoryIndicator(this.impactEvaluation.categories, {
+      this.addCategoryIndicator(this.section.categories, {
         id: cat.category.id,
         code: cat.category.code,
         name: cat.category.name,
@@ -252,7 +285,7 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
     });
     categoryOption.other.forEach((other: any) => {
       this.addCategoryIndicator(
-        this.impactEvaluation.categories,
+        this.section.categories,
         {
           name: other.name,
           description: other.description,
@@ -268,43 +301,60 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
   }
 
   buildCategoryPayload() {
-    const categorySection = this.form.value.formArray[this.impactEvaluation.categories];
+    const categorySection = this.formArray.at(this.section.categories) as FormGroup;
+
+    const categoriesArray = categorySection.get('categoriesCtrl') as FormArray;
+    const optionOtherArray = categorySection.get('optionOtherCtrl') as FormArray;
+
     return {
-      category_section: categorySection.categoriesCtrl.map((cat) => ({
-        category: cat.id,
-        description: cat.description,
-        indicator: cat.indicator || cat.indicatorOther,
-        base_value: cat.baseValue,
-        expected_value: cat.expectedValue,
-        accumulated_value: cat.accumulatedValue,
-      })),
-      other: categorySection.optionOtherCtrl.map((cat) => ({
-        name: cat.name,
-        description: cat.description,
-        indicator: cat.indicator || cat.indicatorOther,
-        base_value: cat.baseValue,
-        expected_value: cat.expectedValue,
-        accumulated_value: cat.accumulatedValue,
-      })),
-      impact_type: categorySection.impactTypeCtrl,
-      pertinent: categorySection.pertinentCtrl,
-      relevant: categorySection.relevantCtrl,
+      category_section: categoriesArray.controls.map((ctrl: AbstractControl) => {
+        const cat = ctrl.value;
+        return {
+          category: cat.id,
+          description: cat.description,
+          indicator: cat.indicator || cat.indicatorOther,
+          base_value: cat.baseValue,
+          expected_value: cat.expectedValue,
+          accumulated_value: cat.accumulatedValue,
+        };
+      }),
+      other: optionOtherArray.controls.map((ctrl: AbstractControl) => {
+        const cat = ctrl.value;
+        return {
+          name: cat.name,
+          description: cat.description,
+          indicator: cat.indicator || cat.indicatorOther,
+          base_value: cat.baseValue,
+          expected_value: cat.expectedValue,
+          accumulated_value: cat.accumulatedValue,
+        };
+      }),
+      impact_type: categorySection.get('impactTypeCtrl')?.value,
+      pertinent: categorySection.get('pertinentCtrl')?.value,
+      relevant: categorySection.get('relevantCtrl')?.value,
     };
   }
 
   buildResultPayload() {
-    const resultSection = this.form.value.formArray[this.impactEvaluation.results];
+    const resultSection = this.formArray.at(this.section.results) as FormGroup;
+
+    const categoriesArray = resultSection.get('categoriesCtrl') as FormArray;
+    const impactScaleValues = resultSection.get('impactScaleCtrl')?.value || [];
+    const impactScaleTermValues = resultSection.get('impactScaleTermCtrl')?.value || [];
+
     return [
       {
-        scale: resultSection.categoriesCtrl.map((option) => {
+        scale: categoriesArray.controls.map((ctrl: AbstractControl) => {
+          const option = ctrl.value;
+
           let categoryResult = [];
           if (option.code === this.impactEvalCategories.SCALE) {
-            categoryResult = resultSection.impactScaleCtrl.map((key) => ({
+            categoryResult = impactScaleValues.map((key: string) => ({
               code: key,
               name: getImpactEvalCategoryKey(key),
             }));
           } else if (option.code === this.impactEvalCategories.SCALE_TERM) {
-            categoryResult = resultSection.impactScaleTermCtrl.map((key) => ({
+            categoryResult = impactScaleTermValues.map((key: string) => ({
               code: key,
               name: getImpactEvalCategoryKey(key),
             }));

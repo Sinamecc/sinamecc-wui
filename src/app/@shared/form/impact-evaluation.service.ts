@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { Category, CategoryCT, CategoryGroup, Characteristic, Dimension } from './types/results';
-import { CategoryGroupInput, CategoryInput } from './types/payload';
+import { CategoryGroupInput, CategoryInput, CharacteristicInput } from './types/payload';
 
 const routes = {
   dimension: () => `/v1/general/dimension/`,
@@ -64,8 +64,8 @@ export class ImpactEvaluationService {
     );
   }
 
-  getCharacteristics() {
-    return this.httpClient.get(routes.characteristics()).pipe(
+  getCharacteristics(categories: CharacteristicInput) {
+    return this.httpClient.post(routes.characteristics(), categories).pipe(
       map((response: Characteristic[]) => {
         return response;
       }),
