@@ -1139,6 +1139,107 @@
               <mat-icon>comment</mat-icon>
             </button> -->
           </div>
+          <mat-accordion class="mt-4" *ngIf="adaptationAction?.impact_identification">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title translate>impactEvaluation.identification</mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="p-2 border-b">
+                <h3 class="mat-h3" translate>impactEvaluation.vision.title</h3>
+
+                <div *ngIf="adaptationAction.impact_identification.short_term">
+                  <strong translate>impactEvaluation.vision.short</strong>
+                  <p class="break-words">{{ adaptationAction.impact_identification.short_term }}</p>
+                </div>
+
+                <div *ngIf="adaptationAction.impact_identification.medium_term">
+                  <strong translate>impactEvaluation.vision.mid</strong>
+                  <p class="break-words">{{ adaptationAction.impact_identification.medium_term }}</p>
+                </div>
+
+                <div *ngIf="adaptationAction.impact_identification.long_term">
+                  <strong translate>impactEvaluation.vision.long</strong>
+                  <p class="break-words">{{ adaptationAction.impact_identification.long_term }}</p>
+                </div>
+              </div>
+
+              <div *ngIf="adaptationAction.impact_identification.barrier_option?.length" class="p-2 border-b">
+                <h3 class="mat-h3" translate>impactEvaluation.barriers</h3>
+
+                <div *ngFor="let barrier of adaptationAction.impact_identification.barrier_option" class="mb-4">
+                  <p><strong translate>info.name</strong>: {{ barrier.name | translate }}</p>
+                  <p class="break-words">
+                    <strong translate>impactEvaluation.description</strong>: {{ barrier.description }}
+                  </p>
+                </div>
+              </div>
+
+              <div *ngIf="adaptationAction.impact_identification.other_barrier_option?.length" class="p-2 border-b">
+                <h3 class="mat-h3">
+                  <span translate>impactEvaluation.select.other</span>
+                  <span translate>impactEvaluation.barriers</span>
+                </h3>
+
+                <div *ngFor="let other of adaptationAction.impact_identification.other_barrier_option">
+                  <p class="break-words">{{ other.description }}</p>
+                </div>
+              </div>
+
+              <div class="p-2">
+                <strong translate>impactEvaluation.addressed</strong>:
+                <span>{{
+                  adaptationAction.impact_identification.is_directly_addressed ? ('general.yes' | translate) : 'No'
+                }}</span>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <mat-accordion class="mt-4" *ngIf="adaptationAction.process?.specific_impact?.length">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title translate>impactEvaluation.processes</mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div *ngFor="let impact of adaptationAction.process.specific_impact" class="p-2 border-b gap-4">
+                <h3 class="mat-h3">{{ impact.category_ct?.name | translate }}</h3>
+
+                <div *ngIf="adaptationAction.process.characteristic?.length">
+                  <div *ngFor="let char of adaptationAction.process.characteristic">
+                    <ng-container *ngIf="char.category_ct?.code === impact.category_ct?.code">
+                      <p class="font-semibold">
+                        <span translate>impactEvaluation.characteristic</span>: {{ char.name }}
+                      </p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <p class="break-words">{{ impact.description }}</p>
+
+                <div class="flex flex-col gap-1 mt-4">
+                  <div>
+                    <strong translate>impactEvaluation.quantifiedIndicator</strong>: {{ impact.indicator?.name }}
+                  </div>
+                  <em>{{ impact.indicator?.description }}</em>
+                </div>
+
+                <div class="flex flex-col gap-2 mt-2">
+                  <div><span translate>impactEvaluation.baseValue</span>: {{ impact.base_value }}</div>
+                  <div><span translate>impactEvaluation.expectedValue</span>: {{ impact.expected_value }}</div>
+                  <div><span translate>impactEvaluation.accumulatedValue</span>: {{ impact.accumulated_value }}</div>
+                </div>
+              </div>
+
+              <div *ngIf="adaptationAction.process.other?.trim()" class="mt-4">
+                <h4 class="mat-h4">
+                  <span translate>impactEvaluation.select.other</span>
+                  <span translate>impactEvaluation.characteristic</span>
+                </h4>
+                <p>{{ adaptationAction.process.other }}</p>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+
           <mat-accordion class="mt-4" *ngIf="adaptationAction?.final_result?.length">
             @let res = adaptationAction.final_result[0];
             <mat-expansion-panel>
