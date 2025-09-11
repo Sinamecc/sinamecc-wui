@@ -1,5 +1,5 @@
 <mat-toolbar class="toolbar-title flex flex-row justify-center items-center">
-  <div [style.width]="'auto'" translate class="section-heading">Acciones de adaptación</div>
+  <div [style.width]="'auto'" translate class="section-heading">adaptationAction.title</div>
 </mat-toolbar>
 <mat-divider class="divider-custom"></mat-divider>
 <mat-divider class="divider-custom"></mat-divider>
@@ -63,7 +63,7 @@
 
     <!-- Status Column -->
     <ng-container matColumnDef="fms_state">
-      <mat-header-cell *matHeaderCellDef translate>Estado</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef translate>general.status</mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.fsm_state.label }} </mat-cell>
     </ng-container>
 
