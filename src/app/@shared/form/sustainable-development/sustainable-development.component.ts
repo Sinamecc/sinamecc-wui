@@ -416,7 +416,7 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
           this.onComplete?.emit(true);
 
           this.translateService
-            .get('form.success')
+            .get('specificLabel.sucessfullySubmittedForm')
             .pipe(takeUntil(this.destroy$))
             .subscribe((res: string) => {
               this.snackBar.open(res, null, { duration: 3000 });

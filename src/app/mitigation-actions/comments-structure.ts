@@ -184,6 +184,20 @@ export const commentsStructureModule6: CommentsStructure[] = [
   },
 ];
 
+export const commentsStructureModule7: CommentsStructure[] = [
+  {
+    module: 'impactEvaluation.identification',
+    fields: [],
+  },
+];
+
+export const commentsStructureModule8: CommentsStructure[] = [
+  {
+    module: 'impactEvaluation.transformationalChange',
+    fields: [],
+  },
+];
+
 export const TypeDataMap = {
   1: 'Gestión',
   2: 'Resultados',

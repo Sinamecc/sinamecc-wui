@@ -36,6 +36,7 @@ import {
 } from '../types/results';
 import { requireOtherIfSelected } from '../validators/other';
 import { requireCategoriesIfOptionsSelected } from '../validators/categories';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-transformational-change',
@@ -70,6 +71,7 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
     private formBuilder: UntypedFormBuilder,
     private impactService: ImpactEvaluationService,
     private translateService: TranslateService,
+    private router: Router,
     private snackBar: MatSnackBar,
   ) {
     super(formBuilder);
@@ -170,14 +172,14 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
         this.formBuilder.group({
           categoryCtrl: ['', Validators.required],
           optionCtrl: [[], Validators.required], // characteristic
-          optionOtherCtrl: [''],
+          optionOtherCtrl: [null],
           categoriesCtrl: this.formBuilder.array([]),
         }),
         // results
         this.formBuilder.group({
           optionCtrl: [[], Validators.required], // category
-          impactScaleCtrl: ['', Validators.required],
-          impactScaleTermCtrl: ['', Validators.required],
+          impactScaleCtrl: [''],
+          impactScaleTermCtrl: [''],
           categoriesCtrl: this.formBuilder.array([]),
         }),
       ]),
@@ -263,7 +265,7 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
     const process = this.formArray.at(this.section.processes) as FormGroup;
 
     const optionCtrlValue = process.get('optionCtrl')?.value || [];
-    const optionOtherValue = process.get('optionOtherCtrl')?.value || '';
+    const optionOtherValue = process.get('optionOtherCtrl')?.value;
     const categoriesArray = process.get('categoriesCtrl') as FormArray;
     return {
       characteristic: optionCtrlValue.filter((cat: any) => cat !== this.other).map((char: any) => char.id),
@@ -456,13 +458,13 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
           this.onComplete?.emit(true);
 
           this.translateService
-            .get('form.success')
+            .get('specificLabel.sucessfullySubmittedForm')
             .pipe(takeUntil(this.destroy$))
             .subscribe((res: string) => {
               this.snackBar.open(res, null, { duration: 3000 });
             });
 
-          this.stepper?.next();
+          this.navigateBasedOnAdaptation();
         },
 
         error: (error) => {
@@ -474,5 +476,13 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
             });
         },
       });
+  }
+
+  private navigateBasedOnAdaptation() {
+    if (this.adaptation) {
+      this.router.navigate(['/adaptation/actions'], { replaceUrl: true });
+    } else {
+      this.router.navigate(['/mitigation/actions'], { replaceUrl: true });
+    }
   }
 }

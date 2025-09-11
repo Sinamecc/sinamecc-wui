@@ -139,9 +139,6 @@ export class ReportingClimateActionFormComponent implements OnInit {
       },
     };
 
-    if (this.mitigationAction.next_state.length && this.mitigationAction.next_state[0].state === this.stateLabel) {
-      context['is_complete'] = true;
-    }
     const monitoringReporting = this.mitigationAction.monitoring_reporting_indicator['monitoring_indicator'];
     if (monitoringReporting && monitoringReporting.length > 0) {
       if (monitoringReporting[0].id) {

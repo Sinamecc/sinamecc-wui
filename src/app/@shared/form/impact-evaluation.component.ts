@@ -223,8 +223,7 @@ export abstract class ImpactEvaluationComponent {
               name: value.name,
               barrier: barrier,
             });
-          }
-          if (ct) {
+          } else if (ct) {
             this.addCategoryIndicator(section, {
               id: value.id,
               code: value.code,
