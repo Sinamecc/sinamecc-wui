@@ -76,14 +76,6 @@ export class MitigationActionsUpdateComponent implements OnInit {
     this.displayFinancialSource = id !== 1;
   }
 
-  private initialFormData(): Observable<MitigationActionNewFormData> {
-    return this.service.newMitigationActionFormData(this.i18nService.language.split('-')[0], 'new').pipe(
-      finalize(() => {
-        this.isLoading = false;
-      }),
-    );
-  }
-
   financialSourceInputShown($event: any) {
     // todo: when we traslate in the backend we need to traslate this hardcoded value here
     const insuredSourceTypeId = this.financeSourceTypes

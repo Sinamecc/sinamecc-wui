@@ -7,7 +7,7 @@ import { MitigationActionsService } from '@app/mitigation-actions/mitigation-act
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
-import { ImpactEmission, MAFileType, MitigationAction, MAStates } from '../mitigation-action';
+import { ImpactEmission, MAFileType, MitigationAction } from '../mitigation-action';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 import * as _moment from 'moment';
@@ -15,6 +15,7 @@ import { ErrorReportingComponent } from '@shared';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAFile } from '../mitigation-action-file-upload/file-upload';
+import { States } from '@app/@shared/next-state';
 
 export const MY_FORMATS = {
   parse: {
@@ -63,7 +64,7 @@ export class KeyAspectsFormComponent implements OnInit {
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
-  @Output() state = new EventEmitter<MAStates>();
+  @Output() state = new EventEmitter<States>();
 
   @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
 
@@ -88,7 +89,7 @@ export class KeyAspectsFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
-        this.state.emit(this.mitigationAction.fsm_state.state as MAStates);
+        this.state.emit(this.mitigationAction.fsm_state.state as States);
         this.files = this.getFiles();
       });
     }
@@ -157,7 +158,7 @@ export class KeyAspectsFormComponent implements OnInit {
       )
       .subscribe(
         async (response) => {
-          this.state.emit(response.state as MAStates);
+          this.state.emit(response.state as States);
           await this.successSendForm(response.id);
         },
         (error) => {

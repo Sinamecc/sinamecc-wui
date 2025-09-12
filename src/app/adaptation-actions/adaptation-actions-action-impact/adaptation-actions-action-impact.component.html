@@ -1,7 +1,7 @@
 <div class="container-custom">
   <div class="header-container flex flex-col justify-center items-center">
     <h2 translate>adaptationAction.form6.title</h2>
-    <ng-container *ngIf="type === types.A">
+    <ng-container *ngIf="typeStr === types.A">
       <div class="flex flex-col justify-center items-start rounded bg-gray-100 border-2 border-gray-200 p-2">
         <span translate>general.optional</span>
       </div>
@@ -9,7 +9,7 @@
   </div>
   <form [formGroup]="form">
     <mat-vertical-stepper #stepper linear formArrayName="formArray">
-      <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+      <mat-step *ngIf="permissions.canEditAA(state)" formGroupName="0" [stepControl]="formArray?.get([0])">
         <ng-template matStepLabel>
           <span translate>adaptationAction.form6.actionImpact</span>
         </ng-template>
@@ -84,14 +84,39 @@
           <div class="text-sm text-gray-500" translate>general.requiredFile</div>
         </div>
 
-        <div class="button-box flex flex-row justify-end items-center">
-          <button
-            mat-raised-button
-            color="primary"
-            type="button"
-            [disabled]="!(type === types.A && isEmpty()) && (formArray?.get([0]).invalid || !annexSupportingFile)"
-            (click)="submitForm()"
+        <div class="box-button">
+          <button type="button" matRipple (click)="stepper.next()" class="primary-button">
+            <span translate>general.next</span>
+          </button>
+        </div>
+      </mat-step>
+
+      <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+        <ng-template matStepLabel>
+          <span translate>impactEvaluation.includeImpactInfoTitle</span>
+        </ng-template>
+        <div class="flex flex-col gap-1">
+          <label class="text-sm font-medium text-gray-700" translate>
+            <span translate>impactEvaluation.includeImpactInfo</span>
+          </label>
+
+          <mat-radio-group
+            class="flex gap-4 items-center"
+            formControlName="includeImpactInfoCtrl"
+            [(ngModel)]="includeImpactInfo"
+            name="includeImpactInfo"
           >
+            <mat-radio-button [value]="true" class="flex items-center gap-1">
+              <span translate>general.yes</span>
+            </mat-radio-button>
+            <mat-radio-button [value]="false" class="flex items-center gap-1">
+              <span translate>No</span>
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="button-box flex flex-row justify-end items-center">
+          <button mat-raised-button color="primary" type="button" [disabled]="isDisabled()" (click)="submitForm()">
             <span translate>general.done</span>
           </button>
         </div>

@@ -1,6 +1,13 @@
 import { FileUploaded } from '@app/@shared/upload-button/file-upload';
 import { GeographicScale } from './mitigation-action-new-form-data';
 import { NextState } from '@shared/next-state';
+import {
+  CategoryOptionResult,
+  ImpactIdentificationResult,
+  ImpactProcessResult,
+  ResultResult,
+} from '@app/@shared/form/types/results';
+import { CategoryOption, ImpactIdentification, ImpactProcess, ImpactScale } from '@app/@shared/form/types/payload';
 
 export interface MitigationAction {
   initiative: Initiative;
@@ -45,6 +52,13 @@ export interface MitigationAction {
   impact_documentation: any;
   monitoring_information: MonitoringInformation;
   monitoring_reporting_indicator: any;
+  // section 7
+  result?: { scale: ImpactScale[] }[] | ResultResult[];
+  category_option?: CategoryOption | CategoryOptionResult;
+  // section 8
+  final_result?: { scale: ImpactScale[] }[] | ResultResult[];
+  process?: ImpactProcess | ImpactProcessResult;
+  impact_identification?: ImpactIdentification | ImpactIdentificationResult;
 }
 
 export interface MonitoringInformation {
@@ -295,18 +309,6 @@ export enum MAFileType {
 export enum MAEntityType {
   MONITORING_INDICATOR = 'monitoring-indicator',
   INDICATOR = 'indicator',
-}
-
-export enum MAStates {
-  NEW = 'new',
-  SUBMITTED = 'submitted',
-  IN_EVALUATION_BY_DCC = 'in_evaluation_by_DCC',
-  REJECTED_BY_DCC = 'rejected_by_DCC',
-  REQUESTED_CHANGES_BY_DCC = 'requested_changes_by_DCC',
-  UPDATING_BY_REQUEST_DCC = 'updating_by_request_DCC',
-  ACCEPTED_BY_DCC = 'accepted_by_DCC',
-  REGISTERED_BY_DCC = 'registered_by_DCC',
-  END = 'end',
 }
 
 export const DECIMAL_NUMBER_REGEX = '^\\d{1,18}(\\.\\d{1,2})?$';

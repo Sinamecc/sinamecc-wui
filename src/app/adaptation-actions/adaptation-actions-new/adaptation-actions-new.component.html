@@ -52,7 +52,7 @@
           </ng-template>
 
           <!-- section 1 -->
-          <mat-step [completed]="completed.generalRegister">
+          <mat-step *ngIf="!state || permissions.canEditAA(state)" [completed]="completed.generalRegister">
             <app-progress-bar [completed]="completed"></app-progress-bar>
             <ng-template matStepLabel>
               <span translate>adaptationAction.form1.title</span>
@@ -64,7 +64,7 @@
           </mat-step>
 
           <!-- section 2 -->
-          <mat-step [completed]="completed.report">
+          <mat-step *ngIf="!state || permissions.canEditAA(state)" [completed]="completed.report">
             <app-progress-bar [completed]="completed"></app-progress-bar>
             <app-adaptation-actions-report
               [adaptationActionUpdated]="adaptationAction"
@@ -76,7 +76,7 @@
           </mat-step>
 
           <!-- section 3 -->
-          <mat-step [completed]="completed.financing">
+          <mat-step *ngIf="!state || permissions.canEditAA(state)" [completed]="completed.financing">
             <app-progress-bar [completed]="completed"></app-progress-bar>
             <ng-template matStepLabel>
               <span translate>adaptationAction.form3.title</span>
@@ -91,7 +91,7 @@
           </mat-step>
 
           <!-- section 4 -->
-          <mat-step [completed]="completed.indicators">
+          <mat-step *ngIf="!state || permissions.canEditAA(state)" [completed]="completed.indicators">
             <app-progress-bar [completed]="completed"></app-progress-bar>
             <ng-template matStepLabel>
               <span translate>adaptationAction.form4.title</span>
@@ -105,7 +105,7 @@
           </mat-step>
 
           <!-- section 5 -->
-          <mat-step [completed]="completed.climateMonitoring">
+          <mat-step *ngIf="!state || permissions.canEditAA(state)" [completed]="completed.climateMonitoring">
             <app-progress-bar [completed]="completed"></app-progress-bar>
             <ng-template matStepLabel>
               <span translate>adaptationAction.form5.title</span>
@@ -119,7 +119,7 @@
           </mat-step>
 
           <!-- section 6 -->
-          <mat-step [completed]="completed.actionImpact">
+          <mat-step *ngIf="permissions.isAAProvider()" [completed]="completed.actionImpact">
             <app-progress-bar [completed]="completed"></app-progress-bar>
             <ng-template matStepLabel>
               <span translate>adaptationAction.form6.title</span>
@@ -127,9 +127,31 @@
             <app-adaptation-actions-action-impact
               [type]="aaType"
               [edit]="edit"
+              [stepper]="stepper"
               [adaptationActionUpdated]="adaptationAction"
               (onComplete)="onComplete('actionImpact', $event)"
+              (wantsImpactEval)="wantsImpactEval = $event"
             ></app-adaptation-actions-action-impact>
+          </mat-step>
+
+          <!-- section 7 -->
+          <mat-step *ngIf="shouldShowImpactEvalStep">
+            <ng-template matStepLabel>
+              <span translate>impactEvaluation.title</span>
+            </ng-template>
+            <app-sustainable-development
+              [adaptation]="true"
+              [service]="service"
+              [stepper]="stepper"
+            ></app-sustainable-development>
+          </mat-step>
+
+          <!-- Section 8 -->
+          <mat-step *ngIf="shouldShowImpactEvalStep">
+            <ng-template matStepLabel>
+              <span translate>impactEvaluation.title</span>
+            </ng-template>
+            <app-transformational-change [adaptation]="true" [service]="service"> </app-transformational-change>
           </mat-step>
         </mat-horizontal-stepper>
       </form>

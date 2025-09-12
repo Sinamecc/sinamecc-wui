@@ -10,6 +10,8 @@ import {
   commentsStructureModule4,
   commentsStructureModule5,
   commentsStructureModule6,
+  commentsStructureModule7,
+  commentsStructureModule8,
 } from '../comments-structure';
 import {
   actionState,
@@ -56,7 +58,13 @@ export class AdaptationActionsViewComponent implements OnInit {
   commentsModule4 = commentsStructureModule4;
   commentsModule5 = commentsStructureModule5;
   commentsModule6 = commentsStructureModule6;
+  commentsModule7 = commentsStructureModule7; // TODO: not sure if you can
+  commentsModule8 = commentsStructureModule8; // TODO: not sure if you can
   geographicCoverage = geographicCoverageMap;
+
+  scale = {
+    SCALE: 'impactEvaluation.select',
+  };
 
   loading = false;
 
