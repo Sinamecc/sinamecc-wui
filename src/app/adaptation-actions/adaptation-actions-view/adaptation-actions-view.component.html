@@ -1202,21 +1202,14 @@
               </mat-expansion-panel-header>
 
               <div *ngFor="let impact of adaptationAction.process.specific_impact" class="p-2 border-b gap-4">
-                <h3 class="mat-h3">{{ impact.category_ct?.name | translate }}</h3>
-
-                <div *ngIf="adaptationAction.process.characteristic?.length">
-                  <div *ngFor="let char of adaptationAction.process.characteristic">
-                    <ng-container *ngIf="char.category_ct?.code === impact.category_ct?.code">
-                      <p class="font-semibold">
-                        <span translate>impactEvaluation.characteristic</span>: {{ char.name }}
-                      </p>
-                    </ng-container>
-                  </div>
-                </div>
+                <h3 class="mat-h3">{{ impact.characteristic?.category_ct?.name | translate }}</h3>
+                <p class="font-semibold">
+                  <span translate>impactEvaluation.characteristic</span>: {{ impact.characteristic?.name }}
+                </p>
 
                 <p class="break-words">{{ impact.description }}</p>
 
-                <div class="flex flex-col gap-1 mt-4">
+                <div class="flex flex-col gap-1 mt-4" *ngIf="impact.indicator">
                   <div>
                     <strong translate>impactEvaluation.quantifiedIndicator</strong>: {{ impact.indicator?.name }}
                   </div>
