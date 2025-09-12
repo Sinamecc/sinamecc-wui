@@ -122,7 +122,6 @@ export abstract class ImpactEvaluationComponent {
           id: [values?.id || ''],
           code: [values?.code || ''],
           name: [values?.name || ''],
-          ct: [values?.ct || ''],
           description: [
             values?.description || '',
             [Validators.required, Validators.minLength(50), Validators.maxLength(600)],
@@ -133,7 +132,6 @@ export abstract class ImpactEvaluationComponent {
           expectedValue: [values?.expectedValue || '', Validators.maxLength(70)],
           accumulatedValue: [values?.accumulatedValue || '', Validators.maxLength(70)],
         };
-
     array.push(this.fb.group(groupConfig));
   }
 
@@ -206,29 +204,24 @@ export abstract class ImpactEvaluationComponent {
     this.applyScaleValidators(section, options);
   }
 
-  protected watchOptionSelection(section: number, barrier?: boolean, ct?: boolean) {
+  protected watchOptionSelection(section: number, barrier?: boolean) {
     const sectionGroup = this.getSection(section);
     const optionCtrl = sectionGroup.get('optionCtrl');
     const categoriesArray = sectionGroup.get('categoriesCtrl') as FormArray;
-
     optionCtrl?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((values: any[]) => {
       const selected = values?.filter((value) => value !== this.other);
-
       selected.forEach((value) => {
-        const exists = categoriesArray.value.some((cat: any) => cat.code === value.code);
+        const exists = categoriesArray.value.some((cat: any) => {
+          return barrier
+            ? cat.code?.toString() === value.code?.toString()
+            : cat.id?.toString() === value.id?.toString();
+        });
         if (!exists) {
           if (barrier) {
             this.addCategoryIndicator(section, {
               code: value.code,
               name: value.name,
               barrier: barrier,
-            });
-          } else if (ct) {
-            this.addCategoryIndicator(section, {
-              id: value.id,
-              code: value.code,
-              name: value.name,
-              ct: value.category_ct.id,
             });
           } else {
             this.addCategoryIndicator(section, {

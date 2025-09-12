@@ -61,34 +61,34 @@ export const TRANSFORMATIONAL_CATEGORIES = {
 export const MOCK_BARRIERS = [
   {
     name: 'impactEvaluation.select.politicalInstitutional',
-    code: 1,
+    code: '1',
   },
   {
     name: 'impactEvaluation.select.regulatory',
-    code: 2,
+    code: '2',
   },
   {
     name: 'impactEvaluation.select.socialTransformation',
-    code: 3,
+    code: '3',
   },
   {
     name: 'impactEvaluation.select.technological',
-    code: 4,
+    code: '4',
   },
   {
     name: 'impactEvaluation.select.capacity',
-    code: 5,
+    code: '5',
   },
   {
     name: 'impactEvaluation.select.financialInvestment',
-    code: 6,
+    code: '6',
   },
   {
     name: 'impactEvaluation.select.marketEconomicIncentives',
-    code: 7,
+    code: '7',
   },
   {
     name: 'impactEvaluation.select.structuralInequalities',
-    code: 8,
+    code: '8',
   },
 ];

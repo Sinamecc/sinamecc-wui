@@ -97,9 +97,9 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
       this.updateForm();
     }
     this.applyConditionalValidators();
-    this.watchOptionSelection(this.section.processes, !this.IS_BARRIER, this.IS_CT);
-    this.watchOptionSelection(this.section.results);
     this.watchOptionSelection(this.section.identification, this.IS_BARRIER);
+    this.watchOptionSelection(this.section.processes);
+    this.watchOptionSelection(this.section.results);
     this.categoriesScale = getCategoriesScale(this.adaptation);
     this.loadCategoriesCT();
   }
@@ -121,7 +121,7 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
   onCategoryCTChange(event: any) {
     if (!event || event.length === 0) {
       this.characteristics = [];
-      this.formArray?.get([this.section.processes])?.get('categoryGroupCtrl')?.setValue([]);
+      this.formArray?.get([this.section.processes])?.get('optionCtrl')?.setValue([]);
       return;
     }
     this.impactService
@@ -134,7 +134,7 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
       .subscribe((characteristics: Characteristic[]) => {
         const grouped = this.groupOptions(characteristics);
         this.characteristics = Object.entries(grouped).map(([ct, items]) => ({
-          ct: ct,
+          ct,
           items: items,
         }));
       });
@@ -144,7 +144,7 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
     const grouped: { [key: string]: Characteristic[] } = {};
 
     options.forEach((item) => {
-      const groupName = item.category_ct?.name || 'general.other';
+      const groupName = item.category_ct.name || 'general.other';
 
       if (!grouped[groupName]) {
         grouped[groupName] = [];
@@ -264,16 +264,14 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
   buildProcessPayload() {
     const process = this.formArray.at(this.section.processes) as FormGroup;
 
-    const optionCtrlValue = process.get('optionCtrl')?.value || [];
     const optionOtherValue = process.get('optionOtherCtrl')?.value;
     const categoriesArray = process.get('categoriesCtrl') as FormArray;
     return {
-      characteristic: optionCtrlValue.filter((cat: any) => cat !== this.other).map((char: any) => char.id),
       other: optionOtherValue,
       specific_impact: categoriesArray.controls.map((ctrl: AbstractControl) => {
         const cat = ctrl.value;
         return {
-          category_ct: cat.ct,
+          characteristic: cat.id,
           description: cat.description,
           indicator: cat.indicator || cat.indicatorOther,
           base_value: cat.baseValue,
@@ -337,8 +335,7 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
 
   private patchProcess(process: ImpactProcessResult): void {
     const sectionGroup = this.getSection(this.section.processes);
-    const specificImpact = process.specific_impact;
-    const characteristic = process.characteristic;
+    const characteristic: any = process.specific_impact.map((impact) => impact.characteristic);
     const categoryCT = characteristic.map((char) => char.category_ct);
     const hasOthers = process.other && process.other.trim() != '';
 
@@ -347,39 +344,35 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
         category_ct_list: categoryCT.map((ct) => ({ code_category_ct: ct.code })),
       })
       .pipe(takeUntil(this.destroy$))
-      .subscribe((fetched: Characteristic[]) => {
-        const grouped = this.groupOptions(fetched);
-
+      .subscribe((characteristics: Characteristic[]) => {
+        const grouped = this.groupOptions(characteristics);
         this.characteristics = Object.entries(grouped).map(([ct, items]) => ({
           ct,
           items,
         }));
 
-        const selectedOptions: (string | Characteristic)[] = [...characteristic];
         if (hasOthers) {
-          selectedOptions.push('other');
+          characteristic.push('other');
           sectionGroup.get('optionOtherCtrl')?.patchValue(process.other);
         }
-
-        sectionGroup.get('optionCtrl')?.patchValue(selectedOptions);
+        sectionGroup.get('optionCtrl')?.patchValue(characteristic);
       });
 
     sectionGroup.patchValue({
       categoryCtrl: categoryCT,
     });
 
-    specificImpact.forEach((char: SpecificImpactResult) => {
+    process.specific_impact.forEach((res: SpecificImpactResult) => {
       this.addCategoryIndicator(this.section.processes, {
-        id: char.id,
-        ct: char.category_ct.id,
-        code: char.category_ct.code,
-        name: char.category_ct.name,
-        description: char.description,
-        indicator: char.indicator?.id,
-        indicatorOther: char.indicator?.name,
-        baseValue: char.base_value,
-        expectedValue: char.expected_value,
-        accumulatedValue: char.accumulated_value,
+        id: res.characteristic.id,
+        code: res.characteristic.code,
+        name: res.characteristic.name,
+        description: res.description,
+        indicator: res.indicator?.id,
+        indicatorOther: res.indicator?.name,
+        baseValue: res.base_value,
+        expectedValue: res.expected_value,
+        accumulatedValue: res.accumulated_value,
       });
     });
   }
@@ -421,7 +414,7 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
   }
 
   compareBarrier = (o1: any, o2: any): boolean => {
-    return o1 && o2 ? o1.name === o2.name : o1 === o2;
+    return o1 && o2 ? o1.code.toString() === o2.code.toString() : o1 === o2;
   };
 
   submitForm() {

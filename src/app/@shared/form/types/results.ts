@@ -90,14 +90,13 @@ export interface ResultResult extends Timestamps {
 
 export interface ImpactProcessResult extends Timestamps {
   id: number;
-  characteristic: Characteristic[];
   other: string;
   specific_impact: SpecificImpactResult[];
 }
 
 export interface SpecificImpactResult extends Timestamps {
   id: number;
-  category_ct: CategoryCT;
+  characteristic: Characteristic;
   description: string;
   indicator: Indicator;
   base_value: string;

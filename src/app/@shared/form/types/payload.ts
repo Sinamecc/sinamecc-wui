@@ -11,7 +11,6 @@ export interface ImpactCategoryResult {
 }
 
 export interface ImpactProcess {
-  characteristic: number[];
   other: string;
   specific_impact: SpecficImpact[];
 }
@@ -79,7 +78,7 @@ export interface IndicatorOption {
 
 export interface SpecficImpact {
   description: string;
-  category_ct: number;
+  characteristic: number;
   indicator: number;
   base_value: string;
   expected_value: string;
