@@ -74,6 +74,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
       const includeImpactControl = this.form.get(['formArray', 3, 'includeImpactInfoCtrl']);
       if (includeImpactControl) {
         includeImpactControl.valueChanges.subscribe((value) => {
+          this.includeImpactInfo = value;
           this.wantsImpactEval.emit(value);
         });
       }
