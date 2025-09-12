@@ -12,6 +12,9 @@ import { GeneralRegisterComponent } from '../general-register/general-register.c
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AAType } from '../interfaces/catalogs';
+import { PermissionService } from '@app/@core/permissions.service';
+import { States } from '@app/@shared/next-state';
+import { SustainableDevelopmentComponent } from '@app/@shared/form/sustainable-development/sustainable-development.component';
 
 @Component({
   selector: 'app-adaptation-actions-new',
@@ -40,11 +43,13 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
 
   @ViewChild(AdaptationActionsActionImpactComponent)
   impactForm: AdaptationActionsActionImpactComponent;
-
+  impactEvaluationFormComponent: SustainableDevelopmentComponent;
   mainGroup: UntypedFormGroup;
   adaptationAction: AdaptationAction;
   edit: boolean;
-
+  state: States;
+  wantsImpactEval: boolean = false;
+  isLoading = false;
   aaType: AAType | null;
   completed: Record<string, boolean> = {
     generalRegister: false,
@@ -61,9 +66,10 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
     private _formBuilder: UntypedFormBuilder,
     private cdRef: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private service: AdaptationActionService,
+    public service: AdaptationActionService,
     public snackBar: MatSnackBar,
     private translateService: TranslateService,
+    public permissions: PermissionService,
   ) {
     const id = this.route.snapshot.paramMap.get('id');
     this.edit = id ? true : false;
@@ -71,12 +77,22 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
       this.loading = true;
       this.loadAdaptationActions(id);
       this.assistantOpen = false;
+      this.route.queryParams.subscribe((params) => {
+        if (params['state']) {
+          this.state = params['state'] as States;
+        }
+      });
     }
     this.createForm();
   }
 
   get formArray(): AbstractControl | null {
     return this.mainGroup.get('formArray');
+  }
+
+  get shouldShowImpactEvalStep() {
+    if (!this.wantsImpactEval) return false;
+    return this.permissions.isAAProvider();
   }
 
   handleAssistantOpen() {
@@ -92,6 +108,7 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
       ...this.completed,
       [key]: completed,
     };
+    this.cdRef.detectChanges();
   }
 
   loadAdaptationActions(id: string) {
@@ -111,6 +128,7 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
         this.indicatorFrm,
         this.climateMoniotoringFrm,
         this.impactFrm,
+        this.impactEvaluationFrm,
       ]),
     });
   }
@@ -137,6 +155,10 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
 
   get impactFrm() {
     return this.impactForm ? this.impactForm.form : null;
+  }
+
+  get impactEvaluationFrm() {
+    return this.impactEvaluationFormComponent ? this.impactEvaluationFormComponent.form : null;
   }
 
   ngAfterViewInit() {

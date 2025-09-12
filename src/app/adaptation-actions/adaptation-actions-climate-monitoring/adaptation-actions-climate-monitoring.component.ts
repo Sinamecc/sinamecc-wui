@@ -163,55 +163,43 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     ]);
   }
 
-  submitForm() {
-    // here que need to call the EP
+  private processForm(isFinalStep: boolean) {
     const payload: AdaptationAction = this.buildPayload();
-
     this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
     this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
-      (_) => {
-        this.onComplete.emit(true);
-        this.mainStepper.next();
-        this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-          this.snackBar.open(res, null, { duration: 3000 });
-        });
-      },
-      (error) => {
-        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      },
-    );
-  }
-
-  sendForm() {
-    const payload: any = this.buildPayload();
-    this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
-    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
-      (_) => {
-        this.openSnackBar('Formulario creado correctamente', '');
-        this.router.navigate([`/adaptation/actions`], {
-          replaceUrl: true,
-        });
-      },
-      (error) => {
-        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      },
-    );
-  }
-
-  clickNext(stteper: any, value: number, monitoringAdvance: string) {
-    if (parseInt(monitoringAdvance) === 1) {
-      this.sendForm();
-    } else {
-      if (parseInt(monitoringAdvance) === 3) {
-        this.submitForm();
-      } else {
-        if (value === 1) {
-          this.setGeneralReportFiels(true);
-          stteper.next();
+      () => {
+        if (isFinalStep) {
+          this.openSnackBar('Formulario creado correctamente', '');
+          this.router.navigate(['/adaptation/actions'], { replaceUrl: true });
         } else {
-          this.sendForm();
+          this.onComplete.emit(true);
+          this.mainStepper.next();
+          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
+            this.snackBar.open(res, null, { duration: 3000 });
+          });
         }
-      }
+      },
+      () => {
+        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+      },
+    );
+  }
+
+  sendForm(finalStep: boolean = true) {
+    this.processForm(finalStep);
+  }
+
+  clickNext(stepper: any, value: number, monitoringAdvance: string) {
+    const advance = parseInt(monitoringAdvance, 10);
+    if (advance === 1) {
+      this.sendForm();
+    } else if (advance === 3) {
+      this.sendForm(false);
+    } else if (value === 1) {
+      this.setGeneralReportFiels(true);
+      stepper.next();
+    } else {
+      this.sendForm();
     }
   }
 

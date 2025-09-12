@@ -8,10 +8,11 @@ import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-
 
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { AMOUNT_REGEX_STRING, MAStates, MitigationAction } from '../mitigation-action';
+import { AMOUNT_REGEX_STRING, MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { States } from '@app/@shared/next-state';
 
 const log = new Logger('MitigationAction');
 
@@ -36,7 +37,7 @@ export class BasicInformationFormComponent implements OnInit {
   @Input() newFormData: Observable<MitigationActionNewFormData>;
   @Input() processedNewFormData: MitigationActionNewFormData;
   @Input() isUpdating: boolean;
-  @Output() state = new EventEmitter<MAStates>();
+  @Output() state = new EventEmitter<States>();
   @ViewChild('errorComponent') errorComponent: ErrorReportingComponent;
 
   get formArray(): AbstractControl | null {
@@ -61,7 +62,7 @@ export class BasicInformationFormComponent implements OnInit {
       this.service.currentMitigationAction.subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
-        this.state.emit(this.mitigationAction.fsm_state.state as MAStates);
+        this.state.emit(this.mitigationAction.fsm_state.state as States);
       });
     }
   }
@@ -235,7 +236,7 @@ export class BasicInformationFormComponent implements OnInit {
             this.snackBar.open(res, null, { duration: 3000 });
           });
           this.wasSubmittedSuccessfully = true;
-          this.state.emit(response.state as MAStates);
+          this.state.emit(response.state as States);
           this.stepper.next();
         },
         (error) => {

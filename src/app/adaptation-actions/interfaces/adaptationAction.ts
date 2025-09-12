@@ -1,4 +1,10 @@
-import { AAType } from './catalogs';
+import { CategoryOption, ImpactIdentification, ImpactProcess, ImpactScale } from '@app/@shared/form/types/payload';
+import {
+  CategoryOptionResult,
+  ImpactIdentificationResult,
+  ImpactProcessResult,
+  ResultResult,
+} from '@app/@shared/form/types/results';
 
 export interface ReportOrganization {
   responsible_entity: string;
@@ -177,7 +183,6 @@ export interface GeneralReport {
 }
 
 export interface AdaptationAction {
-  indicatorList?: any;
   report_organization?: ReportOrganization;
   address?: Adress;
   adaptation_action_information?: AdaptationActionInformation;
@@ -198,6 +203,13 @@ export interface AdaptationAction {
   next_state?: State[];
   fsm_state?: State;
   general_report?: any;
+  // section 7
+  result?: { scale: ImpactScale[] }[] | ResultResult[];
+  category_option?: CategoryOption | CategoryOptionResult;
+  // section 8
+  final_result?: { scale: ImpactScale[] }[] | ResultResult[];
+  process?: ImpactProcess | ImpactProcessResult;
+  impact_identification?: ImpactIdentification | ImpactIdentificationResult;
 }
 
 export interface Province {

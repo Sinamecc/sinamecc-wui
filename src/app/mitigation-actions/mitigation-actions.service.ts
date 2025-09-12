@@ -131,6 +131,7 @@ export class MitigationActionsService {
           Array.isArray(monitoringIndicators) && monitoringIndicators.length > 0 ? monitoringIndicators[0].id : null;
 
         const response = {
+          body: body,
           statusCode: 200,
           id: body.id,
           state: body.fsm_state.state,

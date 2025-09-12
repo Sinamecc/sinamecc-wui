@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { MaterialModule } from '@app/material.module';
 import { LoaderComponent } from './loader/loader.component';
-
 import { CustomSearchBarComponent } from './custom-search-bar/custom-search-bar.component';
 import { GenericButtonComponent } from './generic-button/generic-button.component';
 import { GenericButtonSecondaryComponent } from './generic-button-secondary/generic-button-secondary.component';
@@ -27,6 +25,10 @@ import { UploadButtonComponent } from './upload-button/upload-button.component';
 import { AmountInputComponent } from './amount-input/amount-input.component';
 import { FileListComponent } from './file-list/file-list.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { TransformationalChangeComponent } from './form/transformational-change/transformational-change.component';
+import { CategoryComponent } from './form/category/category.component';
+import { ImpactEvaluationService } from './form/impact-evaluation.service';
+import { SustainableDevelopmentComponent } from './form/sustainable-development/sustainable-development.component';
 
 @NgModule({
   imports: [MaterialModule, CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
@@ -49,8 +51,11 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     FileListComponent,
     AmountInputComponent,
     UnauthorizedComponent,
+    SustainableDevelopmentComponent,
+    TransformationalChangeComponent,
+    CategoryComponent,
   ],
-  providers: [UploadProposalService, UpdateStatusService, ViewPdfService, S3Service],
+  providers: [UploadProposalService, UpdateStatusService, ViewPdfService, S3Service, ImpactEvaluationService],
   exports: [
     LoaderComponent,
     InputFileComponent,
@@ -70,6 +75,9 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     FileListComponent,
     AmountInputComponent,
     UnauthorizedComponent,
+    SustainableDevelopmentComponent,
+    TransformationalChangeComponent,
+    CategoryComponent,
   ],
 })
 export class SharedModule {}

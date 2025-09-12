@@ -1001,6 +1001,274 @@
           </div>
         </div>
       </mat-tab>
+      <!-- section 7 -->
+      <mat-tab [label]="'impactEvaluation.identification' | translate">
+        <div class="tab-container flex flex-col justify-start items-start flex-fill">
+          <div class="header-container flex flex-row justify-between items-center">
+            <label class="mat-h1" translate>impactEvaluation.identification</label>
+            <!-- <button
+              *ngIf="adaptationAction.comments || edit"
+              (click)="openCommentsModal(commentsModule7, 6)"
+              mat-icon-button
+            >
+              <mat-icon>comment</mat-icon>
+            </button> -->
+          </div>
+
+          <mat-accordion *ngIf="adaptationAction?.category_option">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title translate>impactEvaluation.categories</mat-panel-title>
+                <mat-panel-description>
+                  <span translate>impactEvaluation.impactType</span>
+                  :
+                  {{
+                    (adaptationAction.category_option.impact_type
+                      ? 'impactEvaluation.select.positive'
+                      : 'impactEvaluation.select.negative'
+                    ) | translate
+                  }}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <div class="flex flex-col gap-2">
+                <span
+                  ><span translate>impactEvaluation.pertinent</span>:
+                  {{ (adaptationAction.category_option.pertinent ? 'general.yes' : 'No') | translate }}</span
+                >
+                <span
+                  ><span translate>impactEvaluation.relevant</span>:
+                  {{ (adaptationAction.category_option.relevant ? 'general.yes' : 'No') | translate }}</span
+                >
+              </div>
+
+              <label class="mat-h1" translate>impactEvaluation.title</label>
+              <div *ngFor="let section of adaptationAction.category_option.category_section" class="p-2 border-b gap-4">
+                <h3 class="mat-h3">
+                  {{ section.category?.category_group?.dimension?.name }} >
+                  {{ section.category?.category_group?.name }} > {{ section.category?.name }}
+                </h3>
+                <p class="break-words">{{ section.description }}</p>
+
+                <div class="flex flex-col gap-1 mt-4">
+                  <div>
+                    <strong translate>impactEvaluation.quantifiedIndicator</strong>: {{ section.indicator?.name }}
+                  </div>
+                  <em>{{ section.indicator?.description }}</em>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <div><span translate>impactEvaluation.baseValue</span>: {{ section.base_value }}</div>
+                  <div><span translate>impactEvaluation.expectedValue</span>: {{ section.expected_value }}</div>
+                  <div><span translate>impactEvaluation.accumulatedValue</span>: {{ section.accumulated_value }}</div>
+                </div>
+              </div>
+
+              <div *ngIf="adaptationAction.category_option.other?.length">
+                <h4 class="mat-h4" translate>general.other</h4>
+                <div>
+                  <div *ngFor="let o of adaptationAction.category_option.other">
+                    <h3 class="mat-h3">
+                      {{ o.name }}
+                    </h3>
+                    <p class="break-words">{{ o.description }}</p>
+
+                    <div class="flex flex-col gap-1 mt-4">
+                      <div>
+                        <strong translate>impactEvaluation.quantifiedIndicator</strong>: {{ o.indicator?.name }}
+                      </div>
+                      <em>{{ o.indicator?.description }}</em>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                      <div><span translate>impactEvaluation.baseValue</span>: {{ o.base_value }}</div>
+                      <div><span translate>impactEvaluation.expectedValue</span>: {{ o.expected_value }}</div>
+                      <div><span translate>impactEvaluation.accumulatedValue</span>: {{ o.accumulated_value }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <mat-accordion class="mt-4" *ngIf="adaptationAction?.result?.length">
+            @let res = adaptationAction.result[0];
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title translate>impactEvaluation.results</mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div *ngFor="let scale of res.scale" class="p-2 border-b gap-4">
+                <h3 class="mat-h3">{{ scale.name | translate }}</h3>
+                <p class="break-words">{{ scale.description }}</p>
+
+                <div class="flex flex-col gap-1 mt-4">
+                  <div>
+                    <strong translate>impactEvaluation.quantifiedIndicator</strong>: {{ scale.indicator?.name }}
+                  </div>
+                  <em>{{ scale.indicator?.description }}</em>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <div><span translate>impactEvaluation.baseValue</span>: {{ scale.base_value }}</div>
+                  <div><span translate>impactEvaluation.expectedValue</span>: {{ scale.expected_value }}</div>
+                  <div><span translate>impactEvaluation.accumulatedValue</span>: {{ scale.accumulated_value }}</div>
+                </div>
+
+                <div *ngIf="scale.category_result?.length">
+                  <!-- TODO: this is wrong, probably -->
+                  <h4 class="mat-h4" translate>impactEvaluation.categories</h4>
+                  <ul>
+                    <li *ngFor="let cat of scale.category_result">{{ cat.code }} - {{ cat.name || 'N/A' }}</li>
+                  </ul>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </mat-tab>
+      <!-- section 8 -->
+      <mat-tab [label]="'impactEvaluation.transformationalChange' | translate">
+        <div class="tab-container flex flex-col justify-start items-start flex-fill">
+          <div class="header-container flex flex-row justify-between items-center">
+            <label class="mat-h1" translate>impactEvaluation.transformationalChange</label>
+            <!-- <button
+              *ngIf="adaptationAction.comments || edit"
+              (click)="openCommentsModal(commentsModule8, 7)"
+              mat-icon-button
+            >
+              <mat-icon>comment</mat-icon>
+            </button> -->
+          </div>
+          <mat-accordion class="mt-4" *ngIf="adaptationAction?.impact_identification">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title translate>impactEvaluation.identification</mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="p-2 border-b">
+                <h3 class="mat-h3" translate>impactEvaluation.vision.title</h3>
+
+                <div *ngIf="adaptationAction.impact_identification.short_term">
+                  <strong translate>impactEvaluation.vision.short</strong>
+                  <p class="break-words">{{ adaptationAction.impact_identification.short_term }}</p>
+                </div>
+
+                <div *ngIf="adaptationAction.impact_identification.medium_term">
+                  <strong translate>impactEvaluation.vision.mid</strong>
+                  <p class="break-words">{{ adaptationAction.impact_identification.medium_term }}</p>
+                </div>
+
+                <div *ngIf="adaptationAction.impact_identification.long_term">
+                  <strong translate>impactEvaluation.vision.long</strong>
+                  <p class="break-words">{{ adaptationAction.impact_identification.long_term }}</p>
+                </div>
+              </div>
+
+              <div *ngIf="adaptationAction.impact_identification.barrier_option?.length" class="p-2 border-b">
+                <h3 class="mat-h3" translate>impactEvaluation.barriers</h3>
+
+                <div *ngFor="let barrier of adaptationAction.impact_identification.barrier_option" class="mb-4">
+                  <p><strong translate>info.name</strong>: {{ barrier.name | translate }}</p>
+                  <p class="break-words">
+                    <strong translate>impactEvaluation.description</strong>: {{ barrier.description }}
+                  </p>
+                </div>
+              </div>
+
+              <div *ngIf="adaptationAction.impact_identification.other_barrier_option?.length" class="p-2 border-b">
+                <h3 class="mat-h3">
+                  <span translate>impactEvaluation.select.other</span>
+                  <span translate>impactEvaluation.barriers</span>
+                </h3>
+
+                <div *ngFor="let other of adaptationAction.impact_identification.other_barrier_option">
+                  <p class="break-words">{{ other.description }}</p>
+                </div>
+              </div>
+
+              <div class="p-2">
+                <strong translate>impactEvaluation.addressed</strong>:
+                <span>{{
+                  adaptationAction.impact_identification.is_directly_addressed ? ('general.yes' | translate) : 'No'
+                }}</span>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <mat-accordion class="mt-4" *ngIf="adaptationAction.process?.specific_impact?.length">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title translate>impactEvaluation.processes</mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div *ngFor="let impact of adaptationAction.process.specific_impact" class="p-2 border-b gap-4">
+                <h3 class="mat-h3">{{ impact.characteristic?.category_ct?.name | translate }}</h3>
+                <p class="font-semibold">
+                  <span translate>impactEvaluation.characteristic</span>: {{ impact.characteristic?.name }}
+                </p>
+
+                <p class="break-words">{{ impact.description }}</p>
+
+                <div class="flex flex-col gap-1 mt-4" *ngIf="impact.indicator">
+                  <div>
+                    <strong translate>impactEvaluation.quantifiedIndicator</strong>: {{ impact.indicator?.name }}
+                  </div>
+                  <em>{{ impact.indicator?.description }}</em>
+                </div>
+
+                <div class="flex flex-col gap-2 mt-2">
+                  <div><span translate>impactEvaluation.baseValue</span>: {{ impact.base_value }}</div>
+                  <div><span translate>impactEvaluation.expectedValue</span>: {{ impact.expected_value }}</div>
+                  <div><span translate>impactEvaluation.accumulatedValue</span>: {{ impact.accumulated_value }}</div>
+                </div>
+              </div>
+
+              <div *ngIf="adaptationAction.process.other?.trim()" class="mt-4">
+                <h4 class="mat-h4">
+                  <span translate>impactEvaluation.select.other</span>
+                  <span translate>impactEvaluation.characteristic</span>
+                </h4>
+                <p>{{ adaptationAction.process.other }}</p>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <mat-accordion class="mt-4" *ngIf="adaptationAction?.final_result?.length">
+            @let res = adaptationAction.final_result[0];
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title translate>impactEvaluation.results</mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div *ngFor="let scale of res.scale" class="p-2 border-b gap-4">
+                <h3 class="mat-h3">{{ scale.name | translate }}</h3>
+                <p class="break-words">{{ scale.description }}</p>
+
+                <div class="flex flex-col gap-1 mt-4">
+                  <div>
+                    <strong translate>impactEvaluation.quantifiedIndicator</strong>: {{ scale.indicator?.name }}
+                  </div>
+                  <em>{{ scale.indicator?.description }}</em>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <div><span translate>impactEvaluation.baseValue</span>: {{ scale.base_value }}</div>
+                  <div><span translate>impactEvaluation.expectedValue</span>: {{ scale.expected_value }}</div>
+                  <div><span translate>impactEvaluation.accumulatedValue</span>: {{ scale.accumulated_value }}</div>
+                </div>
+
+                <div *ngIf="scale.category_result?.length">
+                  <!-- TODO: this is wrong, probably -->
+                  <h4 class="mat-h4" translate>impactEvaluation.categories</h4>
+                  <ul>
+                    <li *ngFor="let cat of scale.category_result">{{ cat.code }} - {{ cat.name || 'N/A' }}</li>
+                  </ul>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </mat-tab>
     </mat-tab-group>
   </div>
 </div>
