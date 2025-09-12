@@ -10,6 +10,7 @@ export abstract class ImpactEvaluationComponent {
   impactEvalCategories = IMPACT_EVAL_CATEGORIES;
   impactScale = IMPACT_SCALE;
   impactScaleTerm = IMPACT_SCALE_TERM;
+  IS_CODE_SEARCH = true;
   categoriesScale: {
     code: string;
     name: string;
@@ -204,7 +205,7 @@ export abstract class ImpactEvaluationComponent {
     this.applyScaleValidators(section, options);
   }
 
-  protected watchOptionSelection(section: number, barrier?: boolean) {
+  protected watchOptionSelection(section: number, code?: boolean, barrier?: boolean) {
     const sectionGroup = this.getSection(section);
     const optionCtrl = sectionGroup.get('optionCtrl');
     const categoriesArray = sectionGroup.get('categoriesCtrl') as FormArray;
@@ -212,7 +213,7 @@ export abstract class ImpactEvaluationComponent {
       const selected = values?.filter((value) => value !== this.other);
       selected.forEach((value) => {
         const exists = categoriesArray.value.some((cat: any) => {
-          return barrier
+          return barrier || code
             ? cat.code?.toString() === value.code?.toString()
             : cat.id?.toString() === value.id?.toString();
         });

@@ -78,7 +78,7 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
     }
     this.applyConditionalValidators();
     this.watchOptionSelection(this.section.categories);
-    this.watchOptionSelection(this.section.results);
+    this.watchOptionSelection(this.section.results, this.IS_CODE_SEARCH);
     this.categoriesScale = getCategoriesScale(this.adaptation);
     this.loadDimensions();
   }

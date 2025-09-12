@@ -97,9 +97,9 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
       this.updateForm();
     }
     this.applyConditionalValidators();
-    this.watchOptionSelection(this.section.identification, this.IS_BARRIER);
+    this.watchOptionSelection(this.section.identification, this.IS_CODE_SEARCH, this.IS_BARRIER);
     this.watchOptionSelection(this.section.processes);
-    this.watchOptionSelection(this.section.results);
+    this.watchOptionSelection(this.section.results, this.IS_CODE_SEARCH);
     this.categoriesScale = getCategoriesScale(this.adaptation);
     this.loadCategoriesCT();
   }
