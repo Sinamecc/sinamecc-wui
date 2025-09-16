@@ -772,7 +772,8 @@
       "actionCode": "Action code",
       "expectedResults": "Resultados esperados",
       "beneficiaryPopulation": "Beneficiary population",
-      "potentialCoBenefits": "Potential co-benefits"
+      "potentialCoBenefits": "Potential co-benefits",
+      "review": "Review the concepts in the guide Reporting and Recording Adaptation Actions in SINAMECC"
     },
     "form3": {
       "title": "Financing",
