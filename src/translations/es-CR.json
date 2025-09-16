@@ -768,7 +768,8 @@
       "actionCode": "Código de la acción",
       "expectedResults": "Resultados esperados",
       "beneficiaryPopulation": "Población beneficiaria",
-      "potentialCoBenefits": "Potenciales co-beneficios"
+      "potentialCoBenefits": "Potenciales co-beneficios",
+      "review": "Revisar los conceptos en la guia Reporte y registro de acciones de adaptación en el SINAMECC"
     },
     "form3": {
       "title": "Financiamiento",
