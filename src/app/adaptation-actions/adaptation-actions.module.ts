@@ -19,6 +19,7 @@ import { AdaptationActionReviewComponent } from './adaptation-action-review/adap
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { AdaptationActionUpdateComponent } from './adaptation-action-update/adaptation-action-update.component';
 import { AdaptationActionIndicatorFormComponent } from './adaptation-actions-indicators/adaptation-action-indicator-form/adaptation-action-indicator-form.component';
+import { IndicatorSearchComponent } from './adaptation-actions-indicators/indicator-search/indicator-search.component';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { AdaptationActionIndicatorFormComponent } from './adaptation-actions-ind
     ProgressBarComponent,
     AdaptationActionUpdateComponent,
     AdaptationActionIndicatorFormComponent,
+    IndicatorSearchComponent,
   ],
   providers: [AdaptationActionService],
 })

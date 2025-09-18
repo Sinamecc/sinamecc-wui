@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
-import { AdaptationAction } from '../interfaces/adaptationAction';
+import { AdaptationAction, Indicator } from '../interfaces/adaptationAction';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { AdaptationActionIndicatorFormComponent } from './adaptation-action-indicator-form/adaptation-action-indicator-form.component';
@@ -18,6 +18,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
   @Input() edit: boolean;
   readonly dialog = inject(MatDialog);
   adaptationAction: AdaptationAction;
+  indicatorsToShow: Indicator[] = [];
 
   constructor(
     public snackBar: MatSnackBar,
@@ -30,6 +31,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
         this.adaptationAction.indicator_list &&
         this.adaptationAction.indicator_list.length
       ) {
+        this.indicatorsToShow = this.adaptationAction.indicator_list;
         this.onComplete.emit(true);
       }
     });
