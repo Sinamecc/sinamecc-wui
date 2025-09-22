@@ -1,5 +1,38 @@
 {
+  "register": {
+    "title": "Access Request Form",
+    "name": "Name",
+    "entity": "Entity",
+    "position": "Position",
+    "entityType": "Type of entity",
+    "type": {
+      "public": "Public sector",
+      "private": "Private sector",
+      "academia": "Academia",
+      "civil": "Civil society",
+      "orgs": "NGOs"
+    },
+    "email": "Email",
+    "module": {
+      "title": "Module to request access",
+      "adaptation": "Adaptation",
+      "mitigation": "Mitigation",
+      "reports": "Reports",
+      "admin": "Administration"
+    },
+    "letter": "Authorization letter",
+    "letterHint": "Upload an official authorization letter (PDF, DOC, or image).",
+    "accepts": "I accept the terms and conditions of use of the information",
+    "submit": "Submit",
+    "reset": "Reset",
+    "errors": {
+      "required": "This field is required",
+      "invalidEmail": "Please enter a valid email address",
+      "acceptTerms": "You must accept the terms and conditions"
+    }
+  },
   "credentialsSection": {
+    "register": "Request access",
     "changePassword": "Change Password",
     "changeText": "Choose a new password to complete the process and log in",
     "newPassword": "New Password",

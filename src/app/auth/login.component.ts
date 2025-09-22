@@ -68,6 +68,11 @@ export class LoginComponent implements OnInit {
     return re.test(String(email).toLowerCase());
   }
 
+  goToRegister() {
+    this.location.replaceState('/register');
+    window.location.reload();
+  }
+
   private createForm() {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],

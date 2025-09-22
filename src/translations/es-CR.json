@@ -1,5 +1,38 @@
 {
+  "register": {
+    "title": "Formulario de solicitud de acceso",
+    "name": "Nombre",
+    "entity": "Entidad",
+    "position": "Cargo",
+    "entityType": "Tipo de entidad",
+    "type": {
+      "public": "Sector público",
+      "private": "Sector privado",
+      "academia": "Academia",
+      "civil": "Sociedad civil",
+      "orgs": "ONGs"
+    },
+    "email": "Correo electrónico",
+    "module": {
+      "title": "Módulo al que solicita acceso",
+      "adaptation": "Adaptación",
+      "mitigation": "Mitigación",
+      "reports": "Reportes",
+      "admin": "Administración"
+    },
+    "letter": "Carta de autorización",
+    "letterHint": "Cargue una carta de autorización oficial (PDF, DOC o imagen).",
+    "accepts": "Acepto los términos y condiciones de uso de la información",
+    "submit": "Enviar",
+    "reset": "Restablecer",
+    "errors": {
+      "required": "Este campo es obligatorio",
+      "invalidEmail": "Por favor ingrese un correo electrónico válido",
+      "acceptTerms": "Debe aceptar los términos y condiciones"
+    }
+  },
   "credentialsSection": {
+    "register": "Solicitar acceso",
     "changePassword": "Cambiar contraseña",
     "changeText": "Elija una nueva contraseña para terminar el proceso e iniciar sesión",
     "newPassword": "Nueva contraseña",

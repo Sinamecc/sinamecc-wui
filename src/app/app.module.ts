@@ -13,6 +13,7 @@ import { CoreModule } from '@core';
 import { SharedModule } from '@shared';
 import { ReportModule } from '@app/report/report.module';
 import { AuthModule } from '@app/auth';
+import { RegisterModule } from './register/register.module';
 import { HomeModule } from './home/home.module';
 import { ShellModule } from './shell/shell.module';
 import { AppComponent } from './app.component';
@@ -68,6 +69,7 @@ export const DATE_FORMATS = {
     MitigationActionsModule,
     ShellModule,
     AuthModule,
+    RegisterModule,
     AdminModule,
     PpcnModule,
     MccrRegistriesModule,

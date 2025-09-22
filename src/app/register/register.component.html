@@ -1,0 +1,107 @@
+<div class="h-screen w-full flex items-center justify-center p-16">
+  <mat-card class="w-6/8 h-full">
+    <div class="overflow-auto p-4">
+      <mat-card-content>
+        <h1 class="mb-4">{{ 'register.title' | translate }}</h1>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col">
+          <mat-form-field appearance="fill" class="full">
+            <mat-label>{{ 'register.name' | translate }}</mat-label>
+            <input matInput formControlName="name" placeholder="{{ 'register.name' | translate }}" />
+            <mat-error *ngIf="form.get('name')?.hasError('required')">
+              {{ 'register.errors.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full">
+            <mat-label>{{ 'register.entity' | translate }}</mat-label>
+            <input matInput formControlName="entity" placeholder="{{ 'register.entity' | translate }}" />
+            <mat-error *ngIf="form.get('entity')?.hasError('required')">
+              {{ 'register.errors.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full">
+            <mat-label>{{ 'register.position' | translate }}</mat-label>
+            <input matInput formControlName="position" placeholder="{{ 'register.position' | translate }}" />
+            <mat-error *ngIf="form.get('position')?.hasError('required')">
+              {{ 'register.errors.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full">
+            <mat-label>{{ 'register.entityType' | translate }}</mat-label>
+            <mat-select formControlName="entityType">
+              <mat-option value="public">{{ 'register.type.public' | translate }}</mat-option>
+              <mat-option value="private">{{ 'register.type.private' | translate }}</mat-option>
+              <mat-option value="academia">{{ 'register.type.academia' | translate }}</mat-option>
+              <mat-option value="civil">{{ 'register.type.civil' | translate }}</mat-option>
+              <mat-option value="orgs">{{ 'register.type.orgs' | translate }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('entityType')?.hasError('required')">
+              {{ 'register.errors.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full">
+            <mat-label>{{ 'register.email' | translate }}</mat-label>
+            <input matInput formControlName="email" placeholder="{{ 'register.email' | translate }}" />
+            <mat-error *ngIf="form.get('email')?.hasError('required')">
+              {{ 'register.errors.required' | translate }}
+            </mat-error>
+            <mat-error *ngIf="form.get('email')?.hasError('email')">
+              {{ 'register.errors.invalidEmail' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full">
+            <mat-label>{{ 'register.module.title' | translate }}</mat-label>
+            <mat-select formControlName="module">
+              <mat-option value="adaptation">{{ 'register.module.adaptation' | translate }}</mat-option>
+              <mat-option value="mitigation">{{ 'register.module.mitigation' | translate }}</mat-option>
+              <mat-option value="reports">{{ 'register.module.reports' | translate }}</mat-option>
+              <mat-option value="admin">{{ 'register.module.admin' | translate }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('module')?.hasError('required')">
+              {{ 'register.errors.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <div class="flex flex-col">
+            <div class="flex flex-row gap-4 mb-4 justify-between">
+              <label class="file-label">{{ 'register.letter' | translate }}</label>
+              <app-upload-button
+                #uploader
+                [loading]="loading"
+                [type]="type"
+                (fileChange)="onFileChange($event)"
+                [multiple]="false"
+              />
+            </div>
+            <mat-hint>{{ 'register.letterHint' | translate }}</mat-hint>
+          </div>
+
+          <div class="flex flex-col gap-4">
+            <mat-checkbox color="primary" formControlName="terms">
+              {{ 'register.accepts' | translate }}
+            </mat-checkbox>
+            <mat-error *ngIf="form.get('terms')?.hasError('required') && form.get('terms')?.touched">
+              {{ 'register.errors.acceptTerms' | translate }}
+            </mat-error>
+          </div>
+
+          <div class="flex flex-row justify-end gap-4">
+            <button mat-button type="button" (click)="onReset()">{{ 'register.reset' | translate }}</button>
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="(form.invalid && filesToUpload.length <= 0) || loading"
+            >
+              {{ 'register.submit' | translate }}
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </div>
+  </mat-card>
+</div>

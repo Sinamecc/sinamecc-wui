@@ -13,6 +13,7 @@ export class UploadButtonComponent {
   @Input() type: string = '';
   @Output() fileChange = new EventEmitter<FileUpload>();
   @Input() filesUploaded: FileUploaded[] = [];
+  @Input() multiple = true;
   filesToUpload: File[] = [];
   filesToRemove: string[] = [];
 
