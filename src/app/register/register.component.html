@@ -4,7 +4,7 @@
       <mat-card-content>
         <h1 class="mb-4">{{ 'register.title' | translate }}</h1>
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col">
-          <mat-form-field appearance="fill" class="full">
+          <mat-form-field appearance="fill">
             <mat-label>{{ 'register.name' | translate }}</mat-label>
             <input matInput formControlName="name" placeholder="{{ 'register.name' | translate }}" />
             <mat-error *ngIf="form.get('name')?.hasError('required')">
@@ -12,7 +12,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="fill" class="full">
+          <mat-form-field appearance="fill">
             <mat-label>{{ 'register.entity' | translate }}</mat-label>
             <input matInput formControlName="entity" placeholder="{{ 'register.entity' | translate }}" />
             <mat-error *ngIf="form.get('entity')?.hasError('required')">
@@ -20,7 +20,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="fill" class="full">
+          <mat-form-field appearance="fill">
             <mat-label>{{ 'register.position' | translate }}</mat-label>
             <input matInput formControlName="position" placeholder="{{ 'register.position' | translate }}" />
             <mat-error *ngIf="form.get('position')?.hasError('required')">
@@ -28,7 +28,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="fill" class="full">
+          <mat-form-field appearance="fill">
             <mat-label>{{ 'register.entityType' | translate }}</mat-label>
             <mat-select formControlName="entityType">
               <mat-option value="public">{{ 'register.type.public' | translate }}</mat-option>
@@ -42,9 +42,9 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="fill" class="full">
+          <mat-form-field appearance="fill">
             <mat-label>{{ 'register.email' | translate }}</mat-label>
-            <input matInput formControlName="email" placeholder="{{ 'register.email' | translate }}" />
+            <input matInput type="email" formControlName="email" placeholder="{{ 'register.email' | translate }}" />
             <mat-error *ngIf="form.get('email')?.hasError('required')">
               {{ 'register.errors.required' | translate }}
             </mat-error>
@@ -53,7 +53,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="fill" class="full">
+          <mat-form-field appearance="fill">
             <mat-label>{{ 'register.module.title' | translate }}</mat-label>
             <mat-select formControlName="module">
               <mat-option value="adaptation">{{ 'register.module.adaptation' | translate }}</mat-option>
@@ -68,7 +68,7 @@
 
           <div class="flex flex-col">
             <div class="flex flex-row gap-4 mb-4 justify-between">
-              <label class="file-label">{{ 'register.letter' | translate }}</label>
+              <label>{{ 'register.letter' | translate }}</label>
               <app-upload-button
                 #uploader
                 [loading]="loading"
