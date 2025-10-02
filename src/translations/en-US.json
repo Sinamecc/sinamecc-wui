@@ -161,6 +161,7 @@
     "monitoringGHG": "Indicator baseline",
     "monitoringGHGGoal": "Indicator target",
     "monitoringData": "Monitored data",
+    "monitoredData": "Monitored data",
     "monitoringAdvance": "Narrative progress update for the reporting period"
   },
 

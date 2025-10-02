@@ -191,9 +191,10 @@ export class MitigationActionComponent implements OnInit {
       return !indicator ? [] : indicator.files.filter((file) => file.type === type);
     } else if (type === MAFileType.MONITORING_UPDATED_DATA) {
       // TODO: add id when issue SIN-I75 is solved
-      return this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].files.filter(
-        (file) => file.type === type,
-      );
+      // return this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].files.filter(
+      //   (file) => file.type === type,
+      // );
+      return [];
     } else {
       return this.mitigationAction.files.filter((file) => file.type === type);
     }

@@ -159,6 +159,7 @@
     "monitoringGHG": "Línea base del indicador",
     "monitoringGHGGoal": "Meta del indicador",
     "monitoringData": "Dato monitoreado",
+    "monitoredData": "Datos monitoreados",
     "monitoringAdvance": "Descripción narrativa del avance durante el período de reporte"
   },
 

@@ -1,6 +1,7 @@
 <div *ngIf="!isLoading" class="main-container flex flex-row justify-start items-start flex-fill">
   <div style="width: 75%">
     <mat-tab-group class="custom-tabs">
+      <!-- 1 MA -->
       <mat-tab [label]="'specificLabel.initiative' | translate">
         <div [style.width.%]="100" [style.padding.px]="20" class="flex flex-col justify-start items-start">
           <div class="header-container flex flex-row justify-between items-center">
@@ -192,6 +193,7 @@
         </div>
       </mat-tab>
 
+      <!--  2 financing -->
       <mat-tab [label]="'info.financingInformation' | translate">
         <div [style.width.%]="100" [style.padding.px]="20" class="flex flex-col justify-start items-start">
           <div class="header-container flex flex-row justify-between items-center">
@@ -264,6 +266,7 @@
         </div>
       </mat-tab>
 
+      <!-- 3 -->
       <mat-tab [label]="'general.keyAspects' | translate">
         <div [style.width.%]="100" [style.padding.px]="20" class="flex flex-col justify-start items-start">
           <div class="header-container flex flex-row justify-between items-center">
@@ -304,6 +307,7 @@
         </div>
       </mat-tab>
 
+      <!-- 4 -->
       <mat-tab [label]="'specificLabel.mitigationEmissions' | translate">
         <div [style.width.%]="100" [style.padding.px]="20" class="flex flex-col justify-start items-start">
           <div class="header-container flex flex-row justify-between items-center">
@@ -446,6 +450,7 @@
         </div>
       </mat-tab>
 
+      <!-- 5 -->
       <mat-tab [label]="'specificLabel.informationMonitoring' | translate">
         <div [style.width.%]="100" [style.padding.px]="20" class="flex flex-col justify-start items-start">
           <div class="header-container flex flex-row justify-between items-center">
@@ -488,6 +493,16 @@
                 <h3 class="mat-h3">{{ indicator['available_time_start_date'] | date: 'dd/MM/yyyy' }}</h3>
                 <strong translate>general.until</strong>
                 <h3 class="mat-h3">{{ indicator['available_time_end_date'] | date: 'dd/MM/yyyy' }}</h3>
+                <h3 class="mat-h3">
+                  <strong translate>mitigationAction.reportingPeriod</strong>
+                  {{
+                    (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator
+                      ? (mitigationAction?.monitoring_reporting_indicator?.monitoring_indicator)[0]
+                          ?.initial_date_report_period
+                      : ''
+                    ) | date: 'dd/MM/yyyy'
+                  }}
+                </h3>
                 <strong translate>mitigationAction.ghgIndicatorBaseView</strong>
                 <h3 class="mat-h3">{{ indicator['ghg_indicator_base'] }}</h3>
                 <strong translate>mitigationAction.ghgIndicatorGoalView</strong>
@@ -553,6 +568,14 @@
               </div>
               <br />
 
+              <!-- monitoring data -->
+              <strong translate>mitigationAction.monitoredData</strong>
+              <mat-divider></mat-divider>
+              <br />
+              <div>
+                <!-- MONITORING DATA -->
+              </div>
+
               <strong translate>mitigationAction.contactInformation</strong>
               <mat-divider></mat-divider>
               <br />
@@ -597,6 +620,7 @@
         </div>
       </mat-tab>
 
+      <!-- 6 -->
       <mat-tab [label]="'mitigationAction.monitoringReportingClimateActions' | translate">
         <div [style.width.%]="100" [style.padding.px]="20" class="flex flex-col justify-start items-start">
           <div class="header-container flex flex-row justify-between items-center">
