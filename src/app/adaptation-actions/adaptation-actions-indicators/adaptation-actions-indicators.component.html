@@ -13,30 +13,45 @@
       </button>
     </div>
     <div class="flex flex-col gap-2">
-      <div *ngFor="let item of indicatorsToShow" class="flex flex-row justify-between items-center">
-        <span>{{ item.id }} - {{ item.name }}</span>
-        <div class="flex flex-row">
-          <button
-            mat-icon-button
-            type="button"
-            color="warn"
-            (click)="openConfirmationDialog(item.id)"
-            matTooltip="{{ 'general.delete' | translate }}"
-            matTooltipPosition="above"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button
-            mat-icon-button
-            type="button"
-            (click)="openDialog(item.id)"
-            matTooltip="{{ 'general.edit' | translate }}"
-            matTooltipPosition="above"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-        </div>
-      </div>
+      <table mat-table [dataSource]="indicatorsToShow" class="mat-elevation-z1 w-full">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let item">{{ item.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>
+            <span translate>adaptationAction.form4.indicatorName</span>
+          </th>
+          <td mat-cell *matCellDef="let item">{{ item.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let item">
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="openConfirmationDialog(item.id)"
+              matTooltip="{{ 'general.delete' | translate }}"
+              matTooltipPosition="above"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              (click)="openDialog(item.id)"
+              matTooltip="{{ 'general.edit' | translate }}"
+              matTooltipPosition="above"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['id', 'name', 'actions']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['id', 'name', 'actions']"></tr>
+      </table>
     </div>
     <div class="button-box flex flex-row justify-end items-center">
       <button mat-raised-button color="primary" type="button" (click)="next()">
