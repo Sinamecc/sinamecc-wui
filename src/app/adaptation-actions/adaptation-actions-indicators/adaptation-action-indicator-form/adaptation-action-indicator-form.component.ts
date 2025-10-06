@@ -112,9 +112,11 @@ export class AdaptationActionIndicatorFormComponent {
   }
 
   buildUpdateRegisterForm() {
-    if (this.data.adaptationAction.indicator_list.length > 0) {
-      let index = 0;
-      for (const indicator of this.data.adaptationAction.indicator_list) {
+    if (this.data.indicator !== undefined && this.data.adaptationAction.indicator_list.length > 0) {
+      const indicator = this.data.adaptationAction.indicator_list.find(
+        (indicator) => indicator.id === this.data.indicator,
+      );
+      if (indicator) {
         const timeSeriesAvailableEnd = new Date(indicator.available_time_end_date);
         const adaptationActionIndicatorTime = new Date(indicator.available_time_start_date);
 
@@ -186,20 +188,11 @@ export class AdaptationActionIndicatorFormComponent {
             adaptationActionIndicatorContactPhoneCtrl: [indicator.contact.phone],
           }),
         ]);
-        if (index === 0) {
-          this.form = this.fb.group({
-            formArray: form,
-          });
-        } else {
-          this.form.controls['formArray' + index] = form;
-        }
 
-        index += 1;
+        this.form = this.fb.group({
+          formArray: form,
+        });
       }
-    } else {
-      this.form = this.fb.group({
-        formArray: this.buildRegisterForm(),
-      });
     }
   }
 
