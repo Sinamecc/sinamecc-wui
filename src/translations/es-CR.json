@@ -786,6 +786,7 @@
     },
     "form4": {
       "title": "Registro de indicadores",
+      "titleDialog": "Registro de indicador",
       "dataWantUpdate": "Ingrese el dato que desea actualizar",
       "RegisterIindicators": "Registro de indicadores",
       "indicatorName": "Nombre del indicador",

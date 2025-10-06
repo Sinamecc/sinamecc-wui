@@ -13,11 +13,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdaptationActionService } from '@app/adaptation-actions/adaptation-actions-service';
 import { AdaptationAction } from '@app/adaptation-actions/interfaces/adaptationAction';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 export interface DialogData {
   adaptationAction: AdaptationAction;
-  indicator?: string;
+  indicator?: number;
   edit: boolean;
 }
 
@@ -257,29 +257,42 @@ export class AdaptationActionIndicatorFormComponent {
   }
 
   submitForm() {
-    // TODO remove this if first
+    let service: (payload: any) => Observable<any>;
+
     if (this.data.edit) {
-      // CANT EDIT YET
-      this.dialogRef.close();
-      return;
+      service = (payload) => this.service.updateIndicator(this.data.indicator, payload);
+    } else {
+      service = (payload) => this.service.createIndicator(payload);
     }
 
     const payload = this.buildPayload();
-    this.service.createIndicator(payload).subscribe({
-      next: (response) => {
-        this.data.adaptationAction.indicator_list.push(response.body);
-        this.service.updateCurrentAdaptationAction(Object.assign(this.data.adaptationAction, payload));
-        this.translateService.get('specificLabel.saveInformation').subscribe({
-          next: (res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-            this.dialogRef.close();
-          },
-        });
-      },
-      error: () => {
-        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
-      },
-    });
+    service(payload)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          const indicator = response.body;
+          if (this.data.edit) {
+            this.data.adaptationAction.indicator_list = this.data.adaptationAction.indicator_list.map((ind) =>
+              ind.id === indicator.id ? indicator : ind,
+            );
+          } else {
+            this.data.adaptationAction.indicator_list.push(indicator);
+          }
+
+          this.translateService
+            .get('specificLabel.saveInformation')
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+              next: (res: string) => {
+                this.snackBar.open(res, null, { duration: 3000 });
+                this.dialogRef.close(this.data.adaptationAction);
+              },
+            });
+        },
+        error: () => {
+          this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+        },
+      });
   }
 
   buildPayload() {

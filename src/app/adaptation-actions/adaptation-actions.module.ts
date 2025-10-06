@@ -20,6 +20,7 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { AdaptationActionUpdateComponent } from './adaptation-action-update/adaptation-action-update.component';
 import { AdaptationActionIndicatorFormComponent } from './adaptation-actions-indicators/adaptation-action-indicator-form/adaptation-action-indicator-form.component';
 import { IndicatorSearchComponent } from './adaptation-actions-indicators/indicator-search/indicator-search.component';
+import { DeleteDialogComponent } from '@app/@shared/delete-dialog/delete-dialog.component';
 
 @NgModule({
   imports: [
@@ -47,6 +48,6 @@ import { IndicatorSearchComponent } from './adaptation-actions-indicators/indica
     AdaptationActionIndicatorFormComponent,
     IndicatorSearchComponent,
   ],
-  providers: [AdaptationActionService],
+  providers: [AdaptationActionService, DeleteDialogComponent],
 })
 export class AdaptationActionsModule {}

@@ -4,6 +4,8 @@ import { AdaptationAction, Indicator } from '../interfaces/adaptationAction';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { AdaptationActionIndicatorFormComponent } from './adaptation-action-indicator-form/adaptation-action-indicator-form.component';
+import { DeleteDialogComponent } from '@app/@shared/delete-dialog/delete-dialog.component';
+import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-adaptation-actions-indicators',
@@ -16,6 +18,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
   @Input() mainStepper: any;
   @Input() adaptationActionUpdated: AdaptationAction;
   @Input() edit: boolean;
+  destroy$ = new Subject<void>();
   readonly dialog = inject(MatDialog);
   adaptationAction: AdaptationAction;
   indicatorsToShow: Indicator[] = [];
@@ -24,7 +27,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     public snackBar: MatSnackBar,
     private service: AdaptationActionService,
   ) {
-    this.service.currentAdaptationActionSource.subscribe((message) => {
+    this.service.currentAdaptationActionSource.pipe(takeUntil(this.destroy$)).subscribe((message) => {
       this.adaptationAction = message;
       if (
         this.adaptationAction &&
@@ -39,7 +42,12 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  openDialog(indicator?: string): void {
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  openDialog(indicator?: number): void {
     const dialogRef = this.dialog.open(AdaptationActionIndicatorFormComponent, {
       data: {
         adaptationAction: this.adaptationAction,
@@ -48,11 +56,36 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result !== undefined) {
-        console.log('Dialog result:', result);
-      }
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result) => {
+        if (result !== undefined) {
+          this.service.updateCurrentAdaptationAction(result);
+        }
+      });
+  }
+
+  async openConfirmationDialog(indicator?: number) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      minWidth: '300px',
+      disableClose: true,
     });
+
+    const result = await firstValueFrom(dialogRef.afterClosed());
+    if (!result) return;
+
+    this.service
+      .deleteIndicator(indicator)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.adaptationAction = {
+          ...this.adaptationAction,
+          indicator_list: this.adaptationAction.indicator_list.filter((ind) => ind.id !== indicator),
+        };
+        this.indicatorsToShow = [...this.adaptationAction.indicator_list];
+        this.service.updateCurrentAdaptationAction(this.adaptationAction);
+      });
   }
 
   next() {

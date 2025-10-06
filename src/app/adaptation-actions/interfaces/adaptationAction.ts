@@ -120,7 +120,7 @@ export interface InformationSource {
 
 export interface Indicator {
   name: string;
-  id?: string;
+  id?: number;
   description: string;
   unit: string;
   methodological_detail: string;

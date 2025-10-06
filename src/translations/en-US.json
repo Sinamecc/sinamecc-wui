@@ -786,6 +786,7 @@
     },
     "form4": {
       "title": "Indicator Registration",
+      "titleDialog": "Indicator Registration",
       "dataWantUpdate": "Enter the data you want to update",
       "RegisterIindicators": "Indicator Registration",
       "indicatorName": "Indicator Name",

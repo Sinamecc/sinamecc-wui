@@ -29,6 +29,7 @@ import { TransformationalChangeComponent } from './form/transformational-change/
 import { CategoryComponent } from './form/category/category.component';
 import { ImpactEvaluationService } from './form/impact-evaluation.service';
 import { SustainableDevelopmentComponent } from './form/sustainable-development/sustainable-development.component';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 
 @NgModule({
   imports: [MaterialModule, CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
@@ -54,6 +55,7 @@ import { SustainableDevelopmentComponent } from './form/sustainable-development/
     SustainableDevelopmentComponent,
     TransformationalChangeComponent,
     CategoryComponent,
+    DeleteDialogComponent,
   ],
   providers: [UploadProposalService, UpdateStatusService, ViewPdfService, S3Service, ImpactEvaluationService],
   exports: [
@@ -78,6 +80,7 @@ import { SustainableDevelopmentComponent } from './form/sustainable-development/
     SustainableDevelopmentComponent,
     TransformationalChangeComponent,
     CategoryComponent,
+    DeleteDialogComponent,
   ],
 })
 export class SharedModule {}
