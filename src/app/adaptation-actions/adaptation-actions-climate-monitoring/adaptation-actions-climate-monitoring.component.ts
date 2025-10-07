@@ -6,6 +6,7 @@ import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { FileUpload } from '@app/@shared/upload-button/file-upload';
 import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-adaptation-actions-climate-monitoring',
@@ -31,7 +32,7 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     private service: AdaptationActionService,
     private router: Router,
   ) {
-    this.service.currentAdaptationActionSource.subscribe((message) => {
+    this.service.currentAdaptationActionSource.pipe(untilDestroyed(this)).subscribe((message) => {
       this.adaptationAction = message;
       if (this.adaptationAction && this.adaptationAction.progress_log?.id) {
         this.onComplete.emit(true);

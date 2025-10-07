@@ -50,18 +50,18 @@ export class ReportVersionsNewComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           // :id/versions
           this.router.navigate([`/report/${this.route.snapshot.paramMap.get('id')}/versions`], { replaceUrl: true });
           this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from form`);
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Report File error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 
   private createForm() {
@@ -74,17 +74,17 @@ export class ReportVersionsNewComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           this.reportForm = this.formBuilder.group({
             name: [response, Validators.required],
             file: [{ value: undefined, disabled: false }, []],
           });
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Report File error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 }

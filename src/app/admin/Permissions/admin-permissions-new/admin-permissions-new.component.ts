@@ -71,17 +71,17 @@ export class AdminPermissionsNewComponent implements OnInit {
               this.isLoading = false;
             }),
           )
-          .subscribe(
-            (response) => {
+          .subscribe({
+            next: (response) => {
               this.snackBar.show('Sucessfully submitted form');
               log.debug(`${response.statusCode} status code received from create permissions `);
               this.router.navigate([`/home`], { replaceUrl: true });
             },
-            (error) => {
+            error: (error) => {
               log.debug(`Create permission error: ${error}`);
               this.error = error;
             },
-          );
+          });
       }
     }
   }

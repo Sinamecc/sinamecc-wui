@@ -208,17 +208,17 @@ export class ReportFormDataComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           const newPayload = Object.assign(payload, { id: response.id });
           this.reportService.updateCurrentReport(newPayload);
           this.reportService.updateCurrentReport(payload);
           this.successSendForm(response.id);
         },
-        (error) => {
+        error: (error) => {
           this.error = error;
         },
-      );
+      });
   }
 
   sendUpdatedForm(payload: ReportDataPayload) {
@@ -230,16 +230,16 @@ export class ReportFormDataComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           const newPayload = Object.assign(payload, { id: response.id });
           this.reportService.updateCurrentReport(newPayload);
           this.successSendForm(response.id);
         },
-        (error) => {
+        error: (error) => {
           this.error = error;
         },
-      );
+      });
   }
 
   successSendForm(id: string) {

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, AbstractControl } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
-import { Logger } from '@core';
+import { Logger, untilDestroyed } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
@@ -64,14 +64,16 @@ export class EmissionsMitigationFormComponent implements OnInit {
     public snackBar: SnackbarService,
     private router: Router,
   ) {
-    this.service.currentMitigationAction.subscribe((message) => (this.mitigationAction = message));
+    this.service.currentMitigationAction
+      .pipe(untilDestroyed(this))
+      .subscribe((message) => (this.mitigationAction = message));
     this.createForm();
     this.getSectorCatalog();
   }
 
   ngOnInit() {
     if (this.isUpdating) {
-      this.service.currentMitigationAction.subscribe((message) => {
+      this.service.currentMitigationAction.pipe(untilDestroyed(this)).subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);

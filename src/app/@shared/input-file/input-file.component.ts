@@ -5,6 +5,7 @@ import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { FileInput } from '@shared/input-file/file-input.model';
 import { MatFormFieldControl } from '@angular/material/form-field';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-input-file',
@@ -74,10 +75,12 @@ export class InputFileComponent implements MatFormFieldControl<FileInput>, Contr
       ngControl.valueAccessor = this;
     }
 
-    fm.monitor(_elementRef.nativeElement, true).subscribe((origin) => {
-      this.focused = !!origin;
-      this.stateChanges.next();
-    });
+    fm.monitor(_elementRef.nativeElement, true)
+      .pipe(untilDestroyed(this))
+      .subscribe((origin) => {
+        this.focused = !!origin;
+        this.stateChanges.next();
+      });
   }
 
   get fileNames() {

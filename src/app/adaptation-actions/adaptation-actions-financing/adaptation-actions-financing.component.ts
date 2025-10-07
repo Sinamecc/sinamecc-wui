@@ -4,6 +4,7 @@ import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction, InstrumentDetail } from '../interfaces/adaptationAction';
 import { AAType } from '../interfaces/catalogs';
 import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-adaptation-actions-financing',
@@ -37,7 +38,7 @@ export class AdaptationActionsFinancingComponent implements OnInit {
     public snackBar: SnackbarService,
     private service: AdaptationActionService,
   ) {
-    this.service.currentAdaptationActionSource.subscribe((message) => {
+    this.service.currentAdaptationActionSource.pipe(untilDestroyed(this)).subscribe((message) => {
       this.adaptationAction = message;
       if (this.adaptationAction && this.adaptationAction.finance?.id) {
         this.onComplete.emit(true);

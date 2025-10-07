@@ -66,14 +66,14 @@ export class MccrSearchPocComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response: MccrPoc) => {
+      .subscribe({
+        next: (response: MccrPoc) => {
           this.mccr_poc = response;
         },
-        (error) => {
+        error: (error) => {
           this.snackBar.show(error.error.message);
         },
-      );
+      });
   }
 
   view(uuid: string) {
@@ -89,14 +89,14 @@ export class MccrSearchPocComponent implements OnInit {
           this.verifyingState = false;
         }),
       )
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           this.openVerifyDialog(response);
         },
-        (error) => {
+        error: (error) => {
           this.snackBar.show('errorLabel.error400');
         },
-      );
+      });
   }
 
   cancel(uuid: string) {

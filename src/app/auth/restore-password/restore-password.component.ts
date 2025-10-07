@@ -35,15 +35,15 @@ export class RestorePasswordComponent implements OnInit {
       password: password,
     };
 
-    this.authenticationService.restorePassword(context).subscribe(
-      (response: any) => {
+    this.authenticationService.restorePassword(context).subscribe({
+      next: (response: any) => {
         this._snackBar.show('Password is reset successfully', [], 1000);
         this.router.navigate(['/login'], { replaceUrl: true });
       },
-      (error: any) => {
+      error: (error: any) => {
         this._snackBar.show('Error processing the request, please try again later', [], 1000);
       },
-    );
+    });
   }
 
   ngOnInit() {}

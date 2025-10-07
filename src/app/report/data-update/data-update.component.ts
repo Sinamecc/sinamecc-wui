@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { I18nService } from '@app/i18n';
 import { finalize } from 'rxjs/operators';
 import { Report } from '../interfaces/report';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
 import { ReportService } from '../report.service';
 import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-data-update',
@@ -25,11 +25,10 @@ export class DataUpdateComponent implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: UntypedFormBuilder,
-    private i18nService: I18nService,
     private reportService: ReportService,
     public snackBar: SnackbarService,
   ) {
-    this.reportService.currentReport.subscribe((message) => {
+    this.reportService.currentReport.pipe(untilDestroyed(this)).subscribe((message) => {
       this.report = message;
     });
   }
@@ -106,14 +105,14 @@ export class DataUpdateComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.router.navigate(['/report'], { replaceUrl: true });
           this.snackBar.show('specificLabel.saveInformation');
         },
-        (error) => {
+        error: (error) => {
           this.error = error;
         },
-      );
+      });
   }
 }

@@ -53,17 +53,17 @@ export class UploadProposalComponent implements OnInit, OnChanges {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response: any) => {
+      .subscribe({
+        next: (response: any) => {
           this.router.navigate([this.nextRoute], { replaceUrl: true });
           this.snackBar.show('Sucessfully submitted form');
           log.debug(`${response.statusCode} status code received from form`);
         },
-        (error: any) => {
+        error: (error: any) => {
           log.debug(`Upload Proposal error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 
   private createForm() {

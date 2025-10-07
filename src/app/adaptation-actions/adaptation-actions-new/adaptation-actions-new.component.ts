@@ -14,6 +14,7 @@ import { PermissionService } from '@app/@core/permissions.service';
 import { States } from '@app/@shared/next-state';
 import { SustainableDevelopmentComponent } from '@app/@shared/form/sustainable-development/sustainable-development.component';
 import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-adaptation-actions-new',
@@ -75,7 +76,7 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
       this.loading = true;
       this.loadAdaptationActions(id);
       this.assistantOpen = false;
-      this.route.queryParams.subscribe((params) => {
+      this.route.queryParams.pipe(untilDestroyed(this)).subscribe((params) => {
         if (params['state']) {
           this.state = params['state'] as States;
         }

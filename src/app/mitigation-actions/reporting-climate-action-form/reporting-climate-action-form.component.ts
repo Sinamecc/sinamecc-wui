@@ -12,6 +12,7 @@ import { MAFile } from '../mitigation-action-file-upload/file-upload';
 import { States } from '@app/@shared/next-state';
 import { PermissionService } from '@app/@core/permissions.service';
 import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-reporting-climate-action-form',
@@ -54,7 +55,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
     private datePipe: DatePipe,
     private router: Router,
   ) {
-    this.service.currentMitigationAction.subscribe((message) => {
+    this.service.currentMitigationAction.pipe(untilDestroyed(this)).subscribe((message) => {
       this.mitigationAction = message;
     });
     this.isUpdating = this.action === 'update';
@@ -64,14 +65,14 @@ export class ReportingClimateActionFormComponent implements OnInit {
     if (!this.isUpdating) {
       this.snackBar.show('mitigationAction.mesage1', [], undefined, 'Cerrar');
     }
-    this.service.currentMitigationAction.subscribe((message) => {
+    this.service.currentMitigationAction.pipe(untilDestroyed(this)).subscribe((message) => {
       this.mitigationAction = message;
       this.state = this.mitigationAction?.fsm_state.state as States;
       this.buildForm();
       this.files = this.getFiles();
       const includeImpactControl = this.form.get(['formArray', 3, 'includeImpactInfoCtrl']);
       if (includeImpactControl) {
-        includeImpactControl.valueChanges.subscribe((value) => {
+        includeImpactControl.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
           this.includeImpactInfo = value;
           this.wantsImpactEval.emit(value);
         });
@@ -87,14 +88,14 @@ export class ReportingClimateActionFormComponent implements OnInit {
     if (this.mitigationAction) {
       if (this.mitigationAction.id) {
         const code = this.mitigationAction.id;
-        this.service.getMitigationActionIndicators(code).subscribe(
-          (context) => {
+        this.service.getMitigationActionIndicators(code).subscribe({
+          next: (context) => {
             this.indicator = context;
           },
-          (error) => {
+          error: (error) => {
             this.indicator = [];
           },
-        );
+        });
       }
     }
   }

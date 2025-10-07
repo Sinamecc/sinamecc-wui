@@ -1,13 +1,11 @@
-import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
-import { Logger } from '@core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Logger, untilDestroyed } from '@core';
 import { environment } from '@env/environment';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { GeographicLevel } from '@app/ppcn/ppcn-new-form-data';
-import { Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
 import { PpcnService } from '@app/ppcn/ppcn.service';
-import { TranslateService } from '@ngx-translate/core';
 import { finalize, tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -32,11 +30,9 @@ export class PpcnLevelComponent implements OnInit {
   isLoading = false;
 
   constructor(
-    private router: Router,
     private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private service: PpcnService,
-    private translateService: TranslateService,
     public snackBar: MatSnackBar,
   ) {
     this.formData = new FormData();
@@ -44,7 +40,7 @@ export class PpcnLevelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.service.currentLevelId.subscribe((levelId) => (this.levelId = levelId));
+    this.service.currentLevelId.pipe(untilDestroyed(this)).subscribe((levelId) => (this.levelId = levelId));
   }
 
   private createForm() {

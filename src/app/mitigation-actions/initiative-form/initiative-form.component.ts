@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Input, EventEmitter, Output } from '@angu
 import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl, UntypedFormArray } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
-import { Logger } from '@core';
+import { Logger, untilDestroyed } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { lastValueFrom, Observable } from 'rxjs';
 import { MitigationActionNewFormData, InitiativeType } from '@app/mitigation-actions/mitigation-action-new-form-data';
@@ -142,7 +142,7 @@ export class InitiativeFormComponent implements OnInit {
 
   ngOnInit() {
     if (this.isUpdating) {
-      this.service.currentMitigationAction.subscribe((message) => {
+      this.service.currentMitigationAction.pipe(untilDestroyed(this)).subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
@@ -206,15 +206,17 @@ export class InitiativeFormComponent implements OnInit {
     const deploymentCompletionIdCtrl = this.form.controls['formArray']['controls'][2].get('deploymentCompletionIdCtrl');
 
     if (deploymentCompletionIdCtrl) {
-      this.deploymentCompletionSubscription = deploymentCompletionIdCtrl.valueChanges.subscribe((value: string) => {
-        const parentGroup = this.form.controls['formArray']['controls'][2];
+      this.deploymentCompletionSubscription = deploymentCompletionIdCtrl.valueChanges
+        .pipe(untilDestroyed(this))
+        .subscribe((value: string) => {
+          const parentGroup = this.form.controls['formArray']['controls'][2];
 
-        if (value === '1') {
-          parentGroup.get('deploymentCompletionOtherCtrl')?.setValue('');
-        } else if (value === '2') {
-          parentGroup.get('deploymentCompletionDateCtrl')?.setValue('');
-        }
-      });
+          if (value === '1') {
+            parentGroup.get('deploymentCompletionOtherCtrl')?.setValue('');
+          } else if (value === '2') {
+            parentGroup.get('deploymentCompletionDateCtrl')?.setValue('');
+          }
+        });
     }
   }
 

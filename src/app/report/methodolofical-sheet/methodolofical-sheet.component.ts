@@ -9,6 +9,7 @@ import { ReportDataCatalog } from '../interfaces/report-data';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
 import { ReportService } from '../report.service';
 import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-methodolofical-sheet',
@@ -33,7 +34,7 @@ export class MethodoloficalSheetComponent implements OnInit {
     public snackBar: SnackbarService,
     private datePipe: DatePipe,
   ) {
-    this.reportService.currentReport.subscribe((message) => {
+    this.reportService.currentReport.pipe(untilDestroyed(this)).subscribe((message) => {
       this.report = message;
     });
   }
@@ -71,15 +72,15 @@ export class MethodoloficalSheetComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.snackBar.show('specificLabel.saveInformation');
           this.mainStepper.next();
         },
-        (error) => {
+        error: (error) => {
           this.error = error;
         },
-      );
+      });
   }
 
   private buildForm() {

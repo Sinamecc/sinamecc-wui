@@ -4,6 +4,7 @@ import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } fro
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-adaptation-actions-indicators',
@@ -39,7 +40,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     private datePipe: DatePipe,
     private service: AdaptationActionService,
   ) {
-    this.service.currentAdaptationActionSource.subscribe((message) => {
+    this.service.currentAdaptationActionSource.pipe(untilDestroyed(this)).subscribe((message) => {
       this.adaptationAction = message;
       if (
         this.adaptationAction &&
@@ -74,7 +75,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     const group = this.formArray?.get([3]);
     const sameContactCtrl = group?.get('sameContactCtrl');
 
-    sameContactCtrl?.valueChanges.subscribe((value: boolean) => {
+    sameContactCtrl?.valueChanges.pipe(untilDestroyed(this)).subscribe((value: boolean) => {
       const fieldsToUpdate = [
         'adaptationActionIndicatorContactNameCtrl',
         'adaptationActionIndicatorContactInstitutionCtrl',

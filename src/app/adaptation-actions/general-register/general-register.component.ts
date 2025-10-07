@@ -129,39 +129,32 @@ export class GeneralRegisterComponent implements OnInit {
     };
 
     if (this.id) {
-      this.service.updateNewAdaptationAction(payload, this.id).subscribe(
-        (res) => {
+      this.service.updateNewAdaptationAction(payload, this.id).subscribe({
+        next: (res) => {
           payload.id = this.id;
           this.service.updateCurrentAdaptationAction(payload);
           this.snackBar.show('specificLabel.saveInformation');
           this.onComplete.emit(true);
           this.mainStepper.next();
         },
-        (error) => {
+        error: (error) => {
           this.snackBar.show('Error al crear el formulario, intentelo de nuevo más tarde');
         },
-      );
+      });
     } else {
-      this.service.createNewAdaptationAction(payload).subscribe(
-        (res) => {
+      this.service.createNewAdaptationAction(payload).subscribe({
+        next: (res) => {
           payload.id = res.body.id;
           this.service.updateCurrentAdaptationAction(payload);
           this.snackBar.show('specificLabel.saveInformation');
           this.onComplete.emit(true);
           this.mainStepper.next();
         },
-        (error) => {
+        error: (error) => {
           this.snackBar.show('Error al crear el formulario, intentelo de nuevo más tarde');
         },
-      );
+      });
     }
-
-    /*
-		this.service.createNewAdaptationAction(payload).subscribe(_ => {
-			this.openSnackBar("Formulario creado correctamente", "");
-			this.mainStepper.next();
-		});
-		*/
   }
 
   buildPayload() {

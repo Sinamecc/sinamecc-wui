@@ -79,17 +79,17 @@ export class AdminNewComponent implements OnInit {
 
   ngOnInit() {
     this.roles$ = this.loadRoles();
-    this.roles$.subscribe(
-      (roles: Role[]) => {
+    this.roles$.subscribe({
+      next: (roles: Role[]) => {
         const rolesList = roles;
         this.roles = rolesList;
         this.createForm(rolesList);
         this.setData(rolesList);
       },
-      (err) => {
+      error: (err) => {
         this.snackBar.show('Error loading form information');
       },
-    );
+    });
   }
 
   setData(rolesList: Array<Role>) {
@@ -175,8 +175,8 @@ export class AdminNewComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response: Response) => {
+      .subscribe({
+        next: (response: Response) => {
           this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from form`);
 
@@ -189,11 +189,11 @@ export class AdminNewComponent implements OnInit {
           // this.submitUserDetail('permissions',this.perm.listOfPermissions)
           // this.submitUserDetail('groups',this.group.listOfGroups)
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Create user error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 
   editForm() {
@@ -213,8 +213,8 @@ export class AdminNewComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from form`);
 
@@ -224,11 +224,11 @@ export class AdminNewComponent implements OnInit {
           this.submitDeleteGroup(this.groupEdit.getRemoveGroups());
           this.dialogRef.close();
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Create user error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 
   submitRoles(id: string, selectedRoles: Array<string>) {
@@ -236,13 +236,13 @@ export class AdminNewComponent implements OnInit {
       userId: id,
       roles: selectedRoles,
     };
-    return this.adminService.assignRoles(context).subscribe(
-      (_: any) => () => {},
-      (err: any) => {
+    return this.adminService.assignRoles(context).subscribe({
+      next: (_: any) => () => {},
+      error: (err: any) => {
         log.debug(`Create user error: ${err}`);
         this.error = err;
       },
-    );
+    });
   }
 
   submit() {
@@ -267,17 +267,17 @@ export class AdminNewComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response: any) => {
+      .subscribe({
+        next: (response: any) => {
           this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from form`);
           this.router.navigate([`/home`], { replaceUrl: true });
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Create user image error: ${error.error}`);
           this.error = error.error;
         },
-      );
+      });
   }
 
   submitDeleteGroup(list: any[]) {
@@ -296,17 +296,17 @@ export class AdminNewComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response: any) => {
+      .subscribe({
+        next: (response: any) => {
           this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from delete groups `);
           this.router.navigate([`/home`], { replaceUrl: true });
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Delete groups  error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 
   submitDeletePermission(list: any[]) {
@@ -325,16 +325,16 @@ export class AdminNewComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response: any) => {
+      .subscribe({
+        next: (response: any) => {
           this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from delete permissions `);
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Delete permissions  error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 
   submitUserDetail(type: string, list: any[]) {
@@ -354,17 +354,17 @@ export class AdminNewComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response: any) => {
+      .subscribe({
+        next: (response: any) => {
           this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from create user`);
           this.router.navigate([`/home`], { replaceUrl: true });
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Create user `.concat(` error: ${error}`));
           this.error = error;
         },
-      );
+      });
   }
 
   private createForm(roles: Array<Role>) {

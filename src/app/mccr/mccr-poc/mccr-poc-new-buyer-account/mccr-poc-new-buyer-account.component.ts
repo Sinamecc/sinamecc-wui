@@ -46,16 +46,16 @@ export class MccrPocNewBuyerAccountComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response: any) => {
+      .subscribe({
+        next: (response: any) => {
           this.snackBar.show('sucessfullySubmittedForm');
           this.createDisable = true;
           this.account_number = response.account_number;
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 }

@@ -44,19 +44,19 @@ export class MccrPocAddDeveloperComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           this.router.navigate([`/mccr/poc/detail/${this.id}`], {
             replaceUrl: true,
           });
           this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from form`);
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Mccr Registry File error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 
   back() {

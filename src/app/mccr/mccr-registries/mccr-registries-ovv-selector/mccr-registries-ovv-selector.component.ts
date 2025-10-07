@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Logger } from '@core';
+import { Logger, untilDestroyed } from '@core';
 import { Ovv } from '@app/mccr/mccr-registries/mccr-registries-ovv-selector/ovv';
 import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
@@ -35,7 +35,7 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.service.currentMccrRegistry.subscribe((message) => (this.mccrRegistry = message));
+    this.service.currentMccrRegistry.pipe(untilDestroyed(this)).subscribe((message) => (this.mccrRegistry = message));
     this.service
       .getOvvs()
       .pipe(
@@ -58,18 +58,18 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           // :id/versions
           this.router.navigate([`mccr/registries`], { replaceUrl: true });
           this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from form`);
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Report File error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 
   private createForm() {

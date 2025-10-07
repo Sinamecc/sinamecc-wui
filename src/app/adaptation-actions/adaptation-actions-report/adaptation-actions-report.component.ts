@@ -20,6 +20,7 @@ import {
 import { AAType, Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
 import { firstValueFrom } from 'rxjs';
 import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-adaptation-actions-report',
@@ -81,7 +82,7 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.service.currentAdaptationActionSource.subscribe((message) => {
+    this.service.currentAdaptationActionSource.pipe(untilDestroyed(this)).subscribe((message) => {
       this.adaptationAction = message;
       if (this.adaptationAction) {
         const type = this.getType(this.adaptationAction);
@@ -250,47 +251,47 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   loadODS() {
-    this.service.loadODS().subscribe(
-      (ods) => {
+    this.service.loadODS().subscribe({
+      next: (ods) => {
         this.ods = ods;
       },
-      (error) => {
+      error: (error) => {
         this.ods = [];
       },
-    );
+    });
   }
 
   loadTopics(index = 0) {
-    this.service.loadTopics().subscribe(
-      (topics) => {
+    this.service.loadTopics().subscribe({
+      next: (topics) => {
         this.topics[index] = topics;
       },
-      (error) => {
+      error: (error) => {
         this.topics = [];
       },
-    );
+    });
   }
 
   loadSubTopics() {
-    this.service.loadSubTopics().subscribe(
-      (subTopics) => {
+    this.service.loadSubTopics().subscribe({
+      next: (subTopics) => {
         this.subTopics = subTopics;
       },
-      (error) => {
+      error: (error) => {
         this.subTopics = [];
       },
-    );
+    });
   }
 
   loadSubTopic(id: string) {
-    this.service.loadSubTopics(id).subscribe(
-      (subTopics) => {
+    this.service.loadSubTopics(id).subscribe({
+      next: (subTopics) => {
         this.subTopics = subTopics;
       },
-      (error) => {
+      error: (error) => {
         this.subTopics = [];
       },
-    );
+    });
   }
 
   loadActivities(id: string, index: number) {
@@ -354,14 +355,14 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   changeSubTopics(idTopic: string, index: number) {
-    this.service.loadSubTopics(idTopic).subscribe(
-      (subTopics) => {
+    this.service.loadSubTopics(idTopic).subscribe({
+      next: (subTopics) => {
         this.subTopicsToShow[index] = subTopics;
       },
-      (error) => {
+      error: (error) => {
         this.subTopics = [];
       },
-    );
+    });
   }
 
   buildRegisterForm() {
@@ -469,12 +470,12 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   loadBenefitedPopulation() {
-    this.service.loadBenefitedPopulation().subscribe(
-      (response) => (this.benefiedPopulation = response),
-      (error) => {
+    this.service.loadBenefitedPopulation().subscribe({
+      next: (response) => (this.benefiedPopulation = response),
+      error: (error) => {
         this.benefiedPopulation = [];
       },
-    );
+    });
   }
 
   loadProvinceSByCantonSelected(cantons: Canton[]) {
@@ -631,8 +632,8 @@ export class AdaptationActionsReportComponent implements OnInit {
   submitForm() {
     const payload: AdaptationAction = this.buildPayload();
 
-    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
-      (res) => {
+    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe({
+      next: (res) => {
         this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
         let type = this.getType(res.body);
         this.snackBar.show('specificLabel.saveInformation');
@@ -640,10 +641,10 @@ export class AdaptationActionsReportComponent implements OnInit {
         this.onTypeSet.emit(type);
         this.mainStepper.next();
       },
-      (error) => {
+      error: (error) => {
         this.snackBar.show('Error al crear el formulario, intentelo de nuevo más tarde');
       },
-    );
+    });
   }
   private clean(value: any): any {
     return value === '' ? null : value;

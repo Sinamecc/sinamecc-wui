@@ -46,15 +46,15 @@ export class AdaptationActionReviewComponent implements OnInit {
     this.service
       .loadOneAdaptationActions(this.id)
       .pipe(finalize(() => (this.isLoading = false)))
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           this.adaptationAction = response;
           this.statuses = this.adaptationAction.next_state;
         },
-        (error) => {
+        error: (error) => {
           console.error(error);
         },
-      );
+      });
   }
 
   onSubmission(context: any) {

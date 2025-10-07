@@ -89,8 +89,8 @@ export class AdaptationActionsViewComponent implements OnInit {
       this.service
         .loadOneAdaptationActions(this.id)
         .pipe(finalize(() => (this.loading = false)))
-        .subscribe(
-          (response) => {
+        .subscribe({
+          next: (response) => {
             this.adaptationAction = response;
             if (this.adaptationAction && this.adaptationAction.indicator_list.length) {
               this.adaptationAction.indicator_list.forEach((indicator: any) => {
@@ -106,10 +106,10 @@ export class AdaptationActionsViewComponent implements OnInit {
               });
             }
           },
-          (error) => {
+          error: (error) => {
             console.error(error);
           },
-        );
+        });
     }
   }
 

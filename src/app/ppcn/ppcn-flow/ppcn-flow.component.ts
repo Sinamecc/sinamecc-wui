@@ -5,6 +5,7 @@ import { DownloadProposalComponent } from '@shared/download-proposal/download-pr
 import { PpcnUploadComponent } from '@app/ppcn/ppcn-upload/ppcn-upload.component';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { PpcnService } from '@app/ppcn/ppcn.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-ppcn-flow',
@@ -38,7 +39,7 @@ export class PpcnFlowComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.service.currentLevelId.subscribe((levelId: string) => (this.levelId = levelId));
+    this.service.currentLevelId.pipe(untilDestroyed(this)).subscribe((levelId: string) => (this.levelId = levelId));
   }
 
   createForm() {

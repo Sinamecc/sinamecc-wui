@@ -126,17 +126,17 @@ export class PpcnUploadComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           this.router.navigate(['/ppcn/registries'], { replaceUrl: true });
           this.snackBar.show('Sucessfully submitted file');
           log.debug(`${response.statusCode} status code received from form`);
         },
-        (error) => {
+        error: (error) => {
           log.debug(`PPCN File error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 
   public addFile(): void {
