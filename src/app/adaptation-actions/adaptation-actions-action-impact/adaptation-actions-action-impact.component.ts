@@ -74,6 +74,8 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {}
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['type'] && this.form) {
       this.setValidators(this.typeStr !== AAType.A);

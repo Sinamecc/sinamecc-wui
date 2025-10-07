@@ -90,6 +90,8 @@ export class PpcnNewComponent implements OnInit, DoCheck {
     }
   }
 
+  ngOnDestroy() {}
+
   getEditPpcn(id: string) {
     this.service.getPpcn(id, this.i18nService.language.split('-')[0]).subscribe((response: Ppcn) => {
       this.ppcnAutoSaved = response;

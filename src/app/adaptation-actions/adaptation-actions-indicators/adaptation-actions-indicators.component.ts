@@ -57,6 +57,8 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     this.changeContactValidators();
   }
 
+  ngOnDestroy() {}
+
   get formArray(): AbstractControl | null {
     return this.form.get('formArray');
   }

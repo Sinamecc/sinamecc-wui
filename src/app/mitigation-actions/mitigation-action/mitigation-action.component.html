@@ -402,22 +402,12 @@
           <mat-divider></mat-divider>
           <br />
           <div class="flex flex-col justify-start items-start" [style.padding.px]="'10'">
-            <strong translate>mitigationAction.standardizedCalculationMethodologyUsed</strong>
-            <h3 class="mat-h3" translate>{{ findQuestion('Q1', true) }}</h3>
-            <strong translate>general.detail</strong>
-            <h3 class="mat-h3">{{ findQuestion('Q1') }}</h3>
-            <strong translate>mitigationAction.calculationsDocumented</strong>
-            <h3 class="mat-h3" translate>{{ findQuestion('Q2', true) }}</h3>
-            <strong translate>general.detail</strong>
-            <h3 class="mat-h3">{{ findQuestion('Q2') }}</h3>
-            <strong translate>mitigationAction.emissionFactorsUsedCalculationDocumented</strong>
-            <h3 class="mat-h3" translate>{{ findQuestion('Q3', true) }}</h3>
-            <strong translate>general.detail</strong>
-            <h3 class="mat-h3">{{ findQuestion('Q3') }}</h3>
-            <strong translate>mitigationAction.assumptionsDocumented</strong>
-            <h3 class="mat-h3" translate>{{ findQuestion('Q4', true) }}</h3>
-            <strong translate>general.detail</strong>
-            <h3 class="mat-h3">{{ findQuestion('Q4') }}</h3>
+            <div *ngFor="let q of questionsToDisplay">
+              <strong translate>{{ mitigationLabels[q.code] }}</strong>
+              <h3 class="mat-h3" translate>{{ q.checkText }}</h3>
+              <strong translate>general.detail</strong>
+              <h3 class="mat-h3">{{ q.detailText }}</h3>
+            </div>
           </div>
 
           <strong translate>mitigationAction.marketParticipation</strong>

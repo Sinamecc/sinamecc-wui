@@ -102,6 +102,8 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
     this.openStartMessages();
   }
 
+  ngOnDestroy() {}
+
   onComplete(key: string, completed: boolean) {
     this.completed = {
       ...this.completed,

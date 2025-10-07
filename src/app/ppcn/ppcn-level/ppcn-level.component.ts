@@ -43,6 +43,8 @@ export class PpcnLevelComponent implements OnInit {
     this.service.currentLevelId.pipe(untilDestroyed(this)).subscribe((levelId) => (this.levelId = levelId));
   }
 
+  ngOnDestroy() {}
+
   private createForm() {
     this.form = this.formBuilder.group({
       geographicCtrl: ['', Validators.required],

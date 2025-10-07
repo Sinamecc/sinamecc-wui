@@ -41,6 +41,8 @@ export class DataUpdateComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {}
+
   get formArray(): AbstractControl | null {
     return this.reportForm.get('formArray');
   }

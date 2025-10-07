@@ -118,6 +118,8 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     this.isLoading = false;
   }
 
+  ngOnDestroy() {}
+
   createForm() {
     this.mainGroup = this._formBuilder.group({
       formArray: this._formBuilder.array([

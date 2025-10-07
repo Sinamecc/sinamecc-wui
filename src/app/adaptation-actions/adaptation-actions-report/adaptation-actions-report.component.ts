@@ -113,6 +113,8 @@ export class AdaptationActionsReportComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {}
+
   get formArray(): AbstractControl | null {
     return this.form.get('formArray');
   }

@@ -95,6 +95,8 @@ export class KeyAspectsFormComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {}
+
   private createForm() {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([

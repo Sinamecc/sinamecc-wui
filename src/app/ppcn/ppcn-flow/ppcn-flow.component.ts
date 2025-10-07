@@ -42,6 +42,8 @@ export class PpcnFlowComponent implements OnInit {
     this.service.currentLevelId.pipe(untilDestroyed(this)).subscribe((levelId: string) => (this.levelId = levelId));
   }
 
+  ngOnDestroy() {}
+
   createForm() {
     this.mainGroup = this._formBuilder.group({
       formArray: this._formBuilder.array([this.frmGeographic, this.frmPpcn]),

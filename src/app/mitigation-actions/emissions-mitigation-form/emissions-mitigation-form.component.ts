@@ -82,6 +82,8 @@ export class EmissionsMitigationFormComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {}
+
   private createForm() {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([

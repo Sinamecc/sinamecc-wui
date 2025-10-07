@@ -44,6 +44,8 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     this.createForm();
   }
 
+  ngOnDestroy() {}
+
   get formArray(): AbstractControl | null {
     return this.form.get('formArray');
   }

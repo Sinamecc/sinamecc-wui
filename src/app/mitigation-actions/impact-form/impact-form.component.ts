@@ -112,6 +112,8 @@ export class ImpactFormComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {}
+
   private createForm() {
     this.form = this.formBuilder.group({
       formArray: this.buildForm(),

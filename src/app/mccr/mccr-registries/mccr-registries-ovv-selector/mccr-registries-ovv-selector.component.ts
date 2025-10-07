@@ -48,6 +48,8 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
       });
   }
 
+  ngOnDestroy() {}
+
   submitForm() {
     this.isLoading = true;
     this.service

@@ -65,6 +65,8 @@ export class BasicInformationFormComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {}
+
   setmitigationActionBudgeValuetCtrl(value: string, index: number) {
     this.mitigationActionBudgeValuetCtrl[index] = value;
   }

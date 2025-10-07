@@ -49,6 +49,8 @@ export class MethodoloficalSheetComponent implements OnInit {
     this.getCatalogs();
   }
 
+  ngOnDestroy() {}
+
   async getCatalogs() {
     this.catalogs = await this.reportService.getReportCatalogs().toPromise();
   }

@@ -81,6 +81,8 @@ export class PpcnService {
     );
   }
 
+  ngOnDestroy() {}
+
   updateCurrentGeographicalLevel(newGeographicalLevelId: string) {
     this.pccnLevelId.next(newGeographicalLevelId);
   }

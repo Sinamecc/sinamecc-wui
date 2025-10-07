@@ -80,6 +80,8 @@ export class ReportingClimateActionFormComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {}
+
   get formArray(): AbstractControl | null {
     return this.form.get('formArray');
   }
