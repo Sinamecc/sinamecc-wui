@@ -15,10 +15,9 @@ import { SubSector } from '../interfaces/subSector';
 import { Ovv } from '../interfaces/ovv';
 import { GasReportTableComponent } from '../gas-report-table/gas-report-table.component';
 import { ErrorReportingComponent } from '@shared/error-reporting/error-reporting.component';
-import { TranslateService } from '@ngx-translate/core';
 import { I18nService } from '@app/i18n';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 const log = new Logger('Report');
 @Component({
@@ -79,8 +78,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
     private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private service: PpcnService,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
   ) {
     this.createForm();
   }
@@ -196,11 +194,7 @@ export class PpcnNewComponent implements OnInit, DoCheck {
       .subscribe(
         (response) => {
           this.router.navigate(['/ppcn/registries'], { replaceUrl: true });
-          this.translateService.get('ppcn.ppcnUpdateSuccess').subscribe((res: string) => {
-            this.snackBar.open(res, `PPCN ID ${response.id} `, {
-              duration: 3000,
-            });
-          });
+          this.snackBar.show('ppcn.ppcnUpdateSuccess', [response.id, 'PPCN ID']);
 
           if (this.ppcnEdit.ppcn_files.length === 0) {
             this.router.navigate([`ppcn/${response.id}/upload/new`], {
@@ -246,20 +240,12 @@ export class PpcnNewComponent implements OnInit, DoCheck {
             this.savedPPCN = true;
           }
 
-          this.responseMessaage('ppcn.ppcnSave');
+          this.snackBar.show('ppcn.ppcnSave');
         },
         (error) => {
-          this.responseMessaage('ppcn.ppcnSaveError');
+          this.snackBar.show('ppcn.ppcnSaveError');
         },
       );
-  }
-
-  responseMessaage(message: string) {
-    this.translateService.get(message).subscribe((res: string) => {
-      this.snackBar.open(res, null, {
-        duration: 3000,
-      });
-    });
   }
 
   submitCreateForm(context: any) {

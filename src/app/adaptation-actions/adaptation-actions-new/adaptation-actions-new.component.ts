@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionsActionImpactComponent } from '../adaptation-actions-action-impact/adaptation-actions-action-impact.component';
 import { AdaptationActionsClimateMonitoringComponent } from '../adaptation-actions-climate-monitoring/adaptation-actions-climate-monitoring.component';
 import { AdaptationActionsFinancingComponent } from '../adaptation-actions-financing/adaptation-actions-financing.component';
@@ -10,11 +9,11 @@ import { AdaptationActionsReportComponent } from '../adaptation-actions-report/a
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { GeneralRegisterComponent } from '../general-register/general-register.component';
 import { AdaptationAction } from '../interfaces/adaptationAction';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AAType } from '../interfaces/catalogs';
 import { PermissionService } from '@app/@core/permissions.service';
 import { States } from '@app/@shared/next-state';
 import { SustainableDevelopmentComponent } from '@app/@shared/form/sustainable-development/sustainable-development.component';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 @Component({
   selector: 'app-adaptation-actions-new',
@@ -67,8 +66,7 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
     private cdRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     public service: AdaptationActionService,
-    public snackBar: MatSnackBar,
-    private translateService: TranslateService,
+    public snackBar: SnackbarService,
     public permissions: PermissionService,
   ) {
     const id = this.route.snapshot.paramMap.get('id');
@@ -167,8 +165,6 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
   }
 
   public openStartMessages() {
-    this.translateService.get('adaptationAction.mesage1').subscribe((res: string) => {
-      this.snackBar.open(res, 'Cerrar');
-    });
+    this.snackBar.show('adaptationAction.mesage1', [], undefined, 'Cerrar');
   }
 }

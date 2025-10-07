@@ -6,13 +6,12 @@ import { Observable } from 'rxjs';
 import { environment } from '@env/environment';
 import { Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
-import { TranslateService } from '@ngx-translate/core';
-import { CredentialsService } from '@app/auth';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { CredentialsService } from '@app/auth';
 
 export class MccrRegistriesDataSource extends DataSource<any> {
   id: number;
@@ -51,9 +50,8 @@ export class MccrRegistriesListComponent implements OnInit {
     private i18nService: I18nService,
     private service: MccrRegistriesService,
     private dialog: MatDialog,
-    private translateService: TranslateService,
     private credentialsService: CredentialsService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
   ) {}
 
   ngOnInit() {
@@ -70,11 +68,7 @@ export class MccrRegistriesListComponent implements OnInit {
       // here i need to refresh table
       this.isLoading = false;
       this.loadMCCRData();
-      this.translateService.get('Sucessfully deleted element').subscribe((res: string) => {
-        this.snackBar.open(res, null, {
-          duration: 3000,
-        });
-      });
+      this.snackBar.show('Sucessfully deleted element');
     });
   }
 

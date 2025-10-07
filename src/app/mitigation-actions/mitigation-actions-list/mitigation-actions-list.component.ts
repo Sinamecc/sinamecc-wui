@@ -6,15 +6,14 @@ import { Observable } from 'rxjs';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
-import { TranslateService } from '@ngx-translate/core';
 import { Logger } from '@app/@core';
 import { I18nService } from '@app/i18n';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { PermissionService } from '@app/@core/permissions.service';
 import { States } from '@app/@shared/next-state';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 const log = new Logger('Report');
 
@@ -60,8 +59,7 @@ export class MitigationActionsListComponent implements OnInit {
     private i18nService: I18nService,
     private service: MitigationActionsService,
     private dialog: MatDialog,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     public permissions: PermissionService,
   ) {}
 
@@ -137,9 +135,7 @@ export class MitigationActionsListComponent implements OnInit {
       // here i need to refresh table
       this.isLoading = false;
       this.loadMAData();
-      this.translateService.get('Sucessfully deleted element').subscribe((res: string) => {
-        this.snackBar.open(res, null, { duration: 3000 });
-      });
+      this.snackBar.show('Sucessfully deleted element');
     });
   }
 

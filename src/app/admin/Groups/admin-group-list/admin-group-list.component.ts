@@ -1,11 +1,10 @@
 import { Component, OnInit, Input, ViewChild, Optional, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 import { Groups } from '@app/admin/groups';
 import { GroupsData } from '@app/admin/groupsData';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-admin-group-list',
@@ -30,11 +29,10 @@ export class AdminGroupListComponent implements OnInit {
   }
   constructor(
     public dialog: MatDialog,
-    private snackBar: MatSnackBar,
     @Optional()
     @Inject(MAT_DIALOG_DATA)
     public data: GroupsData,
-    private translateService: TranslateService,
+    private snackbar: SnackbarService,
   ) {
     if (this.data) {
       this.componentType = data.componentType;
@@ -56,18 +54,14 @@ export class AdminGroupListComponent implements OnInit {
     this.listOfGroups.push(group);
     this.dataTable.splice(this.dataTable.indexOf(group), 1);
     this.dataSource = new MatTableDataSource<Groups>(this.dataTable);
-    this.translateService.get('admin.successfullyAdded').subscribe((res: string) => {
-      this.snackBar.open(`${group.name}  ${res}`, null, { duration: 3000 });
-    });
+    this.snackbar.show('admin.successfullyAdded', [group.name]);
   }
 
   removePermissions(group: Groups) {
     this.removeTempGroupsList.splice(this.removeTempGroupsList.indexOf(group), 1);
     this.dataSource = new MatTableDataSource<Groups>(this.removeTempGroupsList);
     this.removeGroupsList.push(group);
-    this.translateService.get('admin.properlyRemoved').subscribe((res: string) => {
-      this.snackBar.open(`${group.name}  ${res}`, null, { duration: 3000 });
-    });
+    this.snackbar.show('admin.properlyRemoved', [group.name]);
   }
 
   close() {

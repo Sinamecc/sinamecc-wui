@@ -2,10 +2,9 @@ import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 @Component({
   selector: 'app-general-register',
@@ -24,11 +23,10 @@ export class GeneralRegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private service: AdaptationActionService,
     private datePipe: DatePipe,
     private route: ActivatedRoute,
-    private translateService: TranslateService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.createForm();
@@ -108,12 +106,6 @@ export class GeneralRegisterComponent implements OnInit {
     ]);
   }
 
-  openSnackBar(message: string, action: string = '') {
-    this.snackBar.open(message, action, {
-      duration: this.durationInSeconds * 1000,
-    });
-  }
-
   buildRegisterForm() {
     return this.formBuilder.array([
       this.formBuilder.group({
@@ -141,14 +133,12 @@ export class GeneralRegisterComponent implements OnInit {
         (res) => {
           payload.id = this.id;
           this.service.updateCurrentAdaptationAction(payload);
+          this.snackBar.show('specificLabel.saveInformation');
           this.onComplete.emit(true);
-          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-            this.mainStepper.next();
-          });
+          this.mainStepper.next();
         },
         (error) => {
-          this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+          this.snackBar.show('Error al crear el formulario, intentelo de nuevo más tarde');
         },
       );
     } else {
@@ -156,14 +146,12 @@ export class GeneralRegisterComponent implements OnInit {
         (res) => {
           payload.id = res.body.id;
           this.service.updateCurrentAdaptationAction(payload);
-          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-            this.onComplete.emit(true);
-            this.mainStepper.next();
-          });
+          this.snackBar.show('specificLabel.saveInformation');
+          this.onComplete.emit(true);
+          this.mainStepper.next();
         },
         (error) => {
-          this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+          this.snackBar.show('Error al crear el formulario, intentelo de nuevo más tarde');
         },
       );
     }

@@ -4,15 +4,14 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl } fro
 
 import { I18nService } from '@app/i18n';
 import { environment } from '@env/environment';
-import { TranslateService } from '@ngx-translate/core';
 
 import { ReportService } from '@app/report/report.service';
 import { ReportDataCatalog } from '../interfaces/report-data';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
 import { Report } from '../interfaces/report';
 import { finalize } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileUpload } from '@app/@shared/upload-button/file-upload';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 @Component({
   selector: 'app-report-form-data',
@@ -41,8 +40,7 @@ export class ReportFormDataComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private reportService: ReportService,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar,
+    private snackBar: SnackbarService,
   ) {
     this.createForm();
     this.getCatalogs();
@@ -253,10 +251,8 @@ export class ReportFormDataComponent implements OnInit {
       this.submitFile(id, this.baseLineReportFile);
     }
 
-    this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-      this.snackBar.open(res, null, { duration: 3000 });
-      this.mainStepper.next();
-    });
+    this.snackBar.show('specificLabel.saveInformation');
+    this.mainStepper.next();
   }
 
   async submitFile(id: string, file: FileUpload) {

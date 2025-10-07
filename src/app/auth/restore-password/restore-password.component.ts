@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from '../authentication.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 @Component({
   selector: 'app-restore-password',
@@ -20,9 +19,8 @@ export class RestorePasswordComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
-    private _snackBar: MatSnackBar,
+    private _snackBar: SnackbarService,
     private router: Router,
-    private translateService: TranslateService,
   ) {
     if (this.route.snapshot.queryParams['code'] && this.route.snapshot.queryParams['token']) {
       this.token = this.route.snapshot.queryParams['token'];
@@ -39,16 +37,11 @@ export class RestorePasswordComponent implements OnInit {
 
     this.authenticationService.restorePassword(context).subscribe(
       (response: any) => {
+        this._snackBar.show('Password is reset successfully', [], 1000);
         this.router.navigate(['/login'], { replaceUrl: true });
-
-        this.translateService.get('Password is reset successfully').subscribe((res: string) => {
-          this._snackBar.open(res, null, { duration: 1000 });
-        });
       },
       (error: any) => {
-        this.translateService.get('Error processing the request, please try again later').subscribe((res: string) => {
-          this._snackBar.open(res, null, { duration: 2000 });
-        });
+        this._snackBar.show('Error processing the request, please try again later', [], 1000);
       },
     );
   }

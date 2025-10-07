@@ -8,7 +8,6 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import {
   AdaptationAction,
@@ -19,8 +18,8 @@ import {
   Province,
 } from '../interfaces/adaptationAction';
 import { AAType, Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { firstValueFrom } from 'rxjs';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 @Component({
   selector: 'app-adaptation-actions-report',
@@ -74,10 +73,9 @@ export class AdaptationActionsReportComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private datePipe: DatePipe,
     private service: AdaptationActionService,
-    private translateService: TranslateService,
   ) {
     this.createForm();
   }
@@ -366,12 +364,6 @@ export class AdaptationActionsReportComponent implements OnInit {
     );
   }
 
-  openSnackBar(message: string, action: string = '') {
-    this.snackBar.open(message, action, {
-      duration: this.durationInSeconds * 1000,
-    });
-  }
-
   buildRegisterForm() {
     return this.formBuilder.array([
       this.formBuilder.group({
@@ -643,15 +635,13 @@ export class AdaptationActionsReportComponent implements OnInit {
       (res) => {
         this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
         let type = this.getType(res.body);
-        this.onTypeSet.emit(type);
+        this.snackBar.show('specificLabel.saveInformation');
         this.onComplete.emit(true);
-        this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-          this.snackBar.open(res, null, { duration: 3000 });
-          this.mainStepper.next();
-        });
+        this.onTypeSet.emit(type);
+        this.mainStepper.next();
       },
       (error) => {
-        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+        this.snackBar.show('Error al crear el formulario, intentelo de nuevo más tarde');
       },
     );
   }

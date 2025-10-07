@@ -3,13 +3,12 @@ import { UntypedFormGroup, UntypedFormArray, UntypedFormBuilder, Validators } fr
 import { environment } from '@env/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Logger } from '@core';
-import { TranslateService } from '@ngx-translate/core';
 import { Ppcn } from '@app/ppcn/ppcn_registry';
 import { Observable } from 'rxjs';
 import { PpcnService } from '@app/ppcn/ppcn.service';
 import { tap, finalize } from 'rxjs/operators';
 import { I18nService } from '@app/i18n/i18n.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 const log = new Logger('Report');
 
 @Component({
@@ -106,9 +105,8 @@ export class PpcnUploadComponent implements OnInit {
     private router: Router,
     private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
-    private translateService: TranslateService,
     private ppcnService: PpcnService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private route: ActivatedRoute,
   ) {
     this.createForm();
@@ -131,9 +129,7 @@ export class PpcnUploadComponent implements OnInit {
       .subscribe(
         (response) => {
           this.router.navigate(['/ppcn/registries'], { replaceUrl: true });
-          this.translateService.get('Sucessfully submitted file').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('Sucessfully submitted file');
           log.debug(`${response.statusCode} status code received from form`);
         },
         (error) => {

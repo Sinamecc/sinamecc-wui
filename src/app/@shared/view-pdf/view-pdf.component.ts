@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { ViewPdfService } from './view-pdf.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '../snackbar-service/snackbar.service';
 
 @Component({
   selector: 'app-view-pdf',
@@ -21,8 +20,7 @@ export class ViewPdfComponent implements OnInit {
     private service: ViewPdfService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private _snackBar: MatSnackBar,
-    private translateService: TranslateService,
+    private snackbar: SnackbarService,
   ) {}
 
   ngOnInit() {
@@ -44,11 +42,7 @@ export class ViewPdfComponent implements OnInit {
 
       this.isLoading = false;
     } else {
-      this.translateService.get('general.errorLoadingFile').subscribe((res: string) => {
-        this._snackBar.open(res, null, {
-          duration: 2000,
-        });
-      });
+      this.snackbar.show('general.errorLoadingFile', [], 2000);
     }
   }
 }

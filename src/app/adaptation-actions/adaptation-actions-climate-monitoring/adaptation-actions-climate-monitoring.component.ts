@@ -1,13 +1,11 @@
-import { I } from '@angular/cdk/keycodes';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileUpload } from '@app/@shared/upload-button/file-upload';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 @Component({
   selector: 'app-adaptation-actions-climate-monitoring',
@@ -28,11 +26,10 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private datePipe: DatePipe,
     private service: AdaptationActionService,
     private router: Router,
-    private translateService: TranslateService,
   ) {
     this.service.currentAdaptationActionSource.subscribe((message) => {
       this.adaptationAction = message;
@@ -53,12 +50,6 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
   private createForm() {
     this.form = this.formBuilder.group({
       formArray: !this.edit ? this.buildRegisterForm() : this.buildUpdateRegisterForm(),
-    });
-  }
-
-  openSnackBar(message: string, action: string = '') {
-    this.snackBar.open(message, action, {
-      duration: this.durationInSeconds * 1000,
     });
   }
 
@@ -169,18 +160,16 @@ export class AdaptationActionsClimateMonitoringComponent implements OnInit {
     this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
       () => {
         if (isFinalStep) {
-          this.openSnackBar('Formulario creado correctamente', '');
+          this.snackBar.show('Formulario creado correctamente');
           this.router.navigate(['/adaptation/actions'], { replaceUrl: true });
         } else {
+          this.snackBar.show('specificLabel.saveInformation');
           this.onComplete.emit(true);
           this.mainStepper.next();
-          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
         }
       },
       () => {
-        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+        this.snackBar.show('Error al crear el formulario, intentelo de nuevo más tarde');
       },
     );
   }

@@ -10,7 +10,6 @@ import { Groups } from '../../groups';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { User } from '../../users';
 import { AdminEditPasswordDialogComponent } from '../../admin-edit-password-dialog/admin-edit-password-dialog.component';
 import { AdminPermissionsListEditComponent } from '../../Permissions/admin-permissions-list-edit/admin-permissions-list-edit.component';
@@ -20,9 +19,9 @@ import { Role } from '@app/admin/roles';
 import { pickBy, identity } from 'lodash';
 import { map } from 'rxjs/operators';
 import { Response } from './../../admin.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 const log = new Logger('CreateUser');
 
@@ -69,8 +68,7 @@ export class AdminNewComponent implements OnInit {
     private adminService: AdminService,
     private formBuilder: UntypedFormBuilder,
     private router: Router,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
   ) {
     this.name = '';
     this.lastName = '';
@@ -89,9 +87,7 @@ export class AdminNewComponent implements OnInit {
         this.setData(rolesList);
       },
       (err) => {
-        this.translateService.get('Error loading form information').subscribe((res: string) => {
-          this.snackBar.open(res, null, { duration: 3000 });
-        });
+        this.snackBar.show('Error loading form information');
       },
     );
   }
@@ -181,9 +177,7 @@ export class AdminNewComponent implements OnInit {
       )
       .subscribe(
         (response: Response) => {
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from form`);
 
           if (this.imageFile) {
@@ -221,9 +215,7 @@ export class AdminNewComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from form`);
 
           this.submitUserDetail('permissions', this.permEdit.newListOfUserpermission);
@@ -277,9 +269,7 @@ export class AdminNewComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from form`);
           this.router.navigate([`/home`], { replaceUrl: true });
         },
@@ -308,9 +298,7 @@ export class AdminNewComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from delete groups `);
           this.router.navigate([`/home`], { replaceUrl: true });
         },
@@ -339,9 +327,7 @@ export class AdminNewComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from delete permissions `);
         },
         (error) => {
@@ -370,9 +356,7 @@ export class AdminNewComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from create user`);
           this.router.navigate([`/home`], { replaceUrl: true });
         },

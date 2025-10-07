@@ -3,9 +3,8 @@ import { Logger } from '@core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MccrPocService } from '@app/mccr/mccr-poc/mccr-poc.service';
-import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 const log = new Logger('Report');
 
@@ -25,8 +24,7 @@ export class MccrPocAddPocComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private service: MccrPocService,
     private router: Router,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
   ) {
     this.createForm();
   }
@@ -46,9 +44,7 @@ export class MccrPocAddPocComponent implements OnInit {
       .subscribe(
         (response) => {
           this.router.navigate([`/mccr/poc/detail/${this.form.value.uccBatchCode}`], { replaceUrl: true });
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from form`);
         },
         (error) => {

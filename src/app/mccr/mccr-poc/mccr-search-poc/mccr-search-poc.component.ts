@@ -3,14 +3,13 @@ import { MccrPoc, VerifyResponse } from '@app/mccr/mccr-poc/mccr-poc';
 import { ActivatedRoute, Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
 import { MccrPocService } from '@app/mccr/mccr-poc/mccr-poc.service';
-import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 import { MccrPocNewDeveloperAccountComponent } from '@app/mccr/mccr-poc/mccr-poc-new-developer-account/mccr-poc-new-developer-account.component';
 import { MccrPocNewBuyerAccountComponent } from '@app/mccr/mccr-poc/mccr-poc-new-buyer-account/mccr-poc-new-buyer-account.component';
 import { UccVerifyDataComponent } from '../ucc-verify-data/ucc-verify-data.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 @Component({
   selector: 'app-mccr-search-poc',
@@ -30,8 +29,7 @@ export class MccrSearchPocComponent implements OnInit {
     private i18nService: I18nService,
     private service: MccrPocService,
     private dialog: MatDialog,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private route: ActivatedRoute,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -73,7 +71,7 @@ export class MccrSearchPocComponent implements OnInit {
           this.mccr_poc = response;
         },
         (error) => {
-          this.snackBar.open(error.error.message, null, { duration: 3000 });
+          this.snackBar.show(error.error.message);
         },
       );
   }
@@ -96,9 +94,7 @@ export class MccrSearchPocComponent implements OnInit {
           this.openVerifyDialog(response);
         },
         (error) => {
-          this.translateService.get('errorLabel.error400').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('errorLabel.error400');
         },
       );
   }
@@ -107,9 +103,7 @@ export class MccrSearchPocComponent implements OnInit {
     this.isLoading = true;
     this.service.cancelUcc(uuid).subscribe(() => {
       this.isLoading = false;
-      this.translateService.get('Sucessfully cancel element').subscribe((res: string) => {
-        this.snackBar.open(res, null, { duration: 3000 });
-      });
+      this.snackBar.show('Sucessfully cancel element');
     });
   }
 

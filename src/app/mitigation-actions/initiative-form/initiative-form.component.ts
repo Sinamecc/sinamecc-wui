@@ -4,15 +4,14 @@ import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom, Observable } from 'rxjs';
 import { MitigationActionNewFormData, InitiativeType } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { MAFileType, MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAFile } from '../mitigation-action-file-upload/file-upload';
 import { States } from '@app/@shared/next-state';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 const log = new Logger('MitigationAction');
 
@@ -105,8 +104,7 @@ export class InitiativeFormComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private service: MitigationActionsService,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private datePipe: DatePipe,
   ) {
     // this.formData = new FormData();
@@ -524,9 +522,7 @@ export class InitiativeFormComponent implements OnInit {
             this.state.emit(response.state as States);
           },
           (error) => {
-            this.translateService.get('Error submitting form').subscribe((res: string) => {
-              this.snackBar.open(res, null, { duration: 3000 });
-            });
+            this.snackBar.show('Error submitting form');
             log.debug(`New Mitigation Action Form error: ${error}`);
 
             this.errorComponent.parseErrors(error);
@@ -549,9 +545,7 @@ export class InitiativeFormComponent implements OnInit {
             await this.successSendForm(response);
           },
           (error) => {
-            this.translateService.get('Error submitting form').subscribe((res: string) => {
-              this.snackBar.open(res, null, { duration: 3000 });
-            });
+            this.snackBar.show('Error submitting form');
             log.debug(`New Mitigation Action Form error: ${error}`);
             this.errorComponent.parseErrors(error);
             this.error = error;
@@ -572,11 +566,8 @@ export class InitiativeFormComponent implements OnInit {
 
     await Promise.all(fileUploadPromises);
     this.id = response.id;
-
-    this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-      this.snackBar.open(res, null, { duration: 3000 });
-      this.stepper.next();
-    });
+    this.snackBar.show('specificLabel.saveInformation');
+    this.stepper.next();
     this.isLoading = false;
     this.wasSubmittedSuccessfully = true;
   }

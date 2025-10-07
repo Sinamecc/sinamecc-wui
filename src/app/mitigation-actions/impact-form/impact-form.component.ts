@@ -5,16 +5,15 @@ import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom, Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { DECIMAL_NUMBER_REGEX, MitigationAction, MAFileType, MAEntityType } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
 import { I18nService } from '@app/i18n';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAFile } from '../mitigation-action-file-upload/file-upload';
 import { States } from '@app/@shared/next-state';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 const log = new Logger('MitigationAction');
 
@@ -77,9 +76,8 @@ export class ImpactFormComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private service: MitigationActionsService,
-    private translateService: TranslateService,
     private router: Router,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private datePipe: DatePipe,
   ) {
     // this.formData = new FormData();
@@ -330,9 +328,7 @@ export class ImpactFormComponent implements OnInit {
             this.successSendForm(response.state);
           },
           (error) => {
-            this.translateService.get('Error submitting form').subscribe((res: string) => {
-              this.snackBar.open(res, null, { duration: 3000 });
-            });
+            this.snackBar.show('Error submitting form');
             log.debug(`New Mitigation Action Form error: ${error}`);
             this.error = error;
             this.errorComponent.parseErrors(error);
@@ -352,9 +348,7 @@ export class ImpactFormComponent implements OnInit {
       await this.uploadFiles();
     }
 
-    this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-      this.snackBar.open(res, null, { duration: 3000 });
-    });
+    this.snackBar.show('specificLabel.saveInformation');
 
     this.wasSubmittedSuccessfully = true;
     this.state.emit(state as States);

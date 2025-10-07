@@ -4,7 +4,6 @@ import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 import { ImpactEmission, MAFileType, MitigationAction } from '../mitigation-action';
@@ -13,9 +12,9 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as _moment from 'moment';
 import { ErrorReportingComponent } from '@shared';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAFile } from '../mitigation-action-file-upload/file-upload';
 import { States } from '@app/@shared/next-state';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -75,8 +74,7 @@ export class KeyAspectsFormComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private service: MitigationActionsService,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
   ) {
     // this.formData = new FormData();
     this.service.currentMitigationAction.subscribe((message) => (this.mitigationAction = message));
@@ -162,9 +160,7 @@ export class KeyAspectsFormComponent implements OnInit {
           await this.successSendForm(response.id);
         },
         (error) => {
-          this.translateService.get('Error submitting form').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('Error submitting form');
           log.debug(`New Mitigation Action Form error: ${error}`);
           this.errorComponent.parseErrors(error);
           this.error = error;
@@ -178,9 +174,7 @@ export class KeyAspectsFormComponent implements OnInit {
       await this.service.submitFiles(id, this.maFileType, this.newFiles);
     }
 
-    this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-      this.snackBar.open(res, null, { duration: 3000 });
-    });
+    this.snackBar.show('specificLabel.saveInformation');
     this.wasSubmittedSuccessfully = true;
     this.stepper.next();
   }
