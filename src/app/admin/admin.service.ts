@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Groups } from '@app/admin/groups';
 import { Observable } from 'rxjs';
-import { User } from '@app/admin/users';
+import { UserResponse } from '@app/admin/users';
 import { Role } from '@app/admin/roles';
 export interface Response {
   // Customize received credentials here
@@ -20,7 +20,12 @@ const routes = {
   submitUser: () => `/v1/users`,
   submitPermissions: (userName: string) => `/v1/users/${userName}/permission/`,
   submitGroups: (userName: string) => `/v1/users/${userName}/group/`,
-  users: () => `/v1/users`,
+  users: (params?: Record<string, number>) => {
+    const query = params
+      ? '?' + new URLSearchParams(Object.entries(params).map(([k, v]) => [k, String(v)])).toString()
+      : '';
+    return `/v1/users${query}`;
+  },
   user: (userName: string) => `/v1/users/${userName}`,
   editUser: (userId: string) => `/v1/users/${userId}`,
   submitImage: () => `/v1/users/1/profile_picture/`,
@@ -51,8 +56,8 @@ export class AdminService {
     return asyncResult;
   }
 
-  users(): Observable<User[]> {
-    return this.httpClient.get(routes.users(), {}).pipe(
+  users(params: { limit: number; offset: number }): Observable<UserResponse> {
+    return this.httpClient.get(routes.users(params), {}).pipe(
       map((body: any) => {
         return body;
       }),

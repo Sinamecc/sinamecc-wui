@@ -1,35 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { User } from '../../users';
+import { User, UserResponse } from '../../users';
 import { AdminService } from '../../admin.service';
 import { Role } from '../../roles';
-
 import { ComponentDialogComponent } from '@core/component-dialog/component-dialog.component';
 import { AdminUserDetailComponent } from '../admin-user-detail/admin-user-detail.component';
-import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-export class UsersDataSource extends DataSource<any> {
-  users: User[];
-  users$: Observable<User[]>;
-
-  constructor(private adminService: AdminService) {
-    super();
-  }
-
-  connect(): Observable<User[]> {
-    this.users$ = this.adminService.users();
-    this.users$.subscribe((ppcns) => {
-      this.users = ppcns;
-    });
-    return this.users$;
-  }
-  disconnect() {}
-}
 
 @Component({
   selector: 'app-admin-users',
@@ -43,6 +23,9 @@ export class AdminUsersComponent implements OnInit {
   fieldsToSearch: string[][] = [['username'], ['email']];
   roles: Role[];
   roles$: Observable<Role[]>;
+  totalItems = 0;
+  offset = 0;
+  limit = 5;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -54,6 +37,12 @@ export class AdminUsersComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loadUsers();
+  }
+
+  onPageChange(event: PageEvent) {
+    this.limit = event.pageSize;
+    this.offset = event.pageIndex * this.limit;
     this.loadUsers();
   }
 
@@ -91,13 +80,13 @@ export class AdminUsersComponent implements OnInit {
   }
 
   loadUsers() {
-    this.adminService.users().subscribe((users: User[]) => {
-      const usersList = users;
-      usersList.forEach((user: User) => {
-        user['joinedRoles'] = user.roles.map((role: any) => role.role_name).join(', ');
-      });
+    this.adminService.users({ limit: this.limit, offset: this.offset }).subscribe((response: UserResponse) => {
+      const usersList = response.users.map((user: User) => ({
+        ...user,
+        joinedRoles: user.roles.map((r: any) => r.role_name).join(', '),
+      }));
+      this.totalItems = response.total;
       this.dataSource = new MatTableDataSource<User>(usersList);
-      this.dataSource.paginator = this.paginator;
     });
   }
 

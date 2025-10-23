@@ -1,6 +1,11 @@
 import { Permissions } from './permissions';
 import { Groups } from './groups';
 
+export interface UserResponse {
+  users: User[];
+  total: number;
+}
+
 export interface User {
   first_name: string;
   last_name: string;
