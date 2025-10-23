@@ -167,7 +167,10 @@ export class AdminNewComponent implements OnInit {
     delete this.createUserForm.value.roles;
 
     this.adminService
-      .submitUser(this.createUserForm.value)
+      .submitUser({
+        ...this.createUserForm.value,
+        is_active: true,
+      })
       .pipe(
         map((body: any) => {
           const userId = body.body.id;
