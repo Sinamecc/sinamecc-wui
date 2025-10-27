@@ -212,6 +212,7 @@ export class AdminService {
     formData.append('email', context.email);
     formData.append('first_name', context.name);
     formData.append('last_name', context.lastName);
+    formData.append('is_active', context.is_active);
     formData.append('status', 'created');
 
     return this.httpClient.post(routes.users(), formData, {}).pipe(
