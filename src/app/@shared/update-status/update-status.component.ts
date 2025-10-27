@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 import { PpcnComponent } from '@app/ppcn/ppcn/ppcn.component';
 import { UpdateStatusService } from './update-status.service';
@@ -18,7 +17,7 @@ import { Logger } from '@core/logger.service';
 import { AdaptationActionsViewComponent } from '@app/adaptation-actions/adaptation-actions-view/adaptation-actions-view.component';
 import { ReportViewComponent } from '@app/report/report-view/report-view.component';
 import { MitigationActionComponent } from '@app/mitigation-actions/mitigation-action/mitigation-action.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '../snackbar-service/snackbar.service';
 
 const log = new Logger('UploadProposal');
 
@@ -50,9 +49,8 @@ export class UpdateStatusComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private formBuilder: UntypedFormBuilder,
-    private translateService: TranslateService,
     private service: UpdateStatusService,
     private resolver: ComponentFactoryResolver,
   ) {
@@ -128,19 +126,17 @@ export class UpdateStatusComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response: any) => {
+      .subscribe({
+        next: (response: any) => {
           this.router.navigate([this.nextRoute], { replaceUrl: true });
-          this.translateService.get('Sucessfully submitted form').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('Sucessfully submitted form');
           log.debug(`${response.statusCode} status code received from form`);
         },
-        (error: any) => {
+        error: (error: any) => {
           log.debug(`Upload Proposal error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 
   compareIds(id1: any, id2: any): boolean {

@@ -11,10 +11,11 @@ import { Router } from '@angular/router';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
 import { AAType, ODS, TemporalityImpact } from '../interfaces/catalogs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileUpload } from '@app/@shared/upload-button/file-upload';
 import { States } from '@app/@shared/next-state';
 import { PermissionService } from '@app/@core/permissions.service';
+import { untilDestroyed } from '@app/@core';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 @Component({
   selector: 'app-adaptation-actions-action-impact',
@@ -44,12 +45,12 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private service: AdaptationActionService,
     public permissions: PermissionService,
     private router: Router,
   ) {
-    this.service.currentAdaptationActionSource.subscribe((message) => {
+    this.service.currentAdaptationActionSource.pipe(untilDestroyed(this)).subscribe((message) => {
       this.adaptationAction = message;
       this.state = this.adaptationAction?.fsm_state?.state as States;
       if (!this.type) this.type = this.adaptationAction?.adaptation_action_information?.adaptation_action_type?.code;
@@ -72,6 +73,8 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
       this.setValidators(this.typeStr !== AAType.A);
     }
   }
+
+  ngOnDestroy() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['type'] && this.form) {
@@ -115,7 +118,7 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
 
     const includeImpactControl = this.form.get(['formArray', 1, 'includeImpactInfoCtrl']);
     if (includeImpactControl) {
-      includeImpactControl.valueChanges.subscribe((value) => {
+      includeImpactControl.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
         this.wantsImpactEval.emit(value);
       });
     }
@@ -134,36 +137,36 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
   }
 
   loadODS() {
-    this.service.loadODS().subscribe(
-      (ods) => {
+    this.service.loadODS().subscribe({
+      next: (ods) => {
         this.ods = ods;
       },
-      (error) => {
+      error: (error) => {
         this.ods = [];
       },
-    );
+    });
   }
 
   getTemporallyInpacts() {
-    this.service.loadTemporalityImpact().subscribe(
-      (response) => {
+    this.service.loadTemporalityImpact().subscribe({
+      next: (response) => {
         this.temporalityImpact = response;
       },
-      (error) => {
+      error: (error) => {
         this.temporalityImpact = [];
       },
-    );
+    });
   }
 
   getGeneralImpact() {
-    this.service.loadGeneralImpact().subscribe(
-      (response) => {
+    this.service.loadGeneralImpact().subscribe({
+      next: (response) => {
         this.generalImpact = response;
       },
-      (error) => {
+      error: (error) => {
         this.generalImpact = [];
       },
-    );
+    });
   }
 
   buildUpdateRegisterForm() {
@@ -218,12 +221,6 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
     ]);
   }
 
-  openSnackBar(message: string, action: string = '') {
-    this.snackBar.open(message, action, {
-      duration: this.durationInSeconds * 1000,
-    });
-  }
-
   submitForm() {
     if (this.permissions.canEditAA(this.state)) {
       this.handleEditableAASubmission();
@@ -255,12 +252,12 @@ export class AdaptationActionsActionImpactComponent implements OnInit {
 
     this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe({
       next: () => this.handleSubmissionSuccess(),
-      error: () => this.openSnackBar('Error al crear el formulario, inténtelo de nuevo más tarde'),
+      error: () => this.snackBar.show('Error al crear el formulario, inténtelo de nuevo más tarde'),
     });
   }
 
   private handleSubmissionSuccess() {
-    this.openSnackBar('Formulario creado correctamente');
+    this.snackBar.show('Formulario creado correctamente');
     this.onComplete.emit(true);
 
     if (this.includeImpactInfo) {

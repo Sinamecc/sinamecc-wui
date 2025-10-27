@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Logger } from '@core';
+import { Logger, untilDestroyed } from '@core';
 import { Ovv } from '@app/mccr/mccr-registries/mccr-registries-ovv-selector/ovv';
 import { MccrRegistry } from '@app/mccr/mccr-registries/mccr-registry';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
-import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 const log = new Logger('Report');
 
@@ -27,17 +26,16 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
   constructor(
     private router: Router,
     private service: MccrRegistriesService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
-    private translateService: TranslateService,
   ) {
     this.createForm();
   }
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.service.currentMccrRegistry.subscribe((message) => (this.mccrRegistry = message));
+    this.service.currentMccrRegistry.pipe(untilDestroyed(this)).subscribe((message) => (this.mccrRegistry = message));
     this.service
       .getOvvs()
       .pipe(
@@ -50,6 +48,8 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
       });
   }
 
+  ngOnDestroy() {}
+
   submitForm() {
     this.isLoading = true;
     this.service
@@ -60,20 +60,18 @@ export class MccrRegistriesOvvSelectorComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           // :id/versions
           this.router.navigate([`mccr/registries`], { replaceUrl: true });
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from form`);
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Report File error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 
   private createForm() {

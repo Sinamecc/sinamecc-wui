@@ -8,7 +8,6 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import {
   AdaptationAction,
@@ -19,8 +18,9 @@ import {
   Province,
 } from '../interfaces/adaptationAction';
 import { AAType, Activities, ODS, SubTopics, Topic } from '../interfaces/catalogs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { firstValueFrom } from 'rxjs';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-adaptation-actions-report',
@@ -74,16 +74,15 @@ export class AdaptationActionsReportComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private datePipe: DatePipe,
     private service: AdaptationActionService,
-    private translateService: TranslateService,
   ) {
     this.createForm();
   }
 
   async ngOnInit() {
-    this.service.currentAdaptationActionSource.subscribe((message) => {
+    this.service.currentAdaptationActionSource.pipe(untilDestroyed(this)).subscribe((message) => {
       this.adaptationAction = message;
       if (this.adaptationAction) {
         const type = this.getType(this.adaptationAction);
@@ -113,6 +112,8 @@ export class AdaptationActionsReportComponent implements OnInit {
       }
     }
   }
+
+  ngOnDestroy() {}
 
   get formArray(): AbstractControl | null {
     return this.form.get('formArray');
@@ -252,47 +253,47 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   loadODS() {
-    this.service.loadODS().subscribe(
-      (ods) => {
+    this.service.loadODS().subscribe({
+      next: (ods) => {
         this.ods = ods;
       },
-      (error) => {
+      error: (error) => {
         this.ods = [];
       },
-    );
+    });
   }
 
   loadTopics(index = 0) {
-    this.service.loadTopics().subscribe(
-      (topics) => {
+    this.service.loadTopics().subscribe({
+      next: (topics) => {
         this.topics[index] = topics;
       },
-      (error) => {
+      error: (error) => {
         this.topics = [];
       },
-    );
+    });
   }
 
   loadSubTopics() {
-    this.service.loadSubTopics().subscribe(
-      (subTopics) => {
+    this.service.loadSubTopics().subscribe({
+      next: (subTopics) => {
         this.subTopics = subTopics;
       },
-      (error) => {
+      error: (error) => {
         this.subTopics = [];
       },
-    );
+    });
   }
 
   loadSubTopic(id: string) {
-    this.service.loadSubTopics(id).subscribe(
-      (subTopics) => {
+    this.service.loadSubTopics(id).subscribe({
+      next: (subTopics) => {
         this.subTopics = subTopics;
       },
-      (error) => {
+      error: (error) => {
         this.subTopics = [];
       },
-    );
+    });
   }
 
   loadActivities(id: string, index: number) {
@@ -356,19 +357,13 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   changeSubTopics(idTopic: string, index: number) {
-    this.service.loadSubTopics(idTopic).subscribe(
-      (subTopics) => {
+    this.service.loadSubTopics(idTopic).subscribe({
+      next: (subTopics) => {
         this.subTopicsToShow[index] = subTopics;
       },
-      (error) => {
+      error: (error) => {
         this.subTopics = [];
       },
-    );
-  }
-
-  openSnackBar(message: string, action: string = '') {
-    this.snackBar.open(message, action, {
-      duration: this.durationInSeconds * 1000,
     });
   }
 
@@ -477,12 +472,12 @@ export class AdaptationActionsReportComponent implements OnInit {
   }
 
   loadBenefitedPopulation() {
-    this.service.loadBenefitedPopulation().subscribe(
-      (response) => (this.benefiedPopulation = response),
-      (error) => {
+    this.service.loadBenefitedPopulation().subscribe({
+      next: (response) => (this.benefiedPopulation = response),
+      error: (error) => {
         this.benefiedPopulation = [];
       },
-    );
+    });
   }
 
   loadProvinceSByCantonSelected(cantons: Canton[]) {
@@ -639,21 +634,19 @@ export class AdaptationActionsReportComponent implements OnInit {
   submitForm() {
     const payload: AdaptationAction = this.buildPayload();
 
-    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe(
-      (res) => {
+    this.service.updateNewAdaptationAction(payload, this.adaptationAction.id).subscribe({
+      next: (res) => {
         this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
         let type = this.getType(res.body);
-        this.onTypeSet.emit(type);
+        this.snackBar.show('specificLabel.saveInformation');
         this.onComplete.emit(true);
-        this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-          this.snackBar.open(res, null, { duration: 3000 });
-          this.mainStepper.next();
-        });
+        this.onTypeSet.emit(type);
+        this.mainStepper.next();
       },
-      (error) => {
-        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+      error: (error) => {
+        this.snackBar.show('Error al crear el formulario, intentelo de nuevo más tarde');
       },
-    );
+    });
   }
   private clean(value: any): any {
     return value === '' ? null : value;

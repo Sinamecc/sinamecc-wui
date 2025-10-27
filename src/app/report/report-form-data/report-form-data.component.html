@@ -23,13 +23,13 @@
                   formControlName="whatInformationReportedCtrl"
                   class="custom-radio-group"
                 >
-                  <mat-radio-button [style.margin.px]="5" [value]="'statistics_or_variable'">
-                    <label translate>Una variable o estadística </label>
+                  <mat-radio-button style="margin: 5px" value="statistics_or_variable">
+                    <label translate>Una variable o estadística</label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" [value]="'indicator'">
+                  <mat-radio-button style="margin: 5px" value="indicator">
                     <label translate>Indicador</label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" [value]="'data_base'">
+                  <mat-radio-button style="margin: 5px" value="data_base">
                     <label translate>Base de datos</label>
                   </mat-radio-button>
                 </mat-radio-group>
@@ -42,34 +42,34 @@
                   formControlName="isBaselineCtrl"
                   class="custom-radio-group"
                 >
-                  <mat-radio-button [style.margin.px]="5" [value]="true">
+                  <mat-radio-button style="margin: 5px" [value]="true">
                     <label translate>general.yes </label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" [value]="false">
+                  <mat-radio-button style="margin: 5px" [value]="false">
                     <label translate>No</label>
                   </mat-radio-button>
                 </mat-radio-group>
 
-                <div *ngIf="isBaseline.value" [style.width.%]="100" class="flex flex-col justify-start items-start">
+                <div *ngIf="isBaseline.value" style="width: 100%" class="flex flex-col justify-start items-start">
                   <span translate>¿Cómo se desea reportar la línea base del indicador?</span>
                   <mat-radio-group
                     formControlName="reportUpdateCtrl"
                     #howReportedInfo="matRadioGroup"
                     class="custom-radio-group"
                   >
-                    <mat-radio-button [style.margin.px]="5" [value]="1">
+                    <mat-radio-button style="margin: 5px" [value]="1">
                       <label translate>Carga de archivos </label>
                     </mat-radio-button>
-                    <mat-radio-button [style.margin.px]="5" [value]="2">
+                    <mat-radio-button style="margin: 5px" [value]="2">
                       <label translate>Reporte de valor individual</label>
                     </mat-radio-button>
-                    <mat-radio-button [style.margin.px]="5" [value]="3">
+                    <mat-radio-button style="margin: 5px" [value]="3">
                       <label translate>Conexión con API o web service</label>
                     </mat-radio-button>
                   </mat-radio-group>
 
                   <span *ngIf="howReportedInfo?.value == 1" translate>Cargue los archivos seleccionados</span>
-                  <div *ngIf="howReportedInfo?.value == 1" [style.width.%]="100" class="flex flex-row justify-center">
+                  <div *ngIf="howReportedInfo?.value == 1" style="width: 100%" class="flex flex-row justify-center">
                     <div class="w-full xl:w-auto flex items-start justify-start">
                       <app-upload-button class="w-full" (fileChange)="uploadFile($event, false)" name="filename" />
                     </div>
@@ -101,10 +101,10 @@
                   formControlName="qualityPreItemsCtrl"
                   class="custom-radio-group"
                 >
-                  <mat-radio-button [style.margin.px]="5" [value]="true">
+                  <mat-radio-button style="margin: 5px" [value]="true">
                     <label translate>general.yes </label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" [value]="false">
+                  <mat-radio-button style="margin: 5px" [value]="false">
                     <label translate>No</label>
                   </mat-radio-button>
                 </mat-radio-group>
@@ -123,10 +123,10 @@
                   formControlName="agreementTransferSINAMECCCtrl"
                   class="custom-radio-group"
                 >
-                  <mat-radio-button [style.margin.px]="5" [value]="true">
+                  <mat-radio-button style="margin: 5px" [value]="true">
                     <label translate>general.yes </label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" [value]="false">
+                  <mat-radio-button style="margin: 5px" [value]="false">
                     <label translate>No</label>
                   </mat-radio-button>
                 </mat-radio-group>
@@ -138,20 +138,20 @@
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
-              <div [style.width.%]="100" class="flex flex-col justify-start items-start">
+              <div style="width: 100%" class="flex flex-col justify-start items-start">
                 <span translate>¿Cómo se desean reportar los datos?</span>
                 <mat-radio-group
                   formControlName="howReportedDataCtrl"
                   #howReportedData="matRadioGroup"
                   class="custom-radio-group"
                 >
-                  <mat-radio-button [style.margin.px]="5" [value]="1">
+                  <mat-radio-button style="margin: 5px" [value]="1">
                     <label translate>Carga de archivos </label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" [value]="2">
+                  <mat-radio-button style="margin: 5px" [value]="2">
                     <label translate>Reporte de valor individual</label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" [value]="3">
+                  <mat-radio-button style="margin: 5px" [value]="3">
                     <label translate>Conexión con API o web service</label>
                   </mat-radio-button>
                 </mat-radio-group>

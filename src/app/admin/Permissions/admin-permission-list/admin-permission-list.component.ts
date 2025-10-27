@@ -2,11 +2,10 @@ import { Component, OnInit, Inject, Optional, Input, ViewChild } from '@angular/
 import { MatSort } from '@angular/material/sort';
 import { PermissionsData } from '@app/admin/permissionsData';
 import { Permissions } from '../../permissions';
-import { TranslateService } from '@ngx-translate/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 @Component({
   selector: 'app-admin-permission-list',
@@ -32,11 +31,10 @@ export class AdminPermissionListComponent implements OnInit {
   }
   constructor(
     public dialog: MatDialog,
-    private snackBar: MatSnackBar,
+    private snackBar: SnackbarService,
     @Optional()
     @Inject(MAT_DIALOG_DATA)
     public data: PermissionsData,
-    private translateService: TranslateService,
   ) {
     this.componentType = 'add';
     if (data != null) {
@@ -59,18 +57,14 @@ export class AdminPermissionListComponent implements OnInit {
     this.listOfPermissions.push(perm);
     this.dataTable.splice(this.dataTable.indexOf(perm), 1);
     this.dataSource = new MatTableDataSource<Permissions>(this.dataTable);
-    this.translateService.get('admin.successfullyAdded').subscribe((res: string) => {
-      this.snackBar.open(`${perm.name}  ${res}`, null, { duration: 3000 });
-    });
+    this.snackBar.show('admin.successfullyAdded', [perm.name]);
   }
 
   removePermissions(perm: Permissions) {
     this.removeTempPermissionsList.splice(this.removeTempPermissionsList.indexOf(perm), 1);
     this.dataSource = new MatTableDataSource<Permissions>(this.removeTempPermissionsList);
     this.removePermissionsList.push(perm);
-    this.translateService.get('admin.properlyRemoved').subscribe((res: string) => {
-      this.snackBar.open(`${perm.name}  ${res}`, null, { duration: 3000 });
-    });
+    this.snackBar.show('admin.properlyRemoved', [perm.name]);
   }
 
   close() {

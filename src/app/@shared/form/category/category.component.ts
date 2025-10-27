@@ -21,6 +21,7 @@ export class CategoryComponent {
   @Input() barrier: boolean;
   indicators: IndicatorOption[];
   other = OTHER;
+  name: string;
 
   ngOnInit() {
     if (this.isAdaptationAction(this.item)) {
@@ -28,6 +29,7 @@ export class CategoryComponent {
     } else {
       this.indicators = this.mapMAIndicators();
     }
+    this.name = this.categoryGroup.get('name')?.value;
   }
 
   onOtherCategoryChange(event: any) {

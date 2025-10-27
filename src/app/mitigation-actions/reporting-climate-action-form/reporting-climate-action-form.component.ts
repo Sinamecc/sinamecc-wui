@@ -3,16 +3,16 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { AbstractControl, FormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ErrorReportingComponent } from '@shared';
-import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MAEntityType, MAFileType, MitigationAction } from '../mitigation-action';
 import { MitigationActionNewFormData } from '../mitigation-action-new-form-data';
 import { MitigationActionsService } from '../mitigation-actions.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileUpload } from '@app/@shared/upload-button/file-upload';
 import { MAFile } from '../mitigation-action-file-upload/file-upload';
 import { States } from '@app/@shared/next-state';
 import { PermissionService } from '@app/@core/permissions.service';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-reporting-climate-action-form',
@@ -50,13 +50,12 @@ export class ReportingClimateActionFormComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private service: MitigationActionsService,
-    private translateService: TranslateService,
     public permissions: PermissionService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private datePipe: DatePipe,
     private router: Router,
   ) {
-    this.service.currentMitigationAction.subscribe((message) => {
+    this.service.currentMitigationAction.pipe(untilDestroyed(this)).subscribe((message) => {
       this.mitigationAction = message;
     });
     this.isUpdating = this.action === 'update';
@@ -64,22 +63,24 @@ export class ReportingClimateActionFormComponent implements OnInit {
 
   ngOnInit() {
     if (!this.isUpdating) {
-      this.openStartMessages();
+      this.snackBar.show('mitigationAction.mesage1', [], undefined, 'Cerrar');
     }
-    this.service.currentMitigationAction.subscribe((message) => {
+    this.service.currentMitigationAction.pipe(untilDestroyed(this)).subscribe((message) => {
       this.mitigationAction = message;
       this.state = this.mitigationAction?.fsm_state.state as States;
       this.buildForm();
       this.files = this.getFiles();
       const includeImpactControl = this.form.get(['formArray', 3, 'includeImpactInfoCtrl']);
       if (includeImpactControl) {
-        includeImpactControl.valueChanges.subscribe((value) => {
+        includeImpactControl.valueChanges.pipe(untilDestroyed(this)).subscribe((value) => {
           this.includeImpactInfo = value;
           this.wantsImpactEval.emit(value);
         });
       }
     });
   }
+
+  ngOnDestroy() {}
 
   get formArray(): AbstractControl | null {
     return this.form.get('formArray');
@@ -89,14 +90,14 @@ export class ReportingClimateActionFormComponent implements OnInit {
     if (this.mitigationAction) {
       if (this.mitigationAction.id) {
         const code = this.mitigationAction.id;
-        this.service.getMitigationActionIndicators(code).subscribe(
-          (context) => {
+        this.service.getMitigationActionIndicators(code).subscribe({
+          next: (context) => {
             this.indicator = context;
           },
-          (error) => {
+          error: (error) => {
             this.indicator = [];
           },
-        );
+        });
       }
     }
   }
@@ -181,9 +182,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
       await this.uploadFiles();
     }
 
-    this.translateService.get('specificLabel.sucessfullySubmittedForm').subscribe((res: string) => {
-      this.snackBar.open(res, null, { duration: 3000 });
-    });
+    this.snackBar.show('specificLabel.sucessfullySubmittedForm');
 
     this.wasSubmittedSuccessfully = true;
     this.navigateBasedOnImpact();
@@ -203,9 +202,7 @@ export class ReportingClimateActionFormComponent implements OnInit {
     this.wasSubmittedSuccessfully = false;
 
     if (fallbackMessage) {
-      this.translateService.get(fallbackMessage).subscribe((res: string) => {
-        this.snackBar.open(res, null, { duration: 3000 });
-      });
+      this.snackBar.show(fallbackMessage);
     }
   }
 
@@ -243,12 +240,6 @@ export class ReportingClimateActionFormComponent implements OnInit {
           ],
         }),
       ]),
-    });
-  }
-
-  public openStartMessages() {
-    this.translateService.get('mitigationAction.mesage1').subscribe((res: string) => {
-      this.snackBar.open(res, 'Cerrar');
     });
   }
 

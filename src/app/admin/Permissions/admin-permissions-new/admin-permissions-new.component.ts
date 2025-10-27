@@ -3,10 +3,9 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
 import { Permissions } from '../../permissions';
 import { finalize } from 'rxjs/operators';
 import { AdminService } from '@app/admin/admin.service';
-import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { Logger } from '@core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 const log = new Logger('CreatePermission');
 
@@ -31,9 +30,8 @@ export class AdminPermissionsNewComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private service: AdminService,
-    private translateService: TranslateService,
     private router: Router,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
   ) {
     this.createForm();
     this.contentTypeMap = new Map<string, number>();
@@ -73,19 +71,17 @@ export class AdminPermissionsNewComponent implements OnInit {
               this.isLoading = false;
             }),
           )
-          .subscribe(
-            (response) => {
-              this.translateService.get('Sucessfully submitted form').subscribe((res: string) => {
-                this.snackBar.open(res, null, { duration: 3000 });
-              });
+          .subscribe({
+            next: (response) => {
+              this.snackBar.show('Sucessfully submitted form');
               log.debug(`${response.statusCode} status code received from create permissions `);
               this.router.navigate([`/home`], { replaceUrl: true });
             },
-            (error) => {
+            error: (error) => {
               log.debug(`Create permission error: ${error}`);
               this.error = error;
             },
-          );
+          });
       }
     }
   }

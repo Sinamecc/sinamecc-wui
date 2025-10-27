@@ -71,8 +71,7 @@
 
         <mat-form-field
           *ngIf="climateValue?.value?.includes(instrumentDeatils[instrumentDeatils.length - 1]?.id)"
-          [style.margin-right]="'10px'"
-          [style.width.%]="100"
+          style="margin-right: 10px; width: 100%"
           class="ppcn-field"
         >
           <mat-label translate>adaptationAction.form3.nameInstrument</mat-label>
@@ -82,7 +81,7 @@
 
         <div class="flex flex-col">
           <div class="flex flex-row">
-            <div [style.margin-right]="'10px'">
+            <div style="margin-right: 10px">
               <mat-button-toggle-group (change)="changeCurrency($event.value)" [value]="actualCurrency">
                 <mat-button-toggle value="CRC">CRC</mat-button-toggle>
                 <mat-button-toggle value="USD">USD</mat-button-toggle>
@@ -92,8 +91,7 @@
 
             <mat-form-field
               *ngIf="actualCurrency == 'other'"
-              [style.margin-right]="'10px'"
-              [style.width.%]="100"
+              style="margin-right: 10px; width: 100%"
               class="ppcn-field"
             >
               <mat-label translate>general.currencyType</mat-label>
@@ -101,7 +99,7 @@
               <mat-error translate>errorLabel.fieldRequired</mat-error>
             </mat-form-field>
 
-            <mat-form-field [style.margin-right]="'10px'" [style.width.%]="100" class="ppcn-field">
+            <mat-form-field style="margin-right: 10px; width: 100%" class="ppcn-field">
               <mat-label translate>Presupuesto</mat-label>
               <input type="text" matInput formControlName="adaptationActionFinancingBufgetValueCtrl" required />
               <mat-error translate>errorLabel.fieldRequired</mat-error>

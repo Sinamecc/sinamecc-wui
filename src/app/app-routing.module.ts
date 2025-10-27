@@ -17,6 +17,11 @@ const routes: Routes = [
       loadChildren: () => import('src/app/report/report.module').then((m) => m.ReportModule),
     },
     {
+      path: 'adaptation/actions',
+      loadChildren: () =>
+        import('src/app/adaptation-actions/adaptation-actions.module').then((m) => m.AdaptationActionsModule),
+    },
+    {
       path: 'mitigation/actions',
       loadChildren: () =>
         import('src/app/mitigation-actions/mitigation-actions.module').then((m) => m.MitigationActionsModule),

@@ -40,15 +40,15 @@ export class ReportReviewComponent implements OnInit {
 
   loadReport() {
     this.isLoading = true;
-    this.service.report(this.id).subscribe(
-      (x) => {
+    this.service.report(this.id).subscribe({
+      next: (x) => {
         this.report = x;
         this.statuses = this.report.next_action;
       },
-      (complete) => {
+      error: (complete) => {
         this.isLoading = false;
       },
-    );
+    });
   }
 
   onSubmission(context: any) {

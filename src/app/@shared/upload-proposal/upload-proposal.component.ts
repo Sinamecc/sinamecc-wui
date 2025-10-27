@@ -2,10 +2,9 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitte
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Logger } from '@core/logger.service';
-import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 import { UploadProposalService } from '@shared/upload-proposal/upload-proposal.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '../snackbar-service/snackbar.service';
 
 const log = new Logger('UploadProposal');
 
@@ -30,9 +29,8 @@ export class UploadProposalComponent implements OnInit, OnChanges {
 
   constructor(
     private router: Router,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private formBuilder: UntypedFormBuilder,
-    private translateService: TranslateService, //
     private service: UploadProposalService,
   ) {}
 
@@ -55,19 +53,17 @@ export class UploadProposalComponent implements OnInit, OnChanges {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response: any) => {
+      .subscribe({
+        next: (response: any) => {
           this.router.navigate([this.nextRoute], { replaceUrl: true });
-          this.translateService.get('Sucessfully submitted form').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('Sucessfully submitted form');
           log.debug(`${response.statusCode} status code received from form`);
         },
-        (error: any) => {
+        error: (error: any) => {
           log.debug(`Upload Proposal error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 
   private createForm() {

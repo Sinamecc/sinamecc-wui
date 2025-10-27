@@ -30,11 +30,11 @@
               <!-- group name in this case row index -->
               <div [formGroupName]="i">
                 <div>
-                  <mat-form-field [style.width.%]="100">
+                  <mat-form-field style="width: 100%">
                     <div>
                       <mat-card class="document-card flex flex-row justify-start items-center">
                         <div>
-                          <mat-icon [style.font-size.px]="50">picture_as_pdf</mat-icon>
+                          <mat-icon style="font-size: 50px">picture_as_pdf</mat-icon>
                         </div>
                         <div class="description-section flex flex-col justify-start items-start">
                           <mat-card-title translate>{{ fileDetail[i].name }}</mat-card-title>

@@ -56,16 +56,16 @@ export class AdaptationActionsListComponent implements OnInit {
     this.loading = true;
     this.service
       .loadAdaptationActions()
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           this.dataSource = new MatTableDataSource<AdaptationAction>(response);
           this.dataSource.paginator = this.paginator;
           this.loading = false;
         },
-        (error) => {
+        error: (error) => {
           this.loading = false;
         },
-      )
+      })
       .add(() => {
         this.loading = false;
       });

@@ -7,9 +7,8 @@ import { Logger } from '@core';
 import { I18nService } from '@app/i18n';
 import { Observable } from 'rxjs';
 import { ReportService } from '@app/report/report.service';
-import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 const log = new Logger('Report');
 
@@ -33,8 +32,7 @@ export class ReportVersionsNewComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private reportService: ReportService,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
   ) {
     this.id = +this.route.snapshot.paramMap.get('id');
     this.createForm();
@@ -52,20 +50,18 @@ export class ReportVersionsNewComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           // :id/versions
           this.router.navigate([`/report/${this.route.snapshot.paramMap.get('id')}/versions`], { replaceUrl: true });
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from form`);
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Report File error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 
   private createForm() {
@@ -78,17 +74,17 @@ export class ReportVersionsNewComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           this.reportForm = this.formBuilder.group({
             name: [response, Validators.required],
             file: [{ value: undefined, disabled: false }, []],
           });
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Report File error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 }

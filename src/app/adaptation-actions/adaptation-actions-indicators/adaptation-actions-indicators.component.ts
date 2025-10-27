@@ -1,10 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { AdaptationAction } from '../interfaces/adaptationAction';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-adaptation-actions-indicators',
@@ -36,12 +36,11 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private datePipe: DatePipe,
     private service: AdaptationActionService,
-    private translateService: TranslateService,
   ) {
-    this.service.currentAdaptationActionSource.subscribe((message) => {
+    this.service.currentAdaptationActionSource.pipe(untilDestroyed(this)).subscribe((message) => {
       this.adaptationAction = message;
       if (
         this.adaptationAction &&
@@ -57,6 +56,8 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     this.createForm();
     this.changeContactValidators();
   }
+
+  ngOnDestroy() {}
 
   get formArray(): AbstractControl | null {
     return this.form.get('formArray');
@@ -76,7 +77,7 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     const group = this.formArray?.get([3]);
     const sameContactCtrl = group?.get('sameContactCtrl');
 
-    sameContactCtrl?.valueChanges.subscribe((value: boolean) => {
+    sameContactCtrl?.valueChanges.pipe(untilDestroyed(this)).subscribe((value: boolean) => {
       const fieldsToUpdate = [
         'adaptationActionIndicatorContactNameCtrl',
         'adaptationActionIndicatorContactInstitutionCtrl',
@@ -263,12 +264,6 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
     ]);
   }
 
-  openSnackBar(message: string, action: string = '') {
-    this.snackBar.open(message, action, {
-      duration: this.durationInSeconds * 1000,
-    });
-  }
-
   submitForm() {
     const payload: AdaptationAction = this.buildPayload();
 
@@ -276,14 +271,12 @@ export class AdaptationActionsIndicatorsComponent implements OnInit {
       (response) => {
         payload.indicator_list = response.body.indicator_list;
         this.service.updateCurrentAdaptationAction(Object.assign(this.adaptationAction, payload));
-        this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-          this.snackBar.open(res, null, { duration: 3000 });
-          this.onComplete.emit(true);
-          this.mainStepper.next();
-        });
+        this.snackBar.show('specificLabel.saveInformation');
+        this.onComplete.emit(true);
+        this.mainStepper.next();
       },
       (error) => {
-        this.openSnackBar('Error al crear el formulario, intentelo de nuevo más tarde', '');
+        this.snackBar.show('Error al crear el formulario, intentelo de nuevo más tarde');
       },
     );
   }

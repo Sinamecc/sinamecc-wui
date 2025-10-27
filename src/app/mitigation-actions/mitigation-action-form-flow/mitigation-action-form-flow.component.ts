@@ -33,6 +33,7 @@ import { States } from '@app/@shared/next-state';
 import { PermissionService } from '@app/@core/permissions.service';
 import { TransformationalChangeComponent } from '@app/@shared/form/transformational-change/transformational-change.component';
 import { SustainableDevelopmentComponent } from '@app/@shared/form/sustainable-development/sustainable-development.component';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-mitigation-action-form-flow',
@@ -98,7 +99,7 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     this.createForm();
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.route.queryParams.subscribe((params) => {
+      this.route.queryParams.pipe(untilDestroyed(this)).subscribe((params) => {
         if (params['state']) {
           this.state = params['state'] as States;
         }
@@ -116,6 +117,8 @@ export class MitigationActionFormFlowComponent implements OnInit, AfterViewInit 
     this.isLinear = true;
     this.isLoading = false;
   }
+
+  ngOnDestroy() {}
 
   createForm() {
     this.mainGroup = this._formBuilder.group({

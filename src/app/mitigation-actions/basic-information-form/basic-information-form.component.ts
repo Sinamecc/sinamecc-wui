@@ -2,17 +2,16 @@ import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, Input }
 import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl, UntypedFormArray } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { environment } from '@env/environment';
-import { Logger } from '@core';
+import { Logger, untilDestroyed } from '@core';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { MitigationActionNewFormData } from '@app/mitigation-actions/mitigation-action-new-form-data';
 
-import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { AMOUNT_REGEX_STRING, MitigationAction } from '../mitigation-action';
 import { ErrorReportingComponent } from '@shared';
 import { DatePipe } from '@angular/common';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { States } from '@app/@shared/next-state';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 const log = new Logger('MitigationAction');
 
@@ -47,11 +46,10 @@ export class BasicInformationFormComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private service: MitigationActionsService,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private datePipe: DatePipe,
   ) {
-    this.service.currentMitigationAction.subscribe((message) => {
+    this.service.currentMitigationAction.pipe(untilDestroyed(this)).subscribe((message) => {
       this.mitigationAction = message;
     });
     this.createForm();
@@ -59,13 +57,15 @@ export class BasicInformationFormComponent implements OnInit {
 
   ngOnInit() {
     if (this.isUpdating) {
-      this.service.currentMitigationAction.subscribe((message) => {
+      this.service.currentMitigationAction.pipe(untilDestroyed(this)).subscribe((message) => {
         this.mitigationAction = message;
         this.updateFormData();
         this.state.emit(this.mitigationAction.fsm_state.state as States);
       });
     }
   }
+
+  ngOnDestroy() {}
 
   setmitigationActionBudgeValuetCtrl(value: string, index: number) {
     this.mitigationActionBudgeValuetCtrl[index] = value;
@@ -232,17 +232,13 @@ export class BasicInformationFormComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('specificLabel.saveInformation');
           this.wasSubmittedSuccessfully = true;
           this.state.emit(response.state as States);
           this.stepper.next();
         },
         (error) => {
-          this.translateService.get('Error submitting form').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('Error submitting form');
           log.debug(`New Mitigation Action Form error: ${error}`);
           this.errorComponent.parseErrors(error);
           this.error = error;

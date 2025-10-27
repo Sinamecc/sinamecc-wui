@@ -8,9 +8,8 @@ import { Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
 import { MccrRegistriesService } from '@app/mccr/mccr-registries/mccr-registries.service';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
-import { TranslateService } from '@ngx-translate/core';
 import { finalize, tap } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 const log = new Logger('Report');
 
@@ -35,8 +34,7 @@ export class MccrRegistriesNewComponent implements OnInit {
     private i18nService: I18nService,
     private service: MccrRegistriesService,
     private mitigationService: MitigationActionsService,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
   ) {
     this.createForm();
   }
@@ -53,19 +51,17 @@ export class MccrRegistriesNewComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           this.router.navigate(['/mccr/registries'], { replaceUrl: true });
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from form`);
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Mccr Registry File error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 
   private createForm() {

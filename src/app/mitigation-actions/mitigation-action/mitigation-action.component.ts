@@ -48,6 +48,13 @@ export class MitigationActionComponent implements OnInit {
   typeDataMapDict = TypeDataMap;
   fileType = MAFileType;
   files: { [key: string]: any } = {};
+  questionsToDisplay: { code: string; checkText: string; detailText: string }[] = [];
+  mitigationLabels = {
+    Q1: 'mitigationAction.standardizedCalculationMethodologyUsed',
+    Q2: 'mitigationAction.calculationsDocumented',
+    Q3: 'mitigationAction.emissionFactorsUsedCalculationDocumented',
+    Q4: 'mitigationAction.assumptionsDocumented',
+  };
 
   constructor(
     private i18nService: I18nService,
@@ -64,20 +71,17 @@ export class MitigationActionComponent implements OnInit {
     return this.mitigationAction && this.mitigationAction.fsm_state.state;
   }
 
-  findQuestion(id: string, check = false) {
-    if (this.mitigationAction) {
-      if (this.mitigationAction.impact_documentation.question) {
-        const element = this.mitigationAction.impact_documentation.question.find(
-          (x: { code: string }) => x.code === id,
-        );
-
-        if (check) {
-          return element.check ? 'general.yes' : 'No';
-        }
-        return element.detail;
-      }
+  setQuestions() {
+    if (this.mitigationAction?.impact_documentation?.question) {
+      this.questionsToDisplay = ['Q1', 'Q2', 'Q3', 'Q4'].map((code) => {
+        const q = this.mitigationAction.impact_documentation.question.find((x) => x.code === code);
+        return {
+          code,
+          checkText: q?.is_checked ? 'general.yes' : 'general.no',
+          detailText: q?.detail ?? '',
+        };
+      });
     }
-    return '';
   }
 
   openCommentsModal(commentStructure: CommentsStructure[], moduleIndex: number) {
@@ -134,6 +138,8 @@ export class MitigationActionComponent implements OnInit {
           if (type !== MAFileType.INDICATOR_METHODOLOGICAL_DETAIL && type !== MAFileType.INDICATOR_SUSTAINABILITY)
             this.files[type] = this.getFilesByType(type);
         });
+
+        this.setQuestions();
       });
   }
 
@@ -191,8 +197,10 @@ export class MitigationActionComponent implements OnInit {
       return !indicator ? [] : indicator.files.filter((file) => file.type === type);
     } else if (type === MAFileType.MONITORING_UPDATED_DATA) {
       // TODO: add id when issue SIN-I75 is solved
-      return this.mitigationAction.monitoring_reporting_indicator.monitoring_indicator[0].files.filter(
-        (file) => file.type === type,
+      return (
+        this.mitigationAction.monitoring_reporting_indicator?.monitoring_indicator?.[0]?.files?.filter(
+          (file) => file.type === type,
+        ) ?? []
       );
     } else {
       return this.mitigationAction.files.filter((file) => file.type === type);

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Logger } from '@core';
-import { TranslateService } from '@ngx-translate/core';
 import { MccrPocService } from '@app/mccr/mccr-poc/mccr-poc.service';
 import { finalize } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 const log = new Logger('Report');
 
@@ -24,8 +23,7 @@ export class MccrPocNewDeveloperAccountComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private service: MccrPocService,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
   ) {
     this.createForm();
   }
@@ -48,19 +46,17 @@ export class MccrPocNewDeveloperAccountComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        (response: any) => {
-          this.translateService.get('sucessfullySubmittedForm').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+      .subscribe({
+        next: (response: any) => {
+          this.snackBar.show('sucessfullySubmittedForm');
           log.debug(`${response.statusCode} status code received from form`);
           this.createDisable = true;
           this.account_number = response.account_number;
         },
-        (error) => {
+        error: (error) => {
           log.debug(`Error: ${error}`);
           this.error = error;
         },
-      );
+      });
   }
 }

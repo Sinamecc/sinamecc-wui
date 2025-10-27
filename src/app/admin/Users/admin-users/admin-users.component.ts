@@ -7,11 +7,10 @@ import { ComponentDialogComponent } from '@core/component-dialog/component-dialo
 import { AdminUserDetailComponent } from '../admin-user-detail/admin-user-detail.component';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
 
 export class UsersDataSource extends DataSource<any> {
   users: User[];
@@ -49,8 +48,7 @@ export class AdminUsersComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private translateService: TranslateService,
+    private snackBar: SnackbarService,
   ) {}
 
   ngOnInit() {
@@ -101,22 +99,14 @@ export class AdminUsersComponent implements OnInit {
     });
   }
 
-  openSnackBar(durationSeconds: number, message: string) {
-    this.translateService.get(message).subscribe((res: string) => {
-      this.snackBar.open(res, null, {
-        duration: 1000 * durationSeconds,
-      });
-    });
-  }
-
   removeUser(id: string) {
     this.adminService.removeUser(id).subscribe(
       (response) => {
-        this.openSnackBar(3, 'admin.createUserSuccess');
+        this.snackBar.show('admin.createUserSuccess');
         this.loadUsers();
       },
       (error) => {
-        this.openSnackBar(3, 'admin.createUserError');
+        this.snackBar.show('admin.createUserError');
       },
     );
   }

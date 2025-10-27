@@ -7,13 +7,11 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { getCategoriesScale, IMPACT_EVALUATION, IMPACT_TYPE, OTHER } from '../constants';
 import { MitigationActionsService } from '@app/mitigation-actions/mitigation-actions.service';
 import { AdaptationActionService } from '@app/adaptation-actions/adaptation-actions-service';
-import { finalize, Observable, switchMap, takeUntil } from 'rxjs';
+import { finalize, Observable, switchMap } from 'rxjs';
 import { States } from '@app/@shared/next-state';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdaptationAction } from '@app/adaptation-actions/interfaces/adaptationAction';
 import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { ImpactEvaluationComponent } from '../impact-evaluation.component';
@@ -23,6 +21,8 @@ import { Category, CategoryGroup, CategoryOptionResult, Dimension } from '../typ
 import { SustainableDevelopmentImpactPayload } from '../types/payload';
 import { requireOtherIfSelected } from '../validators/other';
 import { requireCategoriesIfOptionsSelected } from '../validators/categories';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-sustainable-development',
@@ -51,8 +51,7 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private impactService: ImpactEvaluationService,
-    private translateService: TranslateService,
-    private snackBar: MatSnackBar,
+    private snackBar: SnackbarService,
   ) {
     super(formBuilder);
   }
@@ -60,13 +59,13 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
   ngOnInit() {
     if (!this.adaptation) {
       (this.service as MitigationActionsService).currentMitigationAction
-        .pipe(takeUntil(this.destroy$))
+        .pipe(untilDestroyed(this))
         .subscribe((message) => {
           this.item = message;
         });
     } else {
       (this.service as AdaptationActionService).currentAdaptationActionSource
-        .pipe(takeUntil(this.destroy$))
+        .pipe(untilDestroyed(this))
         .subscribe((message) => {
           this.item = message;
         });
@@ -89,12 +88,9 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
   }
 
   loadDimensions() {
-    this.impactService
-      .getDimensions()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((dimensions: Dimension[]) => {
-        this.dimensions = dimensions;
-      });
+    this.impactService.getDimensions().subscribe((dimensions: Dimension[]) => {
+      this.dimensions = dimensions;
+    });
   }
 
   onDimensionChange(event: any) {
@@ -110,7 +106,6 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
       .getCategoryGroupsByDimensions({
         dimension_list: event.map((code: string) => ({ code_dimension: code })),
       })
-      .pipe(takeUntil(this.destroy$))
       .subscribe((groups: CategoryGroup[]) => {
         const grouped = this.groupOptions(groups);
         this.categoryGroups = Object.entries(grouped).map(([dimension, items]) => ({
@@ -137,7 +132,6 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
           code_dimension: category.dimension.code,
         })),
       })
-      .pipe(takeUntil(this.destroy$))
       .subscribe((categories: Category[]) => {
         const grouped = this.groupOptions(categories);
         this.categories = Object.entries(grouped).map(([category, items]) => ({
@@ -251,7 +245,6 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
             })),
           });
         }),
-        takeUntil(this.destroy$),
       )
       .subscribe((categories) => {
         const groupedCategories = this.groupOptions(categories);
@@ -399,7 +392,6 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
           this.form?.markAsPristine();
         }),
       )
-      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           if (this.service instanceof AdaptationActionService) {
@@ -415,23 +407,12 @@ export class SustainableDevelopmentComponent extends ImpactEvaluationComponent {
           this.state.emit(response.state as States);
           this.onComplete?.emit(true);
 
-          this.translateService
-            .get('specificLabel.sucessfullySubmittedForm')
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((res: string) => {
-              this.snackBar.open(res, null, { duration: 3000 });
-            });
-
+          this.snackBar.show('specificLabel.sucessfullySubmittedForm');
           this.stepper?.next();
         },
 
         error: (error) => {
-          this.translateService
-            .get('errorLabel.errorProcessing')
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((res: string) => {
-              this.snackBar.open(res, null, { duration: 3000 });
-            });
+          this.snackBar.show('errorLabel.errorProcessing');
         },
       });
   }

@@ -24,7 +24,7 @@ import { MitigationAction } from '@app/mitigation-actions/mitigation-action';
 import { ImpactEvaluationComponent } from '../impact-evaluation.component';
 import { ImpactEvaluationService } from '../impact-evaluation.service';
 import { getImpactEvalCategoryKey } from '../utils';
-import { finalize, Observable, takeUntil } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { TransformationalChangePayload } from '../types/payload';
 import {
   BarrierOptionResult,
@@ -37,6 +37,8 @@ import {
 import { requireOtherIfSelected } from '../validators/other';
 import { requireCategoriesIfOptionsSelected } from '../validators/categories';
 import { Router } from '@angular/router';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-transformational-change',
@@ -70,9 +72,8 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private impactService: ImpactEvaluationService,
-    private translateService: TranslateService,
     private router: Router,
-    private snackBar: MatSnackBar,
+    private snackBar: SnackbarService,
   ) {
     super(formBuilder);
   }
@@ -80,13 +81,13 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
   ngOnInit() {
     if (!this.adaptation) {
       (this.service as MitigationActionsService).currentMitigationAction
-        .pipe(takeUntil(this.destroy$))
+        .pipe(untilDestroyed(this))
         .subscribe((message) => {
           this.item = message;
         });
     } else {
       (this.service as AdaptationActionService).currentAdaptationActionSource
-        .pipe(takeUntil(this.destroy$))
+        .pipe(untilDestroyed(this))
         .subscribe((message) => {
           this.item = message;
         });
@@ -110,12 +111,9 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
   }
 
   private loadCategoriesCT() {
-    this.impactService
-      .getCategoryCT()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((categories: CategoryCT[]) => {
-        this.categoriesCT = categories;
-      });
+    this.impactService.getCategoryCT().subscribe((categories: CategoryCT[]) => {
+      this.categoriesCT = categories;
+    });
   }
 
   onCategoryCTChange(event: any) {
@@ -130,7 +128,6 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
           code_category_ct: cat.code,
         })),
       })
-      .pipe(takeUntil(this.destroy$))
       .subscribe((characteristics: Characteristic[]) => {
         const grouped = this.groupOptions(characteristics);
         this.characteristics = Object.entries(grouped).map(([ct, items]) => ({
@@ -343,7 +340,6 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
       .getCharacteristics({
         category_ct_list: categoryCT.map((ct) => ({ code_category_ct: ct.code })),
       })
-      .pipe(takeUntil(this.destroy$))
       .subscribe((characteristics: Characteristic[]) => {
         const grouped = this.groupOptions(characteristics);
         this.characteristics = Object.entries(grouped).map(([ct, items]) => ({
@@ -434,7 +430,6 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
           this.form?.markAsPristine();
         }),
       )
-      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           if (this.service instanceof AdaptationActionService) {
@@ -450,23 +445,12 @@ export class TransformationalChangeComponent extends ImpactEvaluationComponent {
           this.state.emit(response.state as States);
           this.onComplete?.emit(true);
 
-          this.translateService
-            .get('specificLabel.sucessfullySubmittedForm')
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((res: string) => {
-              this.snackBar.open(res, null, { duration: 3000 });
-            });
-
+          this.snackBar.show('specificLabel.sucessfullySubmittedForm');
           this.navigateBasedOnAdaptation();
         },
 
         error: (error) => {
-          this.translateService
-            .get('errorLabel.errorProcessing')
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((res: string) => {
-              this.snackBar.open(res, null, { duration: 3000 });
-            });
+          this.snackBar.show('errorLabel.errorProcessing');
         },
       });
   }

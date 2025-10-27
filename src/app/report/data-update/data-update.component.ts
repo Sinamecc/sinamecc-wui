@@ -1,13 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { I18nService } from '@app/i18n';
-import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 import { Report } from '../interfaces/report';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
 import { ReportService } from '../report.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-data-update',
@@ -26,12 +25,10 @@ export class DataUpdateComponent implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: UntypedFormBuilder,
-    private i18nService: I18nService,
     private reportService: ReportService,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
   ) {
-    this.reportService.currentReport.subscribe((message) => {
+    this.reportService.currentReport.pipe(untilDestroyed(this)).subscribe((message) => {
       this.report = message;
     });
   }
@@ -43,6 +40,8 @@ export class DataUpdateComponent implements OnInit {
       this.createForm();
     }
   }
+
+  ngOnDestroy() {}
 
   get formArray(): AbstractControl | null {
     return this.reportForm.get('formArray');
@@ -108,16 +107,14 @@ export class DataUpdateComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.router.navigate(['/report'], { replaceUrl: true });
-          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-          });
+          this.snackBar.show('specificLabel.saveInformation');
         },
-        (error) => {
+        error: (error) => {
           this.error = error;
         },
-      );
+      });
   }
 }

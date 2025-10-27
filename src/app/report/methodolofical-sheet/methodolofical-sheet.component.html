@@ -53,24 +53,27 @@
                 <mat-error translate>errorLabel.fieldRequired</mat-error>
               </mat-form-field>
 
-              <div [style.width.%]="100" class="flex flex-col justify-start items-start">
+              <div style="width: 100%" class="flex flex-col justify-start items-start">
                 <span translate>Frecuencia de la medición</span>
                 <mat-radio-group
                   #measurementFrequency="matRadioGroup"
                   formControlName="measurementFrequencyCtrl"
                   class="custom-radio-group"
                 >
-                  <mat-radio-button [style.margin.px]="5" [value]="'yearly'">
-                    <label translate>Anual </label>
+                  <mat-radio-button style="margin: 5px" value="yearly">
+                    <label translate>Anual</label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" [value]="'biannual'">
+
+                  <mat-radio-button style="margin: 5px" value="biannual">
                     <label translate>Semestral</label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" [value]="'quartely'">
+
+                  <mat-radio-button style="margin: 5px" value="quartely">
                     <label translate>Trimestral</label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" [value]="'other'">
-                    <label translate>Otro </label>
+
+                  <mat-radio-button style="margin: 5px" value="other">
+                    <label translate>Otro</label>
                   </mat-radio-button>
                 </mat-radio-group>
               </div>
@@ -117,26 +120,26 @@
               </div>
               <br />
 
-              <div [style.width.%]="100" class="flex flex-col justify-start items-start">
+              <div style="width: 100%" class="flex flex-col justify-start items-start">
                 <span translate>mitigationAction.geographicCoverage</span><br /><br />
                 <mat-radio-group
                   #geographicCoverage="matRadioGroup"
                   formControlName="geographicCoverageCtrl"
                   class="custom-radio-group"
                 >
-                  <mat-radio-button [style.margin.px]="5" value="NATIONAL">
+                  <mat-radio-button style="margin: 5px" value="NATIONAL">
                     <label translate>Nacional</label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" value="REGIONAL">
+                  <mat-radio-button style="margin: 5px" value="REGIONAL">
                     <label translate>Regional</label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" value="PROVINCIAL">
+                  <mat-radio-button style="margin: 5px" value="PROVINCIAL">
                     <label translate>Provincial</label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" value="CANTONAL">
+                  <mat-radio-button style="margin: 5px" value="CANTONAL">
                     <label translate>Cantonal</label>
                   </mat-radio-button>
-                  <mat-radio-button [style.margin.px]="5" value="OTHER">
+                  <mat-radio-button style="margin: 5px" value="OTHER">
                     <label translate>Otro</label>
                   </mat-radio-button>
                 </mat-radio-group>
@@ -349,7 +352,7 @@
                 <span translate>Categorización temática</span>
               </ng-template>
 
-              <div [style.width.%]="100" class="flex flex-col justify-start items-start">
+              <div style="width: 100%" class="flex flex-col justify-start items-start">
                 <span translate>mitigationAction.datatype</span>
                 <mat-radio-group
                   *ngIf="catalogs"
@@ -359,7 +362,7 @@
                 >
                   <mat-radio-button
                     *ngFor="let element of catalogs.thematic_categorization_type"
-                    [style.margin.px]="5"
+                    style="margin: 5px"
                     [value]="element.id"
                   >
                     <label translate>{{ element.name }}</label>

@@ -12,6 +12,7 @@ import { Ppcn } from './ppcn_registry';
 import { GeographicLevel } from './interfaces/geographicLevel';
 import { SubSector } from './interfaces/subSector';
 import { CredentialsService } from '@app/auth';
+import { untilDestroyed } from '@app/@core';
 
 const routes = {
   getGeographicLevel: (lang: string) => `/v1/ppcn/geographic/level/${lang}`,
@@ -79,6 +80,8 @@ export class PpcnService {
       }),
     );
   }
+
+  ngOnDestroy() {}
 
   updateCurrentGeographicalLevel(newGeographicalLevelId: string) {
     this.pccnLevelId.next(newGeographicalLevelId);
@@ -317,7 +320,7 @@ export class PpcnService {
       formData['organization']['contact']['id'] = String(contactFormId);
     }
 
-    this.currentLevelId.subscribe((levelId) => (formData['geographic_level'] = levelId));
+    this.currentLevelId.pipe(untilDestroyed(this)).subscribe((levelId) => (formData['geographic_level'] = levelId));
     formData['user'] = String(this.credentialsService.credentials.id);
 
     if (geographicFormId) {

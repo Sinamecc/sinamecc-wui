@@ -3,13 +3,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { I18nService } from '@app/i18n';
-import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 import { Report } from '../interfaces/report';
 import { ReportDataCatalog } from '../interfaces/report-data';
 import { ReportDataPayload } from '../interfaces/report-data-payload';
 import { ReportService } from '../report.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '@app/@shared/snackbar-service/snackbar.service';
+import { untilDestroyed } from '@app/@core';
 
 @Component({
   selector: 'app-methodolofical-sheet',
@@ -31,11 +31,10 @@ export class MethodoloficalSheetComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private i18nService: I18nService,
     private reportService: ReportService,
-    private translateService: TranslateService,
-    public snackBar: MatSnackBar,
+    public snackBar: SnackbarService,
     private datePipe: DatePipe,
   ) {
-    this.reportService.currentReport.subscribe((message) => {
+    this.reportService.currentReport.pipe(untilDestroyed(this)).subscribe((message) => {
       this.report = message;
     });
   }
@@ -49,6 +48,8 @@ export class MethodoloficalSheetComponent implements OnInit {
 
     this.getCatalogs();
   }
+
+  ngOnDestroy() {}
 
   async getCatalogs() {
     this.catalogs = await this.reportService.getReportCatalogs().toPromise();
@@ -73,17 +74,15 @@ export class MethodoloficalSheetComponent implements OnInit {
           this.isLoading = false;
         }),
       )
-      .subscribe(
-        () => {
-          this.translateService.get('specificLabel.saveInformation').subscribe((res: string) => {
-            this.snackBar.open(res, null, { duration: 3000 });
-            this.mainStepper.next();
-          });
+      .subscribe({
+        next: () => {
+          this.snackBar.show('specificLabel.saveInformation');
+          this.mainStepper.next();
         },
-        (error) => {
+        error: (error) => {
           this.error = error;
         },
-      );
+      });
   }
 
   private buildForm() {
