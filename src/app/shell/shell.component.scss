@@ -1,5 +1,31 @@
 @use "src/theme/theme-variables";
 
+.mobile-menu {
+  background-color: #0f375a;
+  color: white;
+}
+
+.menu-toggle {
+  background-color: #0f375a;
+  color: white;
+
+  .option {
+    padding: 0.7em;
+    color: white;
+
+    &:hover {
+      background-color: #255d82;
+      cursor: pointer;
+    }
+  }
+
+  .option-selected {
+    background-color: #255d82;
+    padding: 0.7em;
+    color: white;
+  }
+}
+
 .main-container {
   width: 100vw;
   height: 100vh;
@@ -30,6 +56,14 @@
   .logo {
     margin-left: 0.7em;
     width: 80%;
+    height: auto;
+  }
+}
+
+.logo-container-mobile {
+  .logo {
+    margin-left: 0.7em;
+    width: 100px;
     height: auto;
   }
 }

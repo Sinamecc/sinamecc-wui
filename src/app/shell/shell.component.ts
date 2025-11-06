@@ -66,7 +66,21 @@ export class ShellComponent implements OnInit, OnDestroy {
     },
   ];
 
+  mobile_modules = [
+    ...this.modules,
+    {
+      name: 'admin.users',
+      url: '/admin/users',
+      icon: 'supervised_user_circle',
+      selected: false,
+      module: 'admin',
+    },
+  ];
+
   @ViewChild('sidenav', { static: false }) sidenav!: MatSidenav;
+
+  isMobile = false;
+  toggle = false;
 
   constructor(
     private router: Router,
@@ -76,11 +90,11 @@ export class ShellComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // Automatically close side menu on screens > sm breakpoint
     this.breakpointObserver
       .observe([Breakpoints.XSmall, Breakpoints.Small])
       .pipe(untilDestroyed(this))
       .subscribe((state) => {
+        this.isMobile = state.matches;
         if (!state.matches && this.sidenav) {
           this.sidenav.close();
         }
@@ -107,9 +121,14 @@ export class ShellComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectItem(index: number) {
-    this.modules.forEach((x) => (x.selected = false));
-    this.modules[index].selected = true;
+  toggleMenu() {
+    this.toggle = !this.toggle;
+  }
+
+  selectItem(modules: any[], index: number) {
+    modules.forEach((x) => (x.selected = false));
+    modules[index].selected = true;
+    if (this.toggle) this.toggle = false;
   }
 
   get username(): string | null {
@@ -131,7 +150,5 @@ export class ShellComponent implements OnInit, OnDestroy {
     this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
-  ngOnDestroy() {
-    // Needed for automatic unsubscribe with untilDestroyed
-  }
+  ngOnDestroy() {}
 }

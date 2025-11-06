@@ -1,15 +1,26 @@
-<div class="main-container">
-  <mat-drawer-container class="h-screen box-border">
-    <mat-drawer class="flex flex-col justify-start items-star side-menu" mode="side" opened>
-      <div class="logo-container flex flex-row justify-center items-center">
+<ng-template #mobileTemplate>
+  <div class="main-container">
+    <mat-toolbar class="mobile-menu">
+      <button (click)="toggleMenu()" matIconButton>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div class="logo-container-mobile flex flex-row justify-center items-center">
         <img class="logo" [src]="logoSINAMECC" />
       </div>
-      <div class="option-container flex flex-col justify-start items-stretch">
-        <div *ngFor="let item of modules; index as i">
+      <span></span>
+      <button (click)="logout()" class="icon-button" mat-icon-button color="primary">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+    <div class="menu-toggle" *ngIf="toggle">
+      <div class="flex flex-col justify-start items-stretch">
+        <div *ngFor="let item of mobile_modules; index as i">
+          <mat-divider *ngIf="item.module === 'admin'" />
+
           <div
             [routerLink]="item.url"
             *ngIf="showModule(permissions, item.module)"
-            (click)="selectItem(i)"
+            (click)="selectItem(mobile_modules, i)"
             [class]="item.selected ? 'option-selected' : 'option'"
             class="flex flex-row justify-start items-center"
           >
@@ -19,24 +30,62 @@
             <label translate class="icon-button mat-h3">{{ item.name }}</label>
           </div>
         </div>
-      </div>
-      <hr />
-      <div>
-        <button *ngIf="showModule(permissions, 'admin')" routerLink="/admin/users" mat-mini-fab color="primary">
-          <mat-icon>supervised_user_circle</mat-icon>
-        </button>
-        <app-language-selector [icon]="true"></app-language-selector>
-        <div class="user-data">
-          <h3 class="mat-h3 no-margin">{{ fullName }}</h3>
-          <h3 class="mat-h3">{{ email }}</h3>
-          <button (click)="logout()" mat-button>
-            <span translate>credentialsSection.logout</span>
+
+        <div (click)="logout()" class="option flex flex-row justify-start items-center">
+          <button class="icon-button" mat-icon-button color="primary">
+            <mat-icon>logout</mat-icon>
           </button>
+          <label translate class="icon-button mat-h3" translate>credentialsSection.logout</label>
         </div>
       </div>
-    </mat-drawer>
-    <mat-drawer-content class="side-content">
-      <router-outlet></router-outlet>
-    </mat-drawer-content>
-  </mat-drawer-container>
-</div>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</ng-template>
+
+<ng-template #desktopTemplate>
+  <div class="main-container">
+    <mat-drawer-container class="h-screen box-border">
+      <mat-drawer class="flex flex-col justify-start items-star side-menu" mode="side" opened>
+        <div class="logo-container flex flex-row justify-center items-center">
+          <img class="logo" [src]="logoSINAMECC" />
+        </div>
+        <div class="option-container flex flex-col justify-start items-stretch">
+          <div *ngFor="let item of modules; index as i">
+            <div
+              [routerLink]="item.url"
+              *ngIf="showModule(permissions, item.module)"
+              (click)="selectItem(modules, i)"
+              [class]="item.selected ? 'option-selected' : 'option'"
+              class="flex flex-row justify-start items-center"
+            >
+              <button class="icon-button" mat-icon-button color="primary">
+                <mat-icon>{{ item.icon }}</mat-icon>
+              </button>
+              <label translate class="icon-button mat-h3">{{ item.name }}</label>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div>
+          <button *ngIf="showModule(permissions, 'admin')" routerLink="/admin/users" mat-mini-fab color="primary">
+            <mat-icon>supervised_user_circle</mat-icon>
+          </button>
+          <app-language-selector [icon]="true"></app-language-selector>
+          <div class="user-data">
+            <h3 class="mat-h3 no-margin">{{ fullName }}</h3>
+            <h3 class="mat-h3">{{ email }}</h3>
+            <button (click)="logout()" mat-button>
+              <span translate>credentialsSection.logout</span>
+            </button>
+          </div>
+        </div>
+      </mat-drawer>
+      <mat-drawer-content class="side-content">
+        <router-outlet></router-outlet>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+</ng-template>
+
+<ng-container *ngTemplateOutlet="isMobile ? mobileTemplate : desktopTemplate"></ng-container>
