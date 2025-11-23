@@ -5,7 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { AdaptationActionsActionImpactComponent } from '../adaptation-actions-action-impact/adaptation-actions-action-impact.component';
 import { AdaptationActionsClimateMonitoringComponent } from '../adaptation-actions-climate-monitoring/adaptation-actions-climate-monitoring.component';
 import { AdaptationActionsFinancingComponent } from '../adaptation-actions-financing/adaptation-actions-financing.component';
-import { AdaptationActionsIndicatorsComponent } from '../adaptation-actions-indicators/adaptation-actions-indicators.component';
 import { AdaptationActionsReportComponent } from '../adaptation-actions-report/adaptation-actions-report.component';
 import { AdaptationActionService } from '../adaptation-actions-service';
 import { GeneralRegisterComponent } from '../general-register/general-register.component';
@@ -34,9 +33,6 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
 
   @ViewChild(AdaptationActionsFinancingComponent)
   financingForm: AdaptationActionsFinancingComponent;
-
-  @ViewChild(AdaptationActionsIndicatorsComponent)
-  indicatorForm: AdaptationActionsIndicatorsComponent;
 
   @ViewChild(AdaptationActionsClimateMonitoringComponent)
   climateMonitoringForm: AdaptationActionsClimateMonitoringComponent;
@@ -120,12 +116,10 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
 
   createForm() {
     this.mainGroup = this._formBuilder.group({
-      // this.formBuilder.array([])
       formArray: this._formBuilder.array([
         this.generalRegisterFrm,
         this.reportFrm,
         this.financingFrm,
-        this.indicatorFrm,
         this.climateMoniotoringFrm,
         this.impactFrm,
         this.impactEvaluationFrm,
@@ -143,10 +137,6 @@ export class AdaptationActionsNewComponent implements OnInit, AfterViewInit {
 
   get financingFrm() {
     return this.financingForm ? this.financingForm.form : null;
-  }
-
-  get indicatorFrm() {
-    return this.indicatorForm ? this.indicatorForm.form : null;
   }
 
   get climateMoniotoringFrm() {

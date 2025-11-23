@@ -1,0 +1,14 @@
+<div class="flex flex-col p-4">
+  <mat-dialog-content>
+    <p translate>general.youSure</p>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">
+      <span translate>general.no</span>
+    </button>
+    <button mat-raised-button color="warn" (click)="onConfirm()">
+      <span translate>general.yes</span>
+    </button>
+  </mat-dialog-actions>
+</div>

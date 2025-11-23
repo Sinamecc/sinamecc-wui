@@ -1,512 +1,62 @@
 <div class="container-custom">
-  <div class="header-container flex flex-col justify-center items-center">
+  <div class="header-container flex flex-col justify-center items-center mb-4">
     <h2 translate>adaptationAction.form4.title</h2>
   </div>
-  <form [formGroup]="form">
-    <div class="flex flex-col">
-      <div *ngFor="let formElement of getFormKeys(); let i = index">
-        <div *ngIf="i > 0">
-          <br />
-          <mat-divider></mat-divider>
-          <br />
-        </div>
-        <mat-vertical-stepper #stepper [formArrayName]="formElement">
-          <mat-step formGroupName="0" [stepControl]="getFormObject(formElement)?.get([0])">
-            <ng-template matStepLabel>
-              <span translate>adaptationAction.form4.RegisterIindicators</span>
-            </ng-template>
-
-            <div class="flex flex-row justify-start items-center">
-              <mat-icon [matTooltip]="indicatorToolTipTxt">info</mat-icon>
-              <mat-form-field class="field-ppcn">
-                <mat-label [matTooltip]="indicatorToolTipTxt" translate
-                  >adaptationAction.form4.indicatorName
-                </mat-label>
-                <input matInput formControlName="adaptationActionIndicatorNameCtrl" />
-                <mat-error
-                  *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorNameCtrl')?.hasError('required')"
-                  translate
-                >
-                  errorLabel.fieldRequired
-                </mat-error>
-                <mat-error
-                  *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorNameCtrl')?.hasError('maxlength')"
-                  translate
-                >
-                  errorLabel.maxLengthExceeded
-                </mat-error>
-              </mat-form-field>
-            </div>
-
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>adaptationAction.form4.indicatorDescription </mat-label>
-              <input matInput formControlName="adaptationActionIndicatorDescriptionCtrl" />
-              <mat-error
-                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorDescriptionCtrl')?.hasError('required')"
-                translate
-              >
-                errorLabel.fieldRequired
-              </mat-error>
-              <mat-error
-                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorDescriptionCtrl')?.hasError('maxlength')"
-                translate
-              >
-                errorLabel.maxLengthExceeded
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>mitigationAction.indicatorUnit </mat-label>
-              <input matInput formControlName="adaptationActionIndicatorUnitCtrl" />
-              <mat-error
-                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorUnitCtrl')?.hasError('required')"
-                translate
-              >
-                errorLabel.fieldRequired
-              </mat-error>
-              <mat-error
-                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorUnitCtrl')?.hasError('maxlength')"
-                translate
-              >
-                errorLabel.maxLengthExceeded
-              </mat-error>
-            </mat-form-field>
-
-            <div class="flex flex-row justify-center gap-4">
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>adaptationAction.form4.calculationMethodology</mat-label>
-                <input matInput formControlName="adaptationActionIndicatorMetodologyCtrl" />
-                <mat-error
-                  *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorMetodologyCtrl')?.hasError('required')"
-                  translate
-                >
-                  errorLabel.fieldRequired
-                </mat-error>
-                <mat-error
-                  *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorMetodologyCtrl')?.hasError('maxlength')"
-                  translate
-                >
-                  errorLabel.maxLengthExceeded
-                </mat-error>
-              </mat-form-field>
-              <input formControlName="adaptationActionIndicatorUnitFileCtrl" type="file" />
-            </div>
-
-            <span translate>mitigationAction.indicatorReportingPeriodicity</span>
-            <mat-radio-group
-              #adaptationActionIndicatorFrecuence="matRadioGroup"
-              formControlName="adaptationActionIndicatorFrecuenceCtrl"
-              class="custom-radio-group"
-            >
-              <mat-radio-button value="YEARLY">
-                <label translate>Anual</label>
-              </mat-radio-button>
-              <mat-radio-button value="BIANNUAL">
-                <label translate>Semestral</label>
-              </mat-radio-button>
-              <mat-radio-button value="QUARTERLY">
-                <label translate>Trimestral</label>
-              </mat-radio-button>
-              <mat-radio-button value="OTHER">
-                <label translate>Otro</label>
-              </mat-radio-button>
-            </mat-radio-group>
-
-            <mat-form-field *ngIf="adaptationActionIndicatorFrecuence.value == 'OTHER'" class="field-ppcn">
-              <mat-label translate>adaptationAction.form4.measurementFrequency</mat-label>
-              <input matInput formControlName="adaptationActionIndicatorFrecuenceOtherCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-            <br />
-            <br />
-            <mat-label translate>mitigationAction.timeSeriesAvailable</mat-label>
-            <div class="flex flex-row justify-center">
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>Desde</mat-label>
-                <input
-                  matInput
-                  [placeholder]="'Choose a date' | translate"
-                  [matDatepicker]="adaptationActionIndicatorTime"
-                  formControlName="adaptationActionIndicatorTimeCtrl"
-                />
-
-                <mat-datepicker-toggle matSuffix [for]="adaptationActionIndicatorTime"></mat-datepicker-toggle>
-                <mat-datepicker #adaptationActionIndicatorTime></mat-datepicker>
-
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>general.until</mat-label>
-                <input
-                  matInput
-                  [placeholder]="'Choose a date' | translate"
-                  [matDatepicker]="timeSeriesAvailableEndCtrl"
-                  formControlName="timeSeriesAvailableEndCtrl"
-                />
-
-                <mat-datepicker-toggle matSuffix [for]="timeSeriesAvailableEndCtrl"></mat-datepicker-toggle>
-                <mat-datepicker #timeSeriesAvailableEndCtrl></mat-datepicker>
-
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-            </div>
-
-            <span translate>mitigationAction.geographicCoverage</span>
-            <mat-radio-group
-              #adaptationActionIndicatorCoverage="matRadioGroup"
-              formControlName="adaptationActionIndicatorCoverageCtrl"
-              class="custom-radio-group"
-            >
-              <mat-radio-button [value]="LOCATION.NATIONAL">
-                <label translate>adaptationAction.location.national</label>
-              </mat-radio-button>
-              <mat-radio-button [value]="LOCATION.PROVINCIAL">
-                <label translate>adaptationAction.location.provincial</label>
-              </mat-radio-button>
-              <mat-radio-button [value]="LOCATION.CANTONAL">
-                <label translate>adaptationAction.location.cantonal</label>
-              </mat-radio-button>
-              <mat-radio-button [value]="LOCATION.DISTRICT">
-                <label translate>adaptationAction.location.district</label>
-              </mat-radio-button>
-              <mat-radio-button [value]="LOCATION.OTHER">
-                <label translate>adaptationAction.location.other</label>
-              </mat-radio-button>
-            </mat-radio-group>
-
-            <mat-form-field *ngIf="adaptationActionIndicatorCoverage.value == 'OTHER'" class="field-ppcn">
-              <mat-label translate>adaptationAction.form4.geographicCoverageDetail </mat-label>
-              <input matInput formControlName="adaptationActionIndicatorCoverageOtherCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>mitigationAction.disintegration </mat-label>
-              <input matInput formControlName="adaptationActionIndicatorDisintegrationCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>mitigationAction.dataSource </mat-label>
-              <input matInput formControlName="adaptationActionIndicatorLimitCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>adaptationAction.form4.indicatorGoal </mat-label>
-              <input matInput formControlName="adaptationActionIndicatorGoalCtrl" />
-              <mat-error
-                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorGoalCtrl')?.hasError('required')"
-                translate
-                >errorLabel.fieldRequired</mat-error
-              >
-              <mat-error
-                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorGoalCtrl')?.hasError('maxlength')"
-                translate
-              >
-                errorLabel.maxLengthExceeded
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>mitigationAction.howSustainabilityIndicator </mat-label>
-              <input matInput formControlName="adaptationActionIndicatorMeasurementCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>mitigationAction.observationsComments </mat-label>
-              <input matInput formControlName="adaptationActionIndicatorDetailsCtrl" />
-              <mat-error
-                *ngIf="formArray?.get([0])?.get('adaptationActionIndicatorDetailsCtrl')?.hasError('maxlength')"
-                translate
-              >
-                errorLabel.maxLengthExceeded
-              </mat-error>
-            </mat-form-field>
-
-            <div class="flex flex-row justify-center gap-4">
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>adaptationAction.form4.indicatorBaseline</mat-label>
-                <input matInput formControlName="indicatorBaselineCtrl" />
-                <mat-error *ngIf="formArray?.get([0])?.get('indicatorBaselineCtrl')?.hasError('maxlength')" translate>
-                  errorLabel.maxLengthExceeded
-                </mat-error>
-              </mat-form-field>
-              <app-upload-button />
-            </div>
-
-            <div class="button-box flex flex-row justify-end items-center">
-              <button
-                mat-raised-button
-                color="primary"
-                type="button"
-                [disabled]="formArray?.get([0]).invalid"
-                (click)="stepper.next()"
-              >
-                <span translate>general.next</span>
-              </button>
-            </div>
-          </mat-step>
-
-          <mat-step formGroupName="1" [stepControl]="getFormObject(formElement)?.get([1])">
-            <ng-template matStepLabel>
-              <span translate>mitigationAction.indicatorDataSource </span>
-            </ng-template>
-
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>mitigationAction.responsibleInstitution </mat-label>
-              <input matInput formControlName="adaptationActionIndicatorResponsibleInstitutionCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="field-ppcn" appearance="fill">
-              <mat-label translate>adaptationAction.form4.sourceType</mat-label>
-              <mat-select #indicatorSource formControlName="adaptationActionIndicatorSourceTypeCtrl" multiple>
-                <mat-option [value]="1">
-                  <label translate>Censos</label>
-                </mat-option>
-
-                <mat-option [value]="2">
-                  <label translate>Encuesta por muestreo</label>
-                </mat-option>
-
-                <mat-option [value]="3">
-                  <label translate>Combinación de censo y muestreo</label>
-                </mat-option>
-
-                <mat-option [value]="4">
-                  <label translate>Sondeos de opinión</label>
-                </mat-option>
-
-                <mat-option [value]="5">
-                  <label translate>Registro administrativo</label>
-                </mat-option>
-
-                <mat-option [value]="6">
-                  <label translate>Sistema de Monitoreo</label>
-                </mat-option>
-
-                <mat-option [value]="7">
-                  <label translate> Estimación directa</label>
-                </mat-option>
-
-                <mat-option [value]="8">
-                  <label translate>Otro</label>
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field *ngIf="indicatorSource?.value?.includes(8)" class="field-ppcn">
-              <mat-label translate>adaptationAction.form4.sourceTypeDetail </mat-label>
-              <input matInput formControlName="adaptationActionIndicatorSourceTypeOtherCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="field-ppcn">
-              <mat-label translate>mitigationAction.statisticalOperationName </mat-label>
-              <input matInput formControlName="adaptationActionIndicatorOperationNameCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-
-            <div class="button-box flex flex-row justify-end items-center">
-              <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
-              <button
-                mat-raised-button
-                color="primary"
-                type="button"
-                [disabled]="formArray?.get([1]).invalid"
-                (click)="stepper.next()"
-              >
-                <span translate>general.next</span>
-              </button>
-            </div>
-          </mat-step>
-
-          <mat-step formGroupName="2" [stepControl]="getFormObject(formElement)?.get([2])">
-            <ng-template matStepLabel>
-              <span translate> reportData.thematicCategorization</span>
-            </ng-template>
-
-            <div class="flex flex-row justify-start items-center">
-              <mat-icon [matTooltip]="typeIndicatorToolTipTxt">info</mat-icon>
-              <div>
-                <span translate>mitigationAction.datatype</span>
-                <mat-radio-group
-                  #adaptationActionIndicatorSourceData="matRadioGroup"
-                  formControlName="adaptationActionIndicatorSourceDataCtrl"
-                  class="custom-radio-group"
-                >
-                  <mat-radio-button [value]="1">
-                    <label translate>Gestión</label>
-                  </mat-radio-button>
-                  <mat-radio-button [value]="2">
-                    <label translate>Resultado</label>
-                  </mat-radio-button>
-                  <mat-radio-button [value]="3">
-                    <label translate>Otro</label>
-                  </mat-radio-button>
-                </mat-radio-group>
-              </div>
-            </div>
-
-            <mat-form-field *ngIf="adaptationActionIndicatorSourceData.value == 3" class="field-ppcn">
-              <mat-label translate>mitigationAction.datatypeDetail</mat-label>
-              <input matInput formControlName="adaptationActionIndicatorSourceDataOtherCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-
-            <br />
-            <br />
-
-            <span translate>mitigationAction.SINAMECCClassifiers</span>
-            <mat-radio-group
-              #adaptationActionIndicatorClassifiers="matRadioGroup"
-              formControlName="adaptationActionIndicatorClassifiersCtrl"
-              class="custom-radio-group"
-            >
-              <mat-radio-button [value]="1">
-                <label translate>Acción Climática</label>
-              </mat-radio-button>
-              <mat-radio-button [value]="2">
-                <label translate>Modelación</label>
-              </mat-radio-button>
-              <mat-radio-button [value]="3">
-                <label translate>INGEI</label>
-              </mat-radio-button>
-
-              <mat-radio-button [value]="4">
-                <label translate>Reportes</label>
-              </mat-radio-button>
-
-              <mat-radio-button [value]="5">
-                <label translate>Finanzas Climáticas</label>
-              </mat-radio-button>
-
-              <mat-radio-button [value]="6">
-                <label translate>Impactos</label>
-              </mat-radio-button>
-
-              <mat-radio-button [value]="7">
-                <label translate>Otro</label>
-              </mat-radio-button>
-            </mat-radio-group>
-
-            <mat-form-field *ngIf="adaptationActionIndicatorClassifiers.value == 7" class="field-ppcn">
-              <mat-label
-                ><span translate>mitigationAction.SINAMECCClassifiers</span> (<span translate>general.other</span>)
-              </mat-label>
-              <input matInput formControlName="adaptationActionIndicatorClassifiersOtherCtrl" />
-              <mat-error translate>errorLabel.fieldRequired</mat-error>
-            </mat-form-field>
-
-            <div class="button-box flex flex-row justify-end items-center">
-              <button (click)="stepper.previous()" mat-button><span translate>general.back</span></button>
-              <button
-                mat-raised-button
-                color="primary"
-                type="button"
-                [disabled]="formArray?.get([2]).invalid"
-                (click)="stepper.next()"
-              >
-                <span translate>general.next</span>
-              </button>
-            </div>
-          </mat-step>
-
-          <mat-step formGroupName="3" [stepControl]="getFormObject(formElement)?.get([3])">
-            <ng-template matStepLabel>
-              <span translate>adaptationAction.form4.contactInfo</span>
-            </ng-template>
-
-            <mat-form-field appearance="fill" class="field-ppcn">
-              <mat-label translate>adaptationAction.form4.sameContactQuestion</mat-label>
-              <mat-select formControlName="sameContactCtrl">
-                <mat-option [value]="true">{{ 'general.yes' | translate }}</mat-option>
-                <mat-option [value]="false">{{ 'general.no' | translate }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <ng-container *ngIf="formArray?.get([3])?.get('sameContactCtrl').value === false">
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>adaptationAction.form4.contactName</mat-label>
-                <input matInput formControlName="adaptationActionIndicatorContactNameCtrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>reportData.institution</mat-label>
-                <input matInput formControlName="adaptationActionIndicatorContactInstitutionCtrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>reportData.department</mat-label>
-                <input matInput formControlName="adaptationActionIndicatorContactDepartmentCtrl" />
-                <mat-error translate>errorLabel.fieldRequired</mat-error>
-              </mat-form-field>
-
-              <mat-form-field class="field-ppcn">
-                <mat-label translate>admin.email</mat-label>
-                <input matInput formControlName="adaptationActionIndicatorContactEmailCtrl" />
-                <mat-error
-                  *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactEmailCtrl')?.hasError('required')"
-                  translate
-                >
-                  errorLabel.fieldRequired
-                </mat-error>
-                <mat-error
-                  *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactEmailCtrl')?.hasError('email')"
-                  translate
-                >
-                  errorLabel.invalidEmail
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field class="field-ppcn">
-                <span matPrefix>+506 &nbsp;</span>
-                <mat-label translate>info.telephone</mat-label>
-                <input matInput type="tel" maxlength="8" formControlName="adaptationActionIndicatorContactPhoneCtrl" />
-                <mat-error
-                  *ngIf="formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('required')"
-                  translate
-                >
-                  errorLabel.fieldRequired
-                </mat-error>
-                <mat-error
-                  *ngIf="
-                    formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('maxlength') ||
-                    formArray?.get([3])?.get('adaptationActionIndicatorContactPhoneCtrl')?.hasError('minlength')
-                  "
-                  translate
-                >
-                  errorLabel.invalidLength
-                </mat-error>
-              </mat-form-field>
-            </ng-container>
-          </mat-step>
-        </mat-vertical-stepper>
-
-        <div>
-          <button mat-mini-fab color="warn" *ngIf="i > 0" (click)="removeForm(formElement)" type="button">
-            <mat-icon>delete forever</mat-icon>
-          </button>
-        </div>
-
-        <div class="align-right mb-1">
-          <button (click)="addNewForm()" type="button" matRipple class="primary-button">
-            <span translate>general.addOther</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="button-box flex flex-row justify-end items-center">
-        <br />
-        <button mat-raised-button color="primary" type="button" (click)="submitForm()">
-          <span translate>general.next</span>
-        </button>
-      </div>
+  <div class="flex flex-col gap-4">
+    <app-indicator-search
+      [indicators]="adaptationAction?.indicator_list"
+      (indicatorResults)="indicatorsToShow = $event"
+    />
+    <div class="flex flex-row justify-end items-center">
+      <button type="button" class="primary-button" (click)="openDialog()">
+        <span translate>adaptationAction.form4.add</span>
+      </button>
     </div>
-  </form>
+    <div class="flex flex-col gap-2">
+      <table mat-table [dataSource]="indicatorsToShow" class="mat-elevation-z1 w-full">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let item">{{ item.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>
+            <span translate>adaptationAction.form4.indicatorName</span>
+          </th>
+          <td mat-cell *matCellDef="let item">{{ item.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let item">
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="openConfirmationDialog(item.id)"
+              matTooltip="{{ 'general.delete' | translate }}"
+              matTooltipPosition="above"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              (click)="openDialog(item.id)"
+              matTooltip="{{ 'general.edit' | translate }}"
+              matTooltipPosition="above"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['id', 'name', 'actions']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['id', 'name', 'actions']"></tr>
+      </table>
+    </div>
+    <div class="button-box flex flex-row justify-end items-center">
+      <button mat-raised-button color="primary" type="button" (click)="next()">
+        <span translate>general.next</span>
+      </button>
+    </div>
+  </div>
 </div>
