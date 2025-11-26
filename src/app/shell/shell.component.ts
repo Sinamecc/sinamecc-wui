@@ -5,6 +5,7 @@ import { Permissions } from '@app/@core/permissions';
 import { AuthenticationService, CredentialsService, Credentials } from '@app/auth';
 import { untilDestroyed } from '@core';
 import { Router } from '@angular/router';
+import { MobileService } from '@app/@shared/mobile.service';
 
 @Component({
   selector: 'app-shell',
@@ -87,6 +88,7 @@ export class ShellComponent implements OnInit, OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private authenticationService: AuthenticationService,
     private credentialsService: CredentialsService,
+    private mobileService: MobileService,
   ) {}
 
   ngOnInit() {
@@ -94,11 +96,15 @@ export class ShellComponent implements OnInit, OnDestroy {
       .observe([Breakpoints.XSmall, Breakpoints.Small])
       .pipe(untilDestroyed(this))
       .subscribe((state) => {
-        this.isMobile = state.matches;
-        if (!state.matches && this.sidenav) {
-          this.sidenav.close();
-        }
+        this.mobileService.setIsMobile(state.matches);
       });
+
+    this.mobileService.isMobile$.pipe(untilDestroyed(this)).subscribe((isMobile) => {
+      this.isMobile = isMobile;
+      if (!isMobile && this.sidenav) {
+        this.sidenav.close();
+      }
+    });
   }
 
   get permissions(): Permissions {

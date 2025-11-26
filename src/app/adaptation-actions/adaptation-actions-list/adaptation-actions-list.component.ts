@@ -9,6 +9,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { PermissionService } from '@app/@core/permissions.service';
 import { States } from '@app/@shared/next-state';
 import { MatDialogConfig } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { MobileService } from '@app/@shared/mobile.service';
 
 @Component({
   selector: 'app-adaptation-actions-list',
@@ -17,6 +19,7 @@ import { MatDialogConfig } from '@angular/material/dialog';
   standalone: false,
 })
 export class AdaptationActionsListComponent implements OnInit {
+  isMobile$: Observable<boolean> = this.mobileService.isMobile$;
   adaptationsActions: AdaptationAction[] = [];
   dataSource: MatTableDataSource<AdaptationAction>;
   headers = ['id', 'name', 'type', 'objetive', 'fms_state', 'lastUpdate', 'created', 'actions'];
@@ -28,9 +31,11 @@ export class AdaptationActionsListComponent implements OnInit {
     private service: AdaptationActionService,
     private router: Router,
     public permissions: PermissionService,
+    private mobileService: MobileService,
   ) {}
 
   ngOnInit() {
+    this.setColumns();
     this.loadData();
   }
 
@@ -50,6 +55,12 @@ export class AdaptationActionsListComponent implements OnInit {
 
   canDelete(state: States): boolean {
     return this.permissions.canDeleteAA(state);
+  }
+
+  setColumns() {
+    if (this.mobileService.isMobileValue) {
+      this.headers = ['name', 'actions'];
+    }
   }
 
   loadData() {
