@@ -64,8 +64,14 @@ export interface Activity {
   adaptation_axis_guideline: any;
 }
 
+export interface AxisRelation {
+  code: string;
+  value: string;
+}
+
 export interface Instrument {
   name: string;
+  adaptation_axis_relation: AxisRelation[];
 }
 
 export interface ClimateThreat {

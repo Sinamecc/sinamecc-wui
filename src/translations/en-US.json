@@ -700,6 +700,14 @@
     "mesage1": "It is suggested to have on hand the Guide for the registration of climate actions with adaptation impacts in the National System of Metrics for Climate Change (SINAMECC) when completing this registration",
     "addReview": "Add a new review for this adaptation action",
     "newButton": "New Adaptation Action report",
+    "pnaRelationship": {
+      "knowledgeManagement": "Knowledge management on climate change effects, climate services, and development of local and institutional capacities.",
+      "resilienceConditions": "Promotion of conditions for resilience of human and natural systems through territorial, marine, and coastal planning.",
+      "ecosystemManagement": "Management of biodiversity, ecosystems, watersheds, and marine and coastal areas for adaptation.",
+      "adaptedServices": "Adapted public services and resilient infrastructure.",
+      "adaptedProductiveSystems": "Adapted and eco-competitive productive systems.",
+      "investmentSecurity": "Investment and financial security for climate action."
+    },
     "help": {
       "help": "For inquiries or questions, contact the email ",
       "guide": "Registration Guide",
@@ -736,6 +744,7 @@
       "AAProvince": "Province where the action is executed",
       "AACanton": "Canton where the action is executed",
       "AADistrict": "District where the action is executed",
+      "PNARelationship": "Relationship of the adaptation action with the axes of the National Adaptation Plan 2022-2026",
       "narrativeActionPlace": "Narrative description location where the action takes place",
       "attachGeographicalLocation": "Attach the georeferenced location of the action in case you have this",
       "attachGeographicalLocationHint": "The georeferenced location of the action refers to a GIS point (if possible, allowing the location to be marked on a map), shapes, among others.",

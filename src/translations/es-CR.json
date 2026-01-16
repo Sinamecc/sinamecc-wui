@@ -700,6 +700,14 @@
     "mesage1": "Se sugiere tener a la mano la Guía para el registro de acciones climáticas con impactos de adaptación en el Sistema Nacional de Métricas de Cambio Climático (SINAMECC) al momento de completar este registro",
     "addReview": "Agregar una nueva revisión para esta acción de adaptación",
     "newButton": "Nuevo reporte Acción de Adaptación",
+    "pnaRelationship": {
+      "knowledgeManagement": "Gestión del conocimiento sobre efectos del cambio climático, servicios climáticos y desarrollo de capacidades locales e institucionales.",
+      "resilienceConditions": "Fomento de las condiciones para la resiliencia de los sistemas humanos naturales mediante la planificación territorial, marina y costera.",
+      "ecosystemManagement": "Gestión de la biodiversidad, ecosistemas, cuencas hidrográficas y espacios marinos y costeros para la adaptación.",
+      "adaptedServices": "Servicios públicos adaptados e infraestructura resiliente.",
+      "adaptedProductiveSystems": "Sistemas productivos adaptados y eco-competitivos.",
+      "investmentSecurity": "Inversión y seguridad financiera para la acción climática."
+    },
     "funding": {
       "public": "Presupuesto público nacional",
       "private": "Fondos privados",
@@ -736,6 +744,7 @@
       "AAProvince": "Provincia donde se ejecuta la acción",
       "AACanton": "Cantón donde se ejecuta la acción",
       "AADistrict": "Distrito donde se ejecuta la acción",
+      "PNARelationship": "Relación de la acción de adaptación con los ejes del Plan Nacional de Adaptación 2022-2026",
       "narrativeActionPlace": "Descripción narrativa localización donde se desarrolla la acción",
       "attachGeographicalLocation": "Adjunte la localización georeferenciada de la acción en caso de contar con esta",
       "attachGeographicalLocationHint": "La localización georeferenciada de la acción se refiere a un Punto GIS (de ser posible que se pueda marcar la ubicación en un mapa), shapes, entre otros",
