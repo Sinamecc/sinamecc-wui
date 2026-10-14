@@ -1,0 +1,62 @@
+name: Deploy on S3
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to (development, production)'
+        required: true
+        default: 'prod'
+        type: choice
+        options:
+          - dev
+          - prod
+
+concurrency:
+  group: deploy-on-s3-${{ inputs.environment }}
+  cancel-in-progress: false
+
+jobs:
+  deploy-on-s3:
+    name: 'Deploy on S3 (${{ inputs.environment }})'
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    env:
+      S3_BUCKET: sinamecc-wui-${{ inputs.environment }}
+      CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+      # Browsers always revalidate (cheap 304 via ETag); CloudFront keeps it until the invalidation below.
+      CACHE_CONTROL: 'public, max-age=0, s-maxage=31536000, must-revalidate'
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build -- --configuration=${{ inputs.environment }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-2
+          role-session-name: deploy-on-s3
+
+      - name: Upload to S3
+        run: |
+          # index.html goes last so it never points to bundles that are not uploaded yet
+          aws s3 sync dist/ "s3://$S3_BUCKET" --delete --exclude "index.html" --cache-control "$CACHE_CONTROL"
+          aws s3 cp dist/index.html "s3://$S3_BUCKET/index.html" --cache-control "$CACHE_CONTROL"
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation --distribution-id "$CLOUDFRONT_DISTRIBUTION_ID" --paths "/*"
